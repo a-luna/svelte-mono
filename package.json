@@ -1,0 +1,70 @@
+{
+	"name": "svelte-base64",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "svelte-kit dev --host",
+		"build": "svelte-kit build",
+		"start": "svelte-kit preview --host",
+		"preview": "svelte-kit preview --host",
+		"test": "jest --coverage",
+		"lint": "prettier --check . && eslint --ignore-path .gitignore .",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@babel/core": "^7.16.0",
+		"@babel/preset-env": "^7.16.0",
+		"@babel/preset-typescript": "^7.16.0",
+		"@sveltejs/adapter-netlify": "^1.0.0-next.35",
+		"@sveltejs/adapter-static": "^1.0.0-next.21",
+		"@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+		"@testing-library/jest-dom": "^5.15.0",
+		"@testing-library/svelte": "^3.0.3",
+		"@tsconfig/svelte": "^2.0.1",
+		"@types/jest": "^27.0.2",
+		"@typescript-eslint/eslint-plugin": "^5.3.1",
+		"@typescript-eslint/parser": "^5.3.1",
+		"autoprefixer": "^10.4.0",
+		"cssnano": "^5.0.10",
+		"cypress": "^8.7.0",
+		"eslint": "^8.2.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-import": "^2.25.2",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-svelte3": "^3.2.1",
+		"jest": "^27.3.1",
+		"postcss": "^8.3.11",
+		"postcss-load-config": "^3.1.0",
+		"pre-commit": "^1.2.2",
+		"prettier": "^2.4.1",
+		"prettier-plugin-svelte": "^2.4.0",
+		"sass": "^1.43.4",
+		"svelte": "^3.44.1",
+		"svelte-loader": "^3.1.2",
+		"tailwindcss": "^2.2.19",
+		"ts-jest": "^27.0.7",
+		"tslib": "^2.3.1",
+		"typescript": "^4.4.4",
+		"vite": "^2.6.13"
+	},
+	"type": "module",
+	"engines": {
+		"node": ">= 12.17.0"
+	},
+	"dependencies": {
+		"@sveltejs/adapter-node": "1.0.0-next.53",
+		"@sveltejs/kit": "^1.0.0-next.195",
+		"svelte-preprocess": "^4.9.8"
+	},
+	"jest": {
+		"verbose": true,
+		"transform": {
+			".(ts|tsx)": "ts-jest"
+		},
+		"testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js"
+		]
+	}
+}
