@@ -1,0 +1,231 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorParser component can parse strings containing valid color keywords (CSS Colors Level 3) can parse color name, regardless of letter-case: fuchsia/Fuchsia/FUCHSIA: initial-state 1`] = `
+<body>
+  <div>
+    <input
+      class="hidden"
+      type="color"
+    />
+     
+    <div
+      class="color-picker flex flex-row flex-nowrap items-start gap-2 p-2 w-min svelte-x17t25"
+      data-testid="test-picker"
+      id="test-picker"
+    >
+      <div
+        class="flex flex-col flex-nowrap justify-start items-stretch gap-2"
+      >
+        <div
+          class="relative flex-initial inline-block text-left"
+          data-testid="select-color-space"
+          style="width: 100%;"
+        >
+          <div>
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="font-medium inline-flex items-center justify-between gap-2.5 w-full py-2.5 px-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-800 svelte-zhrqdg"
+              data-testid="open-list-button"
+              id="open-list-button"
+              style="font-size: 0.875rem;"
+              type="button"
+            >
+              <span
+                class="leading-none whitespace-nowrap mx-auto"
+              >
+                RGB
+              </span>
+               
+              <div
+                style="width: 0.875rem; height: 0.875rem;"
+              >
+                <svg
+                  class="svelte-q1wtpt"
+                  viewBox="0 0 320 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+           
+        </div>
+         
+        <div
+          class="swatch flex-grow svelte-lvgthr cursor-pointer"
+          style="background-color: #808080; width: 104px; height: 104px"
+          title="Click to open color picker"
+        />
+      </div>
+       
+      <div
+        class="flex flex-col flex-nowrap justify-start items-stretch gap-2"
+      >
+        <div
+          class="color-label flex flex-row flex-nowwrap gap-3 p-2.5 svelte-8tz8q1"
+          style="background-color: var(--white3)"
+        >
+          <div
+            class="flex-initial h-4 w-4 my-auto cursor-pointer"
+            data-testid="copy-color-button"
+            id="copy-color-button"
+            title="Copy Hex value"
+          >
+            <svg
+              class="svelte-q1wtpt"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"
+              />
+            </svg>
+          </div>
+           
+          <span
+            class="cursor-pointer flex-grow text-center text-sm font-medium leading-none whitespace-nowrap"
+            data-testid="color-string"
+            title="Click to toggle Hex, RGB, and HSL string values"
+          >
+            #808080
+          </span>
+           
+          <div
+            class="flex-initial h-4 w-4 my-auto cursor-pointer"
+            data-testid="edit-color-button"
+            id="edit-color-button"
+            title="Edit string value"
+          >
+            <svg
+              class="svelte-q1wtpt"
+              viewBox="0 0 576 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"
+              />
+            </svg>
+          </div>
+        </div>
+         
+        <div
+          class="text-sm flex flex-col flex-nowrap justify-center items-stretch gap-2"
+        >
+          <div
+            class="flex flex-row flex-nowrap items-center gap-2 svelte-1ykc7j8"
+          >
+            <label
+              class="text-right flex-initial font-medium svelte-1ykc7j8"
+              for="slider"
+            >
+              R
+            </label>
+             
+            <input
+              class="m-0 flex-grow"
+              data-testid="R-slider"
+              id="slider"
+              max="255"
+              min="0"
+              step="1"
+              type="range"
+            />
+             
+            <span
+              class="value flex-initial font-medium svelte-1ykc7j8"
+            >
+              128
+            </span>
+          </div>
+           
+          <div
+            class="flex flex-row flex-nowrap items-center gap-2 svelte-1ykc7j8"
+          >
+            <label
+              class="text-right flex-initial font-medium svelte-1ykc7j8"
+              for="slider"
+            >
+              G
+            </label>
+             
+            <input
+              class="m-0 flex-grow"
+              data-testid="G-slider"
+              id="slider"
+              max="255"
+              min="0"
+              step="1"
+              type="range"
+            />
+             
+            <span
+              class="value flex-initial font-medium svelte-1ykc7j8"
+            >
+              128
+            </span>
+          </div>
+           
+          <div
+            class="flex flex-row flex-nowrap items-center gap-2 svelte-1ykc7j8"
+          >
+            <label
+              class="text-right flex-initial font-medium svelte-1ykc7j8"
+              for="slider"
+            >
+              B
+            </label>
+             
+            <input
+              class="m-0 flex-grow"
+              data-testid="B-slider"
+              id="slider"
+              max="255"
+              min="0"
+              step="1"
+              type="range"
+            />
+             
+            <span
+              class="value flex-initial font-medium svelte-1ykc7j8"
+            >
+              128
+            </span>
+          </div>
+           
+          <div
+            class="flex flex-row flex-nowrap items-center gap-2 svelte-1ykc7j8 disabled"
+          >
+            <label
+              class="text-right flex-initial font-medium svelte-1ykc7j8"
+              for="slider"
+            >
+              A
+            </label>
+             
+            <input
+              class="m-0 flex-grow"
+              data-testid="A-slider"
+              disabled=""
+              id="slider"
+              max="1"
+              min="0"
+              step="0.01"
+              type="range"
+            />
+             
+            <span
+              class="value flex-initial font-medium svelte-1ykc7j8"
+            >
+              
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

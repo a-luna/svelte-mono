@@ -1,0 +1,102 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	/* Color Pallette */
+	--rich-black1: hsl(226, 27%, 5%);
+	--rich-black2: hsl(226, 27%, 10%);
+	--rich-black3: hsl(226, 27%, 13%);
+	--rich-black4: hsl(226, 27%, 15%);
+
+	--black4: hsl(0, 0%, 0%);
+	--black3: hsl(0, 0%, 5%);
+	--black2: hsl(0, 0%, 10%);
+	--black1: hsl(0, 0%, 15%);
+
+	--dark-gray4: hsl(0, 0%, 20%);
+	--dark-gray3: hsl(0, 0%, 25%);
+	--dark-gray2: hsl(0, 0%, 30%);
+	--dark-gray1: hsl(0, 0%, 35%);
+
+	--gray4: hsl(0, 0%, 40%);
+	--gray3: hsl(0, 0%, 45%);
+	--gray2: hsl(0, 0%, 50%);
+	--gray1: hsl(0, 0%, 60%);
+
+	--light-gray4: hsl(0, 0%, 65%);
+	--light-gray3: hsl(0, 0%, 70%);
+	--light-gray2: hsl(0, 0%, 75%);
+	--light-gray1: hsl(0, 0%, 80%);
+
+	--white1: hsl(0, 0%, 85%);
+	--white2: hsl(0, 0%, 90%);
+	--white3: hsl(0, 0%, 95%);
+	--white4: hsl(0, 0%, 100%);
+
+	--red1: hsl(2, 100%, 35%);
+	--red2: hsl(2, 100%, 45%);
+	--red3: hsl(2, 100%, 55%);
+  --red4: hsl(2, 100%, 75%);
+
+	--orange1: hsl(19, 100%, 35%);
+	--orange2: hsl(19, 100%, 45%);
+	--orange3: hsl(19, 100%, 55%);
+
+	--orange-yellow1: hsl(35, 100%, 35%);
+	--orange-yellow2: hsl(35, 100%, 45%);
+	--orange-yellow3: hsl(35, 100%, 55%);
+
+	--yellow1: hsl(60, 100%, 35%);
+	--yellow2: hsl(60, 100%, 45%);
+	--yellow3: hsl(60, 100%, 55%);
+
+	--yellow-green1: hsl(84, 100%, 35%);
+	--yellow-green2: hsl(84, 100%, 45%);
+	--yellow-green3: hsl(84, 100%, 55%);
+
+	--green1: hsl(113, 100%, 20%);
+	--green2: hsl(113, 100%, 30%);
+	--green3: hsl(113, 100%, 40%);
+  --green4: hsl(113, 100%, 70%);
+
+	--blue-green1: hsl(165, 100%, 35%);
+	--blue-green2: hsl(165, 100%, 45%); /* THEME */
+	--blue-green3: hsl(165, 100%, 55%);
+	--blue-green4: hsl(165, 100%, 75%);
+
+	--dark-teal1: hsl(179, 100%, 15%);
+	--dark-teal2: hsl(179, 100%, 25%);
+
+	--teal1: hsl(179, 100%, 35%);
+	--teal2: hsl(179, 100%, 45%);
+	--teal3: hsl(179, 100%, 55%);
+
+	--blue1: hsl(218, 100%, 25%);
+	--blue2: hsl(218, 100%, 35%);
+	--blue3: hsl(218, 100%, 45%);
+	--blue4: hsl(218, 100%, 55%);
+
+	--blue-gray0: hsl(221, 39%, 11%); /* gray-900 */
+	--blue-gray1: hsl(215, 28%, 17%); /* gray-800 */
+	--blue-gray2: hsl(217, 19%, 27%); /* gray-700 */
+	--blue-gray4: hsl(220, 10%, 46%); /* gray-500 */
+
+	--indigo1: hsl(251, 74%, 30%);
+	--indigo2: hsl(251, 74%, 40%); /* THEME */
+	--indigo3: hsl(251, 74%, 50%);
+	--indigo4: hsl(251, 80%, 60%);
+
+	--purple1: hsl(290, 100%, 35%);
+	--purple2: hsl(290, 100%, 45%);
+	--purple3: hsl(290, 100%, 55%);
+
+	--pink1: hsl(315, 100%, 35%);
+	--pink2: hsl(315, 100%, 45%);
+	--pink3: hsl(315, 100%, 55%);
+
+	/* Select Menu */
+	--select-bg-color: var(--white3);
+	--select-text-color: var(--black4);
+}

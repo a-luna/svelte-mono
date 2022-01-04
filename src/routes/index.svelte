@@ -1,2 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import ColorPicker from '$lib/components/ColorPicker/ColorPicker.svelte';
+	import type { ColorPickerState } from '$lib/types';
+	import type { Writable } from 'svelte/store';
+
+	let colorPickerState: Writable<ColorPickerState>;
+</script>
+
+<ColorPicker bind:state={colorPickerState} />
