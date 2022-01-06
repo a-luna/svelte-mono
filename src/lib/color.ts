@@ -353,3 +353,15 @@ function namedColorToRgb(name: string): string {
 		return colorRgb;
 	}
 }
+
+export function getNamedColorsOrderedByHue(): { name: string; hsl: string }[] {
+	return namedColors
+		.map((name) => ({ name, result: parseColorFromCssValue(name) }))
+		.filter(({ result }) => result.success)
+		.map(({ name, result }) => ({ name, color: result.value }))
+		.sort(sortColors)
+		.map(({ name, color }) => ({ name, hsl: color.hslString }));
+}
+
+const sortColors = (a: { name: string; color: CssColor }, b: { name: string; color: CssColor }): number =>
+	a.color.hsl.h - b.color.hsl.h || a.color.hsl.s - b.color.hsl.s || a.color.hsl.l - b.color.hsl.l;
