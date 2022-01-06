@@ -23,9 +23,7 @@ const percentToDecimalValue = (percent: number): number => Math.round((percent /
 const decimalToOpacityValue = (decimal: number): number => parseFloat((decimal / 255).toFixed(2));
 
 const rgbToString = (rgb: RgbColor, hasAlpha: boolean): string =>
-	hasAlpha
-		? `rgba(${rgb.r} ${rgb.g} ${rgb.b} / ${decimalToOpacityValue(rgb.a)})`
-		: `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
+	hasAlpha ? `rgba(${rgb.r} ${rgb.g} ${rgb.b} / ${decimalToOpacityValue(rgb.a)})` : `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 
 const hslToString = (hsl: HslColor, hasAlpha: boolean): string =>
 	hasAlpha ? `hsla(${hsl.h} ${hsl.s}% ${hsl.l}% / ${hsl.a})` : `hsl(${hsl.h} ${hsl.s}% ${hsl.l}%)`;
@@ -66,7 +64,7 @@ export function parseColorFromCssValue(s: string): Result<CssColor> {
 	if (colorNameIsValid(s)) {
 		return parseNamedColor(s);
 	}
-	return { success: false, error: `Unabel to parse "${s}" as a valid color value` };
+	return { success: false, error: `Unable to parse "${s}" as a valid color value` };
 }
 
 function parseRgb(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
@@ -85,7 +83,7 @@ function parseRgb(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 			rgb = {
 				r: percentToDecimalValue(parseInt(redPerc)),
 				g: percentToDecimalValue(parseInt(greenPerc)),
-				b: percentToDecimalValue(parseInt(bluePerc))
+				b: percentToDecimalValue(parseInt(bluePerc)),
 			};
 		}
 	}
@@ -176,7 +174,7 @@ function parseHex(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 
 function parseHexCondensedFormat(
 	match: RegExpExecArray,
-	hasAlpha: boolean
+	hasAlpha: boolean,
 ): { didParse: boolean; rgb: RgbColor; hsl: HslColor; hex: string } {
 	let didParse = false;
 	let rgb: RgbColor;
@@ -189,7 +187,7 @@ function parseHexCondensedFormat(
 		rgb = {
 			r: parseInt(`${redHex}${redHex}`, 16),
 			g: parseInt(`${greenHex}${greenHex}`, 16),
-			b: parseInt(`${blueHex}${blueHex}`, 16)
+			b: parseInt(`${blueHex}${blueHex}`, 16),
 		};
 		if (hasAlpha) {
 			const alphaHex = match.groups.alphaHexA;
@@ -207,7 +205,7 @@ function parseHexCondensedFormat(
 
 function parseHexFullFormat(
 	match: RegExpExecArray,
-	hasAlpha: boolean
+	hasAlpha: boolean,
 ): { didParse: boolean; rgb: RgbColor; hsl: HslColor; hex: string } {
 	let didParse = false;
 	let rgb: RgbColor;
@@ -223,7 +221,7 @@ function parseHexFullFormat(
 		rgb = {
 			r: parseInt(`${redHex1}${redHex2}`, 16),
 			g: parseInt(`${greenHex1}${greenHex2}`, 16),
-			b: parseInt(`${blueHex1}${blueHex2}`, 16)
+			b: parseInt(`${blueHex1}${blueHex2}`, 16),
 		};
 		if (hasAlpha) {
 			const alphaHex1 = match.groups.alphaHexB;
@@ -329,7 +327,6 @@ function hslToRgb(hsl: HslColor) {
 
 function parseNamedColor(name: string): Result<CssColor> {
 	const rgb = namedColorToRgb(name);
-  console.log(`${name}=${rgb}`)
 	if (rgb) {
 		const match = RGB_REGEX.exec(rgb);
 		if (match) {
@@ -342,6 +339,7 @@ function parseNamedColor(name: string): Result<CssColor> {
 			}
 		}
 	}
+	return { success: false, error: `Unable to parse "${name}" as a valid color value` };
 }
 
 function namedColorToRgb(name: string): string {
