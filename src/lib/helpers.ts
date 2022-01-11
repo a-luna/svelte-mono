@@ -18,7 +18,7 @@ export function clickOutside(node: HTMLElement, { enabled: initialEnabled, cb })
 		update,
 		destroy() {
 			window.removeEventListener('click', handleOutsideClick);
-		}
+		},
 	};
 }
 
@@ -36,3 +36,12 @@ export const getRandomHexString = (length: number): string =>
 	Array.from({ length }, () => Math.floor(Math.random() * 16))
 		.map((n) => Number(n).toString(16))
 		.join('');
+
+export function groupByProperty<T>(array: T[], property: keyof T): Record<string, T[]> {
+	return array.reduce((grouped, item) => {
+		const groupVal = item[property].toString();
+		grouped[groupVal] = grouped[groupVal] || [];
+		grouped[groupVal].push(item);
+		return grouped;
+	}, {});
+}

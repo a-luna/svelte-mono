@@ -33,4 +33,7 @@
 	.disabled {
 		color: var(--dark-gray1);
 	}
+	input[type='range']:focus {
+		outline: 1px solid transparent;
+	}
 </style>

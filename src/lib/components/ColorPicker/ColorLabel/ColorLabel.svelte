@@ -33,6 +33,12 @@
 		timeout = setTimeout(() => ($state.labelState = 'inactive'), 500);
 	}
 
+	function handleEditButtonClicked() {
+		if ($state.editable) {
+			$state.labelState = 'edit';
+		}
+	}
+
 	onDestroy(() => clearTimeout(timeout));
 </script>
 
@@ -43,8 +49,9 @@
 		<CopyColorString
 			color={$state.color}
 			{alphaEnabled}
+			editable={$state.editable}
 			on:copyColorString={(e) => handleCopyButtonClicked(e.detail)}
-			on:editColorString={() => ($state.labelState = 'edit')}
+			on:editColorString={() => handleEditButtonClicked()}
 		/>
 	{/if}
 </div>

@@ -7,10 +7,10 @@
 	export let value: string = 'rgb';
 
 	const options: SelectMenuOption[] = [
-		{ text: 'RGB', value: 'rgb', optionNumber: 1, active: false },
-		{ text: 'RGBA', value: 'rgba', optionNumber: 2, active: false },
-		{ text: 'HSL', value: 'hsl', optionNumber: 3, active: false },
-		{ text: 'HSLA', value: 'hsla', optionNumber: 4, active: false }
+		{ label: 'RGB', value: 'rgb', optionNumber: 1, active: false },
+		{ label: 'RGBA', value: 'rgba', optionNumber: 2, active: false },
+		{ label: 'HSL', value: 'hsl', optionNumber: 3, active: false },
+		{ label: 'HSLA', value: 'hsla', optionNumber: 4, active: false },
 	];
 	const menuId = 'select-color-space';
 	const menuLabel = '';

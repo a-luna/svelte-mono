@@ -1,11 +1,12 @@
 <script lang="ts">
 	import CopyButton from '$lib/components/Icons/CopyButton.svelte';
-	import EditButton from '$lib/components/Icons/EditButton.svelte';
+	import Edit from '$lib/components/Icons/Edit.svelte';
 	import type { CssColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let color: CssColor;
 	export let alphaEnabled: boolean;
+	export let editable: boolean;
 	let currentLabelIndex = 0;
 	const dispatch = createEventDispatcher();
 
@@ -44,9 +45,11 @@
 <div
 	id="edit-color-button"
 	data-testid="edit-color-button"
-	class="flex-initial h-4 w-4 my-auto cursor-pointer"
+	class="flex-initial h-4 w-4 my-auto"
+	class:cursor-pointer={!alphaEnabled && editable}
+	class:cursor-not-allowed={alphaEnabled || !editable}
 	title="Edit string value"
 	on:click={() => dispatch('editColorString')}
 >
-	<EditButton />
+	<Edit />
 </div>

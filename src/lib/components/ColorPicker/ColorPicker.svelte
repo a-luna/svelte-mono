@@ -1,3 +1,5 @@
+<svelte:options accessors />
+
 <script lang="ts">
 	import ColorChannels from '$lib/components/ColorPicker/ColorChannels/ColorChannels.svelte';
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
@@ -14,13 +16,26 @@
 		pickerId,
 		color: ColorParser.parse('rgb(128 128 128)').value,
 		colorSpace: 'rgb',
-		labelState: 'prerender'
+		labelState: 'prerender',
+		editable: true,
 	});
+	export let color: CssColor = $state.color;
+	export let editable = true;
 	setContext($state.pickerId, { state });
 	let timeout: NodeJS.Timeout;
 	let colorPicker: HTMLInputElement;
 
 	$: alphaEnabled = $state.colorSpace === 'rgba' || $state.colorSpace === 'hsla';
+	$: color = $state.color;
+	$: $state.editable = editable;
+
+	export function setColor(color: CssColor) {
+		$state.labelState = 'prerender';
+		$state.color = color;
+		timeout = setTimeout(() => {
+			$state.labelState = 'inactive';
+		}, 500);
+	}
 
 	const getHexOpaqueValue = (color: CssColor): string => color?.hex?.slice(0, 7) || '#000000';
 
@@ -60,33 +75,21 @@
 	value={getHexOpaqueValue($state?.color)}
 	on:change={() => handleColorPickerValueChanged()}
 />
-<div
-	id={$state.pickerId}
-	class="color-picker flex flex-row flex-nowrap items-start gap-2 p-2 w-min"
-	data-testid={$state.pickerId}
->
+<div class="color-picker flex flex-row flex-nowrap items-start gap-2 p-2 w-min" data-testid={$state.pickerId}>
 	<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
 		<ColorSpaceSelector bind:value={$state.colorSpace} />
-		<ColorSwatch
-			pickerId={$state.pickerId}
-			{alphaEnabled}
-			on:showColorPicker={() => colorPicker.click()}
-		/>
+		<ColorSwatch pickerId={$state.pickerId} {alphaEnabled} on:showColorPicker={() => colorPicker.click()} />
 	</div>
 	<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
-		<ColorLabel
-			pickerId={$state.pickerId}
-			{alphaEnabled}
-			on:updateColor={(e) => handleStringValueChanged(e.detail)}
-		/>
-		<ColorChannels pickerId={$state.pickerId} {alphaEnabled} />
+		<ColorLabel pickerId={$state.pickerId} {alphaEnabled} on:updateColor={(e) => handleStringValueChanged(e.detail)} />
+		<ColorChannels pickerId={$state.pickerId} {alphaEnabled} editable={$state.editable} />
 	</div>
 </div>
 
 <style>
 	.color-picker {
-		background-color: var(--light-gray1);
-		border: 1px solid var(--black2);
+		background-color: var(--white1);
+		border: 2px solid var(--gray4);
 		border-radius: 4px;
 	}
 </style>

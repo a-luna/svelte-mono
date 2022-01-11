@@ -6,6 +6,7 @@
 
 	export let pickerId: string;
 	export let alphaEnabled: boolean;
+	export let editable: boolean;
 	let { state } = getContext(pickerId);
 	let rgb: string;
 	let hsl: string;
@@ -38,8 +39,8 @@
 
 <div class="text-sm flex flex-col flex-nowrap justify-center items-stretch gap-2">
 	{#if $state?.colorSpace === 'rgb' || $state?.colorSpace === 'rgba'}
-		<RgbColorChannels bind:r bind:g bind:b bind:a bind:alphaEnabled />
+		<RgbColorChannels bind:r bind:g bind:b bind:a {alphaEnabled} {editable} />
 	{:else if $state?.colorSpace === 'hsl' || $state?.colorSpace === 'hsla'}
-		<HslColorChannels bind:h bind:s bind:l bind:a bind:alphaEnabled />
+		<HslColorChannels bind:h bind:s bind:l bind:a {alphaEnabled} {editable} />
 	{/if}
 </div>

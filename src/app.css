@@ -38,7 +38,7 @@
 	--red1: hsl(2, 100%, 35%);
 	--red2: hsl(2, 100%, 45%);
 	--red3: hsl(2, 100%, 55%);
-  --red4: hsl(2, 100%, 75%);
+	--red4: hsl(2, 100%, 75%);
 
 	--orange1: hsl(19, 100%, 35%);
 	--orange2: hsl(19, 100%, 45%);
@@ -59,7 +59,7 @@
 	--green1: hsl(113, 100%, 20%);
 	--green2: hsl(113, 100%, 30%);
 	--green3: hsl(113, 100%, 40%);
-  --green4: hsl(113, 100%, 70%);
+	--green4: hsl(113, 100%, 70%);
 
 	--blue-green1: hsl(165, 100%, 35%);
 	--blue-green2: hsl(165, 100%, 45%); /* THEME */
@@ -98,5 +98,146 @@
 
 	/* Select Menu */
 	--select-bg-color: var(--white3);
+	--select-bg-color-hov: var(--white4);
 	--select-text-color: var(--black4);
+	--select-text-color-no-selection: var(--dark-gray4);
+	--selected-item-bg-color: var(--light-gray2);
+
+	/* Buttons & Accordion Items */
+	--default-border-color: var(--dark-gray3);
+	--default-bg-color: hsl(0 0% 93%);
+	--default-text-color: var(--dark-gray3);
+	--default-hover-border-color: var(--black2);
+	--default-hover-bg-color: hsl(0 0% 98%);
+	--default-hover-text-color: var(--black2);
+	--default-border-radius: 6px;
+
+	--yellow-bg-color: hsl(47 85% 94%);
+	--yellow-hover-bg-color: hsl(47 85% 98%);
+	--yellow-fg-color: hsl(47 63% 26%);
+	--yellow-active-fg-color: hsl(47 56% 50%);
+
+	--blue-bg-color: hsl(240 100% 96%);
+	--blue-hover-bg-color: hsl(240 100% 100%);
+	--blue-fg-color: hsl(240 63% 26%);
+	--blue-active-fg-color: hsl(240 56% 50%);
+
+	--green-bg-color: hsl(120 100% 96%);
+	--green-hover-bg-color: hsl(120 100% 100%);
+	--green-fg-color: hsl(120 63% 26%);
+	--green-active-fg-color: hsl(120 56% 50%);
+
+	--indigo-bg-color: hsl(275 100% 96%);
+	--indigo-hover-bg-color: hsl(275 100% 100%);
+	--indigo-fg-color: hsl(275 63% 26%);
+	--indigo-active-fg-color: hsl(275 56% 50%);
+}
+
+button {
+	font-size: inherit;
+}
+
+.theme-button {
+	background-color: var(--default-bg-color);
+	border: 2px solid var(--default-border-color);
+	color: var(--default-text-color);
+	border-radius: var(--default-border-radius);
+	height: 30px;
+	padding: 2px 6px;
+}
+
+.theme-button:hover,
+.theme-button:active,
+.theme-button:focus,
+.theme-button:active:focus {
+	background-color: var(--default-hover-bg-color);
+	border: 2px solid var(--default-hover-border-color);
+	color: var(--default-hover-text-color);
+	outline: 1px solid transparent;
+	outline-offset: 1px;
+}
+
+/* Yellow */
+.theme-button.yellow {
+	background-color: var(--yellow-bg-color);
+	border: 2px solid var(--yellow-fg-color);
+	color: var(--yellow-fg-color);
+	border-radius: var(--default-border-radius);
+}
+
+.theme-button.yellow:hover {
+	background-color: var(--yellow-hover-bg-color);
+}
+
+.theme-button.yellow:active,
+.theme-button.yellow:focus,
+.theme-button.yellow:active:focus,
+.theme-button.yellow:hover:focus {
+	border: 1px solid var(--yellow-active-fg-color);
+	color: var(--yellow-active-fg-color);
+	outline: 1px solid transparent;
+	outline-offset: 1px;
+}
+
+/* Blue */
+.theme-button.blue {
+	background-color: var(--blue-bg-color);
+	border: 2px solid var(--blue-fg-color);
+	color: var(--blue-fg-color);
+	border-radius: var(--default-border-radius);
+}
+
+.theme-button.blue:hover {
+	background-color: var(--blue-hover-bg-color);
+}
+
+.theme-button.blue:active,
+.theme-button.blue:focus,
+.theme-button.blue:active:focus,
+.theme-button.blue:hover:focus {
+	border: 1px solid var(--blue-active-fg-color);
+	color: var(--blue-active-fg-color);
+	outline: none;
+}
+
+/* Green */
+.theme-button.green {
+	background-color: var(--green-bg-color);
+	border: 2px solid var(--green-fg-color);
+	color: var(--green-fg-color);
+	border-radius: var(--default-border-radius);
+}
+
+.theme-button.green:hover {
+	background-color: var(--green-hover-bg-color);
+}
+
+.theme-button.green:active,
+.theme-button.green:focus,
+.theme-button.green:active:focus,
+.theme-button.green:hover:focus {
+	border: 1px solid var(--green-active-fg-color);
+	color: var(--green-active-fg-color);
+	outline: none;
+}
+
+/* Indigo */
+.theme-button.indigo {
+	background-color: var(--indigo-bg-color);
+	border: 2px solid var(--indigo-fg-color);
+	color: var(--indigo-fg-color);
+	border-radius: var(--default-border-radius);
+}
+
+.theme-button.indigo:hover {
+	background-color: var(--indigo-hover-bg-color);
+}
+
+.theme-button.indigo:active,
+.theme-button.indigo:focus,
+.theme-button.indigo:active:focus,
+.theme-button.indigo:hover:focus {
+	border: 1px solid var(--indigo-active-fg-color);
+	color: var(--indigo-active-fg-color);
+	outline: none;
 }

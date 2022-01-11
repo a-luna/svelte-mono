@@ -1,12 +1,6 @@
 export type ColorSpace = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla';
-export type LabelState =
-	| 'prerender'
-	| 'inactive'
-	| 'copied'
-	| 'edit'
-	| 'pick'
-	| 'success'
-	| 'error';
+export type LabelState = 'prerender' | 'inactive' | 'copied' | 'edit' | 'pick' | 'success' | 'error';
+export type ComponentColor = 'black' | 'blue' | 'green' | 'yellow' | 'indigo';
 
 export interface Result<T> {
 	success: boolean;
@@ -35,6 +29,7 @@ export interface CssColor {
 	hasAlpha: boolean;
 	rgbString: string;
 	hslString: string;
+	name?: string;
 }
 
 export interface ColorPickerState {
@@ -42,11 +37,19 @@ export interface ColorPickerState {
 	color: CssColor;
 	colorSpace: ColorSpace;
 	labelState: LabelState;
+	editable: boolean;
 }
 
 export interface SelectMenuOption {
-	text: string;
+	label: string;
 	value: number | string;
 	optionNumber: number;
 	active: boolean;
+}
+
+export interface ColorPalette {
+	id: string;
+	paletteName: string;
+	colors: CssColor[];
+	updated?: boolean;
 }

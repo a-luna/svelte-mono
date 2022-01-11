@@ -8,12 +8,10 @@
 
 	$: alphaStyles = `background-color: ${$state?.color?.hex}; background-image: url("./ps-neutral.png")`;
 	$: opaqueStyles = `background-color: ${$state?.color?.hex}`;
-	$: tooltip = alphaEnabled
-		? 'Color picker does not support RGBA/HSLA color space'
-		: 'Click to open color picker';
+	$: tooltip = alphaEnabled ? 'Color picker does not support RGBA/HSLA color space' : 'Click to open color picker';
 
 	function showColorPicker() {
-		if (!alphaEnabled) {
+		if (!alphaEnabled && $state.editable) {
 			$state.labelState = 'pick';
 			dispatch('showColorPicker');
 		}
@@ -22,8 +20,8 @@
 
 <div
 	class="swatch flex-grow"
-	class:cursor-pointer={!alphaEnabled}
-	class:cursor-not-allowed={alphaEnabled}
+	class:cursor-pointer={!alphaEnabled && $state.editable}
+	class:cursor-not-allowed={alphaEnabled || !$state.editable}
 	style="{alphaEnabled ? alphaStyles : opaqueStyles}; width: 104px; height: 104px"
 	title={tooltip}
 	on:click={() => showColorPicker()}

@@ -1,5 +1,6 @@
+import { getRandomHexString, groupByProperty } from './helpers';
 import { namedColors } from './namedColors';
-import type { CssColor, HslColor, Result, RgbColor } from './types';
+import type { ColorPalette, CssColor, HslColor, Result, RgbColor } from './types';
 
 const RGB_REGEX =
 	/^rgb\(((((((?<redDecA>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?))(((?<greenDecA>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?))|(((?<redDecB>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s))(((?<greenDecB>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)))(?<blueDec>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((?<redPercA>([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?)((?<greenPercA>([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?)|((?<redPercB>([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s)((?<greenPercB>([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s))(?<bluePerc>([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
@@ -33,7 +34,7 @@ const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase
 const colorNameIsValid = (name: string): boolean =>
 	Boolean(namedColors.map((c) => c.toLowerCase()).find((c) => c === normalize(name))) || false;
 
-export function parseColorFromCssValue(s: string): Result<CssColor> {
+export function parseColorFromString(s: string): Result<CssColor> {
 	let match = RGB_REGEX.exec(s);
 	if (match) {
 		return parseRgb(match, false);
@@ -354,14 +355,49 @@ function namedColorToRgb(name: string): string {
 	}
 }
 
-export function getNamedColorsOrderedByHue(): { name: string; hsl: string }[] {
-	return namedColors
-		.map((name) => ({ name, result: parseColorFromCssValue(name) }))
-		.filter(({ result }) => result.success)
-		.map(({ name, result }) => ({ name, color: result.value }))
-		.sort(sortColors)
-		.map(({ name, color }) => ({ name, hsl: color.hslString }));
+export function getNamedColorPalettes(): ColorPalette[] {
+	const hueRanges = [
+		{ hueStart: -30, hueEnd: 30, name: 'red - orange' },
+		{ hueStart: 30, hueEnd: 60, name: 'orange - yellow' },
+		{ hueStart: 60, hueEnd: 150, name: 'green - teal' },
+		{ hueStart: 150, hueEnd: 240, name: 'teal - blue' },
+		{ hueStart: 240, hueEnd: 330, name: 'blue - magenta' },
+	];
+	const [colors, grays, whites] = getNamedColorsOrderedByHue();
+	const colorPalettes = hueRanges.map(({ hueStart, hueEnd, name }) => ({
+		id: getRandomHexString(4),
+		paletteName: name,
+		colors: getColorsInHueRange(hueStart, hueEnd, colors),
+	}));
+	const grayPalette = { id: getRandomHexString(4), paletteName: 'black - white', colors: [...grays, ...whites] };
+	return [...colorPalettes, grayPalette];
 }
 
-const sortColors = (a: { name: string; color: CssColor }, b: { name: string; color: CssColor }): number =>
-	a.color.hsl.h - b.color.hsl.h || a.color.hsl.s - b.color.hsl.s || a.color.hsl.l - b.color.hsl.l;
+function getColorsInHueRange(hueStart: number, hueEnd: number, colors: CssColor[]): CssColor[] {
+	if (hueStart < 0 && hueEnd > 0) {
+		return [...getColorsInHueRange(hueStart + 360, 360, colors), ...getColorsInHueRange(0, hueEnd, colors)];
+	}
+	return colors.filter((c) => hueStart < c.hsl.h && c.hsl.h <= hueEnd);
+}
+
+function getNamedColorsOrderedByHue(): CssColor[][] {
+	const allColorsWithDupes = namedColors
+		.map((name) => ({ name, result: parseColorFromString(name) }))
+		.filter(({ result }) => result.success)
+		.map(({ name, result }) => ({ ...result.value, name }));
+	const allColors = removeDuplicateColors(allColorsWithDupes);
+	const colors = allColors.filter((c) => c.hsl.s > 0 && c.hsl.l < 95).sort(sortColors);
+	const grays = allColors.filter((c) => c.hsl.s === 0).sort(sortColors);
+	const whites = allColors.filter((c) => c.hsl.l >= 95).sort(sortColors);
+	return [colors, grays, whites];
+}
+
+const removeDuplicateColors = (colors: CssColor[]): CssColor[] =>
+	Object.values(groupByProperty<CssColor>(colors, 'hex')).map((g) =>
+		g.length === 1 ? g[0] : { ...g[0], name: combineColorNames(g) },
+	);
+
+const combineColorNames = (colors: CssColor[]): string =>
+	[...new Set(colors.map((c) => (c?.name ? c.name : '')))].filter((n) => n).join('/');
+
+const sortColors = (a: CssColor, b: CssColor): number => a.hsl.h - b.hsl.h || a.hsl.s - b.hsl.s || a.hsl.l - b.hsl.l;

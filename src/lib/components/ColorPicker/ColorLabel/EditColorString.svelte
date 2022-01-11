@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CancelButton from '$lib/components/Icons/CancelButton.svelte';
+	import Cancel from '$lib/components/Icons/Cancel.svelte';
 	import OkButton from '$lib/components/Icons/OkButton.svelte';
 	import { createEventDispatcher, onMount, tick } from 'svelte';
 
@@ -46,6 +46,6 @@
 		style="color: var(--black2)"
 		on:click={() => dispatch('keepCurrentColor')}
 	>
-		<CancelButton />
+		<Cancel />
 	</div>
 </div>

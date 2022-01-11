@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let value: number | string;
-	export let text: string;
+	export let label: string;
 	export let optionNumber: number;
 	export let active: boolean = false;
 	export let menuId: string;
@@ -21,7 +21,7 @@
 	data-testid={menuId ? `${menuId}-option-${optionNumber}` : `option-${optionNumber}`}
 	on:click={() => dispatch('click', optionNumber)}
 >
-	{text}
+	{label}
 </div>
 
 <style lang="postcss">
