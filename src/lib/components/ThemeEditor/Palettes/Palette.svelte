@@ -1,18 +1,22 @@
 <svelte:options accessors />
 
 <script lang="ts">
-	import Color from '$lib/components/Palette/Color.svelte';
+	import Color from '$lib/components/ThemeEditor/Palettes/Color.svelte';
 	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import ChevronUp from '../Icons/ChevronUp.svelte';
 
 	export let palette: ColorPalette;
+	export let columns: number;
 	export let expanded = false;
 	export let color: ComponentColor = 'blue';
-	export let rotateDegrees = 0;
+	export let displayName = false;
 	const dispatch = createEventDispatcher();
 
+	$: accordionGrid = expanded ? `grid-column-start: span ${columns};` : '';
+	$: paletteGrid = displayName
+		? 'grid-template-columns: 100%; justify-items: flex-start;'
+		: 'grid-template-columns: repeat(4, minmax(0, 1fr)); justify-items: center;';
 	$: if (palette?.updated) {
 		if (!expanded) {
 			togglePalette();
@@ -22,12 +26,16 @@
 
 	export function togglePalette() {
 		expanded = !expanded;
-		rotateDegrees = expanded ? 180 : 0;
 		dispatch('togglePalette', palette.id);
 	}
 </script>
 
-<div id="accordion-item-{palette.id}" class="accordion-item {color}" data-state={expanded ? 'expanded' : 'collapsed'}>
+<div
+	id="accordion-item-{palette.id}"
+	class="accordion-item {color}"
+	data-state={expanded ? 'expanded' : 'collapsed'}
+	style={accordionGrid}
+>
 	<button
 		class="accordion-button transition"
 		class:active={expanded}
@@ -36,20 +44,18 @@
 		aria-controls="accordion-content-{palette.id}"
 		on:click={() => togglePalette()}
 	>
-		<div class="flex flex-row justify-between w-full">
-			<h2 class="accordion-heading mb-0 flex-grow" id="accordion-heading-{palette.id}">{palette.paletteName}</h2>
-			<div class="icon flex-initial"><ChevronUp {rotateDegrees} /></div>
-		</div>
+		<h2 class="accordion-heading mb-0 w-full" id="accordion-heading-{palette.id}">{palette.paletteName}</h2>
 	</button>
 	{#if expanded}
 		<div
 			transition:slide|local
 			id="accordion-content-{palette.id}"
 			class="accordion-content transition"
+			style="display: grid; {paletteGrid}"
 			aria-labelledby="accordion-heading-{palette.id}"
 		>
 			{#each palette.colors as color}
-				<Color {color} on:click={() => dispatch('colorClicked', color)} />
+				<Color {color} {displayName} on:click={() => dispatch('colorSelected', color)} />
 			{/each}
 		</div>
 	{/if}
@@ -142,11 +148,8 @@
 	}
 
 	.accordion-content {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		justify-items: center;
 		flex-grow: 1;
-		gap: 0.25rem;
+		gap: 0.5rem 0.25rem;
 		background-color: var(--active-bg-color, var(--bg-color, var(--light-gray1)));
 		border-bottom-left-radius: var(--border-radius, 4px);
 		border-bottom-right-radius: var(--border-radius, 4px);

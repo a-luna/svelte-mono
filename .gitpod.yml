@@ -27,7 +27,7 @@ vscode:
     - csstools.postcss
     - christian-kohler.npm-intellisense
     - vscode-icons-team.vscode-icons
-    - gengjiawen.vscode-wakatime-gitpods
+    - wakatime.vscode-wakatime
     - dbaeumer.vscode-eslint
     - tuto193.monokai-vibrant
     - this-fifo.natty

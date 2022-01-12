@@ -7,6 +7,7 @@
 	export let width = '100%';
 	export let fontSize: string = '0.875rem';
 	export let value: string = '';
+	export let disabled = false;
 	let options: SelectMenuOption[];
 	const dispatch = createEventDispatcher();
 
@@ -31,6 +32,7 @@
 	buttonHeight={'30px'}
 	buttonPadding={'7px 6px'}
 	{menuLabel}
+	{disabled}
 	{options}
 	selectedValue={value}
 	{menuId}

@@ -1,6 +1,6 @@
 export type ColorSpace = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla';
 export type LabelState = 'prerender' | 'inactive' | 'copied' | 'edit' | 'pick' | 'success' | 'error';
-export type ComponentColor = 'black' | 'blue' | 'green' | 'yellow' | 'indigo';
+export type ComponentColor = 'black' | 'red' | 'yellow' | 'green' | 'teal' | 'blue' | 'indigo';
 
 export interface Result<T> {
 	success: boolean;

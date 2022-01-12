@@ -89,7 +89,6 @@
 <style>
 	.color-picker {
 		background-color: var(--white1);
-		border: 2px solid var(--gray4);
 		border-radius: 4px;
 	}
 </style>

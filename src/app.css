@@ -105,32 +105,47 @@
 
 	/* Buttons & Accordion Items */
 	--default-border-color: var(--dark-gray3);
-	--default-bg-color: hsl(0 0% 93%);
+	--default-bg-color: var(--white3);
 	--default-text-color: var(--dark-gray3);
 	--default-hover-border-color: var(--black2);
-	--default-hover-bg-color: hsl(0 0% 98%);
+	--default-hover-bg-color: var(--white4);
 	--default-hover-text-color: var(--black2);
 	--default-border-radius: 6px;
 
-	--yellow-bg-color: hsl(47 85% 94%);
-	--yellow-hover-bg-color: hsl(47 85% 98%);
-	--yellow-fg-color: hsl(47 63% 26%);
-	--yellow-active-fg-color: hsl(47 56% 50%);
+	--black-bg-color: var(--white3);
+	--black-hover-bg-color: var(--white4);
+	--black-fg-color: var(--dark-gray3);
+	--black-active-fg-color: var(--black2);
 
-	--blue-bg-color: hsl(240 100% 96%);
-	--blue-hover-bg-color: hsl(240 100% 100%);
-	--blue-fg-color: hsl(240 63% 26%);
-	--blue-active-fg-color: hsl(240 56% 50%);
+	--red-bg-color: hsl(0 100% 96%);
+	--red-hover-bg-color: hsl(0 100% 100%);
+	--red-fg-color: hsl(0 63% 26%);
+	--red-active-fg-color: hsl(0 56% 50%);
+
+	--yellow-bg-color: hsl(60 100% 96%);
+	--yellow-hover-bg-color: hsl(60 100% 100%);
+	--yellow-fg-color: hsl(60 63% 26%);
+	--yellow-active-fg-color: hsl(60 56% 50%);
 
 	--green-bg-color: hsl(120 100% 96%);
 	--green-hover-bg-color: hsl(120 100% 100%);
 	--green-fg-color: hsl(120 63% 26%);
 	--green-active-fg-color: hsl(120 56% 50%);
 
-	--indigo-bg-color: hsl(275 100% 96%);
-	--indigo-hover-bg-color: hsl(275 100% 100%);
-	--indigo-fg-color: hsl(275 63% 26%);
-	--indigo-active-fg-color: hsl(275 56% 50%);
+	--teal-bg-color: hsl(180 100% 96%);
+	--teal-hover-bg-color: hsl(180 100% 100%);
+	--teal-fg-color: hsl(180 63% 26%);
+	--teal-active-fg-color: hsl(180 56% 50%);
+
+	--blue-bg-color: hsl(240 100% 96%);
+	--blue-hover-bg-color: hsl(240 100% 100%);
+	--blue-fg-color: hsl(240 63% 26%);
+	--blue-active-fg-color: hsl(240 56% 50%);
+
+	--indigo-bg-color: hsl(300 100% 96%);
+	--indigo-hover-bg-color: hsl(300 100% 100%);
+	--indigo-fg-color: hsl(300 63% 26%);
+	--indigo-active-fg-color: hsl(300 56% 50%);
 }
 
 button {

@@ -22,10 +22,6 @@
 </button>
 
 <style lang="postcss">
-	button {
-		width: 100%;
-	}
-
 	button[disabled],
 	button:hover[disabled] {
 		background-color: var(--white4);

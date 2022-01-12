@@ -1,12 +1,13 @@
 <script lang="ts">
-	import Palette from '$lib/components/Palette/Palette.svelte';
+	import Palette from '$lib/components/ThemeEditor/Palettes/Palette.svelte';
 	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let palettes: ColorPalette[];
 	export let color: ComponentColor = 'blue';
+	export let columns: number = 2;
 	export let allowMultiplePalettesOpen = false;
-	export let columns: number = 1;
+	export let displayName = false;
 	let paletteRefs: Record<string, Palette> = {};
 	const dispatch = createEventDispatcher();
 
@@ -27,7 +28,9 @@
 		<Palette
 			{palette}
 			{color}
-			on:colorClicked
+			{columns}
+			{displayName}
+			on:colorSelected
 			on:togglePalette={(e) => handlePaletteToggled(e.detail)}
 			bind:this={paletteRefs[palette.id]}
 		/>
@@ -38,7 +41,7 @@
 	.accordion {
 		display: grid;
 		gap: 0.25rem;
-		margin: 0.5rem 0.25rem;
+		margin: 0;
 		width: 100%;
 	}
 </style>

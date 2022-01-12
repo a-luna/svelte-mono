@@ -27,7 +27,7 @@
 	let dropdownShown: boolean = false;
 	const dispatch = createEventDispatcher();
 
-	$: label = disabled ? 'N/A' : displaySelectedOptionText ? selectedOption?.label ?? menuLabel : menuLabel;
+	$: label = displaySelectedOptionText ? selectedOption?.label ?? menuLabel : menuLabel;
 	$: noSelection = selectedValue === '';
 	$: buttonStyles = `font-medium ${buttonLayout} ${buttonBorder}`;
 	$: menuStyles = `dropdown origin-top-right ${menuLayout} ${menuBorder}`;
