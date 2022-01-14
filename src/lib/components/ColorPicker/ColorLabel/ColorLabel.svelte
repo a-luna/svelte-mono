@@ -10,11 +10,11 @@
 	let timeout: NodeJS.Timeout;
 
 	$: labelPadding = $state.labelState === 'edit' ? 'p-2' : 'p-2.5';
-	$: inactiveStyle = 'background-color: var(--white3)';
+	$: inactiveStyle = 'background-color: var(--white4)';
 	$: copiedStyle = 'background-color: var(--light-gray2)';
-	$: editStyle = 'background-color: var(--white3); color: var(--black4)';
-	$: successStyle = 'background-color: var(--white3); color: var(--green2)';
-	$: errorStyle = 'background-color: var(--white3); color: var(--red2)';
+	$: editStyle = 'background-color: var(--white4); color: var(--black4)';
+	$: successStyle = 'background-color: var(--white4); color: var(--green2)';
+	$: errorStyle = 'background-color: var(--white4); color: var(--red2)';
 	$: style =
 		$state.labelState === 'copied'
 			? copiedStyle
@@ -60,6 +60,6 @@
 	.color-label {
 		border-radius: 6px;
 		transition: background-color, color 350ms ease-out;
-		width: 263px;
+		width: 230px;
 	}
 </style>

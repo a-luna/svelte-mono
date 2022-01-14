@@ -18,6 +18,9 @@
 	$: tooltip = alphaEnabled
 		? 'Click to toggle Hex, RGBA, and HSLA string values'
 		: 'Click to toggle Hex, RGB, and HSL string values';
+	$: fontSizeAlpha = currentColorSpace === 'HSLA' ? '0.75rem' : '0.8rem';
+	$: fontSizeOpaque = currentColorSpace === 'HSL' ? '0.825rem' : '0.85rem';
+	$: fontSize = alphaEnabled ? fontSizeAlpha : fontSizeOpaque;
 
 	function toggleColorLabel() {
 		currentLabelIndex += 1;
@@ -37,7 +40,8 @@
 	<CopyButton />
 </div>
 <span
-	class="cursor-pointer flex-grow text-center text-sm font-medium leading-none whitespace-nowrap"
+	class="cursor-pointer flex-grow text-center self-center font-medium leading-none whitespace-nowrap"
+	style="font-size: {fontSize}"
 	title={tooltip}
 	data-testid="color-string"
 	on:click={() => toggleColorLabel()}>{currentColor}</span
