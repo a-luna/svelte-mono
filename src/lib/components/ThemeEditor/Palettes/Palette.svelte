@@ -2,21 +2,23 @@
 
 <script lang="ts">
 	import Color from '$lib/components/ThemeEditor/Palettes/Color.svelte';
-	import type { ColorPalette, ComponentColor } from '$lib/types';
+	import type { ColorPalette, CssColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
 	export let palette: ColorPalette;
-	export let columns: number;
 	export let expanded = false;
-	export let color: ComponentColor = 'blue';
 	export let displayName = false;
+	let colorRefs: Record<string, Color> = {};
 	const dispatch = createEventDispatcher();
+	const color = palette.componentColor;
 
-	$: accordionGrid = expanded ? `grid-column-start: span ${columns};` : '';
+	$: accordionStyles = `--border-color: var(--${color}-fg-color); --text-color: var(--${color}-fg-color); --hover-border-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --hover-bg-color: var(--${color}-hover-bg-color); --active-bg-color: var(--${color}-hover-bg-color);`;
+	$: accordionCollapsedStyles = `--bg-color: var(--${color}-bg-color);`;
+	$: accordionExpandedStyles = `--bg-color: var(--${color}-hover-bg-color);`;
 	$: paletteGrid = displayName
-		? 'grid-template-columns: 100%; justify-items: flex-start;'
-		: 'grid-template-columns: repeat(4, minmax(0, 1fr)); justify-items: center;';
+		? 'grid-template-columns: 100%; justify-items: flex-start; gap: 0.75rem 0.75rem'
+		: 'grid-template-columns: repeat(4, minmax(0, 1fr)); justify-items: center; gap: 0.5rem 0.25rem;';
 	$: if (palette?.updated) {
 		if (!expanded) {
 			togglePalette();
@@ -28,16 +30,24 @@
 		expanded = !expanded;
 		dispatch('togglePalette', palette.id);
 	}
+
+	function handleBeginEditingColorName(color: CssColor) {
+		for (let [hex, colorComponent] of Object.entries(colorRefs)) {
+			if (hex !== color.hex) {
+				colorComponent.editName = false;
+			}
+		}
+	}
 </script>
 
 <div
 	id="accordion-item-{palette.id}"
 	class="accordion-item {color}"
 	data-state={expanded ? 'expanded' : 'collapsed'}
-	style={accordionGrid}
+	style="{accordionStyles} {expanded ? accordionExpandedStyles : accordionCollapsedStyles}"
 >
 	<button
-		class="accordion-button transition"
+		class="accordion-button transition-color"
 		class:active={expanded}
 		type="button"
 		aria-expanded="false"
@@ -55,63 +65,30 @@
 			aria-labelledby="accordion-heading-{palette.id}"
 		>
 			{#each palette.colors as color}
-				<Color {color} {displayName} on:click={() => dispatch('colorSelected', color)} />
+				<Color
+					{color}
+					{displayName}
+					componentColor={palette.componentColor}
+					on:click={() => dispatch('colorSelected', color)}
+					on:beginEditingColorName={(e) => handleBeginEditingColorName(e.detail)}
+					bind:this={colorRefs[color.hex]}
+				/>
 			{/each}
 		</div>
 	{/if}
 </div>
 
 <style lang="postcss">
-	.accordion-item.black {
-		--active-border-color: var(--black2);
-		--active-bg-color: var(--white2);
-		--active-text-color: var(--black2);
-	}
-
-	.accordion-item.yellow {
-		--active-border-color: hsl(47 63% 26%);
-		--active-bg-color: hsl(47 85% 94%);
-		--active-text-color: hsl(47 63% 26%);
-	}
-
-	.accordion-item.blue {
-		--active-border-color: hsl(240 63% 26%);
-		--active-bg-color: hsl(240 100% 98%);
-		--active-text-color: hsl(240 63% 26%);
-	}
-
-	.accordion-item.green {
-		--active-border-color: hsl(120 63% 26%);
-		--active-bg-color: hsl(150 100% 98%);
-		--active-text-color: hsl(120 63% 26%);
-	}
-
-	.accordion-item.indigo {
-		--active-border-color: hsl(275 63% 26%);
-		--active-bg-color: hsl(275 100% 98%);
-		--active-text-color: hsl(275 63% 26%);
-	}
-
-	.accordion-item {
-		--border-color: var(--dark-gray3);
-		--bg-color: hsl(0 0% 98%);
-		--text-color: var(--dark-gray3);
-		--hover-border-color: var(--black2);
-		--hover-bg-color: var(--white2);
-		--hover-text-color: var(--black2);
-		--border-radius: 6px;
-	}
-
 	button .accordion-heading {
 		margin: 0;
 	}
 
 	.accordion-button {
-		border-radius: var(--border-radius, 4px);
+		border-radius: var(--border-radius, var(--default-border-radius));
 		display: flex;
 		position: relative;
 		align-items: center;
-		background-color: var(--bg-color, var(--bg-color, var(--light-gray1)));
+		background-color: var(--bg-color, var(--light-gray1));
 		color: var(--text-color, var(--dark-gray2));
 		border: 2px solid var(--border-color, var(--black2));
 		font-size: 14px;
@@ -149,10 +126,9 @@
 
 	.accordion-content {
 		flex-grow: 1;
-		gap: 0.5rem 0.25rem;
 		background-color: var(--active-bg-color, var(--bg-color, var(--light-gray1)));
-		border-bottom-left-radius: var(--border-radius, 4px);
-		border-bottom-right-radius: var(--border-radius, 4px);
+		border-bottom-left-radius: var(--border-radius, var(--default-border-radius));
+		border-bottom-right-radius: var(--border-radius, var(--default-border-radius));
 		border-top: none;
 		border-bottom: 2px solid var(--active-border-color, var(--black2));
 		border-right: 2px solid var(--active-border-color, var(--black2));
@@ -167,11 +143,5 @@
 
 	:global(.expanded) {
 		display: block;
-	}
-
-	.transition {
-		transition-property: color, background-color, border-color, transform;
-		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-		transition-duration: 150ms;
 	}
 </style>

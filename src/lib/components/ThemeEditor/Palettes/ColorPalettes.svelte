@@ -1,10 +1,9 @@
 <script lang="ts">
 	import Palette from '$lib/components/ThemeEditor/Palettes/Palette.svelte';
-	import type { ColorPalette, ComponentColor } from '$lib/types';
+	import type { ColorPalette } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let palettes: ColorPalette[];
-	export let color: ComponentColor = 'blue';
 	export let columns: number = 2;
 	export let allowMultiplePalettesOpen = false;
 	export let displayName = false;
@@ -27,8 +26,6 @@
 	{#each palettes as palette}
 		<Palette
 			{palette}
-			{color}
-			{columns}
 			{displayName}
 			on:colorSelected
 			on:togglePalette={(e) => handlePaletteToggled(e.detail)}

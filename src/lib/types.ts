@@ -1,6 +1,6 @@
 export type ColorSpace = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla';
 export type LabelState = 'prerender' | 'inactive' | 'copied' | 'edit' | 'pick' | 'success' | 'error';
-export type ComponentColor = 'black' | 'red' | 'yellow' | 'green' | 'teal' | 'blue' | 'indigo';
+export type ComponentColor = 'black' | 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'indigo';
 
 export interface Result<T> {
 	success: boolean;
@@ -32,6 +32,13 @@ export interface CssColor {
 	name?: string;
 }
 
+export interface HueRange {
+	hueStart: number;
+	hueEnd: number;
+	name: string;
+	componentColor: ComponentColor;
+}
+
 export interface ColorPickerState {
 	pickerId: string;
 	color: CssColor;
@@ -51,5 +58,6 @@ export interface ColorPalette {
 	id: string;
 	paletteName: string;
 	colors: CssColor[];
+	componentColor: ComponentColor;
 	updated?: boolean;
 }

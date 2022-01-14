@@ -3,12 +3,13 @@
 	import AddColorButton from '$lib/components/ThemeEditor/ColorEditor/AddColorButton.svelte';
 	import EditPalettesButton from '$lib/components/ThemeEditor/ColorEditor/EditPalettesButton.svelte';
 	import PaletteSelector from '$lib/components/ThemeEditor/ColorEditor/PaletteSelector.svelte';
-	import type { ColorPalette, CssColor } from '$lib/types';
+	import type { ColorPalette, ComponentColor, CssColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let editMode = false;
 	export let themePalettes: ColorPalette[];
 	export let selectedPaletteId: string;
+	export let componentColor: ComponentColor;
 	let name: string;
 	let custom = false;
 	let selectedColor: CssColor;
@@ -18,7 +19,10 @@
 	const dispatch = createEventDispatcher();
 
 	$: editable = !editMode;
-	$: disabled = !custom && selectedColor?.hex === color?.hex;
+	$: disabled = (!custom && selectedColor?.hex === color?.hex) || editMode;
+	$: selectorStyles = `--select-bg-color: var(--${componentColor}-hover-bg-color); --select-bg-color-hov: var(--${componentColor}-hover-bg-color); --select-text-color: var(--black2); --select-text-color-no-selection: var(--gray4); --selected-item-bg-color: var(--${componentColor}-bg-color); --select-bg-color-disabled: var(--white1)`;
+	$: inputBgStyle = disabled ? 'var(--white1)' : `var(--${componentColor}-hover-bg-color)`;
+	$: inputStyles = `outline: none; background-color: ${inputBgStyle};`;
 
 	$: if (name) {
 		error = false;
@@ -44,14 +48,26 @@
 </script>
 
 <div class="color-editor">
-	<div class="palette-selector">
+	<div class="palette-selector" style={selectorStyles}>
 		<PaletteSelector {themePalettes} bind:value={selectedPaletteId} disabled={editMode} on:paletteSelected />
-		<EditPalettesButton color={'indigo'} on:click={() => (editMode = true)} disabled={editMode} />
+		<EditPalettesButton color={componentColor} on:click={() => (editMode = true)} disabled={editMode} />
 	</div>
 	<ColorPicker bind:this={colorPicker} bind:color bind:editable />
 	<form class="palette-controls" autocomplete="off">
-		<input type="text" id="color-name" placeholder="color name" class:error bind:value={name} {disabled} />
-		<AddColorButton color={'indigo'} on:click={() => addColorToPalette()} disabled={!selectedPaletteId || editMode} />
+		<input
+			type="text"
+			id="color-name"
+			placeholder="color name"
+			class:error
+			{disabled}
+			style={inputStyles}
+			bind:value={name}
+		/>
+		<AddColorButton
+			color={componentColor}
+			on:click={() => addColorToPalette()}
+			disabled={!selectedPaletteId || editMode}
+		/>
 	</form>
 </div>
 
@@ -61,16 +77,10 @@
 		flex-flow: column nowrap;
 		justify-content: flex-end;
 		gap: 0.5rem;
-		width: 393px;
+		width: 360px;
 	}
 
 	.palette-selector {
-		--select-bg-color: var(--indigo-hover-bg-color);
-		--select-bg-color-hov: var(--indigo-hover-bg-color);
-		--select-text-color: var(--indigo-fg-color);
-		--select-text-color-no-selection: var(--gray4);
-		--selected-item-bg-color: var(--indigo-bg-color);
-
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 0.5rem;
@@ -85,7 +95,6 @@
 	input {
 		flex-grow: 1;
 		padding: 2.5px 8px;
-		background-color: var(--indigo-bg-color);
 		border: none;
 		border-radius: 6px;
 		outline: none;
@@ -95,13 +104,12 @@
 	input[disabled] {
 		border: none;
 		outline: none;
-		background-color: var(--white2);
-		color: var(--light-gray3);
+		background-color: var(--light-gray1);
+		color: var(--gray4);
 	}
 
 	input:focus {
-		background-color: var(--indigo-hover-bg-color);
-		outline: 1px solid var(--indigo-fg-color);
+		outline: none;
 	}
 
 	input.error {

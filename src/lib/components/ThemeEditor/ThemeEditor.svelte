@@ -2,13 +2,15 @@
 	import { browser } from '$app/env';
 	import { getNamedColorPalettes } from '$lib/color';
 	import ColorEditor from '$lib/components/ThemeEditor/ColorEditor/ColorEditor.svelte';
-	import ColorPalettes from '$lib/components/ThemeEditor/Palettes/ColorPalettes.svelte';
 	import PaletteEditor from '$lib/components/ThemeEditor/PaletteEditor/PaletteEditor.svelte';
+	import ColorPalettes from '$lib/components/ThemeEditor/Palettes/ColorPalettes.svelte';
 	import { getRandomHexString } from '$lib/helpers';
 	import type { ColorPalette, CssColor } from '$lib/types';
 
 	let namedColorPalettes: ColorPalette[];
-	let themePalettes: ColorPalette[] = [{ id: getRandomHexString(4), paletteName: 'custom palette', colors: [] }];
+	let themePalettes: ColorPalette[] = [
+		{ id: getRandomHexString(4), paletteName: 'custom palette', colors: [], componentColor: 'indigo' },
+	];
 	let selectedPalette: ColorPalette;
 	let selectedPaletteId: string;
 	let colorEditor: ColorEditor;
@@ -43,6 +45,7 @@
 			bind:editMode
 			bind:themePalettes
 			bind:selectedPaletteId
+			componentColor={'black'}
 			on:paletteSelected={(e) => changeSelectedPalette(e.detail)}
 			on:addColorToPalette={(e) => addColorToPalette(e.detail)}
 		/>
@@ -50,8 +53,7 @@
 			<ColorPalettes
 				palettes={namedColorPalettes}
 				displayName={false}
-				color={'blue'}
-				columns={2}
+				columns={1}
 				on:colorSelected={(e) => colorEditor.setColor(e.detail, false)}
 			/>
 		{/if}
@@ -60,6 +62,7 @@
 		{#if editMode}
 			<PaletteEditor
 				bind:themePalettes
+				color={'indigo'}
 				on:paletteDeleted={(e) => handlePaletteDeleted(e.detail)}
 				on:exitEditMode={() => (editMode = false)}
 			/>
@@ -67,7 +70,6 @@
 			<ColorPalettes
 				palettes={themePalettes}
 				displayName={true}
-				color={'green'}
 				columns={1}
 				on:colorSelected={(e) => colorEditor.setColor(e.detail, true)}
 				on:paletteToggled={(e) => changeSelectedPalette(e.detail)}
@@ -82,7 +84,9 @@
 		flex-flow: row nowrap;
 		gap: 1rem;
 		padding: 1rem;
-		background-color: var(--light-gray3);
+		background-color: var(--light-gray4);
+		max-width: 700px;
+		margin: 0 auto;
 	}
 
 	.color-editor {
@@ -90,7 +94,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1rem;
-		width: 393px;
+		width: 360px;
 	}
 
 	.theme-palettes {

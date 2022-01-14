@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Plus from '$lib/components/Icons/Plus.svelte';
+	import ThemeButton from '$lib/components/ThemeButton.svelte';
 	import type { ComponentColor } from '$lib/types';
 
 	export let color: ComponentColor;
@@ -8,38 +9,9 @@
 	$: tooltip = disabled ? 'You must select a palette first' : 'Add color to the selected palette';
 </script>
 
-<button
-	type="button"
-	title={tooltip}
-	class="theme-button {color} flex flex-row flex-nowrap gap-1 whitespace-nowrap"
-	on:click
-	{disabled}
->
-	<div class="icon">
+<ThemeButton {color} {tooltip} {disabled} on:click>
+	<svelte:fragment slot="icon">
 		<Plus />
-	</div>
-	<span>Add to Palette</span>
-</button>
-
-<style lang="postcss">
-	button[disabled],
-	button:hover[disabled] {
-		background-color: var(--white4);
-		border: 2px solid var(--gray4);
-		color: var(--gray4);
-		cursor: not-allowed;
-	}
-
-	.icon {
-		width: 12px;
-		height: 12px;
-		margin: auto 0;
-	}
-
-	span {
-		font-size: 14px;
-		font-weight: 500;
-		line-height: 1;
-		margin: auto;
-	}
-</style>
+	</svelte:fragment>
+	<svelte:fragment slot="label">Add to Palette</svelte:fragment>
+</ThemeButton>

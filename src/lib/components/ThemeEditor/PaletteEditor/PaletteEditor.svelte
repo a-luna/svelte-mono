@@ -1,18 +1,22 @@
 <script lang="ts">
 	import AddPaletteButton from '$lib/components/ThemeEditor/PaletteEditor/AddPaletteButton.svelte';
+	import EditPaletteForm from '$lib/components/ThemeEditor/PaletteEditor/EditPaletteForm.svelte';
 	import FinishEditingButton from '$lib/components/ThemeEditor/PaletteEditor/FinishEditingButton.svelte';
 	import { getRandomHexString } from '$lib/helpers';
-	import type { ColorPalette } from '$lib/types';
+	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
-	import EditPaletteForm from '$lib/components/ThemeEditor/PaletteEditor/EditPaletteForm.svelte';
 
 	export let themePalettes: ColorPalette[] = [];
+	export let color: ComponentColor;
 	const dispatch = createEventDispatcher();
 
 	$: disabled = themePalettes.length === 1;
 
 	const createPalette = () =>
-		(themePalettes = [...themePalettes, { id: getRandomHexString(4), paletteName: 'my custom palette', colors: [] }]);
+		(themePalettes = [
+			...themePalettes,
+			{ id: getRandomHexString(4), paletteName: 'my custom palette', colors: [], componentColor: 'indigo' },
+		]);
 	function deletePalette(id: string) {
 		themePalettes = [...themePalettes.filter((p) => p.id !== id)];
 		dispatch('paletteDeleted', id);
@@ -29,9 +33,9 @@
 				on:deletePalette={(e) => deletePalette(e.detail)}
 			/>
 		{/each}
-		<AddPaletteButton color={'yellow'} on:click={() => createPalette()} />
+		<AddPaletteButton {color} on:click={() => createPalette()} />
 	</div>
-	<FinishEditingButton color={'yellow'} on:click={() => dispatch('exitEditMode')} />
+	<FinishEditingButton {color} on:click={() => dispatch('exitEditMode')} />
 </div>
 
 <style lang="postcss">

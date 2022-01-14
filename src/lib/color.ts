@@ -1,6 +1,6 @@
 import { getRandomHexString, groupByProperty } from './helpers';
 import { namedColors } from './namedColors';
-import type { ColorPalette, CssColor, HslColor, Result, RgbColor } from './types';
+import type { ColorPalette, ComponentColor, CssColor, HslColor, HueRange, Result, RgbColor } from './types';
 
 const RGB_REGEX =
 	/^rgb\(((((((?<redDecA>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?))(((?<greenDecA>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?))|(((?<redDecB>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s))(((?<greenDecB>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)))(?<blueDec>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((?<redPercA>([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?)((?<greenPercA>([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?)|((?<redPercB>([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s)((?<greenPercB>([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s))(?<bluePerc>([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
@@ -32,7 +32,7 @@ const hslToString = (hsl: HslColor, hasAlpha: boolean): string =>
 const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 
 const colorNameIsValid = (name: string): boolean =>
-	Boolean(namedColors.map((c) => c.toLowerCase()).find((c) => c === normalize(name))) || false;
+	Boolean(namedColors.map((c) => c.toLowerCase()).find((c) => c === normalize(name)));
 
 export function parseColorFromString(s: string): Result<CssColor> {
 	let match = RGB_REGEX.exec(s);
@@ -356,28 +356,27 @@ function namedColorToRgb(name: string): string {
 }
 
 export function getNamedColorPalettes(): ColorPalette[] {
-	const hueRanges = [
-		{ hueStart: -30, hueEnd: 30, name: 'red - orange' },
-		{ hueStart: 30, hueEnd: 60, name: 'orange - yellow' },
-		{ hueStart: 60, hueEnd: 150, name: 'green - teal' },
-		{ hueStart: 150, hueEnd: 240, name: 'teal - blue' },
-		{ hueStart: 240, hueEnd: 330, name: 'blue - magenta' },
+	const hueRanges: HueRange[] = [
+		{ hueStart: -30, hueEnd: 30, name: 'red - orange', componentColor: 'red' },
+		{ hueStart: 30, hueEnd: 60, name: 'orange - yellow', componentColor: 'orange' },
+		{ hueStart: 60, hueEnd: 150, name: 'green - teal', componentColor: 'green' },
+		{ hueStart: 150, hueEnd: 240, name: 'teal - blue', componentColor: 'teal' },
+		{ hueStart: 240, hueEnd: 330, name: 'blue - magenta', componentColor: 'blue' },
 	];
 	const [colors, grays, whites] = getNamedColorsOrderedByHue();
-	const colorPalettes = hueRanges.map(({ hueStart, hueEnd, name }) => ({
+	const colorPalettes = hueRanges.map(({ hueStart, hueEnd, name, componentColor }) => ({
 		id: getRandomHexString(4),
 		paletteName: name,
 		colors: getColorsInHueRange(hueStart, hueEnd, colors),
+		componentColor,
 	}));
-	const grayPalette = { id: getRandomHexString(4), paletteName: 'black - white', colors: [...grays, ...whites] };
+	const grayPalette = {
+		id: getRandomHexString(4),
+		paletteName: 'black - white',
+		colors: [...grays, ...whites],
+		componentColor: 'black' as ComponentColor,
+	};
 	return [...colorPalettes, grayPalette];
-}
-
-function getColorsInHueRange(hueStart: number, hueEnd: number, colors: CssColor[]): CssColor[] {
-	if (hueStart < 0 && hueEnd > 0) {
-		return [...getColorsInHueRange(hueStart + 360, 360, colors), ...getColorsInHueRange(0, hueEnd, colors)];
-	}
-	return colors.filter((c) => hueStart < c.hsl.h && c.hsl.h <= hueEnd);
 }
 
 function getNamedColorsOrderedByHue(): CssColor[][] {
@@ -390,6 +389,13 @@ function getNamedColorsOrderedByHue(): CssColor[][] {
 	const grays = allColors.filter((c) => c.hsl.s === 0).sort(sortColors);
 	const whites = allColors.filter((c) => c.hsl.l >= 95).sort(sortColors);
 	return [colors, grays, whites];
+}
+
+function getColorsInHueRange(hueStart: number, hueEnd: number, colors: CssColor[]): CssColor[] {
+	if (hueStart < 0 && hueEnd > 0) {
+		return [...getColorsInHueRange(hueStart + 360, 360, colors), ...getColorsInHueRange(0, hueEnd, colors)];
+	}
+	return colors.filter((c) => hueStart < c.hsl.h && c.hsl.h <= hueEnd);
 }
 
 const removeDuplicateColors = (colors: CssColor[]): CssColor[] =>
