@@ -1,23 +1,45 @@
 <script lang="ts">
 	import DeletePaletteButton from '$lib/components/ThemeEditor/PaletteEditor/DeletePaletteButton.svelte';
-	import { slide } from 'svelte/transition';
-	import { createEventDispatcher } from 'svelte';
 	import type { ColorPalette } from '$lib/types';
+	import { createEventDispatcher } from 'svelte';
+	import { slide } from 'svelte/transition';
+	import ComponentColorSelector from './ComponentColorSelector/ComponentColorSelector.svelte';
 
 	export let palette: ColorPalette;
 	export let paletteNumber: number;
 	export let disabled = false;
+	let inputElement: HTMLInputElement;
 	const dispatch = createEventDispatcher();
+
+	$: numberStyles = `color: var(--${palette.componentColor}-fg-color); background-color: var(--${palette.componentColor}-bg-color); border-top: 1.5px solid var(--${palette.componentColor}-fg-color); border-right: none; border-bottom: 1.5px solid var(--${palette.componentColor}-fg-color); border-left: 1.5px solid var(--${palette.componentColor}-fg-color)`;
+	$: borderStyle = `border: 1.5px solid var(--${palette.componentColor}-fg-color)`;
 
 	const getToolTip = () =>
 		disabled ? 'Your theme must contain at least one color palette' : `Delete Palette #${paletteNumber}`;
+
+	function applyFocusStyles() {
+		inputElement.style.border = `1.5px solid var(--${palette.componentColor}-active-fg-color)`;
+	}
+
+	function removeFocusStyles() {
+		inputElement.style.border = `1.5px solid var(--${palette.componentColor}-fg-color)`;
+	}
 </script>
 
 <div transition:slide|local class="edit-palette">
-	<span class="palette-number">{paletteNumber}</span>
-	<input type="text" placeholder="palette name" bind:value={palette.paletteName} />
+	<span class="palette-number" style={numberStyles}>{paletteNumber}</span>
+	<input
+		bind:this={inputElement}
+		type="text"
+		placeholder="palette name"
+		bind:value={palette.paletteName}
+		on:focus={() => applyFocusStyles()}
+		on:blur={() => removeFocusStyles()}
+		style={borderStyle}
+	/>
+	<ComponentColorSelector bind:value={palette.componentColor} />
 	<DeletePaletteButton
-		color={'yellow'}
+		color={palette.componentColor}
 		tooltip={getToolTip()}
 		on:click={() => dispatch('deletePalette', palette.id)}
 		{disabled}
@@ -29,6 +51,7 @@
 		display: flex;
 		flex-flow: row nowrap;
 		align-items: center;
+		width: 100%;
 	}
 
 	.palette-number {
@@ -37,12 +60,6 @@
 		line-height: 1.5;
 		margin: 0;
 		padding: 3px 6px;
-		color: var(--yellow-fg-color);
-		background-color: var(--yellow-bg-color);
-		border-top: 1.5px solid var(--yellow-fg-color);
-		border-right: none;
-		border-bottom: 1.5px solid var(--yellow-fg-color);
-		border-left: 1.5px solid var(--yellow-fg-color);
 		border-top-left-radius: 6px;
 		border-bottom-left-radius: 6px;
 		border-top-right-radius: 0px;
@@ -52,9 +69,7 @@
 	input {
 		flex-grow: 1;
 		padding: 3px 8px;
-		margin: 0 4px 0 0;
-		background-color: var(--yellow-hover-bg-color);
-		border: 1.5px solid var(--yellow-fg-color);
+		margin: 0 6px 0 0;
 		border-top-left-radius: 0px;
 		border-bottom-left-radius: 0px;
 		border-top-right-radius: 6px;
@@ -64,7 +79,6 @@
 	}
 
 	input:focus {
-		border: 1.5px solid var(--yellow-active-fg-color);
 		outline: none;
 	}
 </style>

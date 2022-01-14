@@ -1,3 +1,5 @@
+<svelte:options accessors />
+
 <script lang="ts">
 	import CaretDown from '$lib/components/Icons/CaretDown.svelte';
 	import { clickOutside } from '$lib/helpers';
@@ -8,10 +10,11 @@
 	import Option from './Option.svelte';
 
 	export let menuLabel: string = 'Options';
-	export let options: SelectMenuOption[];
+	export let options: SelectMenuOption[] = [];
 	export let selectedValue: number | string;
 	export let flexStyles = 'flex-initial';
 	export let width: string = 'auto';
+	export let margin: string = '0';
 	export let fontSize: string = '0.95rem';
 	export let disabled: boolean = false;
 	export let displaySelectedOptionText = true;
@@ -23,14 +26,14 @@
 		'border-0 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-800';
 	export let menuLayout = 'absolute right-0 z-10 w-full mt-2';
 	export let menuBorder = 'rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none';
+	export let dropdownShown: boolean = false;
 	let selectedOption: SelectMenuOption;
-	let dropdownShown: boolean = false;
 	const dispatch = createEventDispatcher();
 
 	$: label = displaySelectedOptionText ? selectedOption?.label ?? menuLabel : menuLabel;
 	$: noSelection = selectedValue === '';
 	$: buttonStyles = `font-medium ${buttonLayout} ${buttonBorder}`;
-	$: menuStyles = `dropdown origin-top-right ${menuLayout} ${menuBorder}`;
+	$: menuStyles = `origin-top-right ${menuLayout} ${menuBorder}`;
 	$: if (options && selectedValue !== selectedOption?.value) {
 		options.forEach((menuOption) => (menuOption.active = false));
 		selectedOption = options.find((menuOption) => menuOption.value == selectedValue);
@@ -61,7 +64,7 @@
 
 <div
 	class="relative inline-block text-left {flexStyles}"
-	style="width: {width ? width : 'auto'}"
+	style="width: {width ? width : 'auto'}; margin: {margin ? margin : '0'}"
 	data-testid={menuId}
 	use:clickOutside={{ enabled: dropdownShown, cb: () => (dropdownShown = !dropdownShown) }}
 >
@@ -78,7 +81,11 @@
 			style="font-size: {fontSize}; height: {buttonHeight}; padding: {buttonPadding}"
 			on:click={() => handleButtonClicked()}
 		>
-			<span class="leading-none whitespace-nowrap mx-auto">{label}</span>
+			<span class="leading-none whitespace-nowrap mx-auto">
+				<slot name="selectedValue">
+					{label}
+				</slot>
+			</span>
 			<div style="width: {fontSize}; height: {fontSize}">
 				<CaretDown />
 			</div>
@@ -87,7 +94,7 @@
 
 	{#if dropdownShown}
 		<div
-			class={menuStyles}
+			class="dropdown {menuStyles}"
 			role="menu"
 			aria-orientation="vertical"
 			aria-labelledby="open-list-button"
@@ -95,11 +102,11 @@
 			in:scale={{ duration: 100, start: 0.95, easing: cubicOut }}
 			out:scale={{ duration: 75, start: 0.95, easing: cubicIn }}
 		>
-			<div class="py-1" role="none">
+			<slot name="options">
 				{#each options as option}
 					<Option {...option} {menuId} {fontSize} on:click={(e) => handleOptionClicked(e.detail)} />
 				{/each}
-			</div>
+			</slot>
 		</div>
 	{/if}
 </div>
@@ -107,21 +114,25 @@
 <style lang="postcss">
 	#open-list-button,
 	.dropdown {
-		background-color: var(--select-bg-color);
-		color: var(--select-text-color);
+		background-color: var(--select-bg-color, var(--white2));
+		color: var(--select-text-color, var(--black2));
 	}
 
 	#open-list-button:hover {
-		background-color: var(--select-bg-color-hov);
+		background-color: var(--select-bg-color-hov, var(--white4));
 	}
 
 	#open-list-button.disabled {
 		cursor: default;
-		color: var(--dark-gray2);
-		background-color: var(--light-gray1);
+		color: var(--select-text-color-disabled, var(--dark-gray2));
+		background-color: var(--select-bg-color-disabled, var(--light-gray1));
 	}
 
 	#open-list-button.no-selection {
-		color: var(--select-text-color-no-selection);
+		color: var(--select-text-color-no-selection, var(--gray4));
+	}
+
+	.dropdown {
+		border: 1px solid var(--light-gray2);
 	}
 </style>

@@ -11,7 +11,6 @@
 </script>
 
 <div
-	class="block px-4 py-2 text-sm cursor-pointer"
 	class:active
 	style="font-size: {fontSize}"
 	data-value={value ? value : optionNumber}
@@ -21,12 +20,18 @@
 	data-testid={menuId ? `${menuId}-option-${optionNumber}` : `option-${optionNumber}`}
 	on:click={() => dispatch('click', optionNumber)}
 >
-	{label}
+	<slot>
+		{label}
+	</slot>
 </div>
 
 <style lang="postcss">
 	div {
+		display: block;
 		color: var(--select-text-color);
+		line-height: 1.25rem;
+		padding: 0.5rem 1rem;
+		cursor: pointer;
 	}
 
 	.active {
