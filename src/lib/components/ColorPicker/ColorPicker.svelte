@@ -77,7 +77,7 @@
 />
 <div class="color-picker flex flex-row flex-nowrap items-start gap-2 p-2 w-min" data-testid={$state.pickerId}>
 	<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
-		<ColorSpaceSelector bind:value={$state.colorSpace} />
+		<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
 		<ColorSwatch pickerId={$state.pickerId} {alphaEnabled} on:showColorPicker={() => colorPicker.click()} />
 	</div>
 	<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
@@ -88,7 +88,7 @@
 
 <style>
 	.color-picker {
-		background-color: var(--white1);
+		background-color: var(--white2);
 		border-radius: 4px;
 	}
 </style>

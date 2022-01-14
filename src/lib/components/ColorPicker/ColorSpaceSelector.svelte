@@ -5,6 +5,7 @@
 	export let width = '100%';
 	export let fontSize: string = '0.875rem';
 	export let value: string = 'rgb';
+	export let disabled = false;
 
 	const options: SelectMenuOption[] = [
 		{ label: 'RGB', value: 'rgb', optionNumber: 1, active: false },
@@ -27,5 +28,6 @@
 	{menuId}
 	{width}
 	{fontSize}
+	{disabled}
 	on:changed={(e) => handleColorSpaceChanged(e.detail)}
 />
