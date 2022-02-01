@@ -1,31 +1,27 @@
 <script lang="ts">
+	import { createEmptyColorPalette } from '$lib/color';
 	import AddPaletteButton from '$lib/components/ThemeEditor/PaletteEditor/AddPaletteButton.svelte';
 	import EditPaletteForm from '$lib/components/ThemeEditor/PaletteEditor/EditPaletteForm.svelte';
-	import FinishEditingButton from '$lib/components/ThemeEditor/PaletteEditor/FinishEditingButton.svelte';
-	import { getRandomHexString } from '$lib/helpers';
 	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
-	export let themePalettes: ColorPalette[] = [];
+	export let themeColorPalettes: ColorPalette[] = [];
 	export let color: ComponentColor;
 	const dispatch = createEventDispatcher();
 
-	$: disabled = themePalettes.length === 1;
+	$: disabled = themeColorPalettes.length === 1;
 
 	const createPalette = () =>
-		(themePalettes = [
-			...themePalettes,
-			{ id: getRandomHexString(4), paletteName: 'my custom palette', colors: [], componentColor: 'indigo' },
-		]);
+		(themeColorPalettes = [...themeColorPalettes, createEmptyColorPalette(`palette ${themeColorPalettes.length + 1}`)]);
 	function deletePalette(id: string) {
-		themePalettes = [...themePalettes.filter((p) => p.id !== id)];
+		themeColorPalettes = [...themeColorPalettes.filter((p) => p.id !== id)];
 		dispatch('paletteDeleted', id);
 	}
 </script>
 
 <div class="palette-editor">
-	<div class="editor-top">
-		{#each themePalettes as palette, i (palette.id)}
+	<div class="palette-list">
+		{#each themeColorPalettes as palette, i (palette.id)}
 			<EditPaletteForm
 				bind:palette
 				{disabled}
@@ -33,9 +29,8 @@
 				on:deletePalette={(e) => deletePalette(e.detail)}
 			/>
 		{/each}
-		<AddPaletteButton {color} on:click={() => createPalette()} />
 	</div>
-	<FinishEditingButton {color} on:click={() => dispatch('exitEditMode')} />
+	<AddPaletteButton {color} on:click={() => createPalette()} />
 </div>
 
 <style lang="postcss">
@@ -43,15 +38,14 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: space-between;
-		align-items: flex-start;
-		gap: 2rem;
+		align-items: flex-end;
+		gap: 1rem;
 		width: 100%;
 	}
 
-	.editor-top {
+	.palette-list {
 		display: flex;
 		flex-flow: column nowrap;
-		flex: 0 1 auto;
 		justify-content: flex-start;
 		align-items: flex-end;
 		gap: 0.5rem;

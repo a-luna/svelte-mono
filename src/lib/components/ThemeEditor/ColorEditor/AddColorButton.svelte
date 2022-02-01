@@ -6,7 +6,7 @@
 	export let color: ComponentColor;
 	export let disabled = false;
 
-	$: tooltip = disabled ? 'You must select a palette first' : 'Add color to the selected palette';
+	$: tooltip = disabled ? 'Select a palette from the list above' : 'Add color to the selected palette';
 </script>
 
 <ThemeButton {color} {tooltip} {disabled} on:click>

@@ -1,6 +1,8 @@
 export type ColorSpace = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla';
 export type LabelState = 'prerender' | 'inactive' | 'copied' | 'edit' | 'pick' | 'success' | 'error';
-export type ComponentColor = 'black' | 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'indigo';
+
+export const COMPONENT_COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo'] as const;
+export type ComponentColor = typeof COMPONENT_COLORS[number];
 
 export interface Result<T> {
 	success: boolean;
@@ -56,7 +58,7 @@ export interface SelectMenuOption {
 
 export interface ColorPalette {
 	id: string;
-	paletteName: string;
+	name: string;
 	colors: CssColor[];
 	componentColor: ComponentColor;
 	updated?: boolean;

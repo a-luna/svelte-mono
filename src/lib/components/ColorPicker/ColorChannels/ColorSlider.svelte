@@ -20,7 +20,7 @@
 		class="m-0 flex-grow"
 		bind:value
 	/>
-	<span class="value flex-initial font-medium">{disabled ? '' : value.toString()}</span>
+	<span class="value flex-initial font-medium">{disabled ? '' : value?.toString()}</span>
 </div>
 
 <style>

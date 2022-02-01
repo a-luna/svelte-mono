@@ -28,6 +28,7 @@
 			{palette}
 			{displayName}
 			on:colorSelected
+			on:deleteColor
 			on:togglePalette={(e) => handlePaletteToggled(e.detail)}
 			bind:this={paletteRefs[palette.id]}
 		/>

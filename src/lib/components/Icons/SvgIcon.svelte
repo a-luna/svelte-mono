@@ -1,8 +1,12 @@
 <script lang="ts">
+	export let title: string = null;
 	export let viewBox: string;
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" {viewBox}>
+	{#if title}
+		<title>{title}</title>
+	{/if}
 	<slot />
 </svg>
 

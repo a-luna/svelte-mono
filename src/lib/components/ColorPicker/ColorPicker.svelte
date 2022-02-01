@@ -19,22 +19,34 @@
 		labelState: 'prerender',
 		editable: true,
 	});
-	export let color: CssColor = $state.color;
+
 	export let editable = true;
 	setContext($state.pickerId, { state });
 	let timeout: NodeJS.Timeout;
 	let colorPicker: HTMLInputElement;
 
 	$: alphaEnabled = $state.colorSpace === 'rgba' || $state.colorSpace === 'hsla';
-	$: color = $state.color;
 	$: $state.editable = editable;
 
 	export function setColor(color: CssColor) {
-		$state.labelState = 'prerender';
+		setCorrectColorSpace(color);
 		$state.color = color;
+		$state.labelState = 'success';
 		timeout = setTimeout(() => {
 			$state.labelState = 'inactive';
 		}, 500);
+	}
+
+	function setCorrectColorSpace(color: CssColor) {
+		if ($state.colorSpace === 'rgba' && !color.hasAlpha) {
+			$state.colorSpace = 'rgb';
+		} else if ($state.colorSpace === 'rgb' && color.hasAlpha) {
+			$state.colorSpace = 'rgba';
+		} else if ($state.colorSpace === 'hsla' && !color.hasAlpha) {
+			$state.colorSpace = 'hsl';
+		} else if ($state.colorSpace === 'hsl' && color.hasAlpha) {
+			$state.colorSpace = 'hsla';
+		}
 	}
 
 	const getHexOpaqueValue = (color: CssColor): string => color?.hex?.slice(0, 7) || '#000000';

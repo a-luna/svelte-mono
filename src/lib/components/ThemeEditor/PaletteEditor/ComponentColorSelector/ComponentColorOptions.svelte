@@ -35,8 +35,8 @@
 
 <style lang="postcss">
 	.color-swatch {
-		width: 20px;
-		height: 20px;
+		width: 15px;
+		height: 15px;
 		padding: 3px;
 		border: 1px solid var(--black2);
 	}

@@ -1,34 +1,34 @@
-<svelte:options accessors />
-
 <script lang="ts">
+	import Delete from '$lib/components/Icons/Delete.svelte';
 	import type { ComponentColor, CssColor } from '$lib/types';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
 	export let color: CssColor;
 	export let displayName = false;
 	export let componentColor: ComponentColor;
-	export let editName = false;
+	let editColorName = false;
 	let newName = color.name;
 	let timeout: NodeJS.Timeout;
 	let error = false;
 	let waitingForDoubleClick = false;
 	let buttonElement: HTMLButtonElement;
+	let colorWrapperElement: HTMLElement;
 	const dispatch = createEventDispatcher();
 
-	$: tooltip = color?.name ? `${color.hslString} (${color.name})` : color.hslString;
+	$: error = editColorName && !newName;
 	$: outlineColor = error ? 'var(--red2)' : `var(--${componentColor}-fg-color);`;
 	$: inputStyles = `outline: 2px solid ${outlineColor}; outline-offset: 2px`;
 
 	function handleColorWrapperClicked() {
-		if (!editName) {
+		if (!editColorName) {
+			dispatch('colorSelected', color);
 			buttonElement.focus();
 		}
 	}
 
 	function handleColorNameClicked() {
 		if (waitingForDoubleClick) {
-			editName = true;
-			dispatch('beginEditingColorName', color);
+			editColorName = true;
 		} else {
 			waitingForDoubleClick = true;
 			clearTimeout(timeout);
@@ -36,53 +36,63 @@
 		}
 	}
 
+	function handleDeleteButtonClicked() {
+		editColorName = false;
+		dispatch('deleteColor', color);
+	}
+
 	const focusInput = (inputElement: HTMLInputElement) => inputElement.focus();
 
 	function handleKeyPress(key: string) {
-		error = false;
-		if (key === 'Enter') {
-			if (newName !== '') {
-				color.name = newName;
-				editName = false;
-			}
-			error = true;
+		if (newName && key === 'Enter') {
+			color.name = newName;
+			editColorName = false;
 		} else if (key === 'Escape') {
-			editName = false;
+			editColorName = false;
 		}
 	}
 
 	function possiblyExitEditMode(key: string) {
-		if (editName && key === 'Escape') {
-			editName = false;
+		if (editColorName && key === 'Escape') {
+			editColorName = false;
+		}
+	}
+
+	function checkForOuterClick(event) {
+		if (editColorName && !colorWrapperElement.contains(event.target)) {
+			editColorName = false;
 		}
 	}
 
 	onDestroy(() => clearTimeout(timeout));
 </script>
 
-<svelte:window on:keydown={(e) => possiblyExitEditMode(e.key)} />
+<svelte:window on:keydown={(e) => possiblyExitEditMode(e.key)} on:click={checkForOuterClick} />
 
 <div
+	bind:this={colorWrapperElement}
 	class="color-wrapper"
-	on:click
-	on:click={() => handleColorWrapperClicked()}
+	on:click|stopPropagation={() => handleColorWrapperClicked()}
 	style={displayName ? `width: 100%` : ''}
 >
 	<button type="button" bind:this={buttonElement}>
-		<div title={tooltip} class="color-swatch" style="background-color: {color.hslString}" />
+		<div class="color-swatch" style="background-color: {color.hslString}" />
 	</button>
 	{#if displayName}
-		{#if editName}
+		{#if editColorName}
 			<input
 				type="text"
 				bind:value={newName}
-				class:error
 				on:keypress={(e) => handleKeyPress(e.key)}
 				style={inputStyles}
 				use:focusInput
 			/>
+			<div class="icon" style="color: var(--{componentColor}-fg-color);" on:click={() => handleDeleteButtonClicked()}>
+				<Delete tooltip={'Remove color from palette'} />
+			</div>
 		{:else}
-			<span class="color-name" on:click={() => handleColorNameClicked()}>{color.name}</span>
+			<span class="color-name" title="Double-click to edit" on:click={() => handleColorNameClicked()}>{color.name}</span
+			>
 		{/if}
 	{/if}
 </div>
@@ -95,11 +105,6 @@
 		gap: 0.75rem;
 		white-space: nowrap;
 		padding: 0 0.25rem;
-	}
-
-	.error {
-		outline: 1.5px solid var(--red2);
-		outline-offset: 1.5px;
 	}
 
 	button {
@@ -137,5 +142,12 @@
 		padding: 0 4px;
 		border-radius: 6px;
 		background-color: var(--white4);
+	}
+
+	.icon {
+		width: 20px;
+		height: 20px;
+		margin: auto 0;
+		cursor: pointer;
 	}
 </style>

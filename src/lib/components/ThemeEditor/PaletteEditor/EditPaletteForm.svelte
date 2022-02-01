@@ -32,7 +32,7 @@
 		bind:this={inputElement}
 		type="text"
 		placeholder="palette name"
-		bind:value={palette.paletteName}
+		bind:value={palette.name}
 		on:focus={() => applyFocusStyles()}
 		on:blur={() => removeFocusStyles()}
 		style={borderStyle}

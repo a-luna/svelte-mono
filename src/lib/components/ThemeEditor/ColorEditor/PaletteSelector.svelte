@@ -3,7 +3,7 @@
 	import type { ColorPalette, SelectMenuOption } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
-	export let themePalettes: ColorPalette[];
+	export let themeColorPalettes: ColorPalette[];
 	export let width = '100%';
 	export let fontSize: string = '0.875rem';
 	export let value: string = '';
@@ -11,8 +11,8 @@
 	let options: SelectMenuOption[];
 	const dispatch = createEventDispatcher();
 
-	$: options = themePalettes?.map((p, i) => ({
-		label: p.paletteName,
+	$: options = themeColorPalettes?.map((p, i) => ({
+		label: p.name,
 		value: p.id,
 		optionNumber: i + 1,
 		active: false,

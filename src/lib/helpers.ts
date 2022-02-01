@@ -1,3 +1,6 @@
+import type { ComponentColor } from '$lib/types';
+import { COMPONENT_COLORS } from '$lib/types';
+
 export function clickOutside(node: HTMLElement, { enabled: initialEnabled, cb }) {
 	const handleOutsideClick = ({ target }) => {
 		if (!node.contains(target)) {
@@ -44,4 +47,10 @@ export function groupByProperty<T>(array: T[], property: keyof T): Record<string
 		grouped[groupVal].push(item);
 		return grouped;
 	}, {});
+}
+
+export const getRandomArrayItem = (array: readonly string[]) => array[Math.floor(Math.random() * array.length)];
+
+export function isComponentColor(arg: string): arg is ComponentColor {
+	return COMPONENT_COLORS.includes(arg as ComponentColor);
 }

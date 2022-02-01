@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import Color from '$lib/components/ThemeEditor/Palettes/Color.svelte';
-	import type { ColorPalette, CssColor } from '$lib/types';
+	import type { ColorPalette } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
@@ -30,14 +30,6 @@
 		expanded = !expanded;
 		dispatch('togglePalette', palette.id);
 	}
-
-	function handleBeginEditingColorName(color: CssColor) {
-		for (let [hex, colorComponent] of Object.entries(colorRefs)) {
-			if (hex !== color.hex) {
-				colorComponent.editName = false;
-			}
-		}
-	}
 </script>
 
 <div
@@ -54,7 +46,7 @@
 		aria-controls="accordion-content-{palette.id}"
 		on:click={() => togglePalette()}
 	>
-		<h2 class="accordion-heading mb-0 w-full" id="accordion-heading-{palette.id}">{palette.paletteName}</h2>
+		<h2 class="accordion-heading mb-0 w-full" id="accordion-heading-{palette.id}">{palette.name}</h2>
 	</button>
 	{#if expanded}
 		<div
@@ -69,8 +61,8 @@
 					{color}
 					{displayName}
 					componentColor={palette.componentColor}
-					on:click={() => dispatch('colorSelected', color)}
-					on:beginEditingColorName={(e) => handleBeginEditingColorName(e.detail)}
+					on:colorSelected
+					on:deleteColor
 					bind:this={colorRefs[color.hex]}
 				/>
 			{/each}

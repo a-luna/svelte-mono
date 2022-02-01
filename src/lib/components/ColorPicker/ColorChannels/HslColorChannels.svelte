@@ -7,9 +7,16 @@
 	export let s: number;
 	export let l: number;
 	export let a: number = 0;
+	// export let hsl: HslColor;
+
+	// $: hsl = alphaEnabled ? { h, s, l } : { h, s, l, a };
 </script>
 
 <ColorSlider name="H" bind:value={h} max={360} disabled={!editable} />
 <ColorSlider name="S" bind:value={s} max={100} disabled={!editable} />
 <ColorSlider name="L" bind:value={l} max={100} disabled={!editable} />
-<ColorSlider name="A" bind:value={a} max={1} step={0.01} disabled={!alphaEnabled || !editable} />
+{#if alphaEnabled}
+	<ColorSlider name="A" bind:value={a} max={1} step={0.01} disabled={!editable} />
+{:else}
+	<div style="width: 100%; height: 20px" />
+{/if}
