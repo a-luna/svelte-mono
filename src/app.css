@@ -106,6 +106,7 @@
 	--select-bg-color-disabled: var(--light-gray1);
 
 	/* Buttons & Accordion Items */
+
 	--default-border-color: var(--black2);
 	--default-bg-color: var(--white1);
 	--default-text-color: var(--black2);
@@ -113,6 +114,7 @@
 	--default-hover-bg-color: var(--white4);
 	--default-hover-text-color: var(--black4);
 	--default-border-radius: 6px;
+	--button-size: 30px;
 
 	--black-bg-color: var(--white2);
 	--black-hover-bg-color: var(--white4);
@@ -164,8 +166,13 @@ button {
 	border: 2px solid var(--black-fg-color);
 	color: var(--black-fg-color);
 	border-radius: var(--default-border-radius);
-	height: 30px;
+	height: var(--button-size);
 	padding: 2px 6px;
+}
+
+.square-button {
+	height: var(--button-size);
+	width: var(--button-size);
 }
 
 .theme-button:hover {

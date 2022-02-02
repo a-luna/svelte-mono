@@ -5,19 +5,22 @@
 	export let disabled = false;
 	export let tooltip: string;
 	export let alignSelf = '';
+	export let classList: string[] = [];
 </script>
 
 <button
 	type="button"
 	title={tooltip}
-	class="theme-button {color} transition-color"
+	class="theme-button {color} transition-color {classList.join(' ')}"
 	{disabled}
 	on:click
 	style={alignSelf ? `align-self: ${alignSelf}` : ''}
 >
-	<div class="icon">
-		<slot name="icon" />
-	</div>
+	{#if $$slots.icon}
+		<div class="icon">
+			<slot name="icon" />
+		</div>
+	{/if}
 	{#if $$slots.label}
 		<span><slot name="label" /></span>
 	{/if}
