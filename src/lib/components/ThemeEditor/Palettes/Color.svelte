@@ -4,7 +4,7 @@
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
 	export let color: CssColor;
-	export let displayName = false;
+	export let displayColorName = false;
 	export let componentColor: ComponentColor;
 	let editColorName = false;
 	let newName = color.name;
@@ -18,6 +18,7 @@
 	$: error = editColorName && !newName;
 	$: outlineColor = error ? 'var(--red2)' : `var(--${componentColor}-fg-color);`;
 	$: inputStyles = `outline: 2px solid ${outlineColor}; outline-offset: 2px`;
+	$: buttonToolTip = !displayColorName ? `${color.name} (${color.hex})` : '';
 
 	function handleColorWrapperClicked() {
 		if (!editColorName) {
@@ -73,12 +74,12 @@
 	bind:this={colorWrapperElement}
 	class="color-wrapper"
 	on:click|stopPropagation={() => handleColorWrapperClicked()}
-	style={displayName ? `width: 100%` : ''}
+	style={displayColorName ? `width: 100%` : ''}
 >
-	<button type="button" bind:this={buttonElement}>
+	<button type="button" title={buttonToolTip} bind:this={buttonElement}>
 		<div class="color-swatch" style="background-color: {color.hslString}" />
 	</button>
-	{#if displayName}
+	{#if displayColorName}
 		{#if editColorName}
 			<input
 				type="text"

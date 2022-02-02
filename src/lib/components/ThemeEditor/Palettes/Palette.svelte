@@ -8,17 +8,20 @@
 
 	export let palette: ColorPalette;
 	export let expanded = false;
-	export let displayName = false;
+	export let displayPaletteName = true;
+	export let displayColorName = false;
+	export let alwaysExpanded = false;
+	export let columns = 4;
 	let colorRefs: Record<string, Color> = {};
 	const dispatch = createEventDispatcher();
-	const color = palette.componentColor;
 
+	$: color = palette.componentColor;
 	$: accordionStyles = `--border-color: var(--${color}-fg-color); --text-color: var(--${color}-fg-color); --hover-border-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --hover-bg-color: var(--${color}-hover-bg-color); --active-bg-color: var(--${color}-hover-bg-color);`;
 	$: accordionCollapsedStyles = `--bg-color: var(--${color}-bg-color);`;
 	$: accordionExpandedStyles = `--bg-color: var(--${color}-hover-bg-color);`;
-	$: paletteGrid = displayName
+	$: paletteGrid = displayColorName
 		? 'grid-template-columns: 100%; justify-items: flex-start; gap: 0.75rem 0.75rem'
-		: 'grid-template-columns: repeat(4, minmax(0, 1fr)); justify-items: center; gap: 0.5rem 0.25rem;';
+		: `grid-template-columns: repeat(${columns}, minmax(0, 1fr)); justify-items: center; gap: 0.5rem 0.25rem;`;
 	$: if (palette?.updated) {
 		if (!expanded) {
 			togglePalette();
@@ -27,8 +30,10 @@
 	}
 
 	export function togglePalette() {
-		expanded = !expanded;
-		dispatch('togglePalette', palette.id);
+		if (!alwaysExpanded) {
+			expanded = !expanded;
+			dispatch('togglePalette', palette.id);
+		}
 	}
 </script>
 
@@ -46,7 +51,9 @@
 		aria-controls="accordion-content-{palette.id}"
 		on:click={() => togglePalette()}
 	>
-		<h2 class="accordion-heading mb-0 w-full" id="accordion-heading-{palette.id}">{palette.name}</h2>
+		{#if displayPaletteName}
+			<h2 class="accordion-heading mb-0 w-full" id="accordion-heading-{palette.id}">{palette.name}</h2>
+		{/if}
 	</button>
 	{#if expanded}
 		<div
@@ -59,7 +66,7 @@
 			{#each palette.colors as color}
 				<Color
 					{color}
-					{displayName}
+					{displayColorName}
 					componentColor={palette.componentColor}
 					on:colorSelected
 					on:deleteColor

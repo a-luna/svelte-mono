@@ -6,7 +6,7 @@
 	export let palettes: ColorPalette[];
 	export let columns: number = 2;
 	export let allowMultiplePalettesOpen = false;
-	export let displayName = false;
+	export let displayColorName = false;
 	let paletteRefs: Record<string, Palette> = {};
 	const dispatch = createEventDispatcher();
 
@@ -26,7 +26,7 @@
 	{#each palettes as palette}
 		<Palette
 			{palette}
-			{displayName}
+			{displayColorName}
 			on:colorSelected
 			on:deleteColor
 			on:togglePalette={(e) => handlePaletteToggled(e.detail)}
