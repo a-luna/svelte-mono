@@ -14,14 +14,14 @@ export interface RgbColor {
 	r: number;
 	g: number;
 	b: number;
-	a?: number;
+	a: number;
 }
 
 export interface HslColor {
 	h: number;
 	s: number;
 	l: number;
-	a?: number;
+	a: number;
 }
 
 export interface CssColor {

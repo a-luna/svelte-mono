@@ -72,13 +72,13 @@ export function parseColorFromString(s: string): Result<CssColor> {
 }
 
 function parseRgb(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
-	let rgb: RgbColor = { r: 0, g: 0, b: 0 };
-	let hsl: HslColor = { h: 0, s: 0, l: 0 };
+	let rgb: RgbColor = { r: 0, g: 0, b: 0, a: 255 };
+	let hsl: HslColor = { h: 0, s: 0, l: 0, a: 1 };
 	const redDec = match.groups.redDecA ?? match.groups.redDecB;
 	const greenDec = match.groups.greenDecA ?? match.groups.greenDecB;
 	const blueDec = match.groups.blueDec ?? match.groups.blueDecA ?? match.groups.blueDecB;
 	if (redDec && greenDec && blueDec) {
-		rgb = { r: parseInt(redDec), g: parseInt(greenDec), b: parseInt(blueDec) };
+		rgb = { r: parseInt(redDec), g: parseInt(greenDec), b: parseInt(blueDec), a: 255 };
 	} else {
 		const redPerc = match.groups.redPercA ?? match.groups.redPercB;
 		const greenPerc = match.groups.greenPercA ?? match.groups.greenPercB;
@@ -88,6 +88,7 @@ function parseRgb(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 				r: percentToDecimalValue(parseInt(redPerc)),
 				g: percentToDecimalValue(parseInt(greenPerc)),
 				b: percentToDecimalValue(parseInt(bluePerc)),
+				a: 255,
 			};
 		}
 	}
@@ -102,11 +103,9 @@ function parseRgb(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 				rgb.a = percentToDecimalValue(parseInt(alphaPerc));
 			}
 		}
-		hsl = rgbaToHsla(rgb);
-	} else {
-		hsl = rgbToHsl(rgb);
 	}
 
+	hsl = rgbaToHsla(rgb);
 	const hex = rgbToHex(rgb, hasAlpha);
 	const rgbString = rgbToString(rgb, hasAlpha);
 	const hslString = hslToString(hsl, hasAlpha);
@@ -130,7 +129,7 @@ export function rgbToHsl(rgb: RgbColor): HslColor {
 	const h = calculateHue(r, g, b, cmax, delta);
 	const l = (cmax + cmin) / 2;
 	const s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-	return { h, s: parseInt((s * 100).toFixed(1)), l: parseInt((l * 100).toFixed(1)) };
+	return { h, s: parseInt((s * 100).toFixed(1)), l: parseInt((l * 100).toFixed(1)), a: 1 };
 }
 
 function calculateHue(r: number, g: number, b: number, cmax: number, delta: number): number {
@@ -192,6 +191,7 @@ function parseHexCondensedFormat(
 			r: parseInt(`${redHex}${redHex}`, 16),
 			g: parseInt(`${greenHex}${greenHex}`, 16),
 			b: parseInt(`${blueHex}${blueHex}`, 16),
+			a: 255,
 		};
 		if (hasAlpha) {
 			const alphaHex = match.groups.alphaHexA;
@@ -226,6 +226,7 @@ function parseHexFullFormat(
 			r: parseInt(`${redHex1}${redHex2}`, 16),
 			g: parseInt(`${greenHex1}${greenHex2}`, 16),
 			b: parseInt(`${blueHex1}${blueHex2}`, 16),
+			a: 255,
 		};
 		if (hasAlpha) {
 			const alphaHex1 = match.groups.alphaHexB;
@@ -244,7 +245,7 @@ function parseHexFullFormat(
 
 function parseHsl(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 	let rgb: RgbColor;
-	const hsl: HslColor = { h: parseHue(match), ...parseSaturationAndLightness(match) };
+	const hsl: HslColor = { h: parseHue(match), a: 1, ...parseSaturationAndLightness(match) };
 
 	if (hasAlpha) {
 		let alpha = match.groups.alphaFloatA ?? match.groups.alphaFloatB;
@@ -252,11 +253,9 @@ function parseHsl(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 			alpha = (parseInt(match.groups.alphaPerc) / 100).toFixed(2);
 		}
 		hsl.a = parseFloat(alpha);
-		rgb = hslaToRgba(hsl);
-	} else {
-		rgb = hslToRgb(hsl);
 	}
 
+	rgb = hslaToRgba(hsl);
 	const hex = rgbToHex(rgb, hasAlpha);
 	const rgbString = rgbToString(rgb, hasAlpha);
 	const hslString = hslToString(hsl, hasAlpha);

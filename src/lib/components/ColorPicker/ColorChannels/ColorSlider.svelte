@@ -1,3 +1,5 @@
+<svelte:options accessors />
+
 <script lang="ts">
 	export let name: string;
 	export let min: number = 0;
@@ -19,6 +21,7 @@
 		{disabled}
 		class="m-0 flex-grow"
 		bind:value
+		on:change
 	/>
 	<span class="value flex-initial font-medium">{disabled ? '' : value?.toString()}</span>
 </div>
