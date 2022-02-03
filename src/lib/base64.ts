@@ -196,14 +196,12 @@ function addBitGroupsToOutputChunk(chunk: OutputChunk, i: number): OutputChunk {
 	base64Digit4.groupId = `base64-chunk-${i + 1}-digit-4`;
 	base64Digit4.bitGroups = [{ groupId: `hex-chunk-${i + 1}-byte-3`, bits: hexBits3b }];
 
-	const hexMap = chunk.hexMap;
-	const hexByte1 = hexMap[0];
-	hexByte1.groupId = `hex-chunk-${i + 1}-byte-1`;
-	hexByte1.bitGroups = [
+	chunk.hexMap[0].groupId = `hex-chunk-${i + 1}-byte-1`;
+	chunk.hexMap[0].bitGroups = [
 		{ groupId: `base64-chunk-${i + 1}-digit-1`, bits: base64Bits1 },
 		{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2a }
 	];
-	if (hexMap.length == 1) {
+	if (chunk.hexMap.length == 1) {
 		base64Digit2.bitGroups = [
 			{ groupId: `hex-chunk-${i + 1}-byte-1`, bits: hexBits1b },
 			{ groupId: 'pad', bits: hexBits2a }
@@ -214,22 +212,20 @@ function addBitGroupsToOutputChunk(chunk: OutputChunk, i: number): OutputChunk {
 		];
 		base64Digit4.bitGroups = [{ groupId: 'pad', bits: hexBits3b }];
 	} else {
-		const hexByte2 = hexMap[1];
-		hexByte2.groupId = `hex-chunk-${i + 1}-byte-2`;
-		hexByte2.bitGroups = [
+		chunk.hexMap[1].groupId = `hex-chunk-${i + 1}-byte-2`;
+		chunk.hexMap[1].bitGroups = [
 			{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2b },
 			{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3a }
 		];
-		if (hexMap.length == 2) {
+		if (chunk.hexMap.length == 2) {
 			base64Digit3.bitGroups = [
 				{ groupId: `hex-chunk-${i + 1}-byte-2`, bits: hexBits2b },
 				{ groupId: 'pad', bits: hexBits3a }
 			];
 			base64Digit4.bitGroups = [{ groupId: 'pad', bits: hexBits3b }];
 		} else {
-			const hexByte3 = hexMap[2];
-			hexByte3.groupId = `hex-chunk-${i + 1}-byte-3`;
-			hexByte3.bitGroups = [
+			chunk.hexMap[2].groupId = `hex-chunk-${i + 1}-byte-3`;
+			chunk.hexMap[2].bitGroups = [
 				{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3b },
 				{ groupId: `base64-chunk-${i + 1}-digit-4`, bits: base64Bits4 }
 			];

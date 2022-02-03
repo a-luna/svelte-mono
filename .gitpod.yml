@@ -1,0 +1,33 @@
+tasks:
+  - before: printf "\n[settings]\napi_key = $WAKA_TIME_API_KEY\n" > ~/.wakatime.cfg
+  - init: npm install
+    command: |
+      export HMR_HOST=`gp url 3000`
+      npm run dev
+
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 3000
+    onOpen: open-browser
+
+vscode:
+  extensions:
+    - github.vscode-pull-request-github
+    - redhat.vscode-yaml
+    - svelte.svelte-vscode
+    - robole.snippets-ranger
+    - bierner.color-info
+    - vivaxy.vscode-conventional-commits
+    - mhutchie.git-graph
+    - heybourn.headwind
+    - bradlc.vscode-tailwindcss
+    - oderwat.indent-rainbow
+    - christian-kohler.path-intellisense
+    - esbenp.prettier-vscode
+    - csstools.postcss
+    - christian-kohler.npm-intellisense
+    - vscode-icons-team.vscode-icons
+    - wakatime.vscode-wakatime
+    - dbaeumer.vscode-eslint
+    - qcz.text-power-tools
+    - cydo.ink-drop
