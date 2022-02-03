@@ -33,7 +33,7 @@ function validateAsciiString(input: string): Result<boolean> | Result {
 }
 
 function validateHexString(input: string): Result<boolean> | Result {
-	const originalInput = `${input}`;
+	const originalInput = input;
 	if (/^0x\w+$/.test(input)) {
 		input = input.replace(/0x/, '');
 	}
