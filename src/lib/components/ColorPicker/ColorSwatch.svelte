@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { hslaToString } from '$lib/color';
+	import { hslToString } from '$lib/color';
 	import ColorSwatches from '$lib/components/Icons/ColorSwatches.svelte';
 	import { createEventDispatcher, getContext } from 'svelte';
 
@@ -11,7 +11,7 @@
 	$: alphaStyles = `background-image: linear-gradient(${$state?.color?.hslaString}, ${$state?.color?.hslaString}), url("./ps-neutral.png")`;
 	$: opaqueStyles = `background-color: ${$state?.color?.hslString}`;
 	$: borderColor = { ...$state.color.hsl, l: $state.color.hsl.l - 20 };
-	$: borderStyles = `border: 2px solid ${hslaToString(borderColor)}`;
+	$: borderStyles = `border: 2px solid ${hslToString(borderColor)}`;
 	$: tooltip = alphaEnabled ? 'Color picker does not support RGBA/HSLA color space' : 'Click to open color picker';
 
 	function showColorPicker() {

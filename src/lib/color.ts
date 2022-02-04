@@ -28,8 +28,8 @@ const percentToDecimalValue = (percent: number): number => Math.round((percent /
 export const decimalToOpacityValue = (decimal: number): number => parseFloat((decimal / 255).toFixed(2));
 const rgbToString = (rgb: RgbColor): string => `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 const rgbaToString = (rgb: RgbColor): string => `rgba(${rgb.r} ${rgb.g} ${rgb.b} / ${decimalToOpacityValue(rgb.a)})`;
-const hslToString = (hsl: HslColor): string => `hsl(${hsl.h} ${hsl.s}% ${hsl.l}%)`;
-export const hslaToString = (hsl: HslColor): string => `hsla(${hsl.h} ${hsl.s}% ${hsl.l}% / ${hsl.a})`;
+export const hslToString = (hsl: HslColor): string => `hsl(${hsl.h} ${hsl.s}% ${hsl.l}%)`;
+const hslaToString = (hsl: HslColor): string => `hsla(${hsl.h} ${hsl.s}% ${hsl.l}% / ${hsl.a})`;
 const rgbToHex = (rgb: RgbColor): string =>
 	`#${byteIntToHexString(rgb.r)}${byteIntToHexString(rgb.g)}${byteIntToHexString(rgb.b)}`;
 const rgbaToHex = (rgb: RgbColor): string =>
