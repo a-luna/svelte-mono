@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CopyButton from '$lib/components/Icons/CopyButton.svelte';
+	import CopyButton from '$lib/components/Icons/Copy.svelte';
 	import Edit from '$lib/components/Icons/Edit.svelte';
 	import type { CssColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
