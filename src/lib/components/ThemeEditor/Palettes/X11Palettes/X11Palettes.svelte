@@ -76,7 +76,7 @@
 	#x11-palettes :global(button.right) {
 		width: 12px;
 		height: 113px;
-		top: 16%;
+		top: 17%;
 	}
 
 	#x11-palettes :global(button.left) {
