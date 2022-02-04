@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ColorPicker from '$lib/components/ColorPicker/ColorPicker.svelte';
 	import AddColorButton from '$lib/components/ThemeEditor/ColorEditor/AddColorButton.svelte';
-	import PaletteSelector from '$lib/components/ThemeEditor/ColorEditor/PaletteSelector.svelte';
+	import PaletteSelector from '$lib/components/ThemeEditor/ColorEditor/PaletteSelector/PaletteSelector.svelte';
 	import type { ColorPalette, ColorPickerState, ComponentColor, CssColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import type { Writable } from 'svelte/store';
@@ -38,11 +38,12 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: flex-end;
-		gap: 0.5rem;
+		gap: 1rem;
 		width: 360px;
 	}
 
 	.palette-selector {
+		--select-border-color: var(--black2);
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 0.5rem;
