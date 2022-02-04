@@ -6,7 +6,7 @@
 	export let themeColorPalettes: ColorPalette[];
 	export let width = '100%';
 	export let fontSize: string = '0.875rem';
-	export let value: string = '';
+	export let value: string = themeColorPalettes[0].id;
 	export let disabled = false;
 	let options: SelectMenuOption[];
 	const dispatch = createEventDispatcher();

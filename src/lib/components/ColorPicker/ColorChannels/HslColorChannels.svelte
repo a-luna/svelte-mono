@@ -17,7 +17,7 @@
 <ColorSlider
 	name="H"
 	bind:value={h}
-	max={360}
+	max={359}
 	disabled={!editable}
 	on:change={() => dispatch('hslColorChanged', hsl)}
 />

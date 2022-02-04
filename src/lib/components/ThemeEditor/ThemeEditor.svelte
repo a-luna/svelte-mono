@@ -5,7 +5,7 @@
 	import FinishEditingButton from '$lib/components/ThemeEditor/PaletteEditor/FinishEditingButton.svelte';
 	import PaletteEditor from '$lib/components/ThemeEditor/PaletteEditor/PaletteEditor.svelte';
 	import ColorPalettes from '$lib/components/ThemeEditor/Palettes/ColorPalettes.svelte';
-	import type { ColorPalette,ColorPickerState,CssColor } from '$lib/types';
+	import type { ColorPalette, ColorPickerState, CssColor } from '$lib/types';
 	import { onDestroy } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
@@ -77,7 +77,7 @@
 	}
 
 	function deleteColorFromPalette(deleteColor: CssColor) {
-		const remainingColors = selectedPalette.colors.filter((c) => c.hex !== deleteColor.hex);
+		const remainingColors = selectedPalette.colors.filter((c) => c.hexAlpha !== deleteColor.hexAlpha);
 		selectedPalette.colors = [...remainingColors];
 		themeColorPalettes = [...themeColorPalettes];
 		selectedPalette.updated = true;
@@ -146,14 +146,14 @@
 				/>
 			{/if}
 		</div>
-    <div class="palette-controls">
-      <div style="height: 30px" />
-      {#if editMode}
-        <FinishEditingButton color={'black'} on:click={() => (editMode = false)} />
-      {:else}
-        <EditPalettesButton color={'black'} on:click={() => (editMode = true)} disabled={editMode || showX11Palettes} />
-      {/if}
-    </div>
+		<div class="palette-controls">
+			<div style="height: 30px" />
+			{#if editMode}
+				<FinishEditingButton color={'black'} on:click={() => (editMode = false)} />
+			{:else}
+				<EditPalettesButton color={'black'} on:click={() => (editMode = true)} disabled={editMode || showX11Palettes} />
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -185,10 +185,10 @@
 
 	.editor-right-col {
 		flex: 1;
-    display: flex;
-    flex-flow: column nowrap;
+		display: flex;
+		flex-flow: column nowrap;
 		align-items: flex-start;
-    gap: 1rem;
+		gap: 1rem;
 		width: 100%;
 	}
 

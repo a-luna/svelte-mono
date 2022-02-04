@@ -89,13 +89,13 @@
 <input
 	bind:this={colorPicker}
 	type="color"
-	class="hidden"
+	style="display: none"
 	value={getHexOpaqueValue($state?.color)}
 	on:change={() => handleColorPickerValueChanged()}
 />
 {#if !showX11Palettes}
-	<div class="color-picker flex flex-row flex-nowrap items-start gap-2 p-2 w-min" data-testid={$state.pickerId}>
-		<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
+	<div class="color-picker" data-testid={$state.pickerId}>
+		<div class="picker-left-col">
 			<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
 			<ColorSwatch
 				pickerId={$state.pickerId}
@@ -104,7 +104,7 @@
 				on:showColorPicker={() => colorPicker.click()}
 			/>
 		</div>
-		<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
+		<div class="picker-right-col">
 			<ColorLabel
 				pickerId={$state.pickerId}
 				{alphaEnabled}
@@ -121,9 +121,24 @@
 	/>
 {/if}
 
-<style>
+<style lang="postcss">
 	.color-picker {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: flex-start;
+		gap: 0.5rem;
+		width: min-content;
 		background-color: var(--white2);
 		border-radius: 4px;
+		padding: 0.5rem;
+	}
+
+	.picker-left-col,
+	.picker-right-col {
+		display: flex;
+		flex-flow: col nowrap;
+		justify-content: flex-start;
+		align-items: stretch;
+		gap: 0.5rem;
 	}
 </style>

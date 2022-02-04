@@ -17,8 +17,8 @@
 	const dispatch = createEventDispatcher();
 
 	$: color = palette.componentColor;
-	$: accordionItemPadding = slideContent ? 'padding: 15px 24px 1rem 24px;' : 'padding: 0.5rem 0.5rem 1rem 0.5rem;';
-	$: accordionButtonPadding = alwaysExpanded ? 'padding: 1px;' : 'padding: 0.5rem';
+	$: accordionItemPadding = slideContent ? 'padding: 14px 24px 1rem 24px;' : 'padding: 0.5rem 0.5rem 1rem 0.5rem;';
+	$: accordionButtonPadding = alwaysExpanded ? 'padding: 2px;' : 'padding: 0.5rem';
 	$: accordionStyles = `--border-color: var(--${color}-fg-color); --text-color: var(--${color}-fg-color); --hover-border-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --hover-bg-color: var(--${color}-hover-bg-color); --active-bg-color: var(--${color}-hover-bg-color);`;
 	$: accordionCollapsedStyles = `--bg-color: var(--${color}-bg-color);`;
 	$: accordionExpandedStyles = `--bg-color: var(--${color}-hover-bg-color);`;
