@@ -12,7 +12,7 @@
 <div class="flex flex-row flex-nowrap items-center gap-2" class:disabled>
 	<label for="slider" class="text-right flex-initial font-medium">{name}</label>
 	<input
-		id="slider"
+		id="{name}-slider"
 		data-testid="{name}-slider"
 		type="range"
 		{min}

@@ -21,6 +21,7 @@
 	$: outlineColor = error ? 'var(--red2)' : `var(--${componentColor}-fg-color);`;
 	$: inputStyles = `outline: 2px solid ${outlineColor}; outline-offset: 2px`;
 	$: buttonToolTip = !displayColorName ? `${color.name} (${color.hsl.h})` : '';
+	$: nameTooltip = editColorName ? 'Press enter to save color name, press Esc to cancel' : 'Double-click to edit';
 
 	function handleColorWrapperClicked() {
 		if (!editColorName) {
@@ -77,6 +78,7 @@
 	class="color-wrapper"
 	on:click|stopPropagation={() => handleColorWrapperClicked()}
 	style={displayColorName ? `width: 100%` : ''}
+	title={nameTooltip}
 >
 	<button type="button" title={buttonToolTip} bind:this={buttonElement}>
 		<div class="color-swatch" style={color.hasAlpha ? alphaStyles : opaqueStyles} />
@@ -94,8 +96,7 @@
 				<Delete tooltip={'Remove color from palette'} />
 			</div>
 		{:else}
-			<span class="color-name" title="Double-click to edit" on:click={() => handleColorNameClicked()}>{color.name}</span
-			>
+			<span class="color-name" on:click={() => handleColorNameClicked()}>{color.name}</span>
 		{/if}
 	{/if}
 </div>

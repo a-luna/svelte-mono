@@ -12,7 +12,7 @@
 	$: labelPadding = $state.labelState === 'edit' ? 'p-2' : 'p-2.5';
 	$: inactiveStyle = 'background-color: var(--white4)';
 	$: copiedStyle = 'background-color: var(--light-gray2)';
-	$: editStyle = 'background-color: var(--white4); color: var(--black4)';
+	$: editStyle = 'background-color: var(--yellow-bg-color); color: var(--black4)';
 	$: successStyle = 'background-color: var(--white4); color: var(--green2)';
 	$: errorStyle = 'background-color: var(--white4); color: var(--red2)';
 	$: style =

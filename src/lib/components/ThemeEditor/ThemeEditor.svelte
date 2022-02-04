@@ -163,7 +163,7 @@
 		flex-flow: row nowrap;
 		gap: 1rem;
 		padding: 1rem;
-		background-color: var(--light-gray4);
+		background-color: var(--gray1);
 		max-width: 700px;
 		margin: 0 auto;
 	}
@@ -203,14 +203,14 @@
 
 	#theme-name {
 		flex: 1;
-		background-color: var(--white2);
+		background-color: var(--white4);
 		font-size: 1rem;
 		line-height: 1;
 		margin: auto 0;
 		text-align: center;
 		cursor: pointer;
 		padding: 0.5rem 0.25rem;
-		border: 1px solid var(--white2);
+		border: 1px solid var(--black2);
 		border-radius: 6px;
 	}
 
