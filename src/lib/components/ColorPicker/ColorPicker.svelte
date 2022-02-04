@@ -1,7 +1,6 @@
 <svelte:options accessors />
 
 <script lang="ts">
-	import { browser } from '$app/env';
 	import { getX11ColorPalettes } from '$lib/color';
 	import ColorChannels from '$lib/components/ColorPicker/ColorChannels/ColorChannels.svelte';
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
@@ -32,7 +31,7 @@
 
 	$: alphaEnabled = $state.colorSpace === 'rgba' || $state.colorSpace === 'hsla';
 	$: $state.editable = editable;
-	$: if (browser) x11ColorPalettes = getX11ColorPalettes();
+	$: if (typeof window !== 'undefined') x11ColorPalettes = getX11ColorPalettes();
 
 	export function setColor(color: CssColor) {
 		setCorrectColorSpace(color);
@@ -128,7 +127,7 @@
 		align-items: flex-start;
 		gap: 0.5rem;
 		width: min-content;
-		background-color: var(--white2);
+		background-color: var(--white1);
 		border-radius: 4px;
 		padding: 0.5rem;
 	}
@@ -136,7 +135,7 @@
 	.picker-left-col,
 	.picker-right-col {
 		display: flex;
-		flex-flow: col nowrap;
+		flex-flow: column nowrap;
 		justify-content: flex-start;
 		align-items: stretch;
 		gap: 0.5rem;

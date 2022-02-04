@@ -38,15 +38,16 @@
 	}
 </script>
 
-<div
-	id="copy-color-button"
-	data-testid="copy-color-button"
+<button
+	type="button"
+	id="copy-color-string-button"
+	data-testid="copy-color-string-button"
 	class="flex-initial h-4 w-4 my-auto cursor-pointer"
 	title="Copy {currentColorSpace} value"
 	on:click={() => dispatch('copyColorString', currentColor)}
 >
 	<CopyButton />
-</div>
+</button>
 <span
 	class="cursor-pointer flex-grow text-center self-center font-medium leading-none whitespace-nowrap"
 	style="font-size: {fontSize}"
@@ -54,9 +55,10 @@
 	data-testid="color-string"
 	on:click={() => toggleColorLabel()}>{currentColor}</span
 >
-<div
-	id="edit-color-button"
-	data-testid="edit-color-button"
+<button
+	type="button"
+	id="edit-color-string-button"
+	data-testid="edit-color-string-button"
 	class="flex-initial h-4 w-4 my-auto"
 	class:cursor-pointer={editable}
 	class:cursor-not-allowed={!editable}
@@ -64,4 +66,11 @@
 	on:click={() => handleEditColorStringButton()}
 >
 	<Edit />
-</div>
+</button>
+
+<style lang="postcss">
+	button {
+		background-color: transparent;
+		border: none;
+	}
+</style>
