@@ -16,9 +16,11 @@
 	const dispatch = createEventDispatcher();
 
 	$: error = editColorName && !newName;
+	$: alphaStyles = `background-image: linear-gradient(${color.hslaString}, ${color.hslaString}), url("./ps-neutral.png")`;
+	$: opaqueStyles = `background-color: ${color.hslString}`;
 	$: outlineColor = error ? 'var(--red2)' : `var(--${componentColor}-fg-color);`;
 	$: inputStyles = `outline: 2px solid ${outlineColor}; outline-offset: 2px`;
-	$: buttonToolTip = !displayColorName ? `${color.name} (${color.hex})` : '';
+	$: buttonToolTip = !displayColorName ? `${color.name} (${color.hsl.h})` : '';
 
 	function handleColorWrapperClicked() {
 		if (!editColorName) {
@@ -77,7 +79,7 @@
 	style={displayColorName ? `width: 100%` : ''}
 >
 	<button type="button" title={buttonToolTip} bind:this={buttonElement}>
-		<div class="color-swatch" style="background-color: {color.hslString}" />
+		<div class="color-swatch" style={color.hasAlpha ? alphaStyles : opaqueStyles} />
 	</button>
 	{#if displayColorName}
 		{#if editColorName}
@@ -120,7 +122,7 @@
 	.color-swatch {
 		flex: 0 1 auto;
 		height: 20px;
-		width: 40px;
+		width: 30px;
 		padding: 5px;
 		border-width: 2px;
 		border-style: inset;

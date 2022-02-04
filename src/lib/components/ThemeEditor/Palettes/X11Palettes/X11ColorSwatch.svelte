@@ -5,8 +5,11 @@
 	export let color: ComponentColor;
 	export let disabled = false;
 	export let tooltip: string;
+	let buttonComponent: ThemeButton;
 
-	$: colorStyles = `--bg-color: var(--${color}-bg-color); --bg-hov-color: var(--${color}-hover-bg-color);`;
+	export function focus() {
+		buttonComponent.focus();
+	}
 </script>
 
-<ThemeButton {color} {tooltip} {disabled} classList={['square-button']} on:click />
+<ThemeButton bind:this={buttonComponent} {color} {tooltip} {disabled} classList={['square-button']} on:click />

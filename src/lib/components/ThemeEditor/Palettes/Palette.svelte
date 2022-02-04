@@ -12,16 +12,19 @@
 	export let displayColorName = false;
 	export let alwaysExpanded = false;
 	export let columns = 4;
+	export let slideContent = false;
 	let colorRefs: Record<string, Color> = {};
 	const dispatch = createEventDispatcher();
 
 	$: color = palette.componentColor;
+	$: accordionItemPadding = slideContent ? 'padding: 15px 24px 1rem 24px;' : 'padding: 0.5rem 0.5rem 1rem 0.5rem;';
+	$: accordionButtonPadding = alwaysExpanded ? 'padding: 1px;' : 'padding: 0.5rem';
 	$: accordionStyles = `--border-color: var(--${color}-fg-color); --text-color: var(--${color}-fg-color); --hover-border-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --hover-bg-color: var(--${color}-hover-bg-color); --active-bg-color: var(--${color}-hover-bg-color);`;
 	$: accordionCollapsedStyles = `--bg-color: var(--${color}-bg-color);`;
 	$: accordionExpandedStyles = `--bg-color: var(--${color}-hover-bg-color);`;
 	$: paletteGrid = displayColorName
-		? 'grid-template-columns: 100%; justify-items: flex-start; gap: 0.75rem 0.75rem'
-		: `grid-template-columns: repeat(${columns}, minmax(0, 1fr)); justify-items: center; gap: 0.5rem 0.25rem;`;
+		? 'grid-template-columns: 100%; justify-items: flex-start; gap: 0.75rem 0.75rem; '
+		: `grid-template-columns: repeat(${columns}, minmax(0, 1fr)); justify-items: center; gap: 0.5rem 0.25rem; `;
 	$: if (palette?.updated) {
 		if (!expanded) {
 			togglePalette();
@@ -47,6 +50,7 @@
 		class="accordion-button transition-color"
 		class:active={expanded}
 		type="button"
+		style={accordionButtonPadding}
 		aria-expanded="false"
 		aria-controls="accordion-content-{palette.id}"
 		on:click={() => togglePalette()}
@@ -60,7 +64,7 @@
 			transition:slide|local
 			id="accordion-content-{palette.id}"
 			class="accordion-content transition"
-			style="display: grid; {paletteGrid}"
+			style="display: grid; {paletteGrid} {accordionItemPadding}"
 			aria-labelledby="accordion-heading-{palette.id}"
 		>
 			{#each palette.colors as color}
@@ -94,7 +98,6 @@
 		line-height: 1;
 		outline: 2px solid transparent;
 		outline-offset: 2px;
-		padding: 8px;
 		width: 100%;
 	}
 
@@ -132,7 +135,6 @@
 		border-bottom: 2px solid var(--active-border-color, var(--black2));
 		border-right: 2px solid var(--active-border-color, var(--black2));
 		border-left: 2px solid var(--active-border-color, var(--black2));
-		padding: 0.5rem 0.5rem 1rem 0.5rem;
 		margin: 0 auto;
 	}
 

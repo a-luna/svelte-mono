@@ -6,9 +6,15 @@
 	export let tooltip: string;
 	export let alignSelf = '';
 	export let classList: string[] = [];
+	let buttonElement: HTMLButtonElement;
+
+	export function focus() {
+		buttonElement.focus();
+	}
 </script>
 
 <button
+	bind:this={buttonElement}
 	type="button"
 	title={tooltip}
 	class="theme-button {color} transition-color {classList.join(' ')}"

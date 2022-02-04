@@ -1,13 +1,16 @@
 <svelte:options accessors />
 
 <script lang="ts">
+	import { browser } from '$app/env';
+	import { getX11ColorPalettes } from '$lib/color';
 	import ColorChannels from '$lib/components/ColorPicker/ColorChannels/ColorChannels.svelte';
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
 	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
 	import ColorSwatch from '$lib/components/ColorPicker/ColorSwatch.svelte';
+	import X11Palettes from '$lib/components/ThemeEditor/Palettes/X11Palettes/X11Palettes.svelte';
 	import { getRandomHexString } from '$lib/helpers';
 	import { ColorParser } from '$lib/parser';
-	import type { ColorPickerState, CssColor } from '$lib/types';
+	import type { ColorPalette, ColorPickerState, CssColor } from '$lib/types';
 	import { onDestroy, onMount, setContext, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 
@@ -21,12 +24,15 @@
 	});
 
 	export let editable = true;
+	export let showX11Palettes = false;
 	setContext($state.pickerId, { state });
 	let timeout: NodeJS.Timeout;
 	let colorPicker: HTMLInputElement;
+	let x11ColorPalettes: ColorPalette[];
 
 	$: alphaEnabled = $state.colorSpace === 'rgba' || $state.colorSpace === 'hsla';
 	$: $state.editable = editable;
+	$: if (browser) x11ColorPalettes = getX11ColorPalettes();
 
 	export function setColor(color: CssColor) {
 		setCorrectColorSpace(color);
@@ -87,16 +93,33 @@
 	value={getHexOpaqueValue($state?.color)}
 	on:change={() => handleColorPickerValueChanged()}
 />
-<div class="color-picker flex flex-row flex-nowrap items-start gap-2 p-2 w-min" data-testid={$state.pickerId}>
-	<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
-		<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
-		<ColorSwatch pickerId={$state.pickerId} {alphaEnabled} on:showColorPicker={() => colorPicker.click()} />
+{#if !showX11Palettes}
+	<div class="color-picker flex flex-row flex-nowrap items-start gap-2 p-2 w-min" data-testid={$state.pickerId}>
+		<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
+			<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
+			<ColorSwatch
+				pickerId={$state.pickerId}
+				{alphaEnabled}
+				on:showX11Palettes={() => (showX11Palettes = true)}
+				on:showColorPicker={() => colorPicker.click()}
+			/>
+		</div>
+		<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
+			<ColorLabel
+				pickerId={$state.pickerId}
+				{alphaEnabled}
+				on:updateColor={(e) => handleStringValueChanged(e.detail)}
+			/>
+			<ColorChannels pickerId={$state.pickerId} {alphaEnabled} editable={$state.editable} />
+		</div>
 	</div>
-	<div class="flex flex-col flex-nowrap justify-start items-stretch gap-2">
-		<ColorLabel pickerId={$state.pickerId} {alphaEnabled} on:updateColor={(e) => handleStringValueChanged(e.detail)} />
-		<ColorChannels pickerId={$state.pickerId} {alphaEnabled} editable={$state.editable} />
-	</div>
-</div>
+{:else if x11ColorPalettes !== undefined}
+	<X11Palettes
+		{x11ColorPalettes}
+		on:colorSelected={() => (showX11Palettes = false)}
+		on:colorSelected={(e) => setColor(e.detail)}
+	/>
+{/if}
 
 <style>
 	.color-picker {

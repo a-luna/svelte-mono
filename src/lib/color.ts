@@ -23,15 +23,17 @@ const HSLA_REGEX =
 
 export const byteIntToHexString = (byteInt: number): string =>
 	0 <= byteInt && byteInt < 256 ? byteInt.toString(16).toUpperCase().padStart(2, '0') : '??';
+
 const percentToDecimalValue = (percent: number): number => Math.round((percent / 100) * 255);
 export const decimalToOpacityValue = (decimal: number): number => parseFloat((decimal / 255).toFixed(2));
-
-const rgbToString = (rgb: RgbColor, hasAlpha: boolean): string =>
-	hasAlpha ? `rgba(${rgb.r} ${rgb.g} ${rgb.b} / ${decimalToOpacityValue(rgb.a)})` : `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
-
-const hslToString = (hsl: HslColor, hasAlpha: boolean): string =>
-	hasAlpha ? `hsla(${hsl.h} ${hsl.s}% ${hsl.l}% / ${hsl.a})` : `hsl(${hsl.h} ${hsl.s}% ${hsl.l}%)`;
-
+const rgbToString = (rgb: RgbColor): string => `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
+const rgbaToString = (rgb: RgbColor): string => `rgba(${rgb.r} ${rgb.g} ${rgb.b} / ${decimalToOpacityValue(rgb.a)})`;
+const hslToString = (hsl: HslColor): string => `hsl(${hsl.h} ${hsl.s}% ${hsl.l}%)`;
+export const hslaToString = (hsl: HslColor): string => `hsla(${hsl.h} ${hsl.s}% ${hsl.l}% / ${hsl.a})`;
+const rgbToHex = (rgb: RgbColor): string =>
+	`#${byteIntToHexString(rgb.r)}${byteIntToHexString(rgb.g)}${byteIntToHexString(rgb.b)}`;
+const rgbaToHex = (rgb: RgbColor): string =>
+	`#${byteIntToHexString(rgb.r)}${byteIntToHexString(rgb.g)}${byteIntToHexString(rgb.b)}${byteIntToHexString(rgb.a)}`;
 const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 
 const colorNameIsValid = (name: string): boolean =>
@@ -106,10 +108,13 @@ function parseRgb(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 	}
 
 	hsl = rgbaToHsla(rgb);
-	const hex = rgbToHex(rgb, hasAlpha);
-	const rgbString = rgbToString(rgb, hasAlpha);
-	const hslString = hslToString(hsl, hasAlpha);
-	const color = { rgb, hsl, hex, hasAlpha, rgbString, hslString, name: hex };
+	const hex = rgbToHex(rgb);
+	const hexAlpha = rgbaToHex(rgb);
+	const rgbString = rgbToString(rgb);
+	const hslString = hslToString(hsl);
+	const rgbaString = rgbaToString(rgb);
+	const hslaString = hslaToString(hsl);
+	const color = { rgb, hsl, hex, hexAlpha, hasAlpha, rgbString, rgbaString, hslString, hslaString, name: hex };
 	return { success: true, value: color };
 }
 
@@ -147,32 +152,18 @@ function calculateHue(r: number, g: number, b: number, cmax: number, delta: numb
 	return h >= 0 ? h : h + 360;
 }
 
-function rgbToHex(rgb: RgbColor, hasAlpha: boolean): string {
-	const r = byteIntToHexString(rgb.r);
-	const g = byteIntToHexString(rgb.g);
-	const b = byteIntToHexString(rgb.b);
-	if (!hasAlpha) {
-		return `#${r}${g}${b}`;
-	}
-	const a = byteIntToHexString(rgb.a);
-	return `#${r}${g}${b}${a}`;
-}
-
 function parseHex(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 	let { didParse, rgb, hsl, hex } = parseHexCondensedFormat(match, hasAlpha);
-	if (didParse) {
-		const rgbString = rgbToString(rgb, hasAlpha);
-		const hslString = hslToString(hsl, hasAlpha);
-		const color = { rgb, hsl, hex, hasAlpha, rgbString, hslString, name: hex };
-		return { success: true, value: color };
+	if (!didParse) {
+		({ didParse, rgb, hsl, hex } = parseHexFullFormat(match, hasAlpha));
 	}
-	({ didParse, rgb, hsl, hex } = parseHexFullFormat(match, hasAlpha));
-	if (didParse) {
-		const rgbString = rgbToString(rgb, hasAlpha);
-		const hslString = hslToString(hsl, hasAlpha);
-		const color = { rgb, hsl, hex, hasAlpha, rgbString, hslString, name: hex };
-		return { success: true, value: color };
-	}
+	const hexAlpha = rgbaToHex(rgb);
+	const rgbString = rgbToString(rgb);
+	const hslString = hslToString(hsl);
+	const rgbaString = rgbaToString(rgb);
+	const hslaString = hslaToString(hsl);
+	const color = { rgb, hsl, hex, hexAlpha, hasAlpha, rgbString, rgbaString, hslString, hslaString, name: hex };
+	return { success: true, value: color };
 }
 
 function parseHexCondensedFormat(
@@ -256,10 +247,13 @@ function parseHsl(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 	}
 
 	rgb = hslaToRgba(hsl);
-	const hex = rgbToHex(rgb, hasAlpha);
-	const rgbString = rgbToString(rgb, hasAlpha);
-	const hslString = hslToString(hsl, hasAlpha);
-	const color = { rgb, hsl, hex, hasAlpha, rgbString, hslString, name: hex };
+	const hex = rgbToHex(rgb);
+	const hexAlpha = rgbaToHex(rgb);
+	const rgbString = rgbToString(rgb);
+	const hslString = hslToString(hsl);
+	const rgbaString = rgbaToString(rgb);
+	const hslaString = hslaToString(hsl);
+	const color = { rgb, hsl, hex, hexAlpha, hasAlpha, rgbString, rgbaString, hslString, hslaString, name: hex };
 	return { success: true, value: color };
 }
 
@@ -338,10 +332,13 @@ function parseNamedColor(name: string): Result<CssColor> {
 				const color = result.value;
 				color.hasAlpha = true;
 				color.rgb.a = 255;
-				color.rgbString = rgbToString(color.rgb, true);
+				color.rgbString = rgbToString(color.rgb);
+				color.rgbaString = rgbaToString(color.rgb);
 				color.hsl.a = 1;
-				color.hslString = hslToString(color.hsl, true);
-				color.hex = rgbToHex(color.rgb, true);
+				color.hslString = hslToString(color.hsl);
+				color.hslaString = hslaToString(color.hsl);
+				color.hex = rgbToHex(color.rgb);
+				color.hexAlpha = rgbaToHex(color.rgb);
 				color.name = name;
 				return { success: true, value: color };
 			}
@@ -365,10 +362,12 @@ function namedColorToRgb(name: string): string {
 export function getX11ColorPalettes(): ColorPalette[] {
 	const hueRanges: HueRange[] = [
 		{ hueStart: -30, hueEnd: 30, name: 'red - orange', componentColor: 'red' },
-		{ hueStart: 30, hueEnd: 60, name: 'orange - yellow', componentColor: 'orange' },
-		{ hueStart: 60, hueEnd: 150, name: 'green - teal', componentColor: 'green' },
-		{ hueStart: 150, hueEnd: 240, name: 'teal - blue', componentColor: 'teal' },
-		{ hueStart: 240, hueEnd: 330, name: 'blue - magenta', componentColor: 'blue' },
+		{ hueStart: 30, hueEnd: 45, name: 'orange', componentColor: 'orange' },
+		{ hueStart: 45, hueEnd: 60, name: 'yellow', componentColor: 'yellow' },
+		{ hueStart: 60, hueEnd: 150, name: 'green', componentColor: 'green' },
+		{ hueStart: 150, hueEnd: 195, name: 'teal - light blue', componentColor: 'teal' },
+		{ hueStart: 195, hueEnd: 240, name: 'light blue - blue', componentColor: 'blue' },
+		{ hueStart: 240, hueEnd: 330, name: 'blue - magenta', componentColor: 'indigo' },
 	];
 	const [colors, grays, whites] = getX11ColorsOrderedByHue();
 	const colorPalettes = hueRanges.map(({ hueStart, hueEnd, name, componentColor }) => ({

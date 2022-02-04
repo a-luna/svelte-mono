@@ -12,6 +12,7 @@
 	export let componentColor: ComponentColor;
 	export let selectedColor: CssColor;
 	export let colorPickerState: Writable<ColorPickerState>;
+	export let showX11Palettes = false;
 	let colorPicker: ColorPicker;
 	const dispatch = createEventDispatcher();
 
@@ -21,13 +22,13 @@
 </script>
 
 <div class="color-editor">
-	<ColorPicker bind:this={colorPicker} bind:state={colorPickerState} bind:editable />
+	<ColorPicker bind:this={colorPicker} bind:state={colorPickerState} bind:editable bind:showX11Palettes />
 	<div class="palette-selector" style={selectorStyles}>
 		<PaletteSelector {themeColorPalettes} bind:value={selectedPaletteId} disabled={editMode} on:paletteSelected />
 		<AddColorButton
 			color={componentColor}
 			on:click={() => dispatch('addColorToPalette', $colorPickerState.color)}
-			disabled={!selectedPaletteId || editMode}
+			disabled={!selectedPaletteId || editMode || showX11Palettes}
 		/>
 	</div>
 </div>

@@ -10,7 +10,9 @@
 	let currentLabelIndex = 0;
 	const dispatch = createEventDispatcher();
 
-	$: colorLabels = [color?.hex, color?.rgbString, color?.hslString];
+	$: colorLabels = alphaEnabled
+		? [color?.hexAlpha, color?.rgbaString, color?.hslaString]
+		: [color?.hex, color?.rgbString, color?.hslString];
 	$: currentColor = colorLabels[currentLabelIndex];
 	$: currentColorSpace = alphaEnabled
 		? ['Hex', 'RGBA', 'HSLA'][currentLabelIndex]

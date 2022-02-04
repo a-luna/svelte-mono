@@ -1,23 +1,21 @@
 <script lang="ts">
-	import { browser } from '$app/env';
-	import { createEmptyColorPalette, getX11ColorPalettes } from '$lib/color';
+	import { createEmptyColorPalette } from '$lib/color';
 	import ColorEditor from '$lib/components/ThemeEditor/ColorEditor/ColorEditor.svelte';
 	import EditPalettesButton from '$lib/components/ThemeEditor/ColorEditor/EditPalettesButton.svelte';
 	import FinishEditingButton from '$lib/components/ThemeEditor/PaletteEditor/FinishEditingButton.svelte';
 	import PaletteEditor from '$lib/components/ThemeEditor/PaletteEditor/PaletteEditor.svelte';
 	import ColorPalettes from '$lib/components/ThemeEditor/Palettes/ColorPalettes.svelte';
-	import X11Palettes from '$lib/components/ThemeEditor/Palettes/X11Palettes/X11Palettes.svelte';
-	import type { ColorPalette, ColorPickerState, CssColor } from '$lib/types';
+	import type { ColorPalette,ColorPickerState,CssColor } from '$lib/types';
 	import { onDestroy } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
-	let x11ColorPalettes: ColorPalette[];
 	let themeColorPalettes: ColorPalette[] = [createEmptyColorPalette()];
 	let selectedPaletteId: string;
 	let selectedPalette: ColorPalette;
 	let selectedColor: CssColor;
 	let colorPickerState: Writable<ColorPickerState>;
 	let editMode: boolean;
+	let showX11Palettes: boolean;
 
 	let editThemeName = false;
 	let timeout: NodeJS.Timeout;
@@ -25,14 +23,16 @@
 	let newName = themeName;
 	let themeNameError = false;
 	let waitingForDoubleClick = false;
+	let alphaEnabled: boolean;
 
-	$: if (browser) x11ColorPalettes = getX11ColorPalettes();
 	$: if (selectedPaletteId) selectedPalette = themeColorPalettes.find((p) => p.id === selectedPaletteId);
 	$: if (selectedPalette) {
 		selectedPalette.colors = [...selectedPalette.colors];
 		themeColorPalettes = [...themeColorPalettes];
 		selectedPalette.updated = true;
 	}
+	$: if ($colorPickerState)
+		alphaEnabled = $colorPickerState.colorSpace === 'rgba' || $colorPickerState.colorSpace === 'hsla';
 
 	$: themeNameError = editThemeName && !newName;
 	$: outlineColor = themeNameError ? 'var(--red2)' : `var(--black-fg-color);`;
@@ -68,8 +68,8 @@
 	}
 
 	function addColorToPalette(newColor: CssColor) {
-		if (!selectedPalette.colors.some((c) => c.hex === newColor.hex)) {
-			newColor.name = newColor.hslString;
+		if (!selectedPalette.colors.some((c) => c.hexAlpha === newColor.hexAlpha)) {
+			newColor.name = alphaEnabled ? newColor.hslaString : newColor.hslString;
 			selectedPalette.colors = [...selectedPalette.colors, newColor];
 			themeColorPalettes = [...themeColorPalettes];
 			selectedPalette.updated = true;
@@ -102,14 +102,12 @@
 			bind:themeColorPalettes
 			bind:selectedPaletteId
 			bind:colorPickerState
+			bind:showX11Palettes
 			componentColor={'black'}
 			{selectedColor}
 			on:paletteSelected={(e) => (selectedPaletteId = e.detail)}
 			on:addColorToPalette={(e) => addColorToPalette(e.detail)}
 		/>
-		{#if x11ColorPalettes !== undefined}
-			<X11Palettes {x11ColorPalettes} on:colorSelected={(e) => (selectedColor = e.detail)} />
-		{/if}
 	</div>
 	<div class="editor-right-col">
 		<div class="theme-palettes">
@@ -147,15 +145,15 @@
 					on:deleteColor={(e) => deleteColorFromPalette(e.detail)}
 				/>
 			{/if}
-			<div class="palette-controls">
-				<div style="height: 30px" />
-				{#if editMode}
-					<FinishEditingButton color={'black'} on:click={() => (editMode = false)} />
-				{:else}
-					<EditPalettesButton color={'black'} on:click={() => (editMode = true)} />
-				{/if}
-			</div>
 		</div>
+    <div class="palette-controls">
+      <div style="height: 30px" />
+      {#if editMode}
+        <FinishEditingButton color={'black'} on:click={() => (editMode = false)} />
+      {:else}
+        <EditPalettesButton color={'black'} on:click={() => (editMode = true)} disabled={editMode || showX11Palettes} />
+      {/if}
+    </div>
 	</div>
 </div>
 
@@ -181,13 +179,16 @@
 	.theme-palettes {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 1rem;
+		gap: 0.5rem;
 		width: 100%;
 	}
 
 	.editor-right-col {
 		flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
 		align-items: flex-start;
+    gap: 1rem;
 		width: 100%;
 	}
 

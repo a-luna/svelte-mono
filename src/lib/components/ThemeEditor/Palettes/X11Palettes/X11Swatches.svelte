@@ -4,7 +4,18 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let x11ColorPalettes: ColorPalette[];
+	export let activePaletteId: string;
+	let swatchMap: Record<string, X11ColorSwatch> = {} as Record<string, X11ColorSwatch>;
 	const dispatch = createEventDispatcher();
+
+	$: if (Object.keys(swatchMap).length === x11ColorPalettes.length) activePaletteId = x11ColorPalettes[0].id;
+	$: if (Object.keys(swatchMap).length === x11ColorPalettes.length && activePaletteId)
+		swatchMap[activePaletteId].focus();
+
+	function handleSwatchClicked(paletteId: string) {
+		dispatch('changeX11Palette', paletteId);
+		activePaletteId = paletteId;
+	}
 </script>
 
 <div class="x11-swatches">
@@ -12,7 +23,8 @@
 		<X11ColorSwatch
 			color={palette.componentColor}
 			tooltip={palette.name}
-			on:click={() => dispatch('changeX11Palette', palette.componentColor)}
+			on:click={() => handleSwatchClicked(palette.id)}
+			bind:this={swatchMap[palette.id]}
 		/>
 	{/each}
 </div>
@@ -22,7 +34,7 @@
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
-		gap: 1rem;
+		gap: 0.5rem;
 		width: 100%;
 	}
 </style>

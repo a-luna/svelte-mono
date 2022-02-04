@@ -25,12 +25,15 @@ export interface HslColor {
 }
 
 export interface CssColor {
-	hex: string;
 	rgb: RgbColor;
 	hsl: HslColor;
 	hasAlpha: boolean;
+	hex: string;
+	hexAlpha: string;
 	rgbString: string;
+	rgbaString: string;
 	hslString: string;
+	hslaString: string;
 	name?: string;
 }
 
