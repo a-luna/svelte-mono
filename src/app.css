@@ -101,6 +101,7 @@
 	--select-bg-color-hov: var(--white4);
 	--select-text-color: var(--black4);
 	--select-text-color-no-selection: var(--dark-gray4);
+	--select-border-color: var(--light-gray2);
 	--selected-item-bg-color: var(--white1);
 	--select-text-color-disabled: var(--gray4);
 	--select-bg-color-disabled: var(--light-gray1);

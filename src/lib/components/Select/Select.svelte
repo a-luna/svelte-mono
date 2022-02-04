@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import CaretDown from '$lib/components/Icons/CaretDown.svelte';
-	import { clickOutside } from '$lib/helpers';
+	import { clickOutside, getRandomHexString } from '$lib/helpers';
 	import type { SelectMenuOption } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import { cubicIn, cubicOut } from 'svelte/easing';
@@ -12,13 +12,13 @@
 	export let menuLabel: string = 'Options';
 	export let options: SelectMenuOption[] = [];
 	export let selectedValue: number | string;
-	export let flexStyles = 'flex-initial';
+	export let flexStyles = 'flex: 1 0 auto;';
 	export let width: string = 'auto';
 	export let margin: string = '0';
 	export let fontSize: string = '0.95rem';
 	export let disabled: boolean = false;
 	export let displaySelectedOptionText = true;
-	export let menuId: string = '';
+	export let menuId: string = `select-menu-${getRandomHexString(4)}`;
 	export let buttonHeight = '36px';
 	export let buttonLayout = 'inline-flex items-center justify-between gap-2.5 w-full';
 	export let buttonPadding = '10px 8px';
@@ -63,25 +63,25 @@
 </script>
 
 <div
-	class="relative inline-block text-left {flexStyles}"
-	style="width: {width ? width : 'auto'}; margin: {margin ? margin : '0'}"
+	class="select-menu-wrapper"
+	style="width: {width ? width : 'auto'}; margin: {margin ? margin : '0'}; {flexStyles}"
 	data-testid={menuId}
 	use:clickOutside={{ enabled: dropdownShown, cb: () => (dropdownShown = !dropdownShown) }}
 >
 	<div>
 		<button
 			type="button"
-			class={buttonStyles}
+			class="{buttonStyles} open-list-button"
 			class:disabled
 			class:no-selection={noSelection}
-			id="open-list-button"
-			data-testid="open-list-button"
+			id="{menuId}-open-list-button"
+			data-testid="{menuId}-open-list-button"
 			aria-expanded={dropdownShown}
 			aria-haspopup="true"
 			style="font-size: {fontSize}; height: {buttonHeight}; padding: {buttonPadding}"
 			on:click={() => handleButtonClicked()}
 		>
-			<span class="leading-none whitespace-nowrap mx-auto">
+			<span class="selected-value">
 				<slot name="selectedValue">
 					{label}
 				</slot>
@@ -91,13 +91,12 @@
 			</div>
 		</button>
 	</div>
-
 	{#if dropdownShown}
 		<div
 			class="dropdown {menuStyles}"
 			role="menu"
 			aria-orientation="vertical"
-			aria-labelledby="open-list-button"
+			aria-labelledby="{menuId}-open-list-button"
 			tabindex="-1"
 			in:scale={{ duration: 100, start: 0.95, easing: cubicOut }}
 			out:scale={{ duration: 75, start: 0.95, easing: cubicIn }}
@@ -112,27 +111,36 @@
 </div>
 
 <style lang="postcss">
-	#open-list-button,
+	.select-menu-wrapper {
+		position: relative;
+		display: inline-block;
+		text-align: left;
+	}
+
+	.open-list-button,
 	.dropdown {
 		background-color: var(--select-bg-color, var(--white2));
 		color: var(--select-text-color, var(--black2));
+		border: 1px solid var(--select-border-color, var(--light-gray2));
 	}
 
-	#open-list-button:hover {
+	.open-list-button:hover {
 		background-color: var(--select-bg-color-hov, var(--white4));
 	}
 
-	#open-list-button.disabled {
+	.open-list-button.disabled {
 		cursor: default;
 		color: var(--select-text-color-disabled, var(--dark-gray2));
 		background-color: var(--select-bg-color-disabled, var(--light-gray1));
 	}
 
-	#open-list-button.no-selection {
+	.open-list-button.no-selection {
 		color: var(--select-text-color-no-selection, var(--gray4));
 	}
 
-	.dropdown {
-		border: 1px solid var(--light-gray2);
+	.selected-value {
+		line-height: 1;
+		white-space: nowrap;
+		margin: 0 auto;
 	}
 </style>
