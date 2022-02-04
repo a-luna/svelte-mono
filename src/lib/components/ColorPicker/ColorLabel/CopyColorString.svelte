@@ -30,6 +30,12 @@
 			currentLabelIndex = 0;
 		}
 	}
+
+	function handleEditColorStringButton() {
+		if (editable) {
+			dispatch('editColorString');
+		}
+	}
 </script>
 
 <div
@@ -52,10 +58,10 @@
 	id="edit-color-button"
 	data-testid="edit-color-button"
 	class="flex-initial h-4 w-4 my-auto"
-	class:cursor-pointer={!alphaEnabled && editable}
-	class:cursor-not-allowed={alphaEnabled || !editable}
+	class:cursor-pointer={editable}
+	class:cursor-not-allowed={!editable}
 	title="Edit string value"
-	on:click={() => dispatch('editColorString')}
+	on:click={() => handleEditColorStringButton()}
 >
 	<Edit />
 </div>
