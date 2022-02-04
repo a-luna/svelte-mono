@@ -13,11 +13,13 @@
 	export let alwaysExpanded = false;
 	export let columns = 4;
 	export let slideContent = false;
+	export let contentHeight = null;
 	let colorRefs: Record<string, Color> = {};
 	const dispatch = createEventDispatcher();
 
 	$: color = palette.componentColor;
-	$: accordionItemPadding = slideContent ? 'padding: 14px 24px 1rem 24px;' : 'padding: 0.5rem 0.5rem 1rem 0.5rem;';
+	$: accordionContentPadding = slideContent ? 'padding: 14px 24px 1rem 24px;' : 'padding: 0.5rem 0.5rem 1rem 0.5rem;';
+	$: accordionContentHeight = contentHeight ? `height: ${contentHeight};` : '';
 	$: accordionButtonPadding = alwaysExpanded ? 'padding: 2px;' : 'padding: 0.5rem';
 	$: accordionStyles = `--border-color: var(--${color}-fg-color); --text-color: var(--${color}-fg-color); --hover-border-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --hover-bg-color: var(--${color}-hover-bg-color); --active-bg-color: var(--${color}-hover-bg-color);`;
 	$: accordionCollapsedStyles = `--bg-color: var(--${color}-bg-color);`;
@@ -64,7 +66,7 @@
 			transition:slide|local
 			id="accordion-content-{palette.id}"
 			class="accordion-content transition"
-			style="display: grid; {paletteGrid} {accordionItemPadding}"
+			style="display: grid; {paletteGrid} {accordionContentPadding} {accordionContentHeight}"
 			aria-labelledby="accordion-heading-{palette.id}"
 		>
 			{#each palette.colors as color}

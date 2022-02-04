@@ -29,16 +29,10 @@
 	}
 
 	function updateSliderControls() {
-		const topPosition = ['yellow', 'orange'].includes(buttonColor) ? '15%' : '16%';
-		const buttonHeight = ['yellow', 'orange'].includes(buttonColor) ? '85px' : '113px';
 		const prevButton = document.querySelector<HTMLElement>('button.left');
 		const nextButton = document.querySelector<HTMLElement>('button.right');
 		prevButton.style.color = `var(--${buttonColor}-fg-color)`;
-		prevButton.style.top = topPosition;
-		prevButton.style.height = buttonHeight;
-		nextButton.style.top = topPosition;
 		nextButton.style.color = `var(--${buttonColor}-fg-color)`;
-		nextButton.style.height = buttonHeight;
 	}
 </script>
 
@@ -56,6 +50,7 @@
 					alwaysExpanded={true}
 					displayPaletteName={false}
 					slideContent={true}
+					contentHeight={'115px'}
 					columns={7}
 					on:colorSelected
 				/>
@@ -80,7 +75,8 @@
 	#x11-palettes :global(button.left),
 	#x11-palettes :global(button.right) {
 		width: 12px;
-		height: 100%;
+		height: 113px;
+		top: 16%;
 	}
 
 	#x11-palettes :global(button.left) {
