@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Cancel from '$lib/components/Icons/Cancel.svelte';
-	import OkButton from '$lib/components/Icons/OkButton.svelte';
+	import OkButton from '$lib/components/Icons/Ok.svelte';
 	import { createEventDispatcher, onMount, tick } from 'svelte';
 
 	let value: string = '';
