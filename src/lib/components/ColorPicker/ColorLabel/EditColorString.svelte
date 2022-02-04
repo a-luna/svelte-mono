@@ -23,17 +23,14 @@
 	bind:this={textInput}
 	{value}
 	type="text"
-	class="text-sm flex-grow px-1"
 	data-testid="color-name-input"
 	on:keypress={(e) => handleKeyPress(e.key)}
 />
-<div class="flex flex-row flex-nowrap gap-1">
+<div class="buttons">
 	<div
 		id="change-color-button"
 		data-testid="change-color-button"
-		class="flex-initial h-4 w-4 my-auto cursor-pointer"
 		title="Change color"
-		style="color: var(--black2)"
 		on:click={() => dispatch('updateColor', textInput.value)}
 	>
 		<OkButton />
@@ -41,11 +38,41 @@
 	<div
 		id="keep-color-button"
 		data-testid="keep-color-button"
-		class="flex-initial h-4 w-4 my-auto cursor-pointer"
 		title="Cancel"
-		style="color: var(--black2)"
 		on:click={() => dispatch('keepCurrentColor')}
 	>
 		<Cancel />
 	</div>
 </div>
+
+<style lang="postcss">
+	input {
+		flex: 1;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		padding: 0 0.25rem;
+		outline: 1px solid var(--gray2);
+		border-radius: 6px;
+	}
+
+	input:focus {
+		outline: 1px solid var(--black2);
+		outline-offset: 1px;
+	}
+
+	.buttons {
+		display: flex;
+		flex-flow: row nowrap;
+		gap: 0.25rem;
+	}
+
+	#change-color-button,
+	#keep-color-button {
+		flex: 0 1 auto;
+		color: var(--black2);
+		width: 1rem;
+		height: 1rem;
+		margin: auto 0;
+		cursor: pointer;
+	}
+</style>

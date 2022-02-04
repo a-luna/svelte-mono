@@ -42,7 +42,7 @@
 	onDestroy(() => clearTimeout(timeout));
 </script>
 
-<div class="color-label flex flex-row flex-nowwrap gap-3 {labelPadding}" {style}>
+<div class="color-label {labelPadding}" {style}>
 	{#if $state.labelState === 'edit'}
 		<EditColorString on:updateColor on:keepCurrentColor={() => ($state.labelState = 'inactive')} />
 	{:else}
@@ -58,6 +58,10 @@
 
 <style lang="postcss">
 	.color-label {
+		display: flex;
+		flex-flow: row nowrap;
+		gap: 0.75rem;
+		outline: 1px solid var(--light-gray2);
 		border-radius: 6px;
 		transition: background-color, color 350ms ease-out;
 		width: 230px;
