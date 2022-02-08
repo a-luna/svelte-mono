@@ -1,4 +1,4 @@
-import { BitGroup } from '.';
+import type { BitGroup } from '.';
 
 export interface Base64ByteMap {
 	bin: string;
