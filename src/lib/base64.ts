@@ -11,21 +11,20 @@ import type {
 	EncodingOutput,
 	HexByteMap,
 	OutputChunk,
+	Result,
 	StringEncoding
 } from './types';
-import { asciiStringFromByteArray, hexStringFromByteArray, hexStringToByteArray, Result } from './util';
+import { asciiStringFromByteArray, hexStringFromByteArray, hexStringToByteArray } from './util';
 import { validateAsciiBytes, validateBase64Encoding, validateTextEncoding } from './validation';
 
 export class Base64Encoder implements Encoder {
-	validateInput = (input: string, encoding: StringEncoding): Result<boolean> | Result =>
-		validateTextEncoding(input, encoding);
+	validateInput = (input: string, encoding: StringEncoding): Result => validateTextEncoding(input, encoding);
 	encode = (input: string, stringEncoding: StringEncoding, b64Encoding: Base64Encoding): EncodingOutput =>
 		b64Encode(input, stringEncoding, b64Encoding);
 }
 
 export class Base64Decoder implements Decoder {
-	validateInput = (input: string, encoding: Base64Encoding): Result<boolean> | Result =>
-		validateBase64Encoding(input, encoding);
+	validateInput = (input: string, encoding: Base64Encoding): Result => validateBase64Encoding(input, encoding);
 	decode = (encodedText: string, base64Encoding: Base64Encoding): DecodingOutput =>
 		b64Decode(encodedText, base64Encoding);
 }

@@ -1,18 +1,5 @@
-import type { IResult, StringEncoding } from './types';
+import type { StringEncoding } from './types';
 import { validateAsciiBytes } from './validation';
-
-export class Result<T = void> implements IResult<T> {
-	readonly failure: boolean;
-	constructor(public success: boolean, public value: T, public error: string) {
-		this.failure = !this.success;
-	}
-	public static Fail(error: string): Result {
-		return new Result(false, null, error);
-	}
-	public static Ok<U>(value: U): Result<U> {
-		return new Result<U>(true, value, '');
-	}
-}
 
 export const divmod = (x: number, y: number): [number, number] => [(x / y) | 0, x % y];
 
