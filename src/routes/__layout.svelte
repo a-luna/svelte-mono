@@ -1,9 +1,27 @@
 <script lang="ts">
-	import MainNav from '$lib/components/MainNav.svelte';
 	import '../global.css';
 </script>
 
-<MainNav />
-<main role="main" class="flex-grow px-5 py-8 m-0 text-base sm:px-5 sm:pt-10 sm:pb-5">
+<main>
 	<slot />
 </main>
+
+<style lang="postcss">
+	main {
+		position: relative;
+		max-width: 35em;
+		background-color: #202020;
+		padding: 1.25rem;
+		margin: 0 auto;
+		box-sizing: border-box;
+	}
+	@media screen and (max-width: 400px) {
+		:global(body) {
+			background-color: #202020;
+		}
+
+		main {
+			padding: 1rem;
+		}
+	}
+</style>

@@ -2,3 +2,81 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*,
+*::before,
+*::after {
+	box-sizing: content-box;
+}
+
+html,
+body {
+	background-color: #444;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+html {
+	font-size: 16px;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+body {
+	font-family: 'Roboto', Helvetica, Arial, sans-serif;
+	font-size: 0.875rem;
+	font-weight: 400;
+	line-height: normal;
+	color: #d8d8d8;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+code,
+pre {
+	font-family: 'Roboto Mono', monospace;
+	font-size: inherit;
+	background-color: inherit;
+	color: inherit;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+}
+
+.notification.is-warning,
+.notification.is-danger {
+	background-color: #f92672;
+	color: #202020;
+	font-weight: 700;
+}
+
+.hide-element {
+	display: none;
+}
+
+.responsive {
+	overflow-x: auto;
+	overflow-y: hidden;
+	width: auto;
+	margin: auto;
+}
+
+/* .bit-group {
+	background-color: #202020;
+	transition: background-color 0.35s ease-in-out;
+} */
+
+.highlight-bit-group,
+.highlight-ascii,
+.highlight-base64 {
+	background-color: #777777;
+	transition: background-color 0.35s ease-in-out;
+}
+
+.hex-map .hex-byte.highlight-ascii code[data-ascii='ws'].hex-ascii,
+.hex-map .hex-byte.highlight-bit-group code[data-ascii='ws'].hex-ascii,
+.base64 code.base64-binary.highlight-base64 span[data-bit-group='pad'].black,
+.base64 code.base64-binary.highlight-bit-group span[data-bit-group='pad'].black {
+	color: #777777;
+	transition: color 0.35s ease-in-out;
+}
