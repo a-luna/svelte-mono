@@ -1,10 +1,43 @@
-import { Base64Encoder, Base64Decoder } from '../base64';
+import { Base64Decoder, Base64Encoder } from '../base64';
 
 describe('Base64Encoder', () => {
 	it('can encode a valid ascii string to standard base64', () => {
 		const encoder = new Base64Encoder();
 		const encoded = encoder.encode('dog', 'ASCII', 'base64');
 		expect(encoded.output).toBe('ZG9n');
+	});
+
+	it('can decode a string that produces more than one output chunk', () => {
+		const encoder = new Base64Encoder();
+		const encoded = encoder.encode('this is a test', 'ASCII', 'base64');
+		expect(encoded.output).toBe('dGhpcyBpcyBhIHRlc3Q=');
+		expect(encoded.chunks.length).toBe(5);
+		const chunk1 = encoded.chunks[0];
+		expect(chunk1.ascii).toBe('thi');
+		expect(chunk1.base64).toBe('dGhp');
+		expect(chunk1.hex).toBe('746869');
+		const chunk1HexByte1Map = chunk1.hexMap[0];
+		expect(chunk1HexByte1Map.ascii).toBe('t');
+		expect(chunk1HexByte1Map.byte).toBe(116);
+		expect(chunk1HexByte1Map.bin_word1).toBe('0111');
+		expect(chunk1HexByte1Map.bin_word2).toBe('0100');
+		const chunk1Base64Digit1Map = chunk1.base64Map[0];
+		expect(chunk1Base64Digit1Map.b64).toBe('d');
+		expect(chunk1Base64Digit1Map.dec).toBe(29);
+		expect(chunk1Base64Digit1Map.bin).toBe('011101');
+		const chunk5 = encoded.chunks[4];
+		expect(chunk5.ascii).toBe('st');
+		expect(chunk5.base64).toBe('c3Q=');
+		expect(chunk5.hex).toBe('7374');
+		const chunk5HexByte2Map = chunk5.hexMap[1];
+		expect(chunk5HexByte2Map.ascii).toBe('t');
+		expect(chunk5HexByte2Map.byte).toBe(116);
+		expect(chunk5HexByte2Map.bin_word1).toBe('0111');
+		expect(chunk5HexByte2Map.bin_word2).toBe('0100');
+		const chunk5Base64Digit4Map = chunk5.base64Map[3];
+		expect(chunk5Base64Digit4Map.b64).toBe('=');
+		expect(chunk5Base64Digit4Map.dec).toBe(null);
+		expect(chunk5Base64Digit4Map.bin).toBe('');
 	});
 });
 
