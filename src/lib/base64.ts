@@ -48,7 +48,7 @@ function encodeChunk(
 	chunkNumber: number,
 	base64Encoding: Base64Encoding
 ): OutputChunk {
-	const { bytes, hex, ascii, binary, inputMap } = encodingInputChunkMap;
+	const { bytes, hex, ascii, binary, inputMap, isPadded } = encodingInputChunkMap;
 	const base64Alphabet = getBase64Alphabet(base64Encoding);
 	const length = binary.length / 6;
 	const outputMap = Array.from({ length }, (_, i) => {
@@ -65,15 +65,16 @@ function encodeChunk(
 			isPad: false
 		};
 	});
-	const padLength = 4 - length;
-	if (padLength > 0) {
-		const encodedPadding = Array(padLength).fill({
-			bin: '',
-			dec: '',
-			b64: '=',
-			isPad: true
-		});
-		outputMap.concat(encodedPadding);
+	if (isPadded) {
+		const padlength = 4 - length;
+		Array.from({ length: padlength }, (_, i) => i).forEach(() =>
+			outputMap.push({
+				bin: '',
+				dec: null,
+				b64: '=',
+				isPad: true
+			})
+		);
 	}
 	const base64 = outputMap.map((map) => map.b64).join('');
 	const outputChunk = {

@@ -24,9 +24,9 @@ export function createEncodingInputChunks(inputText: string, encoding: StringEnc
 	return Array.from({ length: totalChunks }, (_, i) => {
 		const isPadded = lastChunkPadded && i === totalChunks - 1;
 		const bytes = inputBytes.slice(i * 3, Math.min(inputBytes.length, i * 3 + 3));
-		const hex = hexStringFromByteArray(inputBytes);
-		const ascii = encoding === 'ASCII' ? asciiStringFromByteArray(inputBytes) : '';
-		const byteStrings = byteArrayToBinaryStringArray(inputBytes);
+		const hex = hexStringFromByteArray(bytes);
+		const ascii = encoding === 'ASCII' ? asciiStringFromByteArray(bytes) : '';
+		const byteStrings = byteArrayToBinaryStringArray(bytes);
 		const binary = `${byteStrings.join('')}${'0'.repeat(padLength)}`;
 		return {
 			bytes,
@@ -36,7 +36,7 @@ export function createEncodingInputChunks(inputText: string, encoding: StringEnc
 			binary,
 			isPadded,
 			padLength: isPadded ? padLength : 0,
-			inputMap: createHexByteMapsForChunk(inputBytes, encoding, ascii, byteStrings)
+			inputMap: createHexByteMapsForChunk(bytes, encoding, ascii, byteStrings)
 		};
 	});
 }
