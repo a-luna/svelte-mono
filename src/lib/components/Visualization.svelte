@@ -30,19 +30,23 @@
 					</div>
 				</div>
 			</div>
-			<div class="encoding-map">
-				{#each chunks as chunk}
-					<EncodedChunk {chunk} on:highlightAsciiValue on:highlightBase64Value on:highlightBitGroups />
-				{/each}
-			</div>
+			<section class="encoding-map">
+				<div>
+					<ul>
+						{#each chunks as chunk}
+							<li>
+								<EncodedChunk {chunk} on:highlightAsciiValue on:highlightBase64Value on:highlightBitGroups />
+							</li>
+						{/each}
+					</ul>
+				</div>
+			</section>
 		</div>
 	</div>
 {/if}
 
 <style lang="postcss">
 	.visualization-wrapper {
-		overflow-x: auto;
-		overflow-y: hidden;
 		margin: 0.625rem auto;
 		background-color: #202020;
 		border: 1px solid rgba(216, 216, 216, 0.45);
@@ -51,11 +55,9 @@
 	}
 
 	.visualization {
-		font-size: 0.7rem;
 		display: flex;
 		flex-flow: row nowrap;
-		justify-content: flex-start;
-		align-items: center;
+		overflow: hidden;
 		width: auto;
 		padding: 0.3125rem;
 		white-space: nowrap;
@@ -76,20 +78,36 @@
 		margin: 0.3125rem 0 0 0;
 	}
 
-	.encoding-map {
-		display: flex;
-		flex-flow: row nowrap;
-	}
-
 	code {
 		display: block;
 		color: #f2f2f2;
 		font-weight: 400;
-		letter-spacing: 0.3125rem;
+		letter-spacing: 0.75px;
 		text-transform: uppercase;
 	}
 
 	.hide-element {
 		display: none;
+	}
+
+	.encoding-map {
+		overflow-x: auto;
+	}
+
+	.encoding-map div {
+		overflow: hidden;
+	}
+
+	.encoding-map ul {
+		display: flex;
+		flex-flow: row nowrap;
+		overflow-x: scroll;
+		cursor: ew-resize;
+		block-size: calc(100% + 25px);
+	}
+
+	.encoding-map li {
+		flex: 1 0 auto;
+		block-size: calc(100% - 25px);
 	}
 </style>

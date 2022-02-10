@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Base64ByteMap,HexByteMap,OutputChunk } from '$lib/types';
+	import type { Base64ByteMap, HexByteMap, OutputChunk } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let chunk: OutputChunk;
@@ -7,8 +7,10 @@
 	let asciiBitGroupHovered: string;
 	let b64DigitHovered: string;
 	let b64BitGroupHovered: string;
-	const highlightAsciiDispatcher = createEventDispatcher<{ highlightAsciiValue: {highlight: boolean, ascii: string} }>();
-  const highlightBase64Dispatcher = createEventDispatcher<{ highlightBase64Value: {highlight: boolean, base64: string} }>();
+	const highlightAsciiDispatcher =
+		createEventDispatcher<{ highlightAsciiValue: { highlight: boolean; ascii: string } }>();
+	const highlightBase64Dispatcher =
+		createEventDispatcher<{ highlightBase64Value: { highlight: boolean; base64: string } }>();
 
 	function highlightAsciiValue(highlight: boolean, hexMap: HexByteMap) {
 		asciiByteHovered = highlight ? hexMap.ascii : null;
@@ -45,7 +47,7 @@
 							class:hide-element={!chunk.isASCII}
 							class:black={hexMap.isWhiteSpace}
 						>
-							{hexMap.ascii}
+							{@html hexMap.isWhiteSpace ? '&nbsp;' : hexMap.ascii}
 						</code>
 						<code data-ascii={hexMap.ascii} data-hex-byte="{hexMap.hex_word1}{hexMap.hex_word2}">
 							<span class="hex-digit" data-hex={hexMap.hex_word1} data-four-bit={hexMap.bin_word1}>
@@ -108,8 +110,9 @@
 							class:small-font={b64Map.isPad}
 							data-base={b64Map.b64}
 							data-decimal={b64Map.dec}
+							class:black={b64Map.isPad}
 						>
-							{b64Map.dec}
+							{@html b64Map.isPad ? '&nbsp;' : b64Map.dec}
 						</code>
 						<code class="base64-digit" data-base={b64Map.b64} data-decimal={b64Map.dec}>
 							{b64Map.b64}
@@ -125,6 +128,11 @@
 	code,
 	span {
 		margin: 0;
+	}
+
+	.hex-map,
+	.base64-map {
+		transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
 	}
 
 	.hex-map {
@@ -181,12 +189,6 @@
 		display: block;
 	}
 
-	*[data-bit-group],
-	*[data-hex-byte],
-	*[data-base] {
-		transition: background-color 0.35s ease-in-out;
-	}
-
 	.hex-byte:nth-child(even) code {
 		font-weight: 700;
 		color: #fe2d6c;
@@ -223,7 +225,7 @@
 	}
 
 	.hex-byte code.black,
-	.base64-binary span.black {
+	.base64 code.black {
 		color: #202020;
 		transition: color 0.35s ease-in-out;
 	}
