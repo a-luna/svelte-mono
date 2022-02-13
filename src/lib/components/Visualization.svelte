@@ -1,14 +1,12 @@
 <script lang="ts">
 	import EncodedChunk from '$lib/components/EncodedChunk.svelte';
-	import type { AppMode, DecodingOutput, EncodingOutput, OutputChunk } from '$lib/types';
+	import { state } from '$lib/state';
 
-	export let mode: AppMode;
-	export let encodingOutput: EncodingOutput;
-	export let decodingOutput: DecodingOutput;
-	let chunks: OutputChunk[] = [];
-
-	$: chunks = mode === 'encode' ? encodingOutput.chunks : decodingOutput.chunks;
-	$: isASCII = mode === 'encode' ? encodingOutput.inputEncoding === 'ASCII' : decodingOutput.outputEncoding === 'ASCII';
+	$: chunks = $state.mode === 'encode' ? $state.encoderOutput.chunks : $state.decoderOutput.chunks;
+	$: isASCII =
+		$state.mode === 'encode'
+			? $state.encoderOutput.inputEncoding === 'ASCII'
+			: $state.decoderOutput.outputEncoding === 'ASCII';
 </script>
 
 {#if chunks.length}
@@ -35,7 +33,7 @@
 					<ul>
 						{#each chunks as chunk}
 							<li>
-								<EncodedChunk {chunk} on:highlightAsciiValue on:highlightBase64Value on:highlightBitGroups />
+								<EncodedChunk {chunk} on:highlightHexByteValue on:highlightBase64Value on:highlightBitGroups />
 							</li>
 						{/each}
 					</ul>
@@ -47,8 +45,7 @@
 
 <style lang="postcss">
 	.visualization-wrapper {
-		margin: 0.625rem auto;
-		background-color: #202020;
+		background-color: var(--page-bg-color);
 		border: 1px solid rgba(216, 216, 216, 0.45);
 		border-radius: 0.375rem;
 		padding: 0.3125rem 0.625rem;
@@ -109,5 +106,10 @@
 	.encoding-map li {
 		flex: 1 0 auto;
 		block-size: calc(100% - 25px);
+		border-right: 1px solid rgba(216, 216, 216, 0.45);
+	}
+
+	.encoding-map li:last-child {
+		border: none;
 	}
 </style>

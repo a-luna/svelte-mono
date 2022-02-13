@@ -1,27 +1,20 @@
 <script lang="ts">
+	import { state } from '$lib/state';
 	import type { Base64ByteMap, HexByteMap, OutputChunk } from '$lib/types';
-	import { createEventDispatcher } from 'svelte';
 
 	export let chunk: OutputChunk;
-	let asciiByteHovered: string;
-	let asciiBitGroupHovered: string;
-	let b64DigitHovered: string;
-	let b64BitGroupHovered: string;
-	const highlightAsciiDispatcher =
-		createEventDispatcher<{ highlightAsciiValue: { highlight: boolean; ascii: string } }>();
-	const highlightBase64Dispatcher =
-		createEventDispatcher<{ highlightBase64Value: { highlight: boolean; base64: string } }>();
 
-	function highlightAsciiValue(highlight: boolean, hexMap: HexByteMap) {
-		asciiByteHovered = highlight ? hexMap.ascii : null;
-		asciiBitGroupHovered = highlight ? hexMap.groupId : null;
-		highlightAsciiDispatcher('highlightAsciiValue', { highlight, ascii: asciiByteHovered });
+	$: isASCII =
+		$state.mode === 'encode' ? $state.encoderOutput.isASCII : $state.decoderOutput.outputEncoding === 'ASCII';
+
+	function highlightHexByteValue(highlight: boolean, hexMap: HexByteMap) {
+		$state.highlightHexByte = highlight ? hexMap.byte : null;
+		$state.highlightHexBitGroup = highlight ? hexMap.groupId : null;
 	}
 
 	function highlightBase64Value(highlight: boolean, b64Map: Base64ByteMap) {
-		b64DigitHovered = highlight ? b64Map.b64 : null;
-		b64BitGroupHovered = highlight ? b64Map.groupId : null;
-		highlightBase64Dispatcher('highlightBase64Value', { highlight, base64: b64DigitHovered });
+		$state.highlightBase64 = highlight ? b64Map.b64 : null;
+		$state.highlightB64BitGroup = highlight ? b64Map.groupId : null;
 	}
 </script>
 
@@ -31,25 +24,25 @@
 			{#each chunk.hexMap as hexMap}
 				<div
 					class="hex-byte"
-					class:highlight-ascii={asciiByteHovered === hexMap.ascii}
+					class:highlight-hex-byte={$state.highlightHexByte === hexMap.byte}
 					data-eight-bit="{hexMap.bin_word1}{hexMap.bin_word2}"
-					data-hex-byte="{hexMap.hex_word1}{hexMap.hex_word2}"
+					data-hex-byte={hexMap.byte}
 					data-ascii={hexMap.ascii}
 					data-bit-group={hexMap.groupId}
-					on:mouseenter={() => highlightAsciiValue(true, hexMap)}
-					on:mouseleave={() => highlightAsciiValue(false, hexMap)}
+					on:mouseenter={() => highlightHexByteValue(true, hexMap)}
+					on:mouseleave={() => highlightHexByteValue(false, hexMap)}
 				>
 					<div>
 						<code
 							class="hex-ascii"
 							data-ascii={hexMap.ascii}
-							data-hex-byte="{hexMap.hex_word1}{hexMap.hex_word2}"
+							data-hex-byte={hexMap.byte}
 							class:hide-element={!chunk.isASCII}
 							class:black={hexMap.isWhiteSpace}
 						>
 							{@html hexMap.isWhiteSpace ? '&nbsp;' : hexMap.ascii}
 						</code>
-						<code data-ascii={hexMap.ascii} data-hex-byte="{hexMap.hex_word1}{hexMap.hex_word2}">
+						<code data-ascii={hexMap.ascii} data-hex-byte={hexMap.byte}>
 							<span class="hex-digit" data-hex={hexMap.hex_word1} data-four-bit={hexMap.bin_word1}>
 								{hexMap.hex_word1}
 							</span>
@@ -62,7 +55,7 @@
 								<code>
 									{#each hexMap.bitGroups as bitGroup}
 										<span
-											class:highlight-bit-group={bitGroup.groupId === b64BitGroupHovered}
+											class:highlight-bit-group={bitGroup.groupId === $state.highlightB64BitGroup}
 											data-bit-group={bitGroup.groupId}
 										>
 											{bitGroup.bits}
@@ -81,7 +74,7 @@
 			{#each chunk.base64Map as b64Map}
 				<div
 					class="base64"
-					class:highlight-base64={b64DigitHovered === b64Map.b64}
+					class:highlight-base64={$state.highlightBase64 === b64Map.b64}
 					data-six-bit={b64Map.bin}
 					data-decimal={b64Map.dec}
 					data-base={b64Map.b64}
@@ -95,7 +88,7 @@
 								<code>
 									{#each b64Map.bitGroups as bitGroup}
 										<span
-											class:highlight-bit-group={bitGroup.groupId === asciiBitGroupHovered}
+											class:highlight-bit-group={bitGroup.groupId === $state.highlightHexBitGroup}
 											class:black={b64Map.isPad}
 											data-bit-group={bitGroup.groupId}
 										>
@@ -146,12 +139,7 @@
 	.single-chunk {
 		display: flex;
 		flex-flow: column nowrap;
-		border-right: 1px solid rgba(216, 216, 216, 0.45);
 		padding: 0 0.625rem;
-	}
-
-	.single-chunk:last-child {
-		border: none;
 	}
 
 	.hex-map,
@@ -190,23 +178,24 @@
 	}
 
 	.hex-byte:nth-child(even) code {
-		font-weight: 700;
-		color: #fe2d6c;
+		color: var(--indigo4);
 	}
 
 	.hex-byte:nth-child(odd) code {
-		font-weight: 400;
-		color: #19f6d6;
+		color: var(--green4);
 	}
 
 	.base64:nth-child(even) code {
-		font-weight: 700;
-		color: #7a32ff;
+		color: var(--red4);
 	}
 
 	.base64:nth-child(odd) code {
+		color: var(--teal4);
+	}
+
+	.hex-byte code,
+	.base64 code {
 		font-weight: 400;
-		color: #7fff6e;
 	}
 
 	.hex-binary code,
@@ -226,7 +215,22 @@
 
 	.hex-byte code.black,
 	.base64 code.black {
-		color: #202020;
+		color: var(--page-bg-color);
 		transition: color 0.35s ease-in-out;
+	}
+
+	/* :global(.highlight-bit-group),
+	:global(.highlight-hex-byte),
+	:global(.highlight-base64) {
+		background-color: hsla(0, 0%, 35%, 0.5);
+		transition: background-color 0.35s ease-in-out;
+	} */
+
+	:global(.highlight-bit-group),
+	:global(.highlight-hex-byte),
+	:global(.highlight-base64) {
+		text-shadow: var(--hl-text-shadow) 1px 0px 1px, var(--hl-text-shadow) 0px 1px 1px,
+			var(--hl-text-shadow) -1px 0px 1px, var(--hl-text-shadow) 0px -1px 1px;
+		transition: text-shadow 0.35s ease-in-out;
 	}
 </style>

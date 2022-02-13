@@ -1,16 +1,14 @@
 <script lang="ts">
 	import { getChunkedAsciiMap, getChunkedBase64Map } from '$lib/maps';
-	import type { AppMode, AsciiCharacterMap, DecodingOutput, EncodingOutput } from '$lib/types';
+	import { state } from '$lib/state';
+	import type { AsciiCharacterMap } from '$lib/types';
 
-	export let mode: AppMode;
-	export let encodingOutput: EncodingOutput;
-	export let decodingOutput: DecodingOutput;
-	export let highlightAscii: string = null;
-	export let highlightBase64: string = null;
 	const asciiMapChunked: AsciiCharacterMap[][] = getChunkedAsciiMap();
 
-	$: showASCII = mode === 'encode' ? encodingOutput.isASCII : decodingOutput.outputEncoding === 'ASCII';
-	$: base64Encoding = mode === 'encode' ? encodingOutput.outputEncoding : decodingOutput.inputEncoding;
+	$: showASCII =
+		$state.mode === 'encode' ? $state.encoderOutput.isASCII : $state.decoderOutput.outputEncoding === 'ASCII';
+	$: base64Encoding =
+		$state.mode === 'encode' ? $state.encoderOutput.outputEncoding : $state.decoderOutput.inputEncoding;
 	$: base64MapChunked = getChunkedBase64Map(base64Encoding);
 	$: b64AlphabetDetail = base64Encoding == 'base64' ? 'Standard' : 'URL and Filename safe';
 </script>
@@ -25,7 +23,7 @@
 						{#each asciiMap as ascii}
 							<div
 								class="ascii-lookup"
-								class:highlight-ascii={ascii.ascii === highlightAscii}
+								class:highlight-hex-byte={ascii.dec === $state.highlightHexByte}
 								data-ascii={ascii.ascii}
 								data-hex-byte={ascii.hex}
 								data-eight-bit={ascii.bin}
@@ -43,13 +41,13 @@
 	{/if}
 	<div class="table-wrapper">
 		<h2>Base64 Alphabet ({b64AlphabetDetail})</h2>
-		<div class="base64-lookup-table" class:blue={mode === 'encode'} class:green={mode === 'decode'}>
+		<div class="base64-lookup-table">
 			{#each base64MapChunked as base64Map}
 				<div class="base64-lookup-chunk">
 					{#each base64Map as base64}
 						<div
 							class="base64-lookup"
-							class:highlight-base64={base64.b64 === highlightBase64}
+							class:highlight-base64={base64.b64 === $state.highlightBase64}
 							data-base={base64.b64}
 							data-six-bit={base64.bin}
 							data-decimal={base64.dec}
@@ -67,17 +65,19 @@
 
 <style lang="postcss">
 	.lookup-tables {
-		font-size: 0.7rem;
+		font-size: 0.8rem;
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: space-around;
 	}
 
 	.table-wrapper h2 {
-		font-size: 0.875rem;
+		font-size: 1rem;
 		font-weight: 400;
+		line-height: 1;
+		letter-spacing: 0.8px;
 		text-align: center;
-		margin: 0.625rem 0;
+		margin: 0 0 0.625rem 0;
 	}
 
 	.ascii-lookup-table,
@@ -119,7 +119,11 @@
 	}
 
 	.ascii-lookup code {
-		color: #fa72f8;
+		color: var(--sec-color);
+	}
+
+	.base64-lookup code {
+		color: var(--pri-color);
 	}
 
 	.ascii-lookup code,

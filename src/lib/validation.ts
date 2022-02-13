@@ -6,11 +6,10 @@ const BASE64_STANDARD_FORMAT = /^[0-9A-Za-z+/]+[=]{0,2}$/;
 const BASE64_URL_ALPHABET = /^[0-9A-Za-z-_=]+$/;
 const BASE64_URL_FORMAT = /^[0-9A-Za-z-_]+[=]{0,2}$/;
 
-export function validateAsciiBytes(byteArray: number[]) {
-	return byteArray.every((byte: number) => byte > 31 && byte < 127);
-}
+export const validateAsciiBytes = (byteArray: number[]): boolean =>
+	byteArray.every((byte: number) => byte > 31 && byte < 127);
 
-export function validateTextEncoding(input: string, encoding: StringEncoding): Result {
+export function validateTextEncoding(input: string, encoding: StringEncoding): Result<string> {
 	if (input.length == 0) {
 		const error = 'You must provide a string value to encode, text box is empty.';
 		return { success: false, error: Error(error) };
@@ -23,15 +22,15 @@ export function validateTextEncoding(input: string, encoding: StringEncoding): R
 	}
 }
 
-function validateAsciiString(input: string): Result {
+function validateAsciiString(input: string): Result<string> {
 	if (!/^[ -~]+$/.test(input)) {
 		const error = `"${input}" contains data that is not part of the ASCII printable character set.`;
 		return { success: false, error: Error(error) };
 	}
-	return { success: true };
+	return { success: true, value: input };
 }
 
-function validateHexString(input: string): Result {
+function validateHexString(input: string): Result<string> {
 	const originalInput = input;
 	if (/^0x\w+$/.test(input)) {
 		input = input.replace(/0x/, '');
@@ -44,7 +43,7 @@ function validateHexString(input: string): Result {
 		const error = `Hex string must have an even number of digits, length(${originalInput}) = ${input.length}`;
 		return { success: false, error: Error(error) };
 	}
-	return { success: true };
+	return { success: true, value: input };
 }
 
 export function validateBase64Encoding(input: string, encoding: Base64Encoding): Result {

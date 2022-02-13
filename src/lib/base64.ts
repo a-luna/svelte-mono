@@ -1,54 +1,55 @@
 import { BIN_TO_HEX } from './constants';
-import { createDecodingInputChunks, createEncodingInputChunks } from './dataPrep';
+import { validateDecoderInput, validateEncoderInput } from './dataPrep';
 import { getBase64Alphabet } from './maps';
 import type {
 	Base64Encoding,
 	Decoder,
-	DecodingInputChunk,
-	DecodingOutput,
+	DecoderInput,
+	DecoderInputChunk,
+	DecoderOutput,
 	Encoder,
-	EncodingInputChunk,
-	EncodingOutput,
+	EncoderInput,
+	EncoderInputChunk,
+	EncoderOutput,
 	HexByteMap,
 	OutputChunk,
-	Result,
 	StringEncoding
 } from './types';
 import { asciiStringFromByteArray, hexStringFromByteArray, hexStringToByteArray } from './util';
-import { validateAsciiBytes, validateBase64Encoding, validateTextEncoding } from './validation';
+import { validateAsciiBytes } from './validation';
 
 export class Base64Encoder implements Encoder {
-	validateInput = (input: string, encoding: StringEncoding): Result => validateTextEncoding(input, encoding);
-	encode = (input: string, stringEncoding: StringEncoding, b64Encoding: Base64Encoding): EncodingOutput =>
-		b64Encode(input, stringEncoding, b64Encoding);
+	validateInput = (input: string, stringEncoding: StringEncoding, base64Encoding: Base64Encoding): EncoderInput =>
+		validateEncoderInput(input, stringEncoding, base64Encoding);
+	encode = (encoderInput: EncoderInput): EncoderOutput => b64Encode(encoderInput);
 }
 
 export class Base64Decoder implements Decoder {
-	validateInput = (input: string, encoding: Base64Encoding): Result => validateBase64Encoding(input, encoding);
-	decode = (encodedText: string, base64Encoding: Base64Encoding): DecodingOutput =>
-		b64Decode(encodedText, base64Encoding);
+	validateInput = (input: string, base64Encoding: Base64Encoding): DecoderInput =>
+		validateDecoderInput(input, base64Encoding);
+	decode = (decoderInput: DecoderInput): DecoderOutput => b64Decode(decoderInput);
 }
 
-function b64Encode(input: string, stringEncoding: StringEncoding, base64Encoding: Base64Encoding): EncodingOutput {
-	const encodedChunks = createEncodingInputChunks(input, stringEncoding).map((chunk, i) =>
-		encodeChunk(chunk, i, base64Encoding)
-	);
+function b64Encode(encoderInput: EncoderInput): EncoderOutput {
+	const { inputText, inputEncoding, outputEncoding } = encoderInput;
+	const encodedChunks = encoderInput.chunks.map((chunk, i) => encodeChunk(chunk, i, outputEncoding));
 	return {
-		input,
-		inputEncoding: stringEncoding,
+		input: inputText,
+		inputEncoding,
 		isASCII: encodedChunks.every((chunk) => chunk.isASCII),
 		output: encodedChunks.map((chunk) => chunk.base64).join(''),
-		outputEncoding: base64Encoding,
+		bytes: encodedChunks.map((chunk) => chunk.bytes).flat(),
+		outputEncoding,
 		chunks: encodedChunks
 	};
 }
 
 function encodeChunk(
-	encodingInputChunkMap: EncodingInputChunk,
+	encoderInputChunkMap: EncoderInputChunk,
 	chunkNumber: number,
 	base64Encoding: Base64Encoding
 ): OutputChunk {
-	const { bytes, hex, ascii, binary, inputMap, isPadded } = encodingInputChunkMap;
+	const { bytes, hex, ascii, binary, inputMap, isPadded } = encoderInputChunkMap;
 	const base64Alphabet = getBase64Alphabet(base64Encoding);
 	const length = binary.length / 6;
 	const outputMap = Array.from({ length }, (_, i) => {
@@ -90,23 +91,24 @@ function encodeChunk(
 	return addBitGroupsToOutputChunk(outputChunk, chunkNumber);
 }
 
-function b64Decode(encodedText: string, base64Encoding: Base64Encoding): DecodingOutput {
-	const inputChunks = createDecodingInputChunks(encodedText, base64Encoding);
-	const hexMap = createHexMap(inputChunks);
-	const outputChunks = mapHexBytesToBase64Chunks(encodedText, base64Encoding, hexMap, inputChunks);
+function b64Decode(decoderInput: DecoderInput): DecoderOutput {
+	const { inputText, inputEncoding } = decoderInput;
+	const hexMap = createHexMap(decoderInput.chunks);
+	const outputChunks = mapHexBytesToBase64Chunks(inputText, inputEncoding, hexMap, decoderInput.chunks);
 	const hexString = outputChunks.map((chunk) => chunk.hex).join('');
 	const bytes = hexStringToByteArray(hexString);
 	const isASCII = validateAsciiBytes(bytes);
 	return {
-		input: encodedText,
-		inputEncoding: base64Encoding,
+		input: inputText,
+		inputEncoding,
 		output: isASCII ? asciiStringFromByteArray(bytes) : hexString,
+		bytes: outputChunks.map((chunk) => chunk.bytes).flat(),
 		outputEncoding: isASCII ? 'ASCII' : 'hex',
 		chunks: outputChunks
 	};
 }
 
-function createHexMap(inputChunks: DecodingInputChunk[]): HexByteMap[] {
+function createHexMap(inputChunks: DecoderInputChunk[]): HexByteMap[] {
 	const binary = inputChunks.map((b64) => b64.binary).join('');
 	const totalBytes = (binary.length / 8) | 0;
 	return Array.from({ length: totalBytes }, (_, i) => {
@@ -134,7 +136,7 @@ function mapHexBytesToBase64Chunks(
 	encodedText: string,
 	base64Encoding: Base64Encoding,
 	hexMap: HexByteMap[],
-	inputChunks: DecodingInputChunk[]
+	inputChunks: DecoderInputChunk[]
 ): OutputChunk[] {
 	return Array.from({ length: inputChunks.length }, (_, i) => {
 		const bytesInChunk = [];
@@ -201,35 +203,23 @@ function addBitGroupsToOutputChunk(chunk: OutputChunk, i: number): OutputChunk {
 		{ groupId: `base64-chunk-${i + 1}-digit-1`, bits: base64Bits1 },
 		{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2a }
 	];
-	if (chunk.hexMap.length == 1) {
-		base64Digit2.bitGroups = [
-			{ groupId: `hex-chunk-${i + 1}-byte-1`, bits: hexBits1b },
-			{ groupId: 'pad', bits: hexBits2a }
-		];
+	chunk.hexMap[1].groupId = `hex-chunk-${i + 1}-byte-2`;
+	chunk.hexMap[1].bitGroups = [
+		{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2b },
+		{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3a }
+	];
+	if (chunk.hexMap.length == 2) {
 		base64Digit3.bitGroups = [
-			{ groupId: 'pad', bits: hexBits2b },
+			{ groupId: `hex-chunk-${i + 1}-byte-2`, bits: hexBits2b },
 			{ groupId: 'pad', bits: hexBits3a }
 		];
 		base64Digit4.bitGroups = [{ groupId: 'pad', bits: hexBits3b }];
 	} else {
-		chunk.hexMap[1].groupId = `hex-chunk-${i + 1}-byte-2`;
-		chunk.hexMap[1].bitGroups = [
-			{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2b },
-			{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3a }
+		chunk.hexMap[2].groupId = `hex-chunk-${i + 1}-byte-3`;
+		chunk.hexMap[2].bitGroups = [
+			{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3b },
+			{ groupId: `base64-chunk-${i + 1}-digit-4`, bits: base64Bits4 }
 		];
-		if (chunk.hexMap.length == 2) {
-			base64Digit3.bitGroups = [
-				{ groupId: `hex-chunk-${i + 1}-byte-2`, bits: hexBits2b },
-				{ groupId: 'pad', bits: hexBits3a }
-			];
-			base64Digit4.bitGroups = [{ groupId: 'pad', bits: hexBits3b }];
-		} else {
-			chunk.hexMap[2].groupId = `hex-chunk-${i + 1}-byte-3`;
-			chunk.hexMap[2].bitGroups = [
-				{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3b },
-				{ groupId: `base64-chunk-${i + 1}-digit-4`, bits: base64Bits4 }
-			];
-		}
 	}
 	return chunk;
 }

@@ -1,6 +1,6 @@
 import type { HexByteMap, StringEncoding } from '.';
 
-export interface EncodingInputChunk {
+export interface EncoderInputChunk {
 	bytes: number[];
 	encoding: StringEncoding;
 	hex: string;

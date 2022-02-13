@@ -15,6 +15,7 @@ describe('validateTextEncoding', () => {
 	it('can identify a valid ASCII string', () => {
 		const result = validateTextEncoding('dog', 'ASCII');
 		expect(result.success).toBe(true);
+		expect(result.value).toBe('dog');
 	});
 
 	it('can identify an invalid ASCII string (contains non-printable characters)', () => {
@@ -26,9 +27,11 @@ describe('validateTextEncoding', () => {
 	it('can identify a valid hex string', () => {
 		const result1 = validateTextEncoding('1b57cc', 'hex');
 		expect(result1.success).toBe(true);
+		expect(result1.value).toBe('1b57cc');
 
 		const result2 = validateTextEncoding('0x1b57cc', 'hex');
 		expect(result2.success).toBe(true);
+		expect(result2.value).toBe('1b57cc');
 	});
 
 	it('can identify an invalid hex string (contains non-hex digits)', () => {

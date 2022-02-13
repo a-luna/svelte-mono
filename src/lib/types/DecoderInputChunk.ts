@@ -1,6 +1,6 @@
 import type { Base64ByteMap, Base64Encoding } from '.';
 
-export interface DecodingInputChunk {
+export interface DecoderInputChunk {
 	base64: string;
 	binary: string;
 	encoding: Base64Encoding;

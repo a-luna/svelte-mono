@@ -39,6 +39,7 @@
 		"prettier-plugin-svelte": "^2.6.0",
 		"sass": "^1.49.7",
 		"svelte": "^3.46.4",
+		"svelte-icons": "^2.1.0",
 		"svelte-loader": "^3.1.2",
 		"tailwindcss": "^2.2.19",
 		"ts-jest": "^27.1.3",

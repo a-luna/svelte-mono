@@ -3,13 +3,15 @@ import { Base64Decoder, Base64Encoder } from '../base64';
 describe('Base64Encoder', () => {
 	it('can encode a valid ascii string to standard base64', () => {
 		const encoder = new Base64Encoder();
-		const encoded = encoder.encode('dog', 'ASCII', 'base64');
+		const encodingInput = encoder.validateInput('dog', 'ASCII', 'base64');
+		const encoded = encoder.encode(encodingInput);
 		expect(encoded.output).toBe('ZG9n');
 	});
 
 	it('can decode a string that produces more than one output chunk', () => {
 		const encoder = new Base64Encoder();
-		const encoded = encoder.encode('this is a test', 'ASCII', 'base64');
+		const encodingInput = encoder.validateInput('this is a test', 'ASCII', 'base64');
+		const encoded = encoder.encode(encodingInput);
 		expect(encoded.output).toBe('dGhpcyBpcyBhIHRlc3Q=');
 		expect(encoded.chunks.length).toBe(5);
 		const chunk1 = encoded.chunks[0];
@@ -44,7 +46,8 @@ describe('Base64Encoder', () => {
 describe('Base64Decoder', () => {
 	it('can decode a valid base64 string to ascii', () => {
 		const decoder = new Base64Decoder();
-		const decoded = decoder.decode('ZG9n', 'base64');
+		const decodingInput = decoder.validateInput('ZG9n', 'base64');
+		const decoded = decoder.decode(decodingInput);
 		expect(decoded.output).toBe('dog');
 	});
 });

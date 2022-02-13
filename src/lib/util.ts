@@ -9,14 +9,10 @@ export const stringToByteArray = (s: string, encoding: StringEncoding): number[]
 export const asciiStringToByteArray = (s: string): number[] => Array.from(s, (_, i) => s.charCodeAt(i));
 
 export const hexStringToByteArray = (hexString: string): number[] =>
-	Array.from({ length: hexString.length / 2 }, (_, i) => parseInt(hexString.substr(i * 2, 2), 16));
+	Array.from({ length: hexString.length / 2 }, (_, i) => parseInt(hexString.slice(i * 2, i * 2 + 2), 16));
 
-export const asciiStringFromByteArray = (byteArray: number[]): string => {
-	if (validateAsciiBytes(byteArray)) {
-		return Array.from(byteArray, (x) => String.fromCharCode(x)).join('');
-	}
-	return '';
-};
+export const asciiStringFromByteArray = (byteArray: number[]): string =>
+	validateAsciiBytes(byteArray) ? Array.from(byteArray, (x) => String.fromCharCode(x)).join('') : '';
 
 export const asciiStringFromHexString = (hexString: string): string =>
 	asciiStringFromByteArray(hexStringToByteArray(hexString));
@@ -47,3 +43,6 @@ export function chunkify<T>(inputList: T[], chunkSize: number): T[][] {
 		inputList.slice(i * chunkSize, Math.min(inputList.length, i * chunkSize + chunkSize))
 	);
 }
+
+export const getCSSPropValue = (element: HTMLElement, propName: string): string =>
+	getComputedStyle(element).getPropertyValue(propName);
