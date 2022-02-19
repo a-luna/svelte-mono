@@ -1,5 +1,5 @@
-import { getBase64Alphabet } from './maps';
-import type { Base64Encoding, Result, StringEncoding } from './types';
+import { getBase64Alphabet } from '$lib/maps';
+import type { Base64Encoding, Result, StringEncoding } from '$lib/types';
 
 const BASE64_STANDARD_ALPHABET = /^[0-9A-Za-z+/=]+$/;
 const BASE64_STANDARD_FORMAT = /^[0-9A-Za-z+/]+[=]{0,2}$/;
@@ -10,7 +10,7 @@ export const validateAsciiBytes = (byteArray: number[]): boolean =>
 	byteArray.every((byte: number) => byte > 31 && byte < 127);
 
 export function validateTextEncoding(input: string, encoding: StringEncoding): Result<string> {
-	if (input.length == 0) {
+	if (!input || input.length == 0) {
 		const error = 'You must provide a string value to encode, text box is empty.';
 		return { success: false, error: Error(error) };
 	}
@@ -40,14 +40,14 @@ function validateHexString(input: string): Result<string> {
 		return { success: false, error: Error(error) };
 	}
 	if (input.length % 2 > 0) {
-		const error = `Hex string must have an even number of digits, length(${originalInput}) = ${input.length}`;
+		const error = `Hex string must have an even number of digits, length('${originalInput}') = ${input.length}`;
 		return { success: false, error: Error(error) };
 	}
 	return { success: true, value: input };
 }
 
 export function validateBase64Encoding(input: string, encoding: Base64Encoding): Result {
-	if (input.length == 0) {
+	if (!input || input.length == 0) {
 		const error = 'You must provide a string value to encode, text box is empty.';
 		return { success: false, error: Error(error) };
 	}

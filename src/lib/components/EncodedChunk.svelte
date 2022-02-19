@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { state } from '$lib/state';
+	import { state } from '$lib/stores/state';
 	import type { Base64ByteMap, HexByteMap, OutputChunk } from '$lib/types';
 
 	export let chunk: OutputChunk;
@@ -186,7 +186,7 @@
 	}
 
 	.base64:nth-child(even) code {
-		color: var(--red4);
+		color: var(--pink4);
 	}
 
 	.base64:nth-child(odd) code {

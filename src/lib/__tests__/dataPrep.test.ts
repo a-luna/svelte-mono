@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import { validateDecoderInput, validateEncoderInput } from '../dataPrep';
+import { validateDecoderInput, validateEncoderInput } from '$lib/dataPrep';
 
 describe('validateEncoderInputChunks', () => {
 	it('can create a map (no whitespace, no pad characters) for a 3-byte chunk of an ASCII string', () => {

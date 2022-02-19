@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getChunkedAsciiMap, getChunkedBase64Map } from '$lib/maps';
-	import { state } from '$lib/state';
+	import { state } from '$lib/stores/state';
 	import type { AsciiCharacterMap } from '$lib/types';
 
 	const asciiMapChunked: AsciiCharacterMap[][] = getChunkedAsciiMap();

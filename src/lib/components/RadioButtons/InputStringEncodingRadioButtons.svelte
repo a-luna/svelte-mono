@@ -1,0 +1,37 @@
+<script lang="ts">
+	import RadioButtons from '$lib/components/Buttons/RadioButtons.svelte';
+	import { state } from '$lib/stores/state';
+	import { isEncoding, isStringEncoding } from '$lib/typeguards';
+
+	const inputEncodingOptionDefs = {
+		title: 'Input Encoding',
+		form: 'encode-form',
+		groupId: 'input-encoding',
+		groupName: 'inputEncoding',
+		buttons: [
+			{
+				label: 'ASCII',
+				id: 'inputEncoding1',
+				value: 'ASCII',
+				checked: $state.encoderInput.inputEncoding === 'ASCII'
+			},
+			{
+				label: 'Hex',
+				id: 'inputEncoding2',
+				value: 'hex',
+				checked: $state.encoderInput.inputEncoding === 'hex'
+			}
+		]
+	};
+
+	function handleRadioButtonSelectionChanged(
+		e: CustomEvent<{ groupId: string; groupName: string; selectionId: string; value: string }>
+	) {
+		const { value } = e.detail;
+		if (isEncoding(value) && isStringEncoding(value)) {
+			state.setInputEncoding(value);
+		}
+	}
+</script>
+
+<RadioButtons {...inputEncodingOptionDefs} on:radioButtonSelectionChanged={handleRadioButtonSelectionChanged} />

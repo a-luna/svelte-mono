@@ -1,4 +1,4 @@
-import { Base64Decoder, Base64Encoder } from '../base64';
+import { Base64Decoder, Base64Encoder } from '$lib/base64';
 
 describe('Base64Encoder', () => {
 	it('can encode a valid ascii string to standard base64', () => {

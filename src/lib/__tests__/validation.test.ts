@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import { validateBase64Encoding, validateTextEncoding } from '../validation';
+import { validateBase64Encoding, validateTextEncoding } from '$lib/validation';
 
 describe('validateTextEncoding', () => {
 	it('can identify an empty string as an invalid value', () => {
@@ -51,11 +51,11 @@ describe('validateTextEncoding', () => {
 	it('can identify an invalid hex string (length is not an even number)', () => {
 		const result1 = validateTextEncoding('157cc', 'hex');
 		expect(result1.success).toBe(false);
-		expect(result1.error.message).toBe('Hex string must have an even number of digits, length(157cc) = 5');
+		expect(result1.error.message).toBe("Hex string must have an even number of digits, length('157cc') = 5");
 
 		const result2 = validateTextEncoding('0x157cc', 'hex');
 		expect(result2.success).toBe(false);
-		expect(result2.error.message).toBe('Hex string must have an even number of digits, length(0x157cc) = 5');
+		expect(result2.error.message).toBe("Hex string must have an even number of digits, length('0x157cc') = 5");
 	});
 });
 

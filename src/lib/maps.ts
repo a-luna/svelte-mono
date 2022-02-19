@@ -1,6 +1,6 @@
-import { B64_ALPHABET_COMMON, BIN_TO_HEX } from './constants';
-import type { Base64Encoding, AsciiCharacterMap, Base64CharacterMap } from './types';
-import { decimalToBinaryString, chunkify } from './util';
+import { B64_ALPHABET_COMMON, BIN_TO_HEX } from '$lib/constants';
+import type { AsciiCharacterMap, Base64CharacterMap, Base64Encoding } from '$lib/types';
+import { chunkify, decimalToBinaryString } from '$lib/util';
 
 export const getBase64LookupMap = (base64Encoding: Base64Encoding): { [key: string]: number } => {
 	const base64Lookup = {};

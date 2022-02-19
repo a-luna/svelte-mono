@@ -1,6 +1,6 @@
 <script lang="ts">
 	import EncodedChunk from '$lib/components/EncodedChunk.svelte';
-	import { state } from '$lib/state';
+	import { state } from '$lib/stores/state';
 
 	$: chunks = $state.mode === 'encode' ? $state.encoderOutput.chunks : $state.decoderOutput.chunks;
 	$: isASCII =
@@ -9,27 +9,27 @@
 			: $state.decoderOutput.outputEncoding === 'ASCII';
 </script>
 
-{#if chunks.length}
-	<div class="visualization-wrapper">
-		<div class="visualization">
-			<div class="encoding-key">
-				<div class="input-key">
-					<div>
-						<code class:hide-element={!isASCII}>ASCII</code>
-						<code>Hex</code>
-						<code>8-bit</code>
-					</div>
-				</div>
-				<div class="output-key">
-					<div>
-						<code>6-bit</code>
-						<code>Decimal</code>
-						<code>Base64</code>
-					</div>
+<div class="visualization-wrapper">
+	<div class="visualization">
+		<div class="encoding-key">
+			<div class="input-key">
+				<div>
+					<code class:hide-element={!isASCII}>ASCII</code>
+					<code>Hex</code>
+					<code>8-bit</code>
 				</div>
 			</div>
-			<section class="encoding-map">
+			<div class="output-key">
 				<div>
+					<code>6-bit</code>
+					<code>Decimal</code>
+					<code>Base64</code>
+				</div>
+			</div>
+		</div>
+		<section class="encoding-map">
+			<div>
+				{#if chunks.length}
 					<ul>
 						{#each chunks as chunk}
 							<li>
@@ -37,16 +37,16 @@
 							</li>
 						{/each}
 					</ul>
-				</div>
-			</section>
-		</div>
+				{/if}
+			</div>
+		</section>
 	</div>
-{/if}
+</div>
 
 <style lang="postcss">
 	.visualization-wrapper {
 		background-color: var(--page-bg-color);
-		border: 1px solid rgba(216, 216, 216, 0.45);
+		border: 1px solid hsla(0, 0%, 85%, 0.45);
 		border-radius: 0.375rem;
 		padding: 0.3125rem 0.625rem;
 	}
@@ -106,7 +106,7 @@
 	.encoding-map li {
 		flex: 1 0 auto;
 		block-size: calc(100% - 25px);
-		border-right: 1px solid rgba(216, 216, 216, 0.45);
+		border-right: 1px solid hsla(0, 0%, 85%, 0.25);
 	}
 
 	.encoding-map li:last-child {

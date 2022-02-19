@@ -97,15 +97,15 @@
 	--pink3: hsl(315, 100%, 55%);
 	--pink4: hsl(301, 93%, 71%);
 
-	--bg-color-red: var(--red2);
-	--bg-color-pink: var(--pink3);
+	--bg-color-red: var(--red4);
+	--bg-color-pink: var(--pink4);
 	--bg-color-orange: var(--orange2);
 	--bg-color-teal: var(--blue-green2);
 	--bg-color-green: var(--green4);
 	--bg-color-blue: var(--teal4);
-	--bg-color-gray: var(--gray4);
+	--bg-color-gray: var(--gray1);
 	--bg-color-yellow: var(--yellow3);
-	--bg-color-indigo: var(--indigo2);
+	--bg-color-indigo: var(--indigo4);
 
 	--fg-color-on-red: var(--black4);
 	--fg-color-on-pink: var(--black4);
@@ -168,22 +168,14 @@ main.decode {
 main {
 	display: flex;
 	flex-flow: column nowrap;
+	justify-content: space-between;
 	gap: 1.5rem;
 	position: relative;
-	max-width: 800px;
+	width: 510px;
 	background-color: var(--page-bg-color);
 	padding: 1.25rem;
 	margin: 0 auto;
 	box-sizing: border-box;
-}
-@media screen and (max-width: 400px) {
-	:global(body) {
-		background-color: var(--page-bg-color);
-	}
-
-	main {
-		padding: 15px;
-	}
 }
 
 code,
@@ -220,10 +212,12 @@ textarea {
 	margin: auto;
 }
 
-.blue {
-	color: hsl(171, 92%, 53%);
-}
+@media screen and (max-width: 400px) {
+	:global(body) {
+		background-color: var(--page-bg-color);
+	}
 
-.green {
-	color: hsl(113, 100%, 72%);
+	main {
+		padding: 15px;
+	}
 }

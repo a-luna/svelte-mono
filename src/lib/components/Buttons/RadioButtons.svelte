@@ -6,10 +6,9 @@
 	export let buttons = [];
 	let instances = {};
 	import { createEventDispatcher } from 'svelte';
-	const radioButtonSelectionChangedEventDispatcher =
-		createEventDispatcher<{
-			radioButtonSelectionChanged: { groupId: string; groupName: string; selectionId: string; value: string };
-		}>();
+	const radioButtonSelectionChangedEventDispatcher = createEventDispatcher<{
+		radioButtonSelectionChanged: { groupId: string; groupName: string; selectionId: string; value: string };
+	}>();
 
 	export const reset = () => buttons.forEach((button) => (instances[button.id].checked = button.checked));
 
@@ -50,6 +49,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		align-items: center;
+		width: 100%;
 	}
 	.radio-buttons {
 		display: flex;
@@ -61,8 +61,9 @@
 	fieldset {
 		border: 1px solid rgba(216, 216, 216, 0.45);
 		border-radius: 4px;
-		padding: 2px 4px;
-		font-size: 1.4rem;
+		padding: 4px 0;
+		font-size: 0.875rem;
+		width: 100%;
 	}
 	legend {
 		color: #f2f2f2;
@@ -87,7 +88,7 @@
 		max-width: calc(100% - 2em);
 	}
 	input[type='radio']:focus + label {
-		color: #fa72f8;
+		color: var(--sec-color);
 	}
 	input[type='radio'] + label::before {
 		content: '';
@@ -114,10 +115,10 @@
 		color: #555;
 	}
 	input[type='radio']:checked + label {
-		color: #fa72f8;
+		color: var(--sec-color);
 	}
 	input[type='radio']:checked + label::before {
-		background-color: #fa72f8;
+		background-color: var(--sec-color);
 		box-shadow: inset 0 0 0 0.15em rgba(0, 0, 0, 0.95);
 	}
 </style>

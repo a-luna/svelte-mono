@@ -9,7 +9,7 @@
 	let bgColor: HslColor;
 	let edgeGradient: string = '';
 
-	$: fontSize = size === 'xs' ? '1rem' : size === 'sm' ? '1.2rem' : size === 'md' ? '1.4rem' : '1.5rem';
+	$: fontSize = size === 'xs' ? '0.8rem' : size === 'sm' ? '1rem' : size === 'md' ? '1.2rem' : '1.4rem';
 	$: fgColorCssPropName = disabled ? '--button-disabled-text-color' : `--fg-color-on-${color}`;
 	$: bgColorCssPropName = disabled ? '--button-disabled-bg-color' : `--bg-color-${color}`;
 	$: if (typeof window !== 'undefined')
@@ -21,10 +21,7 @@
 <button {disabled} class="pushable" style="font-size: {fontSize};" on:click>
 	<span class="shadow" />
 	<span class="edge" style="background: {edgeGradient}" />
-	<span
-		class="front"
-		style="color: var({fgColorCssPropName}); text-shadow: var({bgColorCssPropName}) 1px 1px 0; background: var({bgColorCssPropName}) linear-gradient(hsla(0, 0%, 100%, 0.2), transparent)"
-	>
+	<span class="front" style="color: var({fgColorCssPropName}); background: var({bgColorCssPropName})">
 		<slot />
 	</span>
 </button>

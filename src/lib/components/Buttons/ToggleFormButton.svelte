@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { state } from '$lib/state';
+	import { state } from '$lib/stores/state';
 	import type { ButtonColor } from '$lib/types';
 	import FaExchangeAlt from 'svelte-icons/fa/FaExchangeAlt.svelte';
 	import RoundButton from './RoundButton.svelte';

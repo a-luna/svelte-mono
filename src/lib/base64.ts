@@ -1,6 +1,6 @@
-import { BIN_TO_HEX } from './constants';
-import { validateDecoderInput, validateEncoderInput } from './dataPrep';
-import { getBase64Alphabet } from './maps';
+import { BIN_TO_HEX } from '$lib/constants';
+import { validateDecoderInput, validateEncoderInput } from '$lib/dataPrep';
+import { getBase64Alphabet } from '$lib/maps';
 import type {
 	Base64Encoding,
 	Decoder,
@@ -14,9 +14,9 @@ import type {
 	HexByteMap,
 	OutputChunk,
 	StringEncoding
-} from './types';
-import { asciiStringFromByteArray, hexStringFromByteArray, hexStringToByteArray } from './util';
-import { validateAsciiBytes } from './validation';
+} from '$lib/types';
+import { asciiStringFromByteArray, hexStringFromByteArray, hexStringToByteArray } from '$lib/util';
+import { validateAsciiBytes } from '$lib/validation';
 
 export class Base64Encoder implements Encoder {
 	validateInput = (input: string, stringEncoding: StringEncoding, base64Encoding: Base64Encoding): EncoderInput =>
@@ -203,23 +203,32 @@ function addBitGroupsToOutputChunk(chunk: OutputChunk, i: number): OutputChunk {
 		{ groupId: `base64-chunk-${i + 1}-digit-1`, bits: base64Bits1 },
 		{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2a }
 	];
-	chunk.hexMap[1].groupId = `hex-chunk-${i + 1}-byte-2`;
-	chunk.hexMap[1].bitGroups = [
-		{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2b },
-		{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3a }
-	];
-	if (chunk.hexMap.length == 2) {
-		base64Digit3.bitGroups = [
-			{ groupId: `hex-chunk-${i + 1}-byte-2`, bits: hexBits2b },
-			{ groupId: 'pad', bits: hexBits3a }
+
+	if (chunk.hexMap.length > 1) {
+		chunk.hexMap[1].groupId = `hex-chunk-${i + 1}-byte-2`;
+		chunk.hexMap[1].bitGroups = [
+			{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2b },
+			{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3a }
 		];
-		base64Digit4.bitGroups = [{ groupId: 'pad', bits: hexBits3b }];
 	} else {
+		base64Digit2.bitGroups = [
+			{ groupId: `hex-chunk-${i + 1}-byte-1`, bits: hexBits1b },
+			{ groupId: `pad`, bits: hexBits2a }
+		];
+	}
+
+	if (chunk.hexMap.length > 2) {
 		chunk.hexMap[2].groupId = `hex-chunk-${i + 1}-byte-3`;
 		chunk.hexMap[2].bitGroups = [
 			{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3b },
 			{ groupId: `base64-chunk-${i + 1}-digit-4`, bits: base64Bits4 }
 		];
+	} else {
+		base64Digit3.bitGroups = [
+			{ groupId: `hex-chunk-${i + 1}-byte-2`, bits: hexBits2b },
+			{ groupId: 'pad', bits: hexBits3a }
+		];
+		base64Digit4.bitGroups = [{ groupId: 'pad', bits: hexBits3b }];
 	}
 	return chunk;
 }

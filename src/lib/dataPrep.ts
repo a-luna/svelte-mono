@@ -1,5 +1,5 @@
-import { BIN_TO_HEX } from './constants';
-import { getBase64LookupMap } from './maps';
+import { BIN_TO_HEX, defaultEncoderInput } from '$lib/constants';
+import { getBase64LookupMap } from '$lib/maps';
 import type {
 	Base64ByteMap,
 	Base64Encoding,
@@ -8,15 +8,15 @@ import type {
 	HexByteMap,
 	Result,
 	StringEncoding
-} from './types';
+} from '$lib/types';
 import {
 	asciiStringFromByteArray,
 	byteArrayToBinaryStringArray,
 	divmod,
 	hexStringFromByteArray,
 	stringToByteArray
-} from './util';
-import { validateBase64Encoding, validateTextEncoding } from './validation';
+} from '$lib/util';
+import { validateBase64Encoding, validateTextEncoding } from '$lib/validation';
 
 export function validateEncoderInput(
 	inputText: string,
@@ -25,7 +25,7 @@ export function validateEncoderInput(
 ): EncoderInput {
 	const validationResult = validateTextEncoding(inputText, inputEncoding);
 	if (!validationResult.success) {
-		return { inputText, inputEncoding, outputEncoding, validationResult };
+		return { ...defaultEncoderInput, inputText, inputEncoding, outputEncoding, validationResult };
 	}
 	inputText = validationResult.value;
 	return createEncoderInput(inputText, inputEncoding, outputEncoding, validationResult);

@@ -1,69 +1,37 @@
 <script lang="ts">
-	import FormResults from '$lib/components/FormResults.svelte';
-	import FormTitle from '$lib/components/FormTitle.svelte';
-	import LookupTables from '$lib/components/LookupTables.svelte';
+	import InputForm from '$lib/components/InputForm.svelte';
+	import InputResults from '$lib/components/InputResults.svelte';
+	import OutputResults from '$lib/components/OutputResults.svelte';
+	import InputBase64EncodingRadioButtons from '$lib/components/RadioButtons/InputBase64EncodingRadioButtons.svelte';
+	import InputStringEncodingRadioButtons from '$lib/components/RadioButtons/InputStringEncodingRadioButtons.svelte';
+	import OutputBase64EncodingRadioButtons from '$lib/components/RadioButtons/OutputBase64EncodingRadioButtons.svelte';
 	import Visualization from '$lib/components/Visualization.svelte';
+	import { state } from '$lib/stores/state';
 </script>
 
-<div class="main-form">
-	<FormTitle />
-	<div class="outer-form-wrapper">
-		<div class="form-group">
-			<!-- {#if showEncodeForm}
-      <EncodeForm
-        bind:this={encodeForm}
-        on:inputTextChanged={plainTextChanged}
-        on:inputEncodingChanged={plainTextEncodingChanged}
-        on:outputEncodingChanged={outputBase64EncodingChanged}
-        on:encodingSucceeded={encodingSucceeded}
-        on:errorOccurred={errorOccurred} />
-    {:else}
-      <DecodeForm
-        bind:this={decodeForm}
-        on:inputTextChanged={encodedTextChanged}
-        on:inputEncodingChanged={inputBase64EncodingChanged}
-        on:decodingSucceeded={decodingSucceeded}
-        on:errorOccurred={errorOccurred} />
-    {/if} -->
-		</div>
-		<FormResults />
-	</div>
+<InputForm />
+<div class="outer-form-wrapper">
+	{#if $state.mode === 'encode'}
+		<InputStringEncodingRadioButtons />
+	{:else}
+		<InputBase64EncodingRadioButtons />
+	{/if}
+	<InputResults />
+	{#if $state.mode === 'encode'}
+		<OutputBase64EncodingRadioButtons />
+	{:else}
+		<div class="placeholder" />
+	{/if}
+	<OutputResults />
 </div>
-
 <Visualization />
-<LookupTables />
 
 <style lang="postcss">
-	.main-form {
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: space-between;
-		gap: 1.5rem;
-	}
 	.outer-form-wrapper {
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: space-between;
-	}
-	.form-group {
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: space-between;
-		align-self: flex-start;
-		margin: 0 15px auto 0;
-		flex: 0 0 340px;
-	}
-
-	@media screen and (max-width: 670px) {
-		.main-form {
-			flex-flow: row wrap;
-		}
-		.form-group {
-			min-height: 0;
-			margin: auto auto 15px auto;
-		}
-		.form-group {
-			flex: 0 0 100%;
-		}
+		display: grid;
+		grid-template-columns: 135px auto;
+		grid-template-rows: repeat(2, auto);
+		grid-auto-flow: row;
+		grid-gap: 0.5rem 0.75rem;
 	}
 </style>

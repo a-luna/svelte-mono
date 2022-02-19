@@ -1,5 +1,5 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
+	"extends": "@tsconfig/svelte/tsconfig.json",
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"module": "es2020",
@@ -26,8 +26,8 @@
 		"paths": {
 			"$lib/*": ["src/lib/*"]
 		},
-    "types": ["node", "svelte"]
+		"types": ["node", "svelte"]
 	},
 	"include": ["src/**/*"],
-  "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
+	"exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }

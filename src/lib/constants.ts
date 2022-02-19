@@ -1,3 +1,5 @@
+import type { DecoderInput, DecoderOutput, EncoderInput, EncoderOutput } from './types';
+
 export const B64_ALPHABET_COMMON = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 export const BIN_TO_HEX = {
@@ -17,4 +19,50 @@ export const BIN_TO_HEX = {
 	'1101': 'D',
 	'1110': 'E',
 	'1111': 'F'
+};
+
+export const defaultDecoderInput: DecoderInput = {
+	inputText: '',
+	inputEncoding: 'base64',
+	validationResult: { success: false },
+	base64: '',
+	binary: '',
+	totalChunks: 0,
+	lastChunkPadded: false,
+	padLength: 0,
+	chunks: []
+};
+
+export const defaultDecoderOutput: DecoderOutput = {
+	input: '',
+	inputEncoding: 'base64',
+	output: '',
+	bytes: [],
+	outputEncoding: 'ASCII',
+	chunks: []
+};
+
+export const defaultEncoderInput: EncoderInput = {
+	inputText: '',
+	inputEncoding: 'ASCII',
+	outputEncoding: 'base64url',
+	validationResult: { success: true },
+	bytes: [],
+	hex: '',
+	ascii: '',
+	binary: '',
+	totalChunks: 0,
+	lastChunkPadded: false,
+	padLength: 0,
+	chunks: []
+};
+
+export const defaultEncoderOutput: EncoderOutput = {
+	input: '',
+	inputEncoding: 'ASCII',
+	isASCII: true,
+	output: '',
+	bytes: [],
+	outputEncoding: 'base64',
+	chunks: []
 };

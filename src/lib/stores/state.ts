@@ -1,51 +1,14 @@
+import { Base64Decoder, Base64Encoder } from '$lib/base64';
+import { defaultDecoderInput, defaultDecoderOutput, defaultEncoderInput, defaultEncoderOutput } from '$lib/constants';
+import { isBase64Encoding, isStringEncoding } from '$lib/typeguards';
+import type { AppSettings, AppState, Base64Encoding, DecoderInput, EncoderInput, Encoding } from '$lib/types';
 import { writable } from 'svelte/store';
-import { Base64Decoder, Base64Encoder } from './base64';
-import { isBase64Encoding, isStringEncoding } from './typeguards';
-import type { AppSettings, AppState, Base64Encoding, Encoding, StringEncoding } from './types';
 
-const defaultSettings = {
-	decoderInput: {
-		inputText: '',
-		inputEncoding: 'base64' as Base64Encoding,
-		validationResult: { success: false },
-		base64: '',
-		binary: '',
-		totalChunks: 0,
-		lastChunkPadded: false,
-		padLength: 0,
-		chunks: []
-	},
-	decoderOutput: {
-		input: '',
-		inputEncoding: 'base64' as Base64Encoding,
-		output: '',
-		bytes: [],
-		outputEncoding: 'ASCII' as StringEncoding,
-		chunks: []
-	},
-	encoderInput: {
-		inputText: '',
-		inputEncoding: 'ASCII' as StringEncoding,
-		outputEncoding: 'base64' as Base64Encoding,
-		validationResult: { success: false },
-		bytes: [],
-		hex: '',
-		ascii: '',
-		binary: '',
-		totalChunks: 0,
-		lastChunkPadded: false,
-		padLength: 0,
-		chunks: []
-	},
-	encoderOutput: {
-		input: '',
-		inputEncoding: 'ASCII' as StringEncoding,
-		isASCII: true,
-		output: '',
-		bytes: [],
-		outputEncoding: 'base64' as Base64Encoding,
-		chunks: []
-	}
+export const defaultSettings = {
+	decoderInput: defaultDecoderInput,
+	decoderOutput: defaultDecoderOutput,
+	encoderInput: defaultEncoderInput,
+	encoderOutput: defaultEncoderOutput
 };
 
 function createAppStateStore(): AppState {
@@ -63,44 +26,46 @@ function createAppStateStore(): AppState {
 	function changeInputText(input: string, settings: AppSettings) {
 		if (settings.mode === 'encode') {
 			settings.encoderInput.inputText = input;
-			settings.encoderInput.validationResult = { success: false };
 		} else {
 			settings.decoderInput.inputText = input;
-			settings.decoderInput.validationResult = { success: false };
 		}
-		return settings;
+		return validateInput(settings);
 	}
 
 	function changeInputEncoding(encoding: Encoding, settings: AppSettings) {
 		if (settings.mode === 'encode' && isStringEncoding(encoding)) {
 			settings.encoderInput.inputEncoding = encoding;
-			settings.encoderInput.validationResult = { success: false };
 		} else if (settings.mode === 'decode' && isBase64Encoding(encoding)) {
 			settings.decoderInput.inputEncoding = encoding;
-			settings.decoderInput.validationResult = { success: false };
 		}
-		return settings;
+		return validateInput(settings);
 	}
 
 	function changeOutputEncoding(encoding: Base64Encoding, settings: AppSettings) {
 		if (settings.mode === 'encode') {
 			settings.encoderInput.outputEncoding = encoding;
 		}
-		return settings;
+		return validateInput(settings);
 	}
+
+	const validateEncoderInput = (settings: AppSettings): EncoderInput =>
+		encoder.validateInput(
+			settings.encoderInput.inputText,
+			settings.encoderInput.inputEncoding,
+			settings.encoderInput.outputEncoding
+		);
+	const validateDecoderInput = (settings: AppSettings): DecoderInput =>
+		decoder.validateInput(settings.decoderInput.inputText, settings.decoderInput.inputEncoding);
 
 	function validateInput(settings: AppSettings) {
 		if (settings.mode === 'encode') {
-			settings.encoderInput = encoder.validateInput(
-				settings.encoderInput.inputText,
-				settings.encoderInput.inputEncoding,
-				settings.encoderInput.outputEncoding
-			);
+			settings.encoderInput = settings.encoderInput.inputText
+				? validateEncoderInput(settings)
+				: { validationResult: { success: true }, ...settings.encoderInput };
 		} else {
-			settings.decoderInput = decoder.validateInput(
-				settings.decoderInput.inputText,
-				settings.decoderInput.inputEncoding
-			);
+			settings.decoderInput = settings.decoderInput.inputText
+				? validateDecoderInput(settings)
+				: { validationResult: { success: true }, ...settings.decoderInput };
 		}
 		return settings;
 	}
@@ -114,7 +79,14 @@ function createAppStateStore(): AppState {
 		return settings;
 	}
 
-	const reset = (settings: AppSettings): AppSettings => ({ ...settings, ...defaultSettings });
+	const reset = (settings: AppSettings): AppSettings => ({
+		mode: 'encode',
+		highlightHexByte: null,
+		highlightBase64: '',
+		highlightHexBitGroup: '',
+		highlightB64BitGroup: '',
+		...defaultSettings
+	});
 
 	return {
 		set,

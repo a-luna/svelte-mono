@@ -3,13 +3,13 @@ import { validateAsciiBytes } from './validation';
 
 export const divmod = (x: number, y: number): [number, number] => [(x / y) | 0, x % y];
 
-export const stringToByteArray = (s: string, encoding: StringEncoding): number[] =>
-	encoding === 'ASCII' ? asciiStringToByteArray(s) : hexStringToByteArray(s);
-
 export const asciiStringToByteArray = (s: string): number[] => Array.from(s, (_, i) => s.charCodeAt(i));
 
 export const hexStringToByteArray = (hexString: string): number[] =>
 	Array.from({ length: hexString.length / 2 }, (_, i) => parseInt(hexString.slice(i * 2, i * 2 + 2), 16));
+
+export const stringToByteArray = (s: string, encoding: StringEncoding): number[] =>
+	encoding === 'ASCII' ? asciiStringToByteArray(s) : hexStringToByteArray(s);
 
 export const asciiStringFromByteArray = (byteArray: number[]): string =>
 	validateAsciiBytes(byteArray) ? Array.from(byteArray, (x) => String.fromCharCode(x)).join('') : '';
@@ -17,18 +17,8 @@ export const asciiStringFromByteArray = (byteArray: number[]): string =>
 export const asciiStringFromHexString = (hexString: string): string =>
 	asciiStringFromByteArray(hexStringToByteArray(hexString));
 
-export function hexStringFromByteArray(byteArray: number[]): string {
-	let hexString = '';
-	let nextHexByte: string;
-	for (let i = 0; i < byteArray.length; i++) {
-		nextHexByte = byteArray[i].toString(16); // Integer to base 16
-		if (nextHexByte.length < 2) {
-			nextHexByte = `0${nextHexByte}`; // Otherwise 10 becomes just a instead of 0a
-		}
-		hexString += nextHexByte;
-	}
-	return hexString;
-}
+export const hexStringFromByteArray = (byteArray: number[]): string =>
+	byteArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
 
 export const byteArrayToBinaryStringArray = (byteArray: number[]): string[] =>
 	byteArray.map((byte) => decimalToBinaryString(byte));
@@ -46,3 +36,5 @@ export function chunkify<T>(inputList: T[], chunkSize: number): T[][] {
 
 export const getCSSPropValue = (element: HTMLElement, propName: string): string =>
 	getComputedStyle(element).getPropertyValue(propName);
+
+export const focusInput = (inputElement: HTMLInputElement) => inputElement.focus();
