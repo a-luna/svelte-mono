@@ -1,5 +1,5 @@
 <script lang="ts">
-	import RadioButtons from '$lib/components/Buttons/RadioButtons.svelte';
+	import RadioButtons from '$lib/components/RadioButtons/RadioButtons.svelte';
 	import { state } from '$lib/stores/state';
 	import { isBase64Encoding, isEncoding } from '$lib/typeguards';
 

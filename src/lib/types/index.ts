@@ -1,5 +1,6 @@
 export type { AppSettings } from './AppSettings';
 export type { AppState } from './AppState';
+export type { AppStore } from './AppStore';
 export type { AsciiCharacterMap } from './AsciiCharacterMap';
 export type { Base64ByteMap } from './Base64ByteMap';
 export type { Base64CharacterMap } from './Base64CharacterMap';

@@ -1,12 +1,6 @@
 <script lang="ts">
-	import EncodedChunk from '$lib/components/EncodedChunk.svelte';
-	import { state } from '$lib/stores/state';
-
-	$: chunks = $state.mode === 'encode' ? $state.encoderOutput.chunks : $state.decoderOutput.chunks;
-	$: isASCII =
-		$state.mode === 'encode'
-			? $state.encoderOutput.inputEncoding === 'ASCII'
-			: $state.decoderOutput.outputEncoding === 'ASCII';
+	import EncodedChunk from '$lib/components/Visualization/EncodedChunk.svelte';
+	import { app } from '$lib/stores/app';
 </script>
 
 <div class="visualization-wrapper">
@@ -14,7 +8,7 @@
 		<div class="encoding-key">
 			<div class="input-key">
 				<div>
-					<code class:hide-element={!isASCII}>ASCII</code>
+					<code class:hide-element={!$app.isAscii}>ASCII</code>
 					<code>Hex</code>
 					<code>8-bit</code>
 				</div>
@@ -29,9 +23,9 @@
 		</div>
 		<section class="encoding-map">
 			<div>
-				{#if chunks.length}
+				{#if $app.chunks && $app.chunks.length}
 					<ul>
-						{#each chunks as chunk}
+						{#each $app.chunks as chunk}
 							<li>
 								<EncodedChunk {chunk} on:highlightHexByteValue on:highlightBase64Value on:highlightBitGroups />
 							</li>

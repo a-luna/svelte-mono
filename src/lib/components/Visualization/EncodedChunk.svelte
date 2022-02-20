@@ -4,9 +4,6 @@
 
 	export let chunk: OutputChunk;
 
-	$: isASCII =
-		$state.mode === 'encode' ? $state.encoderOutput.isASCII : $state.decoderOutput.outputEncoding === 'ASCII';
-
 	function highlightHexByteValue(highlight: boolean, hexMap: HexByteMap) {
 		$state.highlightHexByte = highlight ? hexMap.byte : null;
 		$state.highlightHexBitGroup = highlight ? hexMap.groupId : null;

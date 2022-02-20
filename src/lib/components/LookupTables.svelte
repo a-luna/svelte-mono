@@ -1,20 +1,16 @@
 <script lang="ts">
 	import { getChunkedAsciiMap, getChunkedBase64Map } from '$lib/maps';
+	import { app } from '$lib/stores/app';
 	import { state } from '$lib/stores/state';
 	import type { AsciiCharacterMap } from '$lib/types';
 
 	const asciiMapChunked: AsciiCharacterMap[][] = getChunkedAsciiMap();
 
-	$: showASCII =
-		$state.mode === 'encode' ? $state.encoderOutput.isASCII : $state.decoderOutput.outputEncoding === 'ASCII';
-	$: base64Encoding =
-		$state.mode === 'encode' ? $state.encoderOutput.outputEncoding : $state.decoderOutput.inputEncoding;
-	$: base64MapChunked = getChunkedBase64Map(base64Encoding);
-	$: b64AlphabetDetail = base64Encoding == 'base64' ? 'Standard' : 'URL and Filename safe';
+	$: base64MapChunked = getChunkedBase64Map($app.base64Encoding);
 </script>
 
 <div class="lookup-tables">
-	{#if showASCII}
+	{#if $app.isAscii}
 		<div class="table-wrapper">
 			<h2>ASCII Map (Printable Characters)</h2>
 			<div class="ascii-lookup-table">
@@ -40,7 +36,7 @@
 		</div>
 	{/if}
 	<div class="table-wrapper">
-		<h2>Base64 Alphabet ({b64AlphabetDetail})</h2>
+		<h2>Base64 Alphabet ({$app.b64AlphabetDetail})</h2>
 		<div class="base64-lookup-table">
 			{#each base64MapChunked as base64Map}
 				<div class="base64-lookup-chunk">
@@ -132,37 +128,4 @@
 		white-space: nowrap;
 		text-transform: none;
 	}
-
-	/* @media screen and (max-width: 825px) {
-    .lookup-tables {
-      font-size: 10px;
-    }
-    .table-wrapper h2 {
-      font-size: 13px;
-    }
-  }
-
-  @media screen and (max-width: 767px) {
-    .lookup-tables {
-      font-size: 9px;
-    }
-    .table-wrapper h2 {
-      font-size: 13px;
-    }
-  }
-
-  @media screen and (max-width: 720px) {
-    .lookup-tables {
-      font-size: 10px;
-    }
-    .table-wrapper h2 {
-      font-size: 14px;
-    }
-  }
-
-  @media screen and (max-width: 400px) {
-    .lookup-tables {
-      font-size: 10px;
-    }
-  } */
 </style>

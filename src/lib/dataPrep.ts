@@ -1,4 +1,4 @@
-import { BIN_TO_HEX, defaultEncoderInput } from '$lib/constants';
+import { BIN_TO_HEX, defaultDecoderInput, defaultEncoderInput } from '$lib/constants';
 import { getBase64LookupMap } from '$lib/maps';
 import type {
 	Base64ByteMap,
@@ -27,7 +27,9 @@ export function validateEncoderInput(
 	if (!validationResult.success) {
 		return { ...defaultEncoderInput, inputText, inputEncoding, outputEncoding, validationResult };
 	}
-	inputText = validationResult.value;
+	if (inputEncoding === 'hex') {
+		inputText = validationResult.value;
+	}
 	return createEncoderInput(inputText, inputEncoding, outputEncoding, validationResult);
 }
 
@@ -113,7 +115,7 @@ export function createEncoderInputChunk(
 export function validateDecoderInput(inputText: string, inputEncoding: Base64Encoding): DecoderInput {
 	const validationResult = validateBase64Encoding(inputText, inputEncoding);
 	if (!validationResult.success) {
-		return { inputText, inputEncoding, validationResult };
+		return { ...defaultDecoderInput, inputText, inputEncoding, validationResult };
 	}
 	return createDecoderInput(inputText, inputEncoding, validationResult);
 }

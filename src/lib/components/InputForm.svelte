@@ -1,40 +1,29 @@
 <script lang="ts">
-	import PushableButton from '$lib/components/Buttons/PushableButton.svelte';
+	import PushableButton from '$lib/components/PushableButton.svelte';
 	import { alert } from '$lib/stores/alert';
+	import { app } from '$lib/stores/app';
 	import { state } from '$lib/stores/state';
-	import type { ButtonColor } from '$lib/types';
 	import { focusInput } from '$lib/util';
 
-	let switchModeButtonColor: ButtonColor;
-	let errorMessage = '';
 	let inputText: string;
-	let buttonColor: ButtonColor;
+	let inputTextElement: HTMLInputElement;
 
-	$: formTitle = $state.mode === 'encode' ? 'Base64 Encoder' : 'Base64 Decoder';
-	$: switchModeButtonColor = $state.mode === 'encode' ? 'teal' : 'green';
-	$: inputStringIsValid =
-		$state.mode === 'encode'
-			? $state.encoderInput.validationResult.success
-			: $state.decoderInput.validationResult.success;
-	$: buttonColor = inputStringIsValid ? ($state.mode === 'encode' ? 'teal' : 'green') : 'red';
-	$: buttonLabel = $state.mode === 'encode' ? 'Encode' : 'Decode';
-	$: errorMessage =
-		$state.mode === 'encode'
-			? $state.encoderInput.validationResult?.error?.message
-			: $state.decoderInput.validationResult?.error?.message;
 	$: state.setInputText(inputText);
-	$: if (errorMessage) $alert = errorMessage;
+	$: if ($state.resetPerformed) {
+		inputText = '';
+		$state.resetPerformed = false;
+	}
 
 	function toggleMode() {
-		state.reset();
-		if ($state.mode === 'encode') {
-			$state.mode = 'decode';
+		if ($app.encoderMode) {
+			state.changeMode('decode');
 			state.setInputEncoding($state.decoderInput.inputEncoding);
 		} else {
-			$state.mode = 'encode';
+			state.changeMode('encode');
 			state.setInputEncoding($state.encoderInput.inputEncoding);
 			state.setOutputEncoding($state.encoderInput.outputEncoding);
 		}
+		inputTextElement.focus();
 	}
 
 	function handleKeyPress(key: string) {
@@ -44,29 +33,39 @@
 	}
 
 	function submitForm() {
-		if (inputStringIsValid) {
+		if ($app.inputStringIsValid) {
 			state.execute();
+		} else if ($app.errorMessage) {
+			$alert = $app.errorMessage;
 		}
 	}
 </script>
 
-<div class="input-form" class:error={!inputStringIsValid}>
-	<div class="form-title">
-		{formTitle}
-	</div>
-	<PushableButton size={'xs'} color={switchModeButtonColor} on:click={() => toggleMode()}>Switch Mode</PushableButton>
+<div class="input-form" class:error={!$app.inputStringIsValid}>
+	<span class="form-title">
+		{$app.formTitle}
+	</span>
+	<PushableButton size={'xs'} color={$app.switchModeButtonColor} on:click={() => toggleMode()}
+		>Switch Mode</PushableButton
+	>
 	<PushableButton size={'xs'} color={'gray'} on:click={() => state.reset()}>Reset</PushableButton>
-	<input type="text" bind:value={inputText} on:keydown={(e) => handleKeyPress(e.key)} use:focusInput />
-	<PushableButton size={'xs'} color={buttonColor} on:click={() => submitForm()}>{buttonLabel}</PushableButton>
+	<input
+		type="text"
+		bind:this={inputTextElement}
+		bind:value={inputText}
+		on:keydown={(e) => handleKeyPress(e.key)}
+		use:focusInput
+	/>
+	<PushableButton size={'xs'} color={$app.buttonColor} on:click={() => submitForm()}>{$app.buttonLabel}</PushableButton>
 </div>
 
 <style lang="postcss">
 	.input-form {
 		display: grid;
-		grid-template-columns: repeat(3, auto);
-		grid-template-rows: 33px 39px;
+		grid-template-columns: auto auto 87px;
+		grid-template-rows: auto auto;
 		grid-auto-flow: row;
-		align-items: center;
+		align-items: end;
 		grid-gap: 1rem 0.75rem;
 	}
 	.form-title {
@@ -83,13 +82,14 @@
 	}
 	input {
 		grid-column: 1 / span 2;
-		align-self: end;
 		font-size: 1rem;
 		color: var(--pri-color);
 		background-color: var(--page-bg-color);
 		outline: 1px solid var(--pri-color);
 		border: none;
 		border-radius: 6px;
+		margin: auto 0;
+		padding: 0.375rem 0.5rem;
 	}
 	input:focus {
 		outline: 1px solid var(--pri-color);

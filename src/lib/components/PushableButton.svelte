@@ -9,7 +9,7 @@
 	let bgColor: HslColor;
 	let edgeGradient: string = '';
 
-	$: fontSize = size === 'xs' ? '0.8rem' : size === 'sm' ? '1rem' : size === 'md' ? '1.2rem' : '1.4rem';
+	$: fontSize = size === 'xs' ? '0.75rem' : size === 'sm' ? '1rem' : size === 'md' ? '1.2rem' : '1.4rem';
 	$: fgColorCssPropName = disabled ? '--button-disabled-text-color' : `--fg-color-on-${color}`;
 	$: bgColorCssPropName = disabled ? '--button-disabled-bg-color' : `--bg-color-${color}`;
 	$: if (typeof window !== 'undefined')

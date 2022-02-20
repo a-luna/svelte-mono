@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { alert } from '$lib/stores/alert';
 	import { onDestroy } from 'svelte';
+	import FaExclamationTriangle from 'svelte-icons/fa/FaExclamationTriangle.svelte';
 	import { fade, slide } from 'svelte/transition';
 
-	export let duration: number = 3000;
+	export let duration: number = 5000;
 	let timeout: NodeJS.Timeout;
 	let shown: boolean;
 
@@ -35,18 +36,23 @@
 		on:click={() => (shown = false)}
 		class="alert"
 	>
+		<div class="icon">
+			<FaExclamationTriangle />
+		</div>
 		<span>{$alert}</span>
 	</div>
 {/if}
 
 <style lang="postcss">
 	.alert {
-		background-color: hsla(342, 100%, 60%, 0.75);
-		border: 2px solid var(--red4);
+		display: grid;
+		grid-template-columns: 25px auto;
+		gap: 1rem;
+		justify-content: flex-start;
+		align-items: center;
 		color: var(--black4);
-		font-size: 0.9rem;
-		font-weight: 500;
-		font-style: italic;
+		background-color: hsla(342, 100%, 60%, 0.8);
+		border: 2px solid var(--red4);
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -54,8 +60,15 @@
 		z-index: 20;
 		width: 300px;
 		white-space: pre-wrap;
-		padding: 0.5rem 1rem;
+		padding: 0.5rem;
 		margin: 1.5rem auto 0 auto;
 		border-radius: 6px;
+	}
+	span {
+		font-size: 0.875rem;
+		font-weight: 500;
+		font-style: italic;
+		text-align: left;
+		white-space: pre-wrap;
 	}
 </style>

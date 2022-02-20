@@ -2,6 +2,7 @@ import type { AppMode, DecoderInput, DecoderOutput, EncoderInput, EncoderOutput 
 
 export interface AppSettings {
 	mode: AppMode;
+	resetPerformed: boolean;
 	highlightHexByte: number;
 	highlightBase64: string;
 	highlightHexBitGroup: string;
