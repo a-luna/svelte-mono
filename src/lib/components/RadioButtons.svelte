@@ -53,20 +53,20 @@
 	}
 	.radio-buttons {
 		display: flex;
-		flex-flow: column nowrap;
+		flex-flow: row nowrap;
 		margin: 0 2px 2px 2px;
-		justify-content: flex-start;
+		justify-content: space-evenly;
 		padding: 0 5px;
 	}
 	fieldset {
-		border: 1px solid rgba(216, 216, 216, 0.45);
+		border: 1px solid var(--fieldset-border-color);
 		border-radius: 4px;
-		padding: 4px 0;
+		padding: 2px 0;
 		font-size: 0.875rem;
 		width: 100%;
 	}
 	legend {
-		color: #f2f2f2;
+		color: var(--fieldset-title-color);
 		font-weight: 400;
 		margin: 0 auto;
 		padding: 0 3px;

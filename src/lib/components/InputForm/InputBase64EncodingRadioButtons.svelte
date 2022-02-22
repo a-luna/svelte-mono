@@ -1,7 +1,10 @@
 <script lang="ts">
-	import RadioButtons from '$lib/components/RadioButtons/RadioButtons.svelte';
+	import RadioButtons from '$lib/components/RadioButtons.svelte';
 	import { state } from '$lib/stores/state';
 	import { isBase64Encoding, isEncoding } from '$lib/typeguards';
+
+	let buttonsInstance: RadioButtons;
+	export const reset = () => buttonsInstance.reset();
 
 	const inputDecodingButtonDefs = {
 		title: 'Input Encoding',
@@ -29,9 +32,13 @@
 	) {
 		const { value } = e.detail;
 		if (isEncoding(value) && isBase64Encoding(value)) {
-			state.setInputEncoding(value);
+			state.changeInputEncoding(value);
 		}
 	}
 </script>
 
-<RadioButtons {...inputDecodingButtonDefs} on:radioButtonSelectionChanged={handleRadioButtonSelectionChanged} />
+<RadioButtons
+	bind:this={buttonsInstance}
+	{...inputDecodingButtonDefs}
+	on:radioButtonSelectionChanged={handleRadioButtonSelectionChanged}
+/>

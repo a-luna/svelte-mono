@@ -57,7 +57,7 @@
 	.encoding-key {
 		display: flex;
 		flex-flow: column nowrap;
-		color: #f2f2f2;
+		color: var(--fieldset-title-color);
 		font-weight: 400;
 	}
 
@@ -71,7 +71,7 @@
 
 	code {
 		display: block;
-		color: #f2f2f2;
+		color: var(--fieldset-title-color);
 		font-weight: 400;
 		letter-spacing: 0.75px;
 		text-transform: uppercase;

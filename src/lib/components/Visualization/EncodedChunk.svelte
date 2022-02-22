@@ -11,7 +11,7 @@
 
 	function highlightBase64Value(highlight: boolean, b64Map: Base64ByteMap) {
 		$state.highlightBase64 = highlight ? b64Map.b64 : null;
-		$state.highlightB64BitGroup = highlight ? b64Map.groupId : null;
+		$state.highlightBase64BitGroup = highlight ? b64Map.groupId : null;
 	}
 </script>
 
@@ -21,7 +21,7 @@
 			{#each chunk.hexMap as hexMap}
 				<div
 					class="hex-byte"
-					class:highlight-hex-byte={$state.highlightHexByte === hexMap.byte}
+					class:highlight-hex-byte={$state.highlightHexBitGroup === hexMap.groupId}
 					data-eight-bit="{hexMap.bin_word1}{hexMap.bin_word2}"
 					data-hex-byte={hexMap.byte}
 					data-ascii={hexMap.ascii}
@@ -52,7 +52,7 @@
 								<code>
 									{#each hexMap.bitGroups as bitGroup}
 										<span
-											class:highlight-bit-group={bitGroup.groupId === $state.highlightB64BitGroup}
+											class:highlight-bit-group={bitGroup.groupId === $state.highlightBase64BitGroup}
 											data-bit-group={bitGroup.groupId}
 										>
 											{bitGroup.bits}
@@ -71,7 +71,7 @@
 			{#each chunk.base64Map as b64Map}
 				<div
 					class="base64"
-					class:highlight-base64={$state.highlightBase64 === b64Map.b64}
+					class:highlight-base64={$state.highlightBase64BitGroup === b64Map.groupId}
 					data-six-bit={b64Map.bin}
 					data-decimal={b64Map.dec}
 					data-base={b64Map.b64}

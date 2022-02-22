@@ -5,9 +5,11 @@
 <fieldset class="results-out">
 	<legend>Output</legend>
 	<div class="details-wrapper">
-		<div class="encoding">Encoding: {$app.outputEncoding}</div>
+		<div class="encoding"><span class="name">Encoding</span><span class="value">{$app.outputEncoding}</span></div>
 		{#if $app.decoderMode}
-			<div class="byte-length">Total Bytes: {$app.totalBytesOut}</div>
+			<div class="byte-length">
+				<span class="name">Total Bytes</span><span class="value">{$app.totalBytesOut}</span>
+			</div>
 		{/if}
 	</div>
 	<textarea id="copyable-output-text" readonly rows="1" bind:value={$app.outputText} />
@@ -38,7 +40,7 @@
 		padding: 0.4375rem 0 0.375rem 0;
 	}
 	fieldset {
-		border: 1px solid rgba(216, 216, 216, 0.45);
+		border: 1px solid var(--fieldset-border-color);
 		border-radius: 4px;
 		padding: 0.5rem 0.75rem 0.25rem 0.75rem;
 		font-size: 0.9rem;
@@ -48,7 +50,7 @@
 		margin: 0;
 	}
 	legend {
-		color: #f2f2f2;
+		color: var(--fieldset-title-color);
 		font-weight: 400;
 		padding: 0 3px;
 	}
@@ -57,8 +59,14 @@
 		flex-flow: row nowrap;
 		justify-content: flex-start;
 		font-size: 0.7rem;
-		color: #7f7f7f;
 		font-weight: 400;
 		gap: 0.25rem;
+	}
+	.details-wrapper .name {
+		color: var(--options-details-name-color);
+		margin: 0 6px 0 0;
+	}
+	.details-wrapper .value {
+		color: var(--options-details-value-color);
 	}
 </style>

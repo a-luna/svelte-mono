@@ -6,7 +6,7 @@ export interface AppSettings {
 	highlightHexByte: number;
 	highlightBase64: string;
 	highlightHexBitGroup: string;
-	highlightB64BitGroup: string;
+	highlightBase64BitGroup: string;
 	decoderInput: DecoderInput;
 	decoderOutput: DecoderOutput;
 	encoderInput: EncoderInput;
