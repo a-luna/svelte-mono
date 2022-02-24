@@ -48,6 +48,7 @@
 	.visualization {
 		display: flex;
 		flex-flow: row nowrap;
+		gap: 0.625rem;
 		overflow: hidden;
 		width: auto;
 		padding: 0.3125rem;
@@ -101,6 +102,10 @@
 		flex: 1 0 auto;
 		block-size: calc(100% - 25px);
 		border-right: 1px solid hsla(0, 0%, 85%, 0.25);
+	}
+
+	.encoding-map li:first-child {
+		border-left: 1px solid hsla(0, 0%, 85%, 0.25);
 	}
 
 	.encoding-map li:last-child {

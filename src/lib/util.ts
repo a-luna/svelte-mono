@@ -17,11 +17,15 @@ export const asciiStringFromByteArray = (byteArray: number[]): string =>
 export const asciiStringFromHexString = (hexString: string): string =>
 	asciiStringFromByteArray(hexStringToByteArray(hexString));
 
-export const hexStringFromByteArray = (byteArray: number[]): string =>
-	byteArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
+export function hexStringFromByteArray(byteArray: number[], upperCase = false, separator = ''): string {
+	const hex = byteArray.map((byte) => byte.toString(16).padStart(2, '0')).join(separator);
+	return upperCase ? hex.toUpperCase() : hex;
+}
 
 export const byteArrayToBinaryStringArray = (byteArray: number[]): string[] =>
 	byteArray.map((byte) => decimalToBinaryString(byte));
+
+// bytes.map((byte) => byte.toString(16).toUpperCase().padStart(2, '0')).join(' ');
 
 export const decimalToBinaryString = (val: number): string =>
 	`${'0'.repeat(8 - val.toString(2).length)}${val.toString(2)}`;

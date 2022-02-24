@@ -12,7 +12,8 @@ describe('validateEncoderInputChunks', () => {
 				value: 'dog'
 			},
 			bytes: [100, 111, 103],
-			hex: '646f67',
+			hex: '64 6F 67',
+			hexBytes: ['64', '6F', '67'],
 			ascii: 'dog',
 			binary: '011001000110111101100111',
 			totalChunks: 1,
@@ -71,7 +72,8 @@ describe('validateEncoderInputChunks', () => {
 				value: 'do'
 			},
 			bytes: [100, 111],
-			hex: '646f',
+			hex: '64 6F',
+			hexBytes: ['64', '6F'],
 			ascii: 'do',
 			binary: '0110010001101111',
 			totalChunks: 1,
@@ -121,7 +123,8 @@ describe('validateEncoderInputChunks', () => {
 				value: ' do'
 			},
 			bytes: [32, 100, 111],
-			hex: '20646f',
+			hex: '20 64 6F',
+			hexBytes: ['20', '64', '6F'],
 			ascii: ' do',
 			binary: '001000000110010001101111',
 			totalChunks: 1,
@@ -180,7 +183,8 @@ describe('validateEncoderInputChunks', () => {
 				value: ' d'
 			},
 			bytes: [32, 100],
-			hex: '2064',
+			hex: '20 64',
+			hexBytes: ['20', '64'],
 			ascii: ' d',
 			binary: '0010000001100100',
 			totalChunks: 1,
@@ -230,7 +234,8 @@ describe('validateEncoderInputChunks', () => {
 				value: '5f3c0a'
 			},
 			bytes: [95, 60, 10],
-			hex: '5f3c0a',
+			hex: '5F 3C 0A',
+			hexBytes: ['5F', '3C', '0A'],
 			ascii: '',
 			binary: '010111110011110000001010',
 			totalChunks: 1,

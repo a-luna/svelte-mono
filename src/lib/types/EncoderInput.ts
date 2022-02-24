@@ -6,6 +6,7 @@ export interface EncoderInput {
 	outputEncoding: Base64Encoding;
 	validationResult: Result<string>;
 	bytes?: number[];
+	hexBytes?: string[];
 	hex?: string;
 	ascii?: string;
 	binary?: string;

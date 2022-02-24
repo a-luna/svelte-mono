@@ -1,5 +1,6 @@
 import { state } from '$lib/stores/state';
 import type { AppState, AppStore, Base64Encoding, ButtonColor, Encoding, OutputChunk } from '$lib/types';
+import { hexStringFromByteArray } from '$lib/util';
 import type { Readable } from 'svelte/store';
 import { derived } from 'svelte/store';
 
@@ -11,11 +12,8 @@ function createAppStore(state: AppState): Readable<AppStore> {
 		const inputStringIsValid = (): boolean =>
 			encoderMode() ? $state.encoderInput.validationResult.success : $state.decoderInput.validationResult.success;
 
-		const getInputHexBytes = (): string =>
-			$state.encoderInput.bytes.map((byte) => byte.toString(16).toUpperCase().padStart(2, '0')).join(' ');
-
-		const getOutputHexBytes = (): string =>
-			$state.decoderOutput.bytes.map((byte) => byte.toString(16).toUpperCase().padStart(2, '0')).join(' ');
+		const getInputHexBytes = (): string => hexStringFromByteArray($state.encoderInput.bytes, true, ' ');
+		const getOutputHexBytes = (): string => hexStringFromByteArray($state.decoderOutput.bytes, true, ' ');
 
 		const getInputText = (): string =>
 			encoderMode()

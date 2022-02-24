@@ -98,7 +98,7 @@
 		grid-template-rows: 31px auto 31px;
 		grid-auto-flow: row;
 		align-items: end;
-		grid-gap: 0.75rem 0.5rem;
+		grid-gap: 1rem 0.5rem;
 	}
 	.form-title {
 		grid-column: 1 / span 2;

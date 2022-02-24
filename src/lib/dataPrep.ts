@@ -69,7 +69,8 @@ function getEncodingParameters(
 	validationResult: Result<string>
 ): EncoderInput {
 	const bytes = stringToByteArray(inputText, inputEncoding);
-	const hex = hexStringFromByteArray(bytes);
+	const hex = hexStringFromByteArray(bytes, true, ' ');
+	const hexBytes = hex.split(' ');
 	const ascii = inputEncoding === 'ASCII' ? inputText : '';
 	const binary = byteArrayToBinaryStringArray(bytes).join('');
 	const [chunkCount, lastChunkLength] = divmod(bytes.length, 3);
@@ -82,6 +83,7 @@ function getEncodingParameters(
 		outputEncoding,
 		validationResult,
 		bytes,
+		hexBytes,
 		hex,
 		ascii,
 		binary,

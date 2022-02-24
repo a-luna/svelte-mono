@@ -65,6 +65,7 @@
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: space-around;
+		gap: 1.5rem;
 	}
 
 	.table-wrapper h2 {
@@ -83,7 +84,7 @@
 		justify-content: flex-start;
 		border: 1px solid rgba(216, 216, 216, 0.45);
 		border-radius: 0.375rem;
-		margin: 0.625rem auto 0.625rem 0;
+		margin: 0 auto;
 		overflow-x: auto;
 		overflow-y: hidden;
 	}
@@ -91,20 +92,13 @@
 	.ascii-lookup-chunk,
 	.base64-lookup-chunk {
 		border-right: 1px solid rgba(216, 216, 216, 0.45);
-		padding: 0 0.1875rem;
+		padding: 0 0.3125rem;
+		margin: 0.375rem 0;
 	}
 
 	.ascii-lookup-chunk:last-child,
 	.base64-lookup-chunk:last-child {
 		border: none;
-	}
-
-	.ascii-lookup-chunk {
-		margin: 0.1875rem 0;
-	}
-
-	.base64-lookup-chunk {
-		margin: 0.1875rem 0;
 	}
 
 	.ascii-lookup,
