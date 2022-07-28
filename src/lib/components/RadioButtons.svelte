@@ -17,7 +17,7 @@
 			groupId,
 			groupName,
 			selectionId: id,
-			value
+			value,
 		});
 	}
 </script>
@@ -62,7 +62,7 @@
 		border: 1px solid var(--fieldset-border-color);
 		border-radius: 4px;
 		padding: 2px 0;
-		font-size: 0.875rem;
+		font-size: 0.75rem;
 		width: 100%;
 	}
 	legend {
@@ -93,7 +93,7 @@
 	input[type='radio'] + label::before {
 		content: '';
 		background: rgb(37, 37, 37);
-		border: 0.1em solid rgba(216, 216, 216, 0.45);
+		border: 0.1em solid var(--default-border-color);
 		border-radius: 100%;
 		background-color: rgb(37, 37, 37, 80%);
 		display: block;
@@ -120,5 +120,10 @@
 	input[type='radio']:checked + label::before {
 		background-color: var(--sec-color);
 		box-shadow: inset 0 0 0 0.15em rgba(0, 0, 0, 0.95);
+	}
+	@media screen and (min-width: 525px) {
+		fieldset {
+			font-size: 0.875rem;
+		}
 	}
 </style>

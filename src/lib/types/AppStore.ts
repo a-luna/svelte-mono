@@ -1,8 +1,9 @@
-import type { Base64Encoding, ButtonColor, Encoding, OutputChunk } from '.';
+import type { Base64Encoding, ButtonColor, ButtonSize, Encoding, OutputChunk } from '.';
 
 export interface AppStore {
 	encoderMode: boolean;
 	decoderMode: boolean;
+	isMobileDisplay: boolean;
 	inputText: string;
 	outputText: string;
 	totalBytesIn: number;
@@ -16,7 +17,7 @@ export interface AppStore {
 	formTitle: string;
 	switchModeButtonColor: ButtonColor;
 	inputStringIsValid: boolean;
+	buttonSize: ButtonSize;
 	buttonColor: ButtonColor;
 	buttonLabel: string;
-	b64AlphabetDetail: string;
 }

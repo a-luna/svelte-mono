@@ -1,21 +1,23 @@
 <script lang="ts">
+	import FormTitle from '$lib/components/FormTitle.svelte';
 	import InputBase64EncodingRadioButtons from '$lib/components/InputForm/InputBase64EncodingRadioButtons.svelte';
 	import InputStringEncodingRadioButtons from '$lib/components/InputForm/InputStringEncodingRadioButtons.svelte';
 	import OutputBase64EncodingRadioButtons from '$lib/components/InputForm/OutputBase64EncodingRadioButtons.svelte';
+	import InputTextBox from '$lib/components/InputTextBox.svelte';
 	import PushableButton from '$lib/components/PushableButton.svelte';
 	import { alert } from '$lib/stores/alert';
 	import { app } from '$lib/stores/app';
 	import { state } from '$lib/stores/state';
-	import { focusInput } from '$lib/util';
 
 	let inputText: string;
-	let inputTextElement: HTMLInputElement;
+	let inputTextBox: InputTextBox;
 	let inputStringEncodingButtons: InputStringEncodingRadioButtons;
 	let inputBase64EncodingOptions: InputBase64EncodingRadioButtons;
 	let outputBase64EncodingOptions: OutputBase64EncodingRadioButtons;
 
-	$: inputEncodingGridStyles = $state.mode === 'encode' ? 'grid-column: 1 / span 2;' : 'grid-column: 2 / span 2;';
-	$: outputEncodingGridStyles = $state.mode === 'encode' ? 'grid-column: 3 / span 2;' : 'grid-column: 4 / span 1;';
+	$: inputTextBoxGridStyles = 'grid-column: 1 / span 3;';
+	$: inputEncodingGridStyles = $state.mode === 'encode' ? 'flex: 1;' : 'flex: 0 1 50%';
+	$: outputEncodingGridStyles = $state.mode === 'encode' ? 'flex: 0 1 auto;' : '';
 	$: state.changeInputText(inputText);
 	$: if ($state.resetPerformed) {
 		inputText = '';
@@ -24,13 +26,13 @@
 
 	function toggleMode() {
 		state.toggleMode();
-		inputTextElement.focus();
+		inputTextBox.focus();
 	}
 
 	function resetForm() {
 		state.reset();
 		resetRadioButtons();
-		inputTextElement.focus();
+		inputTextBox.focus();
 	}
 
 	function resetRadioButtons() {
@@ -50,22 +52,30 @@
 			$alert = $app.errorMessage;
 		}
 	}
-
-	function handleKeyPress(key: string) {
-		if (key === 'Enter') {
-			submitForm();
-		}
-	}
 </script>
 
-<div class="input-form" class:error={!$app.inputStringIsValid}>
-	<span class="form-title">
-		{$app.formTitle}
-	</span>
-	<PushableButton size={'xs'} color={$app.switchModeButtonColor} on:click={() => toggleMode()}
-		>Switch Mode</PushableButton
-	>
-	<PushableButton size={'xs'} color={'gray'} on:click={() => resetForm()}>Reset</PushableButton>
+<div class="form-top">
+	<FormTitle title={$app.formTitle} />
+	<div class="switch-mode-button-wrapper">
+		<PushableButton
+			size={$app.buttonSize}
+			color={'pri'}
+			width={'100%'}
+			testid={'switch-mode-button'}
+			on:click={() => toggleMode()}>Switch Mode</PushableButton
+		>
+	</div>
+	<div class="reset-form-button-wrapper">
+		<PushableButton
+			size={$app.buttonSize}
+			color={'sec'}
+			width={'100%'}
+			testid={'reset-form-button'}
+			on:click={() => resetForm()}>Reset</PushableButton
+		>
+	</div>
+</div>
+<div class="encoding-options-wrapper">
 	<div class="input-encoding-options" style={inputEncodingGridStyles}>
 		{#if $app.encoderMode}
 			<InputStringEncodingRadioButtons bind:this={inputStringEncodingButtons} />
@@ -80,59 +90,69 @@
 			<div class="placeholder" />
 		{/if}
 	</div>
-	<input
-		type="text"
-		spellcheck="false"
-		bind:this={inputTextElement}
-		bind:value={inputText}
-		on:keydown={(e) => handleKeyPress(e.key)}
-		use:focusInput
-	/>
-	<PushableButton size={'xs'} color={$app.buttonColor} on:click={() => submitForm()}>{$app.buttonLabel}</PushableButton>
 </div>
+<InputTextBox
+	bind:inputText
+	bind:this={inputTextBox}
+	error={!$app.inputStringIsValid}
+	style={inputTextBoxGridStyles}
+	on:submit={() => submitForm()}
+/>
+<PushableButton size={'xs'} color={$app.buttonColor} testid={'execute-button'} on:click={() => submitForm()}
+	>{$app.buttonLabel}</PushableButton
+>
 
 <style lang="postcss">
-	.input-form {
+	.form-top {
 		display: grid;
-		grid-template-columns: auto auto auto 87px;
-		grid-template-rows: 31px auto 31px;
-		grid-auto-flow: row;
-		align-items: end;
-		grid-gap: 1rem 0.5rem;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 31px 31px;
+		grid-gap: 1rem;
+
+		grid-column: 1 / span 4;
+		grid-row: 1 / span 1;
 	}
-	.form-title {
-		grid-column: 1 / span 2;
-		color: var(--pri-color);
-		font-size: 1.8rem;
-		font-weight: 400;
-		text-align: center;
-		letter-spacing: 1.5px;
-		margin: 0;
-		line-height: 1;
-		text-shadow: 2px 2px var(--sec-color), 1.75px 1.75px var(--sec-color), 1.5px 1.5px var(--sec-color),
-			1.25px 1.25px var(--sec-color), 1px 1px var(--sec-color), 0.75px 0.75px var(--sec-color),
-			0.5px 0.5px var(--sec-color), 0.25px 0.25px var(--sec-color);
-	}
-	input {
-		grid-column: 1 / span 3;
-		font-size: 1rem;
-		color: var(--pri-color);
-		background-color: var(--page-bg-color);
-		outline: 1px solid var(--pri-color);
-		border: none;
-		border-radius: 6px;
-		margin: auto 0;
-		padding: 0.375rem 0.5rem;
-	}
-	input:focus {
-		outline: 1px solid var(--pri-color);
-	}
-	.error input {
-		outline: 1px solid var(--red4);
-		color: var(--red4);
+	.encoding-options-wrapper {
+		display: flex;
+		gap: 0.5rem;
+		justify-content: center;
+		grid-column: 1 / span 4;
 	}
 	.input-encoding-options,
 	.output-encoding-options {
 		margin: 0 0 0.25rem 0;
+	}
+	.switch-mode-button-wrapper,
+	.reset-form-button-wrapper {
+		width: 100%;
+	}
+	.switch-mode-button-wrapper {
+		grid-column: 1 / span 1;
+		grid-row: 2 / span 1;
+		justify-self: end;
+	}
+	.reset-form-button-wrapper {
+		grid-column: 2 / span 1;
+		grid-row: 2 / span 1;
+	}
+	@media screen and (min-width: 525px) {
+		.form-top {
+			display: grid;
+			grid-template-columns: 1fr 115px 115px;
+			grid-template-rows: 31px;
+			grid-gap: 1rem;
+
+			grid-column: 1 / span 4;
+			grid-row: 1 / span 1;
+		}
+		.switch-mode-button-wrapper {
+			grid-column: 2 / span 1;
+			grid-row: 1 / span 1;
+			justify-self: center;
+		}
+		.reset-form-button-wrapper {
+			grid-column: 3 / span 1;
+			grid-row: 1 / span 1;
+		}
 	}
 </style>

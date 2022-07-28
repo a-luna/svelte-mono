@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { app } from '$lib/stores/app';
+	import { state } from '$lib/stores/state';
+
+	$: utf8 = $state.encoderOutput.inputEncoding === 'UTF-8';
 </script>
 
 <fieldset class="results-in">
@@ -12,12 +15,14 @@
 			</div>
 		{/if}
 	</div>
-	<textarea id="copyable-input-text" readonly rows="1" bind:value={$app.inputText} />
+	<textarea class:utf8 id="copyable-input-text" readonly rows="1" bind:value={$app.inputText} />
 </fieldset>
 
 <style lang="postcss">
 	.results-in {
 		color: var(--pri-color);
+		grid-column: 1 / span 4;
+		grid-row: 4 / span 1;
 	}
 	#copyable-input-text {
 		font-family: 'Roboto Mono', monospace;
@@ -26,7 +31,6 @@
 		white-space: normal;
 		word-break: break-all;
 		margin: 0;
-		word-break: break-word;
 		width: 100%;
 		background-color: inherit;
 		color: inherit;
@@ -43,7 +47,7 @@
 		border: 1px solid var(--fieldset-border-color);
 		border-radius: 4px;
 		padding: 0.5rem 0.75rem 0.25rem 0.75rem;
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 		line-height: 1;
 	}
 	fieldset:last-child {
@@ -68,5 +72,14 @@
 	}
 	.details-wrapper .value {
 		color: var(--options-details-value-color);
+	}
+	.utf8 {
+		letter-spacing: 5px;
+		font-size: 1rem;
+	}
+	@media screen and (min-width: 525px) {
+		fieldset {
+			font-size: 0.9rem;
+		}
 	}
 </style>

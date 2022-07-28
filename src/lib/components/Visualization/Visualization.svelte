@@ -1,6 +1,11 @@
 <script lang="ts">
 	import EncodedChunk from '$lib/components/Visualization/EncodedChunk.svelte';
 	import { app } from '$lib/stores/app';
+	import { state } from '$lib/stores/state';
+
+	$: isUTF8 = $state.decoderOutput.outputEncoding === 'UTF-8' || $state.encoderOutput.inputEncoding === 'UTF-8';
+	$: textEncoding = isUTF8 || $app.isAscii;
+	$: charType = isUTF8 ? 'UTF-8' : 'ASCII';
 </script>
 
 <div class="visualization-wrapper">
@@ -8,7 +13,7 @@
 		<div class="encoding-key">
 			<div class="input-key">
 				<div>
-					<code class:hide-element={!$app.isAscii}>ASCII</code>
+					<code class:hide-element={!textEncoding}>{charType}</code>
 					<code>Hex</code>
 					<code>8-bit</code>
 				</div>
@@ -23,7 +28,7 @@
 		</div>
 		<section class="encoding-map">
 			<div>
-				{#if $app.chunks && $app.chunks.length}
+				{#if $app.totalBytesOut && $app.chunks && $app.chunks.length}
 					<ul>
 						{#each $app.chunks as chunk}
 							<li>
@@ -39,10 +44,15 @@
 
 <style lang="postcss">
 	.visualization-wrapper {
+		font-size: 0.75rem;
 		background-color: var(--page-bg-color);
 		border: 1px solid hsla(0, 0%, 85%, 0.45);
 		border-radius: 0.375rem;
 		padding: 0.3125rem 0.625rem;
+		overflow: auto;
+
+		grid-column: 1 / span 4;
+		grid-row: 6 / span 1;
 	}
 
 	.visualization {
@@ -60,6 +70,8 @@
 		flex-flow: column nowrap;
 		color: var(--fieldset-title-color);
 		font-weight: 400;
+		padding: 0 0.5rem 0 0;
+		border-right: 1px solid hsla(0, 0%, 85%, 0.45);
 	}
 
 	.input-key {
@@ -96,6 +108,9 @@
 		overflow-x: scroll;
 		cursor: ew-resize;
 		block-size: calc(100% + 25px);
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
 	}
 
 	.encoding-map li {
@@ -104,11 +119,12 @@
 		border-right: 1px solid hsla(0, 0%, 85%, 0.25);
 	}
 
-	.encoding-map li:first-child {
-		border-left: 1px solid hsla(0, 0%, 85%, 0.25);
-	}
-
 	.encoding-map li:last-child {
 		border: none;
+	}
+	@media screen and (min-width: 525px) {
+		.visualization-wrapper {
+			font-size: 0.875rem;
+		}
 	}
 </style>
