@@ -27,16 +27,8 @@ export function createSessionStorageValue<T extends JsonValue>(
 }
 
 export const getAuthToken = (): { Authorization: string } => ({
-  Authorization: `token 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`,
+  Authorization: `token ${process?.env?.GH_TOKEN ?? ""}`,
 });
-
-// export const getAuthToken = (): { Authorization: string } => {
-//   if (process) {
-//     return { Authorization: `token ${process?.env?.GH_TOKEN ?? ""}` };
-//   } else {
-//     return { Authorization: `token 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` };
-//   }
-// };
 
 export const getRandomHexString = (length: number): string =>
   Array.from({ length }, () => Math.floor(Math.random() * 16))
