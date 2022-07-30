@@ -1,0 +1,282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  body {
+    --brand-accent: var(--accent-color);
+    /* https://ishadeed.com/article/defensive-css */
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+  :focus-visible {
+    outline-color: var(--accent-color);
+  }
+  ::selection {
+    background-color: var(--accent-color);
+  }
+  .dark ::selection {
+    color: #1d1d1d;
+  }
+  ::marker {
+    color: var(--accent-color);
+  }
+
+  :is(::-webkit-calendar-picker-indicator, ::-webkit-clear-button, ::-webkit-inner-spin-button, ::-webkit-outer-spin-button) {
+    color: var(--accent-color);
+  }
+
+  /* https://css-tricks.com/two-issues-styling-the-details-element-and-how-to-solve-them/ */
+  details {
+    border: 2px solid var(--accent-color);
+    padding: 0.5rem 1rem;
+  }
+  details > summary {
+    cursor: pointer;
+  }
+
+  details > summary > *:first-child {
+    display: inline;
+  }
+
+  img {
+    /* https://ishadeed.com/article/defensive-css */
+    max-width: 100%;
+    object-fit: cover;
+    background-color: grey;
+  }
+}
+:root {
+  --white: hsl(0 0% 93%);
+  --white-shade1: hsl(0 0% 88%);
+  --white-shade2: hsl(0 0% 83%);
+  --white-shade3: hsl(0 0% 78%);
+  --white-shade4: hsl(0 0% 73%);
+  --white-shade5: hsl(0 0% 68%);
+  --gray: hsl(0 0% 63%);
+  --gray-shade1: hsl(0 0% 58%);
+  --gray-shade2: hsl(0 0% 53%);
+  --gray-shade3: hsl(0 0% 48%);
+  --gray-shade4: hsl(0 0% 43%);
+  --gray-shade5: hsl(0 0% 38%);
+  --gray-shade6: hsl(0 0% 33%);
+  --dark-gray: hsl(0 0% 28%);
+  --dark-gray-shade1: hsl(0 0% 23%);
+  --dark-gray-shade2: hsl(0 0% 20%);
+  --black-tint3: hsl(0 0% 15%);
+  --black-tint2: hsl(0 0% 10%);
+  --black-tint1: hsl(0 0% 5%);
+  --black: hsl(0 0% 0%);
+
+  --red-orange-shade2: hsl(10 89% 37%);
+  --red-orange-shade1: hsl(10 89% 42%);
+  --red-orange: hsl(10 89% 47%);
+  --red-orange-tint1: hsl(10 89% 52%);
+  --red-orange-tint2: hsl(10 89% 57%);
+
+  --yellow-shade2: hsl(60 89% 37%);
+  --yellow-shade1: hsl(60 89% 42%);
+  --yellow: hsl(60 89% 47%);
+  --yellow-tint1: hsl(60 89% 52%);
+  --yellow-tint2: hsl(60 89% 57%);
+
+  --yellow-green-shade2: hsl(76 89% 37%);
+  --yellow-green-shade1: hsl(76 89% 42%);
+  --yellow-green: hsl(76 89% 47%);
+  --yellow-green-tint1: hsl(76 89% 52%);
+  --yellow-green-tint2: hsl(76 89% 57%);
+  
+  --no-hue: 0;
+  --red-hue: 0;
+  --red-orange-hue: 10;
+  --orange-hue: 30;
+  --orange-yellow-hue: 45;
+  --yellow-hue: 60;
+  --yellow-green-hue: 75;
+
+  --green-shade2: hsl(140 89% 37%);
+  --green-shade1: hsl(140 89% 42%);
+  --green: hsl(140 89% 47%);
+  --green-tint1: hsl(140 89% 52%);
+  --green-tint2: hsl(140 89% 57%);
+
+  --aqua-shade2: hsl(168 89% 37%);
+  --aqua-shade1: hsl(168 89% 42%);
+  --aqua: hsl(168 89% 47%);
+  --aqua-tint1: hsl(168 89% 52%);
+  --aqua-tint2: hsl(168 89% 57%);
+
+  --light-blue-shade2: hsl(185 89% 37%);
+  --light-blue-shade1: hsl(185 89% 42%);
+  --light-blue: hsl(185 89% 47%);
+  --light-blue-tint1: hsl(185 89% 52%);
+  --light-blue-tint2: hsl(185 89% 57%);
+
+  --blue-shade2: hsl(215 89% 37%);
+  --blue-shade1: hsl(215 89% 42%);
+  --blue: hsl(215 89% 47%);
+  --blue-tint1: hsl(215 89% 52%);
+  --blue-tint2: hsl(215 89% 57%);
+
+  --indigo-shade2: hsl(256 89% 37%);
+  --indigo-shade1: hsl(256 89% 42%);
+  --indigo: hsl(256 89% 47%);
+  --indigo-tint1: hsl(256 89% 52%);
+  --indigo-tint2: hsl(256 89% 57%);
+
+  --magenta-shade2: hsl(298 89% 37%);
+  --magenta-shade1: hsl(298 89% 42%);
+  --magenta: hsl(298 89% 47%);
+  --magenta-tint1: hsl(298 89% 52%);
+  --magenta-tint2: hsl(298 89% 57%);
+}
+
+body {
+  --header-bg-color: var(--black-tint2);
+  --page-bg-color: var(--black-tint3);
+  --body-text: var(--white-shade1);
+  --accent-color: var(--aqua);
+
+  --button-bg-color: var(--black-tint3);
+  --button-hover-bg-color: var(--black-tint1);
+
+  --scroll-bar-start-color: var(--magenta);
+  --scroll-bar-stop-color: var(--blue);
+
+  --typescript-color-h: 298;
+  --javascript-color-h: 60;
+  --shell-color-h: 256;
+  --python-color-h: 140;
+  --csharp-color-h: 168;
+  --svelte-color-h: 30;
+  --nodejs-color-h: 256;
+  --css-color-h: 298;
+
+  --g-color-1: var(--light-blue);
+  --g-color-2: var(--blue);
+  --g-color-3: var(--indigo);
+  --g-color-1-dim: hsl(185 9% 20%);
+  --g-color-2-dim: hsl(215 9% 20%);
+  --g-color-3-dim: hsl(256 9% 20%);
+  --gradient: linear-gradient(
+    to bottom right,
+    var(--g-color-1),
+    var(--g-color-2),
+    var(--g-color-3)
+  );
+  --gradient-dim: linear-gradient(
+    to bottom right,
+    var(--g-color-1-dim),
+    var(--g-color-2-dim),
+    var(--g-color-3-dim)
+  );
+
+  background-color: var(--dark-gray-shade2);
+}
+
+.gradient {
+  background-clip: padding-box, border-box;
+  background-image: var(--gradient-dim), var(--gradient);
+  background-origin: border-box;
+  border: 1px double transparent;
+  border-radius: 0.5rem;
+}
+
+body::-webkit-scrollbar {
+  width: 0.5rem;
+}
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    var(--scroll-bar-start-color),
+    var(--scroll-bar-stop-color)
+  );
+  border-radius: 4px;
+}
+
+#svelte {
+  background-color: var(--page-bg-color);
+  color: var(--body-text);
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+a {
+  color: var(--light-blue);
+  text-decoration-line: none;
+}
+a:hover {
+  color: var(--light-blue-shade1);
+}
+
+a.index-card .index-card-reactions,
+a.index-card .index-card-date,
+a.index-card .index-card-description {
+  color: var(--text-color);
+}
+
+a.index-card:hover .index-card-title {
+  text-decoration-line: underline;
+}
+
+a.index-card:hover {
+  text-decoration-line: none;
+}
+
+.prose h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  /* margin-left: 1rem; */
+  text-decoration-line: none;
+}
+.prose h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h5 a:hover,
+h6 a:hover {
+  /* margin-left: 1rem; */
+  text-decoration-line: underline;
+}
+.prose h2::before {
+  content: "## ";
+}
+.prose h3::before {
+  content: "### ";
+}
+.prose h4::before {
+  content: "#### ";
+}
+
+button {
+  background-color: var(--button-bg-color);
+}
+button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+/* https://seek-oss.github.io/capsize/ */
+.capsize::before {
+  content: "";
+  margin-bottom: -0.098em;
+  display: table;
+}
+
+.capsize::after {
+  content: "";
+  margin-top: -0.219em;
+  display: table;
+}
+a.feature-card:hover {
+  text-decoration-line: none;
+}
+a.feature-card > div {
+  background-color: var(--page-bg-color);
+}
+a.feature-card:hover > div {
+  background-color: var(--black-tint1);
+}
