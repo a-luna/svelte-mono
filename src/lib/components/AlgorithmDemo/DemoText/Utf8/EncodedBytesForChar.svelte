@@ -115,6 +115,7 @@
 		flex: 0 0 25px;
 		text-align: center;
 		background-color: inherit;
+		font-size: 12px;
 	}
 	.utf8-bytes-for-char > .utf8-char {
 		color: var(--pri-color);

@@ -78,7 +78,7 @@
 	.details-wrapper .value {
 		color: var(--options-details-value-color);
 	}
-	@media screen and (min-width: 525px) {
+	@media screen and (min-width: 540px) {
 		fieldset {
 			font-size: 0.875rem;
 		}

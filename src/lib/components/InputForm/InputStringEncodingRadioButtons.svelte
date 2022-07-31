@@ -3,6 +3,7 @@
 	import { state } from '$lib/stores/state';
 	import { isEncoding, isStringEncoding } from '$lib/typeguards';
 
+	export let style: string;
 	let buttonsInstance: RadioButtons;
 	export const reset = () => buttonsInstance.reset();
 
@@ -51,6 +52,7 @@
 
 <RadioButtons
 	bind:this={buttonsInstance}
+	{style}
 	{...inputEncodingOptionDefs}
 	on:radioButtonSelectionChanged={handleRadioButtonSelectionChanged}
 />

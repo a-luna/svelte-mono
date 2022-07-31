@@ -13,7 +13,9 @@
 	let hasWhiteSpace = false;
 
 	$: utf8ByteMap = decomposeUtf8String(input);
+	$: expandableCharMaps = Object.values(charByteMapComponents).filter((charMap) => charMap.isCombined);
 	$: anyCharsAreCombined = utf8ByteMap.hasCombinedChars;
+	$: hasMultipleCombinedChars = expandableCharMaps.length > 1;
 	$: inputEncoded = utf8ByteMap.encoded;
 	$: inputHasWhiteSpace = inputEncoded.includes('%20');
 	$: showLegend =
@@ -31,7 +33,6 @@
 	const vs3 = ' which is a non-printing character that requests that a character should be displayed as an emoji.';
 
 	function handleCharacterToggled() {
-		const expandableCharMaps = Object.values(charByteMapComponents).filter((charMap) => charMap.isCombined);
 		const expandedCharMaps = expandableCharMaps.filter((charMap) => charMap.expanded);
 		anyCharsAreExpanded = expandableCharMaps.some((charMap) => charMap.expanded);
 		hasVarSelector = expandedCharMaps.some((charMap) => charMap.encoded.includes('%EF%B8%8F'));
@@ -53,7 +54,7 @@
 </script>
 
 <div class="utf8-byte-map-wrapper">
-	{#if anyCharsAreCombined}
+	{#if hasMultipleCombinedChars}
 		<ToggleExpandAllCharacters bind:toggled={allCharsAreExpanded} on:click={() => toggleAllChars()} />
 	{/if}
 	<div class="utf8-byte-map">
@@ -111,7 +112,7 @@
 	.utf8-byte-map {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 2px;
+		gap: 1px;
 	}
 	.legend {
 		font-size: 0.7rem;

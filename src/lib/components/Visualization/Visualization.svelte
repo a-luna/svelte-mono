@@ -122,7 +122,7 @@
 	.encoding-map li:last-child {
 		border: none;
 	}
-	@media screen and (min-width: 525px) {
+	@media screen and (min-width: 540px) {
 		.visualization-wrapper {
 			font-size: 0.875rem;
 		}

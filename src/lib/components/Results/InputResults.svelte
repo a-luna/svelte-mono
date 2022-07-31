@@ -77,7 +77,7 @@
 		letter-spacing: 5px;
 		font-size: 1rem;
 	}
-	@media screen and (min-width: 525px) {
+	@media screen and (min-width: 540px) {
 		fieldset {
 			font-size: 0.9rem;
 		}

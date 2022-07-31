@@ -16,13 +16,32 @@
 	let outputBase64EncodingOptions: OutputBase64EncodingRadioButtons;
 
 	$: inputTextBoxGridStyles = 'grid-column: 1 / span 3;';
-	$: inputEncodingGridStyles = $state.mode === 'encode' ? 'flex: 1;' : 'flex: 0 1 50%';
-	$: outputEncodingGridStyles = $state.mode === 'encode' ? 'flex: 0 1 auto;' : '';
+	$: defaultFlexStyles = 'display: flex; gap: 0.5rem;';
+	$: encodingOptionsFlexStyles = $app.isDefaultDisplay
+		? $app.encoderMode
+			? `${defaultFlexStyles} flex-flow: row nowrap;`
+			: `${defaultFlexStyles} flex-flow: column nowrap;`
+		: $app.isMobileDisplay
+		? `${defaultFlexStyles} flex-flow: column nowrap; `
+		: `${defaultFlexStyles} flex-flow: row nowrap;`;
+	$: defaultGridStyles = 'display: grid; gap: 0.5rem; padding: 0.25rem 0.5rem 0.5rem 0.5rem;';
+	$: inputTextEncodingStylesGrid = $app.isDefaultDisplay
+		? `${defaultGridStyles} grid-template-columns: 75px 1fr; grid-template-rows: auto auto;`
+		: $app.isMobileDisplay
+		? `${defaultGridStyles} grid-template-columns: 75px 75px 75px 1fr; grid-template-rows: auto;`
+		: `${defaultGridStyles} grid-template-columns: repeat(4, auto); grid-template-rows: auto;`;
+	$: outputBase64EncodingStylesGrid = $app.isDefaultDisplay
+		? `${defaultGridStyles} grid-template-columns: 1fr; grid-template-rows: auto auto;`
+		: $app.isMobileDisplay
+		? `${defaultGridStyles} grid-template-columns: 75px 1fr; grid-template-rows: auto;`
+		: `${defaultGridStyles} grid-template-columns: repeat(2, auto); grid-template-rows: auto;`;
+	$: inputBase64EncodingStylesGrid = `${defaultGridStyles} grid-template-columns: auto 1fr; grid-template-rows: auto;`;
 	$: state.changeInputText(inputText);
 	$: if ($state.resetPerformed) {
 		inputText = '';
 		$state.resetPerformed = false;
 	}
+	$: formTitleMargin = $app.isMobileDisplay ? '0' : '-0.25rem 0 0 0';
 
 	function toggleMode() {
 		state.toggleMode();
@@ -55,7 +74,7 @@
 </script>
 
 <div class="form-top">
-	<FormTitle title={$app.formTitle} />
+	<FormTitle title={$app.formTitle} margin={formTitleMargin} />
 	<div class="switch-mode-button-wrapper">
 		<PushableButton
 			size={$app.buttonSize}
@@ -75,17 +94,20 @@
 		>
 	</div>
 </div>
-<div class="encoding-options-wrapper">
-	<div class="input-encoding-options" style={inputEncodingGridStyles}>
+<div class="encoding-options-wrapper" style={encodingOptionsFlexStyles}>
+	<div class="input-encoding-options">
 		{#if $app.encoderMode}
-			<InputStringEncodingRadioButtons bind:this={inputStringEncodingButtons} />
+			<InputStringEncodingRadioButtons bind:this={inputStringEncodingButtons} style={inputTextEncodingStylesGrid} />
 		{:else}
-			<InputBase64EncodingRadioButtons bind:this={inputBase64EncodingOptions} />
+			<InputBase64EncodingRadioButtons bind:this={inputBase64EncodingOptions} style={inputBase64EncodingStylesGrid} />
 		{/if}
 	</div>
-	<div class="output-encoding-options" style={outputEncodingGridStyles}>
+	<div class="output-encoding-options">
 		{#if $app.encoderMode}
-			<OutputBase64EncodingRadioButtons bind:this={outputBase64EncodingOptions} />
+			<OutputBase64EncodingRadioButtons
+				bind:this={outputBase64EncodingOptions}
+				style={outputBase64EncodingStylesGrid}
+			/>
 		{:else}
 			<div class="placeholder" />
 		{/if}
@@ -113,29 +135,26 @@
 		grid-row: 1 / span 1;
 	}
 	.encoding-options-wrapper {
-		display: flex;
-		gap: 0.5rem;
 		justify-content: center;
 		grid-column: 1 / span 4;
 	}
 	.input-encoding-options,
 	.output-encoding-options {
-		margin: 0 0 0.25rem 0;
+		flex: 0 1 50%;
 	}
 	.switch-mode-button-wrapper,
 	.reset-form-button-wrapper {
-		width: 100%;
+		flex: 1;
 	}
 	.switch-mode-button-wrapper {
 		grid-column: 1 / span 1;
 		grid-row: 2 / span 1;
-		justify-self: end;
 	}
 	.reset-form-button-wrapper {
 		grid-column: 2 / span 1;
 		grid-row: 2 / span 1;
 	}
-	@media screen and (min-width: 525px) {
+	@media screen and (min-width: 540px) {
 		.form-top {
 			display: grid;
 			grid-template-columns: 1fr 115px 115px;
@@ -144,6 +163,12 @@
 
 			grid-column: 1 / span 4;
 			grid-row: 1 / span 1;
+		}
+		.input-encoding-options {
+			flex: 1;
+		}
+		.output-encoding-options {
+			flex: 0;
 		}
 		.switch-mode-button-wrapper {
 			grid-column: 2 / span 1;

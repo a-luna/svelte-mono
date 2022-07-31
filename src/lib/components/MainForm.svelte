@@ -20,8 +20,9 @@
 	.base64-wrapper {
 		background-color: var(--page-bg-color);
 		max-width: 510px;
+		min-width: 365px;
 		margin: 0 auto;
-		padding: 1.5rem 1rem 1rem 1rem;
+		padding: 1rem;
 	}
 	.base64 {
 		display: grid;
@@ -29,7 +30,7 @@
 		grid-template-rows: 78px auto 31px auto auto 1fr;
 		grid-gap: 1rem 0.5rem;
 	}
-	@media screen and (min-width: 525px) {
+	@media screen and (min-width: 540px) {
 		.base64 {
 			grid-template-rows: 31px auto 31px auto auto 1fr;
 		}

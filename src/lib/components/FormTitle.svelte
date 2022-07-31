@@ -2,9 +2,10 @@
 	export let title: string;
 	export let fontSize = '1.8rem';
 	export let letterSpacing = '1.5px';
+	export let margin = '0';
 </script>
 
-<span class="form-title" style="font-size: {fontSize}; letter-spacing: {letterSpacing};">
+<span class="form-title" style="font-size: {fontSize}; letter-spacing: {letterSpacing}; margin: {margin}">
 	{title}
 </span>
 
@@ -23,7 +24,7 @@
 		grid-column: 1 / span 2;
 		grid-row: 1 / span 1;
 	}
-	@media screen and (min-width: 525px) {
+	@media screen and (min-width: 540px) {
 		.form-title {
 			grid-column: 1 / span 1;
 			grid-row: 1 / span 1;

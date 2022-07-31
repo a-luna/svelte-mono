@@ -1,14 +1,23 @@
 <script lang="ts">
+	import { app } from '$lib/stores/app';
+	import { createEventDispatcher } from 'svelte';
+
 	export let title = '';
 	export let form = '';
 	export let groupId = '';
 	export let groupName = '';
+	export let style: string;
 	export let buttons = [];
 	let instances = {};
-	import { createEventDispatcher } from 'svelte';
 	const radioButtonSelectionChangedEventDispatcher = createEventDispatcher<{
 		radioButtonSelectionChanged: { groupId: string; groupName: string; selectionId: string; value: string };
 	}>();
+
+	$: legendMarginStyles = $app.isDefaultDisplay
+		? $app.encoderMode
+			? 'margin: 0 auto;'
+			: 'margin: 0 auto 0 0.5rem;'
+		: 'margin: 0 auto 0 0.5rem;';
 
 	export const reset = () => buttons.forEach((button) => (instances[button.id].checked = button.checked));
 
@@ -24,8 +33,8 @@
 
 <div id={groupId} class="radio-group">
 	<fieldset name={groupName} {form}>
-		<legend>{title}</legend>
-		<div class="radio-buttons">
+		<legend style={legendMarginStyles}>{title}</legend>
+		<div class="radio-buttons" {style}>
 			{#each buttons as button, i}
 				<div class="button-wrapper">
 					<input
@@ -51,24 +60,20 @@
 		align-items: center;
 		width: 100%;
 	}
-	.radio-buttons {
-		display: flex;
-		flex-flow: row nowrap;
-		margin: 0 2px 2px 2px;
-		justify-content: space-evenly;
-		padding: 0 5px;
+	.button-wrapper {
+		flex: 0 1 75px;
 	}
 	fieldset {
 		border: 1px solid var(--fieldset-border-color);
 		border-radius: 4px;
 		padding: 2px 0;
-		font-size: 0.75rem;
+		font-size: 0.875rem;
 		width: 100%;
+		height: 100%;
 	}
 	legend {
 		color: var(--fieldset-title-color);
 		font-weight: 400;
-		margin: 0 auto;
 		padding: 0 3px;
 	}
 	input[type='radio'] {
@@ -121,9 +126,18 @@
 		background-color: var(--sec-color);
 		box-shadow: inset 0 0 0 0.15em rgba(0, 0, 0, 0.95);
 	}
-	@media screen and (min-width: 525px) {
-		fieldset {
-			font-size: 0.875rem;
+	@media screen and (min-width: 365px) {
+		.radio-buttons {
+			display: grid;
+			grid-template-columns: repeat(3, 75px) 1fr;
+			grid-template-rows: auto;
+		}
+	}
+	@media screen and (min-width: 540px) {
+		.radio-buttons {
+			display: flex;
+			flex-flow: row nowrap;
+			gap: 0.5rem;
 		}
 	}
 </style>
