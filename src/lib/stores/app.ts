@@ -10,7 +10,8 @@ function createAppStore(state: AppState): Readable<AppStore> {
 		const encoderMode = (): boolean => $state.mode === 'encode';
 		const decoderMode = (): boolean => $state.mode === 'decode';
 
-		const isMobileDisplay = (): boolean => $pageWidth < 525;
+		const isMobileDisplay = (): boolean => $pageWidth < 540;
+		const isDefaultDisplay = (): boolean => $pageWidth < 365;
 
 		const inputStringIsValid = (): boolean =>
 			encoderMode() ? $state.encoderInput.validationResult.success : $state.decoderInput.validationResult.success;
@@ -20,7 +21,7 @@ function createAppStore(state: AppState): Readable<AppStore> {
 
 		const getInputText = (): string =>
 			encoderMode()
-				? $state.encoderOutput.inputEncoding === 'ASCII' || $state.encoderOutput.inputEncoding === 'UTF-8'
+				? $state.encoderInput.inputEncoding === 'ASCII' || $state.encoderInput.inputEncoding === 'UTF-8'
 					? $state.encoderInput.inputText
 					: getInputHexBytes()
 				: $state.decoderInput.inputText;
@@ -67,6 +68,7 @@ function createAppStore(state: AppState): Readable<AppStore> {
 			encoderMode: encoderMode(),
 			decoderMode: decoderMode(),
 			isMobileDisplay: isMobileDisplay(),
+			isDefaultDisplay: isDefaultDisplay(),
 			inputText: getInputText(),
 			outputText: getOutputText(),
 			totalBytesIn: getTotalBytesIn(),

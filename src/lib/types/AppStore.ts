@@ -4,6 +4,7 @@ export interface AppStore {
 	encoderMode: boolean;
 	decoderMode: boolean;
 	isMobileDisplay: boolean;
+	isDefaultDisplay: boolean;
 	inputText: string;
 	outputText: string;
 	totalBytesIn: number;
