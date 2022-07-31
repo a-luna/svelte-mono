@@ -75,6 +75,7 @@
 		font-weight: 700;
 		line-height: 1;
 		letter-spacing: 0.8px;
+		white-space: nowrap;
 		will-change: transform;
 		transform: translateY(-4px);
 		transition: transform 400ms cubic-bezier(0.3, 0.7, 0.4, 1);
