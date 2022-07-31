@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* c8 ignore start */
 import type { JSDomTestCase, JSDomTestFunction } from '$lib/xstate/b64Encode.test/types';
 import type { Screen } from '@testing-library/svelte';
