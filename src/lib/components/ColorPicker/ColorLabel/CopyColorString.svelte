@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CopyButton from '$lib/components/Icons/Copy.svelte';
+	import Copy from '$lib/components/Icons/Copy.svelte';
 	import Edit from '$lib/components/Icons/Edit.svelte';
 	import type { CssColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
@@ -7,6 +7,7 @@
 	export let color: CssColor;
 	export let alphaEnabled: boolean;
 	export let editable: boolean;
+	export let currentColor = '';
 	let currentLabelIndex = 0;
 	const dispatch = createEventDispatcher();
 
@@ -46,7 +47,7 @@
 	title="Copy {currentColorSpace} value"
 	on:click={() => dispatch('copyColorString', currentColor)}
 >
-	<CopyButton />
+	<Copy />
 </button>
 <span
 	class="cursor-pointer flex-grow text-center self-center font-medium leading-none whitespace-nowrap"

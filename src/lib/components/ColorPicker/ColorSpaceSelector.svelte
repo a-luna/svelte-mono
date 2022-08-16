@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Select from '$lib/components/Select/Select.svelte';
+	import Select from '$lib/components/Shared/Select/Select.svelte';
 	import type { ColorSpace, SelectMenuOption } from '$lib/types';
 
 	export let width = '100%';

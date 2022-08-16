@@ -11,37 +11,22 @@
 	let hsl: string;
 	const dispatch = createEventDispatcher();
 
-	$: hsl = alphaEnabled ? `hsla(${h} ${s}% ${l}% / ${a})` : `hsl(${h} ${s}% ${l}%)`;
+	$: disabled = !editable;
+	$: alpha = alphaEnabled ? a : 1;
+	$: hsl = alphaEnabled ? `hsla(${h} ${s}% ${l}% / ${alpha})` : `hsl(${h} ${s}% ${l}%)`;
+	$: if (!alphaEnabled) dispatch('hslColorChanged', `hsl(${h} ${s}% ${l}%)`);
 </script>
 
-<ColorSlider
-	name="H"
-	bind:value={h}
-	max={359}
-	disabled={!editable}
-	on:change={() => dispatch('hslColorChanged', hsl)}
-/>
-<ColorSlider
-	name="S"
-	bind:value={s}
-	max={100}
-	disabled={!editable}
-	on:change={() => dispatch('hslColorChanged', hsl)}
-/>
-<ColorSlider
-	name="L"
-	bind:value={l}
-	max={100}
-	disabled={!editable}
-	on:change={() => dispatch('hslColorChanged', hsl)}
-/>
+<ColorSlider name="H" bind:value={h} max={359} {disabled} on:change={() => dispatch('hslColorChanged', hsl)} />
+<ColorSlider name="S" bind:value={s} max={100} {disabled} on:change={() => dispatch('hslColorChanged', hsl)} />
+<ColorSlider name="L" bind:value={l} max={100} {disabled} on:change={() => dispatch('hslColorChanged', hsl)} />
 {#if alphaEnabled}
 	<ColorSlider
 		name="A"
 		bind:value={a}
 		max={1}
 		step={0.01}
-		disabled={!editable}
+		{disabled}
 		on:change={() => dispatch('hslColorChanged', hsl)}
 	/>
 {:else}

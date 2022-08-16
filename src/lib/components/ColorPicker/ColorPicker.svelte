@@ -6,32 +6,41 @@
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
 	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
 	import ColorSwatch from '$lib/components/ColorPicker/ColorSwatch.svelte';
-	import X11Palettes from '$lib/components/ThemeEditor/Palettes/X11Palettes/X11Palettes.svelte';
-	import { getRandomHexString } from '$lib/helpers';
+	import X11Palettes from '$lib/components/ColorPicker/X11Palettes/X11Palettes.svelte';
+	import { initColorPickerStore } from '$lib/context';
 	import { ColorParser } from '$lib/parser';
 	import type { ColorPalette, ColorPickerState, CssColor } from '$lib/types';
-	import { onDestroy, onMount, setContext, tick } from 'svelte';
+	import { getRandomHexString } from '$lib/util';
+	import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
+	import type { Writable } from 'svelte/store';
 	import { writable } from 'svelte/store';
 
 	export let pickerId: string = `color-picker-${getRandomHexString(4)}`;
-	export let state = writable<ColorPickerState>({
-		pickerId,
-		color: ColorParser.parse('rgb(128 128 128)').value,
-		colorSpace: 'rgb',
-		labelState: 'prerender',
-		editable: true,
-	});
+	export let state: Writable<ColorPickerState>;
 
 	export let editable = true;
 	export let showX11Palettes = false;
-	setContext($state.pickerId, { state });
+	let initialized = false;
 	let timeout: NodeJS.Timeout;
 	let colorPicker: HTMLInputElement;
 	let x11ColorPalettes: ColorPalette[];
+	const dispatch = createEventDispatcher();
 
-	$: alphaEnabled = $state.colorSpace === 'rgba' || $state.colorSpace === 'hsla';
-	$: $state.editable = editable;
-	$: if (typeof window !== 'undefined') x11ColorPalettes = getX11ColorPalettes();
+	$: alphaEnabled = $state?.colorSpace === 'rgba' || $state?.colorSpace === 'hsla';
+	$: if ($state) $state.editable = editable;
+	$: if (typeof window !== 'undefined' && !initialized) {
+		state = writable<ColorPickerState>({
+			pickerId,
+			color: ColorParser.parse('rgb(128 128 128)').value,
+			x11ColorPalettes: getX11ColorPalettes(),
+			colorSpace: 'rgb',
+			labelState: 'prerender',
+			editable: true,
+		});
+		state = initColorPickerStore(state);
+		initialized = true;
+	}
+	$: if ($state) x11ColorPalettes = $state.x11ColorPalettes;
 
 	export function setColor(color: CssColor) {
 		setCorrectColorSpace(color);
@@ -53,8 +62,6 @@
 			$state.colorSpace = 'hsla';
 		}
 	}
-
-	const getHexOpaqueValue = (color: CssColor): string => color?.hex?.slice(0, 7) || '#000000';
 
 	function handleStringValueChanged(color: string) {
 		const result = ColorParser.parse(color);
@@ -85,39 +92,45 @@
 	onDestroy(() => clearTimeout(timeout));
 </script>
 
-<input
-	bind:this={colorPicker}
-	type="color"
-	style="display: none"
-	value={getHexOpaqueValue($state?.color)}
-	on:change={() => handleColorPickerValueChanged()}
-/>
-{#if !showX11Palettes}
-	<div class="color-picker" data-testid={$state.pickerId}>
-		<div class="picker-left-col">
-			<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
-			<ColorSwatch
-				pickerId={$state.pickerId}
-				{alphaEnabled}
-				on:showX11Palettes={() => (showX11Palettes = true)}
-				on:showColorPicker={() => colorPicker.click()}
-			/>
-		</div>
-		<div class="picker-right-col">
-			<ColorLabel
-				pickerId={$state.pickerId}
-				{alphaEnabled}
-				on:updateColor={(e) => handleStringValueChanged(e.detail)}
-			/>
-			<ColorChannels pickerId={$state.pickerId} {alphaEnabled} editable={$state.editable} />
-		</div>
-	</div>
-{:else if x11ColorPalettes !== undefined}
-	<X11Palettes
-		{x11ColorPalettes}
-		on:colorSelected={() => (showX11Palettes = false)}
-		on:colorSelected={(e) => setColor(e.detail)}
+{#if initialized}
+	<input
+		bind:this={colorPicker}
+		type="color"
+		style="display: none"
+		value={$state?.color?.hex}
+		on:change={() => handleColorPickerValueChanged()}
 	/>
+	{#if !showX11Palettes}
+		<div class="color-picker" data-testid={$state?.pickerId}>
+			<div class="picker-left-col">
+				<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
+				<ColorSwatch
+					pickerId={$state.pickerId}
+					{alphaEnabled}
+					disabled={!$state.editable}
+					on:showX11Palettes={() => (showX11Palettes = true)}
+					on:showX11Palettes
+					on:showColorPicker={() => colorPicker.click()}
+				/>
+			</div>
+			<div class="picker-right-col">
+				<ColorLabel
+					pickerId={$state.pickerId}
+					{alphaEnabled}
+					on:updateColor={(e) => handleStringValueChanged(e.detail)}
+				/>
+				<ColorChannels pickerId={$state.pickerId} {alphaEnabled} editable={$state.editable} />
+			</div>
+		</div>
+	{:else if x11ColorPalettes !== undefined}
+		<X11Palettes
+			{x11ColorPalettes}
+			{alphaEnabled}
+			on:colorSelected={() => (showX11Palettes = false)}
+			on:colorSelected={() => dispatch('hideX11Palettes')}
+			on:colorSelected={(e) => setColor(e.detail)}
+		/>
+	{/if}
 {/if}
 
 <style lang="postcss">
@@ -127,7 +140,8 @@
 		align-items: flex-start;
 		gap: 0.5rem;
 		width: min-content;
-		background-color: var(--white1);
+		background-color: var(--white3);
+		border: 1px solid var(--dark-gray1);
 		border-radius: 4px;
 		padding: 0.5rem;
 	}

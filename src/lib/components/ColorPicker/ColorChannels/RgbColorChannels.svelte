@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { decimalToOpacityValue } from '$lib/color';
+
 	import ColorSlider from '$lib/components/ColorPicker/ColorChannels/ColorSlider.svelte';
 	import { createEventDispatcher } from 'svelte';
 
@@ -9,31 +11,19 @@
 	export let b: number;
 	export let a: number = 0;
 	let rgb: string;
-	let alphaSlider: ColorSlider;
 	const dispatch = createEventDispatcher();
 
-	$: rgbAlpha = a ? a : 1;
-	$: rgb = alphaEnabled ? `rgba(${r} ${g} ${b} / ${rgbAlpha})` : `rgb(${r} ${g} ${b})`;
-
-	function handleAlphaChanged() {
-		a = alphaSlider.value;
-		dispatch('rgbColorChanged', rgb);
-	}
+	$: disabled = !editable;
+	$: alpha = alphaEnabled ? decimalToOpacityValue(a) : 1;
+	$: rgb = alphaEnabled ? `rgba(${r} ${g} ${b} / ${alpha})` : `rgb(${r} ${g} ${b})`;
+	$: if (!alphaEnabled) dispatch('rgbColorChanged', `rgb(${r} ${g} ${b})`);
 </script>
 
-<ColorSlider name="R" bind:value={r} disabled={!editable} on:change={() => dispatch('rgbColorChanged', rgb)} />
-<ColorSlider name="G" bind:value={g} disabled={!editable} on:change={() => dispatch('rgbColorChanged', rgb)} />
-<ColorSlider name="B" bind:value={b} disabled={!editable} on:change={() => dispatch('rgbColorChanged', rgb)} />
+<ColorSlider name="R" bind:value={r} {disabled} on:change={() => dispatch('rgbColorChanged', rgb)} />
+<ColorSlider name="G" bind:value={g} {disabled} on:change={() => dispatch('rgbColorChanged', rgb)} />
+<ColorSlider name="B" bind:value={b} {disabled} on:change={() => dispatch('rgbColorChanged', rgb)} />
 {#if alphaEnabled}
-	<ColorSlider
-		bind:this={alphaSlider}
-		name="A"
-		value={rgbAlpha}
-		max={1}
-		step={0.01}
-		disabled={!editable}
-		on:change={() => handleAlphaChanged()}
-	/>
+	<ColorSlider name="A" bind:value={a} {disabled} on:change={() => dispatch('rgbColorChanged', rgb)} />
 {:else}
 	<div style="width: 100%; height: 20px" />
 {/if}

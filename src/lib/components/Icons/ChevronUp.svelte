@@ -12,8 +12,8 @@
 
 <style>
 	svg {
-		stroke: currentColor;
-		fill: currentColor;
+		stroke: currentcolor;
+		fill: currentcolor;
 		stroke-width: 0;
 		width: 100%;
 		height: auto;

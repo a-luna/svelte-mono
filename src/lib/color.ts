@@ -1,7 +1,6 @@
-import { getRandomArrayItem, getRandomHexString, groupByProperty, isComponentColor } from '$lib/helpers';
 import { namedColors } from '$lib/namedColors';
 import type { ColorPalette, ComponentColor, CssColor, HslColor, HueRange, Result, RgbColor } from '$lib/types';
-import { COMPONENT_COLORS } from '$lib/types';
+import { getRandomArrayItem, getRandomHexString, groupByProperty, normalize } from '$lib/util';
 
 const RGB_REGEX =
 	/^rgb\(((((((?<redDecA>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?))(((?<greenDecA>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?))|(((?<redDecB>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s))(((?<greenDecB>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)))(?<blueDec>(1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((?<redPercA>([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?)((?<greenPercA>([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?)|((?<redPercB>([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s)((?<greenPercB>([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s))(?<bluePerc>([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
@@ -24,20 +23,22 @@ const HSLA_REGEX =
 export const byteIntToHexString = (byteInt: number): string =>
 	0 <= byteInt && byteInt < 256 ? byteInt.toString(16).toUpperCase().padStart(2, '0') : '??';
 
-const percentToDecimalValue = (percent: number): number => Math.round((percent / 100) * 255);
+export const getRandomHueValue = (): number => getRandomArrayItem<number>(Array.from({ length: 360 }, (_, i) => i));
 export const decimalToOpacityValue = (decimal: number): number => parseFloat((decimal / 255).toFixed(2));
+const percentToDecimalValue = (percent: number): number => Math.round((percent / 100) * 255);
+
 const rgbToString = (rgb: RgbColor): string => `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 const rgbaToString = (rgb: RgbColor): string => `rgba(${rgb.r} ${rgb.g} ${rgb.b} / ${decimalToOpacityValue(rgb.a)})`;
 export const hslToString = (hsl: HslColor): string => `hsl(${hsl.h} ${hsl.s}% ${hsl.l}%)`;
 const hslaToString = (hsl: HslColor): string => `hsla(${hsl.h} ${hsl.s}% ${hsl.l}% / ${hsl.a})`;
+
 const rgbToHex = (rgb: RgbColor): string =>
 	`#${byteIntToHexString(rgb.r)}${byteIntToHexString(rgb.g)}${byteIntToHexString(rgb.b)}`;
+
 const rgbaToHex = (rgb: RgbColor): string =>
 	`#${byteIntToHexString(rgb.r)}${byteIntToHexString(rgb.g)}${byteIntToHexString(rgb.b)}${byteIntToHexString(rgb.a)}`;
-const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 
-const colorNameIsValid = (name: string): boolean =>
-	Boolean(namedColors.map((c) => c.toLowerCase()).find((c) => c === normalize(name)));
+const findNamedColor = (name: string): string => namedColors.find((color) => color.toLowerCase() === normalize(name));
 
 export function parseColorFromString(s: string): Result<CssColor> {
 	let match = RGB_REGEX.exec(s);
@@ -67,63 +68,66 @@ export function parseColorFromString(s: string): Result<CssColor> {
 		return parseHsl(match, true);
 	}
 
-	if (colorNameIsValid(s)) {
-		return parseNamedColor(s);
-	}
-	return { success: false, error: `Unable to parse "${s}" as a valid color value` };
+	return parseNamedColor(s);
 }
 
 function parseRgb(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
-	let rgb: RgbColor = { r: 0, g: 0, b: 0, a: 255 };
-	let hsl: HslColor = { h: 0, s: 0, l: 0, a: 1 };
+	const rgb: RgbColor = { r: 0, g: 0, b: 0, a: 255 };
+
 	const redDec = match.groups.redDecA ?? match.groups.redDecB;
 	const greenDec = match.groups.greenDecA ?? match.groups.greenDecB;
 	const blueDec = match.groups.blueDec ?? match.groups.blueDecA ?? match.groups.blueDecB;
+
+	const redPerc = match.groups.redPercA ?? match.groups.redPercB;
+	const greenPerc = match.groups.greenPercA ?? match.groups.greenPercB;
+	const bluePerc = match.groups.bluePerc ?? match.groups.bluePercA ?? match.groups.bluePercB;
+
 	if (redDec && greenDec && blueDec) {
-		rgb = { r: parseInt(redDec), g: parseInt(greenDec), b: parseInt(blueDec), a: 255 };
-	} else {
-		const redPerc = match.groups.redPercA ?? match.groups.redPercB;
-		const greenPerc = match.groups.greenPercA ?? match.groups.greenPercB;
-		const bluePerc = match.groups.bluePerc ?? match.groups.bluePercA ?? match.groups.bluePercB;
-		if (redPerc && greenPerc && bluePerc) {
-			rgb = {
-				r: percentToDecimalValue(parseInt(redPerc)),
-				g: percentToDecimalValue(parseInt(greenPerc)),
-				b: percentToDecimalValue(parseInt(bluePerc)),
-				a: 255,
-			};
-		}
+		rgb.r = parseInt(redDec);
+		rgb.g = parseInt(greenDec);
+		rgb.b = parseInt(blueDec);
+	} else if (redPerc && greenPerc && bluePerc) {
+		rgb.r = percentToDecimalValue(parseFloat(redPerc));
+		rgb.g = percentToDecimalValue(parseFloat(greenPerc));
+		rgb.b = percentToDecimalValue(parseFloat(bluePerc));
 	}
 
 	if (hasAlpha) {
 		const alphaFloat = match.groups.alphaFloatA ?? match.groups.alphaFloatB;
+		const alphaPerc = match.groups.alphaPerc;
 		if (alphaFloat) {
 			rgb.a = Math.round(parseFloat(alphaFloat) * 255);
-		} else {
-			const alphaPerc = match.groups.alphaPerc;
-			if (alphaPerc) {
-				rgb.a = percentToDecimalValue(parseInt(alphaPerc));
-			}
+		} else if (alphaPerc) {
+			rgb.a = percentToDecimalValue(parseFloat(alphaPerc));
 		}
 	}
 
-	hsl = rgbaToHsla(rgb);
+	const hsl = rgbaToHsla(rgb);
 	const hex = rgbToHex(rgb);
 	const hexAlpha = rgbaToHex(rgb);
-	const rgbString = rgbToString(rgb);
-	const hslString = hslToString(hsl);
-	const rgbaString = rgbaToString(rgb);
-	const hslaString = hslaToString(hsl);
-	const color = { rgb, hsl, hex, hexAlpha, hasAlpha, rgbString, rgbaString, hslString, hslaString, name: hex };
-	return { success: true, value: color };
+	return {
+		success: true,
+		value: {
+			rgb,
+			hsl,
+			hex,
+			hasAlpha,
+			hexAlpha,
+			rgbString: rgbToString(rgb),
+			hslString: hslToString(hsl),
+			rgbaString: rgbaToString(rgb),
+			hslaString: hslaToString(hsl),
+			name: hasAlpha ? hexAlpha : hex,
+		},
+	};
 }
 
-export function rgbaToHsla(rgb: RgbColor): HslColor {
+function rgbaToHsla(rgb: RgbColor): HslColor {
 	const hsl = rgbToHsl(rgb);
 	return { ...hsl, a: decimalToOpacityValue(rgb.a) };
 }
 
-export function rgbToHsl(rgb: RgbColor): HslColor {
+function rgbToHsl(rgb: RgbColor): HslColor {
 	const r = rgb.r / 255;
 	const g = rgb.g / 255;
 	const b = rgb.b / 255;
@@ -134,7 +138,7 @@ export function rgbToHsl(rgb: RgbColor): HslColor {
 	const h = calculateHue(r, g, b, cmax, delta);
 	const l = (cmax + cmin) / 2;
 	const s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-	return { h, s: parseInt((s * 100).toFixed(1)), l: parseInt((l * 100).toFixed(1)), a: 1 };
+	return { h, s: parseFloat((s * 100).toFixed(1)), l: parseFloat((l * 100).toFixed(1)), a: 1 };
 }
 
 function calculateHue(r: number, g: number, b: number, cmax: number, delta: number): number {
@@ -148,8 +152,9 @@ function calculateHue(r: number, g: number, b: number, cmax: number, delta: numb
 	} else if (cmax === b) {
 		h = (r - g) / delta + 4;
 	}
-	h = Math.round(h * 60);
-	return h >= 0 ? h : h + 360;
+	h = h * 60;
+	h = h >= 0 ? h : h + 360;
+	return parseFloat(h.toFixed(1));
 }
 
 function parseHex(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
@@ -158,12 +163,22 @@ function parseHex(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
 		({ didParse, rgb, hsl, hex } = parseHexFullFormat(match, hasAlpha));
 	}
 	const hexAlpha = rgbaToHex(rgb);
-	const rgbString = rgbToString(rgb);
-	const hslString = hslToString(hsl);
-	const rgbaString = rgbaToString(rgb);
-	const hslaString = hslaToString(hsl);
-	const color = { rgb, hsl, hex, hexAlpha, hasAlpha, rgbString, rgbaString, hslString, hslaString, name: hex };
-	return { success: true, value: color };
+
+	return {
+		success: true,
+		value: {
+			rgb,
+			hsl,
+			hex,
+			hasAlpha,
+			hexAlpha,
+			rgbString: rgbToString(rgb),
+			hslString: hslToString(hsl),
+			rgbaString: rgbaToString(rgb),
+			hslaString: hslaToString(hsl),
+			name: hasAlpha ? hexAlpha : hex,
+		},
+	};
 }
 
 function parseHexCondensedFormat(
@@ -235,26 +250,34 @@ function parseHexFullFormat(
 }
 
 function parseHsl(match: RegExpExecArray, hasAlpha: boolean): Result<CssColor> {
-	let rgb: RgbColor;
 	const hsl: HslColor = { h: parseHue(match), a: 1, ...parseSaturationAndLightness(match) };
 
 	if (hasAlpha) {
 		let alpha = match.groups.alphaFloatA ?? match.groups.alphaFloatB;
 		if (!alpha) {
-			alpha = (parseInt(match.groups.alphaPerc) / 100).toFixed(2);
+			alpha = (parseFloat(match.groups.alphaPerc) / 100).toFixed(2);
 		}
 		hsl.a = parseFloat(alpha);
 	}
 
-	rgb = hslaToRgba(hsl);
+	const rgb = hslaToRgba(hsl);
 	const hex = rgbToHex(rgb);
 	const hexAlpha = rgbaToHex(rgb);
-	const rgbString = rgbToString(rgb);
-	const hslString = hslToString(hsl);
-	const rgbaString = rgbaToString(rgb);
-	const hslaString = hslaToString(hsl);
-	const color = { rgb, hsl, hex, hexAlpha, hasAlpha, rgbString, rgbaString, hslString, hslaString, name: hex };
-	return { success: true, value: color };
+	return {
+		success: true,
+		value: {
+			rgb,
+			hsl,
+			hex,
+			hasAlpha,
+			hexAlpha,
+			rgbString: rgbToString(rgb),
+			hslString: hslToString(hsl),
+			rgbaString: rgbaToString(rgb),
+			hslaString: hslaToString(hsl),
+			name: hasAlpha ? hexAlpha : hex,
+		},
+	};
 }
 
 function parseHue(match: RegExpExecArray): number {
@@ -269,13 +292,13 @@ function parseHue(match: RegExpExecArray): number {
 	} else if (hueTurn) {
 		hue = (parseFloat(hueTurn) * 360).toFixed(2);
 	}
-	return parseInt(hue);
+	return parseFloat(hue);
 }
 
 function parseSaturationAndLightness(match: RegExpExecArray): { s: number; l: number } {
 	const satPerc = match.groups.satPercA ?? match.groups.satPercB;
 	const lightPerc = match.groups.lightPercA ?? match.groups.lightPercB;
-	return { s: parseInt(satPerc), l: parseInt(lightPerc) };
+	return { s: parseFloat(satPerc), l: parseFloat(lightPerc) };
 }
 
 function hslaToRgba(hsl: HslColor) {
@@ -323,28 +346,27 @@ function hslToRgb(hsl: HslColor) {
 }
 
 function parseNamedColor(name: string): Result<CssColor> {
-	const rgb = namedColorToRgb(name);
-	if (rgb) {
-		const match = RGB_REGEX.exec(rgb);
-		if (match) {
-			const result = parseRgb(match, false);
-			if (result.success) {
+	const namedColor = findNamedColor(name);
+	if (namedColor) {
+		const rgb = namedColorToRgb(namedColor);
+		if (rgb) {
+			let result: Result<CssColor>;
+			let match = RGB_REGEX.exec(rgb);
+			if (match) {
+				result = parseRgb(match, false);
+			}
+			match = RGBA_REGEX.exec(rgb);
+			if (match) {
+				result = parseRgb(match, true);
+			}
+			if (result && result.success) {
 				const color = result.value;
-				color.hasAlpha = true;
-				color.rgb.a = 255;
-				color.rgbString = rgbToString(color.rgb);
-				color.rgbaString = rgbaToString(color.rgb);
-				color.hsl.a = 1;
-				color.hslString = hslToString(color.hsl);
-				color.hslaString = hslaToString(color.hsl);
-				color.hex = rgbToHex(color.rgb);
-				color.hexAlpha = rgbaToHex(color.rgb);
-				color.name = name;
+				color.name = namedColor;
 				return { success: true, value: color };
 			}
 		}
 	}
-	return { success: false, error: `Unable to parse "${name}" as a valid color value` };
+	return { success: false, error: Error(`Unable to parse "${name}" as a valid color value`) };
 }
 
 function namedColorToRgb(name: string): string {
@@ -369,17 +391,19 @@ export function getX11ColorPalettes(): ColorPalette[] {
 		{ hueStart: 195, hueEnd: 240, name: 'light blue - blue', componentColor: 'blue' },
 		{ hueStart: 240, hueEnd: 330, name: 'blue - magenta', componentColor: 'indigo' },
 	];
-	const [colors, grays, whites] = getX11ColorsOrderedByHue();
+	const [colors, grays] = getX11ColorsOrderedByHue();
 	const colorPalettes = hueRanges.map(({ hueStart, hueEnd, name, componentColor }) => ({
 		id: getRandomHexString(4),
-		name: name,
-		colors: getColorsInHueRange(hueStart, hueEnd, colors),
+		propName: String(componentColor),
+		displayName: name,
+		colors: getColorsInHueRange(hueStart, hueEnd, colors).map((c) => ({ color: c })),
 		componentColor,
 	}));
 	const grayPalette = {
 		id: getRandomHexString(4),
-		name: 'black - white',
-		colors: [...grays, ...whites],
+		propName: 'grayPalette',
+		displayName: 'black - white',
+		colors: grays.map((c) => ({ color: c })),
 		componentColor: 'black' as ComponentColor,
 	};
 	return [...colorPalettes, grayPalette];
@@ -387,14 +411,16 @@ export function getX11ColorPalettes(): ColorPalette[] {
 
 function getX11ColorsOrderedByHue(): CssColor[][] {
 	const allColorsWithDupes = namedColors
-		.map((name) => ({ name, result: parseColorFromString(name) }))
-		.filter(({ result }) => result.success)
-		.map(({ result }) => ({ ...result.value }));
+		.filter((name) => name !== 'currentcolor' && name !== 'inherit')
+		.map((name) => ({ name, result: parseNamedColor(name) }))
+		.filter(({ result: { success } }) => success)
+		.map(({ name, result: { value } }) => ({ ...value, name }));
+
 	const allColors = removeDuplicateColors(allColorsWithDupes);
 	const colors = allColors.filter((c) => c.hsl.s > 0 && c.hsl.l < 95).sort(sortColors);
-	const grays = allColors.filter((c) => c.hsl.s === 0).sort(sortColors);
-	const whites = allColors.filter((c) => c.hsl.l >= 95).sort(sortColors);
-	return [colors, grays, whites];
+	const noSaturation = allColors.filter((c) => c.hsl.s === 0).sort(sortColors);
+	const maxLightness = allColors.filter((c) => c.hsl.l >= 95).sort(sortColors);
+	return [colors, [...noSaturation, ...maxLightness]];
 }
 
 function getColorsInHueRange(hueStart: number, hueEnd: number, colors: CssColor[]): CssColor[] {
@@ -405,7 +431,7 @@ function getColorsInHueRange(hueStart: number, hueEnd: number, colors: CssColor[
 }
 
 const removeDuplicateColors = (colors: CssColor[]): CssColor[] =>
-	Object.values(groupByProperty<CssColor>(colors, 'hex')).map((g) =>
+	Object.values(groupByProperty<CssColor>(colors, 'hexAlpha')).map((g) =>
 		g.length === 1 ? g[0] : { ...g[0], name: combineColorNames(g) },
 	);
 
@@ -414,14 +440,94 @@ const combineColorNames = (colors: CssColor[]): string =>
 
 const sortColors = (a: CssColor, b: CssColor): number => a.hsl.h - b.hsl.h || a.hsl.s - b.hsl.s || a.hsl.l - b.hsl.l;
 
-export const createEmptyColorPalette = (name: string = 'custom palette'): ColorPalette => ({
-	id: getRandomHexString(4),
-	name,
-	colors: [],
-	componentColor: getRandomComponentColor(),
+export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
+	const id = getRandomHexString(4);
+	return {
+		id,
+		propName: `palette-${id}`,
+		displayName: name,
+		colors: [],
+		componentColor: 'black',
+	};
+}
+
+export function colorNameisCustomized(color: CssColor): boolean {
+	const cssValues = [color.hex, color.hexAlpha, color.hslString, color.hslaString, color.rgbString, color.rgbaString];
+	return !cssValues.includes(color.name);
+}
+
+export const getColorSchemes = (color: CssColor): { [key: string]: CssColor[] } => ({
+	base: [color],
+	complementary: [adjustHue(color.hsl, 180)],
+	split: [adjustHue(color.hsl, 150), adjustHue(color.hsl, 210)],
+	analogous: [adjustHue(color.hsl, 30), adjustHue(color.hsl, -30)],
+	triadic: [adjustHue(color.hsl, 120), adjustHue(color.hsl, 240)],
+	tetradic: getRectangularColors(color, -60),
+	square: getRectangularColors(color, 90),
+	monochrome: getMonochromePalette(color, 10, 5),
 });
 
-function getRandomComponentColor(): ComponentColor {
-	const randomColor = getRandomArrayItem(COMPONENT_COLORS);
-	return isComponentColor(randomColor) ? randomColor : 'black';
+function adjustHue(hsl: HslColor, hueChange: number): CssColor {
+	let newHue = hsl.h + hueChange;
+	if (newHue > 360) {
+		newHue = newHue - 360;
+	} else if (newHue < 0) {
+		newHue = newHue + 360;
+	}
+	const result = parseColorFromString(hslaToString({ ...hsl, h: newHue }));
+	if (result.success) {
+		return result.value;
+	}
+}
+
+function getMonochromePalette(color: CssColor, paletteSize: number, stepSize: number): CssColor[] {
+	const idealNumberOfShadesAndTints = Math.floor(paletteSize / 2);
+	const palette = [...getShadesForColor(color, stepSize), color, ...getTintsForColor(color, stepSize)].sort(sortColors);
+	const colorIndex = palette.findIndex((pColor) => pColor.hsl.l === color.hsl.l);
+	return colorIndex < idealNumberOfShadesAndTints
+		? palette.slice(0, paletteSize + 1)
+		: colorIndex >= palette.length - idealNumberOfShadesAndTints
+		? palette.slice(-(paletteSize + 1))
+		: palette.slice(colorIndex - idealNumberOfShadesAndTints, colorIndex + idealNumberOfShadesAndTints + 1);
+}
+
+function getShadesForColor(color: CssColor, stepSize: number): CssColor[] {
+	const shades = [];
+	let lightChange = -stepSize;
+	while (color.hsl.l + lightChange > 0) {
+		const result = adjustLightness(color.hsl, lightChange);
+		if (result.success) {
+			shades.push(result.value);
+		}
+		lightChange = lightChange - stepSize;
+	}
+	return shades.sort(sortColors);
+}
+
+function getTintsForColor(color: CssColor, stepSize: number): CssColor[] {
+	const tints = [];
+	let lightChange = stepSize;
+	while (color.hsl.l + lightChange < 100) {
+		const result = adjustLightness(color.hsl, lightChange);
+		if (result.success) {
+			tints.push(result.value);
+		}
+		lightChange = lightChange + stepSize;
+	}
+	return tints.sort(sortColors);
+}
+
+function adjustLightness(hsl: HslColor, lightChange: number): Result<CssColor> {
+	const newLightness = hsl.l + lightChange;
+	if (newLightness < 0 || newLightness > 100) {
+		return {
+			success: false,
+			error: Error('Cannot adjust lightness to a value less than zero or greater than one hundred.'),
+		};
+	}
+	return parseColorFromString(hslaToString({ ...hsl, l: newLightness }));
+}
+
+function getRectangularColors(color: CssColor, hueChange: number): CssColor[] {
+	return [adjustHue(color.hsl, hueChange), adjustHue(color.hsl, 180), adjustHue(color.hsl, 180 + hueChange)];
 }

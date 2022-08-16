@@ -1,186 +1,174 @@
 <script lang="ts">
 	import { createEmptyColorPalette } from '$lib/color';
-	import ColorEditor from '$lib/components/ThemeEditor/ColorEditor/ColorEditor.svelte';
-	import EditPalettesButton from '$lib/components/ThemeEditor/ColorEditor/EditPalettesButton.svelte';
-	import FinishEditingButton from '$lib/components/ThemeEditor/PaletteEditor/FinishEditingButton.svelte';
-	import PaletteEditor from '$lib/components/ThemeEditor/PaletteEditor/PaletteEditor.svelte';
-	import ColorPalettes from '$lib/components/ThemeEditor/Palettes/ColorPalettes.svelte';
-	import type { ColorPalette, ColorPickerState, CssColor } from '$lib/types';
-	import { onDestroy } from 'svelte';
-	import type { Writable } from 'svelte/store';
+	import ColorPicker from '$lib/components/ColorPicker/ColorPicker.svelte';
+	import AddColorToPaletteModal from '$lib/components/ThemeEditor/Modals/AddColorToPaletteModal.svelte';
+	import EditColorDetailsModal from '$lib/components/ThemeEditor/Modals/EditColorDetailsModal.svelte';
+	import EditThemeSettingsModal from '$lib/components/ThemeEditor/Modals/EditThemeSettingsModal/EditThemeSettingsModal.svelte';
+	import LoadUserThemeModal from '$lib/components/ThemeEditor/Modals/LoadUserThemeModal.svelte';
+	import PaletteControls from '$lib/components/ThemeEditor/PaletteControls/PaletteControls.svelte';
+	import UserTheme from '$lib/components/ThemeEditor/UserTheme/UserTheme.svelte';
+	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
+	import { createColorPickerStore } from '$lib/stores/colorPicker';
+	import { createThemeEditorStore } from '$lib/stores/themeEditor';
+	import type {
+		AppStore,
+		ColorPalette,
+		ColorPickerState,
+		ComponentColor,
+		CssColor,
+		ThemeEditorStore,
+		UserThemeImported,
+	} from '$lib/types';
+	import { getRandomHexString } from '$lib/util';
+	import type { Readable, Writable } from 'svelte/store';
 
-	let themeColorPalettes: ColorPalette[] = [createEmptyColorPalette()];
+	let editorId: string = `color-editor-${getRandomHexString(4)}`;
+	let pickerId: string = `color-picker-${getRandomHexString(4)}`;
+	export let state: ThemeEditorStore;
+	let userTheme: UserThemeImported;
+	let themeName: string;
+	let themeColorPalettes: ColorPalette[] = [];
 	let selectedPaletteId: string;
 	let selectedPalette: ColorPalette;
 	let selectedColor: CssColor;
 	let colorPickerState: Writable<ColorPickerState>;
 	let editMode: boolean;
 	let showX11Palettes: boolean;
-
-	let editThemeName = false;
-	let timeout: NodeJS.Timeout;
-	let themeName = 'custom theme';
-	let newName = themeName;
-	let themeNameError = false;
-	let waitingForDoubleClick = false;
 	let alphaEnabled: boolean;
+	let componentStyles = '';
+	let initialized = false;
+	let app: Readable<AppStore>;
+	const componentColor: ComponentColor = 'blue';
+	let loadUserThemeModal: LoadUserThemeModal;
+	let editDetailsModal: EditColorDetailsModal;
+	let addColorModal: AddColorToPaletteModal;
+	let editThemeSettingsModal: EditThemeSettingsModal;
+	let colorPicker: ColorPicker;
 
-	$: if (selectedPaletteId) selectedPalette = themeColorPalettes.find((p) => p.id === selectedPaletteId);
-	$: if (selectedPalette) {
-		selectedPalette.colors = [...selectedPalette.colors];
-		themeColorPalettes = [...themeColorPalettes];
-		selectedPalette.updated = true;
+	// TODO: Create component for left-column that generates classic color schemes based on selectedColor value:
+	//    - Complementary color (1: hue +180)
+	//    - Analogous colors (2: hue +30, hue -30)
+	//    - Triadic colors (2: hue +120, hue +240)
+	//    - Tetradic colors (3: hue +90, hue +180, hue +270)
+	//    - Split complementary (2: hue +150, hue +210)
+	//    - Monochrome (6: lightness -15, -10 -5, +5, +10, +15)
+
+	$: if (typeof window !== 'undefined' && !initialized) {
+		state = createThemeEditorStore(editorId);
+		state = initThemeEditorStore(state);
+		colorPickerState = createColorPickerStore(pickerId);
+		colorPickerState = initColorPickerStore(colorPickerState);
+		app = initAppStore(state, colorPickerState);
+		initialized = true;
 	}
+	$: if (selectedColor && colorPicker) colorPicker.setColor(selectedColor);
+	$: editable = !$app?.themeEditorState?.editMode;
+	$: if (selectedPaletteId) $app.themeEditorStore.changeSelectedPalette(selectedPaletteId);
 	$: if ($colorPickerState)
 		alphaEnabled = $colorPickerState.colorSpace === 'rgba' || $colorPickerState.colorSpace === 'hsla';
 
-	$: themeNameError = editThemeName && !newName;
-	$: outlineColor = themeNameError ? 'var(--red2)' : `var(--black-fg-color);`;
-	$: inputStyles = `outline: 2px solid ${outlineColor}; outline-offset: 2px`;
-
-	function handleThemeNameClicked() {
-		if (waitingForDoubleClick) {
-			editThemeName = true;
-		} else {
-			waitingForDoubleClick = true;
-			clearTimeout(timeout);
-			timeout = setTimeout(() => {
-				waitingForDoubleClick = false;
-			}, 750);
-		}
+	function importUserTheme() {
+		loadUserThemeModal.toggleModal();
 	}
 
-	const focusInput = (inputElement: HTMLInputElement) => inputElement.focus();
-
-	function handleKeyPress(key: string) {
-		if (newName && key === 'Enter') {
-			themeName = newName;
-			editThemeName = false;
-		} else if (key === 'Escape') {
-			editThemeName = false;
-		}
+	function newUserTheme() {
+		const createdAt = new Date().toISOString();
+		$app.themeEditorState.userTheme = {
+			themeName: 'custom theme',
+			usesPrefix: false,
+			themePrefix: null,
+			createdAt,
+			modifiedAt: createdAt,
+			colorFormat: 'hsl',
+			palettes: [createEmptyColorPalette()],
+		};
 	}
 
-	function possiblyExitEditMode(key: string) {
-		if (editThemeName && key === 'Escape') {
-			editThemeName = false;
-		}
+	function closeUserTheme() {
+		$app.themeEditorState.selectedPaletteId = null;
+		$app.themeEditorState.userTheme = null;
 	}
-
-	function addColorToPalette(newColor: CssColor) {
-		if (!selectedPalette.colors.some((c) => c.hexAlpha === newColor.hexAlpha)) {
-			newColor.name = alphaEnabled ? newColor.hslaString : newColor.hslString;
-			selectedPalette.colors = [...selectedPalette.colors, newColor];
-			themeColorPalettes = [...themeColorPalettes];
-			selectedPalette.updated = true;
-		}
-	}
-
-	function deleteColorFromPalette(deleteColor: CssColor) {
-		const remainingColors = selectedPalette.colors.filter((c) => c.hexAlpha !== deleteColor.hexAlpha);
-		selectedPalette.colors = [...remainingColors];
-		themeColorPalettes = [...themeColorPalettes];
-		selectedPalette.updated = true;
-	}
-
-	function handlePaletteDeleted(deletedPaletteId: string) {
-		if (selectedPaletteId === deletedPaletteId) {
-			selectedPaletteId = '';
-			selectedPalette = null;
-		}
-	}
-
-	onDestroy(() => clearTimeout(timeout));
 </script>
 
-<svelte:window on:keydown={(e) => possiblyExitEditMode(e.key)} />
+{#if !$app?.themeEditorState?.userTheme}
+	<LoadUserThemeModal
+		bind:this={loadUserThemeModal}
+		on:loadUserTheme={(e) => ($app.themeEditorState.userTheme = e.detail)}
+	/>
+{:else}
+	<AddColorToPaletteModal
+		{editorId}
+		bind:this={addColorModal}
+		on:addNewColor={(e) => $app.themeEditorStore.addColorToPalette(e.detail)}
+	/>
+	<EditColorDetailsModal {editorId} bind:this={editDetailsModal} />
+	<EditThemeSettingsModal {editorId} bind:this={editThemeSettingsModal} />
+{/if}
 
-<div id="theme-editor">
-	<div class="editor-left-col">
-		<ColorEditor
-			bind:editMode
-			bind:themeColorPalettes
-			bind:selectedPaletteId
-			bind:colorPickerState
-			bind:showX11Palettes
-			componentColor={'black'}
-			{selectedColor}
-			on:paletteSelected={(e) => (selectedPaletteId = e.detail)}
-			on:addColorToPalette={(e) => addColorToPalette(e.detail)}
-		/>
-	</div>
-	<div class="editor-right-col">
-		<div class="theme-palettes">
-			<div class="theme-name-wrapper">
-				{#if editThemeName}
-					<input
-						id="theme-name-input"
-						name="theme-name-input"
-						type="text"
-						bind:value={newName}
-						on:keypress={(e) => handleKeyPress(e.key)}
-						style={inputStyles}
-						use:focusInput
-					/>
-				{:else}
-					<span id="theme-name" title="Doubleclick to change theme name" on:click={() => handleThemeNameClicked()}
-						>{themeName}</span
-					>
-				{/if}
-			</div>
-			{#if editMode}
-				<PaletteEditor
-					bind:themeColorPalettes
-					color={'black'}
-					on:paletteDeleted={(e) => handlePaletteDeleted(e.detail)}
-				/>
-			{:else}
-				<ColorPalettes
-					palettes={themeColorPalettes}
-					allowMultiplePalettesOpen={true}
-					displayColorName={true}
-					columns={1}
-					on:colorSelected={(e) => (selectedColor = e.detail)}
-					on:paletteToggled={(e) => (selectedPaletteId = e.detail)}
-					on:deleteColor={(e) => deleteColorFromPalette(e.detail)}
+<div class="theme-editor-wrapper">
+	<div id="theme-editor" data-testid={$app?.themeEditorState?.editorId}>
+		<div class="editor-left-col">
+			<ColorPicker
+				bind:this={colorPicker}
+				bind:pickerId
+				bind:state={colorPickerState}
+				bind:editable
+				on:showX11Palettes={() => ($app.themeEditorState.showX11Palettes = true)}
+				on:hideX11Palettes={() => ($app.themeEditorState.showX11Palettes = false)}
+			/>
+			{#if $app?.themeEditorState?.userTheme}
+				<PaletteControls
+					{editorId}
+					componentColor={'black'}
+					on:addColorToPalette={(e) => addColorModal.toggleModal(e.detail)}
 				/>
 			{/if}
 		</div>
-		<div class="palette-controls">
-			<div style="height: 30px" />
-			{#if editMode}
-				<FinishEditingButton color={'black'} on:click={() => (editMode = false)} />
-			{:else}
-				<EditPalettesButton color={'black'} on:click={() => (editMode = true)} disabled={editMode || showX11Palettes} />
-			{/if}
+		<div class="editor-right-col">
+			<UserTheme
+				{editorId}
+				{componentColor}
+				on:newUserTheme={() => newUserTheme()}
+				on:importUserTheme={() => importUserTheme()}
+				on:editThemeSettings={() => editThemeSettingsModal.toggleModal(userTheme)}
+				on:createPalette={() => $app.themeEditorStore.createNewPalette()}
+				on:deletePalette={(e) => $app.themeEditorStore.deletePalette(e.detail)}
+				on:closeUserTheme={() => closeUserTheme()}
+				on:colorSelected={(e) => ($app.themeEditorState.selectedColor = e.detail)}
+				on:deleteColor={(e) => $app.themeEditorStore.deleteColorFromPalette(e.detail)}
+				on:editColorDetails={(e) => editDetailsModal.toggleModal(e.detail)}
+			/>
 		</div>
 	</div>
+	{#if $$slots}
+		<div class="test-component" style={$app?.componentStyles}>
+			<slot />
+		</div>
+	{/if}
 </div>
 
 <style lang="postcss">
+	.theme-editor-wrapper {
+		width: min-content;
+		background-color: var(--white1);
+	}
+
 	#theme-editor {
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 1rem;
 		padding: 1rem;
-		background-color: var(--gray1);
 		max-width: 700px;
-		margin: 0 auto;
+		margin: 0 auto 0 0;
 	}
 
 	.editor-left-col {
 		flex: 0 1 auto;
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 1rem;
-		width: 360px;
-	}
-
-	.theme-palettes {
-		display: flex;
-		flex-flow: column nowrap;
+		justify-content: flex-start;
 		gap: 0.5rem;
-		width: 100%;
+		width: 367px;
 	}
 
 	.editor-right-col {
@@ -189,44 +177,10 @@
 		flex-flow: column nowrap;
 		align-items: flex-start;
 		gap: 1rem;
-		width: 100%;
+		width: 335px;
 	}
 
-	.theme-name-wrapper,
-	.palette-controls {
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: flex-end;
-		gap: 0.5rem;
-		width: 100%;
-	}
-
-	#theme-name {
-		flex: 1;
-		background-color: var(--white4);
-		font-size: 1rem;
-		line-height: 1;
-		margin: auto 0;
-		text-align: center;
-		cursor: pointer;
-		padding: 0.5rem 0.25rem;
-		border: 1px solid var(--black2);
-		border-radius: 6px;
-	}
-
-	#theme-name-input {
-		flex-grow: 1;
-		line-height: 1;
-		padding: 0.5rem 0.25rem;
-		border: none;
-		border-radius: 6px;
-		outline: none;
-		font-size: 1rem;
-		text-align: center;
-		background-color: var(--white4);
-	}
-
-	#theme-name-input:focus {
-		outline: none;
+	.test-component {
+		padding: 1rem;
 	}
 </style>

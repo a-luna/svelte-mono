@@ -7,6 +7,8 @@
 	export let step: number = 1;
 	export let value: number;
 	export let disabled: boolean = false;
+
+	$: formattedValue = disabled ? '' : ['S', 'L'].includes(name) ? `${value}%` : value?.toString();
 </script>
 
 <div class="flex flex-row flex-nowrap items-center gap-2" class:disabled>
@@ -23,7 +25,7 @@
 		bind:value
 		on:change
 	/>
-	<span class="value flex-initial font-medium">{disabled ? '' : value?.toString()}</span>
+	<span class="value flex-initial font-medium" data-testid="{name}-slider-value">{formattedValue}</span>
 </div>
 
 <style>
@@ -31,7 +33,7 @@
 		width: 15px;
 	}
 	.value {
-		width: 32px;
+		width: 43px;
 	}
 	.disabled {
 		color: var(--dark-gray1);

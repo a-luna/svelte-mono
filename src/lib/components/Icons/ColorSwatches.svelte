@@ -19,9 +19,9 @@
 
 <style>
 	svg {
-		stroke: currentColor;
+		stroke: #000;
 		fill: url(#gradient-horizontal);
-		stroke-width: 0;
+		stroke-width: 2%;
 		width: 100%;
 		height: auto;
 		max-height: 100%;

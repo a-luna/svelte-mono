@@ -112,82 +112,89 @@
 	--default-bg-color: var(--white1);
 	--default-text-color: var(--black2);
 	--default-hover-border-color: var(--black4);
-	--default-hover-bg-color: var(--white4);
+	--default-hover-bg-color: var(--white3);
 	--default-hover-text-color: var(--black4);
 	--default-border-radius: 6px;
-	--button-size: 30px;
+	--button-size: 32px;
 
-	--black-bg-color: var(--white2);
+	--black-bg-color: var(--white3);
 	--black-hover-bg-color: var(--white4);
 	--black-fg-color: var(--black2);
 	--black-active-fg-color: var(--black4);
+	--black-cw-bg-color: var(--white2);
+	--black-cw-border-color: var(--white2);
+
+	--red-hue: 0;
+	--orange-hue: 39;
+	--yellow-hue: 60;
+	--green-hue: 120;
+	--teal-hue: 180;
+	--blue-hue: 210;
+	--indigo-hue: 275;
+
+	--bg-sat: 100%;
+
+	--bg-light: 94%;
+	--bg-light-hover: calc(var(--bg-light) + 5%);
+
+	--fg-sat: 63%;
+	--fg-sat-active: calc(var(--fg-sat) - 7%);
+
+	--fg-light: 26%;
+	--fg-light-active: calc(var(--fg-light) + 24%);
 
 	--red-bg-color: hsl(0 100% 94%);
 	--red-hover-bg-color: hsl(0 100% 99%);
 	--red-fg-color: hsl(0 63% 26%);
 	--red-active-fg-color: hsl(0 56% 50%);
+	--red-cw-bg-color: var(--red-bg-color);
+	--red-cw-border-color: var(--red-border-color);
 
 	--orange-bg-color: hsl(39 100% 94%);
 	--orange-hover-bg-color: hsl(39 100% 99%);
 	--orange-fg-color: hsl(39 63% 26%);
 	--orange-active-fg-color: hsl(39 56% 50%);
+	--orange-cw-bg-color: var(--orange-bg-color);
+	--orange-cw-border-color: var(--orange-border-color);
 
 	--yellow-bg-color: hsl(60 100% 94%);
 	--yellow-hover-bg-color: hsl(60 100% 99%);
 	--yellow-fg-color: hsl(60 90% 30%);
 	--yellow-active-fg-color: hsl(60 85% 50%);
+	--yellow-cw-bg-color: var(--yellow-bg-color);
 
 	--green-bg-color: hsl(120 100% 94%);
 	--green-hover-bg-color: hsl(120 100% 99%);
 	--green-fg-color: hsl(120 63% 26%);
 	--green-active-fg-color: hsl(120 56% 50%);
+	--green-cw-bg-color: var(--green-bg-color);
 
 	--teal-bg-color: hsl(180 100% 94%);
 	--teal-hover-bg-color: hsl(180 100% 99%);
 	--teal-fg-color: hsl(180 63% 26%);
 	--teal-active-fg-color: hsl(180 56% 50%);
+	--teal-cw-bg-color: var(--teal-bg-color);
 
-	--blue-bg-color: hsl(240 100% 94%);
-	--blue-hover-bg-color: hsl(240 100% 99%);
-	--blue-fg-color: hsl(240 63% 26%);
-	--blue-active-fg-color: hsl(240 56% 50%);
+	--blue-bg-color: hsl(210 100% 94%);
+	--blue-hover-bg-color: hsl(210 100% 99%);
+	--blue-fg-color: hsl(210 63% 26%);
+	--blue-active-fg-color: hsl(210 56% 50%);
+	--blue-cw-bg-color: var(--blue-bg-color);
 
 	--indigo-bg-color: hsl(275 100% 94%);
 	--indigo-hover-bg-color: hsl(275 100% 99%);
 	--indigo-fg-color: hsl(275 100% 25%);
 	--indigo-active-fg-color: hsl(275 100% 50%);
+	--indigo-cw-bg-color: var(--indigo-bg-color);
 }
 
 button {
 	font-size: inherit;
 }
 
-.theme-button {
-	background-color: var(--black-bg-color);
-	border: 2px solid var(--black-fg-color);
-	color: var(--black-fg-color);
-	border-radius: var(--default-border-radius);
-	height: var(--button-size);
-	padding: 2px 6px;
-}
-
 .square-button {
 	height: var(--button-size);
 	width: var(--button-size);
-}
-
-.theme-button:hover {
-	background-color: var(--black-hover-bg-color);
-}
-
-.theme-button:active,
-.theme-button:focus,
-.theme-button:active:focus {
-	background-color: var(--black-hover-bg-color);
-	border: 2px solid var(--black-active-fg-color);
-	color: var(--black-active-fg-color);
-	outline: 1px solid transparent;
-	outline-offset: 1px;
 }
 
 /* Red */

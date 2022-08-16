@@ -1,16 +1,13 @@
 <script lang="ts">
-	import { decimalToOpacityValue } from '$lib/color';
 	import HslColorChannels from '$lib/components/ColorPicker/ColorChannels/HslColorChannels.svelte';
 	import RgbColorChannels from '$lib/components/ColorPicker/ColorChannels/RgbColorChannels.svelte';
+	import { getColorPickerStore } from '$lib/context';
 	import { ColorParser } from '$lib/parser';
-	import { getContext } from 'svelte';
 
 	export let pickerId: string;
 	export let alphaEnabled: boolean;
 	export let editable: boolean;
-	let { state } = getContext(pickerId);
-
-	$: rgbAlpha = alphaEnabled ? decimalToOpacityValue($state.color.rgb.a) ?? $state.color.hsl.a ?? 1 : 1;
+	let state = getColorPickerStore(pickerId);
 
 	function handleRgbColorChanged(rgbString: string) {
 		if ($state.labelState === 'inactive') {
@@ -31,7 +28,7 @@
 			r={$state.color.rgb.r}
 			g={$state.color.rgb.g}
 			b={$state.color.rgb.b}
-			a={rgbAlpha}
+			a={$state.color.rgb.a}
 			{alphaEnabled}
 			{editable}
 			on:rgbColorChanged={(e) => handleRgbColorChanged(e.detail)}

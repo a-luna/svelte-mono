@@ -3,7 +3,7 @@
 	import OkButton from '$lib/components/Icons/Ok.svelte';
 	import { createEventDispatcher, onMount, tick } from 'svelte';
 
-	let value: string = '';
+	export let value: string = '';
 	let textInput: HTMLInputElement;
 	const dispatch = createEventDispatcher();
 
