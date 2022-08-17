@@ -124,13 +124,13 @@
 	--black-cw-bg-color: var(--white2);
 	--black-cw-border-color: var(--white2);
 
-	--red-hue: 0;
+	--red-hue: 335;
 	--orange-hue: 39;
-	--yellow-hue: 60;
-	--green-hue: 120;
-	--teal-hue: 180;
+	--yellow-hue: 57;
+	--green-hue: 140;
+	--teal-hue: 175;
 	--blue-hue: 210;
-	--indigo-hue: 275;
+	--indigo-hue: 250;
 
 	--bg-sat: 100%;
 
@@ -143,48 +143,48 @@
 	--fg-light: 26%;
 	--fg-light-active: calc(var(--fg-light) + 24%);
 
-	--red-bg-color: hsl(0 100% 94%);
-	--red-hover-bg-color: hsl(0 100% 99%);
-	--red-fg-color: hsl(0 63% 26%);
-	--red-active-fg-color: hsl(0 56% 50%);
+	--red-bg-color: hsl(var(--red-hue, 0) 100% 94%);
+	--red-hover-bg-color: hsl(var(--red-hue, 0) 100% 99%);
+	--red-fg-color: hsl(var(--red-hue, 0) 63% 26%);
+	--red-active-fg-color: hsl(var(--red-hue, 0) 56% 50%);
 	--red-cw-bg-color: var(--red-bg-color);
 	--red-cw-border-color: var(--red-border-color);
 
-	--orange-bg-color: hsl(39 100% 94%);
-	--orange-hover-bg-color: hsl(39 100% 99%);
-	--orange-fg-color: hsl(39 63% 26%);
-	--orange-active-fg-color: hsl(39 56% 50%);
+	--orange-bg-color: hsl(var(--orange-hue, 39) 100% 94%);
+	--orange-hover-bg-color: hsl(var(--orange-hue, 39) 100% 99%);
+	--orange-fg-color: hsl(var(--orange-hue, 39) 63% 26%);
+	--orange-active-fg-color: hsl(var(--orange-hue, 39) 56% 50%);
 	--orange-cw-bg-color: var(--orange-bg-color);
 	--orange-cw-border-color: var(--orange-border-color);
 
-	--yellow-bg-color: hsl(60 100% 94%);
-	--yellow-hover-bg-color: hsl(60 100% 99%);
-	--yellow-fg-color: hsl(60 90% 30%);
-	--yellow-active-fg-color: hsl(60 85% 50%);
+	--yellow-bg-color: hsl(var(--yellow-hue, 60) 100% 94%);
+	--yellow-hover-bg-color: hsl(var(--yellow-hue, 60) 100% 99%);
+	--yellow-fg-color: hsl(var(--yellow-hue, 60) 90% 30%);
+	--yellow-active-fg-color: hsl(var(--yellow-hue, 60) 85% 50%);
 	--yellow-cw-bg-color: var(--yellow-bg-color);
 
-	--green-bg-color: hsl(120 100% 94%);
-	--green-hover-bg-color: hsl(120 100% 99%);
-	--green-fg-color: hsl(120 63% 26%);
-	--green-active-fg-color: hsl(120 56% 50%);
+	--green-bg-color: hsl(var(--green-hue, 120) 100% 94%);
+	--green-hover-bg-color: hsl(var(--green-hue, 120) 100% 99%);
+	--green-fg-color: hsl(var(--green-hue, 120) 63% 26%);
+	--green-active-fg-color: hsl(var(--green-hue, 120) 56% 50%);
 	--green-cw-bg-color: var(--green-bg-color);
 
-	--teal-bg-color: hsl(180 100% 94%);
-	--teal-hover-bg-color: hsl(180 100% 99%);
-	--teal-fg-color: hsl(180 63% 26%);
-	--teal-active-fg-color: hsl(180 56% 50%);
+	--teal-bg-color: hsl(var(--teal-hue, 180) 100% 94%);
+	--teal-hover-bg-color: hsl(var(--teal-hue, 180) 100% 99%);
+	--teal-fg-color: hsl(var(--teal-hue, 180) 63% 26%);
+	--teal-active-fg-color: hsl(var(--teal-hue, 180) 56% 50%);
 	--teal-cw-bg-color: var(--teal-bg-color);
 
-	--blue-bg-color: hsl(210 100% 94%);
-	--blue-hover-bg-color: hsl(210 100% 99%);
-	--blue-fg-color: hsl(210 63% 26%);
-	--blue-active-fg-color: hsl(210 56% 50%);
+	--blue-bg-color: hsl(var(--blue-hue, 180) 100% 94%);
+	--blue-hover-bg-color: hsl(var(--blue-hue, 180) 100% 99%);
+	--blue-fg-color: hsl(var(--blue-hue, 180) 63% 26%);
+	--blue-active-fg-color: hsl(var(--blue-hue, 180) 56% 50%);
 	--blue-cw-bg-color: var(--blue-bg-color);
 
-	--indigo-bg-color: hsl(275 100% 94%);
-	--indigo-hover-bg-color: hsl(275 100% 99%);
-	--indigo-fg-color: hsl(275 100% 25%);
-	--indigo-active-fg-color: hsl(275 100% 50%);
+	--indigo-bg-color: hsl(var(--indigo-hue, 180) 100% 94%);
+	--indigo-hover-bg-color: hsl(var(--indigo-hue, 180) 100% 99%);
+	--indigo-fg-color: hsl(var(--indigo-hue, 180) 100% 25%);
+	--indigo-active-fg-color: hsl(var(--indigo-hue, 180) 100% 50%);
 	--indigo-cw-bg-color: var(--indigo-bg-color);
 }
 

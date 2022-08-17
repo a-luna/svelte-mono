@@ -1,4 +1,5 @@
 import type { ThemeColor, UserThemeImported } from '.';
+import type { ViewOption } from './Literals';
 
 export interface ThemeEditorState {
 	editorId: string;
@@ -8,4 +9,5 @@ export interface ThemeEditorState {
 	selectedColor: ThemeColor;
 	editMode: boolean;
 	modalOpen: boolean;
+	currentlyViewing: ViewOption;
 }

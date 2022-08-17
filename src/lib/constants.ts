@@ -12,6 +12,7 @@ export const CSS_COLOR_FORMATS = ['hex', 'rgb', 'hsl'] as const;
 export const COMPONENT_COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo'] as const;
 export const COLOR_SPACES = ['hex', 'rgb', 'rgba', 'hsl', 'hsla'] as const;
 export const LABEL_STATES = ['prerender', 'inactive', 'copied', 'edit', 'pick', 'success', 'error'] as const;
+export const VIEW_OPTIONS = ['component', 'css', 'json'] as const;
 
 const defaultColorPalette: ColorPalette = {
 	id: '',
@@ -77,4 +78,5 @@ export const defaultThemeEditorState: ThemeEditorState = {
 	},
 	editMode: false,
 	modalOpen: false,
+	currentlyViewing: 'component',
 };

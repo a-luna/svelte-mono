@@ -144,3 +144,12 @@ export function getAllCssVariables(
 	}
 	return cssVariables.map((rule) => ({ cssVarName: rule[0], value: rule[1] }));
 }
+
+export const getThemeEditorSlotExampleCode = (): string => `<script lang="ts">
+\timport ThemeEditor from '@a-luna/svelte-color-tools';
+\timport YourComponent from 'YourComponent.svelte';
+</script>
+
+<ThemeEditor>
+\t<YourComponent />
+</ThemeEditor>`;

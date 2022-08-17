@@ -1,15 +1,12 @@
 <script lang="ts">
 	import LoadUserThemeButton from '$lib/components/ThemeEditor/UserTheme/InitializeUserTheme/LoadUserThemeButton.svelte';
 	import NewUserThemeButton from '$lib/components/ThemeEditor/UserTheme/InitializeUserTheme/NewUserThemeButton.svelte';
-	import { COMPONENT_COLORS } from '$lib/constants';
 	import type { ComponentColor } from '$lib/types';
-	import { getRandomArrayItem } from '$lib/util';
 	import { createEventDispatcher } from 'svelte';
 
-	let componentColor: ComponentColor;
+	export let componentColor: ComponentColor;
 	const dispatch = createEventDispatcher();
 
-	$: componentColor = getRandomArrayItem<ComponentColor>(COMPONENT_COLORS);
 	$: style = `color: var(--${componentColor}-fg-color); border: 1px solid var(--${componentColor}-fg-color); background-color: var(--${componentColor}-hover-bg-color);`;
 </script>
 

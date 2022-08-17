@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { createEmptyColorPalette } from '$lib/color';
 	import ColorPicker from '$lib/components/ColorPicker/ColorPicker.svelte';
+	import ContentViewer from '$lib/components/ThemeEditor/ContentViewer/ContentViewer.svelte';
 	import AddColorToPaletteModal from '$lib/components/ThemeEditor/Modals/AddColorToPaletteModal.svelte';
 	import EditColorDetailsModal from '$lib/components/ThemeEditor/Modals/EditColorDetailsModal.svelte';
 	import EditThemeSettingsModal from '$lib/components/ThemeEditor/Modals/EditThemeSettingsModal/EditThemeSettingsModal.svelte';
 	import LoadUserThemeModal from '$lib/components/ThemeEditor/Modals/LoadUserThemeModal.svelte';
 	import PaletteControls from '$lib/components/ThemeEditor/PaletteControls/PaletteControls.svelte';
 	import UserTheme from '$lib/components/ThemeEditor/UserTheme/UserTheme.svelte';
+	import { COMPONENT_COLORS } from '$lib/constants';
 	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
 	import { createThemeEditorStore } from '$lib/stores/themeEditor';
 	import { exportUserThemeToJSON } from '$lib/themes';
@@ -18,6 +20,8 @@
 		ThemeEditorStore,
 		UserThemeImported,
 	} from '$lib/types';
+	import { getRandomArrayItem, getThemeEditorSlotExampleCode } from '$lib/util';
+	import { HighlightSvelte } from 'svelte-highlight';
 	import type { Readable, Writable } from 'svelte/store';
 
 	let editorId: string = 'color-editor';
@@ -28,20 +32,28 @@
 	let storesInitialized = false;
 	let themeInitialized = false;
 	let app: Readable<AppStore>;
-	const componentColor: ComponentColor = 'blue';
 	let loadUserThemeModal: LoadUserThemeModal;
 	let editDetailsModal: EditColorDetailsModal;
 	let addColorModal: AddColorToPaletteModal;
 	let editThemeSettingsModal: EditThemeSettingsModal;
 	let colorPicker: ColorPicker;
 
-	// TODO: Create component for left-column that generates classic color schemes based on selectedColor value:
+	// TODO: FIX TOP RIGHT BORDER OF COMPONENT WRAPPER, IT LOOKS JANKY!
+	// TODO: FIX CSS VALUE DISPLAY STRING ON COLOR COMPONENT, ALWAYS SHOWS HSL REGARDLESS OF THE THEME'S COLOR FORMAT SETTING AND ALL COLORS CHANGE FROM HSL/HSLA BASED ON THE CURRENTLY SELECTED COLOR
+
+	// TODO: Create component that generates classic color schemes based on selectedColor value:
 	//    - Complementary color (1: hue +180)
 	//    - Analogous colors (2: hue +30, hue -30)
 	//    - Triadic colors (2: hue +120, hue +240)
 	//    - Tetradic colors (3: hue +90, hue +180, hue +270)
 	//    - Split complementary (2: hue +150, hue +210)
-	//    - Monochrome (6: lightness -15, -10 -5, +5, +10, +15)
+	//    - Monochrome (10: lightness -25, -20, -15, -10 -5, +5, +10, +15, +20, +25)
+
+	// TODO: Create component to list all CSS Variables and allow user to filter the list based on variable name prefixes and selectors used to apply the variables
+	// TODO: Create component to generate a list of theme colors from the list of css variables
+	// TODO: Create component to view and manage css variables with non-color values (e.g., margin, width, font-size)
+	// TODO: Create component to view the user theme as JSON, allow user to copy the text and/or download the file
+	// TODO: Create component to view the CSS variables as valid CSS and allow the user to copy the text
 
 	$: if (typeof window !== 'undefined' && !editorStateInitialized) {
 		state = createThemeEditorStore(editorId);
@@ -53,6 +65,8 @@
 		app = initAppStore(state, colorPickerState);
 		storesInitialized = true;
 	}
+	$: componentColor = getRandomArrayItem<ComponentColor>(COMPONENT_COLORS);
+
 	$: console.log({
 		picker: $colorPickerState,
 		state: $state,
@@ -141,26 +155,37 @@
 				{/if}
 			</div>
 		</div>
+		{#if storesInitialized}
+			<ContentViewer {editorId} {componentColor}>
+				<slot>
+					<div class="help-text">
+						<p><strong>The slot for the ThemeEditor component is not populated!</strong></p>
+						<p>Please update your code to pass an instance of a component you wish to theme to see live changes:</p>
+						<div class="code-viewer">
+							<HighlightSvelte code={getThemeEditorSlotExampleCode()} />
+						</div>
+					</div>
+				</slot>
+			</ContentViewer>
+		{/if}
 	</div>
-	{#if $$slots && storesInitialized}
-		<div class="test-component" style={$app.componentStyles}>
-			<slot />
-		</div>
-	{/if}
 {/if}
 
 <style lang="postcss">
 	.theme-editor-wrapper {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 1rem;
 		width: min-content;
 		background-color: var(--white1);
+		max-width: 700px;
+		padding: 1rem;
 	}
 
 	#theme-editor {
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 1rem;
-		padding: 1rem;
-		max-width: 700px;
 		margin: 0 auto 0 0;
 	}
 
@@ -179,10 +204,36 @@
 		flex-flow: column nowrap;
 		align-items: flex-start;
 		gap: 1rem;
-		width: 335px;
+		width: 285px;
 	}
 
-	.test-component {
+	.help-text {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 0.5rem;
+	}
+
+	.help-text strong {
+		font-style: italic;
+		font-weight: 500;
+	}
+
+	.code-viewer {
+		flex: 1;
+		border-radius: 6px;
+		max-height: 300px;
+		min-height: 67px;
+		background-color: var(--black4);
+	}
+
+	.code-viewer :global(pre),
+	.code-viewer :global(code) {
+		border-radius: 6px;
+	}
+	.code-viewer :global(code.hljs) {
+		font-size: 0.65rem;
+		line-height: 1.5;
+		max-height: 300px;
 		padding: 1rem;
 	}
 </style>
