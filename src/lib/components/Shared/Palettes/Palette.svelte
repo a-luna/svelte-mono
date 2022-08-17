@@ -83,7 +83,6 @@
 					{displayColorName}
 					componentColor={palette.componentColor}
 					on:colorSelected
-					on:colorDeselected
 					on:editColorDetails
 					on:deleteColor
 					bind:this={colorRefs[color.color.hexAlpha]}

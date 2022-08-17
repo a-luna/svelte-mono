@@ -1,7 +1,7 @@
 <svelte:options accessors />
 
 <script lang="ts">
-	import { getX11ColorPalettes } from '$lib/color';
+	import { copyCssColor, getX11ColorPalettes } from '$lib/color';
 	import ColorChannels from '$lib/components/ColorPicker/ColorChannels/ColorChannels.svelte';
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
 	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
@@ -41,7 +41,7 @@
 	}
 
 	function handleX11ColorSelected(color: ThemeColor) {
-		setColor(color.color);
+		setColor(copyCssColor(color.color));
 	}
 
 	export function setColor(color: CssColor) {

@@ -531,3 +531,16 @@ function adjustLightness(hsl: HslColor, lightChange: number): Result<CssColor> {
 function getRectangularColors(color: CssColor, hueChange: number): CssColor[] {
 	return [adjustHue(color.hsl, hueChange), adjustHue(color.hsl, 180), adjustHue(color.hsl, 180 + hueChange)];
 }
+
+export const copyCssColor = (color: CssColor): CssColor => ({
+	hex: color.hex,
+	rgb: { ...color.rgb },
+	rgbString: color.rgbString,
+	hsl: { ...color.hsl },
+	hslString: color.hslString,
+	hasAlpha: color.hasAlpha,
+	hexAlpha: color.hexAlpha,
+	rgbaString: color.rgbaString,
+	hslaString: color.hslaString,
+	name: color.name,
+});

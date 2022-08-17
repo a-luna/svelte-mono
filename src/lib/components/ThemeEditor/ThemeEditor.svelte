@@ -135,7 +135,6 @@
 						on:deletePalette={(e) => state.deletePalette(e.detail)}
 						on:paletteSelected={(e) => state.changeSelectedPalette(e.detail)}
 						on:colorSelected={(e) => handleColorSelected(e.detail)}
-						on:colorDeselected={(e) => state.deselectColor()}
 						on:deleteColor={(e) => state.deleteColorFromPalette(e.detail)}
 						on:editColorDetails={(e) => editDetailsModal.toggleModal(e.detail)}
 					/>

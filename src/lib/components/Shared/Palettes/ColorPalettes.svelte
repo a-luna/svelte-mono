@@ -37,7 +37,6 @@
 				{palette}
 				{displayColorName}
 				on:colorSelected
-				on:colorDeselected
 				on:editColorDetails
 				on:deleteColor
 				on:togglePalette={() => handlePaletteToggled(palette.id)}

@@ -122,7 +122,7 @@ export function getAllCssVariables(
 		cssRules = cssRules.filter((rule) => selectors.some((selector) => rule.selectorText.includes(selector)));
 	}
 
-	let cssVarNameAndValueList = cssRules
+	let cssVariables = cssRules
 		.map((rule) =>
 			Array.from(rule.style)
 				.filter((propName) => propName.indexOf('--') === 0)
@@ -131,16 +131,16 @@ export function getAllCssVariables(
 		.flat();
 
 	if (onlyIncludePrefixes.length) {
-		cssVarNameAndValueList = onlyIncludePrefixes
-			.map((prefix) => cssVarNameAndValueList.filter((rule) => rule[0].indexOf(`${prefix}-`) === 0))
+		cssVariables = onlyIncludePrefixes
+			.map((prefix) => cssVariables.filter((rule) => rule[0].indexOf(`${prefix}-`) === 0))
 			.flat();
 	} else {
 		if (ignoreTailwinds) {
 			ignorePrefixes.push('--tw');
 		}
 		for (const prefix of ignorePrefixes) {
-			cssVarNameAndValueList = cssVarNameAndValueList.filter((rule) => rule[0].indexOf(`${prefix}-`) === -1);
+			cssVariables = cssVariables.filter((rule) => rule[0].indexOf(`${prefix}-`) === -1);
 		}
 	}
-	return cssVarNameAndValueList.map((rule) => ({ cssVarName: rule[0], value: rule[1] }));
+	return cssVariables.map((rule) => ({ cssVarName: rule[0], value: rule[1] }));
 }

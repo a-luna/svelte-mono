@@ -46,7 +46,6 @@
 				columns={1}
 				on:paletteSelected
 				on:colorSelected
-				on:colorDeselected
 				on:editColorDetails
 				on:deleteColor
 			/>
