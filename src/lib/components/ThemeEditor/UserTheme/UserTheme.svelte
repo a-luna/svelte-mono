@@ -29,6 +29,7 @@
 			on:newUserTheme
 			on:editThemeSettings
 			on:saveUserTheme
+			on:exportUserTheme
 			on:closeUserTheme
 		/>
 		{#if !$state.editMode}
@@ -39,12 +40,13 @@
 		{:else}
 			<ColorPalettes
 				alphaEnabled={$app?.pickerColorHasAlpha}
-				bind:selectedPaletteId={$state.selectedPaletteId}
 				palettes={$state?.userTheme?.palettes}
 				allowMultiplePalettesOpen={false}
 				displayColorName={true}
 				columns={1}
+				on:paletteSelected
 				on:colorSelected
+				on:colorDeselected
 				on:editColorDetails
 				on:deleteColor
 			/>

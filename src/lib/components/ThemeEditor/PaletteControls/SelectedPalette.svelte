@@ -7,12 +7,10 @@
 	let displayName: string;
 	let tooltip: string;
 
-	$: if (selectedPalette) {
-		bgColor = selectedPalette ? 'var(--white3)' : 'var(--white1)';
-		swatchColor = selectedPalette ? `var(--${selectedPalette.componentColor}-fg-color)` : 'inherit';
-		displayName = selectedPalette ? selectedPalette.displayName : 'No Palette Selected';
-		tooltip = selectedPalette ? `${selectedPalette.displayName} is the selected palette` : 'No Palette Selected';
-	}
+	$: bgColor = selectedPalette ? 'var(--white3)' : 'var(--white1)';
+	$: swatchColor = selectedPalette ? `var(--${selectedPalette.componentColor}-fg-color)` : 'inherit';
+	$: displayName = selectedPalette ? selectedPalette.displayName : 'No Palette Selected';
+	$: tooltip = selectedPalette ? `${selectedPalette.displayName} is the selected palette` : 'No Palette Selected';
 </script>
 
 <div class="option-wrapper" title={tooltip} style="background-color: {bgColor}">

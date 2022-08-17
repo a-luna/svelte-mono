@@ -4,6 +4,7 @@
 	import { getAppStore, getColorPickerStore, getThemeEditorStore } from '$lib/context';
 	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
+	import UpdateColorButton from './UpdateColorButton.svelte';
 
 	export let editorId: string;
 	export let pickerId: string;
@@ -24,6 +25,11 @@
 		color={componentColor}
 		on:click={() => dispatch('addColorToPalette', $colorPickerState.color)}
 		disabled={disableControls}
+	/>
+	<UpdateColorButton
+		color={componentColor}
+		on:click={() => dispatch('updateThemeColor', $colorPickerState.color)}
+		disabled={disableControls || !$state.colorSelected}
 	/>
 </div>
 

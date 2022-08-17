@@ -9,26 +9,26 @@
 	import X11Palettes from '$lib/components/ColorPicker/X11Palettes/X11Palettes.svelte';
 	import { initColorPickerStore } from '$lib/context';
 	import { ColorParser } from '$lib/parser';
-	import type { ColorPalette, ColorPickerState, CssColor } from '$lib/types';
+	import type { ColorPickerState, CssColor, ThemeColor } from '$lib/types';
 	import { onDestroy, onMount, tick } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { writable } from 'svelte/store';
 
 	export let pickerId: string = `color-picker`;
 	export let state: Writable<ColorPickerState>;
-
-	export let editable = true;
+	export let editMode = false;
+	let editable = true;
 	let initialized = false;
 	let timeout: NodeJS.Timeout;
 	let colorPicker: HTMLInputElement;
-	let x11ColorPalettes: ColorPalette[];
 
-	$: if ($state) $state.alphaEnabled = $state?.colorSpace === 'rgba' || $state?.colorSpace === 'hsla';
+	$: if (editMode) editable = false;
 	$: if ($state) $state.editable = editable;
+	$: if ($state) $state.alphaEnabled = $state?.colorSpace === 'rgba' || $state?.colorSpace === 'hsla';
 	$: if (typeof window !== 'undefined' && !initialized) {
 		state = writable<ColorPickerState>({
 			pickerId,
-			color: { color: ColorParser.parse('rgb(128 128 128)').value },
+			color: ColorParser.parse('rgb(128 128 128)').value,
 			x11PalettesShown: false,
 			x11ColorPalettes: getX11ColorPalettes(),
 			colorSpace: 'rgb',
@@ -39,11 +39,15 @@
 		state = initColorPickerStore(state);
 		initialized = true;
 	}
-	$: if ($state) x11ColorPalettes = $state.x11ColorPalettes;
+
+	function handleX11ColorSelected(color: ThemeColor) {
+		setColor(color.color);
+	}
 
 	export function setColor(color: CssColor) {
+		console.log({ color });
 		setCorrectColorSpace(color);
-		$state.color.color = color;
+		$state.color = color;
 		$state.labelState = 'success';
 		timeout = setTimeout(() => {
 			$state.labelState = 'inactive';
@@ -65,7 +69,7 @@
 	function handleStringValueChanged(color: string) {
 		const result = ColorParser.parse(color);
 		if (result.success) {
-			$state.color.color = result.value;
+			$state.color = result.value;
 			$state.labelState = 'success';
 		} else {
 			$state.labelState = 'error';
@@ -76,7 +80,7 @@
 	}
 
 	function handleColorPickerValueChanged() {
-		$state.color.color = ColorParser.parse(colorPicker.value).value;
+		$state.color = ColorParser.parse(colorPicker.value).value;
 		$state.labelState = 'success';
 		timeout = setTimeout(() => {
 			$state.labelState = 'inactive';
@@ -96,7 +100,7 @@
 		bind:this={colorPicker}
 		type="color"
 		style="display: none"
-		value={$state?.color?.color?.hex}
+		value={$state?.color?.hex}
 		on:change={() => handleColorPickerValueChanged()}
 	/>
 	{#if !$state.x11PalettesShown}
@@ -114,12 +118,12 @@
 				<ColorChannels pickerId={$state.pickerId} />
 			</div>
 		</div>
-	{:else if x11ColorPalettes !== undefined}
+	{:else if $state.x11ColorPalettes}
 		<X11Palettes
 			x11ColorPalettes={$state.x11ColorPalettes}
 			alphaEnabled={$state.alphaEnabled}
 			on:colorSelected={() => ($state.x11PalettesShown = false)}
-			on:colorSelected={(e) => setColor(e.detail)}
+			on:colorSelected={(e) => handleX11ColorSelected(e.detail)}
 		/>
 	{/if}
 {/if}

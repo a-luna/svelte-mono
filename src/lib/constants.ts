@@ -53,7 +53,6 @@ export const defaultAppStore: AppStore = {
 	selectedThemePalette: defaultColorPalette,
 	themeCurrentColor: defaultThemeColor,
 	themeColorHasAlpha: false,
-	pickerCurrentColor: defaultThemeColor,
 	pickerColorHasAlpha: false,
 	componentStyles: '',
 };
@@ -72,6 +71,7 @@ export const defaultThemeEditorState: ThemeEditorState = {
 	editorId: '',
 	userTheme: defaultUserThemeImported,
 	selectedPaletteId: '',
+	colorSelected: false,
 	selectedColor: {
 		color: defaultCssColor,
 	},

@@ -7,7 +7,7 @@ import type {
 	UserThemeFromFile,
 	UserThemeImported,
 } from '$lib/types';
-import { capitalize } from '$lib/util';
+import { capitalize, slugify } from '$lib/util';
 import { ColorParser } from './parser';
 
 export const CAMEL_CASE_REGEX = /^[a-z](?=.*[A-Z])[A-Za-z]*[^[-`]$/;
@@ -119,8 +119,25 @@ export function copyThemeColor(color: ThemeColor): ThemeColorShallowCopy {
 const getThemeColorCss = (userTheme: UserThemeImported, color: ThemeColor): string =>
 	`${convertPropNameToCssVarName(userTheme, color.propName)}: ${exportColorAsCssValue(color, userTheme.colorFormat)}`;
 
-export const convertThemePalettesToCss = (userTheme: UserThemeImported): string =>
+export const convertThemePalettesToCss = (userTheme: UserThemeImported, withNewLines = false): string =>
 	userTheme?.palettes
 		.map((palette) => palette.colors.map((color) => getThemeColorCss(userTheme, color)))
 		.flat()
-		.join('; ');
+		.join(withNewLines ? '\n;' : '; ');
+
+export function exportUserThemeToJSON(userTheme: UserThemeImported): void {
+	userTheme.modifiedAt = new Date().toISOString();
+	const filename = `${slugify(userTheme.themeName)}.json`;
+	const blob = new Blob([JSON.stringify(exportUserThemeToFile(userTheme))], { type: 'text/json' });
+	const link = document.createElement('a');
+	link.download = filename;
+	link.href = window.URL.createObjectURL(blob);
+	link.dataset.downloadurl = ['text/json', link.download, link.href].join(':');
+	const evt = new MouseEvent('click', {
+		view: window,
+		bubbles: true,
+		cancelable: true,
+	});
+	link.dispatchEvent(evt);
+	link.remove();
+}

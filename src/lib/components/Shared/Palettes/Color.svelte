@@ -22,15 +22,6 @@
 	$: wrapperStyles = displayColorName ? `border: 1px solid var(--${componentColor}-fg-color);` : '';
 	$: buttonToolTip = !displayColorName ? `${color.color.name} (${color.color.hex}, hue: ${color.color.hsl.h})` : '';
 
-	function handleColorSwatchClicked() {
-		dispatch('colorSelected', color);
-		buttonElement.focus();
-	}
-
-	function handleColorNameClicked() {
-		dispatch('editColorDetails', color);
-	}
-
 	function handleCssValueClicked() {
 		currentLabelIndex += 1;
 		if (currentLabelIndex === colorLabels.length) {
@@ -54,7 +45,8 @@
 			type="button"
 			title={buttonToolTip}
 			bind:this={buttonElement}
-			on:click|stopPropagation={() => handleColorSwatchClicked()}
+			on:click|stopPropagation={() => buttonElement.focus()}
+			on:focus={() => dispatch('colorSelected', color)}
 		>
 			<div class="swatch-wrapper">
 				<div class="swatch" style={color.color.hasAlpha ? alphaBg : 'background-color: inherit'} />
@@ -63,7 +55,7 @@
 		</button>
 		{#if hasCustomName && displayColorName}
 			<div class="color-name-wrapper">
-				<span class="color-name" on:click={() => handleColorNameClicked()}>{color.color.name}</span>
+				<span class="color-name" on:click={() => dispatch('editColorDetails', color)}>{color.color.name}</span>
 			</div>
 		{/if}
 	</div>

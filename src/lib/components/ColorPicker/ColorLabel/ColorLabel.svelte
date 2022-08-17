@@ -48,7 +48,7 @@
 		<EditColorString value={currentColor} on:updateColor on:keepCurrentColor={() => ($state.labelState = 'inactive')} />
 	{:else}
 		<CopyColorString
-			color={$state?.color.color}
+			color={$state?.color}
 			alphaEnabled={$state.alphaEnabled}
 			editable={$state?.editable}
 			bind:currentColor

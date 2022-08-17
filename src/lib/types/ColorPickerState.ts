@@ -1,8 +1,8 @@
-import type { ColorPalette, ColorSpace, LabelState, ThemeColor } from '.';
+import type { ColorPalette, ColorSpace, CssColor, LabelState } from '.';
 
 export interface ColorPickerState {
 	pickerId: string;
-	color: ThemeColor;
+	color: CssColor;
 	x11PalettesShown: boolean;
 	x11ColorPalettes: ColorPalette[];
 	colorSpace: ColorSpace;
