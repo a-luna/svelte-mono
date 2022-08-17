@@ -1,4 +1,12 @@
-import type { ColorFormat, ColorPalette, CssColor, UserThemeImported } from './types';
+import type {
+	AppStore,
+	ColorFormat,
+	ColorPalette,
+	CssColor,
+	ThemeColor,
+	ThemeEditorState,
+	UserThemeImported,
+} from './types';
 
 export const CSS_COLOR_FORMATS = ['hex', 'rgb', 'hsl'] as const;
 export const COMPONENT_COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo'] as const;
@@ -35,6 +43,21 @@ const defaultCssColor: CssColor = {
 	hslaString: '',
 };
 
+const defaultThemeColor: ThemeColor = {
+	color: defaultCssColor,
+};
+
+export const defaultAppStore: AppStore = {
+	x11PalettesShown: false,
+	themeColorPalettes: [defaultColorPalette],
+	selectedThemePalette: defaultColorPalette,
+	themeCurrentColor: defaultThemeColor,
+	themeColorHasAlpha: false,
+	pickerCurrentColor: defaultThemeColor,
+	pickerColorHasAlpha: false,
+	componentStyles: '',
+};
+
 const defaultUserThemeImported: UserThemeImported = {
 	themeName: '',
 	usesPrefix: false,
@@ -45,7 +68,7 @@ const defaultUserThemeImported: UserThemeImported = {
 	palettes: [],
 };
 
-export const defaultThemeEditorState = {
+export const defaultThemeEditorState: ThemeEditorState = {
 	editorId: '',
 	userTheme: defaultUserThemeImported,
 	selectedPaletteId: '',
@@ -53,8 +76,5 @@ export const defaultThemeEditorState = {
 		color: defaultCssColor,
 	},
 	editMode: false,
-	showX11Palettes: false,
 	modalOpen: false,
-	selectedPalette: defaultColorPalette,
-	alphaEnabled: false,
 };

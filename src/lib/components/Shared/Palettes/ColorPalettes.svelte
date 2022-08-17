@@ -10,7 +10,7 @@
 	export let displayColorName = false;
 	let paletteRefs: Record<string, Palette> = {};
 
-	$: if (palettes.length === 0) paletteRefs = {};
+	$: if (palettes && palettes.length === 0) paletteRefs = {};
 
 	function handlePaletteToggled(id: string) {
 		const isExpanded = paletteRefs[id].expanded;
@@ -25,18 +25,20 @@
 </script>
 
 <div class="accordion" style="grid-template-columns: repeat({columns}, minmax(0, 1fr));">
-	{#each palettes as palette}
-		<Palette
-			{alphaEnabled}
-			{palette}
-			{displayColorName}
-			on:colorSelected
-			on:editColorDetails
-			on:deleteColor
-			on:togglePalette={() => handlePaletteToggled(palette.id)}
-			bind:this={paletteRefs[palette.id]}
-		/>
-	{/each}
+	{#if palettes && palettes.length}
+		{#each palettes as palette}
+			<Palette
+				{alphaEnabled}
+				{palette}
+				{displayColorName}
+				on:colorSelected
+				on:editColorDetails
+				on:deleteColor
+				on:togglePalette={() => handlePaletteToggled(palette.id)}
+				bind:this={paletteRefs[palette.id]}
+			/>
+		{/each}
+	{/if}
 </div>
 
 <style lang="postcss">

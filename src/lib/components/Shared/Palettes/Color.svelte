@@ -23,7 +23,7 @@
 	$: buttonToolTip = !displayColorName ? `${color.color.name} (${color.color.hex}, hue: ${color.color.hsl.h})` : '';
 
 	function handleColorSwatchClicked() {
-		dispatch('colorSelected', color.color);
+		dispatch('colorSelected', color);
 		buttonElement.focus();
 	}
 
@@ -83,7 +83,7 @@
 	.color-wrapper.user-color {
 		padding: 0.35rem 0.5rem;
 		background-color: var(--color-wrapper-bg-color);
-		order-radius: 4px;
+		border-radius: 4px;
 		width: 100%;
 	}
 

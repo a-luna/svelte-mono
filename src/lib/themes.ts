@@ -120,7 +120,7 @@ const getThemeColorCss = (userTheme: UserThemeImported, color: ThemeColor): stri
 	`${convertPropNameToCssVarName(userTheme, color.propName)}: ${exportColorAsCssValue(color, userTheme.colorFormat)}`;
 
 export const convertThemePalettesToCss = (userTheme: UserThemeImported): string =>
-	userTheme.palettes
+	userTheme?.palettes
 		.map((palette) => palette.colors.map((color) => getThemeColorCss(userTheme, color)))
 		.flat()
 		.join('; ');

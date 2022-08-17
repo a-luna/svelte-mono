@@ -1,4 +1,4 @@
-import type { ColorPalette, ThemeColor, UserThemeImported } from '.';
+import type { ThemeColor, UserThemeImported } from '.';
 
 export interface ThemeEditorState {
 	editorId: string;
@@ -6,9 +6,5 @@ export interface ThemeEditorState {
 	selectedPaletteId: string;
 	selectedColor: ThemeColor;
 	editMode: boolean;
-	showX11Palettes: boolean;
 	modalOpen: boolean;
-
-	selectedPalette: ColorPalette;
-	alphaEnabled: boolean;
 }

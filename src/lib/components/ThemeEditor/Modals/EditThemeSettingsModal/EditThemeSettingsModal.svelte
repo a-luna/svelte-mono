@@ -2,7 +2,7 @@
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import Modal from '$lib/components/Shared/Modal.svelte';
 	import ColorFormatSelector from '$lib/components/ThemeEditor/Modals/EditThemeSettingsModal/ColorFormatSelector.svelte';
-	import { getAppStore } from '$lib/context';
+	import { getAppStore, getThemeEditorStore } from '$lib/context';
 	import { CSS_VAR_PREFIX_REGEX } from '$lib/themes';
 	import type { ColorFormat, UserThemeFromFile } from '$lib/types';
 	import { tick } from 'svelte';
@@ -17,6 +17,7 @@
 	let usesPrefix = false;
 	let themePrefix = '';
 	let inputTextBox: InputTextBox;
+	let state = getThemeEditorStore(editorId);
 	let app = getAppStore(editorId);
 
 	$: error = usesPrefix ? CSS_VAR_PREFIX_REGEX.test(themePrefix) : false;
@@ -32,7 +33,7 @@
 			previousSettings = { themeName, colorFormat, usesPrefix, themePrefix };
 		}
 		modal.toggleModal();
-		$app.themeEditorState.modalOpen = !$app.themeEditorState.modalOpen;
+		$state.modalOpen = !$state.modalOpen;
 	}
 	function saveChanges() {
 		userTheme.themeName = themeName;

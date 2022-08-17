@@ -8,21 +8,21 @@ export function createAppStore(
 	colorPickerState: Writable<ColorPickerState>,
 ): Readable<AppStore> {
 	return derived([themeEditorState, colorPickerState], ([$themeEditorState, $colorPickerState]) => {
-		const getThemePalette = (): ColorPalette =>
-			$themeEditorState.userTheme.palettes.find((p) => p.id === $themeEditorState.selectedPaletteId);
+		function getThemePalette(): ColorPalette {
+			if ($themeEditorState && $themeEditorState.userTheme) {
+				return $themeEditorState.userTheme.palettes.find((p) => p.id === $themeEditorState.selectedPaletteId);
+			}
+		}
 
 		return {
-			themeEditorStore: themeEditorState,
-			themeEditorState: $themeEditorState,
-			colorPickerStore: colorPickerState,
-			colorPickerState: $colorPickerState,
-			themeColorPalettes: $themeEditorState.userTheme.palettes,
+			x11PalettesShown: $colorPickerState?.x11PalettesShown,
+			themeColorPalettes: $themeEditorState?.userTheme?.palettes,
 			selectedThemePalette: getThemePalette(),
-			themeCurrentColor: $themeEditorState.selectedColor,
-			themeColorHasAlpha: $themeEditorState.selectedColor.color.hasAlpha,
-			pickerCurrentColor: $colorPickerState.color,
-			pickerColorHasAlpha: $colorPickerState.color.hasAlpha,
-			componentStyles: convertThemePalettesToCss($themeEditorState.userTheme),
+			themeCurrentColor: $themeEditorState?.selectedColor,
+			themeColorHasAlpha: $themeEditorState?.selectedColor?.color?.hasAlpha,
+			pickerCurrentColor: $colorPickerState?.color,
+			pickerColorHasAlpha: $colorPickerState?.alphaEnabled,
+			componentStyles: convertThemePalettesToCss($themeEditorState?.userTheme),
 		};
 	});
 }

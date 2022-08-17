@@ -1,16 +1,12 @@
-import type { Writable } from 'svelte/store';
-import type { ColorPalette, ColorPickerState, CssColor, ThemeColor, ThemeEditorState, ThemeEditorStore } from '.';
+import type { ColorPalette, ThemeColor } from '.';
 
 export interface AppStore {
-	themeEditorState: ThemeEditorState;
-	themeEditorStore: ThemeEditorStore;
-	colorPickerState: ColorPickerState;
-	colorPickerStore: Writable<ColorPickerState>;
+	x11PalettesShown: boolean;
 	themeColorPalettes: ColorPalette[];
 	selectedThemePalette: ColorPalette;
 	themeCurrentColor: ThemeColor;
 	themeColorHasAlpha: boolean;
-	pickerCurrentColor: CssColor;
+	pickerCurrentColor: ThemeColor;
 	pickerColorHasAlpha: boolean;
 	componentStyles: string;
 }

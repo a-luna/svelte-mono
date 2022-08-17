@@ -2,7 +2,7 @@
 	import { colorNameisCustomized } from '$lib/color';
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import Modal from '$lib/components/Shared/Modal.svelte';
-	import { getThemeEditorStore } from '$lib/context';
+	import { getAppStore, getThemeEditorStore } from '$lib/context';
 	import {
 		CAMEL_CASE_REGEX,
 		convertPropNameToCssVarName,
@@ -25,6 +25,7 @@
 	let autoGenDisplayName = true;
 	let inputTextBox: InputTextBox;
 	let state = getThemeEditorStore(editorId);
+	let app = getAppStore(editorId);
 	const dispatch = createEventDispatcher();
 	const LOWERCASE_REGEX = /^[a-z]+$/;
 
@@ -85,7 +86,13 @@
 		</div>
 		<div class="pallete-name-wrapper">
 			<label for="palette-name">To Palette</label>
-			<input type="text" readonly id="palette-name" name="palette-name" value={$state?.selectedPalette?.displayName} />
+			<input
+				type="text"
+				readonly
+				id="palette-name"
+				name="palette-name"
+				value={$app?.selectedThemePalette?.displayName}
+			/>
 		</div>
 
 		<label for="color-prop-name">JSON Property Name</label>

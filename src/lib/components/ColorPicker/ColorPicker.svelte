@@ -10,32 +10,31 @@
 	import { initColorPickerStore } from '$lib/context';
 	import { ColorParser } from '$lib/parser';
 	import type { ColorPalette, ColorPickerState, CssColor } from '$lib/types';
-	import { getRandomHexString } from '$lib/util';
-	import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { writable } from 'svelte/store';
 
-	export let pickerId: string = `color-picker-${getRandomHexString(4)}`;
+	export let pickerId: string = `color-picker`;
 	export let state: Writable<ColorPickerState>;
 
 	export let editable = true;
-	export let showX11Palettes = false;
 	let initialized = false;
 	let timeout: NodeJS.Timeout;
 	let colorPicker: HTMLInputElement;
 	let x11ColorPalettes: ColorPalette[];
-	const dispatch = createEventDispatcher();
 
-	$: alphaEnabled = $state?.colorSpace === 'rgba' || $state?.colorSpace === 'hsla';
+	$: if ($state) $state.alphaEnabled = $state?.colorSpace === 'rgba' || $state?.colorSpace === 'hsla';
 	$: if ($state) $state.editable = editable;
 	$: if (typeof window !== 'undefined' && !initialized) {
 		state = writable<ColorPickerState>({
 			pickerId,
-			color: ColorParser.parse('rgb(128 128 128)').value,
+			color: { color: ColorParser.parse('rgb(128 128 128)').value },
+			x11PalettesShown: false,
 			x11ColorPalettes: getX11ColorPalettes(),
 			colorSpace: 'rgb',
 			labelState: 'prerender',
 			editable: true,
+			alphaEnabled: false,
 		});
 		state = initColorPickerStore(state);
 		initialized = true;
@@ -44,7 +43,7 @@
 
 	export function setColor(color: CssColor) {
 		setCorrectColorSpace(color);
-		$state.color = color;
+		$state.color.color = color;
 		$state.labelState = 'success';
 		timeout = setTimeout(() => {
 			$state.labelState = 'inactive';
@@ -66,7 +65,7 @@
 	function handleStringValueChanged(color: string) {
 		const result = ColorParser.parse(color);
 		if (result.success) {
-			$state.color = result.value;
+			$state.color.color = result.value;
 			$state.labelState = 'success';
 		} else {
 			$state.labelState = 'error';
@@ -77,7 +76,7 @@
 	}
 
 	function handleColorPickerValueChanged() {
-		$state.color = ColorParser.parse(colorPicker.value).value;
+		$state.color.color = ColorParser.parse(colorPicker.value).value;
 		$state.labelState = 'success';
 		timeout = setTimeout(() => {
 			$state.labelState = 'inactive';
@@ -97,37 +96,29 @@
 		bind:this={colorPicker}
 		type="color"
 		style="display: none"
-		value={$state?.color?.hex}
+		value={$state?.color?.color?.hex}
 		on:change={() => handleColorPickerValueChanged()}
 	/>
-	{#if !showX11Palettes}
+	{#if !$state.x11PalettesShown}
 		<div class="color-picker" data-testid={$state?.pickerId}>
 			<div class="picker-left-col">
 				<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
 				<ColorSwatch
 					pickerId={$state.pickerId}
-					{alphaEnabled}
-					disabled={!$state.editable}
-					on:showX11Palettes={() => (showX11Palettes = true)}
-					on:showX11Palettes
+					on:showX11Palettes={() => ($state.x11PalettesShown = true)}
 					on:showColorPicker={() => colorPicker.click()}
 				/>
 			</div>
 			<div class="picker-right-col">
-				<ColorLabel
-					pickerId={$state.pickerId}
-					{alphaEnabled}
-					on:updateColor={(e) => handleStringValueChanged(e.detail)}
-				/>
-				<ColorChannels pickerId={$state.pickerId} {alphaEnabled} editable={$state.editable} />
+				<ColorLabel pickerId={$state.pickerId} on:updateColor={(e) => handleStringValueChanged(e.detail)} />
+				<ColorChannels pickerId={$state.pickerId} />
 			</div>
 		</div>
 	{:else if x11ColorPalettes !== undefined}
 		<X11Palettes
-			{x11ColorPalettes}
-			{alphaEnabled}
-			on:colorSelected={() => (showX11Palettes = false)}
-			on:colorSelected={() => dispatch('hideX11Palettes')}
+			x11ColorPalettes={$state.x11ColorPalettes}
+			alphaEnabled={$state.alphaEnabled}
+			on:colorSelected={() => ($state.x11PalettesShown = false)}
 			on:colorSelected={(e) => setColor(e.detail)}
 		/>
 	{/if}

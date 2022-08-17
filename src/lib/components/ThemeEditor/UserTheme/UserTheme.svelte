@@ -4,46 +4,43 @@
 	import PaletteEditor from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/PaletteEditor.svelte';
 	import ThemeName from '$lib/components/ThemeEditor/UserTheme/ThemeName.svelte';
 	import UserThemeControls from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/UserThemeControls.svelte';
-	import { getAppStore } from '$lib/context';
-	import type { ComponentColor } from '$lib/types';
+	import { getAppStore, getThemeEditorStore } from '$lib/context';
+	import type { ColorPalette, ComponentColor } from '$lib/types';
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;
+	export let initialized = false;
+	export let themeColorPalettes: ColorPalette[];
+	export let x11PalettesShown: boolean;
+	let state = getThemeEditorStore(editorId);
 	let app = getAppStore(editorId);
 </script>
 
-{#if !$app?.themeEditorState?.userTheme.themeName}
+{#if !initialized}
 	<InitializeUserTheme on:importUserTheme on:newUserTheme />
 {:else}
 	<div class="user-theme">
 		<UserThemeControls
 			{editorId}
 			{componentColor}
+			{themeColorPalettes}
+			{x11PalettesShown}
 			on:importUserTheme
 			on:newUserTheme
 			on:editThemeSettings
 			on:saveUserTheme
 			on:closeUserTheme
 		/>
-		{#if !$app.themeEditorState.editMode}
-			<ThemeName
-				bind:editMode={$app.themeEditorState.editMode}
-				themeName={$app.themeEditorState.userTheme.themeName}
-				{componentColor}
-			/>
+		{#if !$state.editMode}
+			<ThemeName themeName={$state?.userTheme?.themeName} {componentColor} />
 		{/if}
-		{#if $app.themeEditorState.editMode}
-			<PaletteEditor
-				bind:themeColorPalettes={$app.themeEditorState.userTheme.palettes}
-				color={'teal'}
-				on:deletePalette
-				on:createPalette
-			/>
+		{#if $state.editMode}
+			<PaletteEditor {editorId} color={'teal'} on:deletePalette on:createPalette />
 		{:else}
 			<ColorPalettes
-				alphaEnabled={$app.themeEditorState.alphaEnabled}
-				bind:selectedPaletteId={$app.themeEditorState.selectedPaletteId}
-				palettes={$app.themeColorPalettes}
+				alphaEnabled={$app?.pickerColorHasAlpha}
+				bind:selectedPaletteId={$state.selectedPaletteId}
+				palettes={$state?.userTheme?.palettes}
 				allowMultiplePalettesOpen={false}
 				displayColorName={true}
 				columns={1}

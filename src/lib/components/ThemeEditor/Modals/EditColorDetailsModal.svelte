@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Modal from '$lib/components/Shared/Modal.svelte';
-	import { getAppStore } from '$lib/context';
+	import { getThemeEditorStore } from '$lib/context';
 	import { copyThemeColor } from '$lib/themes';
 	import type { ThemeColor, ThemeColorShallowCopy } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
@@ -14,7 +14,7 @@
 	let value: string;
 	let cssVarName: string;
 	let displayName: string;
-	let app = getAppStore(editorId);
+	let state = getThemeEditorStore(editorId);
 	const dispatch = createEventDispatcher();
 
 	export function toggleModal(editColor: ThemeColor) {
@@ -27,7 +27,7 @@
 			originalColor = copyThemeColor(editColor);
 		}
 		modal.toggleModal();
-		$app.themeEditorState.modalOpen = !$app.themeEditorState.modalOpen;
+		$state.modalOpen = !$state.modalOpen;
 	}
 	function saveChanges() {
 		color.propName = propName;

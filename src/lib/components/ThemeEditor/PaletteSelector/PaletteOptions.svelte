@@ -1,17 +1,19 @@
 <script lang="ts">
 	import Option from '$lib/components/Shared/Select/Option.svelte';
-	import type { ColorPalette, ComponentColor, SelectMenuOption } from '$lib/types';
+	import { getThemeEditorStore } from '$lib/context';
+	import type { ComponentColor, SelectMenuOption } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
+	export let editorId: string;
 	export let options: SelectMenuOption[] = [];
-	export let themeColorPalettes: ColorPalette[];
 	export let menuId: string = '';
 	export let fontSize: string = '0.95rem';
 	let selectedOption: SelectMenuOption;
+	let state = getThemeEditorStore(editorId);
 	const dispatch = createEventDispatcher();
 
 	function getPaletteSwatchColor(paletteId: string | number): ComponentColor {
-		return themeColorPalettes.find((p) => p.id === paletteId)?.componentColor ?? 'black';
+		return $state.userTheme.palettes.find((p) => p.id === paletteId)?.componentColor ?? 'black';
 	}
 
 	export function handleOptionClicked(selectedOptionNumber: number) {

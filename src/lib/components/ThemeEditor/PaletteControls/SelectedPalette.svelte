@@ -1,15 +1,18 @@
 <script lang="ts">
-	import { getThemeEditorStore } from '$lib/context';
+	import type { ColorPalette } from '$lib/types';
 
-	export let editorId: string;
-	const state = getThemeEditorStore(editorId);
+	export let selectedPalette: ColorPalette;
+	let bgColor: string;
+	let swatchColor: string;
+	let displayName: string;
+	let tooltip: string;
 
-	$: bgColor = $state?.selectedPaletteId ? 'var(--white3)' : 'var(--white1)';
-	$: swatchColor = $state?.selectedPaletteId ? `var(--${$state?.selectedPalette.componentColor}-fg-color)` : 'inherit';
-	$: displayName = $state?.selectedPaletteId ? $state?.selectedPalette.displayName : 'No Palette Selected';
-	$: tooltip = $state?.selectedPaletteId
-		? `${$state?.selectedPalette.displayName} is the selected palette`
-		: 'No Palette Selected';
+	$: if (selectedPalette) {
+		bgColor = selectedPalette ? 'var(--white3)' : 'var(--white1)';
+		swatchColor = selectedPalette ? `var(--${selectedPalette.componentColor}-fg-color)` : 'inherit';
+		displayName = selectedPalette ? selectedPalette.displayName : 'No Palette Selected';
+		tooltip = selectedPalette ? `${selectedPalette.displayName} is the selected palette` : 'No Palette Selected';
+	}
 </script>
 
 <div class="option-wrapper" title={tooltip} style="background-color: {bgColor}">

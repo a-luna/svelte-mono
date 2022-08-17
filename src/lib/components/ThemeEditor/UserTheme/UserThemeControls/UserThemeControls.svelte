@@ -5,25 +5,27 @@
 	import ExportUserThemeButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/ExportUserThemeButton.svelte';
 	import FinishEditingButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/FinishEditingButton.svelte';
 	import SaveUserThemeButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/SaveUserThemeButton.svelte';
-	import { getAppStore } from '$lib/context';
-	import type { ComponentColor } from '$lib/types';
+	import { getAppStore, getThemeEditorStore } from '$lib/context';
+	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;
+	export let themeColorPalettes: ColorPalette[];
+	export let x11PalettesShown: boolean;
 	let app = getAppStore(editorId);
+	let state = getThemeEditorStore(editorId);
 	const dispatch = createEventDispatcher();
 
-	$: disabled =
-		!$app.themeColorPalettes.length || $app.themeEditorState.editMode || $app.themeEditorState.showX11Palettes;
+	$: disabled = !themeColorPalettes.length || $state.editMode || x11PalettesShown;
 </script>
 
 <div class="user-theme-controls">
 	<div class="buttons-left">
-		{#if $app.themeEditorState.editMode}
-			<FinishEditingButton color={componentColor} on:click={() => ($app.themeEditorState.editMode = false)} />
+		{#if $state.editMode}
+			<FinishEditingButton color={componentColor} on:click={() => ($state.editMode = false)} />
 		{:else}
-			<EditPalettesButton color={componentColor} on:click={() => ($app.themeEditorState.editMode = true)} {disabled} />
+			<EditPalettesButton color={componentColor} on:click={() => ($state.editMode = true)} {disabled} />
 		{/if}
 		<EditSettingsButton color={componentColor} {disabled} on:click={() => dispatch('editThemeSettings')} />
 		<SaveUserThemeButton color={componentColor} {disabled} on:click={() => dispatch('saveUserTheme')} />

@@ -1,19 +1,21 @@
 <script lang="ts">
 	import AddPaletteButton from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/AddPaletteButton.svelte';
 	import EditPaletteForm from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/EditPaletteForm.svelte';
-	import type { ColorPalette, ComponentColor } from '$lib/types';
+	import { getThemeEditorStore } from '$lib/context';
+	import type { ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
-	export let themeColorPalettes: ColorPalette[] = [];
+	export let editorId: string;
 	export let color: ComponentColor;
+	let state = getThemeEditorStore(editorId);
 	const dispatch = createEventDispatcher();
 
-	$: disabled = themeColorPalettes.length === 1;
+	$: disabled = $state.userTheme.palettes.length === 1;
 </script>
 
 <div class="palette-editor">
 	<div class="palette-list">
-		{#each themeColorPalettes as palette, i (palette.id)}
+		{#each $state.userTheme.palettes as palette, i (palette.id)}
 			<EditPaletteForm bind:palette {disabled} paletteNumber={i + 1} on:deletePalette />
 		{/each}
 	</div>

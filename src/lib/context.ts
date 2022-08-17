@@ -1,6 +1,5 @@
 import { createAppStore } from '$lib/stores/app';
 import type { AppStore, ColorPickerState, ThemeEditorStore } from '$lib/types';
-import { slugify } from '$lib/util';
 import { getContext, setContext } from 'svelte';
 import type { Readable, Writable } from 'svelte/store';
 import { get } from 'svelte/store';
@@ -15,15 +14,13 @@ function getService<T>(key: string): () => T {
 }
 
 export function initThemeEditorStore(themeEditor: ThemeEditorStore): ThemeEditorStore {
-	const key = `theme-${slugify(get(themeEditor).editorId)}`;
-	return setService<ThemeEditorStore>(key, themeEditor);
+	return setService<ThemeEditorStore>(get(themeEditor).editorId, themeEditor);
 }
 
 export const getThemeEditorStore = (editorId: string): ThemeEditorStore => getService<ThemeEditorStore>(editorId)();
 
 export function initColorPickerStore(colorPicker: Writable<ColorPickerState>): Writable<ColorPickerState> {
-	const key = `theme-${slugify(get(colorPicker).pickerId)}`;
-	return setService<Writable<ColorPickerState>>(key, colorPicker);
+	return setService<Writable<ColorPickerState>>(get(colorPicker).pickerId, colorPicker);
 }
 
 export const getColorPickerStore = (pickerId: string): Writable<ColorPickerState> =>

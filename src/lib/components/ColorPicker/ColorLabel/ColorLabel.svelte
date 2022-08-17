@@ -6,7 +6,6 @@
 	import { onDestroy } from 'svelte';
 
 	export let pickerId: string;
-	export let alphaEnabled: boolean;
 	let currentColor: string;
 	let state = getColorPickerStore(pickerId);
 	let timeout: NodeJS.Timeout;
@@ -49,8 +48,8 @@
 		<EditColorString value={currentColor} on:updateColor on:keepCurrentColor={() => ($state.labelState = 'inactive')} />
 	{:else}
 		<CopyColorString
-			color={$state?.color}
-			{alphaEnabled}
+			color={$state?.color.color}
+			alphaEnabled={$state.alphaEnabled}
 			editable={$state?.editable}
 			bind:currentColor
 			on:copyColorString={(e) => handleCopyButtonClicked(e.detail)}

@@ -2,7 +2,7 @@
 	import type { ComponentColor } from '$lib/types';
 
 	export let themeName = '';
-	export let editMode: boolean;
+	export let editMode = false;
 	export let componentColor: ComponentColor;
 	let newName = themeName;
 	let error = false;

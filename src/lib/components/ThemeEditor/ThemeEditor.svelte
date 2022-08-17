@@ -8,35 +8,24 @@
 	import PaletteControls from '$lib/components/ThemeEditor/PaletteControls/PaletteControls.svelte';
 	import UserTheme from '$lib/components/ThemeEditor/UserTheme/UserTheme.svelte';
 	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
-	import { createColorPickerStore } from '$lib/stores/colorPicker';
 	import { createThemeEditorStore } from '$lib/stores/themeEditor';
 	import type {
 		AppStore,
-		ColorPalette,
 		ColorPickerState,
 		ComponentColor,
-		CssColor,
+		ThemeColor,
 		ThemeEditorStore,
 		UserThemeImported,
 	} from '$lib/types';
-	import { getRandomHexString } from '$lib/util';
 	import type { Readable, Writable } from 'svelte/store';
 
-	let editorId: string = `color-editor-${getRandomHexString(4)}`;
-	let pickerId: string = `color-picker-${getRandomHexString(4)}`;
-	export let state: ThemeEditorStore;
-	let userTheme: UserThemeImported;
-	let themeName: string;
-	let themeColorPalettes: ColorPalette[] = [];
-	let selectedPaletteId: string;
-	let selectedPalette: ColorPalette;
-	let selectedColor: CssColor;
+	let editorId: string = 'color-editor';
+	let pickerId: string = 'color-picker';
+	let state: ThemeEditorStore;
 	let colorPickerState: Writable<ColorPickerState>;
-	let editMode: boolean;
-	let showX11Palettes: boolean;
-	let alphaEnabled: boolean;
-	let componentStyles = '';
-	let initialized = false;
+	let editorStateInitialized = false;
+	let pickerStateInitialized = false;
+	let themeInitialized = false;
 	let app: Readable<AppStore>;
 	const componentColor: ComponentColor = 'blue';
 	let loadUserThemeModal: LoadUserThemeModal;
@@ -53,27 +42,38 @@
 	//    - Split complementary (2: hue +150, hue +210)
 	//    - Monochrome (6: lightness -15, -10 -5, +5, +10, +15)
 
-	$: if (typeof window !== 'undefined' && !initialized) {
+	$: if (typeof window !== 'undefined' && !editorStateInitialized) {
 		state = createThemeEditorStore(editorId);
 		state = initThemeEditorStore(state);
-		colorPickerState = createColorPickerStore(pickerId);
+		editorStateInitialized = true;
+	}
+	$: if (!pickerStateInitialized && editorStateInitialized && $colorPickerState) {
 		colorPickerState = initColorPickerStore(colorPickerState);
 		app = initAppStore(state, colorPickerState);
-		initialized = true;
+		pickerStateInitialized = true;
 	}
-	$: if (selectedColor && colorPicker) colorPicker.setColor(selectedColor);
-	$: editable = !$app?.themeEditorState?.editMode;
-	$: if (selectedPaletteId) $app.themeEditorStore.changeSelectedPalette(selectedPaletteId);
-	$: if ($colorPickerState)
-		alphaEnabled = $colorPickerState.colorSpace === 'rgba' || $colorPickerState.colorSpace === 'hsla';
+	$: editable = !$state?.editMode;
+	$: if ($app) {
+		console.log({ picker: $colorPickerState, state: $state, app: $app });
+	}
+
+	function handleColorSelected(color: ThemeColor) {
+		$state.selectedColor = color;
+		colorPicker.setColor(color.color);
+	}
 
 	function importUserTheme() {
 		loadUserThemeModal.toggleModal();
 	}
 
+	function handleUserThemeImported(theme: UserThemeImported) {
+		$state.userTheme = theme;
+		themeInitialized = true;
+	}
+
 	function newUserTheme() {
 		const createdAt = new Date().toISOString();
-		$app.themeEditorState.userTheme = {
+		$state.userTheme = {
 			themeName: 'custom theme',
 			usesPrefix: false,
 			themePrefix: null,
@@ -82,43 +82,37 @@
 			colorFormat: 'hsl',
 			palettes: [createEmptyColorPalette()],
 		};
+		themeInitialized = true;
 	}
 
 	function closeUserTheme() {
-		$app.themeEditorState.selectedPaletteId = null;
-		$app.themeEditorState.userTheme = null;
+		$state.selectedPaletteId = null;
+		$state.userTheme = null;
+		themeInitialized = false;
 	}
 </script>
 
-{#if !$app?.themeEditorState?.userTheme}
-	<LoadUserThemeModal
-		bind:this={loadUserThemeModal}
-		on:loadUserTheme={(e) => ($app.themeEditorState.userTheme = e.detail)}
-	/>
+{#if !themeInitialized}
+	<LoadUserThemeModal bind:this={loadUserThemeModal} on:loadUserTheme={(e) => handleUserThemeImported(e.detail)} />
 {:else}
 	<AddColorToPaletteModal
 		{editorId}
 		bind:this={addColorModal}
-		on:addNewColor={(e) => $app.themeEditorStore.addColorToPalette(e.detail)}
+		on:addNewColor={(e) => state.addColorToPalette(e.detail)}
 	/>
 	<EditColorDetailsModal {editorId} bind:this={editDetailsModal} />
 	<EditThemeSettingsModal {editorId} bind:this={editThemeSettingsModal} />
 {/if}
 
 <div class="theme-editor-wrapper">
-	<div id="theme-editor" data-testid={$app?.themeEditorState?.editorId}>
+	<div id="theme-editor" data-testid={$state?.editorId}>
 		<div class="editor-left-col">
-			<ColorPicker
-				bind:this={colorPicker}
-				bind:pickerId
-				bind:state={colorPickerState}
-				bind:editable
-				on:showX11Palettes={() => ($app.themeEditorState.showX11Palettes = true)}
-				on:hideX11Palettes={() => ($app.themeEditorState.showX11Palettes = false)}
-			/>
-			{#if $app?.themeEditorState?.userTheme}
+			<ColorPicker bind:this={colorPicker} bind:pickerId bind:state={colorPickerState} bind:editable />
+			{#if $state?.userTheme}
 				<PaletteControls
 					{editorId}
+					{pickerId}
+					selectedPalette={$app?.selectedThemePalette}
 					componentColor={'black'}
 					on:addColorToPalette={(e) => addColorModal.toggleModal(e.detail)}
 				/>
@@ -128,14 +122,17 @@
 			<UserTheme
 				{editorId}
 				{componentColor}
+				initialized={themeInitialized}
+				themeColorPalettes={$app?.themeColorPalettes}
+				x11PalettesShown={$app?.x11PalettesShown}
 				on:newUserTheme={() => newUserTheme()}
 				on:importUserTheme={() => importUserTheme()}
-				on:editThemeSettings={() => editThemeSettingsModal.toggleModal(userTheme)}
-				on:createPalette={() => $app.themeEditorStore.createNewPalette()}
-				on:deletePalette={(e) => $app.themeEditorStore.deletePalette(e.detail)}
+				on:editThemeSettings={() => editThemeSettingsModal.toggleModal($state.userTheme)}
+				on:createPalette={() => state.createNewPalette()}
+				on:deletePalette={(e) => state.deletePalette(e.detail)}
 				on:closeUserTheme={() => closeUserTheme()}
-				on:colorSelected={(e) => ($app.themeEditorState.selectedColor = e.detail)}
-				on:deleteColor={(e) => $app.themeEditorStore.deleteColorFromPalette(e.detail)}
+				on:colorSelected={(e) => handleColorSelected(e.detail)}
+				on:deleteColor={(e) => state.deleteColorFromPalette(e.detail)}
 				on:editColorDetails={(e) => editDetailsModal.toggleModal(e.detail)}
 			/>
 		</div>

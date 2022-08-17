@@ -20,7 +20,6 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 		state.userTheme.palettes = [...state.userTheme.palettes.filter((p) => p.id !== paletteId)];
 		if (state.selectedPaletteId === paletteId) {
 			state.selectedPaletteId = '';
-			state.selectedPalette = null;
 		}
 		return state;
 	}
@@ -28,34 +27,34 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 	function changeSelectedPalette(paletteId: string, state: ThemeEditorState): ThemeEditorState {
 		if (paletteId) {
 			state.selectedPaletteId = paletteId;
-			const selectedPalette = state.userTheme.palettes.find((p) => p.id === state.selectedPaletteId);
+			const selectedPalette = state.userTheme.palettes.find((p) => p.id === paletteId);
 			if (selectedPalette) {
-				state.selectedPalette = selectedPalette;
-				state.selectedPalette.colors = [...selectedPalette.colors];
+				selectedPalette.colors = [...selectedPalette.colors];
 				state.userTheme.palettes = [...state.userTheme.palettes];
-				state.selectedPalette.updated = true;
+				selectedPalette.updated = true;
 			}
-		} else {
-			state.selectedPalette = null;
 		}
 		return state;
 	}
 
 	function addColorToPalette(newColor: ThemeColor, state: ThemeEditorState): ThemeEditorState {
-		state.selectedPalette.colors = [...state.selectedPalette.colors, newColor];
+		const selectedPalette = state.userTheme.palettes.find((p) => p.id === state.selectedPaletteId);
+		selectedPalette.colors = [...selectedPalette.colors, newColor];
 		state.userTheme.palettes = [...state.userTheme.palettes];
-		state.selectedPalette.updated = true;
+		selectedPalette.updated = true;
+		state.selectedColor = newColor;
 		return state;
 	}
 
 	function deleteColorFromPalette(color: ThemeColor, state: ThemeEditorState): ThemeEditorState {
-		const removeIndex = state.selectedPalette.colors.indexOf(color);
-		state.selectedPalette.colors = [
-			...state.selectedPalette.colors.slice(0, removeIndex),
-			...state.selectedPalette.colors.slice(removeIndex + 1),
+		const selectedPalette = state.userTheme.palettes.find((p) => p.id === state.selectedPaletteId);
+		const removeIndex = selectedPalette.colors.indexOf(color);
+		selectedPalette.colors = [
+			...selectedPalette.colors.slice(0, removeIndex),
+			...selectedPalette.colors.slice(removeIndex + 1),
 		];
 		state.userTheme.palettes = [...state.userTheme.palettes];
-		state.selectedPalette.updated = true;
+		selectedPalette.updated = true;
 		return state;
 	}
 

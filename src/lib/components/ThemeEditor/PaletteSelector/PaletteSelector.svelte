@@ -1,28 +1,31 @@
 <script lang="ts">
 	import Select from '$lib/components/Shared/Select/Select.svelte';
 	import PaletteOptions from '$lib/components/ThemeEditor/PaletteSelector/PaletteOptions.svelte';
+	import { getAppStore, getThemeEditorStore } from '$lib/context';
 	import type { ColorPalette, SelectMenuOption } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
-	export let themeColorPalettes: ColorPalette[];
+	export let editorId: string;
+	let app = getAppStore(editorId);
+	let state = getThemeEditorStore(editorId);
 	export let width = '100%';
 	export let fontSize: string = '0.875rem';
-	export let value: string = themeColorPalettes.length > 0 ? themeColorPalettes[0].id : null;
+	export let value: string = $state && $state.userTheme.palettes.length ? $state.userTheme.palettes[0].id : null;
 	export let disabled = false;
 	let options: SelectMenuOption[];
 	let selectedPalette: ColorPalette;
 	let selectComponent: Select;
 	const dispatch = createEventDispatcher();
 
-	$: options = themeColorPalettes?.map((p, i) => ({
+	$: options = $state.userTheme.palettes?.map((p, i) => ({
 		label: p.displayName,
 		value: p.id,
 		optionNumber: i + 1,
 		active: false,
 	}));
 
-	$: if (value) selectedPalette = themeColorPalettes.find((p) => p.id === value);
-	$: enabled = themeColorPalettes.length > 0 && !disabled;
+	$: if (value) selectedPalette = $app?.selectedThemePalette;
+	$: enabled = $state.userTheme.palettes.length > 0 && !disabled;
 
 	const menuId = 'select-theme-palette';
 	const menuLabel = 'select theme palette';
@@ -49,13 +52,7 @@
 	on:changed={(e) => handleThemePaletteChanged(e.detail)}
 >
 	<svelte:fragment slot="options">
-		<PaletteOptions
-			{options}
-			{themeColorPalettes}
-			{menuId}
-			{fontSize}
-			on:changed={(e) => handleThemePaletteChanged(e.detail)}
-		/>
+		<PaletteOptions {editorId} {options} {menuId} {fontSize} on:changed={(e) => handleThemePaletteChanged(e.detail)} />
 	</svelte:fragment>
 
 	<svelte:fragment slot="selectedValue">
