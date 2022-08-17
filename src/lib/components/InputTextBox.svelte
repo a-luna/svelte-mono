@@ -1,10 +1,13 @@
 <script lang="ts">
+	import { getRandomHexString } from '$lib/util';
+
 	import { createEventDispatcher } from 'svelte';
 
 	export let style: string;
 	export let inputText: string;
 	export let disabled = false;
 	export let error = false;
+	export let id = `text-box-${getRandomHexString(4)}`;
 	let inputTextElement: HTMLInputElement;
 	const dispatch = createEventDispatcher();
 
@@ -26,6 +29,8 @@
 	data-testid="input-text"
 	{style}
 	{disabled}
+	{id}
+	name={id}
 	bind:this={inputTextElement}
 	bind:value={inputText}
 	on:keydown|stopPropagation={(e) => handleKeyPress(e.key)}
