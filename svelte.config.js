@@ -43,9 +43,14 @@ const config = {
   ],
 
   kit: {
-    adapter: adapter({
-      split: false,
-    }),
+    adapter: adapter(),
+    prerender: {
+      default: true,
+      crawl: false,
+      enabled: true,
+      entries: ["*"],
+      onError: "continue",
+    },
   },
 };
 

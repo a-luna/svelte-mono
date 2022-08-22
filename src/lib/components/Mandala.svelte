@@ -5,11 +5,11 @@
   $: if (typeof window !== "undefined") {
     svgSize =
       pageWidth >= 1024
-        ? { width: 625, height: 625 }
+        ? { width: 675, height: 675 }
         : pageWidth >= 768
         ? { width: 625, height: 625 }
         : pageWidth >= 640
-        ? { width: 550, height: 550 }
+        ? { width: 525, height: 525 }
         : { width: 475, height: 475 };
   }
   $: ({ width, height } = svgSize);
@@ -179,23 +179,27 @@
 
 <style lang="postcss">
   .mandala-wrapper {
-    grid-column: 1;
-    grid-row: 1;
     height: 550px;
     overflow: hidden;
     transition: all 1s ease-in-out;
     width: 100%;
     z-index: 1;
+    grid-column: 1 / span 10;
+    grid-row: 1 / span 10;
   }
   .mandala-container {
-    --mandala-primary: hsl(0, 0%, 18%);
-    --mandala-accent-1: hsl(256, 100%, 67%);
-    --mandala-accent-2: hsl(0, 0%, 67%);
-    --mandala-accent-3: hsl(140, 100%, 67%);
-    --mandala-accent-4: hsl(76, 100%, 67%);
+    --mandala-primary: var(--gray-shade6);
+    --mandala-accent-1: var(--blue-icon);
+    --mandala-accent-2: var(--pink-icon);
+    --mandala-accent-3: var(--yellow-icon);
+    --mandala-accent-4: var(--purple-icon);
+    /* --mandala-accent-1: hsl(250, 100%, 67%);
+    --mandala-accent-2: hsl(210, 100%, 67%);
+    --mandala-accent-3: hsl(175, 100%, 67%);
+    --mandala-accent-4: hsl(140, 100%, 67%); */
     display: flex;
     justify-content: center;
-    transform: translate(6rem, -4rem);
+    transform: translate(3rem, -5rem);
   }
   .mandala-container .mandala-accent-1 {
     font-size: 1.5rem;
@@ -252,7 +256,7 @@
       transform: rotate(1turn);
     }
   }
-  /* @keyframes mandala-color-change {
+  @keyframes mandala-color-change {
     0% {
       fill: var(--mandala-primary);
     }
@@ -316,59 +320,61 @@
     to {
       fill: var(--mandala-primary);
     }
-  } */
-  @keyframes mandala-color-change {
+  }
+  /* @keyframes mandala-color-change {
     0% {
       fill: var(--mandala-primary);
     }
-    10% {
-      fill: var(--mandala-primary);
-    }
-    15% {
+    8% {
       fill: var(--mandala-accent-1);
     }
-    20% {
+    16% {
       fill: var(--mandala-primary);
     }
     25% {
       fill: var(--mandala-primary);
     }
-    30% {
+    33% {
       fill: var(--mandala-accent-2);
     }
-    35% {
-      fill: var(--mandala-primary);
-    }
-    40% {
+    41% {
       fill: var(--mandala-primary);
     }
     50% {
+      fill: var(--mandala-primary);
+    }
+    58% {
       fill: var(--mandala-accent-3);
     }
-    55% {
+    66% {
       fill: var(--mandala-primary);
     }
-    60% {
+    75% {
       fill: var(--mandala-primary);
     }
-    65% {
+    83% {
       fill: var(--mandala-accent-4);
     }
-    70% {
+    91% {
       fill: var(--mandala-primary);
     }
     to {
       fill: var(--mandala-primary);
     }
+  } */
+  @media (min-width: 640px) {
+    .mandala-container {
+      transform: translate(4rem, -5rem);
+    }
+  }
+  @media (min-width: 768px) {
+    .mandala-container {
+      transform: translate(10rem, -6rem);
+    }
   }
   @media (min-width: 1024px) {
     .mandala-container {
-      transform: translate(8rem, -8rem);
-    }
-  }
-  @media (min-width: 640px) {
-    .mandala-container {
-      transform: translate(8rem, -8rem);
+      transform: translate(10rem, -6rem);
     }
   }
 </style>

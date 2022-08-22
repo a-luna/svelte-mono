@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "start": "env-cmd vite --host --port 3005",
+    "dev": "env-cmd vite --host --port 3005",
     "build": "vite build",
     "package": "vite package",
     "preview": "vite preview",
@@ -21,7 +21,7 @@
     "@playwright/test": "^1.23.1",
     "@sveltejs/adapter-netlify": "^1.0.0-next.66",
     "@sveltejs/adapter-static": "1.0.0-next.35",
-    "@sveltejs/kit": "^1.0.0-next.379",
+    "@sveltejs/kit": "^1.0.0-next.405",
     "@tailwindcss/typography": "^0.5.2",
     "@typescript-eslint/eslint-plugin": "^5.30.3",
     "@typescript-eslint/parser": "^5.30.3",

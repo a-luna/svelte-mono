@@ -6,13 +6,13 @@
     SITE_TITLE,
     SITE_URL,
   } from "$lib/siteConfig";
-  import type { UserRepos } from "$lib/types";
-  import { getAuthToken, projectGroupToRepoList, userRepos } from "$lib/util";
+  import type { GHRepo } from "$lib/types";
+  import { getAuthToken, userRepos } from "$lib/util";
   import { get } from "svelte/store";
 
   // export const prerender = true; // turned off so it refreshes quickly
   export async function load({ fetch }) {
-    let allRepos: UserRepos;
+    let allRepos: GHRepo[];
     const storedValue = get(userRepos);
     if (!storedValue || !Object.keys(storedValue).length) {
       const result = await fetch(`/api/listUserRepos.json`, {
@@ -39,11 +39,10 @@
 </script>
 
 <script lang="ts">
-  export let allRepos: UserRepos = {};
+  export let allRepos: GHRepo[] = [];
   import { browser } from "$app/env";
   import Mandala from "$components/Mandala.svelte";
-  import ProjectGroup from "$components/ProjectGroup.svelte";
-  import { isProjectGroup } from "$lib/util";
+  import ProjectList from "$lib/components/ProjectList/ProjectList.svelte";
 
   $: if (browser && Object.keys(allRepos).length) $userRepos = allRepos;
 </script>
@@ -69,62 +68,44 @@
   <meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
 </svelte:head>
 
-<div class="main-header max-w-3xl">
-  <div class="main-header-content mr-auto px-4 sm:px-8">
-    <div class="my-8 flex flex-col pr-8">
-      <span class="title-card">
-        <span class="relative p-2">
-          <h1 class="mb-3 text-4xl font-bold tracking-normal md:text-5xl">
-            Aaron Luna
-          </h1>
-          <span class="text-base sm:text-lg md:text-xl"
-            >Front-end developer in Reno, NV.</span
-          >
-        </span>
-      </span>
-    </div>
-  </div>
+<div class="main-header">
+  <div class="main-header-content mr-auto px-4 sm:px-8" />
   <Mandala />
 </div>
 
-{#each Object.entries(projectGroupToRepoList) as [group, repos]}
-  {#if isProjectGroup(group)}
-    <ProjectGroup {group} {repos} />
-  {/if}
-{/each}
+<h2>// My_Projects</h2>
+<ProjectList />
 
 <style lang="postcss">
   .main-header {
     background: var(--page-bg-color);
     display: grid;
-    grid-template-columns: 100%;
+    grid-template-columns: auto 1fr auto 1fr auto repeat(5, 1fr);
+    grid-template-rows: 1fr auto 1fr auto 1fr auto 1fr auto 1fr auto;
     width: 100%;
-    max-height: 350px;
+    max-height: 365px;
     margin: 0 auto;
   }
   .main-header-content {
-    grid-column: 1;
-    grid-row: 1;
     padding-top: 0;
     z-index: 2;
     position: relative;
+    grid-column: 1 / span 10;
+    grid-row: 1 / span 10;
   }
-  .title-card {
-    display: inline-block;
-    background-color: var(--light-blue);
-    color: var(--black-tint2);
-    position: relative;
-    transform: skewY(-3deg);
+  h2 {
+    color: var(--gray-shade4);
+    font-family: "Roboto Mono", menlo, consolas, monospace;
+    font-size: 2em;
+    margin: 0 0 2.5rem 0;
   }
-  .title-card > * {
-    display: block;
-    transform: skewY(3deg);
-  }
-  @media (min-width: 768px) {
-    .main-header {
-      max-height: 450px;
+
+  @media (min-width: 640px) {
+    h2 {
+      font-size: 3em;
     }
   }
+
   @media (min-width: 1024px) {
     .main-header {
       max-height: 450px;

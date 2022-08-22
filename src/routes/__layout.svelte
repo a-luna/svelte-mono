@@ -3,7 +3,7 @@
 </script>
 
 <script>
-  import Nav from "$components/Nav.svelte";
+  import Nav from "$components/Nav/Nav.svelte";
   import "../tailwind.css";
 </script>
 
@@ -16,32 +16,29 @@
   />
 </svelte:head>
 
-<div class="header-wrapper flex flex-col justify-center px-4 sm:px-8">
+<div class="header-wrapper">
   <Nav />
 </div>
-<main class="flex flex-col justify-center">
+<main>
   <slot />
 </main>
 
-<svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient
-      id="icon-gradient"
-      x1="0"
-      y1="0"
-      x2="24"
-      y2="24"
-      gradientUnits="userSpaceOnUse"
-    >
-      <stop offset="25%" stop-color="#aae30d" />
-      <stop offset="55%" stop-color="#0de354" />
-      <stop offset="85%" stop-color="#0de3b8" />
-    </linearGradient>
-  </defs>
-</svg>
-
 <style lang="postcss">
   .header-wrapper {
-    background-color: var(--header-bg-color);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    background-color: var(----page-bg-color);
+  }
+  main {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    padding: 0 1rem;
+  }
+  @media (min-width: 640px) {
+    main {
+      padding: 0 2rem;
+    }
   }
 </style>

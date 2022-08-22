@@ -83,6 +83,10 @@
 <style lang="postcss">
   form button {
     color: var(--black-tint1);
-    background-color: var(--green);
+    background-color: hsl(
+      var(--green-hue),
+      var(--default-sat),
+      var(--default-light)
+    );
   }
 </style>

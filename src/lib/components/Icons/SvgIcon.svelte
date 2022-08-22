@@ -1,7 +1,6 @@
 <script lang="ts">
   import Circle from "$components/Icons/Circle.svelte";
   import Fork from "$components/Icons/Fork.svelte";
-  import Github from "$components/Icons/Github.svelte";
   import Star from "$components/Icons/Star.svelte";
   import type { IconName } from "$lib/types";
 
@@ -10,6 +9,12 @@
   export let width: string = null;
   export let margin: string = null;
 
+  const icons = {
+    circle: Circle,
+    fork: Fork,
+    star: Star,
+  };
+
   $: hStyle = height ? `height: ${height}` : "";
   $: wStyle = width ? `width: ${width}` : "";
   $: mStyle = margin ? `margin: ${margin}` : "";
@@ -17,13 +22,5 @@
 </script>
 
 <div class="icon-wrapper" {style}>
-  {#if icon === "github"}
-    <Github />
-  {:else if icon === "star"}
-    <Star />
-  {:else if icon === "circle"}
-    <Circle />
-  {:else if icon === "fork"}
-    <Fork />
-  {/if}
+  <svelte:component this={icons[icon]} />
 </div>

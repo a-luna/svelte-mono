@@ -1,4 +1,32 @@
-import type { ICON_NAMES, PROJECT_GROUPS, REPO_NAMES } from "./constants";
+import type Aws from "$lib/components/Icons/Language/AWS.svelte";
+import type Cypress from "$lib/components/Icons/Language/Cypress.svelte";
+import type Database from "$lib/components/Icons/Language/Database.svelte";
+import type FastApi from "$lib/components/Icons/Language/FastAPI.svelte";
+import type Flask from "$lib/components/Icons/Language/Flask.svelte";
+import type Hugo from "$lib/components/Icons/Language/Hugo.svelte";
+import type Lxml from "$lib/components/Icons/Language/lxml.svelte";
+import type Microsoft from "$lib/components/Icons/Language/Microsoft.svelte";
+import type NoTechFilter from "$lib/components/Icons/Language/NoTechFilter.svelte";
+import type Puppeteer from "$lib/components/Icons/Language/Puppeteer.svelte";
+import type Python from "$lib/components/Icons/Language/Python.svelte";
+import type Redis from "$lib/components/Icons/Language/Redis.svelte";
+import type RegExp from "$lib/components/Icons/Language/RegExp.svelte";
+import type Shell from "$lib/components/Icons/Language/Shell.svelte";
+import type Sqlite from "$lib/components/Icons/Language/Sqlite.svelte";
+import type Svelte from "$lib/components/Icons/Language/Svelte.svelte";
+import type Tailwind from "$lib/components/Icons/Language/Tailwind.svelte";
+import type TypeScript from "$lib/components/Icons/Language/TypeScript.svelte";
+import type Xml from "$lib/components/Icons/Language/XML.svelte";
+import type XState from "$lib/components/Icons/Language/XState.svelte";
+import type {
+  BACKEND_CATEGORIES,
+  FRONTEND_CATEGORIES,
+  ICON_COLORS,
+  ICON_NAMES,
+  MAIN_CATEGORIES,
+  REPO_NAMES,
+  TECH_LIST,
+} from "./constants";
 
 export type ContentItem = {
   type: "blog";
@@ -178,6 +206,60 @@ export type JsonValue =
   | { [key: string]: JsonValue };
 
 export type IconName = typeof ICON_NAMES[number];
+export type IconColor = typeof ICON_COLORS[number];
 export type RepoName = typeof REPO_NAMES[number];
-export type ProjectGroup = typeof PROJECT_GROUPS[number];
-export type UserRepos = { [key: string]: GHRepo };
+export type MainCategory = typeof MAIN_CATEGORIES[number];
+export type FrontendCategory = typeof FRONTEND_CATEGORIES[number];
+export type BackendCategory = typeof BACKEND_CATEGORIES[number];
+export type ProjectCategory = MainCategory | FrontendCategory | BackendCategory;
+export type LanguageOrTech = typeof TECH_LIST[number];
+export type FilterSetting = ProjectCategory | LanguageOrTech;
+
+export interface RepoWithMetaData {
+  name: RepoName;
+  description: string;
+  starCount: number;
+  forkCount: number;
+  repoUrl: string;
+  starsUrl: string;
+  forksUrl: string;
+  primaryLanguage: FilterSetting;
+  primaryCategory: FilterSetting;
+  languages?: FilterSetting[];
+  categories?: FilterSetting[];
+}
+
+export type UserRepos = { [key: string]: RepoWithMetaData };
+
+export type Icon =
+  | typeof NoTechFilter
+  | typeof Aws
+  | typeof Cypress
+  | typeof Database
+  | typeof FastApi
+  | typeof Flask
+  | typeof Hugo
+  | typeof Lxml
+  | typeof Microsoft
+  | typeof Puppeteer
+  | typeof Python
+  | typeof Redis
+  | typeof RegExp
+  | typeof Shell
+  | typeof Sqlite
+  | typeof Svelte
+  | typeof Tailwind
+  | typeof TypeScript
+  | typeof Xml
+  | typeof XState;
+
+export interface IconDetails {
+  icon?: Icon;
+  displayName: string;
+  color: IconColor;
+  size?: number;
+}
+
+export interface IconDatabase {
+  [k: string]: IconDetails;
+}
