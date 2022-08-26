@@ -52,6 +52,7 @@ See https://swyxkit.netlify.app/ (see [Deploy Logs](https://app.netlify.com/site
   - [Comments are rendered and sanitized](https://github.com/developit/snarkdown/issues/70)
   - Error page (try going to URL that doesnt exist)
     - including nice error when github api rate limit exceeded - fix with `GH_TOKEN`
+    - the 404 page includes a link you can click that sends you back to the search index with the search terms ([blogpost](https://github.com/sw-yx/swyxkit/issues/90))
   - Navlink hover effect
   - [Mobile/Responsive styling](https://swyxkit.netlify.app/mobileresponsive-styling-with-tailwind)
     - Mobile menu with animation
@@ -66,6 +67,8 @@ See https://swyxkit.netlify.app/ (see [Deploy Logs](https://app.netlify.com/site
   - ESLint + Prettier
   - [Nightly lockfile upgrades](https://mobile.twitter.com/FredKSchott/status/1489287560387956736)
 
+This is a partial implementation of https://www.swyx.io/the-surprisingly-high-table-stakes-of-modern-blogs/
+
 ## Setup
 
 ### Step 0: Clone project (and deploy)
@@ -78,6 +81,8 @@ npm run start
 ```
 
 You should be able to deploy this project straight to Netlify as is, just [like this project is](https://app.netlify.com/sites/swyxkit/deploys/).
+
+> July 2022 note: there was a [breaking change in Sveltekit](https://github.com/sveltejs/kit/issues/5337) where you may have to set a Netlify environment variable `AWS_LAMBDA_JS_RUNTIME` to `nodejs16.x` to get serverless rendering to work.
 
 However, to have new posts show up, you will need to personalize the siteConfig below - take note of `APPROVED_POSTERS_GH_USERNAME` in particular (this is an allowlist of people who can post a blog by opening a github issue, otherwise any rando can blog and thats not good).
 

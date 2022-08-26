@@ -26,9 +26,9 @@ export function createSessionStorageValue<T extends JsonValue>(
   return store;
 }
 
-export const getAuthToken = (): { Authorization: string } => {
+export const getAuthToken = (ghToken: string): { Authorization: string } => {
   if (process) {
-    return { Authorization: `token ${process?.env?.GH_TOKEN ?? ""}` };
+    return { Authorization: `token ${ghToken ?? ""}` };
   }
 };
 
@@ -65,4 +65,4 @@ export const isUserRepo = (repoName: string): repoName is RepoName =>
 export const isValidLanguage = (language: string): language is LanguageOrTech =>
   TECH_LIST.includes(language as LanguageOrTech);
 
-export const userRepos = createSessionStorageValue<GHRepo[]>("user-repos", []);
+export const userRepos = writable<GHRepo[]>([]);

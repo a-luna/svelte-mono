@@ -1,3 +1,4 @@
+import { API_KEY } from "$env/static/private";
 import { listGithubContent } from "$lib/ghContent";
 import { SITE_TITLE, SITE_URL } from "$lib/siteConfig";
 import RSS from "rss";
@@ -10,7 +11,7 @@ export async function GET() {
     feed_url: SITE_URL + "/api/rss.xml",
   });
 
-  const allBlogs = await listGithubContent();
+  const allBlogs = await listGithubContent(API_KEY);
   allBlogs.forEach((post) => {
     feed.item({
       title: post.title,
@@ -20,13 +21,12 @@ export async function GET() {
     });
   });
 
-  return {
-    body: feed.xml({ indent: true }), // todo - nonindent if not human
+  return new Response(feed.xml({ indent: true }), {
     headers: {
       "Cache-Control": `max-age=0, s-maxage=${600}`, // 10 minutes
       "Content-Type": "application/rss+xml",
     },
-  };
+  });
 }
 
 // misc notes for future users

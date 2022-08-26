@@ -7,8 +7,6 @@
 
   export let mobile = false;
   export let open = false;
-
-  $: console.log({ mobile, open });
 </script>
 
 <div class:mobile={mobile && open} class:desktop={!mobile} class="social">

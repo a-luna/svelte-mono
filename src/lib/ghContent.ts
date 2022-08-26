@@ -18,7 +18,7 @@ const publishedTags = ["Published"];
 let allBlogposts: ContentItem[] = [];
 // let etag = null // todo - implmement etag header
 ``;
-export async function listGithubContent() {
+export async function listGithubContent(ghToken: string) {
   // use a diff var so as to not have race conditions while fetching
   // TODO: make sure to handle this better when doing etags or cache restore
 
@@ -27,7 +27,7 @@ export async function listGithubContent() {
   const res = await fetch(
     `https://api.github.com/repos/${GH_USER_REPO}/issues?state=all&per_page=100`,
     {
-      headers: getAuthToken(),
+      headers: getAuthToken(ghToken),
     }
   );
 
@@ -55,10 +55,13 @@ export async function listGithubContent() {
   }
 }
 
-export async function getGithubContent(slug): Promise<ContentItem> {
+export async function getGithubContent(
+  slug: string,
+  ghToken: string
+): Promise<ContentItem> {
   // get all blogposts if not already done - or in development
   if (dev || allBlogposts.length === 0) {
-    allBlogposts = await listGithubContent();
+    allBlogposts = await listGithubContent(ghToken);
     if (dev && !allBlogposts.length)
       throw new Error("failed to load blogposts for some reason. check token");
   }
