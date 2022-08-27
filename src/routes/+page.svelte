@@ -61,15 +61,15 @@
 		grid-row: 1 / span 10;
 	}
 	h2 {
-		color: var(--gray-shade4);
+		color: var(--white);
 		font-family: 'Roboto Mono', menlo, consolas, monospace;
 		font-size: 2em;
-		margin: 0 0 2.5rem 0;
+		margin: 0 0 1.5rem 0;
 	}
 
 	@media (min-width: 640px) {
 		h2 {
-			font-size: 3em;
+			font-size: 2.5em;
 		}
 	}
 

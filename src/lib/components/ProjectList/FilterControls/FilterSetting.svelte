@@ -1,34 +1,41 @@
 <script lang="ts">
-  import { getCategoryDetails } from "$lib/projectMetaData";
-  import type { FilterSetting } from "$lib/types";
+	import { getFilterSettingDetails } from '$lib/filterSettings';
+	import type { FilterSetting } from '$lib/types';
 
-  export let value: FilterSetting;
-  export let hovered = false;
-  export let selected = false;
+	export let value: FilterSetting;
+	export let hovered = false;
+	export let selected = false;
 
-  $: category = getCategoryDetails(value);
-  $: displayName = category.displayName;
-  $: bgColor = category.color;
-  $: style = selected
-    ? `color: var(--page-bg-color);`
-    : hovered
-    ? `color: var(--accent-color);`
-    : `color: var(--gray-shade2);`;
+	$: details = getFilterSettingDetails(value);
+	$: color = `var(--${details.color}-icon)`;
+	$: displayName = details.displayName;
+	$: style = `--category-color: ${color}`;
 </script>
 
-<div class="filter-setting" {style}>
-  <span class="filter-value">{displayName}</span>
+<div class="filter-setting" class:hovered class:selected {style}>
+	<span class="filter-value">{displayName}</span>
 </div>
 
 <style lang="postcss">
-  .filter-setting {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 400;
-    line-height: 1;
-  }
-  .filter-value {
-    white-space: nowrap;
-  }
+	.filter-setting {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 400;
+		line-height: 1;
+
+		color: var(--category-color);
+		background-color: var(--page-bg-color);
+	}
+	.hovered {
+		background-color: var(--black-tint2);
+	}
+	.selected,
+	.hovered.selected {
+		color: var(--page-bg-color);
+		background-color: var(--category-color);
+	}
+	.filter-value {
+		white-space: nowrap;
+	}
 </style>
