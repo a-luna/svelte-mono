@@ -1,10 +1,10 @@
-import preprocess from 'svelte-preprocess';
-import adapter from '@sveltejs/adapter-netlify';
+import adapter from '@sveltejs/adapter-node';
 import { mdsvex } from 'mdsvex';
-import remarkGithub from 'remark-github';
-import remarkAbbr from 'remark-abbr';
-import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeSlug from 'rehype-slug';
+import remarkAbbr from 'remark-abbr';
+import remarkGithub from 'remark-github';
+import preprocess from 'svelte-preprocess';
 
 // mdsvex config
 const mdsvexConfig = {
@@ -46,13 +46,13 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		prerender: {
-		  default: true,
-		  crawl: false,
-		  enabled: true,
-		  entries: ["*"],
-		  onError: "continue",
-		},
-	  }
+			default: true,
+			crawl: false,
+			enabled: true,
+			entries: ['*'],
+			onError: 'continue'
+		}
+	}
 };
 
 export default config;
