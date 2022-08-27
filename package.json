@@ -31,6 +31,7 @@
 		"prettier-plugin-tailwindcss": "^0.1.13",
 		"rehype-autolink-headings": "^6.1.1",
 		"rehype-format": "^4.0.1",
+		"rehype-raw": "^6.1.1",
 		"rehype-slug": "^5.0.1",
 		"rehype-stringify": "^9.0.3",
 		"remark-abbr": "^1.4.1",
