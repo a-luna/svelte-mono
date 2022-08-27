@@ -1,7 +1,7 @@
 <script lang="ts">
+	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
+	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 	import type { RepoWithMetaData } from '$lib/types';
-	import FilterSettingWithIcon from '../ProjectList/FilterControls/FilterSettingWithIcon.svelte';
-	import ProjectCategory from './ProjectCategory.svelte';
 
 	export let project: RepoWithMetaData;
 	const otherLangsTitle = 'Other Languages/Technologies Used:';
@@ -83,7 +83,7 @@
 	.all-langage-list-title {
 		font-size: 0.85rem;
 		font-style: italic;
-		color: var(--white-shade5);
+		color: var(--accent-color);
 	}
 
 	.all-category-list {

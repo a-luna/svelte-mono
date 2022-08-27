@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Chevron from '$lib/components/Icons/Chevron.svelte';
-	import FilterSetting from '$lib/components/ProjectList/FilterControls/FilterSetting.svelte';
-	import FilterSettingWithIcon from '$lib/components/ProjectList/FilterControls/FilterSettingWithIcon.svelte';
+	import FilterSetting from '$lib/components/ProjectList/ProjectFilter/FilterSetting.svelte';
+	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 	import { getFilterSettingDetails } from '$lib/filterSettings';
 	import type { FilterSetting as FilterSettingType } from '$lib/types';
 	import { getRandomHexString } from '$lib/util';
+	import { createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	export let id = `radio-${getRandomHexString(4)}`;
@@ -15,7 +16,9 @@
 	export let hoveredValue: FilterSettingType = null;
 	export let selectedValue: FilterSettingType = null;
 	export let expanded = false;
+	const dispatch = createEventDispatcher();
 
+	$: console.log({ selectedValue });
 	$: if (!title) expanded = true;
 	$: settingsListStyle = title ? 'margin: 0 0 0 2rem;' : 'margin: 0;';
 
@@ -47,15 +50,18 @@
 				current === value
 					? `var(--${color}-icon)`
 					: hoveredValue === value
-					? 'var(--black-tint2)'
+					? 'var(--dark-gray-shade1)'
 					: 'var(--page-bg-color)';
 			borderStyle = ` border: 1px solid var(--${color}-icon)`;
 		}
 		return `background-color: ${bgColor};${borderStyle}`;
 	}
 
-	function changeFilterSetting(value: FilterSettingType) {
+	export function changeFilterSetting(value: FilterSettingType, broadcastChange = true) {
 		selectedValue = value;
+		if (broadcastChange) {
+			dispatch('filterSettingChanged', value);
+		}
 	}
 </script>
 
@@ -85,6 +91,7 @@
 				/>
 				<label
 					for="{id}-option-0"
+					class:hovered={hoveredValue === noFilterSetting}
 					class:selected={selectedValue === noFilterSetting}
 					style={getLabelStyles(selectedValue, hoveredValue, noFilterSetting)}
 					class:expanded
@@ -117,6 +124,7 @@
 				/>
 				<label
 					for="{id}-option-{i + startOptionNumber}"
+					class:hovered={hoveredValue === setting}
 					class:selected={selectedValue === setting}
 					style={getLabelStyles(selectedValue, hoveredValue, setting)}
 					on:click={() => changeFilterSetting(setting)}

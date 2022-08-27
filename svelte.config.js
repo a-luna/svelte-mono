@@ -1,57 +1,28 @@
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-static';
 import { mdsvex } from 'mdsvex';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeSlug from 'rehype-slug';
-import remarkAbbr from 'remark-abbr';
-import remarkGithub from 'remark-github';
 import preprocess from 'svelte-preprocess';
-
-// mdsvex config
-const mdsvexConfig = {
-	extensions: ['.svelte.md', '.md', '.svx'],
-	layout: {
-		_: './src/mdsvexlayout.svelte' // default mdsvex layout
-	},
-	remarkPlugins: [
-		[
-			remarkGithub,
-			{
-				// Use your own repository
-				repository: 'https://github.com/mvasigh/sveltekit-mdsvex-blog.git'
-			}
-		],
-		remarkAbbr
-	],
-	rehypePlugins: [
-		rehypeSlug,
-		[
-			rehypeAutolinkHeadings,
-			{
-				behavior: 'wrap'
-			}
-		]
-	]
-};
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	extensions: ['.svelte', '.html', '.svx', ...mdsvexConfig.extensions],
+	extensions: ['.svelte', '.svx', '.md'],
+	// Consult https://github.com/sveltejs/svelte-preprocess
+	// for more information about preprocessors
 	preprocess: [
-		mdsvex(mdsvexConfig),
 		preprocess({
 			postcss: true
-		})
+		}),
+		mdsvex({ extensions: ['.svx', '.md'] })
 	],
 
 	kit: {
 		adapter: adapter(),
 		prerender: {
-			default: true,
+      default: true,
 			crawl: false,
 			enabled: true,
 			entries: ['*'],
 			onError: 'continue'
-		}
+		},
 	}
 };
 

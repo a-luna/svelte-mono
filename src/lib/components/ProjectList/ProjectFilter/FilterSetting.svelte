@@ -25,10 +25,10 @@
 		line-height: 1;
 
 		color: var(--category-color);
-		background-color: var(--page-bg-color);
+		background-color: inherit;
 	}
 	.hovered {
-		background-color: var(--black-tint2);
+		background-color: inherit;
 	}
 	.selected,
 	.hovered.selected {
