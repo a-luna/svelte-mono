@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Chevron from '$lib/components/Icons/Chevron.svelte';
-	import FilterSetting from '$lib/components/ProjectList/ProjectFilter/FilterSetting.svelte';
+	import FilterSettingNoIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingNoIcon.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 	import { getFilterSettingDetails } from '$lib/filterSettings';
 	import type { FilterSetting as FilterSettingType } from '$lib/types';
@@ -18,7 +18,6 @@
 	export let expanded = false;
 	const dispatch = createEventDispatcher();
 
-	$: console.log({ selectedValue });
 	$: if (!title) expanded = true;
 	$: settingsListStyle = title ? 'margin: 0 0 0 2rem;' : 'margin: 0;';
 
@@ -106,7 +105,7 @@
 							value={noFilterSetting}
 						/>
 					{:else}
-						<FilterSetting
+						<FilterSettingNoIcon
 							hovered={hoveredValue === noFilterSetting}
 							selected={selectedValue === noFilterSetting}
 							value={noFilterSetting}
@@ -138,7 +137,7 @@
 							value={setting}
 						/>
 					{:else}
-						<FilterSetting
+						<FilterSettingNoIcon
 							hovered={hoveredValue === setting}
 							selected={selectedValue === setting}
 							value={setting}
@@ -162,7 +161,7 @@
 		display: flex;
 		gap: 1rem;
 		align-items: center;
-		color: var(--accent-color);
+		color: var(--white);
 		font-size: 1.2rem;
 		cursor: pointer;
 		width: 100%;
