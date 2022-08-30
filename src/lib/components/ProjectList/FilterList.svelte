@@ -2,43 +2,38 @@
 	import ProjectFilter from '$lib/components/ProjectList/ProjectFilter/ProjectFilter.svelte';
 	import { BACKEND_CATEGORIES, FRONTEND_CATEGORIES, TECH_LIST } from '$lib/constants';
 	import type { FilterSetting } from '$lib/types';
-	import { fade } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 
+	export let filterProjectType: FilterSetting;
 	export let filterCategory: FilterSetting;
 	export let filterLanguage: FilterSetting;
-	let projectTypeFilter: ProjectFilter;
-	let categoryFilter: ProjectFilter;
 	const categories: FilterSetting[] = [...BACKEND_CATEGORIES, ...FRONTEND_CATEGORIES].sort();
 	const languages: FilterSetting[] = [...TECH_LIST]
 		.filter((lang) => lang !== 'allLanguages')
 		.sort();
 </script>
 
-<div in:fade={{ delay: 200 }} out:fade={{ delay: 300 }} class="project-list-filter-wrapper">
+<div in:slide={{ delay: 200 }} out:slide={{ delay: 300 }} class="project-list-filter-wrapper">
 	<ProjectFilter
-		bind:this={projectTypeFilter}
-		bind:selectedValue={filterCategory}
-		id={'radio-category'}
+		bind:selectedValue={filterProjectType}
+		id={'radio-type'}
 		title={'Filter By Project Type'}
 		filterSettings={['backend', 'frontend']}
 		noFilterSetting={'allProjects'}
-		on:filterSettingChanged={(e) => categoryFilter.changeFilterSetting(e.detail, false)}
 	/>
 	<ProjectFilter
-		bind:this={categoryFilter}
 		bind:selectedValue={filterCategory}
 		id={'radio-category'}
 		title={'Filter By Category'}
 		filterSettings={categories}
-		startOptionNumber={3}
-		on:filterSettingChanged={(e) => projectTypeFilter.changeFilterSetting(e.detail, false)}
+		noFilterSetting={'allCategories'}
 	/>
 	<ProjectFilter
 		bind:selectedValue={filterLanguage}
 		id={'radio-language'}
 		title={'Filter By Language/Tech'}
-		noFilterSetting={'allLanguages'}
 		filterSettings={languages}
+		noFilterSetting={'allLanguages'}
 	/>
 </div>
 
@@ -46,12 +41,11 @@
 	.project-list-filter-wrapper {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 1rem;
+		gap: 2rem;
+		background-color: inherit;
+		border: 2px solid var(--accent-color);
+		line-height: 1;
+		padding: 2rem;
 		z-index: 3;
-	}
-
-	.project-list-filter-wrapper {
-		padding: 1rem;
-		background-color: var(--black-tint2);
 	}
 </style>

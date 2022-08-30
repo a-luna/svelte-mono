@@ -24,7 +24,8 @@ import type {
 	FRONTEND_CATEGORIES,
 	ICON_COLORS,
 	ICON_NAMES,
-	MAIN_CATEGORIES,
+	PROJECT_CATEGORIES,
+	PROJECT_TYPES,
 	REPO_NAMES,
 	TECH_LIST
 } from './constants';
@@ -209,12 +210,12 @@ export type JsonValue =
 export type IconName = typeof ICON_NAMES[number];
 export type IconColor = typeof ICON_COLORS[number];
 export type RepoName = typeof REPO_NAMES[number];
-export type MainCategory = typeof MAIN_CATEGORIES[number];
+export type ProjectType = typeof PROJECT_TYPES[number];
 export type FrontendCategory = typeof FRONTEND_CATEGORIES[number];
 export type BackendCategory = typeof BACKEND_CATEGORIES[number];
-export type ProjectCategory = MainCategory | FrontendCategory | BackendCategory;
+export type ProjectCategory = typeof PROJECT_CATEGORIES[number];
 export type LanguageOrTech = typeof TECH_LIST[number];
-export type FilterSetting = ProjectCategory | LanguageOrTech;
+export type FilterSetting = ProjectType | ProjectCategory | LanguageOrTech;
 
 export interface RepoWithMetaData {
 	name: RepoName;

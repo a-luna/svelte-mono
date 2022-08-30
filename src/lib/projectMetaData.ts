@@ -3,7 +3,6 @@ import type {
 	FilterSettingDetails,
 	GHRepo,
 	LanguageOrTech,
-	ProjectCategory,
 	RepoWithMetaData
 } from '$lib/types';
 import { isUserRepo } from '$lib/util';
@@ -13,14 +12,14 @@ export const repoDataDepot: {
 		primaryLanguage: LanguageOrTech;
 		primaryCategory: 'frontend' | 'backend';
 		languages: LanguageOrTech[];
-		categories: ProjectCategory[];
+		categories: FilterSetting[];
 	};
 } = {
 	'aaronluna.dev': {
 		primaryLanguage: 'Hugo',
 		primaryCategory: 'frontend',
 		languages: [],
-		categories: ['blog_portfolio_sites', 'docs_guides', 'frontend']
+		categories: ['blog_portfolio_sites', 'frontend']
 	},
 	'async-file-server': {
 		primaryLanguage: 'CSharp',
@@ -32,61 +31,61 @@ export const repoDataDepot: {
 		primaryLanguage: 'CSharp',
 		primaryCategory: 'backend',
 		languages: [],
-		categories: ['backend', 'cli_apps', 'dev_tools']
+		categories: ['backend', 'cli_apps']
 	},
 	'dotnetcore-crypto': {
 		primaryLanguage: 'CSharp',
 		primaryCategory: 'backend',
 		languages: [],
-		categories: ['backend', 'cryptography', 'dev_tools']
+		categories: ['backend', 'cryptography']
 	},
 	'fastapi-redis-cache': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['Redis', 'FastAPI'],
-		categories: ['backend', 'cli_apps', 'dev_tools', 'fastapi_plugins']
+		categories: ['backend', 'dev_tools', 'fastapi_plugins']
 	},
 	'flask-api-tutorial': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['Flask', 'Hugo', 'SQLAlchemy', 'SQLite'],
-		categories: ['backend', 'cryptography', 'docs_guides', 'api_development']
+		categories: ['backend', 'docs_guides', 'api_development']
 	},
 	'packer-examples': {
 		primaryLanguage: 'Shell',
 		primaryCategory: 'backend',
 		languages: ['AWS'],
-		categories: ['backend', 'dev_tools', 'devops', 'docs_guides']
+		categories: ['backend', 'dev_tools', 'devops']
 	},
 	'svelte-base64-ts': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['Puppeteer', 'TypeScript', 'XState'],
-		categories: ['docs_guides', 'frontend', 'svelte_apps_sites']
+		categories: ['frontend', 'web_app']
 	},
 	'svelte-base64': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['Cypress'],
-		categories: ['frontend', 'svelte_apps_sites']
+		categories: ['frontend', 'web_app']
 	},
 	'svelte-color-tools': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['RegExp', 'TailwindCSS', 'TypeScript'],
-		categories: ['frontend', 'svelte_components']
+		categories: ['frontend', 'component_library']
 	},
 	'svelte-simple-tables-docs': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TailwindCSS', 'TypeScript'],
-		categories: ['docs_guides', 'frontend', 'svelte_apps_sites', 'svelte_components']
+		categories: ['docs_guides', 'frontend', 'web_app', 'component_library']
 	},
 	'svelte-simple-tables': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TypeScript'],
-		categories: ['frontend', 'svelte_components']
+		categories: ['frontend', 'component_library']
 	},
 	'vig-api': {
 		primaryLanguage: 'Python',
@@ -98,7 +97,7 @@ export const repoDataDepot: {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TypeScript'],
-		categories: ['frontend', 'svelte_apps_sites']
+		categories: ['frontend', 'web_app']
 	},
 	vigorish: {
 		primaryLanguage: 'Python',

@@ -23,18 +23,24 @@ import XState from '$lib/components/Icons/Language/XState.svelte';
 import type { FilterSetting, FilterSettingDatabase, FilterSettingDetails } from '$lib/types';
 
 export const filterSettingDatabase: FilterSettingDatabase = {
-	allLanguages: {
-		hasIcon: true,
-		icon: AllProjects,
-		displayName: 'All Languages',
-		color: 'blue',
-		size: 16
-	},
 	allProjects: {
 		hasIcon: true,
 		icon: AllProjects,
 		displayName: 'All Projects',
 		color: 'green',
+		size: 16
+	},
+	allCategories: {
+		hasIcon: false,
+		displayName: 'All Categories',
+		color: 'default',
+		size: 16
+	},
+	allLanguages: {
+		hasIcon: true,
+		icon: AllProjects,
+		displayName: 'All Languages',
+		color: 'blue',
 		size: 16
 	},
 	frontend: {
@@ -191,35 +197,25 @@ export const filterSettingDatabase: FilterSettingDatabase = {
 		color: 'yellow',
 		size: 16
 	},
-	blog_portfolio_sites: {
-		hasIcon: false,
-		displayName: 'Blog/Portfolio Site',
-		color: 'green'
-	},
-	docs_guides: {
-		hasIcon: false,
-		displayName: 'Documentation',
-		color: 'green'
-	},
-	svelte_apps_sites: {
-		hasIcon: false,
-		displayName: 'Svelte App',
-		color: 'pink'
-	},
-	svelte_components: {
-		hasIcon: false,
-		displayName: 'Svelte Components',
-		color: 'pink'
-	},
 	api_development: {
 		hasIcon: false,
 		displayName: 'REST API',
 		color: 'purple'
 	},
+	blog_portfolio_sites: {
+		hasIcon: false,
+		displayName: 'Blog/Portfolio Site',
+		color: 'green'
+	},
 	cli_apps: {
 		hasIcon: false,
 		displayName: 'CLI App',
 		color: 'yellow'
+	},
+	component_library: {
+		hasIcon: false,
+		displayName: 'Component Library',
+		color: 'pink'
 	},
 	cryptography: {
 		hasIcon: false,
@@ -236,10 +232,20 @@ export const filterSettingDatabase: FilterSettingDatabase = {
 		displayName: 'DevOps',
 		color: 'yellow'
 	},
+	docs_guides: {
+		hasIcon: false,
+		displayName: 'Documentation',
+		color: 'green'
+	},
 	fastapi_plugins: {
 		hasIcon: false,
 		displayName: 'FastAPI Plugin',
 		color: 'purple'
+	},
+	web_app: {
+		hasIcon: false,
+		displayName: 'Web App',
+		color: 'pink'
 	},
 	web_scraping: {
 		hasIcon: false,

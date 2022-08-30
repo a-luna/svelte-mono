@@ -165,6 +165,7 @@
 	--blue-icon: hsl(169.4 93.7% 75.1%);
 	--purple-icon: hsl(251.9 89.3% 66.9%);
 	--pink-icon: hsl(286.5 88.1% 60.4%);
+	--default-icon: var(--white);
 }
 
 body {

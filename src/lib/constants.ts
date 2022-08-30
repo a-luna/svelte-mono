@@ -44,13 +44,13 @@ export const REPO_NAMES = [
 	'vigorish'
 ] as const;
 
-export const MAIN_CATEGORIES = ['allProjects', 'backend', 'frontend'] as const;
+export const PROJECT_TYPES = ['allProjects', 'backend', 'frontend'] as const;
 
 export const FRONTEND_CATEGORIES = [
 	'blog_portfolio_sites',
 	'docs_guides',
-	'svelte_apps_sites',
-	'svelte_components'
+	'web_app',
+	'component_library'
 ] as const;
 
 export const BACKEND_CATEGORIES = [
@@ -61,4 +61,10 @@ export const BACKEND_CATEGORIES = [
 	'devops',
 	'fastapi_plugins',
 	'web_scraping'
+] as const;
+
+export const PROJECT_CATEGORIES = [
+	'allCategories',
+	...BACKEND_CATEGORIES,
+	...FRONTEND_CATEGORIES
 ] as const;

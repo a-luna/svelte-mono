@@ -1,20 +1,14 @@
 <script lang="ts">
 	import Clear from '$lib/components/Icons/Clear.svelte';
 	import Filter from '$lib/components/Icons/Filter.svelte';
-	import type { FilterSetting } from '$lib/types';
+	import { createEventDispatcher } from 'svelte';
 
-	export let filterCategory: FilterSetting;
-	export let filterLanguage: FilterSetting;
 	export let showFilters: boolean;
 	export let filterApplied: boolean;
-
-	function resetFilter() {
-		filterLanguage = 'allLanguages';
-		filterCategory = 'allProjects';
-	}
+	const dispatch = createEventDispatcher();
 </script>
 
-<div class="filter-controls">
+<div class="filter-controls" class:filters-shown={showFilters}>
 	<button
 		class="show-filters"
 		class:open={showFilters}
@@ -27,7 +21,7 @@
 		class="reset-filters"
 		disabled={!filterApplied}
 		title="Reset Filters"
-		on:click={() => resetFilter()}
+		on:click={() => dispatch('resetFilter')}
 	>
 		<div class="icon"><Clear /></div>
 	</button>
@@ -36,7 +30,7 @@
 <style lang="postcss">
 	.filter-controls {
 		display: grid;
-		grid-template-columns: 40px 40px;
+		grid-template-columns: 60px 60px;
 		align-items: flex-start;
 		gap: 1rem;
 	}
@@ -47,15 +41,15 @@
 		justify-content: center;
 		align-items: center;
 		background-color: var(--page-bg-color);
-		border: 2px solid var(--white);
+		border: 3px solid var(--white);
 		color: var(--white);
-		width: 2.5rem;
-		height: 2.5rem;
+		width: 60px;
+		height: 60px;
 	}
 
 	.show-filters.open {
 		border-color: var(--accent-color);
-		background-color: var(--white);
+		background-color: var(--accent-color);
 		color: var(--page-bg-color);
 	}
 
@@ -74,8 +68,12 @@
 		border-color: var(--accent-color);
 	}
 
+	.show-filters .icon {
+		margin: 3px 0 0 0;
+	}
+
 	.icon {
-		width: 1.5rem;
-		height: 1.5rem;
+		width: 35px;
+		height: 35px;
 	}
 </style>
