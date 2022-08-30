@@ -15,7 +15,7 @@
 
 <style lang="postcss">
 	.project-category {
-		padding: 0.25rem 0.5rem;
+		padding: 0.5rem;
 		background-color: inherit;
 		font-weight: 400;
 	}

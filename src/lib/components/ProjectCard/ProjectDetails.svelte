@@ -76,7 +76,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		line-height: 1;
-		gap: 0.25rem;
+		gap: 0.3rem;
 		margin: 1rem 0 0 0;
 	}
 

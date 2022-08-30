@@ -5,7 +5,7 @@
 	export let width: string = null;
 	export let height: string = null;
 	export let title: string = null;
-	export let strokeWidth = '2px';
+	export let strokeWidth = '1px';
 	export let padding = '0';
 </script>
 
