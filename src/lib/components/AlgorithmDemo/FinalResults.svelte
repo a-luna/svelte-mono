@@ -1,21 +1,15 @@
 <script lang="ts">
-	import LinkedLabel from '$lib/components/AlgorithmDemo/Buttons/OpenHelpDocsButton.svelte';
+	import CopyEncodedText from '$lib/components/AlgorithmDemo/Buttons/CopyEncodedText.svelte';
 	import { alert } from '$lib/stores/alert';
 	import type { EncodingMachineStateStore } from '$lib/types';
-	import type { DemoStore } from '$lib/types/DemoStore';
 	import { copyToClipboard } from '$lib/util';
 	import { getContext } from 'svelte';
-	import type { Readable } from 'svelte/store';
 
 	let state: EncodingMachineStateStore;
-	let demoState: Readable<DemoStore>;
-	({ state, demoState } = getContext('demo'));
+	({ state } = getContext('demo'));
 
-	$: inputEncoding = $state.context.output.isASCII ? 'ASCII' : $state.context.output.inputEncoding;
-	$: utf8 = $state.context.output.inputEncoding === 'UTF-8';
-	$: copyToClipboardButtonStyle = $demoState.isMobileDisplay
-		? 'font-weight: 700; align-self: flex-end;'
-		: 'font-weight: 700;';
+	$: inputEncoding = $state.context.output.isASCII ? 'ascii' : $state.context.output.inputEncoding;
+	$: utf8 = $state.context.output.inputEncoding === 'utf8';
 
 	async function handleCopyButtonClicked(colorString: string) {
 		const result = await copyToClipboard(colorString);
@@ -40,14 +34,7 @@
 				<span class="encoding-type" title="Output Encoding">{$state.context.output.outputEncoding}</span>
 			</div>
 			<span class="result-value">{$state.context.output.output}</span>
-			<LinkedLabel
-				tooltip={'Copy encoded output string to clipboard'}
-				name={'copy-output-string-button'}
-				style={copyToClipboardButtonStyle}
-				on:click={() => handleCopyButtonClicked($state.context.output.output)}
-			>
-				Copy to Clipboard
-			</LinkedLabel>
+			<CopyEncodedText on:copyEncodedText={() => handleCopyButtonClicked($state.context.output.output)} />
 		</div>
 	</div>
 {/if}
