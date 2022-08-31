@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dev } from '$app/env';
+	import { dev } from '$app/environment';
 	import AuthorName from '$lib/components/AlgorithmDemo/AuthorName.svelte';
 	import DemoIntro from '$lib/components/AlgorithmDemo/DemoIntro/DemoIntro.svelte';
 	import DemoResults from '$lib/components/AlgorithmDemo/DemoResults/DemoResults.svelte';
