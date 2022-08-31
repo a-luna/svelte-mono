@@ -16,14 +16,14 @@
 			{
 				label: 'ASCII',
 				id: 'inputEncoding1',
-				value: 'ASCII',
-				checked: $state.encoderInput.inputEncoding === 'ASCII',
+				value: 'ascii',
+				checked: $state.encoderInput.inputEncoding === 'ascii',
 			},
 			{
 				label: 'UTF-8',
 				id: 'inputEncoding2',
-				value: 'UTF-8',
-				checked: $state.encoderInput.inputEncoding === 'UTF-8',
+				value: 'utf8',
+				checked: $state.encoderInput.inputEncoding === 'utf8',
 			},
 			{
 				label: 'Hex',

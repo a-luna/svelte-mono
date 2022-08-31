@@ -50,7 +50,7 @@
 	{#each getEncodeInputText_IdleDemoText($state.context.input.inputText, $state.context.input.inputEncoding) as text}
 		<p>{@html text}</p>
 	{/each}
-	{#if $state.context.input.inputEncoding === 'UTF-8'}
+	{#if $state.context.input.inputEncoding === 'utf8'}
 		{#if $state.context.output.utf8.hasCombinedChars}
 			<p>{@html explainCombinedUtf8Chars($state.context.output.utf8)}</p>
 		{/if}

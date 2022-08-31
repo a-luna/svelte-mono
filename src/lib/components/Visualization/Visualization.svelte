@@ -3,9 +3,9 @@
 	import { app } from '$lib/stores/app';
 	import { state } from '$lib/stores/state';
 
-	$: isUTF8 = $state.decoderOutput.outputEncoding === 'UTF-8' || $state.encoderOutput.inputEncoding === 'UTF-8';
+	$: isUTF8 = $state.decoderOutput.outputEncoding === 'utf8' || $state.encoderOutput.inputEncoding === 'utf8';
 	$: textEncoding = isUTF8 || $app.isAscii;
-	$: charType = isUTF8 ? 'UTF-8' : 'ASCII';
+	$: charType = isUTF8 ? 'utf8' : 'ascii';
 </script>
 
 <div class="visualization-wrapper">

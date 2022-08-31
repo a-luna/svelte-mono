@@ -7,7 +7,7 @@
 	<div class="encoding-wrapper">
 		<div class="string-encoding">
 			<span class="form-label">Text Encoding</span>
-			<SelectStringEncoding />
+			<SelectStringEncoding inHelpDocs={true} />
 			<div
 				class="dropdown"
 				role="menu"
@@ -30,7 +30,7 @@
 				<!--<Option>-->
 				<div
 					class="menu-item"
-					data-value="UTF-8"
+					data-value="utf8"
 					role="menuitem"
 					tabindex="-1"
 					id="select-string-encoding-option-2"

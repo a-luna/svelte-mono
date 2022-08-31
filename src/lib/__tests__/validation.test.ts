@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 
 describe('validateTextEncoding', () => {
 	test('can identify an empty string as an invalid value', () => {
-		const result1 = validateTextEncoding('', 'ASCII');
+		const result1 = validateTextEncoding('', 'ascii');
 		expect(result1.success).toBe(false);
 		expect(result1.error.message).toBe('You must provide a value to encode, text box is empty.');
 
@@ -13,13 +13,13 @@ describe('validateTextEncoding', () => {
 	});
 
 	test('can identify a valid ASCII string', () => {
-		const result = validateTextEncoding('dog', 'ASCII');
+		const result = validateTextEncoding('dog', 'ascii');
 		expect(result.success).toBe(true);
 		expect(result.value).toBe('dog');
 	});
 
 	test('can identify an invalid ASCII string (contains non-printable characters)', () => {
-		const result = validateTextEncoding('do§', 'ASCII');
+		const result = validateTextEncoding('do§', 'ascii');
 		expect(result.success).toBe(false);
 		expect(result.error.message).toBe("'do§' contains 1 invalid character:\n\t§ (0xA7) Count: 1");
 	});

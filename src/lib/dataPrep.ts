@@ -71,7 +71,7 @@ function getEncodingParameters(
 	validationResult: Result<string>,
 ): EncoderInput {
 	const bytes = stringToByteArray(inputText, inputEncoding);
-	const ascii = inputEncoding === 'ASCII' ? inputText : '';
+	const ascii = inputEncoding === 'ascii' ? inputText : '';
 	const utf8 = isTextEncoding(inputEncoding) ? decomposeUtf8String(inputText) : null;
 	const binary = inputEncoding === 'bin' ? inputText : byteArrayToBinaryStringArray(bytes).join('');
 	const hex = hexStringFromByteArray(bytes, true, ' ');
@@ -119,7 +119,7 @@ export function createHexByteMapsForChunk(
 			bin_word2: word2,
 			hex_word1: BIN_TO_HEX[word1],
 			hex_word2: BIN_TO_HEX[word2],
-			ascii: encoding === 'ASCII' ? (/^\s+$/.test(ascii[i]) ? 'ws' : ascii[i]) : '',
+			ascii: encoding === 'ascii' ? (/^\s+$/.test(ascii[i]) ? 'ws' : ascii[i]) : '',
 			isWhiteSpace: /^\s+$/.test(ascii[i]),
 		};
 	});

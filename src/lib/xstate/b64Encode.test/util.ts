@@ -108,11 +108,11 @@ export const dataEventToSimpleEventMap = getDataEventToSimpleEventMap();
 
 function getEncodingSettingElementIdMap(): Map<StringEncoding | Base64Encoding, HtmlElementIds> {
 	const encodingSettingElementIdMap = new Map<StringEncoding | Base64Encoding, HtmlElementIds>();
-	encodingSettingElementIdMap.set('ASCII', {
+	encodingSettingElementIdMap.set('ascii', {
 		ids: ['select-string-encoding-open-list-button', 'select-string-encoding-option-1'],
 		variableNames: ['stringEncodingMenu', 'asciiEncodingMenuItem'],
 	});
-	encodingSettingElementIdMap.set('UTF-8', {
+	encodingSettingElementIdMap.set('utf8', {
 		ids: ['select-string-encoding-open-list-button', 'select-string-encoding-option-2'],
 		variableNames: ['stringEncodingMenu', 'asciiEncodingMenuItem'],
 	});

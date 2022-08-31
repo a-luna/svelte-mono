@@ -87,7 +87,7 @@ export const defaultHexByteMap: HexByteMap = {
 
 export const defaultEncoderInputChunk: EncoderInputChunk = {
 	bytes: [],
-	encoding: 'ASCII',
+	encoding: 'ascii',
 	hex: '',
 	hexBytes: [],
 	ascii: '',
@@ -126,13 +126,13 @@ export const defaultDecoderOutput: DecoderOutput = {
 	inputEncoding: 'base64',
 	output: '',
 	bytes: [],
-	outputEncoding: 'ASCII',
+	outputEncoding: 'ascii',
 	chunks: [defaultOutputChunk],
 };
 
 export const defaultEncoderInput: EncoderInput = {
 	inputText: '',
-	inputEncoding: 'ASCII',
+	inputEncoding: 'ascii',
 	outputEncoding: 'base64',
 	validationResult: { success: true },
 	bytes: [],
@@ -147,7 +147,7 @@ export const defaultEncoderInput: EncoderInput = {
 
 export const defaultEncoderOutput: EncoderOutput = {
 	input: '',
-	inputEncoding: 'ASCII',
+	inputEncoding: 'ascii',
 	isASCII: true,
 	output: '',
 	bytes: [],

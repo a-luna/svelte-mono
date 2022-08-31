@@ -5,7 +5,7 @@
 
 	export let chunk: OutputChunk;
 
-	$: isUTF8 = $state.decoderOutput.outputEncoding === 'UTF-8' || $state.encoderOutput.inputEncoding === 'UTF-8';
+	$: isUTF8 = $state.decoderOutput.outputEncoding === 'utf8' || $state.encoderOutput.inputEncoding === 'utf8';
 	$: textEncoding = isUTF8 || $app.isAscii;
 
 	function highlightHexByteValue(highlight: boolean, hexMap: HexByteMap) {

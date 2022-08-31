@@ -4,14 +4,14 @@ import { describe, expect, test } from 'vitest';
 describe('Base64Encoder', () => {
 	test('can encode a valid ascii string to standard base64', () => {
 		const encoder = new Base64Encoder();
-		const encodingInput = encoder.validateInput('dog', 'ASCII', 'base64');
+		const encodingInput = encoder.validateInput('dog', 'ascii', 'base64');
 		const encoded = encoder.encode(encodingInput);
 		expect(encoded.output).toBe('ZG9n');
 	});
 
 	test('can encode a valid UTF-8 string to standard base64', () => {
 		const encoder = new Base64Encoder();
-		const encodingInput = encoder.validateInput('∑ßåœ ≈ ∆c', 'UTF-8', 'base64');
+		const encodingInput = encoder.validateInput('∑ßåœ ≈ ∆c', 'utf8', 'base64');
 		const encoded = encoder.encode(encodingInput);
 		expect(encoded.output).toBe('4oiRw5/DpcWTIOKJiCDiiIZj');
 		expect(encoded.output).not.toBe('JUUyJTg4JTkxJUMzJTlGJUMzJUE1JUM1JTkzJTIwJUUyJTg5JTg4JTIwJUUyJTg4JTg2Yw==');
@@ -19,7 +19,7 @@ describe('Base64Encoder', () => {
 
 	test('can decode a string that produces more than one output chunk', () => {
 		const encoder = new Base64Encoder();
-		const encodingInput = encoder.validateInput('this is a test', 'ASCII', 'base64');
+		const encodingInput = encoder.validateInput('this is a test', 'ascii', 'base64');
 		const encoded = encoder.encode(encodingInput);
 		expect(encoded.output).toBe('dGhpcyBpcyBhIHRlc3Q=');
 		expect(encoded.chunks.length).toBe(5);

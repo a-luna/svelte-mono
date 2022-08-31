@@ -3,9 +3,9 @@ import { describe, expect, test } from 'vitest';
 
 describe('validateEncoderInputChunks', () => {
 	test('can create a map (no whitespace, no pad characters) for a 3-byte chunk of an ASCII string', () => {
-		expect(validateEncoderInput('dog', 'ASCII', 'base64')).toEqual({
+		expect(validateEncoderInput('dog', 'ascii', 'base64')).toEqual({
 			inputText: 'dog',
-			inputEncoding: 'ASCII',
+			inputEncoding: 'ascii',
 			outputEncoding: 'base64',
 			validationResult: {
 				success: true,
@@ -60,7 +60,7 @@ describe('validateEncoderInputChunks', () => {
 			chunks: [
 				{
 					bytes: [100, 111, 103],
-					encoding: 'ASCII',
+					encoding: 'ascii',
 					hex: '64 6F 67',
 					hexBytes: ['64', '6F', '67'],
 					ascii: 'dog',
@@ -102,9 +102,9 @@ describe('validateEncoderInputChunks', () => {
 	});
 
 	test('can create a map (no whitespace, WITH pad characters) for a 3-byte chunk of an ASCII string', () => {
-		expect(validateEncoderInput('do', 'ASCII', 'base64')).toEqual({
+		expect(validateEncoderInput('do', 'ascii', 'base64')).toEqual({
 			inputText: 'do',
-			inputEncoding: 'ASCII',
+			inputEncoding: 'ascii',
 			outputEncoding: 'base64',
 			validationResult: {
 				success: true,
@@ -150,7 +150,7 @@ describe('validateEncoderInputChunks', () => {
 			chunks: [
 				{
 					bytes: [100, 111],
-					encoding: 'ASCII',
+					encoding: 'ascii',
 					hex: '64 6F',
 					hexBytes: ['64', '6F'],
 					ascii: 'do',
@@ -183,9 +183,9 @@ describe('validateEncoderInputChunks', () => {
 	});
 
 	test('can create a map (WITH whitespace, no pad characters) for a single chunk of an ASCII string', () => {
-		expect(validateEncoderInput(' do', 'ASCII', 'base64')).toEqual({
+		expect(validateEncoderInput(' do', 'ascii', 'base64')).toEqual({
 			inputText: ' do',
-			inputEncoding: 'ASCII',
+			inputEncoding: 'ascii',
 			outputEncoding: 'base64',
 			validationResult: {
 				success: true,
@@ -240,7 +240,7 @@ describe('validateEncoderInputChunks', () => {
 			chunks: [
 				{
 					bytes: [32, 100, 111],
-					encoding: 'ASCII',
+					encoding: 'ascii',
 					hex: '20 64 6F',
 					hexBytes: ['20', '64', '6F'],
 					ascii: ' do',
@@ -282,9 +282,9 @@ describe('validateEncoderInputChunks', () => {
 	});
 
 	test('can create a map (WITH whitespace, WITH pad characters) for a 3-byte chunk of an ASCII string', () => {
-		expect(validateEncoderInput(' d', 'ASCII', 'base64')).toEqual({
+		expect(validateEncoderInput(' d', 'ascii', 'base64')).toEqual({
 			inputText: ' d',
-			inputEncoding: 'ASCII',
+			inputEncoding: 'ascii',
 			outputEncoding: 'base64',
 			validationResult: {
 				success: true,
@@ -330,7 +330,7 @@ describe('validateEncoderInputChunks', () => {
 			chunks: [
 				{
 					bytes: [32, 100],
-					encoding: 'ASCII',
+					encoding: 'ascii',
 					hex: '20 64',
 					hexBytes: ['20', '64'],
 					ascii: ' d',

@@ -2,7 +2,7 @@
 	import { app } from '$lib/stores/app';
 	import { state } from '$lib/stores/state';
 
-	$: utf8 = $state.decoderOutput.outputEncoding === 'UTF-8';
+	$: utf8 = $state.decoderOutput.outputEncoding === 'utf8';
 </script>
 
 <fieldset class="results-out">

@@ -12,7 +12,7 @@ export const stringToByteArray = (s: string, encoding: StringEncoding): number[]
 		? hexStringToByteArray(s)
 		: encoding === 'bin'
 		? binaryStringToByteArray(s)
-		: encoding === 'UTF-8'
+		: encoding === 'utf8'
 		? utf8StringToByteArray(s)
 		: genericStringToByteArray(s);
 

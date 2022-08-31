@@ -13,4 +13,4 @@ export const isEncoding = (value: string): value is Encoding =>
 export const isButtonColor = (color: string): color is ButtonColor => BUTTON_COLORS.includes(color as ButtonColor);
 
 export const isTextEncoding = (encoding: string): encoding is TextEncoding =>
-	encoding === 'ASCII' || encoding === 'UTF-8';
+	encoding === 'ascii' || encoding === 'utf8';

@@ -51,12 +51,12 @@ export function getEncodeInputText_IdleDemoText(input: string, encoding: StringE
 	const bytes = stringToByteArray(input, encoding);
 	const totalBytes = bytes.length;
 	let demoText: string[] = [];
-	if (encoding === 'ASCII') {
+	if (encoding === 'ascii') {
 		demoText = [
 			'<strong>Each ASCII character is stored as an 8-bit byte</strong>. The table below shows the complete set of printable ASCII characters and their hex and binary values.',
 			`The input data contains ${totalBytes} ASCII characters. <strong>As each character is converted to an 8-bit value, the corresponding row in the table below will be highlighted.</strong>`,
 		];
-	} else if (encoding === 'UTF-8') {
+	} else if (encoding === 'utf8') {
 		const utf8Composition = decomposeUtf8String(input);
 		demoText = [
 			`In UTF-8 encoding, some characters (e.g., any character in the ASCII set) are represented by a single byte, but the vast majority of chracters translate to multiple bytes.`,
@@ -122,7 +122,7 @@ export function describeInputByte(
 	const byteNumHtml = getByteNumHtml(byteIndex + 1, byteIndex);
 	const bin = decimalToBinaryString(byte);
 	const hex = hexStringFromByte(byte);
-	if (encoding === 'ASCII') {
+	if (encoding === 'ascii') {
 		const charDescription = getAsciiCharacterDescription(byte);
 		const charDescNonAlphaNumeric = charDescription !== '' ? ` (${charDescription})` : '';
 		const char = String.fromCharCode(byte);

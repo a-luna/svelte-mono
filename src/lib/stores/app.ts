@@ -21,7 +21,7 @@ function createAppStore(state: AppState): Readable<AppStore> {
 
 		const getInputText = (): string =>
 			encoderMode()
-				? $state.encoderInput.inputEncoding === 'ASCII' || $state.encoderInput.inputEncoding === 'UTF-8'
+				? $state.encoderInput.inputEncoding === 'ascii' || $state.encoderInput.inputEncoding === 'utf8'
 					? $state.encoderInput.inputText
 					: getInputHexBytes()
 				: $state.decoderInput.inputText;
@@ -29,7 +29,7 @@ function createAppStore(state: AppState): Readable<AppStore> {
 		const getOutputText = (): string =>
 			encoderMode()
 				? $state.encoderOutput.output
-				: $state.decoderOutput.outputEncoding === 'ASCII' || $state.decoderOutput.outputEncoding === 'UTF-8'
+				: $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8'
 				? $state.decoderOutput.output
 				: getOutputHexBytes();
 
@@ -46,8 +46,8 @@ function createAppStore(state: AppState): Readable<AppStore> {
 
 		const isAscii = (): boolean =>
 			encoderMode()
-				? $state.encoderOutput.inputEncoding === 'ASCII' || $state.encoderOutput.inputEncoding === 'UTF-8'
-				: $state.decoderOutput.outputEncoding === 'ASCII' || $state.decoderOutput.outputEncoding === 'UTF-8';
+				? $state.encoderOutput.inputEncoding === 'ascii' || $state.encoderOutput.inputEncoding === 'utf8'
+				: $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8';
 
 		const getBase64Encoding = (): Base64Encoding =>
 			encoderMode() ? $state.encoderOutput.outputEncoding : $state.decoderOutput.inputEncoding;

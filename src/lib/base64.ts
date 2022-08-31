@@ -117,7 +117,7 @@ export function b64Decode(decoderInput: DecoderInput): DecoderOutput {
 	const isASCII = validateAsciiBytes(bytes);
 	const utf8 = utf8StringFromByteArray(bytes);
 	const isUTF8 = utf8 !== '';
-	const outputEncoding: StringEncoding = isASCII ? 'ASCII' : isUTF8 ? 'UTF-8' : 'hex';
+	const outputEncoding: StringEncoding = isASCII ? 'ascii' : isUTF8 ? 'utf8' : 'hex';
 	let decoderOutput = {
 		input: inputText,
 		inputEncoding,

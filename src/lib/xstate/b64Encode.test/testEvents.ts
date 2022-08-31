@@ -10,7 +10,7 @@ const asciiHappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 't',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -22,7 +22,7 @@ const asciiHappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'te',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -34,7 +34,7 @@ const asciiHappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'tes',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -46,7 +46,7 @@ const asciiHappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'test',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -58,7 +58,7 @@ const asciiHappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'VALIDATE_TEXT',
 				inputText: 'test',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -312,7 +312,7 @@ const asciiHappyPathAutoplayEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 't',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -324,7 +324,7 @@ const asciiHappyPathAutoplayEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'te',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -336,7 +336,7 @@ const asciiHappyPathAutoplayEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'tes',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -348,7 +348,7 @@ const asciiHappyPathAutoplayEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'test',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -360,7 +360,7 @@ const asciiHappyPathAutoplayEvents: TestFunctionInputData = {
 			event: {
 				type: 'START_AUTOPLAY',
 				inputText: 'test',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -614,7 +614,7 @@ const asciiHappyPathSkipDemoEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'test',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -626,7 +626,7 @@ const asciiHappyPathSkipDemoEvents: TestFunctionInputData = {
 			event: {
 				type: 'SKIP_DEMO',
 				inputText: 'test',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -646,7 +646,7 @@ const asciiValidationErrorEvents: TestFunctionInputData = {
 			event: {
 				type: 'START_AUTOPLAY',
 				inputText: '',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -658,7 +658,7 @@ const asciiValidationErrorEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'do§',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -670,7 +670,7 @@ const asciiValidationErrorEvents: TestFunctionInputData = {
 			event: {
 				type: 'SKIP_DEMO',
 				inputText: 'do§',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -682,7 +682,7 @@ const asciiValidationErrorEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'do',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -694,7 +694,7 @@ const asciiValidationErrorEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'dog',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -706,7 +706,7 @@ const asciiValidationErrorEvents: TestFunctionInputData = {
 			event: {
 				type: 'VALIDATE_TEXT',
 				inputText: 'dog',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -735,7 +735,7 @@ const asciiWithSymbolsEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: 'test&^%#*&()',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -747,7 +747,7 @@ const asciiWithSymbolsEvents: TestFunctionInputData = {
 			event: {
 				type: 'VALIDATE_TEXT',
 				inputText: 'test&^%#*&()',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -902,7 +902,7 @@ const hexHappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: '0d47bc37af',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -1189,7 +1189,7 @@ const hexValidationErrorEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: '746573t',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -1326,7 +1326,7 @@ const binHappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: '01110100011001010111001101110100',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -1604,7 +1604,7 @@ const binHappyPathSkipDemoEvents: TestFunctionInputData = {
 			event: {
 				type: 'SKIP_DEMO',
 				inputText: '01110100011001010111001101110100',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64url',
 			},
 			expectedState: {
@@ -1677,7 +1677,7 @@ const utf8HappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾',
-				inputEncoding: 'ASCII',
+				inputEncoding: 'ascii',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -1689,7 +1689,7 @@ const utf8HappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'UPDATE_TEXT',
 				inputText: '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾',
-				inputEncoding: 'UTF-8',
+				inputEncoding: 'utf8',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -1701,7 +1701,7 @@ const utf8HappyPathEvents: TestFunctionInputData = {
 			event: {
 				type: 'VALIDATE_TEXT',
 				inputText: '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾',
-				inputEncoding: 'UTF-8',
+				inputEncoding: 'utf8',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -3008,7 +3008,7 @@ const utf8MixedAsciiEvents: TestFunctionInputData = {
 			event: {
 				type: 'VALIDATE_TEXT',
 				inputText: '✓ à la mode',
-				inputEncoding: 'UTF-8',
+				inputEncoding: 'utf8',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -3038,7 +3038,7 @@ const utf8MixedAsciiEvents: TestFunctionInputData = {
 			event: {
 				type: 'VALIDATE_TEXT',
 				inputText: '∑ßåœ ≈ ∆c',
-				inputEncoding: 'UTF-8',
+				inputEncoding: 'utf8',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
@@ -3068,7 +3068,7 @@ const utf8MixedAsciiEvents: TestFunctionInputData = {
 			event: {
 				type: 'VALIDATE_TEXT',
 				inputText: '日本語文字列',
-				inputEncoding: 'UTF-8',
+				inputEncoding: 'utf8',
 				outputEncoding: 'base64',
 			},
 			expectedState: {
