@@ -7,6 +7,7 @@ export interface DemoStore {
 	machineSubState: StateValue;
 	startedSubProcess: boolean;
 	isMobileDisplay: boolean;
+	validInputEncodings: string[];
 	showInputBytes: boolean;
 	showInputChunks: boolean;
 	showOutputChunks: boolean;

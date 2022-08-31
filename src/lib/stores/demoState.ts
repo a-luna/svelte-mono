@@ -1,6 +1,7 @@
 import { getPageWidth } from '$lib/stores/pageWidth';
 import type { DemoState, EncodingMachineStateStore } from '$lib/types';
 import type { DemoStore } from '$lib/types/DemoStore';
+import { checkAllTextEncodings } from '$lib/validation';
 import { derived, writable, type Readable } from 'svelte/store';
 
 export const demoUIState = writable<DemoState>({
@@ -78,7 +79,7 @@ export function createDemoStateStore(state: EncodingMachineStateStore): Readable
 			$state.matches('verifyResults');
 
 		const showAsciiTable = () =>
-			$state.context.input.inputEncoding === 'ASCII' &&
+			$state.context.input.inputEncoding === 'ascii' &&
 			($state.matches({ encodeInput: 'idle' }) ||
 				$state.matches({ encodeInput: 'autoPlayEncodeByte' }) ||
 				$state.matches({ encodeInput: 'encodeByte' }));
@@ -93,6 +94,7 @@ export function createDemoStateStore(state: EncodingMachineStateStore): Readable
 			machineSubState: machineSubState(),
 			startedSubProcess: startedSubProcess(),
 			errorOccurred: $state.matches({ validateInputText: 'error' }),
+			validInputEncodings: checkAllTextEncodings($state.context.input.inputText),
 			showInputBytes: showInputBytes(),
 			showInputChunks: showInputChunks(),
 			showOutputChunks: showOutputChunks(),

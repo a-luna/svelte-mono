@@ -11,15 +11,35 @@ const BASE64_URL_FORMAT = /^[0-9A-Za-z-_]+[=]{0,2}$/;
 export const validateAsciiBytes = (byteArray: number[]): boolean =>
 	byteArray.every((byte: number) => byte > 31 && byte < 127);
 
+export function checkAllTextEncodings(input: string): string[] {
+	const validEncodings: string[] = [];
+	if (validateBinaryString(input).success) {
+		validEncodings.push('bin');
+	}
+	if (validateHexString(input).success) {
+		validEncodings.push('hex');
+	}
+	if (validateAsciiString(input).success) {
+		validEncodings.push('ascii');
+	}
+	if (validateUtf8String(input).success) {
+		validEncodings.push('utf8');
+	}
+	return validEncodings;
+}
+
 export function validateTextEncoding(input: string, encoding: StringEncoding): Result<string> {
 	if (!input || input.length == 0) {
 		const error = 'You must provide a value to encode, text box is empty.';
 		return { success: false, error: Error(error) };
 	}
+	if (!encoding) {
+		return { success: false, error: Error('Encoding type must be specified.') };
+	}
 	switch (encoding) {
-		case 'ASCII':
+		case 'ascii':
 			return validateAsciiString(input);
-		case 'UTF-8':
+		case 'utf8':
 			return validateUtf8String(input);
 		case 'hex':
 			return validateHexString(input);
