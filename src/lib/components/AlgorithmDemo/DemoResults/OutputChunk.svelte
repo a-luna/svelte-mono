@@ -14,6 +14,7 @@
 
 	$: chunkNumber = chunkIndex + 1;
 	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length];
+	$: chunkIdColor = $state.matches('verifyResults') ? '--light-gray3' : chunkColor;
 	$: currentInputChunk = $state.context.inputChunkIndex;
 	$: currentOutputChunk = $state.context.outputChunkIndex;
 	$: stateName = $state.toStrings().join(' ');
@@ -77,9 +78,9 @@
 	data-hex={chunk.hex}
 	data-ascii={chunk.ascii}
 >
-	<div class="chunk-id" data-chunk-id={chunkNumber}>
-		<span class="chunk-label" style="color: var({chunkColor});">OUT</span>
-		<span class="chunk-number" style="color: var({chunkColor});">{chunkNumber}</span>
+	<div class="chunk-id" data-chunk-id={chunkNumber} style="color: var({chunkIdColor});">
+		<span class="chunk-label">OUT</span>
+		<span class="chunk-number">{chunkNumber}</span>
 	</div>
 	{#each chunk.base64Map as map}
 		<div

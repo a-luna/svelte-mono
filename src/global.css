@@ -577,7 +577,7 @@ button {
 
 #input-hex .bit,
 .input-chunk .bit {
-	background-color: var(--dark-gray4);
+	background-color: var(--dark-gray3);
 }
 
 #output-b64 .bit,
@@ -604,7 +604,7 @@ button {
 
 .input-chunk .pad-bit,
 #demo-text .input-chunk .pad-bit {
-	background-color: var(--black1);
+	background-color: var(--black2);
 }
 
 .output-chunk .pad-bit {

@@ -50,9 +50,9 @@
 			? currentChunkColor
 			: '--light-gray3';
 	$: currentByteIdColor =
-		currentByteIsMapped || currentByteIsHovered
+		currentByteIsMapped || currentByteIsHovered || $state.matches('verifyResults')
 			? byteColor
-			: currentChunkIsMapped || b64MappingInProgress || $state.matches('finished')
+			: currentChunkIsMapped || b64MappingInProgress
 			? chunkColor
 			: '--light-gray3';
 

@@ -14,6 +14,7 @@
 
 	$: chunkNumber = chunkIndex + 1;
 	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length];
+	$: chunkIdColor = $state.matches('verifyResults') ? '--light-gray3' : chunkColor;
 	$: chunkMappingInProgress =
 		$state.matches({ createInputChunks: 'autoPlayCreateInputChunk' }) ||
 		$state.matches({ createInputChunks: 'createInputChunk' }) ||
@@ -50,9 +51,7 @@
 			? getHexByteColor(checkHexGroupId)
 			: highlightChunk && !padding
 			? chunkColor
-			: highlightChunk && padding
-			? '--white1'
-			: '--gray3';
+			: '--light-gray3';
 </script>
 
 <div
@@ -64,9 +63,9 @@
 	data-ascii={chunk.ascii}
 	class:mapping={highlightChunk}
 >
-	<div class="chunk-id" data-chunk-id={chunkNumber}>
-		<span class="chunk-label" style="color: var({chunkColor});">IN</span>
-		<span class="chunk-number" style="color: var({chunkColor});">{chunkNumber}</span>
+	<div class="chunk-id" data-chunk-id={chunkNumber} style="color: var({chunkIdColor});">
+		<span class="chunk-label">IN</span>
+		<span class="chunk-number">{chunkNumber}</span>
 	</div>
 	{#each chunk.inputMap as map}
 		<div

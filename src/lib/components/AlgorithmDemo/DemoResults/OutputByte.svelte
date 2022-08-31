@@ -44,10 +44,8 @@
 	$: currentB64CharIsHovered = $state.matches('verifyResults') && $demoUIState.highlightBase64BitGroup === b64.groupId;
 	$: currentB64CharColor = currentB64CharIsMapped || currentB64CharIsHovered ? b64CharColor : currentChunkColor;
 	$: currentB64CharIdColor =
-		currentB64CharIsMapped || currentB64CharIsHovered
+		currentB64CharIsMapped || currentB64CharIsHovered || $state.matches('verifyResults')
 			? b64CharColor
-			: $state.matches('finished')
-			? chunkColor
 			: '--light-gray3';
 	$: currentPadOutline =
 		currentB64CharIsMapped || currentB64CharIsHovered ? `1px dotted var(${currentB64CharColor})` : 'none';
