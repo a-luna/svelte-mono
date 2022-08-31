@@ -130,7 +130,7 @@
 	}
 	.legend li {
 		margin: 0 0 0.5rem 0;
-		line-height: 1.2;
+		line-height: 1.4;
 	}
 	.legend li:last-child {
 		margin: 0;
