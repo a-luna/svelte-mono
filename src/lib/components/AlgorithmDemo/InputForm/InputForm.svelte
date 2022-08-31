@@ -1,6 +1,6 @@
 <script lang="ts">
+	import OpenHelpDocsButton from '$lib/components/AlgorithmDemo/Buttons/OpenHelpDocsButton.svelte';
 	import NavButtons from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButtons.svelte';
-	import OpenHelpDocsSmall from '$lib/components/AlgorithmDemo/InputForm/OpenHelpDocsSmall.svelte';
 	import SelectBase64Encoding from '$lib/components/AlgorithmDemo/InputForm/SelectBase64Encoding.svelte';
 	import SelectStringEncoding from '$lib/components/AlgorithmDemo/InputForm/SelectStringEncoding.svelte';
 	import InputTextBox from '$lib/components/InputTextBox.svelte';
@@ -8,7 +8,7 @@
 	import { getContext } from 'svelte';
 
 	export let inputText: string;
-	export let inputTextEncoding: StringEncoding = 'ASCII';
+	export let inputTextEncoding: StringEncoding = 'ascii';
 	export let outputBase64Encoding: Base64Encoding = 'base64';
 	let state: EncodingMachineStateStore;
 	({ state } = getContext('demo'));
@@ -24,13 +24,15 @@
 
 <div class="input-form">
 	<span class="input-text-label form-label">Input Text/Data</span>
-	<OpenHelpDocsSmall on:openHelpModal />
+	<div class="help-docs-button">
+		<OpenHelpDocsButton label={'Help Docs'} name="help-docs-button-input-form" on:openHelpModal />
+	</div>
 	<div class="input-text">
 		<InputTextBox bind:inputText disabled={controlsDisabled} {error} style={inputTextBoxStyles} on:submit />
 	</div>
 	<span class="input-encoding-label form-label">Text Encoding</span>
 	<div class="input-encoding">
-		<SelectStringEncoding bind:value={inputTextEncoding} disabled={controlsDisabled} />
+		<SelectStringEncoding bind:value={inputTextEncoding} />
 	</div>
 	<span class="output-encoding-label form-label">Output Encoding</span>
 	<div class="output-encoding">
@@ -59,6 +61,13 @@
 		justify-self: center;
 
 		grid-column: 1 / span 1;
+		grid-row: 1 / span 1;
+	}
+	.help-docs-button {
+		font-size: 0.75rem;
+
+		justify-self: center;
+		grid-column: 3 / span 1;
 		grid-row: 1 / span 1;
 	}
 	.input-text {
@@ -113,6 +122,9 @@
 
 			grid-column: 1 / span 2;
 			grid-row: 1 / span 1;
+		}
+		.help-docs-button {
+			justify-self: flex-end;
 		}
 		.input-text {
 			grid-column: 1 / span 3;
