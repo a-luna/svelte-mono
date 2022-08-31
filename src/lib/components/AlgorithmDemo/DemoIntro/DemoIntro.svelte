@@ -29,38 +29,30 @@
 		'You can stop autoplaying and return to manually stepping through the demo with the <strong>Stop Autoplay</strong> button (You can also start/stop autoplay using the <kbd>Space</kbd> bar).',
 	];
 
-	function toggleWelcomeDetails() {
-		if (welcomeDetailsElement.open) {
-			appNavDetailsElement.open = false;
-			encodingDetailsElement.open = false;
-			openSection = 'welcome';
-		} else if (!welcomeDetailsElement?.open && !encodingDetailsElement?.open && !appNavDetailsElement?.open) {
-			openSection = 'none';
-		}
-	}
+	const getSections = () => ({
+		welcome: welcomeDetailsElement,
+		settings: encodingDetailsElement,
+		navigation: appNavDetailsElement,
+	});
 
-	function toggleEncodingDetails() {
-		if (encodingDetailsElement.open) {
-			appNavDetailsElement.open = false;
-			welcomeDetailsElement.open = false;
-			openSection = 'settings';
-		} else if (!welcomeDetailsElement?.open && !encodingDetailsElement?.open && !appNavDetailsElement?.open) {
-			openSection = 'none';
-		}
-	}
+	const allSectionsCollapsed = (): boolean => Object.values(getSections()).every((section) => !section?.open);
 
-	function toggleAppNavDetails() {
-		if (appNavDetailsElement.open) {
-			welcomeDetailsElement.open = false;
-			encodingDetailsElement.open = false;
-			openSection = 'navigation';
-		} else if (!welcomeDetailsElement?.open && !encodingDetailsElement?.open && !appNavDetailsElement?.open) {
+	function toggle(section: 'none' | 'welcome' | 'settings' | 'navigation') {
+		const sections = getSections();
+		if (sections[section].open) {
+			Object.entries(sections).forEach(([sectionName, sectionElement]) => {
+				if (sectionName !== section) {
+					sectionElement.open = false;
+				}
+			});
+			openSection = section;
+		} else if (allSectionsCollapsed()) {
 			openSection = 'none';
 		}
 	}
 </script>
 
-<details bind:this={welcomeDetailsElement} on:toggle={() => toggleWelcomeDetails()} open>
+<details bind:this={welcomeDetailsElement} on:toggle={() => toggle('welcome')} open>
 	<DetailsSummary sectionName={'Welcome!'} thisSection={'welcome'} {openSection} />
 	{#if welcomeDetailsElement?.open}
 		<div transition:slide class="details-content">
@@ -102,7 +94,7 @@
 		</div>
 	{/if}
 </details>
-<details bind:this={encodingDetailsElement} on:toggle={() => toggleEncodingDetails()}>
+<details bind:this={encodingDetailsElement} on:toggle={() => toggle('settings')}>
 	<DetailsSummary sectionName={'Settings'} thisSection={'settings'} {openSection} />
 	{#if encodingDetailsElement?.open}
 		<div transition:slide class="details-content">
@@ -118,7 +110,7 @@
 		</div>
 	{/if}
 </details>
-<details bind:this={appNavDetailsElement} on:toggle={() => toggleAppNavDetails()}>
+<details bind:this={appNavDetailsElement} on:toggle={() => toggle('navigation')}>
 	<DetailsSummary sectionName={'Navigation'} thisSection={'navigation'} {openSection} />
 	{#if appNavDetailsElement?.open}
 		<div transition:slide class="details-content">
