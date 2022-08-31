@@ -9,6 +9,7 @@
 <style lang="postcss">
 	#help {
 		cursor: pointer;
-		width: 10px;
+		width: 20px;
+		color: var(--nav-button-autoplay-bg-color);
 	}
 </style>
