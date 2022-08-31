@@ -23,7 +23,7 @@
 		"@commitlint/config-conventional": "^16.2.4",
 		"@sveltejs/adapter-netlify": "^1.0.0-next.75",
 		"@sveltejs/adapter-static": "^1.0.0-next.26",
-		"@sveltejs/vite-plugin-svelte": "^1.0.2",
+		"@sveltejs/vite-plugin-svelte": "^1.0.3",
 		"@testing-library/dom": "^8.17.1",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/svelte": "^3.2.1",
@@ -32,6 +32,7 @@
 		"@types/node": "^17.0.45",
 		"@typescript-eslint/eslint-plugin": "^5.36.1",
 		"@typescript-eslint/parser": "^5.36.1",
+		"@vitest/coverage-c8": "^0.22.1",
 		"@vitest/ui": "^0.5.9",
 		"@xstate/cli": "^0.2.1",
 		"@xstate/graph": "^1.4.2",
@@ -54,7 +55,7 @@
 		"pre-commit": "^1.2.2",
 		"prettier": "^2.7.1",
 		"prettier-plugin-svelte": "^2.7.0",
-		"sass": "^1.54.6",
+		"sass": "^1.54.7",
 		"siema": "^1.5.1",
 		"svelte": "^3.49.0",
 		"svelte-check": "^2.9.0",
@@ -63,7 +64,7 @@
 		"tslib": "^2.4.0",
 		"typescript": "^4.8.2",
 		"vite": "^3.1.0-beta.1",
-		"vitest": "^0.18.1",
+		"vitest": "^0.22.1",
 		"ws": "^8.8.1",
 		"xstate": "^4.33.4"
 	},
@@ -72,8 +73,8 @@
 		"node": ">= 12.17.0"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-static": "^1.0.0-next.39",
-		"@sveltejs/kit": "^1.0.0-next.454",
+		"@sveltejs/adapter-static": "^1.0.0-next.40",
+		"@sveltejs/kit": "^1.0.0-next.456",
 		"@xstate/inspect": "^0.7.0",
 		"puppeteer": "^15.5.0",
 		"svelte-preprocess": "^4.10.7"
