@@ -4,41 +4,18 @@ import type {
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
-import { genericStringToByteArray, hexStringFromByte, hexStringToByte } from '$lib/util';
+import { getBlockContainingCodepoint } from '$lib/unicode/blockNames';
+import { unicodeCharNames } from '$lib/unicode/charNames';
+import { reComplexSymbol } from '$lib/unicode/regex';
+import {
+	genericStringToByteArray,
+	hexStringFromByte,
+	hexStringToByte,
+	UnicodeCodepointFromUtf8ByteArray,
+} from '$lib/util';
 import { validateAsciiBytes } from '$lib/validation';
 
-// These RegExps and the utf8ToCharArray function below are directly copied from the implementation
-// of the _stringToArray function in lodash (https://github.com/lodash/lodash/blob/4.13.1-npm/_stringToArray.js)
-// Everything else in this file is original work by Aaron Luna (@a-luna, contact@aaronluna.dev
-
-/** Used to compose unicode character classes. */
-const rsAstralRange = '\\ud800-\\udfff',
-	rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
-	rsComboSymbolsRange = '\\u20d0-\\u20f0',
-	rsVarRange = '\\ufe0e\\ufe0f';
-
-/** Used to compose unicode capture groups. */
-const rsAstral = '[' + rsAstralRange + ']',
-	rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
-	rsFitz = '\\ud83c[\\udffb-\\udfff]',
-	rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
-	rsNonAstral = '[^' + rsAstralRange + ']',
-	rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
-	rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
-	rsZWJ = '\\u200d';
-
-/** Used to compose unicode regexes. */
-const reOptMod = rsModifier + '?',
-	rsOptVar = '[' + rsVarRange + ']?',
-	rsOptJoin =
-		'(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
-	rsSeq = rsOptVar + reOptMod + rsOptJoin,
-	rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
-
-/** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-const reComplexSymbol = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
-
-export const utf8ToCharArray = (s: string): RegExpMatchArray => s.match(reComplexSymbol);
+const utf8ToCharArray = (s: string): RegExpMatchArray => s.match(reComplexSymbol);
 
 export function decomposeUtf8String(s: string): Utf8StringComposition {
 	const complexCharMap: Utf8ComplexCharacterMap[] = utf8ToCharArray(s).map((utf8) => {
@@ -46,12 +23,19 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 			const charData = getUtf8EncodedByteMaps(char).map((byteMap) => ({ hex: byteMap.hex, byte: byteMap.byte }));
 			const hexBytes = charData.map((data) => data.hex);
 			const bytes = charData.map((data) => data.byte);
+			const totalBytes = bytes.length;
+			const codepoint = totalBytes <= 4 ? UnicodeCodepointFromUtf8ByteArray(bytes) : null;
+			const name = unicodeCharNames[parseInt(codepoint, 16)];
+			const block = getBlockContainingCodepoint(parseInt(codepoint, 16));
 			const isASCII = validateAsciiBytes(bytes);
-			return { char, isASCII, hexBytes, bytes, totalBytes: bytes.length, encoded: encodeURI(char) };
+			return { char, isASCII, hexBytes, bytes, codepoint, name, block, totalBytes, encoded: encodeURI(char) };
 		});
 		const hexBytes = charMap.map((charMap) => charMap.hexBytes).flat();
 		const bytes = charMap.map((charMap) => charMap.bytes).flat();
+		const codepoints = charMap.map((charMap) => charMap.codepoint).flat();
 		const isCombined = charMap.length > 1;
+		const name = isCombined ? null : unicodeCharNames[parseInt(codepoints[0], 16)];
+		const block = isCombined ? null : getBlockContainingCodepoint(parseInt(codepoints[0], 16));
 		const isASCII = validateAsciiBytes(bytes);
 		const complexCharMap: Utf8ComplexCharacterMap = {
 			char: utf8,
@@ -59,6 +43,9 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 			isASCII,
 			hexBytes,
 			bytes,
+			codepoints,
+			name,
+			block,
 			totalBytes: bytes.length,
 			encoded: encodeURIComponent(utf8),
 		};
@@ -81,7 +68,7 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 	};
 }
 
-export function getUtf8EncodedByteMaps(s: string): ByteEncodingMap[] {
+function getUtf8EncodedByteMaps(s: string): ByteEncodingMap[] {
 	const utf8Encoded = encodeURIComponent(s);
 	const utf8ByteMaps = getUtf8ByteMaps(utf8Encoded);
 	const asciiByteMaps: ByteEncodingMap[] = utf8ByteMaps.length

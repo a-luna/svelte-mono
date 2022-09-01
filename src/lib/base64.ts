@@ -19,7 +19,7 @@ import type {
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
-import { decomposeUtf8String } from '$lib/utf8';
+import { decomposeUtf8String } from '$lib/unicode/utf8';
 import {
 	asciiStringFromByteArray,
 	chunkify,

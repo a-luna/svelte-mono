@@ -7,6 +7,9 @@ export interface Utf8StandardCharacterMap {
 	isASCII: boolean;
 	hexBytes: string[];
 	bytes: number[];
+	codepoint: string;
+	name: string;
+	block: string;
 	totalBytes: number;
 	encoded: string;
 	hexMap?: HexByteMap[];
@@ -18,6 +21,9 @@ export interface Utf8ComplexCharacterMap {
 	isASCII: boolean;
 	hexBytes: string[];
 	bytes: number[];
+	codepoints: string[];
+	name: string;
+	block: string;
 	totalBytes: number;
 	encoded: string;
 	charMap?: Utf8StandardCharacterMap[];

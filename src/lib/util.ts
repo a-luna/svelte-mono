@@ -1,5 +1,5 @@
 import type { BitGroupDetails, Result, StringEncoding } from '$lib/types';
-import { decomposeUtf8String } from '$lib/utf8';
+import { decomposeUtf8String } from '$lib/unicode/utf8';
 import { validateAsciiBytes } from '$lib/validation';
 
 export const HEX_BIT_GROUP_REGEX = /hex-chunk-(?<chunk>\d+)-byte-(?<byte>1|2|3)/;
@@ -53,6 +53,31 @@ export function utf8StringFromByteArray(byteArray: number[]): string {
 	} catch (ex) {
 		return '';
 	}
+}
+
+export function UnicodeCodepointFromUtf8ByteArray(byteArray: number[]): string {
+	const [m, n, o, p] = [...byteArray];
+	const codepointDecimal =
+		m < 0x80
+			? (m & 0x7f) << 0
+			: 0xc1 < m && m < 0xe0 && n === (n & 0xbf)
+			? ((m & 0x1f) << 6) | ((n & 0x3f) << 0)
+			: ((m === 0xe0 && 0x9f < n && n < 0xc0) ||
+					(0xe0 < m && m < 0xed && 0x7f < n && n < 0xc0) ||
+					(m === 0xed && 0x7f < n && n < 0xa0) ||
+					(0xed < m && m < 0xf0 && 0x7f < n && n < 0xc0)) &&
+			  (o === o) & 0xbf
+			? ((m & 0x0f) << 12) | ((n & 0x3f) << 6) | ((o & 0x3f) << 0)
+			: ((m === 0xf0 && 0x8f < n && n < 0xc0) ||
+					(m === 0xf4 && 0x7f < n && n < 0x90) ||
+					(0xf0 < m && m < 0xf4 && 0x7f < n && n < 0xc0)) &&
+			  (o === o) & 0xbf &&
+			  (p === p) & 0xbf
+			? ((m & 0x07) << 18) | ((n & 0x3f) << 12) | ((o & 0x3f) << 6) | ((p & 0x3f) << 0)
+			: (() => {
+					throw 'Invalid UTF-8 encoding!';
+			  })();
+	return hexStringFromByte(codepointDecimal);
 }
 
 export function chunkify<T>(args: { inputList: T[]; chunkSize: number }): T[][] {
