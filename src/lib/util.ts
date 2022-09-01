@@ -55,7 +55,7 @@ export function utf8StringFromByteArray(byteArray: number[]): string {
 	}
 }
 
-export function UnicodeCodepointFromUtf8ByteArray(byteArray: number[]): string {
+export function UnicodeCodepointFromUtf8ByteArray(byteArray: number[]): { hex: string; dec: number } {
 	const [m, n, o, p] = [...byteArray];
 	const codepointDecimal =
 		m < 0x80
@@ -77,7 +77,7 @@ export function UnicodeCodepointFromUtf8ByteArray(byteArray: number[]): string {
 			: (() => {
 					throw 'Invalid UTF-8 encoding!';
 			  })();
-	return hexStringFromByte(codepointDecimal);
+	return { hex: hexStringFromByte(codepointDecimal), dec: codepointDecimal };
 }
 
 export function chunkify<T>(args: { inputList: T[]; chunkSize: number }): T[][] {

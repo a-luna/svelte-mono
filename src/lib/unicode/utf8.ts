@@ -25,17 +25,35 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 			const bytes = charData.map((data) => data.byte);
 			const totalBytes = bytes.length;
 			const codepoint = totalBytes <= 4 ? UnicodeCodepointFromUtf8ByteArray(bytes) : null;
-			const name = unicodeCharNames[parseInt(codepoint, 16)];
-			const block = getBlockContainingCodepoint(parseInt(codepoint, 16));
+			const hexCodepoint = codepoint?.hex;
+			const decCodepoint = codepoint?.dec;
+			const unicodeName = unicodeCharNames[decCodepoint];
+			const unicodeBlock = getBlockContainingCodepoint(decCodepoint);
 			const isASCII = validateAsciiBytes(bytes);
-			return { char, isASCII, hexBytes, bytes, codepoint, name, block, totalBytes, encoded: encodeURI(char) };
+			return {
+				char,
+				isASCII,
+				hexBytes,
+				bytes,
+				hexCodepoint,
+				decCodepoint,
+				unicodeName,
+				unicodeBlock,
+				totalBytes,
+				encoded: encodeURI(char),
+			};
 		});
 		const hexBytes = charMap.map((charMap) => charMap.hexBytes).flat();
 		const bytes = charMap.map((charMap) => charMap.bytes).flat();
-		const codepoints = charMap.map((charMap) => charMap.codepoint).flat();
+		const hexCodepoints = charMap.map((charMap) => charMap.hexCodepoint).flat();
+		const decCodepoints = charMap.map((charMap) => charMap.decCodepoint).flat();
 		const isCombined = charMap.length > 1;
-		const name = isCombined ? null : unicodeCharNames[parseInt(codepoints[0], 16)];
-		const block = isCombined ? null : getBlockContainingCodepoint(parseInt(codepoints[0], 16));
+		const unicodeNames = isCombined
+			? charMap.map((charMap) => charMap.unicodeName).flat()
+			: [unicodeCharNames[decCodepoints[0]]];
+		const unicodeBlocks = isCombined
+			? charMap.map((charMap) => charMap.unicodeBlock).flat()
+			: [getBlockContainingCodepoint(decCodepoints[0])];
 		const isASCII = validateAsciiBytes(bytes);
 		const complexCharMap: Utf8ComplexCharacterMap = {
 			char: utf8,
@@ -43,9 +61,10 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 			isASCII,
 			hexBytes,
 			bytes,
-			codepoints,
-			name,
-			block,
+			hexCodepoints,
+			decCodepoints,
+			unicodeNames,
+			unicodeBlocks,
 			totalBytes: bytes.length,
 			encoded: encodeURIComponent(utf8),
 		};
