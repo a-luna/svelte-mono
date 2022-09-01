@@ -1,31 +1,17 @@
-import type { MappedStringLiteralPick } from '.';
+import type {
+	APP_MODES,
+	BASE64_ENCODINGS,
+	BUTTON_COLORS,
+	BUTTON_SIZES,
+	DATA_ENCODINGS,
+	TEXT_ENCODINGS,
+} from '$lib/constants';
 
-export type AppMode = 'encode' | 'decode';
-export const BASE64_ENCODINGS = ['base64', 'base64url'] as const;
+export type AppMode = typeof APP_MODES[number];
+export type DataEncoding = typeof DATA_ENCODINGS[number];
+export type TextEncoding = typeof TEXT_ENCODINGS[number];
 export type Base64Encoding = typeof BASE64_ENCODINGS[number];
-export const STRING_ENCODINGS = ['ascii', 'utf8', 'hex', 'bin'] as const;
-export type StringEncoding = typeof STRING_ENCODINGS[number];
-export type DataEncoding = MappedStringLiteralPick<StringEncoding, 'hex' | 'bin'>;
-export type TextEncoding = MappedStringLiteralPick<StringEncoding, 'ascii' | 'utf8'>;
-export type Encoding = Base64Encoding | StringEncoding;
-
-export const STRING_FORMATS = ['text', 'hex', 'bin'] as const;
-export type DecodedStringFormat = typeof STRING_FORMATS[number];
-
-export const BUTTON_COLORS = [
-	'pri',
-	'sec',
-	'red',
-	'pink',
-	'orange',
-	'teal',
-	'green',
-	'blue',
-	'gray',
-	'yellow',
-	'indigo',
-] as const;
-export type ButtonColor = typeof BUTTON_COLORS[number];
-
-export const BUTTON_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
+export type StringEncoding = DataEncoding | TextEncoding;
+export type Encoding = StringEncoding | Base64Encoding;
 export type ButtonSize = typeof BUTTON_SIZES[number];
+export type ButtonColor = typeof BUTTON_COLORS[number];

@@ -10,7 +10,26 @@ import type {
 	OutputChunk,
 } from '$lib/types';
 
+export const APP_MODES = ['encode', 'decode'] as const;
+export const BASE64_ENCODINGS = ['base64', 'base64url'] as const;
+export const TEXT_ENCODINGS = ['ascii', 'utf8'] as const;
+export const DATA_ENCODINGS = ['hex', 'bin'] as const;
 export const B64_ALPHABET_COMMON = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+export const BUTTON_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
+
+export const BUTTON_COLORS = [
+	'pri',
+	'sec',
+	'red',
+	'pink',
+	'orange',
+	'teal',
+	'green',
+	'blue',
+	'gray',
+	'yellow',
+	'indigo',
+] as const;
 
 export const BIN_TO_HEX: { [index: string]: string } = {
 	'0000': '0',
