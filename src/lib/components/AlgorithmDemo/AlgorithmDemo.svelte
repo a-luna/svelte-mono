@@ -19,6 +19,7 @@
 		XStateSendEvent,
 	} from '$lib/types';
 	import type { DemoStore } from '$lib/types/DemoStore';
+	import { decomposeUtf8String } from '$lib/unicode/utf8';
 	import { copyToClipboard } from '$lib/util';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
 	import { createTestSet } from '$lib/xstate/b64Encode.test/testSetGenerator';
@@ -58,6 +59,13 @@
 	}
 	$: bottomRowHeight = $demoState.isMobileDisplay ? 'auto' : '260px';
 	$: formTitleFontSize = $demoState.isMobileDisplay ? '1.6rem' : '1.9rem';
+
+	$: {
+		const test = '∑ßåœ ≈ ∆c';
+		console.log({ utf8: decomposeUtf8String(test) });
+		const test2 = '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾';
+		console.log({ utf8: decomposeUtf8String(test2) });
+	}
 
 	function openHelpDocsModal(helpModalSettings: { helpTopicIndex: number; expanded: boolean }) {
 		const { helpTopicIndex, expanded } = helpModalSettings;
