@@ -31,7 +31,7 @@
 
 	@media screen and (min-width: 762px) {
 		summary {
-			font-size: 1.1rem;
+			font-size: 1.3rem;
 		}
 	}
 </style>

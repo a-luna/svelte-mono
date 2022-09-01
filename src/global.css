@@ -315,7 +315,6 @@ textarea {
 
 .details-content > *,
 #demo-text p {
-	font-size: 0.7rem;
 	line-height: 1.7;
 	letter-spacing: 0.3px;
 	color: var(--light-gray2);
@@ -1111,7 +1110,6 @@ button {
 	}
 	.details-content > *,
 	#demo-text p {
-		font-size: 0.8rem;
 		line-height: 1.5;
 	}
 	#demo-text code {

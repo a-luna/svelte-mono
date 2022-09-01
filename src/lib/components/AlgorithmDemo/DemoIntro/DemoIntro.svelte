@@ -133,12 +133,14 @@
 	}
 
 	details:not(:last-child):not(:only-child) {
-		margin: 0 0 0.5rem 0;
+		margin: 0 0 1rem 0;
 	}
+
 	.details-content {
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 0.75rem;
+		margin: 1rem 0 0 1rem;
 	}
 	ul {
 		margin: 0;

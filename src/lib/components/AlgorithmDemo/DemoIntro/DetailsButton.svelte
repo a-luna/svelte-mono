@@ -23,7 +23,7 @@
 
 	@media screen and (min-width: 762px) {
 		div {
-			width: 12px;
+			width: 15px;
 		}
 	}
 </style>
