@@ -229,7 +229,7 @@
 		background-color: var(--black2);
 		border-radius: 6px;
 		overflow: auto;
-		padding: 0.5rem 0.75rem;
+		padding: 0.75rem 1rem;
 		transition: transform 0.75s ease-in-out;
 		margin: 1rem 0;
 		font-family: 'Roboto Mono', menlo, monospace;
@@ -291,7 +291,7 @@
 		}
 		#demo-steps-wrapper {
 			padding: 1.5rem;
-			width: 669px;
+			width: 653px;
 
 			grid-column: 1 / span 1;
 			grid-row: 3 / span 1;
