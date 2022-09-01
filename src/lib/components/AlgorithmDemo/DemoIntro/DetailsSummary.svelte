@@ -16,8 +16,9 @@
 		display: flex;
 		color: var(--pri-color);
 		cursor: pointer;
-		font-size: 0.9rem;
+		font-size: 1.1rem;
 		font-weight: 500;
+		line-height: 1.3;
 		gap: 0.5rem;
 		list-style-type: none;
 	}
@@ -31,7 +32,7 @@
 
 	@media screen and (min-width: 762px) {
 		summary {
-			font-size: 1.3rem;
+			font-size: 1.4rem;
 		}
 	}
 </style>

@@ -290,7 +290,7 @@
 			grid-row: 1 / span 1;
 		}
 		#demo-steps-wrapper {
-			padding: 1rem;
+			padding: 1.5rem;
 			width: 669px;
 
 			grid-column: 1 / span 1;
