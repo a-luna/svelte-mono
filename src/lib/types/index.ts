@@ -15,6 +15,7 @@ export type { AsciiCharacterMap } from './AsciiCharacterMap';
 export type { Base64ByteMap } from './Base64ByteMap';
 export type { Base64CharacterMap } from './Base64CharacterMap';
 export type { BitGroup } from './BitGroup';
+export type { BitGroupDetails } from './BitGroupDetails';
 export type { Decoder } from './Decoder';
 export type { DecoderInput } from './DecoderInput';
 export type { DecoderInputChunk } from './DecoderInputChunk';

@@ -1,4 +1,4 @@
-import type { Result, StringEncoding } from '$lib/types';
+import type { BitGroupDetails, Result, StringEncoding } from '$lib/types';
 import { decomposeUtf8String } from '$lib/utf8';
 import { validateAsciiBytes } from '$lib/validation';
 
@@ -96,13 +96,7 @@ export const getRandomHexString = (length: number): string =>
 		.map((n) => Number(n).toString(16))
 		.join('');
 
-export function parseGroupId(groupId: string): {
-	chunkIndex: number;
-	byteIndex: number;
-	byteIndexWithinChunk: number;
-	b64CharIndex: number;
-	b64IndexWithinChunk: number;
-} {
+export function parseGroupId(groupId: string): BitGroupDetails {
 	let match = HEX_BIT_GROUP_REGEX.exec(groupId);
 	if (match) {
 		const { chunk, byte } = match.groups;
