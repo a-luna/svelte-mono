@@ -19,9 +19,10 @@
 	let inputTextBox: InputTextBox;
 	let state = getThemeEditorStore(editorId);
 	let app = getAppStore(editorId);
+	let error = false;
 
-	$: error = usesPrefix ? CSS_VAR_PREFIX_REGEX.test(themePrefix) : false;
 	$: if (usesPrefix && inputTextBox) focusInput();
+	$: if (usesPrefix && themePrefix) error = !CSS_VAR_PREFIX_REGEX.test(themePrefix);
 
 	export function toggleModal(theme: UserThemeFromFile) {
 		if (closed) {
