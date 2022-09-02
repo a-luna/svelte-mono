@@ -5,6 +5,7 @@
 
 	export let value: ComponentColor = 'black';
 	export let disabled = false;
+	export const menuId: string = 'select-component-color';
 	let selectComponent: Select;
 	const width = '55px';
 	const buttonHeight = '30px';
@@ -22,7 +23,6 @@
 		{ label: '', value: 'blue', optionNumber: 7, active: false },
 		{ label: '', value: 'indigo', optionNumber: 8, active: false },
 	];
-	const menuId = 'select-component-color';
 	const menuLabel = '';
 
 	function handleComponentColorChanged(color: ComponentColor) {

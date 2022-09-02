@@ -1,11 +1,12 @@
 <script lang="ts">
+	import ComponentColorSelector from '$lib/components/Shared/ComponentColorSelector/ComponentColorSelector.svelte';
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import Modal from '$lib/components/Shared/Modal.svelte';
 	import ColorFormatSelector from '$lib/components/ThemeEditor/Modals/EditThemeSettingsModal/ColorFormatSelector.svelte';
-	import { getAppStore, getThemeEditorStore } from '$lib/context';
+	import { getThemeEditorStore } from '$lib/context';
 	import { CSS_VAR_PREFIX_REGEX } from '$lib/themes';
-	import type { ColorFormat, UserThemeFromFile } from '$lib/types';
-	import { tick } from 'svelte';
+	import type { ColorFormat, ComponentColor, UserThemeFromFile } from '$lib/types';
+	import { createEventDispatcher, tick } from 'svelte';
 
 	export let editorId: string;
 	let userTheme: UserThemeFromFile;
@@ -16,10 +17,12 @@
 	let colorFormat: ColorFormat = null;
 	let usesPrefix = false;
 	let themePrefix = '';
+	let uiColor: ComponentColor = 'black';
+	let uiColorMenuId: string;
 	let inputTextBox: InputTextBox;
 	let state = getThemeEditorStore(editorId);
-	let app = getAppStore(editorId);
 	let error = false;
+	const dispatch = createEventDispatcher();
 
 	$: if (usesPrefix && inputTextBox) focusInput();
 	$: if (usesPrefix && themePrefix) error = !CSS_VAR_PREFIX_REGEX.test(themePrefix);
@@ -28,16 +31,18 @@
 		if (closed) {
 			userTheme = theme;
 			themeName = theme.themeName;
+			uiColor = theme.uiColor;
 			colorFormat = theme.colorFormat;
 			usesPrefix = theme.usesPrefix;
 			themePrefix = theme.themePrefix;
-			previousSettings = { themeName, colorFormat, usesPrefix, themePrefix };
+			previousSettings = { themeName, uiColor, colorFormat, usesPrefix, themePrefix };
 		}
 		modal.toggleModal();
 		$state.modalOpen = !$state.modalOpen;
 	}
 	function saveChanges() {
 		userTheme.themeName = themeName;
+		userTheme.uiColor = uiColor;
 		userTheme.colorFormat = colorFormat;
 		userTheme.usesPrefix = usesPrefix;
 		userTheme.themePrefix = themePrefix;
@@ -46,13 +51,16 @@
 		usesPrefix = false;
 		themePrefix = '';
 		modal.toggleModal();
+		dispatch('updateUiColor', userTheme.uiColor);
 	}
 	function discardChanges() {
 		userTheme.themeName = previousSettings['themeName'];
+		userTheme.uiColor = previousSettings['uiColor'];
 		userTheme.colorFormat = previousSettings['colorFormat'];
 		userTheme.usesPrefix = previousSettings['usesPrefix'];
 		userTheme.themePrefix = previousSettings['themePrefix'];
 		themeName = '';
+		uiColor = 'black';
 		colorFormat = null;
 		usesPrefix = false;
 		themePrefix = '';
@@ -75,6 +83,9 @@
 	<div class="edit-theme-settings">
 		<label for="theme-name">Theme Name</label>
 		<input type="text" id="theme-name" name="theme-name" value={themeName} />
+
+		<label for={uiColorMenuId}>UI Color</label>
+		<ComponentColorSelector bind:menuId={uiColorMenuId} bind:value={uiColor} />
 
 		<label for="css-color-format">CSS Color Format</label>
 		<div class="select-wrapper">

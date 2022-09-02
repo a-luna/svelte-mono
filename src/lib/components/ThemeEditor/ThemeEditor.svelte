@@ -40,7 +40,6 @@
 
 	// # ISSUES
 	// TODO: FIX CSS VALUE DISPLAY STRING ON COLOR COMPONENT, ALWAYS SHOWS HSL REGARDLESS OF THE THEME'S COLOR FORMAT SETTING AND ALL COLORS CHANGE FROM HSL/HSLA BASED ON THE CURRENTLY SELECTED COLOR
-	// TODO: USER CANNOT DISMISS X11 PALETTES WITHOUT SELECTING A COLOR FROM ONE OF THE PALETTES, LOSING THE CURRENT PICKER VALUE. ADD BACK/CANCEL BUTTON AND ESC KEY HANDLER.
 
 	// # COLOR SCHEMES
 	// TODO: Create component that generates classic color schemes based on selectedColor value:
@@ -62,8 +61,6 @@
 	// TODO: Allow user to re-order theme palettes (i.e., move up, down, to top, to bottom buttons for each palette)
 	// TODO: Allow user to delete colors from theme palettes
 	// TODO: Allow user to delete theme palettes
-	// TODO: Allow user to edit the UI Color setting in the EditThemeSettingsModal component
-	// TODO: Implement the UI Color setting, replace the random color behavior currently in place
 
 	$: if (typeof window !== 'undefined' && !editorStateInitialized) {
 		state = createThemeEditorStore(editorId);
@@ -97,12 +94,12 @@
 		const createdAt = new Date().toISOString();
 		$state.userTheme = {
 			themeName: 'custom theme',
+			uiColor: 'black',
 			usesPrefix: false,
 			themePrefix: null,
 			createdAt,
 			modifiedAt: createdAt,
 			colorFormat: 'hsl',
-			uiColor: 'black',
 			palettes: [createEmptyColorPalette()],
 		};
 		themeInitialized = true;
@@ -124,7 +121,11 @@
 		on:addNewColor={(e) => state.addColorToPalette(e.detail)}
 	/>
 	<EditColorDetailsModal {editorId} bind:this={editDetailsModal} />
-	<EditThemeSettingsModal {editorId} bind:this={editThemeSettingsModal} />
+	<EditThemeSettingsModal
+		{editorId}
+		bind:this={editThemeSettingsModal}
+		on:updateUiColor={(e) => (componentColor = e.detail)}
+	/>
 {/if}
 
 {#if editorStateInitialized}
@@ -137,7 +138,7 @@
 						{editorId}
 						{pickerId}
 						selectedPalette={$app.selectedThemePalette}
-						componentColor={'black'}
+						{componentColor}
 						on:addColorToPalette={(e) => addColorModal.toggleModal(e.detail)}
 						on:updateThemeColor={(e) => state.updateThemeColor(e.detail)}
 					/>
