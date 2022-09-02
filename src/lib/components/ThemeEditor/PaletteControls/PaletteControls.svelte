@@ -38,6 +38,5 @@
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 0.5rem;
-		width: 367px;
 	}
 </style>

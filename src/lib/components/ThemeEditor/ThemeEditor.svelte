@@ -11,7 +11,7 @@
 	import { COMPONENT_COLORS } from '$lib/constants';
 	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
 	import { createThemeEditorStore } from '$lib/stores/themeEditor';
-	import { exportUserThemeToJSON } from '$lib/themes';
+	import { exportUserThemeToJSON as downloadUserThemeJSON } from '$lib/themes';
 	import type {
 		AppStore,
 		ColorPickerState,
@@ -38,9 +38,11 @@
 	let editThemeSettingsModal: EditThemeSettingsModal;
 	let colorPicker: ColorPicker;
 
-	// TODO: FIX TOP RIGHT BORDER OF COMPONENT WRAPPER, IT LOOKS JANKY!
+	// # ISSUES
 	// TODO: FIX CSS VALUE DISPLAY STRING ON COLOR COMPONENT, ALWAYS SHOWS HSL REGARDLESS OF THE THEME'S COLOR FORMAT SETTING AND ALL COLORS CHANGE FROM HSL/HSLA BASED ON THE CURRENTLY SELECTED COLOR
+	// TODO: USER CANNOT DISMISS X11 PALETTES WITHOUT SELECTING A COLOR FROM ONE OF THE PALETTES, LOSING THE CURRENT PICKER VALUE. ADD BACK/CANCEL BUTTON AND ESC KEY HANDLER.
 
+	// # COLOR SCHEMES
 	// TODO: Create component that generates classic color schemes based on selectedColor value:
 	//    - Complementary color (1: hue +180)
 	//    - Analogous colors (2: hue +30, hue -30)
@@ -49,11 +51,19 @@
 	//    - Split complementary (2: hue +150, hue +210)
 	//    - Monochrome (10: lightness -25, -20, -15, -10 -5, +5, +10, +15, +20, +25)
 
+	// # CONTENT VIEWER
 	// TODO: Create component to list all CSS Variables and allow user to filter the list based on variable name prefixes and selectors used to apply the variables
 	// TODO: Create component to generate a list of theme colors from the list of css variables
 	// TODO: Create component to view and manage css variables with non-color values (e.g., margin, width, font-size)
 	// TODO: Create component to view the user theme as JSON, allow user to copy the text and/or download the file
 	// TODO: Create component to view the CSS variables as valid CSS and allow the user to copy the text
+
+	// # USER THEME EDITOR
+	// TODO: Allow user to re-order theme palettes (i.e., move up, down, to top, to bottom buttons for each palette)
+	// TODO: Allow user to delete colors from theme palettes
+	// TODO: Allow user to delete theme palettes
+	// TODO: Allow user to edit the UI Color setting in the EditThemeSettingsModal component
+	// TODO: Implement the UI Color setting, replace the random color behavior currently in place
 
 	$: if (typeof window !== 'undefined' && !editorStateInitialized) {
 		state = createThemeEditorStore(editorId);
@@ -92,6 +102,7 @@
 			createdAt,
 			modifiedAt: createdAt,
 			colorFormat: 'hsl',
+			uiColor: 'black',
 			palettes: [createEmptyColorPalette()],
 		};
 		themeInitialized = true;
@@ -143,7 +154,7 @@
 						on:newUserTheme={() => newUserTheme()}
 						on:importUserTheme={() => loadUserThemeModal.toggleModal()}
 						on:editThemeSettings={() => editThemeSettingsModal.toggleModal($state.userTheme)}
-						on:exportUserTheme={() => exportUserThemeToJSON($state.userTheme)}
+						on:saveUserTheme={() => downloadUserThemeJSON($state.userTheme)}
 						on:closeUserTheme={() => closeUserTheme()}
 						on:createPalette={() => state.createNewPalette()}
 						on:deletePalette={(e) => state.deletePalette(e.detail)}
@@ -178,7 +189,6 @@
 		gap: 1rem;
 		width: min-content;
 		background-color: var(--white1);
-		max-width: 700px;
 		padding: 1rem;
 	}
 
@@ -195,7 +205,6 @@
 		flex-flow: column nowrap;
 		justify-content: flex-start;
 		gap: 0.5rem;
-		width: 367px;
 	}
 
 	.editor-right-col {
@@ -204,7 +213,7 @@
 		flex-flow: column nowrap;
 		align-items: flex-start;
 		gap: 1rem;
-		width: 285px;
+		min-width: 300px;
 	}
 
 	.help-text {

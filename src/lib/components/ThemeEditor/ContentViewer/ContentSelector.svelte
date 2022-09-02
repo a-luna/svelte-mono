@@ -43,7 +43,7 @@
 		border-top-right-radius: 6px;
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
-		background-color: var(--white1);
+		background-color: transparent;
 
 		grid-column: 1 / span 1;
 		grid-row: 1 / span 1;
@@ -72,7 +72,7 @@
 	}
 	button.active {
 		background-color: var(--button-hover-bg-color);
-		border-bottom: 1px solid var(--button-hover-bg-color);
+		border-bottom: 1px solid transparent;
 	}
 	button.first {
 		border-left: 1px solid var(--button-border-color);

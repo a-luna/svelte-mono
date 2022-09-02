@@ -29,7 +29,6 @@
 		justify-content: space-between;
 		align-items: flex-end;
 		gap: 1rem;
-		width: 287px;
 	}
 
 	.palette-list {
@@ -38,7 +37,7 @@
 		flex-flow: column nowrap;
 		justify-content: flex-start;
 		align-items: flex-end;
-		gap: 0.5rem;
+		gap: 0.25rem;
 		width: 100%;
 	}
 </style>

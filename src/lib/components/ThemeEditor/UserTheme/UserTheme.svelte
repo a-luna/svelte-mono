@@ -58,6 +58,6 @@
 		display: flex;
 		flex-flow: column nowrap;
 		width: 100%;
-		gap: 0.25rem;
+		gap: 1rem;
 	}
 </style>

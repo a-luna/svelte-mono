@@ -56,14 +56,10 @@
 	}
 
 	.theme-name-wrapper {
-		height: 30px;
-		border-radius: 4px;
-	}
-
-	.theme-name-wrapper {
 		display: flex;
 		flex-flow: row nowrap;
 		align-items: center;
+		border-radius: 4px;
 		gap: 0.5rem;
 	}
 
@@ -74,7 +70,6 @@
 		font-style: italic;
 		line-height: 1;
 		text-align: left;
-		padding: 6px 4px;
 		max-width: 150px;
 		background-color: var(--white1);
 	}
