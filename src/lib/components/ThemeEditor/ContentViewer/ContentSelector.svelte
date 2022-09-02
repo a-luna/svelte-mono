@@ -44,6 +44,9 @@
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
 		background-color: var(--white1);
+
+		grid-column: 1 / span 1;
+		grid-row: 1 / span 1;
 	}
 
 	button {
@@ -56,6 +59,7 @@
 		border-top: 1px solid var(--button-border-color);
 		border-left: 0.5px solid var(--button-border-color);
 		border-right: 0.5px solid var(--button-border-color);
+		border-bottom: 1px solid var(--button-border-color);
 		border-top-left-radius: 6px;
 		border-top-right-radius: 6px;
 	}
@@ -68,6 +72,7 @@
 	}
 	button.active {
 		background-color: var(--button-hover-bg-color);
+		border-bottom: 1px solid var(--button-hover-bg-color);
 	}
 	button.first {
 		border-left: 1px solid var(--button-border-color);

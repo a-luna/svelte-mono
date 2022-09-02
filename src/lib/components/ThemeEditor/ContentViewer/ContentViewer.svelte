@@ -10,7 +10,8 @@
 
 	$: buttonType = componentColor !== 'black' ? 'color' : 'black';
 	$: viewerStyle = `color: var(--${componentColor}-fg-color);`;
-	$: wrapperStyle = `border: 1px solid var(--${componentColor}-fg-color);`;
+	$: bgLeftStyle = `border-left: 1px solid var(--${componentColor}-fg-color); border-bottom: 1px solid var(--${componentColor}-fg-color);`;
+	$: bgRightStyle = `border-top: 1px solid var(--${componentColor}-fg-color); border-right: 1px solid var(--${componentColor}-fg-color); border-bottom: 1px solid var(--${componentColor}-fg-color);`;
 	$: style = `--button-hue: var(--${componentColor}-hue); ${viewerStyle} ${$app.componentStyles}`;
 </script>
 
@@ -20,7 +21,9 @@
 
 <div class="content-viewer" {style} class:black={buttonType === 'black'} class:color={buttonType === 'color'}>
 	<ContentSelector {editorId} />
-	<div class="component-wrapper" style={wrapperStyle}>
+	<div class="bg-left" style={bgLeftStyle} />
+	<div class="bg-right" style={bgRightStyle} />
+	<div class="component-wrapper">
 		<slot />
 	</div>
 </div>
@@ -41,22 +44,45 @@
 		--button-border-color: var(--black2);
 	}
 	.content-viewer {
-		display: flex;
-		flex-flow: column nowrap;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-template-rows: auto 1fr;
 		border-radius: 6px;
 	}
 
-	.component-wrapper {
+	.bg-left,
+	.bg-right {
 		background-color: var(--button-hover-bg-color);
+		z-index: 1;
+
+		grid-row: 2 / span 1;
+	}
+
+	.bg-left {
 		border-bottom-left-radius: 6px;
-		border-bottom-right-radius: 6px;
 		border-top-left-radius: 0;
+
+		grid-column: 1 / span 1;
+	}
+
+	.bg-right {
+		border-bottom-right-radius: 6px;
 		border-top-right-radius: 6px;
+		margin-top: -1px;
+
+		grid-column: 2 / span 1;
+	}
+
+	.component-wrapper {
 		line-height: 1.4;
 		font-size: 0.875rem;
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 0.5rem;
 		padding: 1rem;
+		z-index: 2;
+
+		grid-column: 1 / span 2;
+		grid-row: 2 / span 1;
 	}
 </style>
