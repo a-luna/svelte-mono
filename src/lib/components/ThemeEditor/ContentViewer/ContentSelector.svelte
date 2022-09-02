@@ -1,19 +1,15 @@
 <script lang="ts">
 	import { getThemeEditorStore } from '$lib/context';
-	import type { ComponentColor } from '$lib/types';
 
 	export let editorId: string;
-	export let componentColor: ComponentColor;
 	let state = getThemeEditorStore(editorId);
 
-	$: buttonType = componentColor !== 'black' ? 'color' : 'black';
-	$: style = `--button-hue: var(--${componentColor}-hue)`;
 	$: componentShown = $state.currentlyViewing === 'component';
 	$: cssShown = $state.currentlyViewing === 'css';
 	$: jsonShown = $state.currentlyViewing === 'json';
 </script>
 
-<div class="button-wrapper" {style} class:black={buttonType === 'black'} class:color={buttonType === 'color'}>
+<div class="button-wrapper">
 	<button
 		type="button"
 		title="View Component"
@@ -38,21 +34,6 @@
 </div>
 
 <style lang="postcss">
-	.button-wrapper.color {
-		--button-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), 90%);
-		--button-hover-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), 99%);
-		--button-fg-color: hsl(var(--button-hue, 0), var(--fg-sat, 0%), var(--fg-light, 10%));
-		--section-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), 95%);
-		--button-border-color: hsl(var(--button-hue, 0), 63%, 26%);
-	}
-
-	.button-wrapper.black {
-		--button-bg-color: var(--white2);
-		--button-hover-bg-color: var(--white3);
-		--button-fg-color: var(--black2);
-		--button-border-color: var(--black2);
-	}
-
 	.button-wrapper {
 		display: grid;
 		grid-template-columns: repeat(3, auto) 1fr;
@@ -72,16 +53,11 @@
 		font-weight: 500;
 		font-size: 0.85rem;
 		min-width: 110px;
-		border-bottom: 1px solid var(--button-border-color);
 		border-top: 1px solid var(--button-border-color);
 		border-left: 0.5px solid var(--button-border-color);
 		border-right: 0.5px solid var(--button-border-color);
 		border-top-left-radius: 6px;
 		border-top-right-radius: 6px;
-	}
-
-	button.active {
-		border-bottom: 1px solid var(--button-hover-bg-color);
 	}
 
 	button:hover,
@@ -105,6 +81,5 @@
 		flex: 1;
 		height: 100%;
 		align-items: flex-end;
-		border-bottom: 1px solid var(--button-border-color);
 	}
 </style>
