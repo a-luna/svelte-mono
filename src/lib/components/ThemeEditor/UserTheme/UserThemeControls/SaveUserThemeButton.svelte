@@ -9,7 +9,7 @@
 
 <ThemeButton
 	{color}
-	tooltip={'Save User Theme to File (JSON)'}
+	tooltip={'Download User Theme as JSON'}
 	{disabled}
 	iconWidth={'16px'}
 	wrapperWidth={'32px'}
