@@ -1,4 +1,4 @@
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { COMPONENT_COLORS, CSS_COLOR_FORMATS } from '$lib/constants';
 import { CSS_VAR_PREFIX_REGEX } from '$lib/themes';
 import type { ColorFormat, ComponentColor } from '$lib/types';
