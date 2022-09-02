@@ -1,4 +1,4 @@
-import type { ColorFormat, ColorPalleteFromFile } from './';
+import type { ColorFormat, ColorPalleteFromFile, ComponentColor } from './';
 
 export interface UserThemeFromFile {
 	themeName: string;
@@ -7,5 +7,6 @@ export interface UserThemeFromFile {
 	createdAt: string;
 	modifiedAt: string;
 	colorFormat: ColorFormat;
+	uiColor: ComponentColor;
 	palettes: ColorPalleteFromFile[];
 }

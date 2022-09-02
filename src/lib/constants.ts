@@ -1,12 +1,4 @@
-import type {
-	AppStore,
-	ColorFormat,
-	ColorPalette,
-	CssColor,
-	ThemeColor,
-	ThemeEditorState,
-	UserThemeImported,
-} from './types';
+import type { AppStore, ColorPalette, CssColor, ThemeColor, ThemeEditorState, UserThemeImported } from './types';
 
 export const CSS_COLOR_FORMATS = ['hex', 'rgb', 'hsl'] as const;
 export const COMPONENT_COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo'] as const;
@@ -61,10 +53,11 @@ export const defaultAppStore: AppStore = {
 const defaultUserThemeImported: UserThemeImported = {
 	themeName: '',
 	usesPrefix: false,
-	themePrefix: '' as ColorFormat,
+	themePrefix: '',
 	createdAt: '',
 	modifiedAt: '',
 	colorFormat: 'hsl',
+	uiColor: 'black',
 	palettes: [],
 };
 
