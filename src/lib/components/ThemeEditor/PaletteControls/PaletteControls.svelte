@@ -20,14 +20,17 @@
 </script>
 
 <div class="palette-controls">
+	<span class="palette-name-label">selected palette</span>
 	<SelectedPalette bind:selectedPalette />
 	<AddColorButton
 		color={componentColor}
+		style={'grid-column: 2 /  span 1; grid-row: 2 /  span 1;'}
 		on:click={() => dispatch('addColorToPalette', $colorPickerState.color)}
 		disabled={disableControls}
 	/>
 	<UpdateColorButton
 		color={componentColor}
+		style={'grid-column: 3 /  span 1; grid-row: 2 /  span 1;'}
 		on:click={() => dispatch('updateThemeColor', $colorPickerState.color)}
 		disabled={disableControls || !$state.colorSelected}
 	/>
@@ -35,8 +38,17 @@
 
 <style lang="postcss">
 	.palette-controls {
-		display: flex;
-		flex-flow: row nowrap;
-		gap: 0.5rem;
+		display: grid;
+		grid-template-columns: 1fr auto auto;
+		grid-template-rows: auto auto;
+		column-gap: 0.5rem;
+	}
+	.palette-name-label {
+		font-size: 0.75rem;
+		font-weight: 500;
+		letter-spacing: 0.1px;
+
+		grid-column: 1 / span 1;
+		grid-row: 1 / span 1;
 	}
 </style>

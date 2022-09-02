@@ -12,6 +12,7 @@
 	export let iconWidth: string = '11px';
 	export let padding: string = '2px 6px';
 	export let randomHue = false;
+	export let gridStyle: string = '';
 	let style: string;
 	let buttonElement: HTMLButtonElement;
 
@@ -21,7 +22,7 @@
 	$: widthStyle = wrapperWidth
 		? `width: ${wrapperWidth}; min-width: var(--button-size);`
 		: 'min-width: var(--button-size);';
-	$: style = [hueStyle, flexStyle, widthStyle].filter((s) => s !== '').join(' ');
+	$: style = [hueStyle, flexStyle, widthStyle, gridStyle].filter((s) => s !== '').join(' ');
 
 	export function focus() {
 		buttonElement.focus();

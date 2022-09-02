@@ -5,11 +5,12 @@
 
 	export let color: ComponentColor;
 	export let disabled = false;
+	export let style: string = '';
 
 	$: tooltip = disabled ? 'Select a palette from the list above' : 'Add color to the selected palette';
 </script>
 
-<ThemeButton {color} {tooltip} {disabled} on:click>
+<ThemeButton {color} {tooltip} {disabled} gridStyle={style} on:click>
 	<svelte:fragment slot="icon">
 		<Plus />
 	</svelte:fragment>

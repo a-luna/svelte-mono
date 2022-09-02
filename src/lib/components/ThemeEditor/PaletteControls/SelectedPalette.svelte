@@ -29,6 +29,9 @@
 		gap: 0.5rem;
 		border: 1px solid var(--black1);
 		border-radius: 6px;
+
+		grid-column: 1 / span 1;
+		grid-row: 2 / span 1;
 	}
 
 	.color-swatch {
