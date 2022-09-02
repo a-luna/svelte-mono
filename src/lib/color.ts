@@ -458,10 +458,10 @@ export function colorNameisCustomized(color: CssColor): boolean {
 
 export const getColorSchemes = (color: CssColor): { [key: string]: CssColor[] } => ({
 	base: [color],
-	complementary: [adjustHue(color.hsl, 180)],
-	split: [adjustHue(color.hsl, 150), adjustHue(color.hsl, 210)],
-	analogous: [adjustHue(color.hsl, 30), adjustHue(color.hsl, -30)],
-	triadic: [adjustHue(color.hsl, 120), adjustHue(color.hsl, 240)],
+	complementary: [getComplementaryColor(color)],
+	split: getSplitComplementaryColors(color),
+	analogous: getAnalogousColors(color),
+	triadic: getTriadicColors(color),
 	tetradic: getRectangularColors(color, -60),
 	square: getRectangularColors(color, 90),
 	monochrome: getMonochromePalette(color, 10, 5),
@@ -479,6 +479,19 @@ function adjustHue(hsl: HslColor, hueChange: number): CssColor {
 		return result.value;
 	}
 }
+
+export const getComplementaryColor = (color: CssColor): CssColor => adjustHue(color.hsl, 180);
+export const getSplitComplementaryColors = (color: CssColor): CssColor[] => [
+	adjustHue(color.hsl, 150),
+	adjustHue(color.hsl, 210),
+];
+export const getAnalogousColors = (color: CssColor): CssColor[] => [
+	adjustHue(color.hsl, 30),
+	adjustHue(color.hsl, -30),
+];
+export const getTriadicColors = (color: CssColor): CssColor[] => [adjustHue(color.hsl, 120), adjustHue(color.hsl, 240)];
+export const getTetradicColors = (color: CssColor): CssColor[] => getRectangularColors(color, -60);
+export const getSquareColors = (color: CssColor): CssColor[] => getRectangularColors(color, 90);
 
 function getMonochromePalette(color: CssColor, paletteSize: number, stepSize: number): CssColor[] {
 	const idealNumberOfShadesAndTints = Math.floor(paletteSize / 2);
