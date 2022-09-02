@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ComponentColorSelector from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/ComponentColorSelector/ComponentColorSelector.svelte';
+	import ComponentColorSelector from '$lib/components/Shared/ComponentColorSelector/ComponentColorSelector.svelte';
 	import DeletePaletteButton from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/DeletePaletteButton.svelte';
 	import type { ColorPalette } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';

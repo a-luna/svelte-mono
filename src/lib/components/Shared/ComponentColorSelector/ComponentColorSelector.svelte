@@ -1,6 +1,6 @@
 <script lang="ts">
+	import ComponentColorOptions from '$lib/components/Shared/ComponentColorSelector/ComponentColorOptions.svelte';
 	import Select from '$lib/components/Shared/Select/Select.svelte';
-	import ComponentColorOptions from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/ComponentColorSelector/ComponentColorOptions.svelte';
 	import type { ComponentColor, SelectMenuOption } from '$lib/types';
 
 	export let value: ComponentColor = 'black';
