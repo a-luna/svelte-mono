@@ -1,3 +1,4 @@
+import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -7,11 +8,7 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		package: {
-			dir: 'package',
-			emitTypes: true,
-			exports: (filepath) => /(index.ts|package.json)/.test(filepath) || /components[\w/]*.svelte/.test(filepath),
-		},
+		adapter: adapter(),
 	},
 };
 
