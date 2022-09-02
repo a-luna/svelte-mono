@@ -21,7 +21,7 @@
 	$: tooltip = alphaEnabled
 		? 'Click to toggle Hex, RGBA, and HSLA string values'
 		: 'Click to toggle Hex, RGB, and HSL string values';
-	$: fontSizeAlpha = currentColorSpace === 'HSLA' ? '0.75rem' : '0.8rem';
+	$: fontSizeAlpha = currentColorSpace === 'HSLA' ? '0.7rem' : '0.8rem';
 	$: fontSizeOpaque = currentColorSpace === 'HSL' ? '0.825rem' : '0.85rem';
 	$: fontSize = alphaEnabled ? fontSizeAlpha : fontSizeOpaque;
 
