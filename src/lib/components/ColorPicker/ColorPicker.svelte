@@ -124,6 +124,7 @@
 			alphaEnabled={$state.alphaEnabled}
 			on:colorSelected={() => ($state.x11PalettesShown = false)}
 			on:colorSelected={(e) => handleX11ColorSelected(e.detail)}
+			on:hideX11Palettes={() => ($state.x11PalettesShown = false)}
 		/>
 	{/if}
 {/if}

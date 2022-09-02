@@ -36,7 +36,7 @@
 >
 	<div class="swatch" style={swatchBgStyles} />
 	<div class="swatch-overlay" style={bgColor} />
-	<div class="icon" title="Click to view X11 color palettes" on:click={() => dispatch('showX11Palettes')}>
+	<div class="icon" title="Open X11 Color Palettes" on:click={() => dispatch('showX11Palettes')}>
 		<ColorSwatches />
 	</div>
 </div>
