@@ -10,7 +10,6 @@
 	let state = getColorPickerStore(pickerId);
 	let timeout: NodeJS.Timeout;
 
-	$: labelPadding = $state?.labelState === 'edit' ? 'p-2' : 'p-2.5';
 	$: inactiveStyle = 'background-color: var(--white4)';
 	$: copiedStyle = 'background-color: var(--light-gray2)';
 	$: editStyle = 'background-color: var(--yellow-bg-color); color: var(--black4)';
@@ -43,7 +42,7 @@
 	onDestroy(() => clearTimeout(timeout));
 </script>
 
-<div class="color-label {labelPadding}" {style}>
+<div class:edit-mode={$state?.labelState === 'edit'} class="color-label" {style}>
 	{#if $state?.labelState === 'edit'}
 		<EditColorString value={currentColor} on:updateColor on:keepCurrentColor={() => ($state.labelState = 'inactive')} />
 	{:else}
@@ -63,9 +62,17 @@
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 0.75rem;
-		outline: 1px solid var(--light-gray2);
+		border: 1px solid var(--light-gray2);
 		border-radius: 6px;
 		transition: background-color, color 350ms ease-out;
 		width: 237px;
+		padding: 9px;
+	}
+
+	.color-label.edit-mode {
+		display: grid;
+		grid-template-columns: 6px auto 6px 1fr 6px auto 6px;
+		gap: 0;
+		padding: 6px 0;
 	}
 </style>

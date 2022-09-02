@@ -19,6 +19,14 @@
 	});
 </script>
 
+<div
+	id="keep-color-button"
+	data-testid="keep-color-button"
+	title="Cancel"
+	on:click={() => dispatch('keepCurrentColor')}
+>
+	<Cancel />
+</div>
 <input
 	bind:this={textInput}
 	{value}
@@ -26,23 +34,13 @@
 	data-testid="color-name-input"
 	on:keypress={(e) => handleKeyPress(e.key)}
 />
-<div class="buttons">
-	<div
-		id="change-color-button"
-		data-testid="change-color-button"
-		title="Change color"
-		on:click={() => dispatch('updateColor', textInput.value)}
-	>
-		<OkButton />
-	</div>
-	<div
-		id="keep-color-button"
-		data-testid="keep-color-button"
-		title="Cancel"
-		on:click={() => dispatch('keepCurrentColor')}
-	>
-		<Cancel />
-	</div>
+<div
+	id="change-color-button"
+	data-testid="change-color-button"
+	title="Change color"
+	on:click={() => dispatch('updateColor', textInput.value)}
+>
+	<OkButton />
 </div>
 
 <style lang="postcss">
@@ -51,19 +49,15 @@
 		font-size: 0.875rem;
 		line-height: 1.25rem;
 		padding: 0 0.25rem;
-		outline: 1px solid var(--gray2);
+		border: 1px solid var(--gray2);
 		border-radius: 6px;
+		grid-column: 4 / span 1;
 	}
 
 	input:focus {
-		outline: 1px solid var(--black2);
+		border: 1px solid var(--black2);
+		outline: none;
 		outline-offset: 1px;
-	}
-
-	.buttons {
-		display: flex;
-		flex-flow: row nowrap;
-		gap: 0.25rem;
 	}
 
 	#change-color-button,
@@ -74,5 +68,13 @@
 		height: 1rem;
 		margin: auto 0;
 		cursor: pointer;
+	}
+
+	#change-color-button {
+		grid-column: 6 / span 1;
+	}
+
+	#keep-color-button {
+		grid-column: 2 / span 1;
 	}
 </style>
