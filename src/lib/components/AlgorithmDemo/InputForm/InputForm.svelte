@@ -4,14 +4,13 @@
 	import SelectBase64Encoding from '$lib/components/AlgorithmDemo/InputForm/SelectBase64Encoding.svelte';
 	import SelectStringEncoding from '$lib/components/AlgorithmDemo/InputForm/SelectStringEncoding.svelte';
 	import InputTextBox from '$lib/components/InputTextBox.svelte';
-	import type { Base64Encoding, EncodingMachineStateStore, StringEncoding } from '$lib/types';
-	import { getContext } from 'svelte';
+	import { getAppContext } from '$lib/stores/context';
+	import type { Base64Encoding, StringEncoding } from '$lib/types';
 
 	export let inputText: string;
 	export let inputTextEncoding: StringEncoding = 'ascii';
 	export let outputBase64Encoding: Base64Encoding = 'base64';
-	let state: EncodingMachineStateStore;
-	({ state } = getContext('demo'));
+	const { state } = getAppContext();
 
 	$: inputTextBoxStyles = 'flex: 1;';
 	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });

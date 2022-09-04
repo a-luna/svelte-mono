@@ -16,7 +16,7 @@
 		display: flex;
 		color: var(--pri-color);
 		cursor: pointer;
-		font-size: 1.1rem;
+		font-size: 1.25rem;
 		font-weight: 500;
 		line-height: 1.3;
 		gap: 0.5rem;

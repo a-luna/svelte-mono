@@ -15,7 +15,7 @@
 
 <style lang="postcss">
 	div {
-		width: 10px;
+		width: 14px;
 	}
 	.list-icon {
 		color: var(--pri-color);

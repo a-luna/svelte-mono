@@ -11,28 +11,14 @@
 	import FormTitle from '$lib/components/FormTitle.svelte';
 	import { defaultEncoderInput } from '$lib/constants';
 	import { alert } from '$lib/stores/alert';
-	import type {
-		Base64Encoding,
-		DemoState,
-		EncodingMachineStateStore,
-		StringEncoding,
-		XStateSendEvent,
-	} from '$lib/types';
-	import type { DemoStore } from '$lib/types/DemoStore';
+	import { getAppContext } from '$lib/stores/context';
+	import type { Base64Encoding, StringEncoding } from '$lib/types';
 	import { decomposeUtf8String } from '$lib/unicode/utf8';
 	import { copyToClipboard } from '$lib/util';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
 	import { createTestSet } from '$lib/xstate/b64Encode.test/testSetGenerator';
-	import type { EventLogStore } from '$lib/xstate/b64Encode.test/types';
-	import { getContext } from 'svelte';
-	import type { Readable, Writable } from 'svelte/store';
 
-	let state: EncodingMachineStateStore;
-	let demoState: Readable<DemoStore>;
-	let demoUIState: Writable<DemoState>;
-	let eventLog: EventLogStore;
-	let send: XStateSendEvent;
-	({ state, demoState, demoUIState, eventLog, send } = getContext('demo'));
+	const { state, demoState, demoUIState, eventLog, send } = getAppContext();
 
 	let inputText = defaultEncoderInput.inputText;
 	let inputTextEncoding: StringEncoding = defaultEncoderInput.inputEncoding;

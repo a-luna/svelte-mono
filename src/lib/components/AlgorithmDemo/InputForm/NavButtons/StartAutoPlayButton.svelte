@@ -1,13 +1,12 @@
 <script lang="ts">
 	import NavButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButton.svelte';
 	import StartAutoPlay from '$lib/components/Icons/StartAutoPlay.svelte';
-	import type { EncodingMachineStateStore, EncodingStateToEventMap } from '$lib/types';
+	import { getAppContext } from '$lib/stores/context';
+	import type { EncodingStateToEventMap } from '$lib/types';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
-	import { getContext } from 'svelte';
 
 	export let buttonNumber: number = 0;
-	let state: EncodingMachineStateStore;
-	({ state } = getContext('demo'));
+	const { state } = getAppContext();
 	let defaultNavAction: EncodingEvent = { type: 'RESUME_AUTO_PLAY' };
 	let encodingStateToEventMap: EncodingStateToEventMap = [
 		{

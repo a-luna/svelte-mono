@@ -1,13 +1,12 @@
 <script lang="ts">
 	import NavButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButton.svelte';
 	import LastStep from '$lib/components/Icons/LastStep.svelte';
-	import type { EncodingMachineStateStore, EncodingStateToEventMap } from '$lib/types';
+	import { getAppContext } from '$lib/stores/context';
+	import type { EncodingStateToEventMap } from '$lib/types';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
-	import { getContext } from 'svelte';
 
 	export let buttonNumber: number = 0;
-	let state: EncodingMachineStateStore;
-	({ state } = getContext('demo'));
+	const { state } = getAppContext();
 	let defaultNavAction: EncodingEvent = { type: 'GO_TO_LAST_STEP' };
 	let encodingStateToEventMap: EncodingStateToEventMap = [
 		{

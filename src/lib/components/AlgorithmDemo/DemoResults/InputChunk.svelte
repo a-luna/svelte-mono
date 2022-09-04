@@ -1,16 +1,13 @@
 <script lang="ts">
 	import { rotatingColors } from '$lib/constants';
-	import type { DemoState, EncoderInputChunk, EncodingMachineStateStore } from '$lib/types';
+	import { getAppContext } from '$lib/stores/context';
+	import type { EncoderInputChunk } from '$lib/types';
 	import { getBase64CharIndexFromGroupId, getHexByteIndexFromGroupId } from '$lib/util';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
 
 	export let chunk: EncoderInputChunk;
 	export let chunkIndex: number;
-	let state: EncodingMachineStateStore;
-	let demoUIState: Writable<DemoState>;
-	({ state, demoUIState } = getContext('demo'));
+	const { state, demoUIState } = getAppContext();
 
 	$: chunkNumber = chunkIndex + 1;
 	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length];

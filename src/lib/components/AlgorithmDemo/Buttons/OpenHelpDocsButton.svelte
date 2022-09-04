@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getHelpTopicIndex } from '$lib/components/AlgorithmDemo/HelpDocs/_helpSections';
-	import type { EncodingMachineStateStore } from '$lib/types';
-	import { createEventDispatcher, getContext } from 'svelte';
+	import { getAppContext } from '$lib/stores/context';
+	import { createEventDispatcher } from 'svelte';
 
 	export let label: string;
 	export let helpTopic: string = 'why-base64-1';
@@ -13,8 +13,7 @@
 	const openHelpModalEventDispatcher = createEventDispatcher<{
 		openHelpModal: { helpTopicIndex: number; expanded: boolean };
 	}>();
-	let state: EncodingMachineStateStore;
-	({ state } = getContext('demo'));
+	const { state } = getAppContext();
 
 	$: helpTopicIndex = helpTopic ? getHelpTopicIndex(helpTopic) : 0;
 

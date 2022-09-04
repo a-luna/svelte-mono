@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { rotatingColors } from '$lib/constants';
-	import type { Base64ByteMap, DemoState, EncodingMachineStateStore } from '$lib/types';
+	import { getAppContext } from '$lib/stores/context';
+	import type { Base64ByteMap } from '$lib/types';
 	import { getChunkIndexFromBase64CharIndex, getHexByteIndexFromGroupId } from '$lib/util';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 
 	export let charIndex: number;
 	export let b64: Base64ByteMap;
-	let state: EncodingMachineStateStore;
-	let demoUIState: Writable<DemoState>;
-	({ state, demoUIState } = getContext('demo'));
+	const { state, demoUIState } = getAppContext();
 
 	$: b64CharNumber = charIndex + 1;
 	$: byteDisplayChar = b64.isPad ? '&nbsp;' : 'B';

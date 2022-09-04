@@ -6,11 +6,9 @@
 	import ResetButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/ResetButton.svelte';
 	import StartAutoPlayButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/StartAutoPlayButton.svelte';
 	import StopAutoPlayButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/StopAutoPlayButton.svelte';
-	import type { EncodingMachineStateStore } from '$lib/types';
-	import { getContext } from 'svelte';
+	import { getAppContext } from '$lib/stores/context';
 
-	let state: EncodingMachineStateStore;
-	({ state } = getContext('demo'));
+	const { state } = getAppContext();
 
 	$: autoplay = $state.context.autoplay && !$state.matches({ validateInputText: 'error' });
 </script>

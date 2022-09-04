@@ -1,17 +1,14 @@
 <script lang="ts">
 	import { rotatingColors } from '$lib/constants';
+	import { getAppContext } from '$lib/stores/context';
 	import { isTextEncoding } from '$lib/typeguards';
-	import type { DemoState, EncodingMachineStateStore, HexByteMap } from '$lib/types';
+	import type { HexByteMap } from '$lib/types';
 	import { getBase64CharIndexFromGroupId, getChunkIndexFromByteIndex } from '$lib/util';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 
 	export let byte: HexByteMap;
 	export let byteIndex: number;
 	let currentByteColor: string;
-	let state: EncodingMachineStateStore;
-	let demoUIState: Writable<DemoState>;
-	({ state, demoUIState } = getContext('demo'));
+	const { state, demoUIState } = getAppContext();
 
 	$: inputEncoding = $state.context.input.inputEncoding;
 	$: chunkId = getChunkIndexFromByteIndex(byteIndex);

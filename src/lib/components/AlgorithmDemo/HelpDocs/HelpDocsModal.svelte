@@ -5,19 +5,14 @@
 	import ChevronLeft from '$lib/components/Icons/ChevronLeft.svelte';
 	import ChevronRight from '$lib/components/Icons/ChevronRight.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import type { DemoState } from '$lib/types';
-	import type { DemoStore } from '$lib/types/DemoStore';
-	import { getContext } from 'svelte';
-	import type { Readable, Writable } from 'svelte/store';
+	import { getAppContext } from '$lib/stores/context';
 	import { slide } from 'svelte/transition';
 
 	export let index = 0;
 	export let helpTopicsExpanded = false;
 	let modal: Modal;
 	let closed: boolean;
-	let demoState: Readable<DemoStore>;
-	let demoUIState: Writable<DemoState>;
-	({ demoState, demoUIState } = getContext('demo'));
+	const { demoState, demoUIState } = getAppContext();
 
 	$: $demoUIState.modalOpen = !closed;
 	$: showContentsPanel = $demoState.pageWidth >= 762;

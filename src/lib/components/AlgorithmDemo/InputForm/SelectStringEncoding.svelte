@@ -1,19 +1,15 @@
 <script lang="ts">
 	import Select from '$lib/components/Select/Select.svelte';
+	import { getAppContext } from '$lib/stores/context';
 	import { isStringEncoding } from '$lib/typeguards';
-	import type { EncodingMachineStateStore, SelectMenuOption, StringEncoding } from '$lib/types';
-	import type { DemoStore } from '$lib/types/DemoStore';
-	import { getContext } from 'svelte';
-	import type { Readable } from 'svelte/store';
+	import type { SelectMenuOption, StringEncoding } from '$lib/types';
 
 	export let width = '100%';
 	export let fontSize = '0.875rem';
 	export let value: StringEncoding = 'ascii';
 	export let dropdownShown = false;
 	export let inHelpDocs = false;
-	let state: EncodingMachineStateStore;
-	let demoState: Readable<DemoStore>;
-	({ state, demoState } = getContext('demo'));
+	const { state, demoState } = getAppContext();
 
 	const allOptions: SelectMenuOption[] = [
 		{ label: 'ASCII', value: 'ascii', optionNumber: 1, active: false },

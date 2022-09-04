@@ -16,14 +16,10 @@
 		getBase64AlphabetVerbose,
 		getEncodeInputText_IdleDemoText,
 	} from '$lib/components/AlgorithmDemo/DemoText/_demoText';
-	import type { EncodingMachineStateStore, StringEncoding } from '$lib/types';
-	import type { DemoStore } from '$lib/types/DemoStore';
-	import { getContext } from 'svelte';
-	import type { Readable } from 'svelte/store';
+	import { getAppContext } from '$lib/stores/context';
+	import type { StringEncoding } from '$lib/types';
 
-	let state: EncodingMachineStateStore;
-	let demoState: Readable<DemoStore>;
-	({ state, demoState } = getContext('demo'));
+	const { state, demoState } = getAppContext();
 	const formatEncodingType = (encoding: StringEncoding): string => (encoding === 'bin' ? 'binary' : encoding);
 	const wikiUrl = 'https://en.wikipedia.org/wiki/Least_common_multiple';
 	const lcmSolveUrl =

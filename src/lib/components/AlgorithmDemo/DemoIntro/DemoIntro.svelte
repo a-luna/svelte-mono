@@ -1,9 +1,7 @@
 <script lang="ts">
 	import DetailsSummary from '$lib/components/AlgorithmDemo/DemoIntro/DetailsSummary.svelte';
 	import ArrowKey from '$lib/components/Icons/KeyboardIcons/ArrowKey.svelte';
-	import type { DemoStore } from '$lib/types/DemoStore';
-	import { getContext } from 'svelte';
-	import type { Readable } from 'svelte/store';
+	import { getAppContext } from '$lib/stores/context';
 	import { slide } from 'svelte/transition';
 	import OpenHelpDocsButton from '../Buttons/OpenHelpDocsButton.svelte';
 
@@ -12,8 +10,7 @@
 	let encodingDetailsElement: HTMLDetailsElement;
 	let appNavDetailsElement: HTMLDetailsElement;
 	let openSection: 'none' | 'welcome' | 'settings' | 'navigation' = 'welcome';
-	let demoState: Readable<DemoStore>;
-	({ demoState } = getContext('demo'));
+	const { demoState } = getAppContext();
 
 	$: arrowSize = $demoState.isMobileDisplay ? 'sm' : 'md';
 
@@ -141,6 +138,7 @@
 		flex-flow: column nowrap;
 		gap: 0.75rem;
 		font-size: 0.8rem;
+		margin: 0.75rem 0 0 0.25rem;
 	}
 	ul {
 		margin: 0;

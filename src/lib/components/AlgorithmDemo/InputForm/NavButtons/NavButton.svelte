@@ -1,10 +1,7 @@
 <script lang="ts">
-	import type { EncodingMachineStateStore, EncodingStateToEventMap, XStateSendEvent } from '$lib/types';
-	import type { DemoStore } from '$lib/types/DemoStore';
+	import { getAppContext } from '$lib/stores/context';
+	import type { EncodingStateToEventMap } from '$lib/types';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
-	import type { EventLogStore } from '$lib/xstate/b64Encode.test/types';
-	import { getContext } from 'svelte';
-	import type { Readable } from 'svelte/store';
 	import { fade } from 'svelte/transition';
 
 	export let defaultNavAction: EncodingEvent = null;
@@ -18,11 +15,7 @@
 	let labelShown = false;
 	let duration = 1250;
 	let timeout: NodeJS.Timeout;
-	let state: EncodingMachineStateStore;
-	let demoState: Readable<DemoStore>;
-	let eventLog: EventLogStore;
-	let send: XStateSendEvent;
-	({ state, demoState, eventLog, send } = getContext('demo'));
+	const { state, demoState, eventLog, send } = getAppContext();
 	$: labelColor = $state.context.autoplay ? `var(--nav-button-autoplay-bg-color)` : `var(--nav-button-active-bg-color)`;
 	$: labelStyle = `grid-column: ${buttonNumber} / span 1; grid-row: 1 / span 1; color: ${labelColor}`;
 	$: butttonStyle = `grid-column: ${buttonNumber} / span 1; grid-row: 2 / span 1;`;

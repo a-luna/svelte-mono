@@ -1,10 +1,8 @@
 <script lang="ts">
-	import type { DemoStore } from '$lib/types/DemoStore';
-	import { createEventDispatcher, getContext } from 'svelte';
-	import type { Readable } from 'svelte/store';
+	import { getAppContext } from '$lib/stores/context';
+	import { createEventDispatcher } from 'svelte';
 
-	let demoState: Readable<DemoStore>;
-	({ demoState } = getContext('demo'));
+	const { demoState } = getAppContext();
 
 	$: style = $demoState.isMobileDisplay ? 'font-weight: 700; align-self: flex-end;' : 'font-weight: 700;';
 
