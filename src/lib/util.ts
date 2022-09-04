@@ -43,6 +43,9 @@ export const byteArrayToBinaryStringArray = (byteArray: number[]): string[] =>
 
 export const decimalToBinaryString = (val: number): string => val.toString(2).padStart(8, '0');
 
+export const strictUriEncode = (s: string): string =>
+	encodeURIComponent(s).replace(/[!'()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
+
 export function utf8StringFromByteArray(byteArray: number[]): string {
 	try {
 		const utfEncoded = byteArray
@@ -77,7 +80,7 @@ export function UnicodeCodepointFromUtf8ByteArray(byteArray: number[]): { hex: s
 			: (() => {
 					throw 'Invalid UTF-8 encoding!';
 			  })();
-	return { hex: hexStringFromByte(codepointDecimal), dec: codepointDecimal };
+	return { hex: `U+${hexStringFromByte(codepointDecimal)}`, dec: codepointDecimal };
 }
 
 export function chunkify<T>(args: { inputList: T[]; chunkSize: number }): T[][] {

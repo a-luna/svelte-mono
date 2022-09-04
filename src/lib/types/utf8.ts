@@ -7,8 +7,8 @@ export interface Utf8StandardCharacterMap {
 	isASCII: boolean;
 	hexBytes: string[];
 	bytes: number[];
-	hexCodepoint: string;
-	decCodepoint: number;
+	codepoint: string;
+	decimalCodepoint: number;
 	unicodeName: string;
 	unicodeBlock: string;
 	totalBytes: number;
@@ -22,8 +22,8 @@ export interface Utf8ComplexCharacterMap {
 	isASCII: boolean;
 	hexBytes: string[];
 	bytes: number[];
-	hexCodepoints: string[];
-	decCodepoints: number[];
+	codepoints: string[];
+	decimalCodepoints: number[];
 	unicodeNames: string[];
 	unicodeBlocks: string[];
 	totalBytes: number;

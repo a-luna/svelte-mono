@@ -11,6 +11,8 @@
 	export let isASCII: boolean;
 	export let encoded: string;
 	export let hexBytes: string[];
+	export let codepoints: string[];
+	export let unicodeNames: string[];
 	export let isCombined: boolean;
 	export let charMap: Utf8StandardCharacterMap[];
 	export let expanded = false;
@@ -47,7 +49,7 @@
 		<div class="utf8-char">{getCharToDisplay(char, encoded)}</div>
 		{#if expanded}
 			<div class="combined-utf8-char-map">
-				{#each charMap as { char: singleChar, encoded: singleCharEncoded, hexBytes: singleCharHexBytes }}
+				{#each charMap as { char: singleChar, encoded: singleCharEncoded, hexBytes: singleCharHexBytes, unicodeName, codepoint }}
 					<div class="utf8-bytes-for-char {getCharType(singleCharEncoded)}">
 						<div class="utf8-char">{getCharToDisplay(singleChar, singleCharEncoded)}</div>
 						<div class="hex-bytes">
@@ -55,6 +57,8 @@
 								<code>{hex}</code>
 							{/each}
 						</div>
+						<span class="codepoint">{codepoint}</span>
+						<span class="char-name">{unicodeName}</span>
 					</div>
 				{/each}
 			</div>
@@ -81,6 +85,10 @@
 				<code>{hex}</code>
 			{/each}
 		</div>
+		{#if !anyCharsAreCombined || anyCharsAreExpanded}
+			<span class="codepoint">{codepoints[0]}</span>
+			<span class="char-name">{unicodeNames[0]}</span>
+		{/if}
 	</div>
 {/if}
 
@@ -137,16 +145,32 @@
 	.hex-bytes {
 		display: flex;
 		gap: 2px;
+		min-width: 88px;
 	}
 	.hex-bytes code {
 		flex: 0;
 	}
+	.codepoint {
+		min-width: 47px;
+	}
+	.char-name,
+	.codepoint {
+		white-space: nowrap;
+		align-self: center;
+		margin: 0 0 0 1rem;
+	}
 	:global(#demo-text) .whitespace .utf8-char,
 	:global(#demo-text) .whitespace .hex-bytes code,
+	:global(#demo-text) .whitespace .char-name,
+	:global(#demo-text) .whitespace .codepoint,
 	:global(#demo-text) .zwj .utf8-char,
 	:global(#demo-text) .zwj .hex-bytes code,
+	:global(#demo-text) .zwj .char-name,
+	:global(#demo-text) .zwj .codepoint,
 	:global(#demo-text) .variation .utf8-char,
-	:global(#demo-text) .variation .hex-bytes code {
+	:global(#demo-text) .variation .hex-bytes code,
+	:global(#demo-text) .variation .char-name,
+	:global(#demo-text) .variation .codepoint {
 		color: var(--sec-color);
 	}
 </style>

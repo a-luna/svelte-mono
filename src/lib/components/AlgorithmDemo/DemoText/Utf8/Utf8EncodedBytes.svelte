@@ -16,6 +16,9 @@
 	$: expandableCharMaps = Object.values(charByteMapComponents).filter((charMap) => charMap.isCombined);
 	$: anyCharsAreCombined = utf8ByteMap.hasCombinedChars;
 	$: hasMultipleCombinedChars = expandableCharMaps.length > 1;
+	$: maxCharSize = utf8ByteMap.hasCombinedChars
+		? 4
+		: Math.max(...utf8ByteMap.charMap.map((charMap) => charMap.totalBytes));
 	$: inputEncoded = utf8ByteMap.encoded;
 	$: inputHasWhiteSpace = inputEncoded.includes('%20');
 	$: showLegend =
@@ -58,7 +61,7 @@
 		<ToggleExpandAllCharacters bind:toggled={allCharsAreExpanded} on:click={() => toggleAllChars()} />
 	{/if}
 	<div class="utf8-byte-map">
-		{#each utf8ByteMap.charMap as { char, isASCII, encoded, hexBytes, isCombined, charMap }, i}
+		{#each utf8ByteMap.charMap as { char, isASCII, encoded, hexBytes, isCombined, charMap, unicodeNames, codepoints }, i}
 			<EncodedBytesForChar
 				bind:this={charByteMapComponents[i]}
 				bind:anyCharsAreExpanded
@@ -67,6 +70,8 @@
 				{isASCII}
 				{encoded}
 				{hexBytes}
+				{codepoints}
+				{unicodeNames}
 				{isCombined}
 				{charMap}
 				on:toggled={() => handleCharacterToggled()}
