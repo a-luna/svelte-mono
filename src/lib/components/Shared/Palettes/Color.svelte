@@ -1,32 +1,22 @@
 <script lang="ts">
 	import { colorNameisCustomized } from '$lib/color';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import type { ComponentColor, ThemeColor } from '$lib/types';
+	import { exportColorAsCssValue } from '$lib/themes';
+	import type { ColorFormat, ComponentColor, ThemeColor } from '$lib/types';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
-	export let alphaEnabled: boolean;
 	export let color: ThemeColor;
+	export let colorFormat: ColorFormat;
 	export let displayColorName = false;
 	export let componentColor: ComponentColor;
 	let timeout: NodeJS.Timeout;
 	let buttonElement: HTMLButtonElement;
 	const dispatch = createEventDispatcher();
-	let currentLabelIndex = 0;
 
-	$: colorLabels = alphaEnabled
-		? [color?.color?.hslaString, color?.color?.rgbaString, color?.color?.hexAlpha]
-		: [color?.color?.hslString, color?.color?.rgbString, color?.color?.hex];
-	$: currentColor = colorLabels[currentLabelIndex];
+	$: currentColor = exportColorAsCssValue(color, colorFormat);
 	$: hasCustomName = colorNameisCustomized(color.color);
 	$: wrapperStyles = displayColorName ? `border: 1px solid var(--${componentColor}-fg-color);` : '';
 	$: buttonToolTip = !displayColorName ? `${color.color.name} (${color.color.hex}, hue: ${color.color.hsl.h})` : '';
-
-	function handleCssValueClicked() {
-		currentLabelIndex += 1;
-		if (currentLabelIndex === colorLabels.length) {
-			currentLabelIndex = 0;
-		}
-	}
 
 	onDestroy(() => clearTimeout(timeout));
 </script>
@@ -60,7 +50,7 @@
 		{/if}
 	</div>
 	{#if displayColorName}
-		<span class="css-value" on:click={() => handleCssValueClicked()}>{currentColor}</span>
+		<span class="css-value">{currentColor}</span>
 	{/if}
 </div>
 

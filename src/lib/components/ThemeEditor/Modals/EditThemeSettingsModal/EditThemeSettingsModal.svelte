@@ -52,6 +52,7 @@
 		themePrefix = '';
 		modal.toggleModal();
 		dispatch('updateUiColor', userTheme.uiColor);
+		dispatch('updateColorFormat', userTheme.colorFormat);
 	}
 	function discardChanges() {
 		userTheme.themeName = previousSettings['themeName'];

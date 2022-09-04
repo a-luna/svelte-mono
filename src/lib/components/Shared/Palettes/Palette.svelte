@@ -2,11 +2,11 @@
 
 <script lang="ts">
 	import Color from '$lib/components/Shared/Palettes/Color.svelte';
-	import type { ColorPalette } from '$lib/types';
+	import type { ColorFormat, ColorPalette } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
-	export let alphaEnabled: boolean;
+	export let colorFormat: ColorFormat = 'hex';
 	export let palette: ColorPalette;
 	export let expanded = false;
 	export let displayPaletteName = true;
@@ -78,8 +78,8 @@
 		>
 			{#each palette.colors as color}
 				<Color
-					{alphaEnabled}
 					{color}
+					{colorFormat}
 					{displayColorName}
 					componentColor={palette.componentColor}
 					on:colorSelected

@@ -9,7 +9,6 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let x11ColorPalettes: ColorPalette[];
-	export let alphaEnabled: boolean;
 	let carousel: typeof Carousel;
 	let x11PaletteMap: Record<string, number> = {} as Record<string, number>;
 	let buttonColor: ComponentColor = 'red';
@@ -74,7 +73,6 @@
 			<div id="x11-palette-{palette.id}" class="slide-content">
 				<Palette
 					{palette}
-					{alphaEnabled}
 					expanded={true}
 					alwaysExpanded={true}
 					displayPaletteName={true}

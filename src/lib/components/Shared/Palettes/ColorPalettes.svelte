@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Palette from '$lib/components/Shared/Palettes/Palette.svelte';
-	import type { ColorPalette } from '$lib/types';
+	import type { ColorFormat, ColorPalette } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
-	export let alphaEnabled: boolean;
+	export let colorFormat: ColorFormat;
 	export let palettes: ColorPalette[];
 	export let columns: number = 2;
 	export let allowMultiplePalettesOpen = false;
@@ -33,7 +33,7 @@
 	{#if palettes && palettes.length}
 		{#each palettes as palette}
 			<Palette
-				{alphaEnabled}
+				{colorFormat}
 				{palette}
 				{displayColorName}
 				on:colorSelected

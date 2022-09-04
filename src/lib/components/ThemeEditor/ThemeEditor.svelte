@@ -38,9 +38,6 @@
 	let editThemeSettingsModal: EditThemeSettingsModal;
 	let colorPicker: ColorPicker;
 
-	// # ISSUES
-	// TODO: FIX CSS VALUE DISPLAY STRING ON COLOR COMPONENT, ALWAYS SHOWS HSL REGARDLESS OF THE THEME'S COLOR FORMAT SETTING AND ALL COLORS CHANGE FROM HSL/HSLA BASED ON THE CURRENTLY SELECTED COLOR
-
 	// # COLOR SCHEMES
 	// TODO: Create component that generates classic color schemes based on selectedColor value:
 	//    - Complementary color (1: hue +180)
@@ -90,6 +87,7 @@
 		storesInitialized = true;
 	}
 	$: componentColor = getRandomArrayItem<ComponentColor>(COMPONENT_COLORS);
+	$: colorFormat = $state?.userTheme.colorFormat;
 
 	$: console.log({
 		picker: $colorPickerState,
@@ -142,6 +140,7 @@
 		{editorId}
 		bind:this={editThemeSettingsModal}
 		on:updateUiColor={(e) => (componentColor = e.detail)}
+		on:updateColorFormat={(e) => (colorFormat = e.detail)}
 	/>
 {/if}
 
@@ -167,6 +166,7 @@
 					<UserTheme
 						{editorId}
 						{componentColor}
+						{colorFormat}
 						initialized={themeInitialized}
 						themeColorPalettes={$app.themeColorPalettes}
 						x11PalettesShown={$app.x11PalettesShown}
