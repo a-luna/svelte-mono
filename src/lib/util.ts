@@ -67,8 +67,6 @@ export const isComponentColor = (arg: string): arg is ComponentColor =>
 
 export const isColorFormat = (arg: string): arg is ColorFormat => CSS_COLOR_FORMATS.includes(arg as ColorFormat);
 
-export const isCSSStyleRule = (rule: CSSRule): rule is CSSStyleRule => rule instanceof CSSStyleRule;
-
 export function createLocalStorageValue<T>(key: string, defaultValue: T): Writable<T> {
 	let clientValue: T;
 	if (browser) {
@@ -87,6 +85,8 @@ export function createLocalStorageValue<T>(key: string, defaultValue: T): Writab
 const styleSheetIsInThisDomain = (styleSheet: CSSStyleSheet): boolean =>
 	!styleSheet.href || styleSheet.href.indexOf(window.location.origin) === 0;
 
+export const isCssStyleRule = (rule: CSSRule): rule is CSSStyleRule => rule instanceof CSSStyleRule;
+
 export function getAllCssVariables(
 	args: {
 		ignoreTailwinds: boolean;
@@ -102,7 +102,14 @@ export function getAllCssVariables(
 ): { cssVarName: string; value: string }[] {
 	if (typeof window === 'undefined') return [];
 
-	const { ignoreTailwinds, ignorePrefixes, onlyIncludePrefixes, selectors } = args;
+	const defaultArgs = {
+		ignoreTailwinds: true,
+		ignorePrefixes: [],
+		onlyIncludePrefixes: [],
+		selectors: [],
+	};
+	const { ignoreTailwinds, ignorePrefixes, onlyIncludePrefixes, selectors } = { ...defaultArgs, ...args };
+
 	const invalidPrefixes = [...ignorePrefixes, ...onlyIncludePrefixes].filter(
 		(prefix) => !CSS_VAR_PREFIX_REGEX.test(prefix),
 	);
@@ -115,7 +122,7 @@ export function getAllCssVariables(
 	let cssRules = Array.from(document.styleSheets)
 		.filter(styleSheetIsInThisDomain)
 		.map((sheet) => sheet.cssRules)
-		.map((ruleList) => Array.from(ruleList).filter(isCSSStyleRule))
+		.map((ruleList) => Array.from(ruleList).filter(isCssStyleRule))
 		.flat();
 
 	if (selectors.length) {
@@ -130,14 +137,14 @@ export function getAllCssVariables(
 		)
 		.flat();
 
+	if (ignoreTailwinds) {
+		cssVariables = cssVariables.filter((rule) => rule[0].indexOf('--tw') === -1);
+	}
 	if (onlyIncludePrefixes.length) {
 		cssVariables = onlyIncludePrefixes
 			.map((prefix) => cssVariables.filter((rule) => rule[0].indexOf(`${prefix}-`) === 0))
 			.flat();
 	} else {
-		if (ignoreTailwinds) {
-			ignorePrefixes.push('--tw');
-		}
 		for (const prefix of ignorePrefixes) {
 			cssVariables = cssVariables.filter((rule) => rule[0].indexOf(`${prefix}-`) === -1);
 		}

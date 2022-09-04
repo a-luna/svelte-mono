@@ -12,7 +12,7 @@
 
 <div class="init-theme" {style}>
 	<div class="intro-text">
-		<p class="headline">Welcome to the Color Theme Editor!</p>
+		<p class="headline">Welcome to the Component Theme Editor!</p>
 		<p>Would you like to create a new theme or load an existing theme?</p>
 	</div>
 	<div class="button-wrapper">

@@ -2,11 +2,11 @@ import type { ColorFormat, ColorPalette, ComponentColor } from '.';
 
 export interface UserThemeImported {
 	themeName: string;
-	usesPrefix: boolean;
-	themePrefix: string;
 	createdAt: string;
 	modifiedAt: string;
-	colorFormat: ColorFormat;
+	usesPrefix: boolean;
+	themePrefix: string;
 	uiColor: ComponentColor;
+	colorFormat: ColorFormat;
 	palettes: ColorPalette[];
 }

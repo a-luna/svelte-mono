@@ -76,8 +76,8 @@
 		--modal-outer-bg-color: hsla(0, 0%, 0%, 0.75);
 		--modal-dialog-bg-color: var(--white1);
 		--modal-body-bg-color: var(--white1);
-		--modal-header-bg-color: var(--light-gray3);
-		--modal-footer-bg-color: var(--light-gray3);
+		--modal-header-bg-color: var(--light-gray4);
+		--modal-footer-bg-color: var(--white1);
 		--modal-header-text-color: var(--black1);
 
 		overflow-y: auto;
@@ -189,20 +189,18 @@
 		gap: 0.5rem;
 		border-bottom-right-radius: 0.375rem;
 		border-bottom-left-radius: 0.375rem;
-		border-top-width: 1px;
-		border-color: #e5e7eb;
 		background-color: var(--modal-footer-bg-color);
 		padding: 0.5rem 1rem;
 	}
 
 	.modal-footer button {
 		color: var(--white1);
-		background-color: var(--dark-gray1);
+		background-color: var(--dark-gray4);
 		font-size: 0.95rem;
 		padding: 0.25rem 0.5rem;
 		white-space: nowrap;
 		letter-spacing: 0.6px;
-		border: 1px solid var(--dark-gray1);
+		border: 2px solid var(--dark-gray4);
 		border-radius: 6px;
 		min-width: 75px;
 	}
@@ -212,8 +210,8 @@
 	.modal-footer button:focus,
 	.modal-footer button:active:focus {
 		color: var(--white4);
-		background-color: var(--dark-gray3);
-		border: 1px solid var(--dark-gray3);
+		background-color: var(--dark-gray1);
+		border: 2px solid var(--dark-gray4);
 	}
 
 	.modal-footer button[disabled] {
