@@ -21,6 +21,7 @@ export type { DecoderInput } from './DecoderInput';
 export type { DecoderInputChunk } from './DecoderInputChunk';
 export type { DecoderOutput } from './DecoderOutput';
 export type { DemoState } from './DemoState';
+export type { DemoStore } from './DemoStore';
 export type { Encoder } from './Encoder';
 export type { EncoderInput } from './EncoderInput';
 export type { EncoderInputChunk } from './EncoderInputChunk';

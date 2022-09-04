@@ -1,6 +1,5 @@
 import { getPageWidth } from '$lib/stores/pageWidth';
-import type { DemoState, EncodingMachineStateStore } from '$lib/types';
-import type { DemoStore } from '$lib/types/DemoStore';
+import type { DemoState, DemoStore, EncodingMachineStateStore } from '$lib/types';
 import { checkAllTextEncodings } from '$lib/validation';
 import { derived, writable, type Readable } from 'svelte/store';
 
