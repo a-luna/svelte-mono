@@ -315,8 +315,9 @@ textarea {
 
 .details-content > *,
 #demo-text p {
-	line-height: 1.7;
-	letter-spacing: 0.3px;
+	line-height: 1.6;
+	font-size: 0.825rem;
+	letter-spacing: 0.15px;
 	color: var(--light-gray2);
 }
 
@@ -332,7 +333,7 @@ textarea {
 }
 
 #demo-text p {
-	margin: 0 0 0.5rem 0;
+	margin: 0 0 1rem 0;
 }
 
 #demo-text p:only-of-type {
@@ -494,6 +495,7 @@ button {
 }
 
 .demo-steps .char,
+.demo-steps .ascii,
 .demo-steps .hex,
 .demo-steps .input-byte,
 .demo-steps .base64,
@@ -503,6 +505,7 @@ button {
 }
 
 .char,
+.ascii,
 .hex {
 	color: var(--pri-color);
 }
@@ -1111,6 +1114,7 @@ button {
 	.details-content > *,
 	#demo-text p {
 		line-height: 1.5;
+		font-size: 1rem;
 	}
 	#demo-text code {
 		font-size: 0.7rem;
@@ -1124,6 +1128,7 @@ button {
 		font-size: 8px;
 	}
 	.demo-steps .char,
+	.demo-steps .ascii,
 	.demo-steps .hex,
 	.demo-steps .input-byte,
 	.demo-steps .base64,
