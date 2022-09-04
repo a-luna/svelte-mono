@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { colorNameisCustomized } from '$lib/color';
+	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import type { ComponentColor, ThemeColor } from '$lib/types';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
@@ -17,8 +18,6 @@
 		: [color?.color?.hslString, color?.color?.rgbString, color?.color?.hex];
 	$: currentColor = colorLabels[currentLabelIndex];
 	$: hasCustomName = colorNameisCustomized(color.color);
-	$: alphaBg = `background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E");`;
-	$: bgColor = `background-color: ${color.color.hslaString};`;
 	$: wrapperStyles = displayColorName ? `border: 1px solid var(--${componentColor}-fg-color);` : '';
 	$: buttonToolTip = !displayColorName ? `${color.color.name} (${color.color.hex}, hue: ${color.color.hsl.h})` : '';
 
@@ -48,10 +47,11 @@
 			on:click|stopPropagation={() => buttonElement.focus()}
 			on:focus={() => dispatch('colorSelected', color)}
 		>
-			<div class="swatch-wrapper">
-				<div class="swatch" style={color.color.hasAlpha ? alphaBg : 'background-color: inherit'} />
-				<div class="swatch-overlay" style={bgColor} />
-			</div>
+			<ColorSwatch
+				color={color.color}
+				swatchWidth={displayColorName ? '25px' : '30px'}
+				swatchHeight={displayColorName ? '15px' : '20px'}
+			/>
 		</button>
 		{#if hasCustomName && displayColorName}
 			<div class="color-name-wrapper">
@@ -114,39 +114,6 @@
 
 	.x11-color button {
 		height: 24px;
-	}
-
-	.swatch-wrapper {
-		flex: 0 1 auto;
-
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr;
-	}
-
-	.user-color .swatch-wrapper {
-		width: 25px;
-		height: 15px;
-	}
-
-	.x11-color .swatch-wrapper {
-		width: 30px;
-		height: 20px;
-	}
-
-	.swatch {
-		z-index: 1;
-		position: relative;
-
-		grid-column: 1 / span 1;
-		grid-row: 1 / span 1;
-	}
-
-	.swatch-overlay {
-		z-index: 2;
-
-		grid-column: 1 / span 1;
-		grid-row: 1 / span 1;
 	}
 
 	.color-name-wrapper {

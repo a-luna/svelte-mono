@@ -108,6 +108,8 @@
 
 	/* Buttons & Accordion Items */
 
+	--color-swatch-button-border-color: hsl(220deg 13% 91%);
+
 	--default-border-color: var(--black2);
 	--default-bg-color: var(--white1);
 	--default-text-color: var(--black2);

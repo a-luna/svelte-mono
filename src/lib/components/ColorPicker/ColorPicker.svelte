@@ -1,12 +1,13 @@
 <svelte:options accessors />
 
 <script lang="ts">
-	import { copyCssColor, getX11ColorPalettes } from '$lib/color';
+	import { copyCssColor, getX11ColorPalettes, hslToString } from '$lib/color';
 	import ColorChannels from '$lib/components/ColorPicker/ColorChannels/ColorChannels.svelte';
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
 	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
-	import ColorSwatch from '$lib/components/ColorPicker/ColorSwatch.svelte';
 	import X11Palettes from '$lib/components/ColorPicker/X11Palettes/X11Palettes.svelte';
+	import ColorSwatches from '$lib/components/Icons/ColorSwatches.svelte';
+	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import { initColorPickerStore } from '$lib/context';
 	import { ColorParser } from '$lib/parser';
 	import type { ColorPickerState, CssColor, ThemeColor } from '$lib/types';
@@ -22,9 +23,9 @@
 	let timeout: NodeJS.Timeout;
 	let colorPicker: HTMLInputElement;
 
-	$: if (editMode) editable = false;
-	$: if ($state) $state.editable = editable;
+	$: if ($state) $state.editable = !editMode;
 	$: if ($state) $state.alphaEnabled = $state?.colorSpace === 'rgba' || $state?.colorSpace === 'hsla';
+
 	$: if (typeof window !== 'undefined' && !initialized) {
 		state = writable<ColorPickerState>({
 			pickerId,
@@ -39,6 +40,14 @@
 		state = initColorPickerStore(state);
 		initialized = true;
 	}
+
+	$: borderColor = { ...$state?.color?.hsl, l: $state?.color?.hsl.l - 20 };
+	$: borderStyles = `border: 2px solid ${hslToString(borderColor)};`;
+	$: pointerStyles = !$state.editable ? `pointer-events: none` : '';
+	$: tooltip =
+		$state.alphaEnabled || !$state.editable
+			? 'Color picker does not support RGBA/HSLA color space'
+			: 'Click to open color picker';
 
 	function handleX11ColorSelected(color: ThemeColor) {
 		setColor(copyCssColor(color.color));
@@ -107,11 +116,27 @@
 		<div class="color-picker" data-testid={$state?.pickerId}>
 			<div class="picker-left-col">
 				<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
-				<ColorSwatch
-					pickerId={$state.pickerId}
-					on:showX11Palettes={() => ($state.x11PalettesShown = true)}
-					on:showColorPicker={() => colorPicker.click()}
-				/>
+				<div
+					class="swatch-wrapper"
+					class:cursor-pointer={!$state.alphaEnabled && $state?.editable}
+					class:cursor-not-allowed={$state.alphaEnabled || !$state?.editable}
+					title={tooltip}
+					style="{borderStyles} {pointerStyles}"
+				>
+					<ColorSwatch
+						color={$state.color}
+						swatchWidth={'104px'}
+						swatchHeight={'104px'}
+						iconSize={'25px'}
+						iconTooltip={'Open X11 Color Palettes'}
+						on:iconClicked={() => ($state.x11PalettesShown = true)}
+						on:swatchClicked={() => colorPicker.click()}
+					>
+						<svelte:fragment slot="icon">
+							<ColorSwatches />
+						</svelte:fragment>
+					</ColorSwatch>
+				</div>
 			</div>
 			<div class="picker-right-col">
 				<ColorLabel pickerId={$state.pickerId} on:updateColor={(e) => handleStringValueChanged(e.detail)} />
@@ -149,5 +174,9 @@
 		justify-content: flex-start;
 		align-items: stretch;
 		gap: 0.5rem;
+	}
+
+	.swatch-wrapper {
+		border-radius: 4px;
 	}
 </style>
