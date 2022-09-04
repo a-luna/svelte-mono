@@ -4,6 +4,8 @@
 	import { getAppStore, getColorPickerStore, getThemeEditorStore } from '$lib/context';
 	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
+	import DeselectColorButton from './DeselectColorButton.svelte';
+	import ThemeColor from './ThemeColor.svelte';
 	import UpdateColorButton from './UpdateColorButton.svelte';
 
 	export let editorId: string;
@@ -28,10 +30,19 @@
 		on:click={() => dispatch('addColorToPalette', $colorPickerState.color)}
 		disabled={disableControls}
 	/>
+
+	<span class="theme-color-label">selected color</span>
+	<ThemeColor {editorId} />
 	<UpdateColorButton
 		color={componentColor}
-		style={'grid-column: 3 /  span 1; grid-row: 2 /  span 1;'}
+		style={'grid-column: 2 /  span 1; grid-row: 4 /  span 1;'}
 		on:click={() => dispatch('updateThemeColor', $colorPickerState.color)}
+		disabled={disableControls || !$state.colorSelected}
+	/>
+	<DeselectColorButton
+		color={componentColor}
+		style={'grid-column: 3 /  span 1; grid-row: 4 /  span 1;'}
+		on:click={() => dispatch('deselectThemeColor')}
 		disabled={disableControls || !$state.colorSelected}
 	/>
 </div>
@@ -40,15 +51,21 @@
 	.palette-controls {
 		display: grid;
 		grid-template-columns: 1fr auto auto;
-		grid-template-rows: auto auto;
+		grid-template-rows: auto auto auto auto;
 		column-gap: 0.5rem;
 	}
-	.palette-name-label {
+	.palette-name-label,
+	.theme-color-label {
 		font-size: 0.75rem;
 		font-weight: 500;
 		letter-spacing: 0.1px;
-
+	}
+	.palette-name-label {
 		grid-column: 1 / span 1;
 		grid-row: 1 / span 1;
+	}
+	.theme-color-label {
+		grid-column: 1 / span 1;
+		grid-row: 3 / span 1;
 	}
 </style>

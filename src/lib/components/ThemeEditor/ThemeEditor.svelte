@@ -62,6 +62,23 @@
 	// TODO: Allow user to delete colors from theme palettes
 	// TODO: Allow user to delete theme palettes
 
+	// # NEW IDEAS
+	// New high-level data structure: ThemeCollection
+	// UserTheme -> ComponentTheme, and ColorPalette -> PropertySet
+	//
+	// ThemeCollection is a list of ComponentThemes and metadata, each ComponentTheme is a list of PropertySets
+	// For example, ather than storing only color values, the Button PropertySet should also contain font-size, padding, etc. values for buttons
+	// The Palette component is doing too much, separating the X11Palettes/ColorPalettes use cases into two components should have been done yesterday
+	// Requires changes to the UI to allow user to switch between component themes, change values and save the ThemeCollection to file
+	//
+	// Now, when exporting to JSON, the object will be a list of ComponentThemes with a few metadata fields:
+	//  - createdAt/modifiedAt/usesPrefix/uiColor: these will be moved from UserTheme/ComponentTheme to ThemeCollection
+	//  - component? - need to think about how to store this info, or if it is even really needed
+	//  - themePrefix will also be moved and will be renamed to componentPrefix
+	// The ComponentTheme interface will contain the following metadata fields:
+	//  - selector: CSS selector which applies the component theme (e.g., '.light', '.dark')
+	//  - displayName used to identify the component theme in the UI
+
 	$: if (typeof window !== 'undefined' && !editorStateInitialized) {
 		state = createThemeEditorStore(editorId);
 		state = initThemeEditorStore(state);
@@ -141,6 +158,7 @@
 						{componentColor}
 						on:addColorToPalette={(e) => addColorModal.toggleModal(e.detail)}
 						on:updateThemeColor={(e) => state.updateThemeColor(e.detail)}
+						on:deselectThemeColor={() => state.deselectColor()}
 					/>
 				{/if}
 			</div>
@@ -214,7 +232,7 @@
 		flex-flow: column nowrap;
 		align-items: flex-start;
 		gap: 1rem;
-		min-width: 300px;
+		min-width: 330px;
 	}
 
 	.help-text {
