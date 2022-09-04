@@ -1,12 +1,12 @@
 <script lang="ts">
 	import AddColorButton from '$lib/components/ThemeEditor/PaletteControls/AddColorButton.svelte';
+	import DeselectColorButton from '$lib/components/ThemeEditor/PaletteControls/DeselectColorButton.svelte';
+	import SelectedColor from '$lib/components/ThemeEditor/PaletteControls/SelectedColor.svelte';
 	import SelectedPalette from '$lib/components/ThemeEditor/PaletteControls/SelectedPalette.svelte';
+	import UpdateColorButton from '$lib/components/ThemeEditor/PaletteControls/UpdateColorButton.svelte';
 	import { getAppStore, getColorPickerStore, getThemeEditorStore } from '$lib/context';
 	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
-	import DeselectColorButton from './DeselectColorButton.svelte';
-	import ThemeColor from './ThemeColor.svelte';
-	import UpdateColorButton from './UpdateColorButton.svelte';
 
 	export let editorId: string;
 	export let pickerId: string;
@@ -32,7 +32,7 @@
 	/>
 
 	<span class="theme-color-label">selected color</span>
-	<ThemeColor {editorId} />
+	<SelectedColor {editorId} />
 	<UpdateColorButton
 		color={componentColor}
 		style={'grid-column: 2 /  span 1; grid-row: 4 /  span 1;'}
