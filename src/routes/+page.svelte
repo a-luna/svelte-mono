@@ -1,10 +1,11 @@
 <script lang="ts">
+	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
+
 	import ThemeEditor from '$lib/components/ThemeEditor/ThemeEditor.svelte';
-	import { columnSettings } from '$lib/table/columnSettings';
-	import { data } from '$lib/table/data';
 	import type { PitchFx } from '$lib/table/PitchFx';
-	import SimpleTable from '@a-luna/svelte-simple-tables';
 	import type { TableSettings } from '@a-luna/svelte-simple-tables/types';
+
+	let editorId: string;
 
 	const tableSettings: TableSettings<PitchFx> = {
 		tableId: 'pfx',
@@ -26,6 +27,14 @@
 	};
 </script>
 
-<ThemeEditor>
+<svelte:head>
+	<title>Component Theme Editor by Aaron Luna</title>
+</svelte:head>
+
+<!-- <ThemeEditor>
 	<SimpleTable {data} {columnSettings} {tableSettings} />
+</ThemeEditor> -->
+
+<ThemeEditor {editorId}>
+	<ColorSpaceSelector />
 </ThemeEditor>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ContentSections from '$lib/components/ThemeEditor/ContentViewer/ContentSections.svelte';
 	import ContentSelector from '$lib/components/ThemeEditor/ContentViewer/ContentSelector.svelte';
 	import { getAppStore } from '$lib/context';
 	import type { ComponentColor } from '$lib/types';
@@ -12,7 +13,7 @@
 	$: viewerStyle = `color: var(--${componentColor}-fg-color);`;
 	$: bgLeftStyle = `border-left: 1px solid var(--${componentColor}-fg-color); border-bottom: 1px solid var(--${componentColor}-fg-color);`;
 	$: bgRightStyle = `border-top: 1px solid var(--${componentColor}-fg-color); border-right: 1px solid var(--${componentColor}-fg-color); border-bottom: 1px solid var(--${componentColor}-fg-color);`;
-	$: style = `--button-hue: var(--${componentColor}-hue); ${viewerStyle} ${$app.componentStyles}`;
+	$: style = `--button-hue: var(--${componentColor}-hue); --select-menu-width: 110px; ${viewerStyle} ${$app.componentStyles}`;
 </script>
 
 <svelte:head>
@@ -23,9 +24,9 @@
 	<ContentSelector {editorId} />
 	<div class="bg-left" style={bgLeftStyle} />
 	<div class="bg-right" style={bgRightStyle} />
-	<div class="component-wrapper">
+	<ContentSections {editorId} {componentColor}>
 		<slot />
-	</div>
+	</ContentSections>
 </div>
 
 <style lang="postcss">
@@ -71,18 +72,5 @@
 		margin-top: -1px;
 
 		grid-column: 2 / span 1;
-	}
-
-	.component-wrapper {
-		line-height: 1.4;
-		font-size: 0.875rem;
-		display: flex;
-		flex-flow: column nowrap;
-		gap: 0.5rem;
-		padding: 1rem;
-		z-index: 2;
-
-		grid-column: 1 / span 2;
-		grid-row: 2 / span 1;
 	}
 </style>

@@ -8,23 +8,15 @@
 	import LoadUserThemeModal from '$lib/components/ThemeEditor/Modals/LoadUserThemeModal.svelte';
 	import PaletteControls from '$lib/components/ThemeEditor/PaletteControls/PaletteControls.svelte';
 	import UserTheme from '$lib/components/ThemeEditor/UserTheme/UserTheme.svelte';
-	import { COMPONENT_COLORS } from '$lib/constants';
 	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
 	import { createThemeEditorStore } from '$lib/stores/themeEditor';
-	import { exportUserThemeToJSON as downloadUserThemeJSON } from '$lib/themes';
-	import type {
-		AppStore,
-		ColorPickerState,
-		ComponentColor,
-		ThemeColor,
-		ThemeEditorStore,
-		UserThemeImported,
-	} from '$lib/types';
-	import { getRandomArrayItem, getThemeEditorSlotExampleCode } from '$lib/util';
+	import { downloadUserThemeJson } from '$lib/themes';
+	import type { AppStore, ColorPickerState, ComponentColor, ThemeEditorStore, UserThemeImported } from '$lib/types';
+	import { getThemeEditorSlotExampleCode } from '$lib/util';
 	import { HighlightSvelte } from 'svelte-highlight';
 	import type { Readable, Writable } from 'svelte/store';
 
-	let editorId: string = 'color-editor';
+	export let editorId: string = 'color-editor';
 	let pickerId: string = 'color-picker';
 	let state: ThemeEditorStore;
 	let colorPickerState: Writable<ColorPickerState>;
@@ -36,6 +28,7 @@
 	let editDetailsModal: EditColorDetailsModal;
 	let addColorModal: AddColorToPaletteModal;
 	let editThemeSettingsModal: EditThemeSettingsModal;
+	let componentColor: ComponentColor = 'black';
 	let colorPicker: ColorPicker;
 
 	// # COLOR SCHEMES
@@ -48,11 +41,76 @@
 	//    - Monochrome (10: lightness -25, -20, -15, -10 -5, +5, +10, +15, +20, +25)
 
 	// # CONTENT VIEWER
-	// TODO: Create component to list all CSS Variables and allow user to filter the list based on variable name prefixes and selectors used to apply the variables
-	// TODO: Create component to generate a list of theme colors from the list of css variables
-	// TODO: Create component to view and manage css variables with non-color values (e.g., margin, width, font-size)
-	// TODO: Create component to view the user theme as JSON, allow user to copy the text and/or download the file
-	// TODO: Create component to view the CSS variables as valid CSS and allow the user to copy the text
+	// TODO: PropertySet can contain CSS Custom Properties with non-color values (e.g., margin, width, font-size) and color values
+	// TODO: On the ContentViewer -> JSON tab, user can view the ThemeSet as JSON (any changes to the ThemeSet/PropertySets are immediately reflected in this view), and choose to download the ThemeSet as a JSON file
+	// TODO: On the ContentViewer -> CSS tab, user can list all CSS Custom Properties in window.document and filter the list based on property name prefix (e.g., '--tw') and selectors used to apply the custom properties (e.g., ':root', '.light', 'dark')
+	// TODO: On the ContentViewer -> CSS tab, user can assign CSS Custom Properties/Values from the list to a PropertySet, individually or in bulk
+	// TODO: Alternatively, user can create a new PropertySet from a selection of CSS Custom Properties/Values
+	// TODO: usOn the ContentViewer -> CSS tab, userer can view the CSS Custom Properties from the PropertySets as valid CSS
+	// TODO: On the ContentViewer -> CSS tab, each PropertySet is rendered as a CSS Style Rule: all CSS Custom Properties and theie values in the PropertySet are listed on separate lines, and the list is surounded by curly braces preceded by the PropertySet.selector value
+	//
+	//  Assuming the following ThemeSet object has been created:
+	//
+	//    {
+	//    	themeSetName: "componentThemes",
+	//    	createdAt: "2022-08-04T20:53:59.357Z",
+	//    	modifiedAt: "2022-09-03T06:40:11.523Z",
+	//    	usesPrefix: false,
+	//    	componentPrefix: '',
+	//    	uiColor: 'black',
+	//    	propertySets: [
+	//    	  {
+	//    	  	displayName: "Light Theme",
+	//    	  	jsonPropName: 'lightTheme',
+	//    	  	cssSelector: '.light',
+	//    	  	properties: [
+	//    	  	  {
+	//    	  	  	propName: "textColor",
+	//    	  	  	cssVarName: "--text-color",
+	//    	  	  	displayName: "Text Color",
+	//    	  	  	value: "hsl(0 0% 0%)",
+	//    	  	  },
+	//    	  	  {
+	//    	  	  	propName: "fontSize",
+	//    	  	  	cssVarName: "--font-size",
+	//    	  	  	displayName: "Font Size",
+	//    	  	  	value: "1.5rem",
+	//    	  	  },
+	//    	  	]
+	//    	  },
+	//    	  {
+	//    	  	displayName: "Dark Theme",
+	//    	  	jsonPropName: 'darkTheme',
+	//    	  	cssSelector: '.dark',
+	//    	  	properties: [
+	//    	  	  {
+	//    	  	  	propName: "textColor",
+	//    	  	  	cssVarName: "--text-color",
+	//    	  	  	displayName: "Text Color",
+	//    	  	  	value: "hsl(0 0% 94.1%)",
+	//    	  	  },
+	//    	  	  {
+	//    	  	  	propName: "fontSize",
+	//    	  	  	cssVarName: "--font-size",
+	//    	  	  	displayName: "Font Size",
+	//    	  	  	value: "1.2rem",
+	//    	  	  },
+	//    	  	]
+	//    	  },
+	//    	]
+	//    }
+	//
+	//  The CSS tab would display the following:
+	//
+	//    .light {
+	//	    --text-color: hsl(0 0% 0%);
+	//      --font-size: 1.5rem;
+	//    }
+	//
+	//    .dark {
+	//	    --text-color: hsl(0 0% 94.1%);
+	//      --font-size: 1.2rem;
+	//    }
 
 	// # USER THEME EDITOR
 	// TODO: Allow user to re-order theme palettes (i.e., move up, down, to top, to bottom buttons for each palette)
@@ -60,16 +118,16 @@
 	// TODO: Allow user to delete theme palettes
 
 	// # NEW IDEAS
-	// New high-level data structure: ThemeCollection
+	// New high-level data structure: ThemeSet
 	// UserTheme -> ComponentTheme, and ColorPalette -> PropertySet
 	//
-	// ThemeCollection is a list of ComponentThemes and metadata, each ComponentTheme is a list of PropertySets
+	// ThemeSet is a list of ComponentThemes and metadata, each ComponentTheme is a list of PropertySets
 	// For example, ather than storing only color values, the Button PropertySet should also contain font-size, padding, etc. values for buttons
 	// The Palette component is doing too much, separating the X11Palettes/ColorPalettes use cases into two components should have been done yesterday
-	// Requires changes to the UI to allow user to switch between component themes, change values and save the ThemeCollection to file
+	// Requires changes to the UI to allow user to switch between component themes, change values and save the ThemeSet to file
 	//
 	// Now, when exporting to JSON, the object will be a list of ComponentThemes with a few metadata fields:
-	//  - createdAt/modifiedAt/usesPrefix/uiColor: these will be moved from UserTheme/ComponentTheme to ThemeCollection
+	//  - createdAt/modifiedAt/usesPrefix/uiColor: these will be moved from UserTheme/ComponentTheme to ThemeSet
 	//  - component? - need to think about how to store this info, or if it is even really needed
 	//  - themePrefix will also be moved and will be renamed to componentPrefix
 	// The ComponentTheme interface will contain the following metadata fields:
@@ -86,7 +144,6 @@
 		app = initAppStore(state, colorPickerState);
 		storesInitialized = true;
 	}
-	$: componentColor = getRandomArrayItem<ComponentColor>(COMPONENT_COLORS);
 	$: colorFormat = $state?.userTheme.colorFormat;
 
 	$: console.log({
@@ -94,11 +151,6 @@
 		state: $state,
 		app: $app,
 	});
-
-	function handleColorSelected(color: ThemeColor) {
-		state.changeSelectedColor(color);
-		colorPicker.setColor(color.color);
-	}
 
 	function handleUserThemeImported(theme: UserThemeImported) {
 		$state.userTheme = theme;
@@ -173,12 +225,12 @@
 						on:newUserTheme={() => newUserTheme()}
 						on:importUserTheme={() => loadUserThemeModal.toggleModal()}
 						on:editThemeSettings={() => editThemeSettingsModal.toggleModal($state.userTheme)}
-						on:saveUserTheme={() => downloadUserThemeJSON($state.userTheme)}
+						on:saveUserTheme={() => downloadUserThemeJson($state.userTheme)}
 						on:closeUserTheme={() => closeUserTheme()}
 						on:createPalette={() => state.createNewPalette()}
 						on:deletePalette={(e) => state.deletePalette(e.detail)}
 						on:paletteSelected={(e) => state.changeSelectedPalette(e.detail)}
-						on:colorSelected={(e) => handleColorSelected(e.detail)}
+						on:colorSelected={(e) => state.changeSelectedColor(e.detail)}
 						on:deleteColor={(e) => state.deleteColorFromPalette(e.detail)}
 						on:editColorDetails={(e) => editDetailsModal.toggleModal(e.detail)}
 					/>
@@ -239,6 +291,10 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 0.5rem;
+		background-color: var(--white2);
+		border: 1px solid var(--black4);
+		border-radius: 4px;
+		padding: 1rem;
 	}
 
 	.help-text strong {
@@ -263,5 +319,30 @@
 		line-height: 1.5;
 		max-height: 300px;
 		padding: 1rem;
+	}
+
+	.code-viewer :global(.hljs-tag) {
+		color: #ea33c6;
+	}
+
+	.code-viewer :global(.hljs-title),
+	.code-viewer :global(.language-javascript .hljs-name) {
+		color: #dfc244;
+	}
+
+	.code-viewer :global(.hljs-name) {
+		color: #74f9b1;
+	}
+
+	.code-viewer :global(.hljs-attr) {
+		color: #56adc4;
+	}
+
+	.code-viewer :global(.hljs-string) {
+		color: #ececec;
+	}
+
+	.code-viewer :global(.hljs-keyword) {
+		color: #ea3375;
 	}
 </style>

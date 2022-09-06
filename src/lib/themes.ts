@@ -38,10 +38,16 @@ export function getWordsFromCssVariableName(input: string): string[] {
 }
 
 export const convertPropNameToDisplayName = (propName: string): string =>
-	capitalize(getWordsFromCamelCase(propName).join(' '));
+	!propName
+		? ''
+		: getWordsFromCamelCase(propName)
+				.map((w) => capitalize(w))
+				.join(' ');
 
 export const convertPropNameToCssVarName = (userTheme: UserThemeImported, propName: string): string =>
-	userTheme.usesPrefix
+	!propName
+		? ''
+		: userTheme.usesPrefix
 		? `${userTheme.themePrefix}-${getWordsFromCamelCase(propName)
 				.map((w) => w.toLowerCase())
 				.join('-')}`
@@ -49,7 +55,56 @@ export const convertPropNameToCssVarName = (userTheme: UserThemeImported, propNa
 				.map((w) => w.toLowerCase())
 				.join('-')}`;
 
-export const exportColorAsCssValue = (color: ThemeColor, colorFormat: 'hex' | 'rgb' | 'hsl'): string =>
+export function convertCssVarNameToPropName(userTheme: UserThemeImported, cssVarName: string): string {
+	if (!cssVarName) {
+		return '';
+	}
+	if (userTheme.usesPrefix) {
+		cssVarName = cssVarName.replace(userTheme.themePrefix, '-');
+	}
+	const words = getWordsFromCssVariableName(cssVarName);
+	return `${words[0]}${words
+		.slice(1)
+		.map((w) => capitalize(w))
+		.join('')}`;
+}
+
+export function convertCssVarNameToDisplayName(userTheme: UserThemeImported, cssVarName: string): string {
+	if (!cssVarName) {
+		return '';
+	}
+	if (userTheme.usesPrefix) {
+		cssVarName = cssVarName.replace(userTheme.themePrefix, '-');
+	}
+	const words = getWordsFromCssVariableName(cssVarName);
+	return `${capitalize(words[0])} ${words
+		.slice(1)
+		.map((w) => capitalize(w))
+		.join(' ')}`;
+}
+
+export function convertDisplayNameToCssVarName(userTheme: UserThemeImported, displayName: string): string {
+	if (!displayName) {
+		return '';
+	}
+	const words = displayName.split(' ');
+	return userTheme.usesPrefix
+		? `${userTheme.themePrefix}-${words.map((w) => w.toLowerCase()).join('-')}`
+		: `--${words.map((w) => w.toLowerCase()).join('-')}`;
+}
+
+export function convertDisplayNameToPropName(userTheme: UserThemeImported, displayName: string): string {
+	if (!displayName) {
+		return '';
+	}
+	const words = displayName.split(' ');
+	return `${words[0].toLowerCase()}${words
+		.slice(1)
+		.map((w) => capitalize(w))
+		.join('')}`;
+}
+
+export const getCssValueForColor = (color: ThemeColor, colorFormat: 'hex' | 'rgb' | 'hsl'): string =>
 	['currentcolor', 'inherit'].includes(color.value)
 		? color.value
 		: colorFormat === 'hsl'
@@ -100,7 +155,7 @@ export function exportUserThemeToFile(userTheme: UserThemeImported): UserThemeFr
 			propName: color.propName,
 			cssVarName: color.cssVarName,
 			displayName: color.displayName,
-			value: exportColorAsCssValue(color, userTheme.colorFormat),
+			value: getCssValueForColor(color, userTheme.colorFormat),
 		})),
 	}));
 	return { ...userTheme, palettes };
@@ -117,7 +172,7 @@ export function copyThemeColor(color: ThemeColor): ThemeColorShallowCopy {
 }
 
 const getThemeColorCss = (userTheme: UserThemeImported, color: ThemeColor): string =>
-	`${convertPropNameToCssVarName(userTheme, color.propName)}: ${exportColorAsCssValue(color, userTheme.colorFormat)}`;
+	`${convertPropNameToCssVarName(userTheme, color.propName)}: ${getCssValueForColor(color, userTheme.colorFormat)}`;
 
 export const convertThemePalettesToCss = (userTheme: UserThemeImported, withNewLines = false): string =>
 	userTheme?.palettes
@@ -125,7 +180,7 @@ export const convertThemePalettesToCss = (userTheme: UserThemeImported, withNewL
 		.flat()
 		.join(withNewLines ? '\n;' : '; ');
 
-export function exportUserThemeToJSON(userTheme: UserThemeImported): void {
+export function downloadUserThemeJson(userTheme: UserThemeImported): void {
 	userTheme.modifiedAt = new Date().toISOString();
 	const filename = `${slugify(userTheme.themeName)}.json`;
 	const blob = new Blob([JSON.stringify(exportUserThemeToFile(userTheme))], { type: 'text/json' });
@@ -133,11 +188,13 @@ export function exportUserThemeToJSON(userTheme: UserThemeImported): void {
 	link.download = filename;
 	link.href = window.URL.createObjectURL(blob);
 	link.dataset.downloadurl = ['text/json', link.download, link.href].join(':');
-	const evt = new MouseEvent('click', {
-		view: window,
-		bubbles: true,
-		cancelable: true,
-	});
-	link.dispatchEvent(evt);
+
+	link.dispatchEvent(
+		new MouseEvent('click', {
+			view: window,
+			bubbles: true,
+			cancelable: true,
+		}),
+	);
 	link.remove();
 }
