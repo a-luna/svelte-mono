@@ -1,12 +1,11 @@
 import { browser } from '$app/environment';
 import { COMPONENT_COLORS, CSS_COLOR_FORMATS } from '$lib/constants';
-import { CSS_VAR_PREFIX_REGEX } from '$lib/themes';
-import type { ColorFormat, ComponentColor } from '$lib/types';
+import type { ColorFormat, ComponentColor, CssVariable } from '$lib/types';
 import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
 
 export const uncapitalize = (s: string): string => s.charAt(0).toLowerCase() + s.substring(1);
-export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1);
+export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
 export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 export const slugify = (s: string): string => s.replaceAll(/[\s_]/g, '-').toLowerCase();
 
@@ -87,20 +86,13 @@ const styleSheetIsInThisDomain = (styleSheet: CSSStyleSheet): boolean =>
 
 export const isCssStyleRule = (rule: CSSRule): rule is CSSStyleRule => rule instanceof CSSStyleRule;
 
-export function getAllCssVariables(
-	args: {
-		ignoreTailwinds: boolean;
-		ignorePrefixes: string[];
-		onlyIncludePrefixes: string[];
-		selectors: string[];
-	} = {
-		ignoreTailwinds: true,
-		ignorePrefixes: [],
-		onlyIncludePrefixes: [],
-		selectors: [],
-	},
-): { cssVarName: string; value: string }[] {
-	if (typeof window === 'undefined') return [];
+export function getAllCssVariables(args: {
+	ignoreTailwinds?: boolean;
+	ignorePrefixes?: string[];
+	onlyIncludePrefixes?: string[];
+	selectors?: string[];
+}): Record<string, CssVariable[]> {
+	if (typeof window === 'undefined') return {};
 
 	const defaultArgs = {
 		ignoreTailwinds: true,
@@ -110,9 +102,7 @@ export function getAllCssVariables(
 	};
 	const { ignoreTailwinds, ignorePrefixes, onlyIncludePrefixes, selectors } = { ...defaultArgs, ...args };
 
-	const invalidPrefixes = [...ignorePrefixes, ...onlyIncludePrefixes].filter(
-		(prefix) => !CSS_VAR_PREFIX_REGEX.test(prefix),
-	);
+	const invalidPrefixes = [...ignorePrefixes, ...onlyIncludePrefixes].filter((prefix) => prefix.indexOf('--') !== 0);
 	if (invalidPrefixes.length) {
 		const invalidPrefixList = invalidPrefixes.map((p) => `"${p}"`).join(', ');
 		const maybePlural = invalidPrefixes.length > 1 ? 'are invalid prefixes' : 'is an invalid prefix';
@@ -133,23 +123,23 @@ export function getAllCssVariables(
 		.map((rule) =>
 			Array.from(rule.style)
 				.filter((propName) => propName.indexOf('--') === 0)
-				.map((propName) => [propName.trim(), rule.style.getPropertyValue(propName).trim()]),
+				.map((propName) => ({ name: propName.trim(), value: rule.style.getPropertyValue(propName).trim() })),
 		)
 		.flat();
 
 	if (ignoreTailwinds) {
-		cssVariables = cssVariables.filter((rule) => rule[0].indexOf('--tw') === -1);
+		cssVariables = cssVariables.filter((cssVar) => cssVar.name.indexOf('--tw') === -1);
 	}
 	if (onlyIncludePrefixes.length) {
 		cssVariables = onlyIncludePrefixes
-			.map((prefix) => cssVariables.filter((rule) => rule[0].indexOf(`${prefix}-`) === 0))
+			.map((prefix) => cssVariables.filter((cssVar) => cssVar.name.indexOf(`${prefix}-`) === 0))
 			.flat();
 	} else {
 		for (const prefix of ignorePrefixes) {
-			cssVariables = cssVariables.filter((rule) => rule[0].indexOf(`${prefix}-`) === -1);
+			cssVariables = cssVariables.filter((cssVar) => cssVar.name.indexOf(`${prefix}-`) === -1);
 		}
 	}
-	return cssVariables.map((rule) => ({ cssVarName: rule[0], value: rule[1] }));
+	return groupByProperty<CssVariable>(cssVariables, 'name');
 }
 
 export const getThemeEditorSlotExampleCode = (): string => `<script lang="ts">

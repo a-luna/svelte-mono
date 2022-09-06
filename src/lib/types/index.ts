@@ -3,6 +3,7 @@ export type { ColorPalette } from './ColorPalette';
 export type { ColorPalleteFromFile } from './ColorPalleteFromFile';
 export type { ColorPickerState } from './ColorPickerState';
 export type { CssColor } from './CssColor';
+export type { CssVariable } from './CssVariable';
 export type { HslColor } from './HslColor';
 export type { HueRange } from './HueRange';
 export type { ColorFormat, ColorSpace, ComponentColor, LabelState } from './Literals';
