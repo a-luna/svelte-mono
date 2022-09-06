@@ -2,8 +2,6 @@
 	import Select from '$lib/components/Shared/Select/Select.svelte';
 	import type { ColorSpace, SelectMenuOption } from '$lib/types';
 
-	export let width = '100%';
-	export let fontSize: string = '0.875rem';
 	export let value: string = 'rgb';
 	export let disabled = false;
 
@@ -22,12 +20,10 @@
 </script>
 
 <Select
+	{menuId}
 	{menuLabel}
 	{options}
-	selectedValue={value}
-	{menuId}
-	{width}
-	{fontSize}
 	{disabled}
+	selectedValue={value}
 	on:changed={(e) => handleColorSpaceChanged(e.detail)}
 />

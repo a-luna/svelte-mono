@@ -6,13 +6,11 @@
 	export let optionNumber: number;
 	export let active: boolean = false;
 	export let menuId: string;
-	export let fontSize: string;
 	const dispatch = createEventDispatcher();
 </script>
 
 <div
 	class:active
-	style="font-size: {fontSize}"
 	data-value={value ? value : optionNumber}
 	role="menuitem"
 	tabindex="-1"
@@ -28,23 +26,24 @@
 <style lang="postcss">
 	div {
 		display: block;
-		color: var(--select-text-color);
-		line-height: 1.25rem;
-		padding: 0.5rem 1rem;
 		cursor: pointer;
+		line-height: 1.25rem;
+		font-size: var(--select-menu-font-size, var(--select-menu-default-font-size));
+		color: var(--select-menu-text-color, var(--select-menu-default-text-color));
+		padding: var(--select-menu-item-padding, var(--select-menu-default-item-padding));
 	}
 
 	div:first-child {
-		border-top-left-radius: 6px;
-		border-top-right-radius: 6px;
+		border-top-left-radius: var(--select-menu-border-radius, var(--select-menu-default-border-radius));
+		border-top-right-radius: var(--select-menu-border-radius, var(--select-menu-default-border-radius));
 	}
 
 	div:last-child {
-		border-bottom-left-radius: 6px;
-		border-bottom-right-radius: 6px;
+		border-bottom-left-radius: var(--select-menu-border-radius, var(--select-menu-default-border-radius));
+		border-bottom-right-radius: var(--select-menu-border-radius, var(--select-menu-default-border-radius));
 	}
 
 	.active {
-		background-color: var(--selected-item-bg-color);
+		background-color: var(--select-menu-selected-item-bg-color, var(--select-menu-default-selected-item-bg-color));
 	}
 </style>

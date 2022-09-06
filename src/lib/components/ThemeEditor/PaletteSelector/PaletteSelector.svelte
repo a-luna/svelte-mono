@@ -8,8 +8,6 @@
 	export let editorId: string;
 	let app = getAppStore(editorId);
 	let state = getThemeEditorStore(editorId);
-	export let width = '100%';
-	export let fontSize: string = '0.875rem';
 	export let value: string = $state && $state.userTheme.palettes.length ? $state.userTheme.palettes[0].id : null;
 	export let disabled = false;
 	let options: SelectMenuOption[];
@@ -17,7 +15,7 @@
 	let selectComponent: Select;
 	const dispatch = createEventDispatcher();
 
-	$: options = $state.userTheme.palettes?.map((p, i) => ({
+	$: options = $state?.userTheme.palettes?.map((p, i) => ({
 		label: p.displayName,
 		value: p.id,
 		optionNumber: i + 1,
@@ -25,7 +23,7 @@
 	}));
 
 	$: if (value) selectedPalette = $app?.selectedThemePalette;
-	$: enabled = $state.userTheme.palettes.length > 0 && !disabled;
+	$: enabled = $state?.userTheme.palettes.length > 0 && !disabled;
 
 	const menuId = 'select-theme-palette';
 	const menuLabel = 'select theme palette';
@@ -39,20 +37,15 @@
 
 <Select
 	bind:this={selectComponent}
-	flexStyles={'flex: 0 1 auto;'}
-	buttonHeight={'30px'}
-	buttonPadding={'7px 6px'}
 	disabled={!enabled}
 	selectedValue={value}
 	{menuLabel}
 	{options}
 	{menuId}
-	{width}
-	{fontSize}
 	on:changed={(e) => handleThemePaletteChanged(e.detail)}
 >
 	<svelte:fragment slot="options">
-		<PaletteOptions {editorId} {options} {menuId} {fontSize} on:changed={(e) => handleThemePaletteChanged(e.detail)} />
+		<PaletteOptions {editorId} {options} {menuId} on:changed={(e) => handleThemePaletteChanged(e.detail)} />
 	</svelte:fragment>
 
 	<svelte:fragment slot="selectedValue">
