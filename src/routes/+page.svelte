@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Base64 Visualizer</title>
+	<title>Base64 Algorithm Demo by Aaron Luna</title>
 </svelte:head>
 
 <Alert />
