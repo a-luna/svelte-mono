@@ -1,16 +1,17 @@
 <script lang="ts">
+	import { parseColorFromString } from '$lib/color';
+
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import { getThemeEditorStore } from '$lib/context';
 
 	export let editorId: string;
 	let state = getThemeEditorStore(editorId);
 	let bgColor: string;
-	let swatchColor: string;
 	let displayName: string;
 	let tooltip: string;
 
 	$: bgColor = $state.colorSelected ? 'var(--white3)' : 'var(--white1)';
-	$: swatchColor = $state.colorSelected ? $state.selectedColor.value : 'inherit';
+	$: swatchColor = $state.colorSelected ? $state.selectedColor.color : parseColorFromString('hsl(0, 0%, 85%)').value;
 	$: displayName = $state.colorSelected ? $state.selectedColor.displayName : 'No Color Selected';
 	$: tooltip = $state.colorSelected
 		? `${$state.selectedColor.displayName} is the selected palette`
@@ -19,7 +20,7 @@
 
 <div class="option-wrapper" title={tooltip} style="background-color: {bgColor}">
 	<div class="swatch-border">
-		<ColorSwatch color={$state.selectedColor.color} swatchWidth={'15px'} swatchHeight={'15px'} />
+		<ColorSwatch color={swatchColor} swatchWidth={'15px'} swatchHeight={'15px'} />
 	</div>
 	<span>{displayName}</span>
 </div>
