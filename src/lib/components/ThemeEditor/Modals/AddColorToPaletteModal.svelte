@@ -2,12 +2,13 @@
 	import { colorNameisCustomized } from '$lib/color';
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import Modal from '$lib/components/Shared/Modal.svelte';
+	import { alphaBgPattern } from '$lib/constants';
 	import { getAppStore, getThemeEditorStore } from '$lib/context';
 	import {
 		CAMEL_CASE_REGEX,
 		convertPropNameToCssVarName,
 		convertPropNameToDisplayName,
-		exportColorAsCssValue,
+		getCssValueForColor,
 	} from '$lib/themes';
 	import type { CssColor, ThemeColor } from '$lib/types';
 	import { uncapitalize } from '$lib/util';
@@ -29,7 +30,6 @@
 	const dispatch = createEventDispatcher();
 	const LOWERCASE_REGEX = /^[a-z]+$/;
 
-	$: alphaBg = `background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E");`;
 	$: bgColor = `background-color: ${themeColor?.color.hslaString};`;
 	$: propNameFormatError =
 		autoGenCssVarName || autoGenDisplayName
@@ -56,7 +56,7 @@
 			themeColor.cssVarName = '';
 			themeColor.displayName = '';
 		}
-		themeColor.value = exportColorAsCssValue(themeColor, $state.userTheme.colorFormat);
+		themeColor.value = getCssValueForColor(themeColor, $state.userTheme.colorFormat);
 	}
 
 	function saveChanges() {
@@ -80,7 +80,7 @@
 		<div class="color-swatch-wrapper">
 			<label for="color-swatch">Add color</label>
 			<div class="swatch-wrapper">
-				<div class="swatch" style={themeColor?.color.hasAlpha ? alphaBg : 'background-color: inherit'} />
+				<div class="swatch" style={themeColor?.color.hasAlpha ? alphaBgPattern : 'background-color: inherit'} />
 				<div class="swatch-overlay" style={bgColor} />
 			</div>
 		</div>

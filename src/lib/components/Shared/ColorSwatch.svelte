@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { alphaBgPattern } from '$lib/constants';
 	import type { CssColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
@@ -9,10 +10,9 @@
 	export let iconTooltip = '';
 	const dispatch = createEventDispatcher();
 
-	$: alphaBg = `background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E");`;
 	$: wrapperGrid = $$slots.icon ? `grid-template-rows: 1fr ${iconSize};` : 'grid-template-rows: 1fr;';
 	$: wrapperSize = `width: ${swatchWidth}; height: ${swatchHeight};`;
-	$: swatchColor = color.hasAlpha ? alphaBg : 'background-color: inherit;';
+	$: swatchColor = color.hasAlpha ? alphaBgPattern : 'background-color: inherit;';
 	$: swatchGrid = $$slots.icon ? 'grid-row: 1 / span 2;' : 'grid-row: 1 / span 1;';
 	$: overlayColor = `background-color: ${color.hslaString};`;
 	$: overlayPointer = color.hasAlpha ? `pointer-events: none;` : '';

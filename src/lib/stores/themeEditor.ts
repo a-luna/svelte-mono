@@ -1,6 +1,6 @@
 import { createEmptyColorPalette } from '$lib/color';
 import { defaultThemeEditorState } from '$lib/constants';
-import { exportColorAsCssValue } from '$lib/themes';
+import { getCssValueForColor } from '$lib/themes';
 import type { CssColor, ThemeColor, ThemeEditorState, ThemeEditorStore } from '$lib/types';
 import { writable } from 'svelte/store';
 
@@ -49,7 +49,7 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 	function updateThemeColor(color: CssColor, state: ThemeEditorState): ThemeEditorState {
 		color.name = state.selectedColor.displayName;
 		state.selectedColor.color = color;
-		state.selectedColor.value = exportColorAsCssValue(state.selectedColor, state.userTheme.colorFormat);
+		state.selectedColor.value = getCssValueForColor(state.selectedColor, state.userTheme.colorFormat);
 		return updatePaletteColors(state);
 	}
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { colorNameisCustomized } from '$lib/color';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { exportColorAsCssValue } from '$lib/themes';
+	import { getCssValueForColor } from '$lib/themes';
 	import type { ColorFormat, ComponentColor, ThemeColor } from '$lib/types';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
@@ -13,7 +13,7 @@
 	let buttonElement: HTMLButtonElement;
 	const dispatch = createEventDispatcher();
 
-	$: currentColor = exportColorAsCssValue(color, colorFormat);
+	$: currentColor = getCssValueForColor(color, colorFormat);
 	$: hasCustomName = colorNameisCustomized(color.color);
 	$: wrapperStyles = displayColorName ? `border: 1px solid var(--${componentColor}-fg-color);` : '';
 	$: buttonToolTip = !displayColorName ? `${color.color.name} (${color.color.hex}, hue: ${color.color.hsl.h})` : '';
@@ -132,7 +132,6 @@
 		font-size: 0.75rem;
 		line-height: 1;
 		text-align: left;
-		cursor: pointer;
 		padding: 3px 4px;
 
 		grid-column: 2 / span 1;
