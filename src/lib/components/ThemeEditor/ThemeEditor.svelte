@@ -258,7 +258,7 @@
 	.theme-editor-wrapper {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 1rem;
+		gap: 2rem;
 		width: min-content;
 		background-color: var(--white1);
 		padding: 1rem;
@@ -276,7 +276,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: flex-start;
-		gap: 0.5rem;
+		gap: 1rem;
 	}
 
 	.editor-right-col {
