@@ -144,7 +144,7 @@
 		app = initAppStore(state, colorPickerState);
 		storesInitialized = true;
 	}
-	$: colorFormat = $state?.userTheme.colorFormat;
+	$: colorFormat = $state?.userTheme?.colorFormat ?? 'hsl';
 
 	$: console.log({
 		picker: $colorPickerState,
