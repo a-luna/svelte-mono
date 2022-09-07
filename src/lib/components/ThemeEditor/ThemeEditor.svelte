@@ -208,6 +208,7 @@
 						selectedPalette={$app.selectedThemePalette}
 						{componentColor}
 						on:addColorToPalette={(e) => addColorModal.toggleModal(e.detail)}
+						on:setColorPickerValue={(e) => colorPicker.setColor(e.detail)}
 						on:updateThemeColor={(e) => state.updateThemeColor(e.detail)}
 						on:deselectThemeColor={() => state.deselectColor()}
 					/>

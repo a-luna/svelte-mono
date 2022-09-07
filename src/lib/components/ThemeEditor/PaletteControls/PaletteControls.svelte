@@ -7,6 +7,7 @@
 	import { getAppStore, getColorPickerStore, getThemeEditorStore } from '$lib/context';
 	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
+	import SetColorPickerButton from './SetColorPickerButton.svelte';
 
 	export let editorId: string;
 	export let pickerId: string;
@@ -33,25 +34,32 @@
 
 	<span class="theme-color-label">selected color</span>
 	<SelectedColor {editorId} />
-	<UpdateColorButton
-		color={componentColor}
-		style={'grid-column: 2 /  span 1; grid-row: 4 /  span 1;'}
-		on:click={() => dispatch('updateThemeColor', $colorPickerState.color)}
-		disabled={disableControls || !$state.colorSelected}
-	/>
-	<DeselectColorButton
-		color={componentColor}
-		style={'grid-column: 3 /  span 1; grid-row: 4 /  span 1;'}
-		on:click={() => dispatch('deselectThemeColor')}
-		disabled={disableControls || !$state.colorSelected}
-	/>
+	<div class="button-list">
+		<SetColorPickerButton
+			color={componentColor}
+			style={'grid-column: 2 /  span 1; grid-row: 4 /  span 1;'}
+			on:click={() => dispatch('setColorPickerValue', $state.selectedColor.color)}
+			disabled={disableControls || !$state.colorSelected}
+		/>
+		<UpdateColorButton
+			color={componentColor}
+			on:click={() => dispatch('updateThemeColor', $colorPickerState.color)}
+			disabled={disableControls || !$state.colorSelected}
+		/>
+		<DeselectColorButton
+			color={componentColor}
+			on:click={() => dispatch('deselectThemeColor')}
+			disabled={disableControls || !$state.colorSelected}
+		/>
+	</div>
 </div>
 
 <style lang="postcss">
 	.palette-controls {
 		display: grid;
-		grid-template-columns: 1fr auto auto;
+		grid-template-columns: 1fr auto auto auto;
 		grid-template-rows: auto auto auto auto;
+		row-gap: 0.25rem;
 		column-gap: 0.5rem;
 	}
 	.palette-name-label,
@@ -67,5 +75,12 @@
 	.theme-color-label {
 		grid-column: 1 / span 1;
 		grid-row: 3 / span 1;
+	}
+	.button-list {
+		display: flex;
+		gap: 0.25rem;
+
+		grid-column: 2 / span 3;
+		grid-row: 4 / span 1;
 	}
 </style>
