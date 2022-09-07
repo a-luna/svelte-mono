@@ -88,21 +88,14 @@ export const isCssStyleRule = (rule: CSSRule): rule is CSSStyleRule => rule inst
 
 export function getAllCssVariables(args: {
 	ignoreTailwinds?: boolean;
-	ignorePrefixes?: string[];
-	onlyIncludePrefixes?: string[];
+	prefixBlackList?: string[];
+	prefixWhiteList?: string[];
 	selectors?: string[];
 }): Record<string, CssVariable[]> {
 	if (typeof window === 'undefined') return {};
-
-	const defaultArgs = {
-		ignoreTailwinds: true,
-		ignorePrefixes: [],
-		onlyIncludePrefixes: [],
-		selectors: [],
-	};
-	const { ignoreTailwinds, ignorePrefixes, onlyIncludePrefixes, selectors } = { ...defaultArgs, ...args };
-
-	const invalidPrefixes = [...ignorePrefixes, ...onlyIncludePrefixes].filter((prefix) => prefix.indexOf('--') !== 0);
+	const defaultArgs = { ignoreTailwinds: true, prefixBlackList: [], prefixWhiteList: [], selectors: [] };
+	const { ignoreTailwinds, prefixBlackList, prefixWhiteList, selectors } = { ...defaultArgs, ...args };
+	const invalidPrefixes = [...prefixBlackList, ...prefixWhiteList].filter((prefix) => prefix.indexOf('--') !== 0);
 	if (invalidPrefixes.length) {
 		const invalidPrefixList = invalidPrefixes.map((p) => `"${p}"`).join(', ');
 		const maybePlural = invalidPrefixes.length > 1 ? 'are invalid prefixes' : 'is an invalid prefix';
@@ -130,12 +123,12 @@ export function getAllCssVariables(args: {
 	if (ignoreTailwinds) {
 		cssVariables = cssVariables.filter((cssVar) => cssVar.name.indexOf('--tw') === -1);
 	}
-	if (onlyIncludePrefixes.length) {
-		cssVariables = onlyIncludePrefixes
+	if (prefixWhiteList.length) {
+		cssVariables = prefixWhiteList
 			.map((prefix) => cssVariables.filter((cssVar) => cssVar.name.indexOf(`${prefix}-`) === 0))
 			.flat();
 	} else {
-		for (const prefix of ignorePrefixes) {
+		for (const prefix of prefixBlackList) {
 			cssVariables = cssVariables.filter((cssVar) => cssVar.name.indexOf(`${prefix}-`) === -1);
 		}
 	}
