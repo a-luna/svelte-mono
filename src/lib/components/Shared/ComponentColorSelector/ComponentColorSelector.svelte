@@ -37,11 +37,6 @@
 	{options}
 	selectedValue={value}
 	{menuId}
-	{width}
-	{margin}
-	{buttonHeight}
-	{buttonPadding}
-	{fontSize}
 	{disabled}
 	on:changed={(e) => handleComponentColorChanged(e.detail)}
 >

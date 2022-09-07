@@ -25,8 +25,6 @@
 	{options}
 	selectedValue={value}
 	{menuId}
-	{width}
-	{fontSize}
 	{disabled}
 	on:changed={(e) => handleColorFormatChanged(e.detail)}
 />
