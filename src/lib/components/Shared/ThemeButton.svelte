@@ -60,8 +60,8 @@
 	}
 
 	.black button {
-		--button-bg-color: var(--white3);
-		--button-hover-bg-color: var(--white3);
+		--button-bg-color: var(--white2);
+		--button-hover-bg-color: var(--white4);
 		--button-fg-color: var(--black2);
 		--button-active-fg-color: var(--black4);
 		--button-hover-fg-color: var(--black4);
