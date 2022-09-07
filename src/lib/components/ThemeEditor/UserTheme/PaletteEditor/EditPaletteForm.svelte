@@ -48,6 +48,11 @@
 
 <style lang="postcss">
 	.edit-palette {
+		--select-menu-width: 55px;
+		--select-menu-height: 30px;
+		--select-menu-margin: 0 6px 0 0;
+		--select-menu-padding: 4px 10px;
+
 		display: flex;
 		flex-flow: row nowrap;
 		align-items: center;

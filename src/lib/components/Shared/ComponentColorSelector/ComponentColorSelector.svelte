@@ -7,11 +7,7 @@
 	export let disabled = false;
 	export const menuId: string = 'select-component-color';
 	let selectComponent: Select;
-	const width = '55px';
-	const buttonHeight = '30px';
 	const fontSize = '0.875rem';
-	const buttonPadding = '4px 10px';
-	const margin = '0 6px 0 0';
 
 	const options: SelectMenuOption[] = [
 		{ label: '', value: 'black', optionNumber: 1, active: false },

@@ -2,8 +2,6 @@
 	import Select from '$lib/components/Shared/Select/Select.svelte';
 	import type { ColorFormat, SelectMenuOption } from '$lib/types';
 
-	export let width = '100%';
-	export let fontSize: string = '0.875rem';
 	export let value: string = 'hsl';
 	export let disabled = false;
 

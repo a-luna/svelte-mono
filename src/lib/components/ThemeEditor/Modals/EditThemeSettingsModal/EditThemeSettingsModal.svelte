@@ -111,6 +111,11 @@
 
 <style lang="postcss">
 	.edit-theme-settings {
+		--select-menu-width: 55px;
+		--select-menu-height: 30px;
+		--select-menu-margin: 0 6px 0 0;
+		--select-menu-padding: 4px 10px;
+
 		display: grid;
 		grid-template-columns: auto 1fr;
 		grid-template-rows: repeat(4, auto);
