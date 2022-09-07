@@ -27,15 +27,14 @@
 
 <style lang="postcss">
 	.option-wrapper {
-		flex: 1;
-		display: flex;
-		flex-flow: row nowrap;
+		flex: 0 1 auto;
+		display: grid;
+		grid-template-columns: 1fr auto 8px 200px 1fr;
 		align-items: center;
 		justify-content: center;
 		font-size: 0.9rem;
-		gap: 0.5rem;
 		border: 1px solid var(--black1);
-		border-radius: 6px;
+		border-radius: 4px;
 
 		grid-column: 1 / span 1;
 		grid-row: 4 / span 1;
@@ -43,5 +42,13 @@
 
 	.swatch-border {
 		border: 2px inset var(--color-swatch-button-border-color);
+		grid-column: 2 / span 1;
+	}
+
+	span {
+		overflow-x: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		grid-column: 4 / span 1;
 	}
 </style>
