@@ -32,7 +32,7 @@
 	}
 
 	.palette-list {
-		--select-border-color: var(--black1);
+		--select-menu-default-border-color: var(--black1);
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: flex-start;

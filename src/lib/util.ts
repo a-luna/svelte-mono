@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { COMPONENT_COLORS, CSS_COLOR_FORMATS } from '$lib/constants';
+import { COMPONENT_COLORS, CSS_COLOR_FORMATS, SCOPED_CSS_REGEX } from '$lib/constants';
 import type { ColorFormat, ComponentColor, CssVariable } from '$lib/types';
 import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
@@ -8,6 +8,7 @@ export const uncapitalize = (s: string): string => s.charAt(0).toLowerCase() + s
 export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
 export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 export const slugify = (s: string): string => s.replaceAll(/[\s_]/g, '-').toLowerCase();
+export const removeScopedCssClassNames = (s: string): string => s.replaceAll(SCOPED_CSS_REGEX, '');
 
 export function clickOutside(node: HTMLElement, { enabled: initialEnabled, cb }) {
 	const handleOutsideClick = ({ target }) => {
@@ -88,13 +89,23 @@ export const isCssStyleRule = (rule: CSSRule): rule is CSSStyleRule => rule inst
 
 export function getAllCssVariables(args: {
 	ignoreTailwinds?: boolean;
+	removeScopedCssClasses?: boolean;
 	prefixBlackList?: string[];
 	prefixWhiteList?: string[];
 	selectors?: string[];
-}): Record<string, CssVariable[]> {
-	if (typeof window === 'undefined') return {};
-	const defaultArgs = { ignoreTailwinds: true, prefixBlackList: [], prefixWhiteList: [], selectors: [] };
-	const { ignoreTailwinds, prefixBlackList, prefixWhiteList, selectors } = { ...defaultArgs, ...args };
+}): CssVariable[] {
+	if (typeof window === 'undefined') return [];
+	const defaultArgs = {
+		ignoreTailwinds: true,
+		removeScopedCssClasses: true,
+		prefixBlackList: [],
+		prefixWhiteList: [],
+		selectors: [],
+	};
+	const { ignoreTailwinds, removeScopedCssClasses, prefixBlackList, prefixWhiteList, selectors } = {
+		...defaultArgs,
+		...args,
+	};
 	const invalidPrefixes = [...prefixBlackList, ...prefixWhiteList].filter((prefix) => prefix.indexOf('--') !== 0);
 	if (invalidPrefixes.length) {
 		const invalidPrefixList = invalidPrefixes.map((p) => `"${p}"`).join(', ');
@@ -113,11 +124,18 @@ export function getAllCssVariables(args: {
 	}
 
 	let cssVariables = cssRules
-		.map((rule) =>
-			Array.from(rule.style)
+		.map((rule) => {
+			const ruleSelector = removeScopedCssClasses ? removeScopedCssClassNames(rule.selectorText) : rule.selectorText;
+			return Array.from(rule.style)
 				.filter((propName) => propName.indexOf('--') === 0)
-				.map((propName) => ({ name: propName.trim(), value: rule.style.getPropertyValue(propName).trim() })),
-		)
+				.map((propName) => ({
+					id: getRandomHexString(8),
+					name: propName.trim(),
+					selector: ruleSelector,
+					value: rule.style.getPropertyValue(propName).trim(),
+					addToTheme: false,
+				}));
+		})
 		.flat();
 
 	if (ignoreTailwinds) {
@@ -132,7 +150,9 @@ export function getAllCssVariables(args: {
 			cssVariables = cssVariables.filter((cssVar) => cssVar.name.indexOf(`${prefix}-`) === -1);
 		}
 	}
-	return groupByProperty<CssVariable>(cssVariables, 'name');
+	return cssVariables.sort(
+		(a, b) => String(a.name).localeCompare(String(b.name)) || String(a.selector).localeCompare(String(b.selector)),
+	);
 }
 
 export const getThemeEditorSlotExampleCode = (): string => `<script lang="ts">

@@ -1,19 +1,23 @@
 <script lang="ts">
 	import ContentSections from '$lib/components/ThemeEditor/ContentViewer/ContentSections.svelte';
 	import ContentSelector from '$lib/components/ThemeEditor/ContentViewer/ContentSelector.svelte';
-	import { getAppStore } from '$lib/context';
 	import type { ComponentColor } from '$lib/types';
 	import irBlack from 'svelte-highlight/styles/ir-black';
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;
-	let app = getAppStore(editorId);
+	export let usesTheme: boolean;
+	export let themePrefix: string;
+	let contentSections: ContentSections;
 
 	$: buttonType = componentColor !== 'black' ? 'color' : 'black';
 	$: viewerStyle = `color: var(--${componentColor}-fg-color);`;
 	$: bgLeftStyle = `border-left: 1px solid var(--${componentColor}-fg-color); border-bottom: 1px solid var(--${componentColor}-fg-color);`;
 	$: bgRightStyle = `border-top: 1px solid var(--${componentColor}-fg-color); border-right: 1px solid var(--${componentColor}-fg-color); border-bottom: 1px solid var(--${componentColor}-fg-color);`;
-	$: style = `--button-hue: var(--${componentColor}-hue); --select-menu-width: 110px; ${viewerStyle} ${$app.componentStyles}`;
+	$: style = `--button-hue: var(--${componentColor}-hue); --select-menu-width: 110px; ${viewerStyle}`;
+
+	export const changeComponentPrefix = (usesTheme: boolean, newPrefix: string) =>
+		contentSections.changeComponentPrefix(usesTheme, newPrefix);
 </script>
 
 <svelte:head>
@@ -24,9 +28,11 @@
 	<ContentSelector {editorId} />
 	<div class="bg-left" style={bgLeftStyle} />
 	<div class="bg-right" style={bgRightStyle} />
-	<ContentSections {editorId} {componentColor}>
-		<slot />
-	</ContentSections>
+	<div class="content-wrapper">
+		<ContentSections bind:this={contentSections} {editorId} {componentColor} {usesTheme} {themePrefix}>
+			<slot />
+		</ContentSections>
+	</div>
 </div>
 
 <style lang="postcss">
@@ -72,5 +78,19 @@
 		margin-top: -1px;
 
 		grid-column: 2 / span 1;
+	}
+
+	.content-wrapper {
+		line-height: 1.4;
+		font-size: 0.875rem;
+		display: flex;
+		flex-flow: column nowrap;
+		padding: 1rem;
+		z-index: 2;
+		margin: 0 auto 0 0;
+		width: 100%;
+
+		grid-column: 1 / span 2;
+		grid-row: 2 / span 1;
 	}
 </style>

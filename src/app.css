@@ -96,16 +96,6 @@
 	--pink2: hsl(315, 100%, 45%);
 	--pink3: hsl(315, 100%, 55%);
 
-	/* Select Menu */
-	--select-bg-color: var(--white4);
-	--select-bg-color-hov: var(--white4);
-	--select-text-color: var(--black4);
-	--select-text-color-no-selection: var(--dark-gray4);
-	--select-border-color: var(--light-gray2);
-	--selected-item-bg-color: var(--white1);
-	--select-text-color-disabled: var(--gray4);
-	--select-bg-color-disabled: var(--light-gray1);
-
 	/* Buttons & Accordion Items */
 
 	--color-swatch-button-border-color: hsl(220deg 13% 91%);

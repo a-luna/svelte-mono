@@ -44,16 +44,20 @@ export const convertPropNameToDisplayName = (propName: string): string =>
 				.map((w) => capitalize(w))
 				.join(' ');
 
-export const convertPropNameToCssVarName = (userTheme: UserThemeImported, propName: string): string =>
-	!propName
+export function convertPropNameToCssVarName(userTheme: UserThemeImported, propName: string): string {
+	let cssVarName = !propName
 		? ''
-		: userTheme.usesPrefix
-		? `${userTheme.themePrefix}-${getWordsFromCamelCase(propName)
-				.map((w) => w.toLowerCase())
-				.join('-')}`
 		: `--${getWordsFromCamelCase(propName)
 				.map((w) => w.toLowerCase())
 				.join('-')}`;
+
+	if (userTheme.usesPrefix && cssVarName.indexOf(`${userTheme.themePrefix}-`) !== 0) {
+		cssVarName = `${userTheme.themePrefix}-${getWordsFromCamelCase(propName)
+			.map((w) => w.toLowerCase())
+			.join('-')}`;
+	}
+	return cssVarName;
+}
 
 export function convertCssVarNameToPropName(userTheme: UserThemeImported, cssVarName: string): string {
 	if (!cssVarName) {

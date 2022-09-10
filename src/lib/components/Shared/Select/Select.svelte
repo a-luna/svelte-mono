@@ -16,6 +16,7 @@
 	export let disabled: boolean = false;
 	export let displaySelectedOptionText = true;
 	export let dropdownShown: boolean = false;
+	export let style = '';
 	let selectedOption: SelectMenuOption;
 	const dispatch = createEventDispatcher();
 
@@ -52,6 +53,7 @@
 <div
 	class="select-menu-wrapper"
 	data-testid={menuId}
+	{style}
 	use:clickOutside={{ enabled: dropdownShown, cb: () => (dropdownShown = !dropdownShown) }}
 >
 	<div>
@@ -101,9 +103,10 @@
 		--select-menu-default-margin: 0;
 		--select-menu-default-flex: 0 1 auto;
 		--select-menu-default-text-color: hsl(0, 0%, 10%);
-		--select-menu-default-disabled-text-color: hsl(0, 0%, 30%);
+		--select-menu-default-no-selection-text-color: var(--dark-gray4);
 		--select-menu-default-bg-color: hsl(0, 0%, 100%);
 		--select-menu-default-hover-bg-color: hsl(0, 0%, 95%);
+		--select-menu-default-disabled-text-color: hsl(0, 0%, 30%);
 		--select-menu-default-disabled-bg-color: hsl(0, 0%, 80%);
 		--select-menu-default-font-size: 0.875rem;
 		--select-menu-default-height: 36px;
@@ -131,6 +134,7 @@
 			var(--select-menu-focus-ring-offset-color, --select-menu-default-focus-ring-offset-color);
 		--focus-ring-box-shadow: var(--focus-ring-offset-shadow), var(--focus-ring-shadow), 0 0 #0000;
 
+		--select-menu-default-dropdown-height: auto;
 		--select-menu-default-dropdown-margin: 0.5rem 0 0 0;
 		--select-menu-default-dropdown-box-shadow: 0 0 0 0px #fff, 0 0 0 1px rbg(0 0 0 / 0.05), 0 0 #0000;
 		--select-menu-default-selected-item-bg-color: hsl(0, 0%, 90%);
@@ -183,12 +187,15 @@
 
 	.open-list-button.disabled {
 		cursor: default;
-		color: var(--select-text-color-disabled, var(--dark-gray2));
-		background-color: var(--select-bg-color-disabled, var(--light-gray1));
+		color: var(--select-menu-disabled-text-color, var(--select-menu-default-disabled-text-color, var(--dark-gray2)));
+		background-color: var(
+			--select-menu-disabled-bg-color,
+			var(--select-menu-default-disabled-bg-color, var(--light-gray1))
+		);
 	}
 
 	.open-list-button.no-selection {
-		color: var(--select-text-color-no-selection, var(--gray4));
+		color: var(--select-menu-no-selection-text-color, var(--select-menu-default-no-selection-text-color, var(--gray4)));
 	}
 
 	.dropdown {
@@ -197,6 +204,8 @@
 		right: 0;
 		z-index: 10;
 		width: 100%;
+		overflow-y: auto;
+		height: var(--select-menu-dropdown-height, var(--select-menu-default-dropdown-height));
 		margin: var(--select-menu-dropdown-margin, var(--select-menu-default-dropdown-margin));
 		border-radius: var(--select-menu-border-radius, var(--select-menu-default-border-radius));
 		box-shadow: var(--select-menu-dropdown-box-shadow, var(--select-menu-default-dropdown-box-shadow));

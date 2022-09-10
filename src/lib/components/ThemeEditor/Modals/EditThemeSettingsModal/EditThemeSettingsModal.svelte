@@ -4,7 +4,6 @@
 	import Modal from '$lib/components/Shared/Modal.svelte';
 	import ColorFormatSelector from '$lib/components/ThemeEditor/Modals/EditThemeSettingsModal/ColorFormatSelector.svelte';
 	import { getThemeEditorStore } from '$lib/context';
-	import { CSS_VAR_PREFIX_REGEX } from '$lib/themes';
 	import type { ColorFormat, ComponentColor, UserThemeFromFile } from '$lib/types';
 	import { createEventDispatcher, tick } from 'svelte';
 
@@ -19,16 +18,23 @@
 	let themePrefix = '';
 	let uiColor: ComponentColor = 'black';
 	let uiColorMenuId: string;
-	let inputTextBox: InputTextBox;
+	let nameTextBox: InputTextBox;
+	let prefixTextBox: InputTextBox;
 	let state = getThemeEditorStore(editorId);
-	let error = false;
+	let themeNameError = false;
+	let themePrefixError = false;
 	const dispatch = createEventDispatcher();
 
-	$: if (usesPrefix && inputTextBox) focusInput();
-	$: if (usesPrefix && themePrefix) error = !CSS_VAR_PREFIX_REGEX.test(themePrefix);
+	$: if (usesPrefix && prefixTextBox) focusPrefixTextBox();
+	$: if (usesPrefix && themePrefix)
+		themePrefixError = !themePrefix || !themePrefix.length || themePrefix.indexOf('--') !== 0;
+	$: themeNameError = !themeName || !themeName.length;
 
-	export function toggleModal(theme: UserThemeFromFile) {
-		if (closed) {
+	export async function toggleModal(theme: UserThemeFromFile) {
+		modal.toggleModal();
+		$state.modalOpen = !$state.modalOpen;
+
+		if (!closed) {
 			userTheme = theme;
 			themeName = theme.themeName;
 			uiColor = theme.uiColor;
@@ -36,9 +42,11 @@
 			usesPrefix = theme.usesPrefix;
 			themePrefix = theme.themePrefix;
 			previousSettings = { themeName, uiColor, colorFormat, usesPrefix, themePrefix };
+			await focusNameTextBox();
+		} else {
+			nameTextBox.blur();
+			prefixTextBox.blur();
 		}
-		modal.toggleModal();
-		$state.modalOpen = !$state.modalOpen;
 	}
 	function saveChanges() {
 		userTheme.themeName = themeName;
@@ -53,6 +61,7 @@
 		modal.toggleModal();
 		dispatch('updateUiColor', userTheme.uiColor);
 		dispatch('updateColorFormat', userTheme.colorFormat);
+		dispatch('updateComponentPrefix', userTheme);
 	}
 	function discardChanges() {
 		userTheme.themeName = previousSettings['themeName'];
@@ -68,9 +77,14 @@
 		modal.toggleModal();
 	}
 
-	async function focusInput() {
+	async function focusNameTextBox() {
 		await tick();
-		inputTextBox.focus();
+		nameTextBox.focus();
+	}
+
+	async function focusPrefixTextBox() {
+		await tick();
+		prefixTextBox.focus();
 	}
 </script>
 
@@ -78,12 +92,13 @@
 	bind:this={modal}
 	bind:closed
 	title={'Edit Theme Settings'}
+	disableSaveButton={themeNameError || themePrefixError}
 	on:discardChanges={() => discardChanges()}
 	on:saveChanges={() => saveChanges()}
 >
 	<div class="edit-theme-settings">
 		<label for="theme-name">Theme Name</label>
-		<input type="text" id="theme-name" name="theme-name" value={themeName} />
+		<InputTextBox error={themeNameError} bind:this={nameTextBox} bind:inputText={themeName} id={'theme-name'} />
 
 		<label for={uiColorMenuId}>UI Color</label>
 		<ComponentColorSelector bind:menuId={uiColorMenuId} bind:value={uiColor} />
@@ -93,15 +108,15 @@
 			<ColorFormatSelector bind:value={colorFormat} />
 		</div>
 
-		<label for="uses-prefix" class="checkbox-label">Add Prefix to Css Var. Names</label>
+		<label for="uses-prefix">Use Theme Prefix?</label>
 		<div class="checkbox-wrapper">
 			<input type="checkbox" id="uses-prefix" name="uses-prefix" bind:checked={usesPrefix} />
 		</div>
 
 		<label for="theme-prefix">CSS Variable Prefix</label>
 		<InputTextBox
-			{error}
-			bind:this={inputTextBox}
+			error={themePrefixError}
+			bind:this={prefixTextBox}
 			bind:inputText={themePrefix}
 			disabled={!usesPrefix}
 			id={'theme-prefix'}
@@ -111,7 +126,7 @@
 
 <style lang="postcss">
 	.edit-theme-settings {
-		--select-menu-width: 55px;
+		--select-menu-width: 80px;
 		--select-menu-height: 30px;
 		--select-menu-margin: 0 6px 0 0;
 		--select-menu-padding: 4px 10px;
@@ -139,9 +154,6 @@
 	}
 	.select-wrapper {
 		width: 80px;
-	}
-	.checkbox-label {
-		font-size: 0.65rem;
 	}
 	.checkbox-wrapper {
 		width: 20px;

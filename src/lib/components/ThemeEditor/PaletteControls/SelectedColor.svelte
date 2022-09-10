@@ -12,16 +12,18 @@
 
 	$: bgColor = $state.colorSelected ? 'var(--white3)' : 'var(--white1)';
 	$: swatchColor = $state.colorSelected ? $state.selectedColor.color : parseColorFromString('hsl(0, 0%, 85%)').value;
-	$: displayName = $state.colorSelected ? $state.selectedColor.displayName : 'No Color Selected';
+	$: displayName = $state.colorSelected ? $state.selectedColor.displayName : '';
 	$: tooltip = $state.colorSelected
 		? `${$state.selectedColor.displayName} is the selected palette`
 		: 'No Palette Selected';
 </script>
 
 <div class="option-wrapper" title={tooltip} style="background-color: {bgColor}">
-	<div class="swatch-border">
-		<ColorSwatch color={swatchColor} swatchWidth={'15px'} swatchHeight={'15px'} />
-	</div>
+	{#if $state.colorSelected}
+		<div class="swatch-border">
+			<ColorSwatch color={swatchColor} swatchWidth={'15px'} swatchHeight={'15px'} />
+		</div>
+	{/if}
 	<span>{displayName}</span>
 </div>
 

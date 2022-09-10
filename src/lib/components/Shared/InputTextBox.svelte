@@ -14,6 +14,10 @@
 		inputTextElement.focus();
 	}
 
+	export function blur() {
+		inputTextElement.blur();
+	}
+
 	function handleKeyPress(key: string) {
 		if (key === 'Enter') {
 			dispatch('submit');
@@ -40,20 +44,26 @@
 		justify-self: flex-start;
 		font-size: 1rem;
 		border-radius: 6px;
-		padding: 0.25rem;
+		-webkit-border-radius: 6px;
+		padding: 0.25rem 0.5rem;
 		margin: auto 0;
 		width: 100%;
-		font-size: 1rem;
+		font-size: var(--input-font-size, var(--input-default-text-size, 1rem));
 		line-height: 19px;
 	}
+	input:focus {
+		box-shadow: 0 0 0 2px var(--blue4);
+		outline: 0;
+	}
 	input.error {
-		border: 1px solid var(--red4);
+		box-shadow: 0 0 0 2px var(--red4);
 		color: var(--red4);
+		outline: 0;
 	}
 	input[disabled] {
-		color: var(--gray4);
-		background-color: var(--modal-body-bg-color);
-		outline: 1px solid var(--black1);
+		color: var(--input-text-fg-color, var(--input-text-default-fg-color, var(--gray4)));
+		background-color: var(--input-text-bg-color, var(--input-text-default-bg-color, var(--modal-body-bg-color)));
+		outline: 1px solid var(--input-text-border-color, var(--input-text-default-border-color, var(--black1)));
 		border-radius: 4px;
 	}
 </style>

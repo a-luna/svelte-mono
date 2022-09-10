@@ -5,7 +5,7 @@
 
 	export let color: ComponentColor = 'black';
 	export let disabled = false;
-	export let tooltip: string;
+	export let tooltip: string = '';
 	export let alignSelf = '';
 	export let wrapperWidth: string = '';
 	export let classList: string[] = [];

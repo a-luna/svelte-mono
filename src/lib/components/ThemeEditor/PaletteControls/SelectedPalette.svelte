@@ -2,49 +2,39 @@
 	import type { ColorPalette } from '$lib/types';
 
 	export let selectedPalette: ColorPalette;
-	let bgColor: string;
-	let swatchColor: string;
 	let displayName: string;
 	let tooltip: string;
 
-	$: bgColor = selectedPalette ? 'var(--white3)' : 'var(--white1)';
-	$: swatchColor = selectedPalette ? `var(--${selectedPalette.componentColor}-fg-color)` : 'inherit';
-	$: displayName = selectedPalette ? selectedPalette.displayName : 'No Palette Selected';
+	$: bgColor = selectedPalette ? `var(--${selectedPalette.componentColor}-hover-bg-color)` : 'var(--white1)';
+	$: fgColor = selectedPalette ? `var(--${selectedPalette.componentColor}-fg-color)` : 'var(--black-fg-color)';
+	$: displayName = selectedPalette ? selectedPalette.displayName : '';
 	$: tooltip = selectedPalette ? `${selectedPalette.displayName} is the selected palette` : 'No Palette Selected';
 </script>
 
-<div class="option-wrapper" title={tooltip} style="background-color: {bgColor}">
-	<div class="color-swatch" style="background-color: {swatchColor}" />
+<div
+	class="option-wrapper"
+	title={tooltip}
+	style="color: {fgColor}; background-color: {bgColor}; border: 1px solid {fgColor};"
+>
 	<span>{displayName}</span>
 </div>
 
 <style lang="postcss">
 	.option-wrapper {
-		flex: 0 1 auto;
-		display: grid;
-		grid-template-columns: 1fr auto 8px 200px 1fr;
+		display: flex;
 		align-items: center;
-		justify-content: center;
-		font-size: 0.9rem;
-		border: 1px solid var(--black1);
 		border-radius: 4px;
-
+		padding: 0 0 0 8px;
 		grid-column: 1 / span 1;
 		grid-row: 2 / span 1;
 	}
 
-	.color-swatch {
-		width: 15px;
-		height: 15px;
-		padding: 3px;
-		border: 1px solid var(--black2);
-		grid-column: 2 / span 1;
-	}
-
 	span {
+		font-size: 0.9rem;
+		font-weight: 500;
+		width: 100%;
 		overflow-x: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		grid-column: 4 / span 1;
 	}
 </style>

@@ -15,6 +15,7 @@
 		sortBy: 'launch_speed',
 		sortDir: 'desc',
 		tableWrapper: true,
+		expandToContainerWidth: true,
 		themeName: 'light',
 		clickableRows: false,
 		animateSorting: false,
@@ -31,7 +32,7 @@
 	<title>Component Theme Editor by Aaron Luna</title>
 </svelte:head>
 
-<!-- <ThemeEditor>
+<!-- <ThemeEditor {editorId}>
 	<SimpleTable {data} {columnSettings} {tableSettings} />
 </ThemeEditor> -->
 

@@ -11,10 +11,11 @@
 	export let noFooter = false;
 	export let outsideClickClosesModal = true;
 	export let saveButtonText = 'Save';
-	export const toggleModal = () => (closed = !closed);
 	const dispatch = createEventDispatcher();
 
 	$: modelLabel = `${modalId}-label`;
+
+	export const toggleModal = () => (closed = !closed);
 
 	function handleKeyPress(key: string) {
 		if (key === 'Escape') {
@@ -218,7 +219,7 @@
 		cursor: not-allowed;
 		color: var(--light-gray2);
 		background-color: var(--gray2);
-		border: 1px solid var(--gray2);
+		border: 2px solid var(--gray2);
 	}
 
 	@media screen and (min-width: 762px) {

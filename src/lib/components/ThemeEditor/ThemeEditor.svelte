@@ -30,15 +30,24 @@
 	let editThemeSettingsModal: EditThemeSettingsModal;
 	let componentColor: ComponentColor = 'black';
 	let colorPicker: ColorPicker;
+	let contentViewer: ContentViewer;
 
-	// # COLOR SCHEMES
-	// TODO: Create component that generates classic color schemes based on selectedColor value:
-	//    - Complementary color (1: hue +180)
-	//    - Analogous colors (2: hue +30, hue -30)
-	//    - Triadic colors (2: hue +120, hue +240)
-	//    - Tetradic colors (3: hue +90, hue +180, hue +270)
-	//    - Split complementary (2: hue +150, hue +210)
-	//    - Monochrome (10: lightness -25, -20, -15, -10 -5, +5, +10, +15, +20, +25)
+	// # NEW IDEAS
+	// New high-level data structure: ThemeSet
+	// UserTheme -> ComponentTheme, and ColorPalette -> PropertySet
+	//
+	// ThemeSet is a list of ComponentThemes and metadata, each ComponentTheme is a list of PropertySets
+	// For example, ather than storing only color values, the Button PropertySet should also contain font-size, padding, etc. values for buttons
+	// The Palette component is doing too much, separating the X11Palettes/ColorPalettes use cases into two components should have been done yesterday
+	// Requires changes to the UI to allow user to switch between component themes, change values and save the ThemeSet to file
+	//
+	// Now, when exporting to JSON, the object will be a list of ComponentThemes with a few metadata fields:
+	//  - createdAt/modifiedAt/usesPrefix/uiColor: these will be moved from UserTheme/ComponentTheme to ThemeSet
+	//  - component? - need to think about how to store this info, or if it is even really needed
+	//  - themePrefix will also be moved and will be renamed to componentPrefix
+	// The ComponentTheme interface will contain the following metadata fields:
+	//  - selector: CSS selector which applies the component theme (e.g., '.light', '.dark')
+	//  - displayName used to identify the component theme in the UI
 
 	// # CONTENT VIEWER
 	// TODO: PropertySet can contain CSS Custom Properties with non-color values (e.g., margin, width, font-size) and color values
@@ -46,8 +55,8 @@
 	// TODO: On the ContentViewer -> CSS tab, user can list all CSS Custom Properties in window.document and filter the list based on property name prefix (e.g., '--tw') and selectors used to apply the custom properties (e.g., ':root', '.light', 'dark')
 	// TODO: On the ContentViewer -> CSS tab, user can assign CSS Custom Properties/Values from the list to a PropertySet, individually or in bulk
 	// TODO: Alternatively, user can create a new PropertySet from a selection of CSS Custom Properties/Values
-	// TODO: usOn the ContentViewer -> CSS tab, userer can view the CSS Custom Properties from the PropertySets as valid CSS
-	// TODO: On the ContentViewer -> CSS tab, each PropertySet is rendered as a CSS Style Rule: all CSS Custom Properties and theie values in the PropertySet are listed on separate lines, and the list is surounded by curly braces preceded by the PropertySet.selector value
+	// TODO: On the ContentViewer -> CSS tab, userer can view the CSS Custom Properties from the PropertySets as valid CSS
+	// TODO: On the ContentViewer -> CSS tab, each PropertySet is rendered as a CSS Style Rule: all CSS Custom Properties and their values in the PropertySet are listed on separate lines, and the list is surounded by curly braces preceded by the PropertySet.selector value
 	//
 	//  Assuming the following ThemeSet object has been created:
 	//
@@ -117,22 +126,20 @@
 	// TODO: Allow user to delete colors from theme palettes
 	// TODO: Allow user to delete theme palettes
 
-	// # NEW IDEAS
-	// New high-level data structure: ThemeSet
-	// UserTheme -> ComponentTheme, and ColorPalette -> PropertySet
-	//
-	// ThemeSet is a list of ComponentThemes and metadata, each ComponentTheme is a list of PropertySets
-	// For example, ather than storing only color values, the Button PropertySet should also contain font-size, padding, etc. values for buttons
-	// The Palette component is doing too much, separating the X11Palettes/ColorPalettes use cases into two components should have been done yesterday
-	// Requires changes to the UI to allow user to switch between component themes, change values and save the ThemeSet to file
-	//
-	// Now, when exporting to JSON, the object will be a list of ComponentThemes with a few metadata fields:
-	//  - createdAt/modifiedAt/usesPrefix/uiColor: these will be moved from UserTheme/ComponentTheme to ThemeSet
-	//  - component? - need to think about how to store this info, or if it is even really needed
-	//  - themePrefix will also be moved and will be renamed to componentPrefix
-	// The ComponentTheme interface will contain the following metadata fields:
-	//  - selector: CSS selector which applies the component theme (e.g., '.light', '.dark')
-	//  - displayName used to identify the component theme in the UI
+	// # COLOR SCHEMES
+	// TODO: Create component that generates classic color schemes based on selectedColor value:
+	//    - Complementary color (1: hue +180)
+	//    - Analogous colors (2: hue +30, hue -30)
+	//    - Triadic colors (2: hue +120, hue +240)
+	//    - Tetradic colors (3: hue +90, hue +180, hue +270)
+	//    - Split complementary (2: hue +150, hue +210)
+	//    - Monochrome (10: lightness -25, -20, -15, -10 -5, +5, +10, +15, +20, +25)
+
+	$: console.log({
+		picker: $colorPickerState,
+		state: $state,
+		app: $app,
+	});
 
 	$: if (typeof window !== 'undefined' && !editorStateInitialized) {
 		state = createThemeEditorStore(editorId);
@@ -145,16 +152,16 @@
 		storesInitialized = true;
 	}
 	$: colorFormat = $state?.userTheme?.colorFormat ?? 'hsl';
-
-	$: console.log({
-		picker: $colorPickerState,
-		state: $state,
-		app: $app,
-	});
+	$: componentColor = $state?.userTheme?.uiColor ?? 'black';
 
 	function handleUserThemeImported(theme: UserThemeImported) {
 		$state.userTheme = theme;
 		themeInitialized = true;
+		contentViewer.changeComponentPrefix(theme.usesPrefix, theme.themePrefix);
+	}
+
+	function handleUserThemeSettingsChanged(updatedUserTheme: UserThemeImported) {
+		contentViewer.changeComponentPrefix(updatedUserTheme.usesPrefix, updatedUserTheme.themePrefix);
 	}
 
 	function newUserTheme() {
@@ -193,6 +200,7 @@
 		bind:this={editThemeSettingsModal}
 		on:updateUiColor={(e) => (componentColor = e.detail)}
 		on:updateColorFormat={(e) => (colorFormat = e.detail)}
+		on:updateComponentPrefix={(e) => handleUserThemeSettingsChanged(e.detail)}
 	/>
 {/if}
 
@@ -239,7 +247,13 @@
 			</div>
 		</div>
 		{#if storesInitialized}
-			<ContentViewer {editorId} {componentColor}>
+			<ContentViewer
+				bind:this={contentViewer}
+				{editorId}
+				{componentColor}
+				themePrefix={$state?.userTheme?.themePrefix}
+				usesTheme={$state?.userTheme?.usesPrefix}
+			>
 				<slot>
 					<div class="help-text">
 						<p><strong>The slot for the ThemeEditor component is not populated!</strong></p>

@@ -7,7 +7,7 @@
 	export let componentColor: ComponentColor;
 	const dispatch = createEventDispatcher();
 
-	$: style = `color: var(--${componentColor}-fg-color); border: 1px solid var(--${componentColor}-fg-color); background-color: var(--${componentColor}-hover-bg-color);`;
+	$: style = `color: var(--${componentColor}-fg-color); border: 1px solid var(--${componentColor}-fg-color); background-color: var(--${componentColor}-bg-color);`;
 </script>
 
 <div class="init-theme" {style}>

@@ -146,7 +146,6 @@
 	{:else if $state.x11ColorPalettes}
 		<X11Palettes
 			x11ColorPalettes={$state.x11ColorPalettes}
-			alphaEnabled={$state.alphaEnabled}
 			on:colorSelected={() => ($state.x11PalettesShown = false)}
 			on:colorSelected={(e) => handleX11ColorSelected(e.detail)}
 			on:hideX11Palettes={() => ($state.x11PalettesShown = false)}
