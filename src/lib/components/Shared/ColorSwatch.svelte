@@ -8,6 +8,7 @@
 	export let swatchHeight: string;
 	export let iconSize = '';
 	export let iconTooltip = '';
+	export let style = '';
 	const dispatch = createEventDispatcher();
 
 	$: wrapperGrid = $$slots.icon ? `grid-template-rows: 1fr ${iconSize};` : 'grid-template-rows: 1fr;';
@@ -18,7 +19,7 @@
 	$: overlayPointer = color?.hasAlpha ? `pointer-events: none;` : '';
 </script>
 
-<div class="swatch-wrapper" style="{wrapperGrid} {wrapperSize}">
+<div class="swatch-wrapper" style="{wrapperGrid} {wrapperSize} {style}">
 	<div class="swatch" style="{swatchColor} {swatchGrid}" />
 	<div
 		class="swatch-overlay"
