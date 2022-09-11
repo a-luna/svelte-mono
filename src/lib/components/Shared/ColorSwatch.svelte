@@ -12,10 +12,10 @@
 
 	$: wrapperGrid = $$slots.icon ? `grid-template-rows: 1fr ${iconSize};` : 'grid-template-rows: 1fr;';
 	$: wrapperSize = `width: ${swatchWidth}; height: ${swatchHeight};`;
-	$: swatchColor = color.hasAlpha ? alphaBgPattern : 'background-color: inherit;';
+	$: swatchColor = color?.hasAlpha ? alphaBgPattern : 'background-color: inherit;';
 	$: swatchGrid = $$slots.icon ? 'grid-row: 1 / span 2;' : 'grid-row: 1 / span 1;';
-	$: overlayColor = `background-color: ${color.hslaString};`;
-	$: overlayPointer = color.hasAlpha ? `pointer-events: none;` : '';
+	$: overlayColor = `background-color: ${color?.hslaString};`;
+	$: overlayPointer = color?.hasAlpha ? `pointer-events: none;` : '';
 </script>
 
 <div class="swatch-wrapper" style="{wrapperGrid} {wrapperSize}">

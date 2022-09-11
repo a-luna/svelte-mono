@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { colorNameisCustomized } from '$lib/color';
+	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import Modal from '$lib/components/Shared/Modal.svelte';
-	import { alphaBgPattern } from '$lib/constants';
 	import { getAppStore, getThemeEditorStore } from '$lib/context';
 	import {
 		CAMEL_CASE_REGEX,
@@ -79,9 +79,8 @@
 	<div class="color-details">
 		<div class="color-swatch-wrapper">
 			<label for="color-swatch">Add color</label>
-			<div class="swatch-wrapper">
-				<div class="swatch" style={themeColor?.color.hasAlpha ? alphaBgPattern : 'background-color: inherit'} />
-				<div class="swatch-overlay" style={bgColor} />
+			<div class="swatch-border">
+				<ColorSwatch color={themeColor?.color} swatchWidth={'39px'} swatchHeight={'20px'} />
 			</div>
 		</div>
 		<div class="pallete-name-wrapper">
@@ -146,28 +145,6 @@
 		grid-column: 1 / span 1;
 		grid-row: 1 / span 1;
 	}
-	.swatch-wrapper {
-		flex: 0 1 auto;
-		width: 39px;
-		height: 20px;
-
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr;
-	}
-	.swatch {
-		z-index: 1;
-		position: relative;
-
-		grid-column: 1 / span 1;
-		grid-row: 1 / span 1;
-	}
-	.swatch-overlay {
-		z-index: 2;
-
-		grid-column: 1 / span 1;
-		grid-row: 1 / span 1;
-	}
 	.pallete-name-wrapper {
 		flex: 0 1 auto;
 		display: flex;
@@ -212,5 +189,10 @@
 		outline: 1px solid var(--black1);
 		border-radius: 4px;
 		padding: 0.25rem;
+	}
+
+	.swatch-border {
+		border: 2px inset var(--color-swatch-button-border-color);
+		grid-column: 2 / span 1;
 	}
 </style>
