@@ -7,7 +7,6 @@
 	const style = `grid-column: 3 / span 1; grid-row: 2 / span 1;`;
 </script>
 
-<Checkbox id={'ignore-tailwinds-checkbox'} label={'Ignore Tailwinds?'} color={componentColor} {style} bind:checked />
-
-<style lang="postcss">
-</style>
+<Checkbox id={'ignore-tailwinds-checkbox'} color={componentColor} {style} bind:checked>
+	<svelte:fragment slot="leftLabel">Ignore Tailwinds?</svelte:fragment>
+</Checkbox>

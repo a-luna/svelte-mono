@@ -4,15 +4,14 @@
 	import type { ComponentColor } from '$lib/types';
 
 	export let id: string;
-	export let label: string;
 	export let checked: boolean;
 	export let color: ComponentColor;
 	export let style = '';
 </script>
 
 <label for={id} class={color !== 'black' ? 'color' : 'black'} style="--button-hue: var(--{color}-hue); {style}">
-	{#if label}
-		<span on:click|stopPropagation>{label}</span>
+	{#if $$slots.leftLabel}
+		<span on:click|stopPropagation><slot name="leftLabel" /></span>
 	{/if}
 	{#if checked}
 		<div class="icon" on:click|stopPropagation>
@@ -22,6 +21,9 @@
 		<div class="icon" on:click|stopPropagation>
 			<Unchecked />
 		</div>
+	{/if}
+	{#if $$slots.rightLabel}
+		<span on:click|stopPropagation><slot name="rightLabel" /></span>
 	{/if}
 </label>
 <input type="checkbox" {id} name={id} bind:checked />
