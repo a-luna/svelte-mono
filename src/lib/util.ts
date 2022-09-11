@@ -128,8 +128,8 @@ export function getAllCssVariables(args: {
 			const ruleSelector = removeScopedCssClasses ? removeScopedCssClassNames(rule.selectorText) : rule.selectorText;
 			return Array.from(rule.style)
 				.filter((propName) => propName.indexOf('--') === 0)
-				.map((propName) => ({
-					id: getRandomHexString(8),
+				.map((propName, i) => ({
+					id: (i + 1).toString(),
 					name: propName.trim(),
 					selector: ruleSelector,
 					value: rule.style.getPropertyValue(propName).trim(),
