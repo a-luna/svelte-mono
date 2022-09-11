@@ -63,7 +63,7 @@
 	input[disabled] {
 		color: var(--input-text-fg-color, var(--input-text-default-fg-color, var(--gray4)));
 		background-color: var(--input-text-bg-color, var(--input-text-default-bg-color, var(--modal-body-bg-color)));
-		outline: 1px solid var(--input-text-border-color, var(--input-text-default-border-color, var(--black1)));
+		border: 1px solid var(--input-text-border-color, var(--input-text-default-border-color, var(--black1)));
 		border-radius: 4px;
 	}
 </style>

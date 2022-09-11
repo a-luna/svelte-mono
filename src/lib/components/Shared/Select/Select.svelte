@@ -126,12 +126,15 @@
 		--select-menu-default-focus-ring-color: rgb(31 41 55);
 		--select-menu-default-focus-ring-offset-color: hsl(220 14.3% 95.9%);
 		--select-menu-default-focus-ring-offset-width: 2px;
+
 		--focus-ring-shadow: 0 0 0
-			calc(2px + var(--select-menu-focus-ring-offset-width, --select-menu-default-focus-ring-offset-width))
-			var(--select-menu-focus-ring-color, --select-menu-default-focus-ring-color);
+			calc(2px + var(--select-menu-focus-ring-offset-width, var(--select-menu-default-focus-ring-offset-width)))
+			var(--select-menu-focus-ring-color, var(--select-menu-default-focus-ring-color));
+
 		--focus-ring-offset-shadow: 0 0 0
-			var(--select-menu-focus-ring-offset-width, --select-menu-default-focus-ring-offset-width)
-			var(--select-menu-focus-ring-offset-color, --select-menu-default-focus-ring-offset-color);
+			var(--select-menu-focus-ring-offset-width, var(--select-menu-default-focus-ring-offset-width))
+			var(--select-menu-focus-ring-offset-color, var(--select-menu-default-focus-ring-offset-color));
+
 		--focus-ring-box-shadow: var(--focus-ring-offset-shadow), var(--focus-ring-shadow), 0 0 #0000;
 
 		--select-menu-default-dropdown-height: auto;
