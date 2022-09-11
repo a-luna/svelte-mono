@@ -28,15 +28,11 @@
 		data = refreshCssCustomProps(ignoreTailwinds, [], usesTheme, themePrefix, selector);
 		allSelectors = getUniqueSelectors();
 	}
-	$: if (ignoreTailwinds || usesTheme || themePrefix || selector) {
-		data = refreshCssCustomProps(ignoreTailwinds, [], usesTheme, themePrefix, selector);
-		totalFiltered = data.length;
-		selectedCustomProps = data.filter((data) => data.addToTheme);
-		totalSelected = selectedCustomProps.length;
-		allCustomPropsSelected = totalSelected === totalFiltered;
-		anyCustomPropsSelected = totalSelected > 0;
-		data = [...data];
-	}
+	$: totalFiltered = data.length;
+	$: selectedCustomProps = data.filter((data) => data.addToTheme);
+	$: totalSelected = selectedCustomProps.length;
+	$: allCustomPropsSelected = totalSelected === totalFiltered;
+	$: anyCustomPropsSelected = totalSelected > 0;
 
 	export function changeComponentPrefix(newUsesTheme: boolean, newPrefix: string) {
 		usesTheme = newUsesTheme;
@@ -70,11 +66,13 @@
 	function selectAllCustomProperties() {
 		data.forEach((prop) => (prop.addToTheme = true));
 		data = [...data];
+		tableState.reset(data.length, $tableState.pageSize);
 	}
 
 	function deselectAllCustomProperties() {
 		data.forEach((prop) => (prop.addToTheme = false));
 		data = [...data];
+		tableState.reset(data.length, $tableState.pageSize);
 	}
 
 	function getUniqueSelectors(): string[] {
@@ -115,13 +113,15 @@
 	on:ignoreTailwindsChanged={(e) => handleIgnoreTailwindsChanged(e.detail)}
 />
 <span class="css-filter-results"
-	>{totalCustomProps} found on page, {totalFiltered} match filter, {totalSelected} selected for theme settings</span
+	><strong>{totalFiltered}</strong> custom properties match these filter settings (<strong>{totalCustomProps}</strong> total
+	custom properties on page)</span
 >
-<div class="css-table-wwrapper" on:click={(e) => handleTableClicked(e.target)}>
+<div class="css-table-wrapper" on:click={(e) => handleTableClicked(e.target)}>
 	<CssCustomPropTable {data} bind:tableState />
 </div>
 <CssControls
 	{componentColor}
+	{totalSelected}
 	{allCustomPropsSelected}
 	{anyCustomPropsSelected}
 	on:selectAllCustomProperties={() => selectAllCustomProperties()}
@@ -130,6 +130,15 @@
 
 <style lang="postcss">
 	.css-filter-results {
-		margin: 0.5rem 0;
+		font-size: 0.8rem;
+		padding: 1rem 1rem 0.5rem 1rem;
+	}
+	strong {
+		font-weight: 700;
+	}
+	.css-table-wrapper {
+		padding: 0.5rem 1rem 0 1rem;
+		border-left: 1px solid var(--fg-color);
+		border-right: 1px solid var(--fg-color);
 	}
 </style>

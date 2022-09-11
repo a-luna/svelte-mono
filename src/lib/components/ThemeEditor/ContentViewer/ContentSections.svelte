@@ -20,17 +20,19 @@
 </script>
 
 <div
-	class="component-padding"
+	class="component-wrapper"
 	class:visible={$state.currentlyViewing === 'component'}
 	class:invisible={$state.currentlyViewing !== 'component'}
-	style="{alphaBgPattern} {paddingBorder} {$app.componentStyles}"
 >
-	<slot />
+	<div class="component-padding" style="{alphaBgPattern} {paddingBorder} {$app.componentStyles}">
+		<slot />
+	</div>
 </div>
 <div
 	class="css-section-wrapper"
 	class:visible={$state.currentlyViewing === 'css'}
 	class:invisible={$state.currentlyViewing !== 'css'}
+	style="--bg-color: var(--{componentColor}-bg-color); --fg-color: var(--{componentColor}-fg-color); --active-fg-color: var(--{componentColor}-active-fg-color); --disabled-bg-color: var(--{componentColor}-hover-bg-color);  --hover-bg-color: var(--{componentColor}-hover-bg-color);"
 >
 	<CssSection bind:this={cssSection} {componentColor} {usesTheme} {themePrefix} />
 </div>
@@ -43,6 +45,11 @@
 </div>
 
 <style lang="postcss">
+	.component-wrapper {
+		padding: 1rem;
+		background-color: var(--hover-bg-color);
+	}
+
 	.component-padding {
 		padding: 0.5rem;
 		border-radius: 4px;
@@ -51,6 +58,7 @@
 	}
 	.css-section-wrapper {
 		--sst-font-size: 13px;
+		--sst-table-wrapper-margin: 0;
 
 		display: flex;
 		flex-flow: column nowrap;

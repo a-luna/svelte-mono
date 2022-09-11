@@ -17,7 +17,7 @@
 		clickableRows: false,
 		animateSorting: false,
 		paginated: true,
-		pageSize: 10,
+		pageSize: 5,
 		pageSizeOptions: [5, 10, 15, 20],
 		pageRangeFormat: 'verbose',
 		pageNavFormat: 'compact',
@@ -55,6 +55,3 @@
 </script>
 
 <SimpleTable bind:tableState {data} {columnSettings} {tableSettings} />
-
-<style lang="postcss">
-</style>

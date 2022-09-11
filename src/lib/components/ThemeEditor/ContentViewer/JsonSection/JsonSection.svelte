@@ -6,4 +6,7 @@
 </div>
 
 <style lang="postcss">
+	.json-section-wrapper {
+		padding: 1rem;
+	}
 </style>

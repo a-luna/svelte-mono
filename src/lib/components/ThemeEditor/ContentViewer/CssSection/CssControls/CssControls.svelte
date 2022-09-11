@@ -5,6 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let componentColor: ComponentColor;
+	export let totalSelected: number;
 	export let allCustomPropsSelected: boolean;
 	export let anyCustomPropsSelected: boolean;
 	const dispatch = createEventDispatcher();
@@ -21,11 +22,15 @@
 		disabled={!anyCustomPropsSelected}
 		on:click={() => dispatch('deselectAllCustomProperties')}
 	/>
+	<span class="total-selected"><strong>{totalSelected}</strong> custom properties selected</span>
 </div>
 
 <style lang="postcss">
 	.button-list {
 		display: flex;
-		gap: 0.25rem;
+		align-items: center;
+		font-size: 0.8rem;
+		gap: 0.5rem;
+		padding: 1rem;
 	}
 </style>

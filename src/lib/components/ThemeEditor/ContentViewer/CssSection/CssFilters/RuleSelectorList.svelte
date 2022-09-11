@@ -7,7 +7,7 @@
 	export let disabled = false;
 	export let allSelectors: string[] = [];
 	let options: SelectMenuOption[] = [];
-	const noSelection = { label: '(no selector)', value: '', optionNumber: 1, active: false };
+	const noSelection = { label: '', value: '', optionNumber: 1, active: false };
 	const menuId = 'css-rule-selector';
 	const menuLabel = '';
 	const dispatch = createEventDispatcher();

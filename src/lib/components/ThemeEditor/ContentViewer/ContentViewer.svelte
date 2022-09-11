@@ -85,7 +85,6 @@
 		font-size: 0.875rem;
 		display: flex;
 		flex-flow: column nowrap;
-		padding: 1rem;
 		z-index: 2;
 		margin: 0 auto 0 0;
 		width: 100%;

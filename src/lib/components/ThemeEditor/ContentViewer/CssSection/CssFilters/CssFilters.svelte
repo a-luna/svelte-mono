@@ -19,10 +19,7 @@
 	}
 </script>
 
-<div
-	class="css-filters"
-	style="--bg-color: var(--{componentColor}-bg-color); --fg-color: var(--{componentColor}-fg-color); --active-fg-color: var(--{componentColor}-active-fg-color); --disabled-bg-color: var(--{componentColor}-hover-bg-color);  --hover-bg-color: var(--{componentColor}-hover-bg-color);"
->
+<div class="css-filters">
 	<span class="prefix-label label">Component Prefix:</span>
 	<InputTextBox
 		bind:inputText={prefix}
@@ -45,7 +42,7 @@
 		--select-menu-padding: 0 4px;
 		--select-menu-height: 30px;
 		--select-menu-dropdown-height: 300px;
-		--select-menu-no-selection-text-color: var(--active-fg-color);
+		--select-menu-no-selection-text-color: var(--fg-color);
 		--input-font-size: 0.875rem;
 		--input-text-border-color: var(--fg-color);
 		--input-text-fg-color: var(--fg-color);
@@ -56,6 +53,7 @@
 		grid-template-rows: auto auto;
 		column-gap: 1em;
 		row-gap: 0.25rem;
+		padding: 1rem 1rem 0 1rem;
 	}
 	.label {
 		font-size: 0.75rem;
