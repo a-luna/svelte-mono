@@ -37,7 +37,7 @@
 	on:changed={(e) => handleComponentColorChanged(e.detail)}
 >
 	<svelte:fragment slot="options">
-		<ComponentColorOptions {options} {menuId} {fontSize} on:changed={(e) => handleComponentColorChanged(e.detail)} />
+		<ComponentColorOptions {options} {menuId} on:changed={(e) => handleComponentColorChanged(e.detail)} />
 	</svelte:fragment>
 
 	<svelte:fragment slot="selectedValue">

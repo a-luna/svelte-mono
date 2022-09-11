@@ -5,7 +5,6 @@
 
 	export let options: SelectMenuOption[] = [];
 	export let menuId: string = '';
-	export let fontSize: string = '0.95rem';
 	let selectedOption: SelectMenuOption;
 	const dispatch = createEventDispatcher();
 
@@ -25,7 +24,6 @@
 	<Option
 		{...option}
 		{menuId}
-		{fontSize}
 		on:click={() => dispatch('click', option.optionNumber)}
 		on:click={(e) => handleOptionClicked(e.detail)}
 	>
