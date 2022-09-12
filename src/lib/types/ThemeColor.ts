@@ -6,6 +6,7 @@ export interface ThemeColor {
 	cssVarName?: string;
 	displayName?: string;
 	value?: string;
+	isSelected?: boolean;
 }
 
-export type ThemeColorShallowCopy = Omit<ThemeColor, 'color'>;
+export type ThemeColorShallowCopy = Omit<ThemeColor, 'color' | 'isSelected'>;

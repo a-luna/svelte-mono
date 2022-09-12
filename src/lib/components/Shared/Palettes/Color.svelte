@@ -10,13 +10,13 @@
 	export let displayColorName = false;
 	export let componentColor: ComponentColor;
 	let timeout: NodeJS.Timeout;
-	let buttonElement: HTMLButtonElement;
 	const dispatch = createEventDispatcher();
 
 	$: currentColor = getCssValueForColor(color, colorFormat);
 	$: hasCustomName = colorNameisCustomized(color.color);
 	$: wrapperStyles = displayColorName ? `border: 1px solid var(--${componentColor}-fg-color);` : '';
 	$: buttonToolTip = !displayColorName ? `${color.color.name} (${color.color.hex}, hue: ${color.color.hsl.h})` : '';
+	$: outlineStyles = color.isSelected ? `outline: 2px solid var(--red3); outline-offset: 2px;` : '';
 
 	onDestroy(() => clearTimeout(timeout));
 </script>
@@ -27,16 +27,10 @@
 	class:x11-color={!displayColorName}
 	class:named-color={hasCustomName}
 	class:unnamed-color={!hasCustomName}
-	style={wrapperStyles}
+	style="{wrapperStyles} {outlineStyles}"
 >
 	<div class="color-wrapper-top">
-		<button
-			type="button"
-			title={buttonToolTip}
-			bind:this={buttonElement}
-			on:click|stopPropagation={() => buttonElement.focus()}
-			on:focus={() => dispatch('colorSelected', color)}
-		>
+		<button type="button" title={buttonToolTip} on:click={() => dispatch('colorSelected', color)}>
 			<ColorSwatch
 				color={color.color}
 				swatchWidth={displayColorName ? '25px' : '30px'}
@@ -93,8 +87,7 @@
 	}
 
 	button:focus {
-		outline: 2px solid hsl(240 100% 27%);
-		outline-offset: 2px;
+		outline: none;
 	}
 
 	.user-color button {

@@ -28,12 +28,7 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 	function changeSelectedPalette(paletteId: string, state: ThemeEditorState): ThemeEditorState {
 		if (paletteId) {
 			state.selectedPaletteId = paletteId;
-			const selectedPalette = state.userTheme.palettes.find((p) => p.id === paletteId);
-			if (selectedPalette) {
-				selectedPalette.colors = [...selectedPalette.colors];
-				state.userTheme.palettes = [...state.userTheme.palettes];
-				selectedPalette.updated = true;
-			}
+			state = _resetAllColorsInPalette(state);
 		} else {
 			state.selectedPaletteId = null;
 		}
@@ -41,8 +36,21 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 	}
 
 	function changeSelectedColor(color: ThemeColor, state: ThemeEditorState): ThemeEditorState {
+		state = _resetAllColorsInPalette(state);
 		state.colorSelected = true;
 		state.selectedColor = color;
+		state.selectedColor.isSelected = true;
+		return state;
+	}
+
+	function _resetAllColorsInPalette(state: ThemeEditorState): ThemeEditorState {
+		const selectedPalette = state.userTheme.palettes.find((p) => p.id === state.selectedPaletteId);
+		if (selectedPalette) {
+			selectedPalette.colors.forEach((c) => (c.isSelected = false));
+			selectedPalette.colors = [...selectedPalette.colors];
+			state.userTheme.palettes = [...state.userTheme.palettes];
+			selectedPalette.updated = true;
+		}
 		return state;
 	}
 
@@ -50,11 +58,13 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 		color.name = state.selectedColor.displayName;
 		state.selectedColor.color = color;
 		state.selectedColor.value = getCssValueForColor(state.selectedColor, state.userTheme.colorFormat);
+		state.selectedColor.isSelected = true;
 		return updatePaletteColors(state);
 	}
 
 	function deselectColor(state: ThemeEditorState): ThemeEditorState {
 		state.colorSelected = false;
+		state.selectedColor.isSelected = false;
 		return state;
 	}
 

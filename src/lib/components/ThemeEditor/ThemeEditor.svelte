@@ -213,7 +213,6 @@
 					<PaletteControls
 						{editorId}
 						{pickerId}
-						selectedPalette={$app.selectedThemePalette}
 						{componentColor}
 						on:addColorToPalette={(e) => addColorModal.toggleModal(e.detail)}
 						on:setColorPickerValue={(e) => colorPicker.setColor(e.detail)}

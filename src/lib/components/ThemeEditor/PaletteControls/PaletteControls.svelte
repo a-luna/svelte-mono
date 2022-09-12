@@ -5,14 +5,13 @@
 	import SelectedPalette from '$lib/components/ThemeEditor/PaletteControls/SelectedPalette.svelte';
 	import UpdateColorButton from '$lib/components/ThemeEditor/PaletteControls/UpdateColorButton.svelte';
 	import { getAppStore, getColorPickerStore, getThemeEditorStore } from '$lib/context';
-	import type { ColorPalette, ComponentColor } from '$lib/types';
+	import type { ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import SetColorPickerButton from './SetColorPickerButton.svelte';
 
 	export let editorId: string;
 	export let pickerId: string;
 	export let componentColor: ComponentColor;
-	export let selectedPalette: ColorPalette;
 	let state = getThemeEditorStore(editorId);
 	let app = getAppStore(editorId);
 	let colorPickerState = getColorPickerStore(pickerId);
@@ -20,11 +19,12 @@
 
 	$: disableControls =
 		$state.userTheme.palettes.length === 0 || !$app?.selectedThemePalette || $state.editMode || $app?.x11PalettesShown;
+	$: selectedPalette = $state?.userTheme?.palettes.find((p) => p.id === $state?.selectedPaletteId) || null;
 </script>
 
 <div class="palette-controls">
 	<span class="palette-name-label">selected palette</span>
-	<SelectedPalette bind:selectedPalette />
+	<SelectedPalette {selectedPalette} />
 	<AddColorButton
 		color={componentColor}
 		style={'grid-column: 2 /  span 1; grid-row: 2 /  span 1;'}

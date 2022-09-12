@@ -141,7 +141,7 @@ function importColorPalette(palette: ColorPalleteFromFile): Result<ColorPalette>
 	for (const color of palette.colors) {
 		const result = ColorParser.parse(color.value);
 		if (result.success) {
-			colors.push({ ...color, color: { ...result.value, name: color.displayName } });
+			colors.push({ ...color, color: { ...result.value, name: color.displayName }, isSelected: false });
 		} else {
 			return { success: false, error: Error(`Unable to parse "${color.value}" as a valid CSS color value`) };
 		}
