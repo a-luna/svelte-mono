@@ -45,7 +45,7 @@
 	.component-wrapper {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 0.5rem;
+		gap: 1rem;
 
 		padding: 1rem;
 		background-color: var(--hover-bg-color);

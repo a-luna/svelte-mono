@@ -38,9 +38,13 @@
 	</svelte:fragment>
 
 	<svelte:fragment slot="selectedValue">
-		<div class="swatch-border">
-			<ColorSwatch color={parseColorFromString(value).value} swatchWidth={'15px'} swatchHeight={'15px'} />
-		</div>
+		{#if !disabled}
+			<div class="swatch-border">
+				<ColorSwatch color={parseColorFromString(value).value} swatchWidth={'15px'} swatchHeight={'15px'} />
+			</div>
+		{:else}
+			<div class="swatch-border" style="width: 15px; height: 15px" />
+		{/if}
 	</svelte:fragment>
 </Select>
 
