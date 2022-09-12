@@ -6,7 +6,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let allSelectors: string[];
-	export let ignoreTailwinds: boolean;
+	export let ignoreTailwinds: boolean = false;
 	export let usesTheme: boolean;
 	export let themePrefix: string;
 	export let selector: string = '';

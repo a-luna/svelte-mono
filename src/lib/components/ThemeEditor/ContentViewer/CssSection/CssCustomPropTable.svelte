@@ -38,7 +38,7 @@
 		},
 		{
 			propName: 'name',
-			headerText: 'Custom Property',
+			headerText: 'Property Name',
 			tooltip: 'CSS Custom Property Name',
 		},
 		{
