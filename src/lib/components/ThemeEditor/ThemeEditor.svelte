@@ -298,7 +298,7 @@
 		flex-flow: column nowrap;
 		align-items: flex-start;
 		gap: 1rem;
-		min-width: 330px;
+		min-width: 335px;
 	}
 
 	.help-text {

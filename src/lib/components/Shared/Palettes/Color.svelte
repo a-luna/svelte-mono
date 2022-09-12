@@ -54,6 +54,7 @@
 		gap: 0.25rem;
 		justify-content: flex-start;
 		border-radius: 4px;
+		-webkit-border-radius: 4px;
 	}
 
 	.color-wrapper.user-color {
