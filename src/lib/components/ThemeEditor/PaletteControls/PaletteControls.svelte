@@ -12,17 +12,21 @@
 	export let editorId: string;
 	export let pickerId: string;
 	export let componentColor: ComponentColor;
+	export let gridStyle: string = '';
 	let state = getThemeEditorStore(editorId);
 	let app = getAppStore(editorId);
 	let colorPickerState = getColorPickerStore(pickerId);
 	const dispatch = createEventDispatcher();
 
 	$: disableControls =
-		$state.userTheme.palettes.length === 0 || !$app?.selectedThemePalette || $state.editMode || $app?.x11PalettesShown;
+		$state?.userTheme?.palettes.length === 0 ||
+		!$app?.selectedThemePalette ||
+		$state?.editMode ||
+		$app?.x11PalettesShown;
 	$: selectedPalette = $state?.userTheme?.palettes.find((p) => p.id === $state?.selectedPaletteId) || null;
 </script>
 
-<div class="palette-controls">
+<div class="palette-controls" style={gridStyle}>
 	<span class="palette-name-label">selected palette</span>
 	<SelectedPalette {selectedPalette} />
 	<AddColorButton

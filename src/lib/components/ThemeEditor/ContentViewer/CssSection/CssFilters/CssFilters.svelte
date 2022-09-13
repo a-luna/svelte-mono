@@ -17,7 +17,7 @@
 	const dispatch = createEventDispatcher();
 	let state = getThemeEditorStore(editorId);
 
-	$: themePrefixExists = Boolean($state.userTheme.usesPrefix && $state.userTheme.themePrefix);
+	$: themePrefixExists = Boolean($state?.userTheme?.usesPrefix && $state?.userTheme?.themePrefix);
 	$: if (ignoreTailwinds || !ignoreTailwinds) {
 		dispatch('ignoreTailwindsChanged', ignoreTailwinds);
 	}
@@ -25,7 +25,7 @@
 		dispatch('useThemePrefixChanged', useThemePrefix);
 	}
 	$: if (useThemePrefix && themePrefixExists) {
-		prefix = $state.userTheme.themePrefix;
+		prefix = $state?.userTheme?.themePrefix;
 	}
 	$: if (prefix) {
 		dispatch('componentPrefixChanged', prefix);
