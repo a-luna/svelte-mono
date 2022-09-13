@@ -7,26 +7,33 @@
 	import type { TableState } from '@a-luna/svelte-simple-tables/types';
 	import { onMount, tick } from 'svelte';
 
+	export let editorId: string;
 	export let componentColor: ComponentColor;
-	export let usesTheme: boolean;
-	export let themePrefix: string;
 	let data: CssVariable[];
 	let allCustomProps: CssVariable[];
 	let selectedCustomProps: CssVariable[];
 	let allSelectors: string[];
 	let selector: string;
+	let prefix: string = '';
+	let useThemePrefix = false;
 	let ignoreTailwinds: boolean;
 	let totalFiltered: number;
 	let totalSelected: number;
 	let allCustomPropsSelected: boolean;
 	let anyCustomPropsSelected: boolean;
 	let tableState: TableState<CssVariable>;
+	let cssFilters: CssFilters;
 
 	$: allCustomProps = getAllCssVariables({ ignoreTailwinds: false });
 	$: totalCustomProps = allCustomProps.length;
 	$: if (allCustomProps) {
-		data = refreshCssCustomProps(ignoreTailwinds, [], usesTheme, themePrefix, selector);
+		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selector);
 		allSelectors = getUniqueSelectors();
+	}
+	$: if (prefix) {
+		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selector);
+	}
+	$: if (useThemePrefix) {
 	}
 	$: totalFiltered = data.length;
 	$: selectedCustomProps = data.filter((data) => data.addToTheme);
@@ -34,23 +41,26 @@
 	$: allCustomPropsSelected = totalSelected === totalFiltered;
 	$: anyCustomPropsSelected = totalSelected > 0;
 
-	export function changeComponentPrefix(newUsesTheme: boolean, newPrefix: string) {
-		usesTheme = newUsesTheme;
-		themePrefix = newPrefix;
-		data = refreshCssCustomProps(ignoreTailwinds, [], usesTheme, themePrefix, selector);
-		tableState.reset(data.length, $tableState.pageSize);
+	export function handleUserThemeChanged(usePrefix: boolean, newPrefix: string) {
+		cssFilters.handleUserThemeUpdated(usePrefix);
+		handleComponentPrefixChanged(newPrefix);
 	}
 
 	function refreshCssCustomProps(
 		ignoreTailwinds: boolean,
 		prefixBlackList: string[],
-		usesTheme: boolean,
 		prefix: string,
 		selector: string,
 	): CssVariable[] {
-		const prefixWhiteList = usesTheme && prefix ? [prefix] : [];
+		const prefixWhiteList = prefix ? [prefix] : [];
 		const selectors = selector ? [selector] : [];
-		return getAllCssVariables({ ignoreTailwinds, prefixBlackList, prefixWhiteList, selectors });
+		let cssVars: CssVariable[] = [];
+		try {
+			cssVars = getAllCssVariables({ ignoreTailwinds, prefixBlackList, prefixWhiteList, selectors });
+		} catch {
+			// Do nothing since errors are expected in this case
+		}
+		return cssVars;
 	}
 
 	function handleTableClicked(target: EventTarget) {
@@ -80,17 +90,27 @@
 		return [...new Set(allSelectors)].sort();
 	}
 
-	async function handleCssRuleSelectorChanged(newSelector: string) {
-		selector = newSelector;
-		data = refreshCssCustomProps(ignoreTailwinds, [], usesTheme, themePrefix, selector);
+	function handleComponentPrefixChanged(newPrefix: string) {
+		prefix = newPrefix;
+		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selector);
 		tableState.reset(data.length, $tableState.pageSize);
 	}
 
-	async function handleIgnoreTailwindsChanged(ignore: boolean) {
-		console.log({ ignoreTailwinds, totalRows: data.length });
+	function handleCssRuleSelectorChanged(newSelector: string) {
+		selector = newSelector;
+		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selector);
+		tableState.reset(data.length, $tableState.pageSize);
+	}
+
+	function handleIgnoreTailwindsChanged(ignore: boolean) {
 		ignoreTailwinds = ignore;
-		data = refreshCssCustomProps(ignoreTailwinds, [], usesTheme, themePrefix, selector);
-		console.log({ ignoreTailwinds, totalRows: data.length });
+		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selector);
+		tableState.reset(data.length, $tableState.pageSize);
+	}
+
+	function handleUseThemePrefixChanged(usePrefix: boolean) {
+		useThemePrefix = usePrefix;
+		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selector);
 		tableState.reset(data.length, $tableState.pageSize);
 	}
 
@@ -103,13 +123,14 @@
 </script>
 
 <CssFilters
+	bind:this={cssFilters}
+	{editorId}
 	{allSelectors}
 	{componentColor}
-	{usesTheme}
-	bind:ignoreTailwinds
-	bind:selector
-	bind:themePrefix
+	bind:prefix
+	on:componentPrefixChanged={(e) => handleComponentPrefixChanged(e.detail)}
 	on:cssRuleSelectorChanged={(e) => handleCssRuleSelectorChanged(e.detail)}
+	on:useThemePrefixChanged={(e) => handleUseThemePrefixChanged(e.detail)}
 	on:ignoreTailwindsChanged={(e) => handleIgnoreTailwindsChanged(e.detail)}
 />
 <span class="css-filter-results"

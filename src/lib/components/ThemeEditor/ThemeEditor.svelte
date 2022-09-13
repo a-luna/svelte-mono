@@ -246,13 +246,7 @@
 			</div>
 		</div>
 		{#if storesInitialized}
-			<ContentViewer
-				bind:this={contentViewer}
-				{editorId}
-				{componentColor}
-				themePrefix={$state?.userTheme?.themePrefix}
-				usesTheme={$state?.userTheme?.usesPrefix}
-			>
+			<ContentViewer bind:this={contentViewer} {editorId} {componentColor}>
 				<slot>
 					<div class="help-text">
 						<p><strong>The slot for the ThemeEditor component is not populated!</strong></p>

@@ -6,8 +6,6 @@
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;
-	export let usesTheme: boolean;
-	export let themePrefix: string;
 	let contentSections: ContentSections;
 
 	$: buttonType = componentColor !== 'black' ? 'color' : 'black';
@@ -16,8 +14,8 @@
 	$: bgRightStyle = `border-top: 1px solid var(--${componentColor}-fg-color); border-right: 1px solid var(--${componentColor}-fg-color); border-bottom: 1px solid var(--${componentColor}-fg-color);`;
 	$: style = `--button-hue: var(--${componentColor}-hue); --select-menu-width: 110px; ${viewerStyle}`;
 
-	export const changeComponentPrefix = (usesTheme: boolean, newPrefix: string) =>
-		contentSections.changeComponentPrefix(usesTheme, newPrefix);
+	export const changeComponentPrefix = (usePrefix: boolean, newPrefix: string) =>
+		contentSections.changeComponentPrefix(usePrefix, newPrefix);
 </script>
 
 <svelte:head>
@@ -29,7 +27,7 @@
 	<div class="bg-left" style={bgLeftStyle} />
 	<div class="bg-right" style={bgRightStyle} />
 	<div class="content-wrapper">
-		<ContentSections bind:this={contentSections} {editorId} {componentColor} {usesTheme} {themePrefix}>
+		<ContentSections bind:this={contentSections} {editorId} {componentColor}>
 			<slot />
 		</ContentSections>
 	</div>
@@ -37,10 +35,10 @@
 
 <style lang="postcss">
 	.content-viewer.color {
-		--button-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), 90%);
-		--button-hover-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), 99%);
+		--button-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 90%);
+		--button-hover-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 99%);
 		--button-fg-color: hsl(var(--button-hue, 0), var(--fg-sat, 0%), var(--fg-light, 10%));
-		--section-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), 95%);
+		--section-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 95%);
 		--button-border-color: hsl(var(--button-hue, 0), 63%, 26%);
 	}
 

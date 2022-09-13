@@ -16,7 +16,7 @@
 		noSelection,
 		...allSelectors.map((sel, i) => ({ label: sel, value: sel, optionNumber: i + 2, active: false })),
 	];
-	$: style = `grid-column: 2 / span 1; grid-row: 2 / span 1;`;
+	$: style = `grid-column: 3 / span 1; grid-row: 2 / span 1;`;
 
 	function handleSelectorChanged(selector: string) {
 		value = selector;

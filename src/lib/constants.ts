@@ -12,10 +12,11 @@ export const alphaBgPattern = `background-image: url("data:image/svg+xml,%3Csvg 
 
 const defaultColorPalette: ColorPalette = {
 	id: '',
+	colors: [],
 	propName: '',
 	displayName: '',
-	colors: [],
 	componentColor: 'black',
+	updated: false,
 };
 
 const defaultCssColor: CssColor = {

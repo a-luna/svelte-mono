@@ -4,7 +4,7 @@
 
 	export let checked: boolean;
 	export let componentColor: ComponentColor;
-	const style = `grid-column: 3 / span 1; grid-row: 2 / span 1;`;
+	const style = `grid-column: 4 / span 1; grid-row: 2 / span 1;`;
 </script>
 
 <Checkbox id={'ignore-tailwinds-checkbox'} color={componentColor} {style} bind:checked>

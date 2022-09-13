@@ -7,13 +7,11 @@
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;
-	export let usesTheme: boolean;
-	export let themePrefix: string;
 	let state = getThemeEditorStore(editorId);
 	let cssSection: CssSection;
 
-	export const changeComponentPrefix = (usesTheme: boolean, newPrefix: string) =>
-		cssSection.changeComponentPrefix(usesTheme, newPrefix);
+	export const changeComponentPrefix = (usePrefix: boolean, newPrefix: string) =>
+		cssSection.handleUserThemeChanged(usePrefix, newPrefix);
 </script>
 
 <div
@@ -31,7 +29,7 @@
 	class:invisible={$state.currentlyViewing !== 'css'}
 	style="--bg-color: var(--{componentColor}-bg-color); --fg-color: var(--{componentColor}-fg-color); --active-fg-color: var(--{componentColor}-active-fg-color); --disabled-bg-color: var(--{componentColor}-hover-bg-color);  --hover-bg-color: var(--{componentColor}-hover-bg-color);"
 >
-	<CssSection bind:this={cssSection} {componentColor} {usesTheme} {themePrefix} />
+	<CssSection bind:this={cssSection} {editorId} {componentColor} />
 </div>
 <div
 	class="json-section-wrapper"
