@@ -52,7 +52,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
-		font-size: 13px;
+		font-size: 0.75rem;
 		font-weight: 500;
 		line-height: 1;
 		cursor: pointer;
@@ -61,7 +61,7 @@
 		display: none;
 	}
 	.icon {
-		width: 22px;
+		width: 20px;
 		cursor: pointer;
 	}
 </style>

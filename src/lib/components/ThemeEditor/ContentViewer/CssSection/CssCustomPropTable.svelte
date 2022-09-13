@@ -45,6 +45,7 @@
 			propName: 'selector',
 			headerText: 'Selector',
 			tooltip: 'CSS Rule Selector Text',
+			classList: ['whitespace-normal'],
 		},
 		{
 			propName: 'value',

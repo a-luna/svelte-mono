@@ -15,7 +15,7 @@
 	$: displayName = $state.colorSelected ? $state.selectedColor.displayName : '';
 	$: tooltip = $state.colorSelected
 		? `${$state.selectedColor.displayName} is the selected palette`
-		: 'No Palette Selected';
+		: 'No Theme Color Selected';
 </script>
 
 <div class="option-wrapper" title={tooltip} style="background-color: {bgColor}">
