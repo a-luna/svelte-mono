@@ -26,20 +26,24 @@
 		<span on:click|stopPropagation><slot name="rightLabel" /></span>
 	{/if}
 </label>
-<input type="checkbox" {id} name={id} bind:checked />
+<input type="checkbox" {id} name={id} bind:checked on:change />
 
 <style lang="postcss">
 	label.color {
-		--button-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), var(--bg-light, 95%));
-		--button-hover-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), var(--bg-light-hover, 100%));
+		--button-background-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), var(--background-light, 95%));
+		--button-hover-background-color: hsl(
+			var(--button-hue, 0),
+			var(--background-sat, 0%),
+			var(--background-light-hover, 100%)
+		);
 		--button-fg-color: hsl(var(--button-hue, 0), var(--fg-sat, 0%), var(--fg-light, 10%));
 		--button-active-fg-color: hsl(var(--button-hue, 0), var(--fg-sat-active, 0%), var(--fg-light-active, 0%));
 		--button-hover-fg-color: var(--button-fg-color);
 	}
 
 	label.black {
-		--button-bg-color: var(--white2);
-		--button-hover-bg-color: var(--white4);
+		--button-background-color: var(--white2);
+		--button-hover-background-color: var(--white4);
 		--button-fg-color: var(--black2);
 		--button-active-fg-color: var(--black4);
 		--button-hover-fg-color: var(--black4);

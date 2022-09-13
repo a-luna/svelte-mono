@@ -124,10 +124,10 @@
 	--blue-hue: 210;
 	--indigo-hue: 250;
 
-	--bg-sat: 100%;
+	--background-sat: 100%;
 
-	--bg-light: 94%;
-	--bg-light-hover: calc(var(--bg-light) + 5%);
+	--background-light: 94%;
+	--background-light-hover: calc(var(--background-light) + 5%);
 
 	--fg-sat: 63%;
 	--fg-sat-active: calc(var(--fg-sat) - 7%);

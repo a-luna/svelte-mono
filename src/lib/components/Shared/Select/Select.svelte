@@ -104,10 +104,10 @@
 		--select-menu-default-flex: 0 1 auto;
 		--select-menu-default-text-color: hsl(0, 0%, 10%);
 		--select-menu-default-no-selection-text-color: var(--dark-gray4);
-		--select-menu-default-bg-color: hsl(0, 0%, 100%);
-		--select-menu-default-hover-bg-color: hsl(0, 0%, 95%);
+		--select-menu-default-background-color: hsl(0, 0%, 100%);
+		--select-menu-default-hover-background-color: hsl(0, 0%, 95%);
 		--select-menu-default-disabled-text-color: hsl(0, 0%, 30%);
-		--select-menu-default-disabled-bg-color: hsl(0, 0%, 80%);
+		--select-menu-default-disabled-background-color: hsl(0, 0%, 80%);
 		--select-menu-default-font-size: 0.875rem;
 		--select-menu-default-height: 36px;
 		--select-menu-default-display: inline-flex;
@@ -140,7 +140,7 @@
 		--select-menu-default-dropdown-height: auto;
 		--select-menu-default-dropdown-margin: 0.5rem 0 0 0;
 		--select-menu-default-dropdown-box-shadow: 0 0 0 0px #fff, 0 0 0 1px rbg(0 0 0 / 0.05), 0 0 #0000;
-		--select-menu-default-selected-item-bg-color: hsl(0, 0%, 90%);
+		--select-menu-default-selected-item-background-color: hsl(0, 0%, 90%);
 		--select-menu-default-item-padding: 0.5rem 1rem;
 
 		position: relative;
@@ -174,7 +174,7 @@
 
 	.open-list-button,
 	.dropdown {
-		background-color: var(--select-menu-bg-color, var(--select-menu-default-bg-color));
+		background-color: var(--select-menu-background-color, var(--select-menu-default-background-color));
 		color: var(--select-menu-text-color, var(--select-menu-default-text-color));
 		border: 1px solid var(--select-menu-border-color, var(--select-menu-default-border-color));
 	}
@@ -185,15 +185,15 @@
 	}
 
 	.open-list-button:hover {
-		background-color: var(--select-menu-hover-bg-color, var(--select-menu-default-hover-bg-color));
+		background-color: var(--select-menu-hover-background-color, var(--select-menu-default-hover-background-color));
 	}
 
 	.open-list-button.disabled {
 		cursor: default;
 		color: var(--select-menu-disabled-text-color, var(--select-menu-default-disabled-text-color, var(--dark-gray2)));
 		background-color: var(
-			--select-menu-disabled-bg-color,
-			var(--select-menu-default-disabled-bg-color, var(--light-gray1))
+			--select-menu-disabled-background-color,
+			var(--select-menu-default-disabled-background-color, var(--light-gray1))
 		);
 	}
 

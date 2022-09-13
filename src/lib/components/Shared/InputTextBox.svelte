@@ -43,8 +43,9 @@
 	input {
 		justify-self: flex-start;
 		font-size: 1rem;
-		border-radius: 6px;
-		-webkit-border-radius: 6px;
+		border: 1px solid var(--input-text-border-color, var(--input-text-default-border-color, var(--black1)));
+		border-radius: 4px;
+		-webkit-border-radius: 4px;
 		padding: 0.25rem 0.5rem;
 		margin: auto 0;
 		width: 100%;
@@ -61,9 +62,10 @@
 		outline: 0;
 	}
 	input[disabled] {
-		color: var(--input-text-fg-color, var(--input-text-default-fg-color, var(--gray4)));
-		background-color: var(--input-text-bg-color, var(--input-text-default-bg-color, var(--modal-body-bg-color)));
-		border: 1px solid var(--input-text-border-color, var(--input-text-default-border-color, var(--black1)));
-		border-radius: 4px;
+		color: var(--input-text-color, var(--input-text-default-fg-color, var(--gray4)));
+		background-color: var(
+			--input-text-background-color,
+			var(--input-text-default-background-color, var(--modal-body-background-color))
+		);
 	}
 </style>

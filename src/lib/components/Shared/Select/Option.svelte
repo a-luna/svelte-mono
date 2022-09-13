@@ -44,6 +44,9 @@
 	}
 
 	.active {
-		background-color: var(--select-menu-selected-item-bg-color, var(--select-menu-default-selected-item-bg-color));
+		background-color: var(
+			--select-menu-selected-item-background-color,
+			var(--select-menu-default-selected-item-background-color)
+		);
 	}
 </style>

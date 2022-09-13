@@ -74,11 +74,11 @@
 
 <style lang="postcss">
 	.modal {
-		--modal-outer-bg-color: hsla(0, 0%, 0%, 0.75);
-		--modal-dialog-bg-color: var(--white1);
-		--modal-body-bg-color: var(--white1);
-		--modal-header-bg-color: var(--light-gray4);
-		--modal-footer-bg-color: var(--white1);
+		--modal-outer-background-color: hsla(0, 0%, 0%, 0.75);
+		--modal-dialog-background-color: var(--white1);
+		--modal-body-background-color: var(--white1);
+		--modal-header-background-color: var(--light-gray4);
+		--modal-footer-background-color: var(--white1);
 		--modal-header-text-color: var(--black1);
 
 		overflow-y: auto;
@@ -102,7 +102,7 @@
 
 	.shown {
 		display: block;
-		background-color: var(--modal-outer-bg-color);
+		background-color: var(--modal-outer-background-color);
 	}
 
 	.modal-dialog {
@@ -112,7 +112,7 @@
 		width: calc(100% - 4rem);
 		margin: 2rem auto 0 auto;
 		background-clip: padding-box;
-		background-color: var(--modal-dialog-bg-color);
+		background-color: var(--modal-dialog-background-color);
 		border: 2px solid var(--black1);
 		border-radius: 6px;
 		border-style: none;
@@ -139,7 +139,7 @@
 		justify-content: flex-end;
 		align-items: center;
 		line-height: 1;
-		background-color: var(--modal-header-bg-color);
+		background-color: var(--modal-header-background-color);
 		border-top-left-radius: 6px;
 		border-top-right-radius: 6px;
 		padding: 0.5rem 1rem;
@@ -178,7 +178,7 @@
 		position: relative;
 		font-size: 0.9rem;
 		padding: 0.25rem 1rem;
-		background-color: var(--modal-body-bg-color);
+		background-color: var(--modal-body-background-color);
 	}
 
 	.modal-footer {
@@ -190,7 +190,7 @@
 		gap: 0.5rem;
 		border-bottom-right-radius: 0.375rem;
 		border-bottom-left-radius: 0.375rem;
-		background-color: var(--modal-footer-bg-color);
+		background-color: var(--modal-footer-background-color);
 		padding: 0.5rem 1rem;
 	}
 

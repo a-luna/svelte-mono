@@ -88,6 +88,6 @@
 	}
 	input[readonly] {
 		pointer-events: none;
-		background-color: var(--modal-body-bg-color);
+		background-color: var(--modal-body-background-color);
 	}
 </style>

@@ -7,7 +7,7 @@
 
 	export let value: string = '#00000000';
 	export let disabled = false;
-	export const menuId: string = 'select-component-bg-color';
+	export const menuId: string = 'select-component-background-color';
 	let selectComponent: Select;
 
 	const options: SelectMenuOption[] = [

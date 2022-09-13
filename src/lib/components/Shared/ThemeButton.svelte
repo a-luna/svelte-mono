@@ -52,16 +52,20 @@
 
 <style lang="postcss">
 	.color button {
-		--button-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), var(--bg-light, 95%));
-		--button-hover-bg-color: hsl(var(--button-hue, 0), var(--bg-sat, 0%), var(--bg-light-hover, 100%));
+		--button-background-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), var(--background-light, 95%));
+		--button-hover-background-color: hsl(
+			var(--button-hue, 0),
+			var(--background-sat, 0%),
+			var(--background-light-hover, 100%)
+		);
 		--button-fg-color: hsl(var(--button-hue, 0), var(--fg-sat, 0%), var(--fg-light, 10%));
 		--button-active-fg-color: hsl(var(--button-hue, 0), var(--fg-sat-active, 0%), var(--fg-light-active, 0%));
 		--button-hover-fg-color: var(--button-fg-color);
 	}
 
 	.black button {
-		--button-bg-color: var(--white3);
-		--button-hover-bg-color: var(--white4);
+		--button-background-color: var(--white3);
+		--button-hover-background-color: var(--white4);
 		--button-fg-color: var(--black2);
 		--button-active-fg-color: var(--black4);
 		--button-hover-fg-color: var(--black4);
@@ -74,7 +78,7 @@
 		flex-flow: row nowrap;
 		gap: 0.25rem;
 		white-space: nowrap;
-		background-color: var(--button-bg-color);
+		background-color: var(--button-background-color);
 		border: 2px solid var(--button-fg-color);
 		color: var(--button-fg-color);
 		border-radius: var(--default-border-radius);
@@ -84,13 +88,13 @@
 
 	button:hover {
 		color: var(--button-hover-fg-color);
-		background-color: var(--button-hover-bg-color);
+		background-color: var(--button-hover-background-color);
 	}
 
 	button:active,
 	button:focus,
 	button:active:focus {
-		background-color: var(--button-hover-bg-color);
+		background-color: var(--button-hover-background-color);
 		border: 2px solid var(--button-active-fg-color);
 		color: var(--button-active-fg-color);
 		outline: 1px solid transparent;
