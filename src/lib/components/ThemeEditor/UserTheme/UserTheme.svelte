@@ -18,7 +18,7 @@
 </script>
 
 {#if !initialized}
-	<InitializeUserTheme {componentColor} on:importUserTheme on:newUserTheme />
+	<InitializeUserTheme on:importUserTheme on:newUserTheme />
 {:else}
 	<div class="user-theme">
 		<UserThemeControls
