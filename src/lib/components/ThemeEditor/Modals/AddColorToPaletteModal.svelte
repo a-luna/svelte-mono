@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { colorNameisCustomized } from '$lib/color';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import Modal from '$lib/components/Shared/Modal.svelte';
@@ -11,7 +10,6 @@
 		getCssValueForColor,
 	} from '$lib/themes';
 	import type { CssColor, ThemeColor } from '$lib/types';
-	import { uncapitalize } from '$lib/util';
 	import { createEventDispatcher } from 'svelte';
 
 	export let editorId: string;
@@ -30,7 +28,6 @@
 	const dispatch = createEventDispatcher();
 	const LOWERCASE_REGEX = /^[a-z]+$/;
 
-	$: bgColor = `background-color: ${themeColor?.color.hslaString};`;
 	$: propNameFormatError =
 		autoGenCssVarName || autoGenDisplayName
 			? !(CAMEL_CASE_REGEX.test(propName) || LOWERCASE_REGEX.test(propName))
@@ -47,15 +44,9 @@
 
 	function setDefaultValues(color: CssColor) {
 		themeColor = { color };
-		if (colorNameisCustomized(color)) {
-			themeColor.propName = uncapitalize(color.name);
-			themeColor.cssVarName = convertPropNameToCssVarName($state.userTheme, themeColor.propName);
-			themeColor.displayName = convertPropNameToDisplayName(themeColor.propName);
-		} else {
-			themeColor.propName = '';
-			themeColor.cssVarName = '';
-			themeColor.displayName = '';
-		}
+		propName = '';
+		cssVarName = '';
+		displayName = '';
 		themeColor.value = getCssValueForColor(themeColor, $state.userTheme.colorFormat);
 	}
 

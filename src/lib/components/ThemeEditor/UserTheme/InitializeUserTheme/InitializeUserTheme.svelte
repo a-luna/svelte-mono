@@ -6,11 +6,9 @@
 
 	export let componentColor: ComponentColor;
 	const dispatch = createEventDispatcher();
-
-	$: style = `color: var(--${componentColor}-fg-color); border: 1px solid var(--${componentColor}-fg-color); background-color: var(--${componentColor}-bg-color);`;
 </script>
 
-<div class="init-theme" {style}>
+<div class="init-theme">
 	<div class="intro-text">
 		<p class="headline">Welcome to the Component Theme Editor!</p>
 		<p>Would you like to create a new theme or load an existing theme?</p>
@@ -37,6 +35,9 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1rem;
+		color: var(--black2);
+		border: 1px solid var(--black2);
+		background-color: var(--white3);
 		width: 100%;
 		padding: 1rem;
 		border-radius: 4px;

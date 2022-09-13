@@ -191,7 +191,7 @@ export function downloadUserThemeJson(userTheme: UserThemeImported): void {
 	const link = document.createElement('a');
 	link.download = filename;
 	link.href = window.URL.createObjectURL(blob);
-	link.dataset.downloadurl = ['text/json', link.download, link.href].join(':');
+	link.dataset.downloadurl = `text/json:${link.download}:${link.href}`;
 
 	link.dispatchEvent(
 		new MouseEvent('click', {
