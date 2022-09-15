@@ -32,7 +32,7 @@
 	<AddColorButton
 		color={componentColor}
 		style={'grid-column: 2 /  span 1; grid-row: 2 /  span 1;'}
-		on:click={() => dispatch('addColorToPalette', $colorPickerState.color)}
+		on:click={() => dispatch('addColorToPalette', $colorPickerState.color.hslaString)}
 		disabled={disableControls}
 	/>
 

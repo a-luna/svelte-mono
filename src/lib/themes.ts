@@ -11,13 +11,14 @@ import { capitalize, slugify } from '$lib/util';
 import { ColorParser } from './parser';
 
 export const CAMEL_CASE_REGEX = /^[a-z](?=.*[A-Z])[A-Za-z]*[^[-`]$/;
+export const PROP_NAME_REGEX = /^[a-z]+$|^[a-z](?=.*[A-Z])[A-Za-z]*[^[-`]$/;
 export const CSS_VAR_NAME_REGEX = /^--[\w-]*$/;
-export const CSS_VAR_PREFIX_REGEX = /^--[A-Za-z0-9]*[^-]$/;
 
 export const getWordsFromCamelCase = (input: string): string[] => {
 	if (input) {
 		let start = 0;
-		const words = Array.from({ length: input.length }, (_, i) => input.charCodeAt(i))
+		let words = [];
+		words = Array.from({ length: input.length }, (_, i) => input.charCodeAt(i))
 			.map((n, i) => ({ isUpper: n < 97, index: i }))
 			.filter((x) => x.isUpper)
 			.map((x) => x.index)
@@ -33,58 +34,64 @@ export const getWordsFromCamelCase = (input: string): string[] => {
 
 export function getWordsFromCssVariableName(input: string): string[] {
 	if (CSS_VAR_NAME_REGEX.test(input)) {
-		return input.substring(2).split('-');
+		return input.slice(2).split('-');
 	}
 }
 
-export const convertPropNameToDisplayName = (propName: string): string =>
-	!propName
-		? ''
-		: getWordsFromCamelCase(propName)
-				.map((w) => capitalize(w))
-				.join(' ');
+export function convertPropNameToDisplayName(propName: string): string {
+	if (!propName || !PROP_NAME_REGEX.test(propName)) {
+		return '';
+	}
+	const words = getWordsFromCamelCase(propName);
+	if (words) {
+		return words.map((w) => capitalize(w)).join(' ');
+	}
+}
 
 export function convertPropNameToCssVarName(userTheme: UserThemeImported, propName: string): string {
-	let cssVarName = !propName
-		? ''
-		: `--${getWordsFromCamelCase(propName)
-				.map((w) => w.toLowerCase())
-				.join('-')}`;
-
-	if (userTheme.usesPrefix && cssVarName.indexOf(`${userTheme.themePrefix}-`) !== 0) {
-		cssVarName = `${userTheme.themePrefix}-${getWordsFromCamelCase(propName)
-			.map((w) => w.toLowerCase())
-			.join('-')}`;
+	if (!propName || !PROP_NAME_REGEX.test(propName)) {
+		return '';
 	}
-	return cssVarName;
+	const words = getWordsFromCamelCase(propName);
+	if (words) {
+		const cssVarName = `${words.map((w) => w.toLowerCase()).join('-')}`;
+		if (userTheme.usesPrefix && `--${cssVarName}`.indexOf(`${userTheme.themePrefix}-`) === 0) {
+			return `--${cssVarName}`.replace(`${userTheme.themePrefix}-`, '');
+		}
+		return cssVarName;
+	}
 }
 
 export function convertCssVarNameToPropName(userTheme: UserThemeImported, cssVarName: string): string {
-	if (!cssVarName) {
+	if (!cssVarName || !CSS_VAR_NAME_REGEX.test(cssVarName)) {
 		return '';
 	}
 	if (userTheme.usesPrefix) {
 		cssVarName = cssVarName.replace(userTheme.themePrefix, '-');
 	}
 	const words = getWordsFromCssVariableName(cssVarName);
-	return `${words[0]}${words
-		.slice(1)
-		.map((w) => capitalize(w))
-		.join('')}`;
+	if (words) {
+		return `${words[0]}${words
+			.slice(1)
+			.map((w) => capitalize(w))
+			.join('')}`;
+	}
 }
 
 export function convertCssVarNameToDisplayName(userTheme: UserThemeImported, cssVarName: string): string {
-	if (!cssVarName) {
+	if (!cssVarName || !CSS_VAR_NAME_REGEX.test(cssVarName)) {
 		return '';
 	}
 	if (userTheme.usesPrefix) {
 		cssVarName = cssVarName.replace(userTheme.themePrefix, '-');
 	}
 	const words = getWordsFromCssVariableName(cssVarName);
-	return `${capitalize(words[0])} ${words
-		.slice(1)
-		.map((w) => capitalize(w))
-		.join(' ')}`;
+	if (words) {
+		return `${capitalize(words[0])} ${words
+			.slice(1)
+			.map((w) => capitalize(w))
+			.join(' ')}`;
+	}
 }
 
 export function convertDisplayNameToCssVarName(userTheme: UserThemeImported, displayName: string): string {
@@ -92,20 +99,26 @@ export function convertDisplayNameToCssVarName(userTheme: UserThemeImported, dis
 		return '';
 	}
 	const words = displayName.split(' ');
-	return userTheme.usesPrefix
-		? `${userTheme.themePrefix}-${words.map((w) => w.toLowerCase()).join('-')}`
-		: `--${words.map((w) => w.toLowerCase()).join('-')}`;
+	if (words) {
+		const cssVarName = `${words.map((w) => w.toLowerCase()).join('-')}`;
+		if (userTheme.usesPrefix && `--${cssVarName}`.indexOf(`${userTheme.themePrefix}-`) === 0) {
+			return `--${cssVarName}`.replace(`${userTheme.themePrefix}-`, '');
+		}
+		return cssVarName;
+	}
 }
 
-export function convertDisplayNameToPropName(userTheme: UserThemeImported, displayName: string): string {
+export function convertDisplayNameToPropName(displayName: string): string {
 	if (!displayName) {
 		return '';
 	}
 	const words = displayName.split(' ');
-	return `${words[0].toLowerCase()}${words
-		.slice(1)
-		.map((w) => capitalize(w))
-		.join('')}`;
+	if (words) {
+		return `${words[0].toLowerCase()}${words
+			.slice(1)
+			.map((w) => capitalize(w))
+			.join('')}`;
+	}
 }
 
 export const getCssValueForColor = (color: ThemeColor, colorFormat: 'hex' | 'rgb' | 'hsl'): string =>
@@ -176,7 +189,7 @@ export function copyThemeColor(color: ThemeColor): ThemeColorShallowCopy {
 }
 
 const getThemeColorCss = (userTheme: UserThemeImported, color: ThemeColor): string =>
-	`${convertPropNameToCssVarName(userTheme, color.propName)}: ${getCssValueForColor(color, userTheme.colorFormat)}`;
+	`${color.cssVarName}: ${getCssValueForColor(color, userTheme.colorFormat)}`;
 
 export const convertThemePalettesToCss = (userTheme: UserThemeImported, withNewLines = false): string =>
 	userTheme?.palettes

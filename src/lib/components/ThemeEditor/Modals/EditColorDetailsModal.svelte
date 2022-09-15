@@ -4,6 +4,7 @@
 	import { copyThemeColor } from '$lib/themes';
 	import type { ThemeColor, ThemeColorShallowCopy } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
+	import ColorSettings from './ColorSettings.svelte';
 
 	export let editorId: string;
 	let color: ThemeColor;
@@ -14,10 +15,11 @@
 	let value: string;
 	let cssVarName: string;
 	let displayName: string;
+	let disableSaveButton = false;
 	let state = getThemeEditorStore(editorId);
 	const dispatch = createEventDispatcher();
 
-	export function toggleModal(editColor: ThemeColor) {
+	export function toggleModal(editColor: ThemeColor = null) {
 		if (closed) {
 			propName = editColor?.propName;
 			value = editColor?.value;
@@ -33,20 +35,30 @@
 		color.propName = propName;
 		color.cssVarName = cssVarName;
 		color.displayName = displayName;
+		color.color.name = displayName;
+		color.value = value;
 		propName = '';
 		cssVarName = '';
 		displayName = '';
-		modal.toggleModal();
 		dispatch('colorDetailsChanged');
+		toggleModal();
 	}
 	function discardChanges() {
 		color.propName = originalColor.propName;
 		color.cssVarName = originalColor.cssVarName;
 		color.displayName = originalColor.displayName;
+		color.color.name = originalColor.displayName;
+		color.value = originalColor.value;
 		propName = '';
 		cssVarName = '';
 		displayName = '';
-		modal.toggleModal();
+		toggleModal();
+	}
+
+	function submitForm() {
+		if (!disableSaveButton) {
+			saveChanges();
+		}
 	}
 </script>
 
@@ -54,40 +66,32 @@
 	bind:this={modal}
 	bind:closed
 	title={'Edit Color Details'}
+	{disableSaveButton}
 	on:discardChanges={() => discardChanges()}
 	on:saveChanges={() => saveChanges()}
 >
 	<div class="color-details">
-		<label for="color-prop-name">JSON Property Name</label>
-		<input type="text" id="color-prop-name" name="color-prop-name" bind:value={propName} />
-		<label for="css-var-name">CSS Variable Name</label>
-		<input type="text" id="css-var-name" name="css-var-name" bind:value={cssVarName} />
-		<label for="display-name">Display Name</label>
-		<input type="text" id="display-name" name="display-name" bind:value={displayName} />
-		<label for="color-prop-value">CSS/JSON Value</label>
-		<input type="text" readonly id="color-prop-value" name="color-prop-value" {value} />
+		<ColorSettings
+			{editorId}
+			bind:propName
+			bind:propValue={value}
+			bind:displayName
+			bind:cssVarNameFinal={cssVarName}
+			bind:validationError={disableSaveButton}
+			on:submit={() => submitForm()}
+		/>
 	</div>
 </Modal>
 
 <style lang="postcss">
 	.color-details {
+		--input-text-font-size: 0.9rem;
+
 		display: grid;
 		grid-template-columns: auto 1fr;
 		grid-template-rows: repeat(4, auto);
 		row-gap: 0.5rem;
 		column-gap: 1rem;
 		align-items: center;
-	}
-	label {
-		font-weight: 500;
-		text-align: right;
-	}
-	input {
-		padding: 0.25rem;
-		border-radius: 6px;
-	}
-	input[readonly] {
-		pointer-events: none;
-		background-color: var(--modal-body-background-color);
 	}
 </style>
