@@ -18,8 +18,8 @@
 	export const toggleModal = () => (closed = !closed);
 
 	function handleKeyPress(key: string) {
-		if (key === 'Escape') {
-			closed = true;
+		if (!closed && key === 'Escape') {
+			dispatch('discardChanges');
 		}
 	}
 
@@ -75,10 +75,10 @@
 <style lang="postcss">
 	.modal {
 		--modal-outer-background-color: hsla(0, 0%, 0%, 0.75);
-		--modal-dialog-background-color: var(--white1);
-		--modal-body-background-color: var(--white1);
+		--modal-dialog-background-color: var(--white2);
+		--modal-body-background-color: var(--white2);
 		--modal-header-background-color: var(--light-gray4);
-		--modal-footer-background-color: var(--white1);
+		--modal-footer-background-color: var(--white2);
 		--modal-header-text-color: var(--black1);
 
 		overflow-y: auto;
