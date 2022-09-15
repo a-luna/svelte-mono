@@ -10,7 +10,7 @@
 	let displayName: string;
 	let tooltip: string;
 
-	$: bgColor = $state.colorSelected ? 'var(--white3)' : 'var(--white1)';
+	$: bgColor = $state.colorSelected ? 'var(--white4)' : 'var(--white1)';
 	$: swatchColor = $state.colorSelected ? $state.selectedColor.color : parseColorFromString('hsl(0, 0%, 85%)').value;
 	$: displayName = $state.colorSelected ? $state.selectedColor.displayName : '';
 	$: tooltip = $state.colorSelected

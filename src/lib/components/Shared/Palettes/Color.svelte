@@ -16,7 +16,6 @@
 	$: hasCustomName = colorNameisCustomized(color.color);
 	$: wrapperStyles = displayColorName ? `border: 1px solid var(--${componentColor}-fg-color);` : '';
 	$: buttonToolTip = !displayColorName ? `${color.color.name} (${color.color.hex}, hue: ${color.color.hsl.h})` : '';
-	$: outlineStyles = color.isSelected ? `outline: 2px solid var(--red3); outline-offset: 2px;` : '';
 
 	onDestroy(() => clearTimeout(timeout));
 </script>
@@ -27,7 +26,8 @@
 	class:x11-color={!displayColorName}
 	class:named-color={hasCustomName}
 	class:unnamed-color={!hasCustomName}
-	style="{wrapperStyles} {outlineStyles}"
+	class:selected-color={color.isSelected}
+	style={wrapperStyles}
 >
 	<div class="color-wrapper-top">
 		<button type="button" title={buttonToolTip} on:click={() => dispatch('colorSelected', color)}>
@@ -55,6 +55,11 @@
 		justify-content: flex-start;
 		border-radius: 4px;
 		-webkit-border-radius: 4px;
+	}
+
+	.selected-color {
+		outline: 2px solid var(--blue3);
+		outline-offset: 2px;
 	}
 
 	.color-wrapper.user-color {

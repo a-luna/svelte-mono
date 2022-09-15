@@ -4,7 +4,6 @@ import type { ColorFormat, ComponentColor, CssVariable } from '$lib/types';
 import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
 
-export const uncapitalize = (s: string): string => s.charAt(0).toLowerCase() + s.substring(1);
 export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
 export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 export const slugify = (s: string): string => s.replaceAll(/[\s_]/g, '-').toLowerCase();

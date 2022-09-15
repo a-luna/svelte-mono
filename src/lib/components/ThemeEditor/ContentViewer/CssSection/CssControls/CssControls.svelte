@@ -11,26 +11,35 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<div class="button-list">
-	<SelectAllCustomPropsButton
-		{componentColor}
-		disabled={allCustomPropsSelected}
-		on:click={() => dispatch('selectAllCustomProperties')}
-	/>
-	<SelectNoneCustomPropsButton
-		{componentColor}
-		disabled={!anyCustomPropsSelected}
-		on:click={() => dispatch('deselectAllCustomProperties')}
-	/>
+<div class="css-controls">
+	<div class="button-list">
+		<SelectAllCustomPropsButton
+			{componentColor}
+			disabled={allCustomPropsSelected}
+			wrapperWidth={'112px'}
+			on:click={() => dispatch('selectAllCustomProperties')}
+		/>
+		<SelectNoneCustomPropsButton
+			{componentColor}
+			disabled={!anyCustomPropsSelected}
+			wrapperWidth={'112px'}
+			on:click={() => dispatch('deselectAllCustomProperties')}
+		/>
+	</div>
 	<span class="total-selected"><strong>{totalSelected}</strong> custom properties selected</span>
 </div>
 
 <style lang="postcss">
-	.button-list {
+	.css-controls {
 		display: flex;
 		align-items: center;
 		font-size: 0.8rem;
+		gap: 1.5rem;
+		padding: 0.5rem 1rem;
+		margin: 0.5rem 0 0 0;
+	}
+	.button-list {
+		display: flex;
 		gap: 0.5rem;
-		padding: 1rem;
 	}
 </style>

@@ -134,6 +134,7 @@
 
 	--fg-light: 26%;
 	--fg-light-active: calc(var(--fg-light) + 24%);
+	--fg-light-disabled: calc(var(--fg-light) + 40%);
 
 	--red-bg-color: hsl(var(--red-hue, 0) 100% 94%);
 	--red-hover-bg-color: hsl(var(--red-hue, 0) 100% 99%);

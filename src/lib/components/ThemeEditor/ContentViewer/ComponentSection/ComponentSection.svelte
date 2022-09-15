@@ -45,7 +45,7 @@
 
 <style lang="postcss">
 	.component-padding {
-		padding: 0.5rem;
+		padding: 0.75rem;
 		border-radius: 4px;
 		border: 1px solid;
 		width: auto;

@@ -155,13 +155,15 @@
 
 <style lang="postcss">
 	.color-picker {
+		--select-menu-background-color: var(--white3);
+
 		display: flex;
 		flex-flow: row nowrap;
 		align-items: flex-start;
 		gap: 0.5rem;
 		width: min-content;
-		background-color: var(--white3);
-		border: 1px solid var(--dark-gray1);
+		background-color: var(--white4);
+		border: 1px solid var(--black2);
 		border-radius: 4px;
 		padding: 0.5rem;
 	}

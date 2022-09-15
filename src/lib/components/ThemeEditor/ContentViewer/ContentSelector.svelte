@@ -50,7 +50,7 @@
 	}
 
 	button {
-		background-color: var(--section-bg-color);
+		background-color: var(--button-bg-color);
 		color: var(--button-fg-color);
 		padding: 0.5rem 1rem;
 		font-weight: 500;
@@ -68,7 +68,7 @@
 	button:active,
 	button:focus,
 	button:active:focus {
-		background-color: var(--button-bg-color);
+		background-color: var(--button-active-bg-color);
 	}
 	button.active {
 		background-color: var(--button-hover-bg-color);

@@ -10,11 +10,11 @@
 	let state = getColorPickerStore(pickerId);
 	let timeout: NodeJS.Timeout;
 
-	$: inactiveStyle = 'background-color: var(--white4)';
+	$: inactiveStyle = 'background-color: var(--white3)';
 	$: copiedStyle = 'background-color: var(--light-gray2)';
 	$: editStyle = 'background-color: var(--yellow-bg-color); color: var(--black4)';
-	$: successStyle = 'background-color: var(--white4); color: var(--green2)';
-	$: errorStyle = 'background-color: var(--white4); color: var(--red2)';
+	$: successStyle = 'background-color: var(--white3); color: var(--green2)';
+	$: errorStyle = 'background-color: var(--white3); color: var(--red2)';
 	$: style =
 		$state?.labelState === 'copied'
 			? copiedStyle

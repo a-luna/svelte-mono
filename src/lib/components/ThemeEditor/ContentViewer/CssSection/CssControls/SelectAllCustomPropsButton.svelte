@@ -5,6 +5,7 @@
 
 	export let componentColor: ComponentColor;
 	export let disabled = false;
+	export let wrapperWidth: string = null;
 	export let style: string = '';
 </script>
 
@@ -14,6 +15,7 @@
 	tooltip={'Select All CSS Custom Properties'}
 	{disabled}
 	iconWidth={'18px'}
+	{wrapperWidth}
 	on:click
 >
 	<svelte:fragment slot="icon">
