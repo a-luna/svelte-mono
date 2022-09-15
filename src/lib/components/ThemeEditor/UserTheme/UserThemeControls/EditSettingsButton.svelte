@@ -7,7 +7,7 @@
 	export let disabled = false;
 </script>
 
-<ThemeButton {color} tooltip={'Edit Theme Settings'} {disabled} iconWidth={'21px'} padding={'0'} on:click>
+<ThemeButton {color} tooltip={'Edit Theme Settings'} {disabled} iconWidth={'21px'} on:click>
 	<svelte:fragment slot="icon">
 		<Gear />
 	</svelte:fragment>

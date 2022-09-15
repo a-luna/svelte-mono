@@ -10,7 +10,6 @@
 	export let wrapperWidth: string = '';
 	export let classList: string[] = [];
 	export let iconWidth: string = '11px';
-	export let padding: string = '2px 6px';
 	export let randomHue = false;
 	export let gridStyle: string = '';
 	let style: string;
@@ -35,7 +34,6 @@
 		type="button"
 		title={tooltip}
 		class="theme-button transition-color {classList.join(' ')}"
-		style="padding: {padding};"
 		{disabled}
 		on:click
 	>
@@ -76,6 +74,8 @@
 
 		display: flex;
 		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
 		gap: 0.25rem;
 		white-space: nowrap;
 		background-color: var(--button-background-color);
@@ -110,13 +110,12 @@
 	}
 
 	.icon {
-		margin: auto;
+		margin: auto 0;
 	}
 
 	span {
 		font-size: 13px;
 		font-weight: 500;
 		line-height: 1;
-		margin: auto auto auto 0;
 	}
 </style>

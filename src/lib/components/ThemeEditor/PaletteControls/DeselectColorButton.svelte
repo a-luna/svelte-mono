@@ -14,7 +14,6 @@
 	tooltip={'Deselect Theme Color'}
 	{disabled}
 	iconWidth={'22px'}
-	padding={'0'}
 	wrapperWidth={'32px'}
 	on:click
 >
