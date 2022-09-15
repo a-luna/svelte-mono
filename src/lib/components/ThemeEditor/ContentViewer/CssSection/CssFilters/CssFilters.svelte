@@ -14,6 +14,7 @@
 	export let selector: string = '';
 	export let componentColor: ComponentColor;
 	export let prefix: string;
+	export let themeInitialized: boolean;
 	const dispatch = createEventDispatcher();
 	let state = getThemeEditorStore(editorId);
 
@@ -44,7 +45,7 @@
 		id={'theme-prefix-textbox'}
 		style="grid-column: 1 / span 1; grid-row: 2 / span 1;"
 	/>
-	<UseThemePrefixCheckbox {componentColor} bind:checked={useThemePrefix} />
+	<UseThemePrefixCheckbox {componentColor} bind:checked={useThemePrefix} disabled={!themeInitialized} />
 	<span class="selector-label label">CSS Rule Selector:</span>
 	<RuleSelectorList {allSelectors} bind:value={selector} on:cssRuleSelectorChanged />
 	<IgnoreTailwindsCheckbox {componentColor} bind:checked={ignoreTailwinds} />
@@ -61,10 +62,14 @@
 		--select-menu-height: 30px;
 		--select-menu-dropdown-height: 300px;
 		--select-menu-no-selection-text-color: var(--fg-color);
-		--input-font-size: 0.875rem;
+
+		--input-text-font-size: 0.875rem;
 		--input-text-border-color: var(--fg-color);
 		--input-text-color: var(--fg-color);
 		--input-text-background-color: var(--background-color);
+		--input-text-disabled-text-color: var(--button-fg-color);
+		--input-text-disabled-background-color: var(--button-bg-color);
+		--input-text-disabled-border-color: var(--button-fg-color);
 
 		display: grid;
 		grid-template-columns: 2fr auto 3fr auto;

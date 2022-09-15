@@ -5,28 +5,50 @@
 
 	export let id: string;
 	export let checked: boolean;
-	export let color: ComponentColor;
+	export let disabled = false;
+	export let color: ComponentColor = 'black';
 	export let style = '';
 </script>
 
-<label for={id} class={color !== 'black' ? 'color' : 'black'} style="--button-hue: var(--{color}-hue); {style}">
-	{#if $$slots.leftLabel}
-		<span on:click|stopPropagation><slot name="leftLabel" /></span>
-	{/if}
-	{#if checked}
-		<div class="icon" on:click|stopPropagation>
-			<Checked />
-		</div>
-	{:else}
-		<div class="icon" on:click|stopPropagation>
+{#if !disabled}
+	<label
+		for={id}
+		class={color !== 'black' ? 'color' : 'black'}
+		style="--button-hue: var(--{color}-hue); cursor: pointer; {style}"
+	>
+		{#if $$slots.leftLabel}
+			<span on:click|stopPropagation><slot name="leftLabel" /></span>
+		{/if}
+		{#if checked}
+			<div class="icon" style="cursor: pointer" on:click|stopPropagation>
+				<Checked />
+			</div>
+		{:else}
+			<div class="icon" style="cursor: pointer" on:click|stopPropagation>
+				<Unchecked />
+			</div>
+		{/if}
+		{#if $$slots.rightLabel}
+			<span on:click|stopPropagation><slot name="rightLabel" /></span>
+		{/if}
+	</label>
+	<input type="checkbox" {id} name={id} bind:checked on:change />
+{:else}
+	<label
+		class="{color !== 'black' ? 'color' : 'black'} disabled"
+		style="--button-hue: var(--{color}-hue); cursor: not-allowed; {style}"
+	>
+		{#if $$slots.leftLabel}
+			<span><slot name="leftLabel" /></span>
+		{/if}
+		<div class="icon">
 			<Unchecked />
 		</div>
-	{/if}
-	{#if $$slots.rightLabel}
-		<span on:click|stopPropagation><slot name="rightLabel" /></span>
-	{/if}
-</label>
-<input type="checkbox" {id} name={id} bind:checked on:change />
+		{#if $$slots.rightLabel}
+			<span><slot name="rightLabel" /></span>
+		{/if}
+	</label>
+{/if}
 
 <style lang="postcss">
 	label.color {
@@ -38,6 +60,7 @@
 		);
 		--button-fg-color: hsl(var(--button-hue, 0), var(--fg-sat, 0%), var(--fg-light, 10%));
 		--button-active-fg-color: hsl(var(--button-hue, 0), var(--fg-sat-active, 0%), var(--fg-light-active, 0%));
+		--button-disabled-fg-color: hsl(var(--button-hue, 0), var(--fg-sat-active, 0%), var(--fg-light-disabled, 0%));
 		--button-hover-fg-color: var(--button-fg-color);
 	}
 
@@ -46,6 +69,7 @@
 		--button-hover-background-color: var(--white4);
 		--button-fg-color: var(--black2);
 		--button-active-fg-color: var(--black4);
+		--button-disabled-fg-color: var(--gray1);
 		--button-hover-fg-color: var(--black4);
 	}
 	label {
@@ -55,13 +79,14 @@
 		font-size: 0.75rem;
 		font-weight: 500;
 		line-height: 1;
-		cursor: pointer;
 	}
 	input {
 		display: none;
 	}
 	.icon {
 		width: 20px;
-		cursor: pointer;
+	}
+	.disabled {
+		color: var(--button-disabled-fg-color);
 	}
 </style>

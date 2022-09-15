@@ -9,6 +9,7 @@
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;
+	export let themeInitialized: boolean;
 	let data: CssVariable[];
 	let allCustomProps: CssVariable[];
 	let selectedCustomProps: CssVariable[];
@@ -127,6 +128,7 @@
 	{editorId}
 	{allSelectors}
 	{componentColor}
+	{themeInitialized}
 	bind:prefix
 	on:componentPrefixChanged={(e) => handleComponentPrefixChanged(e.detail)}
 	on:cssRuleSelectorChanged={(e) => handleCssRuleSelectorChanged(e.detail)}

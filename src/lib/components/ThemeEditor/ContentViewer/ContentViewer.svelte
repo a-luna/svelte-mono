@@ -6,6 +6,7 @@
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;
+	export let themeInitialized: boolean;
 	let contentSections: ContentSections;
 
 	$: buttonType = componentColor !== 'black' ? 'color' : 'black';
@@ -27,7 +28,7 @@
 	<div class="bg-left" style={bgLeftStyle} />
 	<div class="bg-right" style={bgRightStyle} />
 	<div class="content-wrapper">
-		<ContentSections bind:this={contentSections} {editorId} {componentColor}>
+		<ContentSections bind:this={contentSections} {editorId} {componentColor} {themeInitialized}>
 			<slot />
 		</ContentSections>
 	</div>
@@ -37,6 +38,7 @@
 	.content-viewer.color {
 		--button-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 90%);
 		--button-hover-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 99%);
+		--button-active-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 90%);
 		--button-fg-color: hsl(var(--button-hue, 0), var(--fg-sat, 0%), var(--fg-light, 10%));
 		--section-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 95%);
 		--button-border-color: hsl(var(--button-hue, 0), 63%, 26%);
@@ -44,8 +46,10 @@
 
 	.content-viewer.black {
 		--button-bg-color: var(--white2);
-		--button-hover-bg-color: var(--white3);
+		--button-hover-bg-color: var(--white4);
+		--button-active-bg-color: var(--white4);
 		--button-fg-color: var(--black2);
+		--section-bg-color: var(--white4);
 		--button-border-color: var(--black2);
 	}
 	.content-viewer {

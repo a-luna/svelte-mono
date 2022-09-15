@@ -52,11 +52,10 @@
 	// # CONTENT VIEWER
 	// TODO: PropertySet can contain CSS Custom Properties with non-color values (e.g., margin, width, font-size) and color values
 	// TODO: On the ContentViewer -> JSON tab, user can view the ThemeSet as JSON (any changes to the ThemeSet/PropertySets are immediately reflected in this view), and choose to download the ThemeSet as a JSON file
-	// TODO: On the ContentViewer -> CSS tab, user can list all CSS Custom Properties in window.document and filter the list based on property name prefix (e.g., '--tw') and selectors used to apply the custom properties (e.g., ':root', '.light', 'dark')
 	// TODO: On the ContentViewer -> CSS tab, user can assign CSS Custom Properties/Values from the list to a PropertySet, individually or in bulk
 	// TODO: Alternatively, user can create a new PropertySet from a selection of CSS Custom Properties/Values
 	// TODO: On the ContentViewer -> CSS tab, userer can view the CSS Custom Properties from the PropertySets as valid CSS
-	// TODO: On the ContentViewer -> CSS tab, each PropertySet is rendered as a CSS Style Rule: all CSS Custom Properties and their values in the PropertySet are listed on separate lines, and the list is surounded by curly braces preceded by the PropertySet.selector value
+	// TODO: On the ContentViewer -> CSS tab, each ComponentTheme is rendered as a CSS Style Rule: all CSS Custom Properties and their values in the ComponentTheme are listed on separate lines, and the list is surounded by curly braces preceded by the ComponentTheme.selector value
 	//
 	//  Assuming the following ThemeSet object has been created:
 	//
@@ -67,7 +66,7 @@
 	//    	usesPrefix: false,
 	//    	componentPrefix: '',
 	//    	uiColor: 'black',
-	//    	propertySets: [
+	//    	themes: [
 	//    	  {
 	//    	  	displayName: "Light Theme",
 	//    	  	jsonPropName: 'lightTheme',
@@ -86,7 +85,9 @@
 	//    	  	  	value: "1.5rem",
 	//    	  	  },
 	//    	  	]
-	//    	  },
+	//    	  }
+	//		],
+	//		[
 	//    	  {
 	//    	  	displayName: "Dark Theme",
 	//    	  	jsonPropName: 'darkTheme',
@@ -122,6 +123,7 @@
 	//    }
 
 	// # USER THEME EDITOR
+	// TODO: Extract propName, displayName, cssVarName, colorValue label/textbox form from AddColorToPaletteModal and reuse it in EditColorDetailsModal
 	// TODO: Allow user to re-order theme palettes (i.e., move up, down, to top, to bottom buttons for each palette)
 	// TODO: Allow user to delete colors from theme palettes
 	// TODO: Allow user to delete theme palettes
@@ -246,7 +248,7 @@
 			</div>
 		</div>
 		{#if storesInitialized}
-			<ContentViewer bind:this={contentViewer} {editorId} {componentColor}>
+			<ContentViewer bind:this={contentViewer} {editorId} {componentColor} {themeInitialized}>
 				<slot>
 					<div class="help-text">
 						<p><strong>The slot for the ThemeEditor component is not populated!</strong></p>
