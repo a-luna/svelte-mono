@@ -1,18 +1,20 @@
-# example netlify.toml
 [build]
   command = "npm run build"
   publish = "build"
-
-[functions]
-  directory = "functions"
-  node_bundler = "esbuild"
-  external_node_modules = ["mdsvex"]
 
 [build.environment]
   NPM_FLAGS="--prefix=/dev/null"
   NODE_VERSION = "16" 
   ## as of v0.334 sveltekit requires node 16 https://github.com/sveltejs/kit/pull/4922
   ## https://github.com/sveltejs/kit/issues/2687
+
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["mdsvex"]
+  
+[plugins]]
+  package = "./netlify-plugin-pnpm"
 
 [[headers]]
   ## https://answers.netlify.com/t/content-type-header-not-working-in-netlify-toml/7718
