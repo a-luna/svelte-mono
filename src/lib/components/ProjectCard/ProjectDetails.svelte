@@ -1,4 +1,5 @@
 <script lang="ts">
+	import GithubStats from '$lib/components/ProjectCard/GithubStats.svelte';
 	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 	import type { RepoWithMetaData } from '$lib/types';
@@ -10,9 +11,12 @@
 {#if project}
 	<div class="project-card-details">
 		<div class="details-top">
-			<FilterSettingWithIcon value={project.primaryLanguage} />
+			<div class="lang-stats-wrapper">
+				<FilterSettingWithIcon value={project.primaryLanguage} />
+				<GithubStats {project} />
+			</div>
 			<h2 class="project-name">{project.name}</h2>
-			<div class="all-category-list">
+			<div class="category-list">
 				{#each project.categories as category}
 					{#if !['frontend', 'backend'].includes(category)}
 						<ProjectCategory {category} />
@@ -54,6 +58,12 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 0.75rem;
+		width: 100%;
+	}
+
+	.lang-stats-wrapper {
+		display: flex;
+		justify-content: space-between;
 	}
 
 	h2 {
@@ -86,11 +96,12 @@
 		color: var(--accent-color);
 	}
 
-	.all-category-list {
+	.category-list {
 		display: flex;
 		flex-flow: row wrap;
 		font-size: 0.85rem;
 		gap: 0.5rem;
+		margin: 0.25rem 0;
 	}
 
 	.all-language-list {
@@ -103,7 +114,7 @@
 		margin: 0.5rem 1rem 0 0;
 	}
 
-	@media screen and (min-width: 767px) {
+	@media screen and (min-width: 768px) {
 		h2 {
 			font-size: 1.75rem;
 		}

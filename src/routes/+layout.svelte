@@ -2,6 +2,8 @@
 	import Nav from '$components/Nav/Nav.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import '../tailwind.css';
+
+	export const prerender = true;
 </script>
 
 <svelte:head>

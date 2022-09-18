@@ -42,7 +42,7 @@
 	) {
 		let [bgColor, borderStyle] = ['', ''];
 		if (settingHasIcon(value)) {
-			bgColor = current !== value ? 'var(--black-tint1)' : 'var(--dark-gray-shade1)';
+			bgColor = current !== value ? 'var(--black-tint2)' : 'var(--dark-gray-shade1)';
 		} else {
 			const color = getFilterSettingColor(value);
 			bgColor =
@@ -75,7 +75,7 @@
 	{/if}
 	{#if expanded}
 		<div
-			in:fade={{ delay: 200 }}
+			in:fade={{ delay: 500 }}
 			out:fade={{ delay: 300 }}
 			class="filter-settings"
 			style={settingsListStyle}

@@ -10,9 +10,7 @@
 				? { width: 625, height: 625 }
 				: pageWidth >= 640
 				? { width: 550, height: 550 }
-				: pageWidth >= 495
-				? { width: 525, height: 525 }
-				: { width: 475, height: 475 };
+				: { width: 525, height: 525 };
 	}
 	$: ({ width, height } = svgSize);
 </script>
@@ -172,7 +170,7 @@
 		--mandala-accent-4: var(--purple-icon);
 		display: flex;
 		justify-content: center;
-		transform: translate(2rem, -2rem);
+		transform: translate(6rem, -5rem);
 	}
 	.mandala-container .mandala-accent-1 {
 		font-size: 1.5rem;

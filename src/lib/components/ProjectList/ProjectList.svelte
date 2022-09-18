@@ -6,6 +6,7 @@
 	import { updateProjectMetaData } from '$lib/projectMetaData';
 	import type { FilterSetting, RepoWithMetaData } from '$lib/types';
 	import { isUserRepo, userRepos } from '$lib/util';
+	import { slide } from 'svelte/transition';
 
 	let filterProjectType: FilterSetting = 'allProjects';
 	let filterCategory: FilterSetting = 'allCategories';
@@ -93,12 +94,14 @@
 <div class="project-list-wrapper">
 	<div class="filter-controls-wrapper">
 		<FilterControls bind:showFilters {filterApplied} on:resetFilter={() => resetFilter()} />
-		{#if showFilters}
-			<FilterList bind:filterProjectType bind:filterCategory bind:filterLanguage />
-		{:else}
-			<span class="total-results">{description}</span>
-		{/if}
 	</div>
+	{#if showFilters}
+		<div transition:slide={{ duration: 500 }} class="project-list-filter-wrapper">
+			<FilterList bind:filterProjectType bind:filterCategory bind:filterLanguage />
+		</div>
+	{/if}
+	<span class="total-results">{description}</span>
+
 	<div class="project-list">
 		{#each filtered as project}
 			<ProjectCard {project} />
@@ -108,6 +111,8 @@
 
 <style lang="postcss">
 	.project-list-wrapper {
+		--project-card-border-color: var(--dark-gray);
+
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1.5rem;
@@ -120,15 +125,38 @@
 		gap: 1rem;
 	}
 
+	.project-list-filter-wrapper {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 2rem;
+		background-color: var(--black);
+		border: 2px solid var(--project-card-border-color);
+		line-height: 1;
+		padding: 2rem;
+		z-index: 3;
+	}
+
 	.project-list {
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: auto;
-		gap: 2rem;
+		gap: 1.5rem;
 	}
 
 	.total-results {
 		font-size: 1.4rem;
+	}
+
+	@media (min-width: 640px) {
+		.project-list {
+			gap: 2rem;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.project-list {
+			gap: 3rem;
+		}
 	}
 
 	@media (min-width: 1024px) {

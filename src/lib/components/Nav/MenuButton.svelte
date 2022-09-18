@@ -13,7 +13,7 @@
 	aria-controls="nav-sidebar"
 	aria-haspopup="menu"
 	aria-expanded={open}
-	on:click
+	on:click={() => (open = !open)}
 >
 	<div class="icon-wrapper">
 		<Menu />
