@@ -9,6 +9,7 @@
   external_node_modules = ["mdsvex"]
 
 [build.environment]
+  NPM_FLAGS="--prefix=/dev/null"
   NODE_VERSION = "16" 
   ## as of v0.334 sveltekit requires node 16 https://github.com/sveltejs/kit/pull/4922
   ## https://github.com/sveltejs/kit/issues/2687
