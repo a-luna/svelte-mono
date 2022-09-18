@@ -15,14 +15,7 @@ const config = {
 	],
 
 	kit: {
-		adapter: adapter(),
-		prerender: {
-      default: true,
-			crawl: false,
-			enabled: true,
-			entries: ['*'],
-			onError: 'continue'
-		},
+		adapter: adapter()
 	}
 };
 
