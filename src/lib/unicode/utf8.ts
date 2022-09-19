@@ -12,41 +12,32 @@ import {
 	hexStringFromByte,
 	hexStringToByte,
 	strictUriEncode,
-	UnicodeCodepointFromUtf8ByteArray,
+	unicodeCodepointFromUtf8ByteArray,
 } from '$lib/util';
 import { validateAsciiBytes } from '$lib/validation';
 
-const utf8ToCharArray = (s: string): RegExpMatchArray => s.match(reComplexSymbol);
-
 export function decomposeUtf8String(s: string): Utf8StringComposition {
-	const complexCharMap: Utf8ComplexCharacterMap[] = utf8ToCharArray(s).map((utf8) => {
+	const complexCharMap: Utf8ComplexCharacterMap[] = s.match(reComplexSymbol).map((utf8) => {
 		const charMap: Utf8StandardCharacterMap[] = [...utf8].map((char) => {
 			const charData = getUtf8EncodedByteMaps(char).map((byteMap) => ({ hex: byteMap.hex, byte: byteMap.byte }));
-			const hexBytes = charData.map((data) => data.hex);
 			const bytes = charData.map((data) => data.byte);
 			const totalBytes = bytes.length;
-			const codepoints = totalBytes <= 4 ? UnicodeCodepointFromUtf8ByteArray(bytes) : null;
-			const codepoint = codepoints?.hex;
+			const codepoints = totalBytes <= 4 ? unicodeCodepointFromUtf8ByteArray(bytes) : null;
 			const decimalCodepoint = codepoints?.dec;
-			const unicodeName = unicodeCharNames[decimalCodepoint];
-			const unicodeBlock = getBlockContainingCodepoint(decimalCodepoint);
-			const isASCII = validateAsciiBytes(bytes);
 			return {
 				char,
-				isASCII,
-				hexBytes,
+				isASCII: validateAsciiBytes(bytes),
+				hexBytes: charData.map((data) => data.hex),
 				bytes,
-				codepoint,
+				codepoint: codepoints?.hex,
 				decimalCodepoint,
-				unicodeName,
-				unicodeBlock,
+				unicodeName: unicodeCharNames[decimalCodepoint],
+				unicodeBlock: getBlockContainingCodepoint(decimalCodepoint),
 				totalBytes,
 				encoded: strictUriEncode(char),
 			};
 		});
-		const hexBytes = charMap.map((charMap) => charMap.hexBytes).flat();
 		const bytes = charMap.map((charMap) => charMap.bytes).flat();
-		const codepoints = charMap.map((charMap) => charMap.codepoint).flat();
 		const decimalCodepoints = charMap.map((charMap) => charMap.decimalCodepoint).flat();
 		const isCombined = charMap.length > 1;
 		const unicodeNames = isCombined
@@ -55,14 +46,13 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 		const unicodeBlocks = isCombined
 			? charMap.map((charMap) => charMap.unicodeBlock).flat()
 			: [getBlockContainingCodepoint(decimalCodepoints[0])];
-		const isASCII = validateAsciiBytes(bytes);
 		const complexCharMap: Utf8ComplexCharacterMap = {
 			char: utf8,
 			isCombined,
-			isASCII,
-			hexBytes,
+			isASCII: validateAsciiBytes(bytes),
+			hexBytes: charMap.map((charMap) => charMap.hexBytes).flat(),
 			bytes,
-			codepoints,
+			codepoints: charMap.map((charMap) => charMap.codepoint).flat(),
 			decimalCodepoints,
 			unicodeNames,
 			unicodeBlocks,
@@ -74,7 +64,6 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 		}
 		return complexCharMap;
 	});
-	const hexBytes = complexCharMap.map((charMap) => charMap.hexBytes).flat();
 	const bytes = complexCharMap.map((charMap) => charMap.bytes).flat();
 	return {
 		utf8: s,
@@ -82,7 +71,7 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 		stringLength: complexCharMap.length,
 		encoded: strictUriEncode(s),
 		totalBytes: bytes.length,
-		hexBytes,
+		hexBytes: complexCharMap.map((charMap) => charMap.hexBytes).flat(),
 		bytes,
 		charMap: complexCharMap,
 	};

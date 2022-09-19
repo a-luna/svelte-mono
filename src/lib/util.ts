@@ -58,7 +58,7 @@ export function utf8StringFromByteArray(byteArray: number[]): string {
 	}
 }
 
-export function UnicodeCodepointFromUtf8ByteArray(byteArray: number[]): { hex: string; dec: number } {
+export function unicodeCodepointFromUtf8ByteArray(byteArray: number[]): { hex: string; dec: number } {
 	const [m, n, o, p] = [...byteArray];
 	const codepointDecimal =
 		m < 0x80

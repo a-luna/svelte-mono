@@ -1,5 +1,5 @@
-// These RegExps are directly copied from the implementation of the _stringToArray function in
-// lodash (https://github.com/lodash/lodash/blob/4.13.1-npm/_stringToArray.js)
+// These RegExps are directly copied from the implementation of the _stringToArray function in lodash
+// (https://github.com/lodash/lodash/blob/4.13.1-npm/_stringToArray.js)
 
 /** Used to compose unicode character classes. */
 const rsAstralRange = '\\ud800-\\udfff',
