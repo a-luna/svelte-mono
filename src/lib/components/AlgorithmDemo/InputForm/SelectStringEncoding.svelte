@@ -7,6 +7,7 @@
 	export let width = '100%';
 	export let fontSize = '0.875rem';
 	export let value: StringEncoding = 'ascii';
+	export let inputText: string = '';
 	export let dropdownShown = false;
 	export let inHelpDocs = false;
 	const { state, demoState } = getAppContext();
@@ -20,16 +21,18 @@
 	const menuId = 'select-string-encoding';
 	const menuLabel = '';
 
+	$: noInputText = !inputText || inputText.length === 0;
 	$: options = inHelpDocs
 		? allOptions
+		: noInputText
+		? []
 		: allOptions.filter((option) => $demoState.validInputEncodings.includes(option.value.toString()));
 	$: bestMatch = inHelpDocs
 		? 'ascii'
-		: $demoState.validInputEncodings.length
-		? $demoState.validInputEncodings.at(0)
-		: null;
+		: noInputText || !$demoState.validInputEncodings.length
+		? null
+		: $demoState.validInputEncodings.at(0);
 	$: value = isStringEncoding(bestMatch) ? bestMatch : null;
-	$: noInputText = !$state.context.input.inputText || $state.context.input.inputText.length == 0;
 	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });
 	$: disabled = inHelpDocs ? false : noInputText || controlsDisabled;
 

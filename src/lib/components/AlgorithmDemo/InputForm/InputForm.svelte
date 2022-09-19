@@ -31,7 +31,7 @@
 	</div>
 	<span class="input-encoding-label form-label">Text Encoding</span>
 	<div class="input-encoding">
-		<SelectStringEncoding bind:value={inputTextEncoding} />
+		<SelectStringEncoding bind:value={inputTextEncoding} {inputText} />
 	</div>
 	<span class="output-encoding-label form-label">Output Encoding</span>
 	<div class="output-encoding">
