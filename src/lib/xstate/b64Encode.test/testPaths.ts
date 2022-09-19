@@ -2,11 +2,11 @@
 /* c8 ignore start */
 import type { JSDomTestCase, JSDomTestFunction } from '$lib/xstate/b64Encode.test/types';
 import type { Screen } from '@testing-library/svelte';
-import type { UserEvent } from '@testing-library/user-event/dist/types/setup';
+import type UserEvent from '@testing-library/user-event';
 
 const asciiHappyPath: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: test
@@ -258,7 +258,7 @@ const asciiHappyPath: JSDomTestFunction = async (
 
 const asciiHappyPathAutoplay: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: test
@@ -500,7 +500,7 @@ const asciiHappyPathAutoplay: JSDomTestFunction = async (
 
 const asciiHappyPathSkipDemo: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: test
@@ -530,7 +530,7 @@ const asciiHappyPathSkipDemo: JSDomTestFunction = async (
 
 const asciiValidationError: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Change input encoding setting to ASCII
@@ -607,7 +607,7 @@ const asciiValidationError: JSDomTestFunction = async (
 
 const asciiWithSymbols: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: test&^%#*&()
@@ -758,7 +758,7 @@ const asciiWithSymbols: JSDomTestFunction = async (
 
 const hexHappyPath: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: 0d47bc37af
@@ -1018,7 +1018,7 @@ const hexHappyPath: JSDomTestFunction = async (
 
 const hexValidationError: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: 746573t
@@ -1097,7 +1097,7 @@ const hexValidationError: JSDomTestFunction = async (
 
 const binHappyPath: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: 01110100011001010111001101110100
@@ -1349,7 +1349,7 @@ const binHappyPath: JSDomTestFunction = async (
 
 const binHappyPathSkipDemo: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: 01110100011001010111001101110100
@@ -1379,7 +1379,7 @@ const binHappyPathSkipDemo: JSDomTestFunction = async (
 
 const binValidationError: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: test
@@ -1459,7 +1459,7 @@ const binValidationError: JSDomTestFunction = async (
 
 const utf8HappyPath: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: 🦦👨‍🌾🫥🏃🏿‍♀️☝🏾
@@ -2699,7 +2699,7 @@ const utf8HappyPath: JSDomTestFunction = async (
 
 const utf8MixedAscii: JSDomTestFunction = async (
 	screen: Screen,
-	userEvent: UserEvent,
+	userEvent: typeof UserEvent,
 	expect: Vi.ExpectStatic,
 ): Promise<void> => {
 	// Set the value of the input data text box: ✓ à la mode
