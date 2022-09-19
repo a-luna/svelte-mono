@@ -22,19 +22,21 @@
 	const menuLabel = '';
 
 	$: noInputText = !inputText || inputText.length === 0;
-	$: options = inHelpDocs
-		? allOptions
-		: noInputText
-		? []
-		: allOptions.filter((option) => $demoState.validInputEncodings.includes(option.value.toString()));
+	$: testMode = import.meta.env.MODE === 'test';
+	$: options =
+		inHelpDocs || testMode
+			? allOptions
+			: noInputText
+			? [allOptions[1]]
+			: allOptions.filter((option) => $demoState.validInputEncodings.includes(option.value.toString()));
 	$: bestMatch = inHelpDocs
 		? 'ascii'
 		: noInputText || !$demoState.validInputEncodings.length
-		? null
+		? 'utf8'
 		: $demoState.validInputEncodings.at(0);
 	$: value = isStringEncoding(bestMatch) ? bestMatch : null;
 	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });
-	$: disabled = inHelpDocs ? false : noInputText || controlsDisabled;
+	$: disabled = inHelpDocs || testMode ? false : noInputText || controlsDisabled;
 
 	const handleStringEncodingChanged = (stringEncoding: StringEncoding) => (value = stringEncoding);
 </script>

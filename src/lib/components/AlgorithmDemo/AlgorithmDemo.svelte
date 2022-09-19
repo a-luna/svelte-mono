@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
 	import AuthorName from '$lib/components/AlgorithmDemo/AuthorName.svelte';
 	import DemoIntro from '$lib/components/AlgorithmDemo/DemoIntro/DemoIntro.svelte';
 	import DemoResults from '$lib/components/AlgorithmDemo/DemoResults/DemoResults.svelte';
@@ -25,6 +24,7 @@
 	let outputBase64Encoding: Base64Encoding = defaultEncoderInput.outputEncoding;
 	let helpModal: HelpDocsModal;
 
+	$: devMode = import.meta.env.MODE === 'development';
 	$: if ($state.context.autoplay && $state.value) eventLog.add({ type: 'AUTOPLAYING' });
 	$: if (inputText) updateInputText(inputText, inputTextEncoding, outputBase64Encoding);
 	$: if ($demoState.errorOccurred) $alert = $state.context.input.validationResult.error.message;
@@ -46,7 +46,7 @@
 	$: bottomRowHeight = $demoState.isMobileDisplay ? 'auto' : '260px';
 	$: formTitleFontSize = $demoState.isMobileDisplay ? '1.6rem' : '1.9rem';
 
-	$: {
+	$: if (devMode) {
 		const test = '∑ßåœ ≈ ∆c';
 		console.log({ utf8: decomposeUtf8String(test) });
 		const test2 = '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾';
@@ -111,7 +111,7 @@
 					}
 				}
 			}
-			if (dev) {
+			if (devMode) {
 				if (key === 'KeyC') {
 					console.log({ context: $state.context });
 				}
