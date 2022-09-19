@@ -7,4 +7,7 @@
   node_bundler = "esbuild"
 
 [build.environment]
-  NODE_VERSION = "16" 
+  NODE_VERSION = "16"
+  
+[[plugins]]
+  package = "/netlify-plugin-pnpm"
