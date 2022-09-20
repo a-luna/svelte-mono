@@ -24,7 +24,7 @@
 	let outputBase64Encoding: Base64Encoding = defaultEncoderInput.outputEncoding;
 	let helpModal: HelpDocsModal;
 
-	$: devMode = import.meta.env.MODE === 'development';
+	$: console.log({ dev: $demoState.dev, test: $demoState.test, prod: $demoState.prod });
 	$: if ($state.context.autoplay && $state.value) eventLog.add({ type: 'AUTOPLAYING' });
 	$: if (inputText) updateInputText(inputText, inputTextEncoding, outputBase64Encoding);
 	$: if ($demoState.errorOccurred) $alert = $state.context.input.validationResult.error.message;
@@ -46,7 +46,7 @@
 	$: bottomRowHeight = $demoState.isMobileDisplay ? 'auto' : '260px';
 	$: formTitleFontSize = $demoState.isMobileDisplay ? '1.6rem' : '1.9rem';
 
-	$: if (devMode) {
+	$: if ($demoState.dev) {
 		const test = '∑ßåœ ≈ ∆c';
 		console.log({ utf8: decomposeUtf8String(test) });
 		const test2 = '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾';
@@ -111,7 +111,7 @@
 					}
 				}
 			}
-			if (devMode) {
+			if ($demoState.dev) {
 				if (key === 'KeyC') {
 					console.log({ context: $state.context });
 				}

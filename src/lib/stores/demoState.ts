@@ -87,6 +87,9 @@ export function createDemoStateStore(state: EncodingMachineStateStore): Readable
 			$state.matches({ encodeInput: 'explainByteMapping' }) || $state.matches('encodeOutput');
 
 		return {
+			dev: import.meta.env.MODE === 'development',
+			test: import.meta.env.MODE === 'test',
+			prod: import.meta.env.MODE === 'production',
 			pageWidth: $pageWidth,
 			isMobileDisplay: $pageWidth < 762,
 			machineState: machineState(),

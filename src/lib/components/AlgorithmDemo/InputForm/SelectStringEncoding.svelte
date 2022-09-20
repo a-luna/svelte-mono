@@ -22,9 +22,8 @@
 	const menuLabel = '';
 
 	$: noInputText = !inputText || inputText.length === 0;
-	$: testMode = import.meta.env.MODE === 'test';
 	$: options =
-		inHelpDocs || testMode
+		inHelpDocs || $demoState.test
 			? allOptions
 			: noInputText
 			? [allOptions[1]]
@@ -36,7 +35,7 @@
 		: $demoState.validInputEncodings.at(0);
 	$: value = isStringEncoding(bestMatch) ? bestMatch : null;
 	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });
-	$: disabled = inHelpDocs || testMode ? false : noInputText || controlsDisabled;
+	$: disabled = inHelpDocs || $demoState.test ? false : noInputText || controlsDisabled;
 
 	const handleStringEncodingChanged = (stringEncoding: StringEncoding) => (value = stringEncoding);
 </script>
