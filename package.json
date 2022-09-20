@@ -4,7 +4,6 @@
 	"scripts": {
 		"dev": "vite --host --port 3500",
 		"build": "vite build",
-		"build:ci": "vite build && vitest run",
 		"start": "vite preview",
 		"preview": "svelte-kit preview --host",
 		"test": "vitest run --coverage",
