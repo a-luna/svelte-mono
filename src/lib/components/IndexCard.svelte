@@ -1,16 +1,17 @@
 <script>
 	// href={item.slug} title={item.data.title} date={item.data.date}
-	export let href = '#';
+	export let slug = '';
 
 	/** @type {import('$lib/types').GHMetadata} */
 	export let ghMetadata = null;
 	export let title = 'Untitled post';
 	/** @type {string} */
 	export let stringData = 'no date';
+
+	$: href = `blog/${slug}`;
 </script>
 
 <a
-	sveltekit:prefetch
 	class="w-full text-gray-900 hover:text-yellow-600 dark:text-gray-100 dark:hover:text-yellow-100"
 	{href}
 	><div class="mb-8 w-full">
