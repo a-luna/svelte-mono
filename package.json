@@ -15,10 +15,10 @@
 	"devDependencies": {
 		"@playwright/test": "^1.25.2",
 		"@sveltejs/adapter-netlify": "^1.0.0-next.78",
-		"@sveltejs/kit": "^1.0.0-next.484",
+		"@sveltejs/kit": "^1.0.0-next.489",
 		"@tailwindcss/typography": "^0.5.7",
-		"@typescript-eslint/eslint-plugin": "^5.37.0",
-		"@typescript-eslint/parser": "^5.37.0",
+		"@typescript-eslint/eslint-plugin": "^5.38.0",
+		"@typescript-eslint/parser": "^5.38.0",
 		"autoprefixer": "^10.4.11",
 		"eslint": "^8.23.1",
 		"eslint-config-prettier": "^8.5.0",
@@ -56,7 +56,7 @@
 		"unified": "^10.1.2",
 		"vfile": "^5.3.5",
 		"vfile-reporter": "^7.0.4",
-		"vite": "^3.1.2"
+		"vite": "^3.1.3"
 	},
 	"engines": {
 		"node": ">=16.7"
