@@ -154,16 +154,25 @@ function parseIssue(issue: GithubIssue): ContentItem {
 	} else {
 		slug = slugify(title);
 	}
-	let description = data.description ?? content.trim().split('\n')[0];
+	let description = data.summary ?? content.trim().split('\n')[0];
 	// you may wish to use a truncation approach like this instead...
 	// let description = (data.content.length > 300) ? data.content.slice(0, 300) + '...' : data.content
 
 	let tags: string[] = [];
-	if (data.tags) tags = Array.isArray(data.tags) ? data.tags : [data.tags];
-	tags = tags.map((tag) => tag.toLowerCase());
+	if (data.tags) {
+		tags = Array.isArray(data.tags) ? data.tags : [data.tags];
+	}
+	tags = [...tags, ...data.categories].map((tag) => tag.toLowerCase());
+
+	let image = '';
+	if (data?.resources) {
+		image = data.resources.find((res) => res.name === 'cover')?.src;
+	} else {
+		image = data.image ?? data.cover_image;
+	}
 
 	return {
-		type: 'blog', // futureproof in case you want to add other types of content
+		type: 'blog' as const, // futureproof in case you want to add other types of content
 		content,
 		frontmatter: data,
 		title,
@@ -171,7 +180,7 @@ function parseIssue(issue: GithubIssue): ContentItem {
 		description,
 		category: data.category,
 		tags,
-		image: data.image ?? data.cover_image,
+		image,
 		canonical: data.canonical, // for canonical URLs of something published elsewhere
 		slug: slug.toLowerCase(),
 		date: new Date(data.date ?? issue.created_at),

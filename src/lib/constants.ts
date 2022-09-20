@@ -1,3 +1,5 @@
+import type { ContentItem } from '$lib/types';
+
 export const ICON_NAMES = ['circle', 'fork', 'github', 'star'] as const;
 
 export const ICON_COLORS = ['yellow', 'green', 'blue', 'purple', 'pink', 'default'] as const;
@@ -68,3 +70,36 @@ export const PROJECT_CATEGORIES = [
 	...BACKEND_CATEGORIES,
 	...FRONTEND_CATEGORIES
 ] as const;
+
+export const nullContentItem: ContentItem = {
+	type: 'blog',
+	content: '',
+	title: '',
+	subtitle: '',
+	description: '',
+	frontmatter: {},
+	category: '',
+	tags: [],
+	image: '',
+	canonical: '',
+	slug: '',
+	date: new Date(null),
+	ghMetadata: {
+		issueUrl: '',
+		commentsUrl: '',
+		title: '',
+		created_at: new Date(null),
+		updated_at: new Date(null),
+		reactions: {
+			total_count: 0,
+			'+1': 0,
+			'-1': 0,
+			laugh: 0,
+			hooray: 0,
+			confused: 0,
+			heart: 0,
+			rocket: 0,
+			eyes: 0
+		}
+	}
+};
