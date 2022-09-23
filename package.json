@@ -77,7 +77,7 @@
 		"snarkdown": "^2.0.0"
 	},
 	"peerDependencies": {
-		"eslint-plugin-jsdoc@": "^22.1.0",
+		"eslint-plugin-jsdoc": "^22.1.0",
 		"eslint-config-eslint": "^7.0.0",
 		"webpack": "^2.0.0 || ^3.0.0 || ^4.5.0",
 		"karma-webpack": "^3.0.0",
