@@ -22,15 +22,16 @@
 
 <style lang="postcss">
 	.menu-button {
-		padding: 0.7rem;
-		border: 3px solid var(--white);
+		padding: 0.5rem;
+		border: 2px solid var(--white);
 		background-color: var(--page-bg-color);
 		color: var(--white);
-		font-size: 2rem;
+		font-size: 1.5rem;
 		z-index: 5;
 	}
 	.menu-button:hover {
 		border: 3px solid var(--accent-color);
+		color: var(--accent-color);
 	}
 	.menu-button.open {
 		border-color: var(--accent-color);
@@ -38,7 +39,19 @@
 		color: var(--page-bg-color);
 	}
 	.icon-wrapper {
-		width: 32px;
-		height: 32px;
+		width: 28px;
+		height: 28px;
+	}
+
+	@media (min-width: 640px) {
+		.menu-button {
+			border-width: 3px;
+			padding: 0.7rem;
+			font-size: 2rem;
+		}
+		.icon-wrapper {
+			width: 32px;
+			height: 32px;
+		}
 	}
 </style>

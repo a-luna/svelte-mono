@@ -67,7 +67,7 @@
 	}
 
 	h2 {
-		font-size: 1.75rem;
+		font-size: 1.4rem;
 		letter-spacing: 0.8px;
 		line-height: 1.4;
 		font-weight: 400;
@@ -112,6 +112,12 @@
 
 	.all-language-list :global(.filter-setting) {
 		margin: 0.5rem 1rem 0 0;
+	}
+
+	@media screen and (min-width: 640px) {
+		h2 {
+			font-size: 1.5rem;
+		}
 	}
 
 	@media screen and (min-width: 768px) {

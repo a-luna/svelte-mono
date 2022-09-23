@@ -20,8 +20,8 @@
 	.github-stats {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
-		font-size: 1.1rem;
+		gap: 0.5rem;
+		font-size: 1rem;
 		margin: 0 2rem 0 0;
 	}
 	.gh-url {
@@ -31,5 +31,12 @@
 	}
 	.gh-url:hover {
 		color: var(--white);
+	}
+
+	@media screen and (min-width: 640px) {
+		.github-stats {
+			gap: 0.75rem;
+			font-size: 1.1rem;
+		}
 	}
 </style>

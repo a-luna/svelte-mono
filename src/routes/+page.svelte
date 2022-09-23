@@ -75,11 +75,11 @@
 	.main-header-content h2 span,
 	.subheading span {
 		color: var(--page-bg-color);
-		background-color: var(--accent-color);
-		padding: 0 0.5rem;
 	}
 
 	.subheading {
+		background-color: var(--accent-color);
+		padding: 0.25rem;
 		font-size: 1.2rem;
 		margin: 1.5rem 0 0 0;
 	}
@@ -94,10 +94,11 @@
 	.projects {
 		margin: 0 auto;
 		padding: 0 1.5rem 1.5rem 1.5rem;
+		max-width: 700px;
 	}
 	h2 {
 		font-family: 'Roboto Mono', menlo, consolas, monospace;
-		font-size: 1.6em;
+		font-size: 1.9em;
 		margin: 1.5rem 0;
 	}
 
@@ -121,14 +122,20 @@
 			max-width: 700px;
 			grid-column: 3 / span 6;
 		}
+		h2 {
+			font-size: 2.3rem;
+		}
 		.projects {
-			padding: 0 3rem 3rem 3rem;
+			padding: 0 0 3rem 0;
 		}
 	}
 
 	@media (min-width: 1024px) {
 		.main-header {
 			max-height: 450px;
+		}
+		h2 {
+			font-size: 2.5rem;
 		}
 	}
 </style>

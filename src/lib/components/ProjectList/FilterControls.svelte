@@ -30,7 +30,7 @@
 <style lang="postcss">
 	.filter-controls {
 		display: grid;
-		grid-template-columns: 60px 60px;
+		grid-template-columns: 48px 48px;
 		align-items: flex-start;
 		gap: 1rem;
 	}
@@ -41,10 +41,10 @@
 		justify-content: center;
 		align-items: center;
 		background-color: var(--page-bg-color);
-		border: 3px solid var(--white);
+		border: 2px solid var(--white);
 		color: var(--white);
-		width: 60px;
-		height: 60px;
+		width: 48px;
+		height: 48px;
 	}
 
 	.show-filters.open {
@@ -53,19 +53,23 @@
 		color: var(--page-bg-color);
 	}
 
+	.show-filters.open:hover {
+		color: var(--page-bg-color);
+	}
+
 	.reset-filters[disabled] {
 		border-color: var(--dark-gray-shade2);
 		color: var(--dark-gray-shade2);
 	}
 
-	.reset-filters:not([disabled]) {
-		border-color: var(--pink-icon);
-		color: var(--pink-icon);
+	.show-filters:hover {
+		border-color: var(--accent-color);
+		color: var(--accent-color);
 	}
 
-	.show-filters:hover,
 	.reset-filters:not([disabled]):hover {
-		border-color: var(--accent-color);
+		border-color: var(--pink-icon);
+		color: var(--pink-icon);
 	}
 
 	.show-filters .icon {
@@ -73,7 +77,23 @@
 	}
 
 	.icon {
-		width: 35px;
-		height: 35px;
+		width: 28px;
+		height: 28px;
+	}
+
+	@media (min-width: 640px) {
+		.filter-controls {
+			grid-template-columns: 60px 60px;
+		}
+		.show-filters,
+		.reset-filters {
+			border-width: 3px;
+			width: 60px;
+			height: 60px;
+		}
+		.icon {
+			width: 35px;
+			height: 35px;
+		}
 	}
 </style>

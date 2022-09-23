@@ -137,19 +137,21 @@
 	}
 
 	.project-list {
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: auto;
+		display: flex;
+		flex-flow: column nowrap;
 		gap: 1.5rem;
 	}
 
 	.total-results {
-		font-size: 1.4rem;
+		font-size: 1.3rem;
 	}
 
 	@media (min-width: 640px) {
 		.project-list {
 			gap: 2rem;
+		}
+		.total-results {
+			font-size: 1.4rem;
 		}
 	}
 
@@ -164,10 +166,6 @@
 			display: flex;
 			flex-flow: row nowrap;
 			align-items: flex-end;
-		}
-
-		.project-list {
-			grid-template-columns: 1fr 1fr;
 		}
 	}
 </style>
