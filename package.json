@@ -75,19 +75,5 @@
 		"shiki": "^0.11.1",
 		"slugify": "^1.6.5",
 		"snarkdown": "^2.0.0"
-	},
-	"peerDependencies": {
-		"eslint-plugin-jsdoc": "^22.1.0",
-		"eslint-config-eslint": "^7.0.0",
-		"webpack": "^2.0.0 || ^3.0.0 || ^4.5.0",
-		"karma-webpack": "^3.0.0",
-		"eslint-plugin-jsx-a11y": "^6.1.1",
-		"eslint-config-airbnb": "17.1.0",
-		"eslint-plugin-react": "^7.11.0",
-		"eslint-plugin-promise": ">=4.2.1",
-		"eslint": "^6.8.0 || ^7.0.0 || ^8.0.0",
-		"@types/jest": "^26.0.23 || ^27.0.3",
-		"karma-chai": "^0.1.0",
-		"debug": "^2.6.9"
 	}
 }
