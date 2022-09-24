@@ -22,15 +22,19 @@ import type XState from '$lib/components/Icons/Language/XState.svelte';
 import type {
 	BACKEND_CATEGORIES,
 	FRONTEND_CATEGORIES,
+	HTTP_METHODS,
 	ICON_COLORS,
 	ICON_NAMES,
 	PROJECT_CATEGORIES,
 	PROJECT_TYPES,
 	REPO_NAMES,
 	TECH_LIST
-} from './constants';
+} from '$lib/constants';
 
-export type ContentItem = {
+export type HttpError = { status: number; message: string };
+export type HttpResult = { success: true; value: Response } | { success: false; error: HttpError };
+
+export type BlogPost = {
 	type: 'blog';
 	content: string;
 	title: string;
@@ -44,7 +48,7 @@ export type ContentItem = {
 	image: string;
 	canonical: string;
 	slug: string;
-	date: Date;
+	date: string;
 	ghMetadata: GHMetadata;
 };
 
@@ -52,8 +56,8 @@ export type GHMetadata = {
 	issueUrl: string;
 	commentsUrl: string;
 	title: string;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string;
+	updated_at: string;
 	reactions: GHReactions;
 };
 
@@ -207,6 +211,7 @@ export type JsonValue =
 	| JsonValue[]
 	| { [key: string]: JsonValue };
 
+export type HttpMethod = typeof HTTP_METHODS[number];
 export type IconName = typeof ICON_NAMES[number];
 export type IconColor = typeof ICON_COLORS[number];
 export type RepoName = typeof REPO_NAMES[number];

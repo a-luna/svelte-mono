@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import Mandala from '$components/Mandala.svelte';
+	import Mandala from '$lib/components/Mandala.svelte';
 	import ProjectList from '$lib/components/ProjectList/ProjectList.svelte';
 	import {
 		DEFAULT_OG_IMAGE,
@@ -9,7 +9,7 @@
 		SITE_TITLE,
 		SITE_URL
 	} from '$lib/siteConfig';
-	import { userRepos } from '$lib/util';
+	import { userRepos } from '$lib/stores';
 	import type { PageData } from './$types';
 
 	export let data: PageData;

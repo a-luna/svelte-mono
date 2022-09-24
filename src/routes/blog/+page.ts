@@ -1,8 +1,17 @@
+import { blogPosts } from '$lib/stores';
+import type { BlogPost } from '$lib/types';
+import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
-export async function load({ data, setHeaders }): Promise<PageLoad> {
-	setHeaders({
-		'Cache-Control': 'max-age=3600'
-	});
-	return { items: data.items };
-}
+export const load: PageLoad = async ({ fetch }) => {
+	let allBlogposts: BlogPost[];
+	const storedValue = get(blogPosts);
+	if (!storedValue || !storedValue.length) {
+		allBlogposts = await fetch('/blog.json').then((r) => r.json());
+		blogPosts.set(allBlogposts);
+	} else {
+		allBlogposts = storedValue;
+	}
+
+	return { allBlogposts };
+};

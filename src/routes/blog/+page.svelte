@@ -1,28 +1,32 @@
 <script lang="ts">
-	import IndexCard from '$components/IndexCard.svelte';
+	import { browser } from '$app/environment';
+	import IndexCard from '$lib/components/IndexCard.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
-	import type { ContentItem } from '$lib/types';
+	import { blogPosts } from '$lib/stores';
+	import type { BlogPost } from '$lib/types';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	let items = data.items;
-	let list: ContentItem[];
+	$: allBlogposts = data.allBlogposts;
 
-	let inputEl;
-	function focusSearch(e) {
+	$: if (browser && Object.keys(allBlogposts).length) $blogPosts = allBlogposts;
+	let list: BlogPost[];
+
+	let inputEl: HTMLInputElement;
+	function focusSearch(e: KeyboardEvent) {
 		if (e.key === '/' && inputEl) inputEl.select();
 	}
 
-	let isTruncated = items.length > 20;
-	let search;
-	$: list = items
+	let isTruncated = $blogPosts.length > 20;
+	let search: string;
+	$: list = $blogPosts
 		.filter((item) => {
 			if (search) {
 				return item.title.toLowerCase().includes(search.toLowerCase());
 			}
 			return true;
 		})
-		.slice(0, isTruncated ? 2 : items.length);
+		.slice(0, isTruncated ? 2 : $blogPosts.length);
 </script>
 
 <svelte:head>
@@ -44,7 +48,7 @@
 			bind:value={search}
 			bind:this={inputEl}
 			placeholder="Hit / to search"
-			class="block w-full rounded-md border px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 border-gray-600"
+			class="block w-full rounded-md border border-gray-600 px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
 		/><svg
 			class="absolute right-3 top-3 h-5 w-5 text-gray-400 dark:text-gray-300"
 			xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +99,7 @@
 			No posts found for
 			<code>{search}</code>.
 		</div>
-		<button class="p-2 bg-slate-500" on:click={() => (search = '')}>Clear your search</button>
+		<button class="bg-slate-500 p-2" on:click={() => (search = '')}>Clear your search</button>
 	{:else}
 		<div class="prose dark:prose-invert">No blogposts found!</div>
 	{/if}

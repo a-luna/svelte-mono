@@ -1,5 +1,5 @@
 <script>
-	import Nav from '$components/Nav/Nav.svelte';
+	import Nav from '$lib/components/Nav/Nav.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import '../tailwind.css';
 

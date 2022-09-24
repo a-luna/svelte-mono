@@ -1,8 +1,7 @@
 <script lang="ts">
-	import Comments from '$components/Comments.svelte';
-	import Reactions from '$components/Reactions.svelte';
+	import Comments from '$lib/components/Comments.svelte';
+	import Reactions from '$lib/components/Reactions.svelte';
 	import { MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
-	import { formatDateString } from '$lib/util';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -33,7 +32,7 @@
 <article
 	class="mx-auto mb-16 mt-8 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8"
 >
-	<h1 class="mb-8 text-3xl font-bold tracking-tightmmd:text-5xl ">
+	<h1 class="tracking-tightmmd:text-5xl mb-8 text-3xl font-bold ">
 		{blogPost?.title}
 	</h1>
 	<div
@@ -48,7 +47,7 @@
 					>
 				</a>
 			{/if}
-			{formatDateString(blogPost?.date)}
+			{blogPost?.date}
 		</p>
 	</div>
 	<div class="gradient -mx-4 my-2 flex h-1 w-[100vw] sm:mx-0 sm:w-full" />

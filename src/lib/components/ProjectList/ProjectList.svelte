@@ -4,8 +4,9 @@
 	import FilterList from '$lib/components/ProjectList/FilterList.svelte';
 	import { getFilterSettingDetails } from '$lib/filterSettings';
 	import { updateProjectMetaData } from '$lib/projectMetaData';
+	import { userRepos } from '$lib/stores';
 	import type { FilterSetting, RepoWithMetaData } from '$lib/types';
-	import { isUserRepo, userRepos } from '$lib/util';
+	import { isUserRepo } from '$lib/util';
 	import { slide } from 'svelte/transition';
 
 	let filterProjectType: FilterSetting = 'allProjects';
@@ -75,11 +76,11 @@
 			filtered = filtered.filter((project) => project.primaryCategory === type);
 		}
 		if (category && category !== 'allCategories') {
-			filtered = filtered.filter((project) => project.categories.includes(category));
+			filtered = filtered.filter((project) => project.categories?.includes(category));
 		}
 		if (language && language !== 'allLanguages') {
 			filtered = filtered.filter(
-				(project) => project.primaryLanguage === language || project.languages.includes(language)
+				(project) => project.primaryLanguage === language || project.languages?.includes(language)
 			);
 		}
 	}

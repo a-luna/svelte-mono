@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Circle from '$components/Icons/Circle.svelte';
-	import Fork from '$components/Icons/Fork.svelte';
-	import Star from '$components/Icons/Star.svelte';
+	import Circle from '$lib/components/Icons/Circle.svelte';
+	import Fork from '$lib/components/Icons/Fork.svelte';
+	import Star from '$lib/components/Icons/Star.svelte';
 	import type { IconName } from '$lib/types';
 
 	export let icon: IconName;

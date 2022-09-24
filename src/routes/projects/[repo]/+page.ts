@@ -1,8 +1,7 @@
 import type { PageLoad } from './$types';
 
-export async function load({ data, setHeaders }): Promise<PageLoad> {
-	setHeaders({
-		'Cache-Control': 'max-age=3600'
-	});
-	return { readme: data.readme };
-}
+export const load: PageLoad = async ({ params, fetch }) => {
+	const { repo } = params;
+	const readme = await fetch(`/projects/${repo}.json`).then((r) => r.text());
+	return { readme };
+};

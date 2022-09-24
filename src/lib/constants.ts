@@ -1,4 +1,15 @@
-import type { ContentItem } from '$lib/types';
+import type { BlogPost } from '$lib/types';
+
+export const HTTP_METHODS = [
+	'GET',
+	'POST',
+	'PUT',
+	'PATCH',
+	'DELETE',
+	'HEAD',
+	'OPTIONS',
+	'CONNECT'
+] as const;
 
 export const ICON_NAMES = ['circle', 'fork', 'github', 'star'] as const;
 
@@ -71,7 +82,7 @@ export const PROJECT_CATEGORIES = [
 	...FRONTEND_CATEGORIES
 ] as const;
 
-export const nullContentItem: ContentItem = {
+export const nullBlogPost: BlogPost = {
 	type: 'blog',
 	content: '',
 	title: '',

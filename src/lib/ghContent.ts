@@ -1,79 +1,24 @@
-import { dev } from '$app/environment';
-import { APPROVED_POSTERS_GH_USERNAME, GH_USER_REPO } from '$lib/siteConfig';
-import type { ContentItem, GithubIssue } from '$lib/types';
-import { getAuthToken } from '$lib/util';
+import type { BlogPost, GithubIssue } from '$lib/types';
+import { formatDateString, slugify } from '$lib/util';
 import grayMatter from 'gray-matter';
 import { compile } from 'mdsvex';
-import fetch from 'node-fetch';
-import parse from 'parse-link-header';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
-import slugify from 'slugify';
 
 const remarkPlugins = undefined;
 const rehypePlugins = [rehypeStringify, rehypeSlug];
 
-const allowedPosters = APPROVED_POSTERS_GH_USERNAME; // array of strings of github username
-const publishedTags = ['Published'];
-let allBlogposts: ContentItem[] = [];
-// let etag = null // todo - implmement etag header
-``;
-export async function listGithubContent(ghToken: string) {
-	// use a diff var so as to not have race conditions while fetching
-	// TODO: make sure to handle this better when doing etags or cache restore
-
-	let _allBlogposts: ContentItem[] = [];
-	let next = null;
-	const res = await fetch(
-		`https://api.github.com/repos/${GH_USER_REPO}/issues?state=all&per_page=100`,
-		{
-			headers: getAuthToken(ghToken)
-		}
-	);
-
-	const issues: GithubIssue[] | { message: string } = (await res.json()) as
-		| GithubIssue[]
-		| { message: string };
-	if ('message' in issues && res.status > 400)
-		throw new Error(res.status + ' ' + res.statusText + '\n' + (issues && issues.message));
-	if (!('message' in issues)) {
-		issues.forEach((issue: GithubIssue) => {
-			if (
-				issue.labels.some((label) => publishedTags.includes(label.name)) &&
-				allowedPosters.includes(issue.user.login)
-			) {
-				_allBlogposts.push(parseIssue(issue));
+export async function parseBlogPost(blogPost: BlogPost): Promise<BlogPost> {
+	const blogbody = blogPost.content
+		.replace(/\n{% youtube (.*?) %}/g, (_, x) => {
+			// https://stackoverflow.com/a/27728417/1106414
+			function youtube_parser(url: string) {
+				const rx =
+					/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/;
+				return url.match(rx)?.at(1);
 			}
-		});
-		const headers = parse(res.headers.get('Link'));
-		next = headers && headers.next;
-		_allBlogposts.sort((a, b) => b.date.valueOf() - a.date.valueOf()); // use valueOf to make TS happy https://stackoverflow.com/a/60688789/1106414
-		allBlogposts = _allBlogposts;
-		return _allBlogposts;
-	}
-}
-
-export async function getGithubContent(slug: string, ghToken: string): Promise<ContentItem> {
-	// get all blogposts if not already done - or in development
-	if (dev || allBlogposts.length === 0) {
-		allBlogposts = await listGithubContent(ghToken);
-		if (dev && !allBlogposts.length)
-			throw new Error('failed to load blogposts for some reason. check token');
-	}
-	if (!allBlogposts.length) throw new Error('no blogposts');
-	// find the blogpost that matches this slug
-	const blogpost = allBlogposts.find((post) => post.slug === slug);
-	if (blogpost) {
-		const blogbody = blogpost.content
-			.replace(/\n{% youtube (.*?) %}/g, (_, x) => {
-				// https://stackoverflow.com/a/27728417/1106414
-				function youtube_parser(url) {
-					var rx =
-						/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-					return url.match(rx)[1];
-				}
-				const videoId = x.startsWith('https://') ? youtube_parser(x) : x;
-				return `<iframe
+			const videoId: string = x.startsWith('https://') ? youtube_parser(x) : x;
+			return `<iframe
 			class="w-full object-contain"
 			srcdoc="
 				<style>
@@ -117,44 +62,41 @@ export async function getGithubContent(slug: string, ghToken: string): Promise<C
 			height="400"
 			allowFullScreen
 			aria-hidden="true"></iframe>`;
-			})
-			.replace(/\n{% (tweet|twitter) (.*?) %}/g, (_, _2, x) => {
-				const url = x.startsWith('https://twitter.com/') ? x : `https://twitter.com/x/status/${x}`;
-				return `
+		})
+		.replace(/\n{% (tweet|twitter) (.*?) %}/g, (_, _2, x) => {
+			const url = x.startsWith('https://twitter.com/') ? x : `https://twitter.com/x/status/${x}`;
+			return `
 					<blockquote class="twitter-tweet" data-lang="en" data-dnt="true" data-theme="dark">
 					<a href="${url}"></a></blockquote> 
 					<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 					`;
-			});
+		});
 
-		// compile it with mdsvex
-		const content = (
-			await compile(blogbody, {
-				remarkPlugins,
-				rehypePlugins
-			})
-		).code
-			// https://github.com/pngwn/MDsveX/issues/392
-			.replace(/>{@html `<code class="language-/g, '><code class="language-')
-			.replace(/<\/code>`}<\/pre>/g, '</code></pre>');
+	// compile it with mdsvex
+	const content = (
+		await compile(blogbody, {
+			remarkPlugins,
+			rehypePlugins
+		})
+	).code
+		// https://github.com/pngwn/MDsveX/issues/392
+		.replace(/>{@html `<code class="language-/g, '><code class="language-')
+		.replace(/<\/code>`}<\/pre>/g, '</code></pre>');
 
-		return { ...blogpost, content };
-	} else {
-		throw new Error('Blogpost not found for slug: ' + slug);
-	}
+	return { ...blogPost, content };
 }
 
-function parseIssue(issue: GithubIssue): ContentItem {
+export function parseIssue(issue: GithubIssue): BlogPost {
 	const src = issue.body;
 	const { content, data } = grayMatter(src);
-	let title = data.title ?? issue.title;
+	const title = data.title ?? issue.title;
 	let slug;
 	if (data.slug) {
 		slug = data.slug;
 	} else {
 		slug = slugify(title);
 	}
-	let description = data.summary ?? content.trim().split('\n')[0];
+	const description = data.summary ?? content.trim().split('\n')[0];
 	// you may wish to use a truncation approach like this instead...
 	// let description = (data.content.length > 300) ? data.content.slice(0, 300) + '...' : data.content
 
@@ -166,7 +108,7 @@ function parseIssue(issue: GithubIssue): ContentItem {
 
 	let image = '';
 	if (data?.resources) {
-		image = data.resources.find((res) => res.name === 'cover')?.src;
+		image = data.resources.find((res: { name: string }) => res.name === 'cover')?.src;
 	} else {
 		image = data.image ?? data.cover_image;
 	}
@@ -182,14 +124,14 @@ function parseIssue(issue: GithubIssue): ContentItem {
 		tags,
 		image,
 		canonical: data.canonical, // for canonical URLs of something published elsewhere
-		slug: slug.toLowerCase(),
-		date: new Date(data.date ?? issue.created_at),
+		slug,
+		date: data.date ?? issue.created_at,
 		ghMetadata: {
 			issueUrl: issue.html_url,
 			commentsUrl: issue.comments_url,
 			title: issue.title,
-			created_at: issue.created_at,
-			updated_at: issue.updated_at,
+			created_at: formatDateString(issue.created_at),
+			updated_at: formatDateString(issue.updated_at),
 			reactions: issue.reactions
 		}
 	};
