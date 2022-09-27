@@ -234,17 +234,17 @@ body::-webkit-scrollbar-thumb {
 }
 
 a {
-	color: var(--teal);
+	color: var(--accent-color);
 	text-decoration-line: none;
 }
 a:hover {
-	color: var(--teal-shade1);
+	color: var(--accent-color-dim);
 }
 
 a.index-card .index-card-reactions,
 a.index-card .index-card-date,
 a.index-card .index-card-description {
-	color: var(--text-color);
+	color: var(--body-text);
 }
 
 a.index-card:hover .index-card-title {
@@ -272,15 +272,6 @@ h5 a:hover,
 h6 a:hover {
 	/* margin-left: 1rem; */
 	text-decoration-line: underline;
-}
-.prose h2::before {
-	content: '## ';
-}
-.prose h3::before {
-	content: '### ';
-}
-.prose h4::before {
-	content: '#### ';
 }
 
 button {

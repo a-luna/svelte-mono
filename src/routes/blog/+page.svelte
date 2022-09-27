@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import IndexCard from '$lib/components/IndexCard.svelte';
+	import BlogSummary from '$lib/components/BlogSummary.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import { blogPosts } from '$lib/stores';
 	import type { BlogPost } from '$lib/types';
@@ -36,25 +36,17 @@
 
 <svelte:window on:keyup={focusSearch} />
 
-<section class="mx-auto mb-16 mt-8 flex max-w-2xl flex-col items-start justify-center px-4 sm:px-8">
-	<h1 class="mb-4 text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
-		Blog
-	</h1>
-	<p class="mb-4 text-gray-600 dark:text-gray-400">Use the search below to filter by title.</p>
-	<div class="relative mb-4 w-full">
+<section>
+	<h1>Blog</h1>
+	<p class="search-desc">Use the search below to filter by title.</p>
+	<div class="input-wrapper">
 		<input
 			aria-label="Search articles"
 			type="text"
 			bind:value={search}
 			bind:this={inputEl}
 			placeholder="Hit / to search"
-			class="block w-full rounded-md border border-gray-600 px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-		/><svg
-			class="absolute right-3 top-3 h-5 w-5 text-gray-400 dark:text-gray-300"
-			xmlns="http://www.w3.org/2000/svg"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke="currentColor"
+		/><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 			><path
 				stroke-linecap="round"
 				stroke-linejoin="round"
@@ -64,32 +56,26 @@
 		>
 	</div>
 	{#if !search}
-		<h3 class="mt-8 mb-4 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
-			All Posts
-		</h3>
+		<h3>All Posts</h3>
 	{/if}
 	{#if list.length}
 		<ul class="">
 			{#each list as item}
-				<li class="mb-8 text-lg">
-					<!-- <code class="mr-4">{item.data.date}</code> -->
-					<IndexCard
+				<li>
+					<BlogSummary
 						slug={item.slug}
 						title={item.title}
-						stringData={new Date(item.date).toISOString().slice(0, 10)}
+						publishDate={new Date(item.date).toISOString().slice(0, 10)}
 						ghMetadata={item.ghMetadata}
 					>
 						{item.description}
-					</IndexCard>
+					</BlogSummary>
 				</li>
 			{/each}
 		</ul>
 		{#if isTruncated}
-			<div class="flex justify-center">
-				<button
-					on:click={() => (isTruncated = false)}
-					class="inline-block rounded bg-blue-100 p-4 text-lg font-bold tracking-tight text-black hover:text-yellow-900 dark:bg-blue-900 dark:text-white hover:dark:text-yellow-200 md:text-2xl"
-				>
+			<div class="button-wrapper">
+				<button on:click={() => (isTruncated = false)} class="load-more-button">
 					Load More Posts...
 				</button>
 			</div>
@@ -106,8 +92,90 @@
 </section>
 
 <style lang="postcss">
+	section {
+		display: flex;
+		flex-flow: column nowrap;
+		padding: 0 1rem;
+		margin: 2rem auto 4rem auto;
+		justify-content: center;
+		align-items: flex-start;
+		max-width: 42rem;
+	}
+	h1 {
+		margin: 0 0 1rem 0;
+		font-size: 1.875rem;
+		line-height: 2.25rem;
+		font-weight: 700;
+		letter-spacing: -0.025em;
+	}
+	.search-desc {
+		margin: 0 0 1rem 0;
+		color: var(--gray);
+	}
+	.input-wrapper {
+		position: relative;
+		margin: 0 0 1rem 0;
+		width: 100%;
+	}
 	input {
+		display: block;
 		background-color: var(--black-tint1);
 		color: var(--white-shade2);
+		border-radius: 0.375rem;
+		border: 1px solid var(--gray-shade6);
+		padding: 0.5rem 1rem;
+		width: 100%;
+	}
+	svg {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		color: var(--gray);
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+	h3 {
+		color: var(--body-text);
+		margin: 2rem 0 1rem 0;
+		font-size: 1.5rem;
+		line-height: 2rem;
+		font-weight: 700;
+		letter-spacing: -0.025em;
+	}
+	li {
+		margin: 0 0 2rem 0;
+		font-size: 1.125rem;
+		line-height: 1.75rem;
+	}
+	.button-wrapper {
+		background-color: var(--page-bg-color);
+		border: 1px solid var(--accent-color);
+		padding: 0.75rem 1rem;
+	}
+	.load-more-button {
+		color: var(--accent-color);
+		background-color: var(--page-bg-color);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 400;
+		line-height: 1;
+	}
+
+	@media (min-width: 640px) {
+		section {
+			padding: 0 2rem;
+		}
+	}
+
+	@media (min-width: 768px) {
+		h1 {
+			font-size: 3rem;
+			line-height: 1;
+		}
+		h3 {
+			font-size: 2.25rem;
+			line-height: 2.5rem;
+		}
 	}
 </style>

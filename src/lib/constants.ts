@@ -1,4 +1,4 @@
-import type { BlogPost } from '$lib/types';
+import type { BlogPost, GHMetadata, GHReactions } from '$lib/types';
 
 export const HTTP_METHODS = [
 	'GET',
@@ -82,6 +82,27 @@ export const PROJECT_CATEGORIES = [
 	...FRONTEND_CATEGORIES
 ] as const;
 
+export const nullGHReactions: GHReactions = {
+	total_count: 0,
+	'+1': 0,
+	'-1': 0,
+	laugh: 0,
+	hooray: 0,
+	confused: 0,
+	heart: 0,
+	rocket: 0,
+	eyes: 0
+};
+
+export const nullGHMetadata: GHMetadata = {
+	issueUrl: '',
+	commentsUrl: '',
+	title: '',
+	created_at: '',
+	updated_at: '',
+	reactions: nullGHReactions
+};
+
 export const nullBlogPost: BlogPost = {
 	type: 'blog',
 	content: '',
@@ -94,23 +115,6 @@ export const nullBlogPost: BlogPost = {
 	image: '',
 	canonical: '',
 	slug: '',
-	date: new Date(null),
-	ghMetadata: {
-		issueUrl: '',
-		commentsUrl: '',
-		title: '',
-		created_at: new Date(null),
-		updated_at: new Date(null),
-		reactions: {
-			total_count: 0,
-			'+1': 0,
-			'-1': 0,
-			laugh: 0,
-			hooray: 0,
-			confused: 0,
-			heart: 0,
-			rocket: 0,
-			eyes: 0
-		}
-	}
+	date: '',
+	ghMetadata: nullGHMetadata
 };
