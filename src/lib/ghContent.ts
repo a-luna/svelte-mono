@@ -125,13 +125,13 @@ export function parseIssue(issue: GithubIssue): BlogPost {
 		image,
 		canonical: data.canonical, // for canonical URLs of something published elsewhere
 		slug,
-		date: data.date ?? issue.created_at,
+		date: formatDateString(new Date(data.date ?? issue.created_at)),
 		ghMetadata: {
 			issueUrl: issue.html_url,
 			commentsUrl: issue.comments_url,
 			title: issue.title,
-			created_at: formatDateString(issue.created_at),
-			updated_at: formatDateString(issue.updated_at),
+			created_at: formatDateString(new Date(issue.created_at)),
+			updated_at: formatDateString(new Date(issue.updated_at)),
 			reactions: issue.reactions
 		}
 	};

@@ -65,7 +65,7 @@
 					<BlogSummary
 						slug={item.slug}
 						title={item.title}
-						publishDate={new Date(item.date).toISOString().slice(0, 10)}
+						publishDate={item.date}
 						ghMetadata={item.ghMetadata}
 					>
 						{item.description}

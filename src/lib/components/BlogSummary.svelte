@@ -36,6 +36,9 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: space-between;
+		white-space: nowrap;
+		line-height: 1;
+		margin: 0 0 1rem 0;
 	}
 	a {
 		width: 100%;
@@ -49,7 +52,7 @@
 	}
 	.blog-meta {
 		display: inline-flex;
-		flex: 1 1 0% '';
+		flex: 1 1 0%;
 		align-items: center;
 	}
 	.reaction-count {
@@ -71,9 +74,6 @@
 	}
 
 	@media (min-width: 768px) {
-		.flex-wrapper {
-			flex-flow: row nowrap;
-		}
 		h4 {
 			font-size: 1.25rem;
 		}
