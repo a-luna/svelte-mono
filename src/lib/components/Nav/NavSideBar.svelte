@@ -1,7 +1,7 @@
 <script lang="ts">
 	import NavLink from '$lib/components/Nav/NavLink.svelte';
+	import SocialLinks from '$lib/components/Nav/SocialLinks.svelte';
 	import { fade, fly } from 'svelte/transition';
-	import SocialLinks from './SocialLinks.svelte';
 
 	export let open: boolean;
 </script>

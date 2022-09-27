@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Codepen from '../Icons/Social/Codepen.svelte';
-	import Email from '../Icons/Social/Email.svelte';
-	import Github from '../Icons/Social/Github.svelte';
-	import LinkedIn from '../Icons/Social/LinkedIn.svelte';
-	import Twitter from '../Icons/Social/Twitter.svelte';
+	import Codepen from '$lib/components/Icons/Social/Codepen.svelte';
+	import Email from '$lib/components/Icons/Social/Email.svelte';
+	import Github from '$lib/components/Icons/Social/Github.svelte';
+	import LinkedIn from '$lib/components/Icons/Social/LinkedIn.svelte';
+	import Twitter from '$lib/components/Icons/Social/Twitter.svelte';
 
 	export let mobile = false;
 	export let open = false;

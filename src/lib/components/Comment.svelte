@@ -1,7 +1,7 @@
 <script>
+	import Reactions from '$lib/components/Reactions.svelte';
 	import { formatDistance } from 'date-fns';
 	import snarkdown from 'snarkdown';
-	import Reactions from './Reactions.svelte';
 	/** @type {import('$lib/types').GHComment} */
 	export let comment;
 	const doc = new DOMParser().parseFromString(

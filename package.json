@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite --host --port 3504",
+		"start": "vite start",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./jsconfig.json",
