@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm run build:ci"
+  command = "npm run build:ci"
   publish = "build"
 
 [functions]
@@ -8,6 +8,3 @@
 
 [build.environment]
   NODE_VERSION = "16"
-  
-[[plugins]]
-  package = "/netlify-plugin-pnpm"
