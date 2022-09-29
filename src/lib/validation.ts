@@ -1,6 +1,6 @@
 import { getBase64Alphabet } from '$lib/maps';
 import type { Base64Encoding, Result, StringEncoding } from '$lib/types';
-import { decomposeUtf8String } from '$lib/unicode/utf8';
+import { decomposeUtf8String } from '$lib/unicode';
 import { genericStringToByteArray } from '$lib/util';
 
 const BASE64_STANDARD_ALPHABET = /^[0-9A-Za-z+/=]+$/;

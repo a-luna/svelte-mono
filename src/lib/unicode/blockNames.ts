@@ -1546,5 +1546,5 @@ const unicodeBlocks = [
 	},
 ];
 
-export const getBlockContainingCodepoint = (codepoint: number): string =>
-	unicodeBlocks.find((block) => block.start <= codepoint && codepoint <= block.finish)?.block;
+export const getUnicodeBlockContainingCodepoint = (codepoint: number): string =>
+	unicodeBlocks.find(({ start, finish }) => start <= codepoint && codepoint <= finish)?.block;

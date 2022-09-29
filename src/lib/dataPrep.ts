@@ -10,7 +10,7 @@ import type {
 	Result,
 	StringEncoding,
 } from '$lib/types';
-import { decomposeUtf8String } from '$lib/unicode/utf8';
+import { decomposeUtf8String } from '$lib/unicode';
 import {
 	asciiStringFromByteArray,
 	byteArrayToBinaryStringArray,

@@ -4,9 +4,7 @@ import type {
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
-import { getBlockContainingCodepoint } from '$lib/unicode/blockNames';
-import { unicodeCharNames } from '$lib/unicode/charNames';
-import { reComplexSymbol } from '$lib/unicode/regex';
+import { getUnicodeBlockContainingCodepoint, getUnicodeCharName, reComplexSymbol } from '$lib/unicode';
 import {
 	genericStringToByteArray,
 	hexStringFromByte,
@@ -31,8 +29,8 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 				bytes,
 				codepoint: codepoints?.hex,
 				decimalCodepoint,
-				unicodeName: unicodeCharNames[decimalCodepoint],
-				unicodeBlock: getBlockContainingCodepoint(decimalCodepoint),
+				unicodeName: getUnicodeCharName(decimalCodepoint),
+				unicodeBlock: getUnicodeBlockContainingCodepoint(decimalCodepoint),
 				totalBytes,
 				encoded: strictUriEncode(char),
 			};
@@ -42,10 +40,10 @@ export function decomposeUtf8String(s: string): Utf8StringComposition {
 		const isCombined = charMap.length > 1;
 		const unicodeNames = isCombined
 			? charMap.map((charMap) => charMap.unicodeName).flat()
-			: [unicodeCharNames[decimalCodepoints[0]]];
+			: [getUnicodeCharName(decimalCodepoints[0])];
 		const unicodeBlocks = isCombined
 			? charMap.map((charMap) => charMap.unicodeBlock).flat()
-			: [getBlockContainingCodepoint(decimalCodepoints[0])];
+			: [getUnicodeBlockContainingCodepoint(decimalCodepoints[0])];
 		const complexCharMap: Utf8ComplexCharacterMap = {
 			char: utf8,
 			isCombined,

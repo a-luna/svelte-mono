@@ -1,5 +1,5 @@
 import type { BitGroupDetails, Result, StringEncoding } from '$lib/types';
-import { decomposeUtf8String } from '$lib/unicode/utf8';
+import { decomposeUtf8String } from '$lib/unicode';
 import { validateAsciiBytes } from '$lib/validation';
 
 export const HEX_BIT_GROUP_REGEX = /hex-chunk-(?<chunk>\d+)-byte-(?<byte>1|2|3)/;

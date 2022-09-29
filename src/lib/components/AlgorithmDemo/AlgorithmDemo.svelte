@@ -12,7 +12,7 @@
 	import { alert } from '$lib/stores/alert';
 	import { getAppContext } from '$lib/stores/context';
 	import type { Base64Encoding, StringEncoding } from '$lib/types';
-	import { decomposeUtf8String } from '$lib/unicode/utf8';
+	import { decomposeUtf8String } from '$lib/unicode';
 	import { copyToClipboard } from '$lib/util';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
 	import { createTestSet } from '$lib/xstate/b64Encode.test/testSetGenerator';

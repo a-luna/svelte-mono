@@ -27491,9 +27491,41 @@ const charMap = {
 };
 
 function buildCharMap() {
-	const map: string[] = new Array<string>(Object.keys(charMap).length);
+	const map: { [k: number]: string } = {};
 	Object.entries(charMap).forEach(([codepoint, name]) => (map[parseInt(codepoint)] = name));
 	return map;
 }
 
-export const unicodeCharNames = buildCharMap();
+const unicodeCharNames = buildCharMap();
+const cjkUnifiedBlocks = [
+	'CJK Unified Ideographs',
+	'CJK Unified Ideographs Extension A',
+	'CJK Unified Ideographs Extension B',
+	'CJK Unified Ideographs Extension C',
+	'CJK Unified Ideographs Extension D',
+	'CJK Unified Ideographs Extension E',
+	'CJK Unified Ideographs Extension F',
+	'CJK Unified Ideographs Extension G',
+];
+const cjkCompatibilityBlocks = ['CJK Compatibility Ideographs', 'CJK Compatibility Ideographs Supplement'];
+const tangutBlocks = ['Tangut', 'Tangut Supplement'];
+
+export function getUnicodeCharName(codepoint: number): string {
+	const codepiontHex = hexStringFromByte(codepoint);
+	const block = getUnicodeBlockContainingCodepoint(codepoint);
+
+	if (cjkUnifiedBlocks.includes(block)) {
+		return `CJK UNIFIED IDEOGRAPH-${codepiontHex}`;
+	}
+	if (cjkCompatibilityBlocks.includes(block)) {
+		return `CJK COMPATIBILITY IDEOGRAPH-${codepiontHex}`;
+	}
+	if (tangutBlocks.includes(block)) {
+		return `TANGUT IDEOGRAPH-${codepiontHex}`;
+	}
+	if (block === 'Variation Selectors Supplement') {
+		const varNumber = codepoint - 917743;
+		return `VARIATION SELECTOR-${varNumber}`;
+	}
+	return unicodeCharNames?.[codepoint] || 'UNDEFINED';
+}
