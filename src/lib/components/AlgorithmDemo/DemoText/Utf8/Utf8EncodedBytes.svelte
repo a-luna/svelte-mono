@@ -1,7 +1,7 @@
 <script lang="ts">
 	import EncodedBytesForChar from '$lib/components/AlgorithmDemo/DemoText/Utf8/EncodedBytesForChar.svelte';
 	import ToggleExpandAllCharacters from '$lib/components/AlgorithmDemo/DemoText/Utf8/ToggleExpandAllCharacters.svelte';
-	import { decomposeUtf8String } from '$lib/unicode/utf8';
+	import { decomposeUtf8String } from '$lib/unicode';
 	import { fade } from 'svelte/transition';
 
 	export let input: string = '';

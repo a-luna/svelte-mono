@@ -24,7 +24,7 @@
 	let outputBase64Encoding: Base64Encoding = defaultEncoderInput.outputEncoding;
 	let helpModal: HelpDocsModal;
 
-	$: console.log({ dev: $demoState.dev, test: $demoState.test, prod: $demoState.prod });
+	$: if ($demoState.dev) console.log({ dev: $demoState.dev, test: $demoState.test, prod: $demoState.prod });
 	$: if ($state.context.autoplay && $state.value) eventLog.add({ type: 'AUTOPLAYING' });
 	$: if (inputText) updateInputText(inputText, inputTextEncoding, outputBase64Encoding);
 	$: if ($demoState.errorOccurred) $alert = $state.context.input.validationResult.error.message;
@@ -79,58 +79,57 @@
 	}
 
 	async function handleKeyPress(key: string) {
-		if (!$demoUIState.modalOpen) {
-			if (key === 'ArrowRight') {
+		if ($demoUIState.modalOpen) return;
+		if (key === 'ArrowRight') {
+			if ($state.matches('inactive')) {
+				sendEvent({
+					type: 'VALIDATE_TEXT',
+					inputText,
+					inputEncoding: inputTextEncoding,
+					outputEncoding: outputBase64Encoding,
+				});
+			} else {
+				sendEvent({ type: 'GO_TO_NEXT_STEP' });
+			}
+		}
+		if (key === 'ArrowLeft') {
+			sendEvent({ type: 'GO_TO_PREV_STEP' });
+		}
+		if (key === 'Space') {
+			if ($state.context.autoplay) {
+				sendEvent({ type: 'STOP_AUTO_PLAY' });
+			} else {
 				if ($state.matches('inactive')) {
 					sendEvent({
-						type: 'VALIDATE_TEXT',
+						type: 'START_AUTOPLAY',
 						inputText,
 						inputEncoding: inputTextEncoding,
 						outputEncoding: outputBase64Encoding,
 					});
 				} else {
-					sendEvent({ type: 'GO_TO_NEXT_STEP' });
+					sendEvent({ type: 'RESUME_AUTO_PLAY' });
 				}
 			}
-			if (key === 'ArrowLeft') {
-				sendEvent({ type: 'GO_TO_PREV_STEP' });
-			}
-			if (key === 'Space') {
-				if ($state.context.autoplay) {
-					sendEvent({ type: 'STOP_AUTO_PLAY' });
-				} else {
-					if ($state.matches('inactive')) {
-						sendEvent({
-							type: 'START_AUTOPLAY',
-							inputText,
-							inputEncoding: inputTextEncoding,
-							outputEncoding: outputBase64Encoding,
-						});
-					} else {
-						sendEvent({ type: 'RESUME_AUTO_PLAY' });
-					}
-				}
-			}
-			if ($demoState.dev) {
-				if (key === 'KeyC') {
-					console.log({ context: $state.context });
-				}
-				if (key === 'KeyE') {
-					console.log({ log: eventLog.entries() });
-				}
-				if (key === 'KeyL') {
-					eventLog.clear();
-					console.log({ $eventLog });
-				}
-				if (key === 'KeyS') {
-					console.log({ state: $state.value });
-				}
-				if (key === 'KeyT') {
-					const result = await copyToClipboard(createTestSet());
-					if (result.success) {
-						console.log('Successfully created test set and copied to clipboard!');
-					}
-				}
+		}
+
+		if (!$demoState.dev) return;
+		if (key === 'KeyC') {
+			console.log({ context: $state.context });
+		}
+		if (key === 'KeyE') {
+			console.log({ log: eventLog.entries() });
+		}
+		if (key === 'KeyL') {
+			eventLog.clear();
+			console.log({ $eventLog });
+		}
+		if (key === 'KeyS') {
+			console.log({ state: $state.value });
+		}
+		if (key === 'KeyT') {
+			const result = await copyToClipboard(createTestSet());
+			if (result.success) {
+				console.log('Successfully created test set and copied to clipboard!');
 			}
 		}
 	}

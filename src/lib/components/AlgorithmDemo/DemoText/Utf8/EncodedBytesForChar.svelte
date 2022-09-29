@@ -116,7 +116,7 @@
 		height: 16px;
 	}
 	.button-placeholder {
-		width: 14.4px;
+		flex: 0 0 14.4px;
 	}
 	.utf8-char,
 	.placeholder {
