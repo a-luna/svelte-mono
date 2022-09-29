@@ -3,7 +3,7 @@
 	import { app } from '$lib/stores/app';
 	import { state } from '$lib/stores/state';
 
-	$: isUTF8 = $state.decoderOutput.outputEncoding === 'utf8' || $state.encoderOutput.inputEncoding === 'utf8';
+	$: isUTF8 = $state.decoderOutput.outputEncoding === 'utf8' || $state.encoderInput.inputEncoding === 'utf8';
 	$: textEncoding = isUTF8 || $app.isAscii;
 	$: charType = isUTF8 ? 'utf8' : 'ascii';
 </script>

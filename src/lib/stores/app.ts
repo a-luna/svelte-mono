@@ -28,15 +28,25 @@ function createAppStore(state: AppState): Readable<AppStore> {
 
 		const getOutputText = (): string =>
 			encoderMode()
-				? $state.encoderOutput.output
-				: $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8'
-				? $state.decoderOutput.output
-				: getOutputHexBytes();
+				? $state.encoderInput.inputText
+					? $state.encoderOutput.output
+					: ''
+				: $state.decoderInput.inputText
+				? $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8'
+					? $state.decoderOutput.output
+					: getOutputHexBytes()
+				: '';
 
 		const getTotalBytesIn = (): number => (encoderMode() ? $state.encoderInput.bytes.length : 0);
 
 		const getTotalBytesOut = (): number =>
-			encoderMode() ? $state.encoderOutput.bytes.length : $state.decoderOutput.bytes.length;
+			encoderMode()
+				? $state.encoderInput.inputText
+					? $state.encoderOutput.bytes.length
+					: 0
+				: $state.decoderInput.inputText
+				? $state.decoderOutput.bytes.length
+				: 0;
 
 		const getInputEncoding = (): Encoding =>
 			encoderMode() ? $state.encoderInput.inputEncoding : $state.decoderInput.inputEncoding;
@@ -46,14 +56,30 @@ function createAppStore(state: AppState): Readable<AppStore> {
 
 		const isAscii = (): boolean =>
 			encoderMode()
-				? $state.encoderOutput.inputEncoding === 'ascii' || $state.encoderOutput.inputEncoding === 'utf8'
-				: $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8';
+				? $state.encoderInput.inputText
+					? $state.encoderOutput.inputEncoding === 'ascii' || $state.encoderOutput.inputEncoding === 'utf8'
+					: false
+				: $state.decoderInput.inputText
+				? $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8'
+				: false;
 
 		const getBase64Encoding = (): Base64Encoding =>
-			encoderMode() ? $state.encoderOutput.outputEncoding : $state.decoderOutput.inputEncoding;
+			encoderMode()
+				? $state.encoderInput.inputText
+					? $state.encoderOutput.outputEncoding
+					: 'base64'
+				: $state.decoderInput.inputText
+				? $state.decoderOutput.inputEncoding
+				: 'base64';
 
 		const getOutputChunks = (): OutputChunk[] =>
-			encoderMode() ? $state.encoderOutput.chunks : $state.decoderOutput.chunks;
+			encoderMode()
+				? $state.encoderInput.inputText
+					? $state.encoderOutput.chunks
+					: []
+				: $state.decoderInput.inputText
+				? $state.decoderOutput.chunks
+				: [];
 
 		const getErrorMessage = (): string =>
 			encoderMode()
