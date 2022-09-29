@@ -667,12 +667,12 @@ button {
 	background-color: var(--help-docs-border-color);
 	color: var(--black2);
 	font-size: 1rem;
-	font-weight: 500;
+	font-weight: 700;
 	letter-spacing: 0.6px;
 	line-height: 1;
 	text-align: center;
 	margin: 0;
-	padding: 0;
+	padding: 0.25rem;
 	flex: 1;
 	border-bottom: 0.5px solid var(--help-docs-border-color);
 	border-top-left-radius: 5px;
@@ -1177,7 +1177,6 @@ button {
 		align-items: center;
 		flex: 1;
 		font-size: 1rem;
-		font-weight: 700;
 		color: var(--nav-button-active-bg-color);
 		background-color: var(--help-docs-bg-color);
 		letter-spacing: 0.6px;

@@ -31,7 +31,6 @@
 	}
 
 	.button-wrapper {
-		padding: 0.3rem 0.25rem;
 		border-top-left-radius: 5px;
 	}
 	button {
