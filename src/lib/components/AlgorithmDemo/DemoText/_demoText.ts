@@ -6,6 +6,7 @@ import type {
 	EncoderInputChunk,
 	OutputChunk,
 	StringEncoding,
+	Utf8ComplexCharacterMap,
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
@@ -96,7 +97,7 @@ export function getUtf8ByteMapHtml(input: string): string {
 	return `<${byteMapOpenTag}>${byteMapHtml.join('\n')}</div>`;
 }
 
-function getStandardUtf8ByteMapHtml(byteMap: Utf8StandardCharacterMap): string {
+function getStandardUtf8ByteMapHtml(byteMap: Utf8StandardCharacterMap | Utf8ComplexCharacterMap): string {
 	const utf8Char = byteMap.encoded === '%EF%B8%8F' ? 'VS16' : byteMap.encoded === '%E2%80%8D' ? 'ZWJ' : byteMap.char;
 	const openTag =
 		byteMap.encoded === '%EF%B8%8F'
