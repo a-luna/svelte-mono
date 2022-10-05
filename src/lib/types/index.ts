@@ -8,6 +8,7 @@ export type {
 	NavButtonEventDispatcher,
 	XStateSendEvent,
 } from './alias';
+export type { HttpError, HttpMethod, HttpResult, UnicodeCharInfo } from './api';
 export type { AppSettings } from './AppSettings';
 export type { AppState } from './AppState';
 export type { AppStore } from './AppStore';

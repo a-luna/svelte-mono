@@ -10,6 +10,8 @@ import type {
 	OutputChunk,
 } from '$lib/types';
 
+export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'CONNECT'] as const;
+
 export const APP_MODES = ['encode', 'decode'] as const;
 export const BASE64_ENCODINGS = ['base64', 'base64url'] as const;
 export const TEXT_ENCODINGS = ['ascii', 'utf8'] as const;
