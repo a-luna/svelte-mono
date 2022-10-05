@@ -19,7 +19,7 @@ import type {
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
-import { decomposeUtf8String } from '$lib/unicode';
+import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
 import {
 	asciiStringFromByteArray,
 	chunkify,
@@ -127,7 +127,7 @@ export function b64Decode(decoderInput: DecoderInput): DecoderOutput {
 		chunks: outputChunks,
 	};
 	if (isUTF8) {
-		const utf8Decomposed = decomposeUtf8String(utf8);
+		const utf8Decomposed = getSimpleUtf8StringDecomposition(utf8);
 		const updatedUtf8 = createEncodedCharacterMap(utf8Decomposed, outputChunks);
 		const updatedChunks = updateEncoderOutputChunks(updatedUtf8, outputChunks);
 		decoderOutput = { ...decoderOutput, chunks: updatedChunks };

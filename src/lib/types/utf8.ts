@@ -8,9 +8,8 @@ export interface Utf8StandardCharacterMap {
 	hexBytes: string[];
 	bytes: number[];
 	codepoint: string;
-	decimalCodepoint: number;
-	unicodeName: string;
-	unicodeBlock: string;
+	unicodeName?: string;
+	unicodeBlock?: string;
 	totalBytes: number;
 	encoded: string;
 	hexMap?: HexByteMap[];
@@ -23,9 +22,8 @@ export interface Utf8ComplexCharacterMap {
 	hexBytes: string[];
 	bytes: number[];
 	codepoints: string[];
-	decimalCodepoints: number[];
-	unicodeNames: string[];
-	unicodeBlocks: string[];
+	unicodeNames?: string[];
+	unicodeBlocks?: string[];
 	totalBytes: number;
 	encoded: string;
 	charMap?: Utf8StandardCharacterMap[];

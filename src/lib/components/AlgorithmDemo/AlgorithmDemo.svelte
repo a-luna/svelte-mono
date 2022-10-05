@@ -12,7 +12,7 @@
 	import { alert } from '$lib/stores/alert';
 	import { getAppContext } from '$lib/stores/context';
 	import type { Base64Encoding, StringEncoding } from '$lib/types';
-	import { decomposeUtf8String } from '$lib/unicode';
+	import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
 	import { copyToClipboard } from '$lib/util';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
 	import { createTestSet } from '$lib/xstate/b64Encode.test/testSetGenerator';
@@ -24,7 +24,6 @@
 	let outputBase64Encoding: Base64Encoding = defaultEncoderInput.outputEncoding;
 	let helpModal: HelpDocsModal;
 
-	$: if ($demoState.dev) console.log({ dev: $demoState.dev, test: $demoState.test, prod: $demoState.prod });
 	$: if ($state.context.autoplay && $state.value) eventLog.add({ type: 'AUTOPLAYING' });
 	$: if (inputText) updateInputText(inputText, inputTextEncoding, outputBase64Encoding);
 	$: if ($demoState.errorOccurred) $alert = $state.context.input.validationResult.error.message;
@@ -48,9 +47,9 @@
 
 	$: if ($demoState.dev) {
 		const test = '∑ßåœ ≈ ∆c';
-		console.log({ utf8: decomposeUtf8String(test) });
+		console.log({ utf8: getSimpleUtf8StringDecomposition(test) });
 		const test2 = '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾';
-		console.log({ utf8: decomposeUtf8String(test2) });
+		console.log({ utf8: getSimpleUtf8StringDecomposition(test2) });
 	}
 
 	function openHelpDocsModal(helpModalSettings: { helpTopicIndex: number; expanded: boolean }) {

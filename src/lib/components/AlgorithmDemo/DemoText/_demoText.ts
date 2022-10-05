@@ -10,7 +10,7 @@ import type {
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
-import { decomposeUtf8String } from '$lib/unicode';
+import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
 import { decimalToBinaryString, hexStringFromByte, parseGroupId, stringToByteArray } from '$lib/util';
 
 const convertNumber = (num: number) =>
@@ -58,7 +58,7 @@ export function getEncodeInputText_IdleDemoText(input: string, encoding: StringE
 			`The input data contains ${totalBytes} ASCII characters. <strong>As each character is converted to an 8-bit value, the corresponding row in the table below will be highlighted.</strong>`,
 		];
 	} else if (encoding === 'utf8') {
-		const utf8Composition = decomposeUtf8String(input);
+		const utf8Composition = getSimpleUtf8StringDecomposition(input);
 		demoText = [
 			`In UTF-8 encoding, some characters (e.g., any character in the ASCII set) are represented by a single byte, but the vast majority of chracters translate to multiple bytes.`,
 			`For example, <strong>the string you provided contains ${utf8Composition.stringLength} characters, but translates to ${utf8Composition.totalBytes} bytes in UTF-8 encoding</strong>.`,
@@ -86,7 +86,7 @@ export function explainCombinedUtf8Chars(utf8: Utf8StringComposition): string {
 
 export function getUtf8ByteMapHtml(input: string): string {
 	const byteMapOpenTag = 'div class="utf8-byte-map"';
-	const utf8ByteMap = decomposeUtf8String(input);
+	const utf8ByteMap = getSimpleUtf8StringDecomposition(input);
 	const byteMapHtml = utf8ByteMap.charMap.map((byteMap) => {
 		if (byteMap.isCombined) {
 			return byteMap.charMap.map((combinedByteMap) => getStandardUtf8ByteMapHtml(combinedByteMap)).join('\n');

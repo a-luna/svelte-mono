@@ -1,5 +1,5 @@
 import type { BitGroupDetails, Result, StringEncoding } from '$lib/types';
-import { decomposeUtf8String } from '$lib/unicode';
+import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
 import { validateAsciiBytes } from '$lib/validation';
 
 export const HEX_BIT_GROUP_REGEX = /hex-chunk-(?<chunk>\d+)-byte-(?<byte>1|2|3)/;
@@ -24,7 +24,7 @@ export const hexStringToByteArray = (hex: string): number[] =>
 export const binaryStringToByteArray = (bin: string): number[] =>
 	Array.from({ length: bin.length / 8 }, (_, i) => parseInt(bin.slice(i * 8, i * 8 + 8), 2));
 
-export const utf8StringToByteArray = (s: string): number[] => decomposeUtf8String(s).bytes;
+export const utf8StringToByteArray = (s: string): number[] => getSimpleUtf8StringDecomposition(s).bytes;
 
 export const genericStringToByteArray = (s: string): number[] =>
 	Array.from({ length: s.length }, (_, i) => s.charCodeAt(i));

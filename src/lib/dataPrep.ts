@@ -10,7 +10,7 @@ import type {
 	Result,
 	StringEncoding,
 } from '$lib/types';
-import { decomposeUtf8String } from '$lib/unicode';
+import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
 import {
 	asciiStringFromByteArray,
 	byteArrayToBinaryStringArray,
@@ -72,7 +72,7 @@ function getEncodingParameters(
 ): EncoderInput {
 	const bytes = stringToByteArray(inputText, inputEncoding);
 	const ascii = inputEncoding === 'ascii' ? inputText : '';
-	const utf8 = isTextEncoding(inputEncoding) ? decomposeUtf8String(inputText) : null;
+	const utf8 = isTextEncoding(inputEncoding) ? getSimpleUtf8StringDecomposition(inputText) : null;
 	const binary = inputEncoding === 'bin' ? inputText : byteArrayToBinaryStringArray(bytes).join('');
 	const hex = hexStringFromByteArray(bytes, true, ' ');
 	const hexBytes = hex.split(' ');

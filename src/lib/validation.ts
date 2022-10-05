@@ -1,6 +1,6 @@
 import { getBase64Alphabet } from '$lib/maps';
 import type { Base64Encoding, Result, StringEncoding } from '$lib/types';
-import { decomposeUtf8String } from '$lib/unicode';
+import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
 import { genericStringToByteArray } from '$lib/util';
 
 const BASE64_STANDARD_ALPHABET = /^[0-9A-Za-z+/=]+$/;
@@ -9,7 +9,7 @@ const BASE64_URL_ALPHABET = /^[0-9A-Za-z-_=]+$/;
 const BASE64_URL_FORMAT = /^[0-9A-Za-z-_]+[=]{0,2}$/;
 
 export const validateAsciiBytes = (byteArray: number[]): boolean =>
-	byteArray.every((byte: number) => byte > 31 && byte < 127);
+	byteArray?.every((byte: number) => byte > 31 && byte < 127);
 
 export function checkAllTextEncodings(input: string): string[] {
 	const validEncodings: string[] = [];
@@ -108,7 +108,7 @@ function validateBinaryString(input: string): Result<string> {
 
 export function validateUtf8String(input: string): Result<string> {
 	try {
-		const roundtrip = decodeURIComponent(decomposeUtf8String(input).encoded);
+		const roundtrip = decodeURIComponent(getSimpleUtf8StringDecomposition(input).encoded);
 		if (roundtrip === input) {
 			return { success: true, value: input };
 		} else {

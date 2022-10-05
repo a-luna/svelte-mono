@@ -1,4 +1,3 @@
-export { getUnicodeBlockContainingCodepoint } from './blockNames';
-export { getUnicodeCharName } from './charNames';
+export { getUnicodeCharInfo } from './api';
 export { reComplexSymbol } from './regex';
-export { decomposeUtf8String } from './utf8';
+export { getFullUtf8StringDecomposition, getSimpleUtf8StringDecomposition } from './utf8';

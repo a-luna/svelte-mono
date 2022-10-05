@@ -8,22 +8,21 @@ const rsAstralRange = '\\ud800-\\udfff',
 	rsVarRange = '\\ufe0e\\ufe0f';
 
 /** Used to compose unicode capture groups. */
-const rsAstral = '[' + rsAstralRange + ']',
-	rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
+const rsAstral = `[${rsAstralRange}]`,
+	rsCombo = `[${rsComboMarksRange}${rsComboSymbolsRange}]`,
 	rsFitz = '\\ud83c[\\udffb-\\udfff]',
-	rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
-	rsNonAstral = '[^' + rsAstralRange + ']',
+	rsModifier = `(?:${rsCombo}|${rsFitz})`,
+	rsNonAstral = `[^${rsAstralRange}]`,
 	rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
 	rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
 	rsZWJ = '\\u200d';
 
 /** Used to compose unicode regexes. */
-const reOptMod = rsModifier + '?',
-	rsOptVar = '[' + rsVarRange + ']?',
-	rsOptJoin =
-		'(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
-	rsSeq = rsOptVar + reOptMod + rsOptJoin,
-	rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
+const reOptMod = `${rsModifier}?`,
+	rsOptVar = `[${rsVarRange}]?`,
+	rsOptJoin = `(?:${rsZWJ}(?:${rsNonAstral}|${rsRegional}|${rsSurrPair})${rsOptVar}${reOptMod})*`,
+	rsSeq = `${rsOptVar}${reOptMod}${rsOptJoin}`,
+	rsSymbol = `(?:${rsNonAstral}${rsCombo}?|${rsCombo}|${rsRegional}|${rsSurrPair}|${rsAstral})`;
 
 /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-export const reComplexSymbol = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
+export const reComplexSymbol = RegExp(`${rsFitz}(?=${rsFitz})|${rsSymbol}${rsSeq}`, 'g');
