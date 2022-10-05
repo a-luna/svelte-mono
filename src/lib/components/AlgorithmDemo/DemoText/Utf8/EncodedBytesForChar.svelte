@@ -36,6 +36,12 @@
 	const getCharToDisplay = (char: string, encoded: string): string =>
 		isVS16(encoded) ? 'VS16' : isZWJ(encoded) ? 'ZWJ' : isWhiteSpace(encoded) ? 'SP' : char;
 
+	$: combinedCharStyles =
+		!expanded && anyCharsAreExpanded
+			? 'text-align: left; flex: 0 0 42px; margin: 0px 0 0 8px;'
+			: 'text-align: center; flex: 0 0 25px;';
+	$: singleCharStyles = anyCharsAreExpanded ? 'flex: 0 0 43px;' : 'flex: 0 0 18px;';
+
 	export function expand() {
 		if (isCombined && expanded) {
 			expanded = false;
@@ -46,7 +52,7 @@
 {#if isCombined}
 	<div class="utf8-bytes-for-char {getCharType(encoded)}">
 		<ToggleExpandCharacters bind:toggled={expanded} on:click={() => dispatch('toggled')} />
-		<div class="utf8-char">{getCharToDisplay(char, encoded)}</div>
+		<div class="utf8-char combined-char" style={combinedCharStyles}>{getCharToDisplay(char, encoded)}</div>
 		{#if expanded}
 			<div class="combined-utf8-char-map">
 				{#each charMap as { char: singleChar, encoded: singleCharEncoded, hexBytes: singleCharHexBytes, unicodeName, codepoint }}
@@ -76,7 +82,7 @@
 {:else}
 	<div class="utf8-bytes-for-char {getCharType(encoded)}">
 		<div class="button-placeholder" />
-		<div class="utf8-char">{getCharToDisplay(char, encoded)}</div>
+		<div class="utf8-char single-char" style={singleCharStyles}>{getCharToDisplay(char, encoded)}</div>
 		{#if anyCharsAreCombined && anyCharsAreExpanded}
 			<div class="placeholder" />
 		{/if}
@@ -97,6 +103,7 @@
 		line-height: 1;
 		display: flex;
 		flex-flow: column nowrap;
+		text-align: center;
 	}
 	.utf8-bytes-for-char {
 		display: flex;
@@ -120,12 +127,14 @@
 	}
 	.utf8-char,
 	.placeholder {
-		flex: 0 0 25px;
-		text-align: center;
 		background-color: inherit;
 		font-size: 12px;
 	}
-	.utf8-bytes-for-char > .utf8-char {
+	.single-char {
+		text-align: left;
+		margin: auto 0 auto 7px;
+	}
+	.utf8-bytes-for-char > .combined-char {
 		color: var(--pri-color);
 		margin: 3.5px 0 0 0;
 	}
@@ -141,6 +150,7 @@
 
 	.combined-utf8-char-map .utf8-char {
 		margin: auto 0;
+		width: 25px;
 	}
 	.hex-bytes {
 		display: flex;
