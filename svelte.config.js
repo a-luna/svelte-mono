@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-netlify';
 import { mdsvex } from 'mdsvex';
 import preprocess from 'svelte-preprocess';
 
@@ -17,7 +17,12 @@ const config = {
 		register: false
 	},
 	kit: {
-		adapter: adapter({ out: 'build' })
+		adapter: adapter({
+			fallback: '200.html',
+			edge: false,
+			split: true
+		}),
+		prerender: { entries: [] }
 	}
 };
 
