@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "vite --host --port 3504",
 		"start": "vite start",
-		"build": "svelte-kit sync && vite build",
+		"build": "svelte-kit sync && vite build && ln -s -f build/index.js server.js",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
