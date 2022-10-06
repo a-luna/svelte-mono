@@ -4,9 +4,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite --host --port 3504",
-		"start": "vite preview",
-		"build": "svelte-kit sync && vite build",
-		"preview": "vite preview",
+		"start": "vite preview --host",
+		"build": "svelte-kit sync && vite build && ln -s -f build/index.js server.js",
+		"preview": "vite preview --host",
 		"check": "svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
