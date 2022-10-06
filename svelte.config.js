@@ -17,7 +17,7 @@ const config = {
 		register: false
 	},
 	kit: {
-		adapter: adapter()
+		adapter: adapter({ out: 'build' })
 	}
 };
 
