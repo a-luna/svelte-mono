@@ -38,7 +38,7 @@
 	<div class="bg mt-2 flex w-full justify-between sm:flex-row sm:items-center">
 		<p class="flex items-center text-sm">{GH_USER}</p>
 		<p class="min-w-32 flex items-center text-sm text-gray-600 dark:text-gray-400 md:mt-0">
-			{#if blogPost?.ghMetadata.issueUrl}
+			{#if blogPost?.ghMetadata?.issueUrl}
 				<a href={blogPost.ghMetadata.issueUrl} rel="external" class="no-underline" target="_blank">
 					<span class="mr-4 font-mono text-xs text-gray-700 text-opacity-70 dark:text-gray-300"
 						>{blogPost.ghMetadata?.reactions?.total_count} reactions</span
@@ -56,7 +56,7 @@
 </article>
 <div class="mx-auto max-w-2xl">
 	<div class="prose mb-12 border-t border-b border-blue-800 p-4 dark:prose-invert">
-		{#if blogPost?.ghMetadata.reactions.total_count > 0}
+		{#if blogPost?.ghMetadata?.reactions?.total_count > 0}
 			Reactions: <Reactions
 				issueUrl={blogPost.ghMetadata?.issueUrl}
 				reactions={blogPost.ghMetadata?.reactions}

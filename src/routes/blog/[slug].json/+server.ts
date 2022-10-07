@@ -15,7 +15,7 @@ const INFO_BOX_REGEX =
 const ALERT_BOX_REGEX =
 	/(?:<p>)?{{< alert_box >}}(?:<\/p>)?\n([\s\S][^{]*)\n{{< \/alert_box >}}(?:<\/p>)?/g;
 
-export const GET: RequestHandler = async ({ fetch, params, setHeaders }: RequestEvent) => {
+export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) => {
 	const { slug } = params;
 	const allBlogPosts = get(blogPosts);
 	let blogPost = allBlogPosts.find((post) => post.slug === slug);
