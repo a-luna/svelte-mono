@@ -8,7 +8,6 @@ import rehypeFormat from 'rehype-format';
 import rehypeParse from 'rehype-parse';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
-import remarkGfm from 'remark-gfm';
 import { unified } from 'unified';
 import type { RequestEvent, RequestHandler } from './$types';
 
@@ -20,7 +19,7 @@ export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) 
 	}
 	const response = result.value;
 	let readme = await response.text().catch(() => '');
-	readme = (await compile(readme), { remarkPlugins: [remarkGfm] })?.code || '';
+	readme = (await compile(readme))?.code || '';
 
 	const html = await unified()
 		.use(rehypeParse)
