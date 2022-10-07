@@ -7,9 +7,9 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	$: allBlogposts = data.allBlogposts;
+	$: allBlogPosts = data.allBlogPosts;
 
-	$: if (browser && Object.keys(allBlogposts).length) $blogPosts = allBlogposts;
+	$: if (browser && Object.keys(allBlogPosts).length) $blogPosts = allBlogPosts;
 	let list: BlogPost[];
 
 	let inputEl: HTMLInputElement;

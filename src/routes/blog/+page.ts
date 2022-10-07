@@ -4,14 +4,13 @@ import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch }) => {
-	let allBlogposts: BlogPost[];
+	let allBlogPosts: BlogPost[];
 	const storedValue = get(blogPosts);
 	if (!storedValue || !storedValue.length) {
-		allBlogposts = await fetch('/blog.json').then((r) => r.json());
-		blogPosts.set(allBlogposts);
+		allBlogPosts = await fetch('/blog.json').then((r) => r.json());
+		blogPosts.set(allBlogPosts);
 	} else {
-		allBlogposts = storedValue;
+		allBlogPosts = storedValue;
 	}
-
-	return { allBlogposts };
+	return { allBlogPosts };
 };
