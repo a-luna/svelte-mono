@@ -36,7 +36,6 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: space-between;
-		white-space: nowrap;
 		line-height: 1;
 		margin: 0 0 1rem 0;
 	}
@@ -67,6 +66,7 @@
 		margin-bottom: 1rem;
 		color: #6b7280;
 		text-align: left;
+		white-space: nowrap;
 		width: 8rem;
 	}
 	.description {

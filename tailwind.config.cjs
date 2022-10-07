@@ -7,10 +7,10 @@ module.exports = {
 	darkMode: 'class',
 	theme: {
 		extend: {
-			typography: (theme) => ({
+			typography: {
 				DEFAULT: {
 					css: {
-						'--tw-prose-bullets': theme('colors.black'),
+						'--tw-prose-invert-code': 'var(--code-text-color1)',
 						// these customizations are explained here https://youtu.be/-FzemNMcOGs
 						blockquote: {
 							borderLeft: '3px solid red',
@@ -28,17 +28,21 @@ module.exports = {
 						'code::before': false,
 						'code::after': false,
 						code: {
-							'border-radius': '0.25rem',
-							padding: '0.15rem 0.3rem',
-							borderWidth: '2px',
-							borderColor: 'rgba(0,0,0,0.1)'
+							fontSize: '.8em',
+							fontWeight: 400,
+							color: 'var(--code-text-color1)',
+							background: 'var(--black-tint2)',
+							border: '1 px solid var(--dark-gray-shade2)',
+							'border-radius': '4px',
+							fontStyle: 'normal',
+							padding: '1px 3px'
 						},
 						'a:hover': {
-							color: '#31cdce !important',
-							textDecoration: 'underline !important'
+							color: 'var(--accent-color-dim)',
+							textDecoration: 'none'
 						},
 						a: {
-							color: '#3182ce',
+							color: 'var(--accent-color)',
 							textDecoration: 'none'
 						},
 						'a code': {
@@ -59,7 +63,7 @@ module.exports = {
 						}
 					}
 				}
-			})
+			}
 		}
 	},
 	variants: {},

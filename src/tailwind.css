@@ -14,7 +14,12 @@
 		outline-color: var(--accent-color);
 	}
 	::selection {
+		color: var(--black);
 		background-color: var(--accent-color);
+	}
+	::strong {
+		color: current;
+		font-weight: 600;
 	}
 	.dark ::selection {
 		color: #1d1d1d;
@@ -166,6 +171,8 @@
 	--purple-icon: hsl(251.9 89.3% 66.9%);
 	--pink-icon: hsl(286.5 88.1% 60.4%);
 	--default-icon: var(--white);
+
+	scroll-behavior: smooth;
 }
 
 body {
@@ -206,9 +213,74 @@ body {
 		var(--g-color-3-dim)
 	);
 
+	--note: hsl(206 100% 57%);
+	--alert: hsl(59 100% 55%);
+	--code-text-color1: hsl(171 100% 53%);
+
 	background-color: var(--dark-gray-shade2);
 	font-family: 'Roboto', Arial, Helvetica, sans-serif;
 	letter-spacing: 0.4px;
+}
+
+.alert {
+	color: var(--alert);
+}
+
+.note {
+	color: var(--note);
+}
+
+.alert,
+.note {
+	font-size: .95em;
+    margin: 10px 0 15px;
+    border-radius: 4px;
+    overflow-wrap: normal;
+    overflow-x: auto;
+    padding: 5px;
+}
+
+.alert-flex,
+.note-flex {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+}
+
+.note-flex {
+    border: 1px solid var(--note);
+    background-color: var(--widget-bg-color);
+}
+
+.alert-flex {
+    border: 1px solid var(--alert);
+    background-color: var(--widget-bg-color);
+}
+
+.alert-icon,
+.note-icon {
+    font-size: 2em;
+    margin: auto 5px;
+    text-align: center;
+}
+
+.alert-icon svg,
+.note-icon svg {
+    width: 30px;
+}
+
+.alert-message,
+.note-message {
+    display: flex;
+    text-align: left;
+    margin: 0 5px;
+}
+
+
+.alert-message p,
+.note-message p {
+	font-size: 0.85rem;
+	margin: auto 0;
 }
 
 .gradient {

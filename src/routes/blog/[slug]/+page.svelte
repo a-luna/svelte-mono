@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Comments from '$lib/components/Comments.svelte';
 	import Reactions from '$lib/components/Reactions.svelte';
-	import { MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
+	import { GH_USER, MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -35,10 +35,8 @@
 	<h1 class="tracking-tightmmd:text-5xl mb-8 text-3xl font-bold ">
 		{blogPost?.title}
 	</h1>
-	<div
-		class="bg mt-2 flex w-full justify-between sm:flex-col sm:items-start md:flex-row md:items-center"
-	>
-		<p class="flex items-center text-sm">swyx</p>
+	<div class="bg mt-2 flex w-full justify-between sm:flex-row sm:items-center">
+		<p class="flex items-center text-sm">{GH_USER}</p>
 		<p class="min-w-32 flex items-center text-sm text-gray-600 dark:text-gray-400 md:mt-0">
 			{#if blogPost?.ghMetadata.issueUrl}
 				<a href={blogPost.ghMetadata.issueUrl} rel="external" class="no-underline" target="_blank">
@@ -52,7 +50,7 @@
 	</div>
 	<div class="gradient -mx-4 my-2 flex h-1 w-[100vw] sm:mx-0 sm:w-full" />
 
-	<div class="prose my-8 w-full max-w-none dark:prose-invert">
+	<div class="prose prose-invert my-8 w-full max-w-none prose-strong:text-current">
 		{@html blogPost?.content}
 	</div>
 </article>
