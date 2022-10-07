@@ -9,7 +9,7 @@
 </script>
 
 <div class="nav-wrapper">
-	<div class="nav-container justify-between items-center md:justify-start md:items-end">
+	<div class="nav-container items-center justify-between md:items-end md:justify-start">
 		<NavBrand />
 		<NavItems />
 		<SocialLinks mobile={false} {open} />
@@ -30,14 +30,17 @@
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 2rem;
-		max-width: 85rem;
 		margin: 0 auto;
 		padding: 0 1.5rem;
 	}
 
+	@media (min-width: 768px) {
+		.nav-container {
+			padding: 0;
+		}
+	}
 	@media (min-width: 1024px) {
 		.nav-container {
-			padding: 0 2.5rem;
 			gap: 3rem;
 		}
 	}
