@@ -2,7 +2,7 @@
 	import DoubleUp from '../Icons/DoubleUp.svelte';
 </script>
 
-<a href="#" title="Scroll To Top"><DoubleUp fill="var(--black)" /></a>
+<a href="#top" title="Scroll To Top"><DoubleUp fill="var(--black)" /></a>
 
 <style lang="postcss">
 	a {

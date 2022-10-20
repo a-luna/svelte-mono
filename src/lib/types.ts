@@ -33,6 +33,46 @@ import type {
 
 export type HttpError = { status: number; message: string };
 export type HttpResult = { success: true; value: Response } | { success: false; error: HttpError };
+export type Result = { success: true } | { success: false; error: string };
+
+export type FrontMatterResources = {
+	name: string;
+	src: string;
+	params?: {
+		credit: string;
+	};
+	title?: string;
+};
+
+export type PartialFrontMatter = {
+	slug: string;
+	resources: FrontMatterResources[];
+};
+
+export type HtmlHeading = {
+	level: number;
+	slug: string;
+	text: string;
+	index: number;
+};
+
+export type TocSection = {
+	heading: HtmlHeading;
+	children: TocSection[];
+};
+
+export type BlogImage = {
+	name: string;
+	src: string;
+	caption?: string;
+};
+
+export type CodeBlock = {
+	id: string;
+	lang: string;
+	lineNumbers: boolean;
+	lineNumberStart: number;
+};
 
 export type BlogPost = {
 	type: 'blog';
@@ -43,12 +83,16 @@ export type BlogPost = {
 	frontmatter: {
 		[key: string]: string;
 	};
+	hasToc: boolean;
+	toc?: TocSection[];
 	category: string;
 	tags: string[];
-	image: string;
 	canonical: string;
 	slug: string;
 	date: string;
+	coverImage: BlogImage;
+	images: { [k: string]: BlogImage };
+	codeBlocks?: CodeBlock[];
 	ghMetadata: GHMetadata;
 };
 

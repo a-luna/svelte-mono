@@ -15,6 +15,7 @@
 
 <style lang="postcss">
 	.project-card:hover {
+		color: var(--body-text);
 		border-color: var(--accent-color);
 	}
 	.project-card {

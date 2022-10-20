@@ -2,7 +2,6 @@
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
-	import '../prism-atom-dark.css';
 	import '../tailwind.css';
 
 	export const prerender = true;
@@ -17,7 +16,7 @@
 	/>
 </svelte:head>
 
-<div class="header-wrapper">
+<div id="top" class="header-wrapper">
 	<Nav />
 </div>
 <main>

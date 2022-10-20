@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import Mandala from '$lib/components/Mandala.svelte';
-	import ProjectList from '$lib/components/ProjectList/ProjectList.svelte';
 	import {
 		DEFAULT_OG_IMAGE,
 		MY_TWITTER_HANDLE,
@@ -35,7 +34,7 @@
 	<meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
 </svelte:head>
 
-<div class="main-header">
+<div class="main-header portfolio">
 	<div class="main-header-content mr-auto">
 		<p class="subheading"><span>Hello, I'm a full-stack developer from Reno, NV.</span></p>
 		<p class="normal-text">
@@ -45,13 +44,6 @@
 		<p class="normal-text">The list is filterable by language/technology used and project type.</p>
 	</div>
 	<Mandala />
-</div>
-
-<div class="projects-outer">
-	<div class="projects">
-		<h2>// My_Projects</h2>
-		<ProjectList />
-	</div>
 </div>
 
 <style lang="postcss">
@@ -87,20 +79,6 @@
 		font-size: 0.9rem;
 		margin: 2rem 0 0 0;
 	}
-	.projects-outer {
-		background-color: hsla(0 0% 10% / 0.7);
-		z-index: 3;
-	}
-	.projects {
-		margin: 0 auto;
-		padding: 0 1.5rem 1.5rem 1.5rem;
-		max-width: 700px;
-	}
-	h2 {
-		font-family: 'Roboto Mono', menlo, consolas, monospace;
-		font-size: 1.9em;
-		margin: 1.5rem 0;
-	}
 
 	@media (min-width: 640px) {
 		.subheading {
@@ -109,12 +87,6 @@
 		.main-header-content .normal-text {
 			font-size: 1rem;
 		}
-		h2 {
-			font-size: 2.5rem;
-		}
-		.projects {
-			padding: 0 2rem 2rem 2rem;
-		}
 	}
 
 	@media (min-width: 768px) {
@@ -122,20 +94,11 @@
 			max-width: 700px;
 			grid-column: 3 / span 6;
 		}
-		h2 {
-			font-size: 2.3rem;
-		}
-		.projects {
-			padding: 0 0 3rem 0;
-		}
 	}
 
 	@media (min-width: 1024px) {
 		.main-header {
 			max-height: 450px;
-		}
-		h2 {
-			font-size: 2.5rem;
 		}
 	}
 </style>

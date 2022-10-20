@@ -87,6 +87,12 @@ export const repoDataDepot: {
 		languages: ['TypeScript'],
 		categories: ['frontend', 'component_library']
 	},
+	'unicode-api': {
+		primaryLanguage: 'Python',
+		primaryCategory: 'backend',
+		languages: ['FastAPI', 'Pydantic'],
+		categories: ['api_development', 'backend']
+	},
 	'vig-api': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',

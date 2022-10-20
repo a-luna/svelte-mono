@@ -4,7 +4,7 @@
 
 <nav class="hidden md:grid">
 	<div>
-		<NavLink href="/">Home</NavLink>
+		<NavLink href="/projects">Projects</NavLink>
 	</div>
 	<div>
 		<NavLink href="/blog">Blog</NavLink>

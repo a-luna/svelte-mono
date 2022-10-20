@@ -1,4 +1,5 @@
-import type { BlogPost, GHMetadata, GHReactions } from '$lib/types';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import type { GHMetadata, GHReactions } from '$lib/types';
 
 export const HTTP_METHODS = [
 	'GET',
@@ -52,6 +53,7 @@ export const REPO_NAMES = [
 	'svelte-color-tools',
 	'svelte-simple-tables-docs',
 	'svelte-simple-tables',
+	'unicode-api',
 	'vig-api',
 	'vig-data',
 	'vigorish'
@@ -101,20 +103,4 @@ export const nullGHMetadata: GHMetadata = {
 	created_at: '',
 	updated_at: '',
 	reactions: nullGHReactions
-};
-
-export const nullBlogPost: BlogPost = {
-	type: 'blog',
-	content: '',
-	title: '',
-	subtitle: '',
-	description: '',
-	frontmatter: {},
-	category: '',
-	tags: [],
-	image: '',
-	canonical: '',
-	slug: '',
-	date: '',
-	ghMetadata: nullGHMetadata
 };

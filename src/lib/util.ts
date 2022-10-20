@@ -21,6 +21,9 @@ export const isUserRepo = (repoName: string): repoName is RepoName =>
 export const isValidLanguage = (language: string): language is LanguageOrTech =>
 	TECH_LIST.includes(language as LanguageOrTech);
 
+export const capitalize = (s: string): string =>
+	s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
+
 export const slugify = (text: string): string =>
 	text
 		.normalize('NFKD')
@@ -30,3 +33,22 @@ export const slugify = (text: string): string =>
 		.replace(/([^A-Za-z0-9-])+/g, '')
 		.replace(/--+/g, '-')
 		.replace(/(^-|-$)/g, '');
+
+export const unslugify = (slug: string): string =>
+	slug
+		.split('-')
+		.map((word) => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
+		.join(' ');
+
+export function getScrollbarWidth() {
+	if (typeof window === 'undefined') return;
+	const outer = document.createElement('div');
+	outer.style.visibility = 'hidden';
+	outer.style.overflow = 'scroll';
+	document.body.appendChild(outer);
+	const inner = document.createElement('div');
+	outer.appendChild(inner);
+	const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+	outer?.parentNode?.removeChild(outer);
+	return scrollbarWidth;
+}

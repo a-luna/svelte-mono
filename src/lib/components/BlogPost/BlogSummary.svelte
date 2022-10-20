@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { nullGHMetadata } from '$lib/constants';
 	import type { GHMetadata } from '$lib/types';
+	import { formatDateString } from '$lib/util';
 
 	export let slug = '';
 	export let ghMetadata: GHMetadata = nullGHMetadata;
 	export let title = 'Untitled post';
-	export let publishDate = 'no date';
+	export let publishDate: Date = new Date(0);
 
 	$: href = `blog/${slug}`;
 </script>
@@ -19,7 +20,7 @@
 			{#if ghMetadata && ghMetadata.reactions.total_count}
 				<span class="reaction-count">{ghMetadata.reactions.total_count} ♥</span>
 			{/if}
-			<p class="published">{publishDate}</p>
+			<p class="published">{formatDateString(publishDate)}</p>
 		</div>
 	</div>
 	<p class="description">

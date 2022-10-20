@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import BlogSummary from '$lib/components/BlogSummary.svelte';
+	import BlogSummary from '$lib/components/BlogPost/BlogSummary.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import { blogPosts } from '$lib/stores';
 	import type { BlogPost } from '$lib/types';
@@ -36,7 +36,7 @@
 
 <svelte:window on:keyup={focusSearch} />
 
-<section>
+<section class="portfolio">
 	<h1>Blog</h1>
 	<p class="search-desc">Use the search below to filter by title.</p>
 	<div class="input-wrapper">
@@ -65,7 +65,7 @@
 					<BlogSummary
 						slug={item.slug}
 						title={item.title}
-						publishDate={item.date}
+						publishDate={new Date(item.date)}
 						ghMetadata={item.ghMetadata}
 					>
 						{item.description}
