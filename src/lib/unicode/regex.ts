@@ -2,27 +2,27 @@
 // (https://github.com/lodash/lodash/blob/4.13.1-npm/_stringToArray.js)
 
 /** Used to compose unicode character classes. */
-const rsAstralRange = '\\ud800-\\udfff',
-	rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
-	rsComboSymbolsRange = '\\u20d0-\\u20f0',
-	rsVarRange = '\\ufe0e\\ufe0f';
+const astralRangePattern = '\\ud800-\\udfff',
+	comboMarksRangePattern = '\\u0300-\\u036f\\ufe20-\\ufe23',
+	comboSymbolsRangePattern = '\\u20d0-\\u20f0',
+	varRangePattern = '\\ufe0e\\ufe0f';
 
 /** Used to compose unicode capture groups. */
-const rsAstral = `[${rsAstralRange}]`,
-	rsCombo = `[${rsComboMarksRange}${rsComboSymbolsRange}]`,
-	rsFitz = '\\ud83c[\\udffb-\\udfff]',
-	rsModifier = `(?:${rsCombo}|${rsFitz})`,
-	rsNonAstral = `[^${rsAstralRange}]`,
-	rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
-	rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
-	rsZWJ = '\\u200d';
+const astralPattern = `[${astralRangePattern}]`,
+	comboPattern = `[${comboMarksRangePattern}${comboSymbolsRangePattern}]`,
+	fitzPattern = '\\ud83c[\\udffb-\\udfff]',
+	modifierPattern = `(?:${comboPattern}|${fitzPattern})`,
+	nonAstralPattern = `[^${astralRangePattern}]`,
+	regionalPattern = '(?:\\ud83c[\\udde6-\\uddff]){2}',
+	surrPairPattern = '[\\ud800-\\udbff][\\udc00-\\udfff]',
+	zwjPattern = '\\u200d';
 
 /** Used to compose unicode regexes. */
-const reOptMod = `${rsModifier}?`,
-	rsOptVar = `[${rsVarRange}]?`,
-	rsOptJoin = `(?:${rsZWJ}(?:${rsNonAstral}|${rsRegional}|${rsSurrPair})${rsOptVar}${reOptMod})*`,
-	rsSeq = `${rsOptVar}${reOptMod}${rsOptJoin}`,
-	rsSymbol = `(?:${rsNonAstral}${rsCombo}?|${rsCombo}|${rsRegional}|${rsSurrPair}|${rsAstral})`;
+const optModPattern = `${modifierPattern}?`,
+	optVarPattern = `[${varRangePattern}]?`,
+	optJoinPattern = `(?:${zwjPattern}(?:${nonAstralPattern}|${regionalPattern}|${surrPairPattern})${optVarPattern}${optModPattern})*`,
+	seqPattern = `${optVarPattern}${optModPattern}${optJoinPattern}`,
+	symbolPattern = `(?:${nonAstralPattern}${comboPattern}?|${comboPattern}|${regionalPattern}|${surrPairPattern}|${astralPattern})`;
 
 /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-export const reComplexSymbol = RegExp(`${rsFitz}(?=${rsFitz})|${rsSymbol}${rsSeq}`, 'g');
+export const COMPLEX_SYMBOL_REGEX = RegExp(`${fitzPattern}(?=${fitzPattern})|${symbolPattern}${seqPattern}`, 'g');

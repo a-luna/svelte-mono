@@ -4,7 +4,7 @@ import type {
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
-import { getUnicodeCharInfo, reComplexSymbol } from '$lib/unicode';
+import { COMPLEX_SYMBOL_REGEX, getUnicodeCharInfo } from '$lib/unicode';
 import {
 	genericStringToByteArray,
 	hexStringFromByte,
@@ -63,7 +63,7 @@ export async function getFullUtf8StringDecomposition(s: string): Promise<Utf8Str
 }
 
 export function getSimpleUtf8StringDecomposition(s: string): Utf8StringComposition {
-	const complexCharMap: Utf8ComplexCharacterMap[] = s.match(reComplexSymbol).map((utf8) => {
+	const complexCharMap: Utf8ComplexCharacterMap[] = s.match(COMPLEX_SYMBOL_REGEX).map((utf8) => {
 		const charMap: Utf8StandardCharacterMap[] = [...utf8].map((char) => {
 			const charData = getUtf8EncodedByteMaps(char).map((byteMap) => ({ hex: byteMap.hex, byte: byteMap.byte }));
 			const bytes = charData.map((data) => data.byte);

@@ -1,12 +1,12 @@
 import { api } from '$lib/api';
 import type { UnicodeCharInfo } from '$lib/types';
 import { strictUriEncode } from '$lib/util';
-import { reComplexSymbol } from '.';
+import { COMPLEX_SYMBOL_REGEX } from '.';
 import { apiMocks } from './mocks';
 
 export async function getUnicodeCharInfo(s: string): Promise<{ char: string; results: UnicodeCharInfo[] }[]> {
 	const charData: { char: string; results: UnicodeCharInfo[] }[] = [];
-	for (const utf8 of s.match(reComplexSymbol)) {
+	for (const utf8 of s.match(COMPLEX_SYMBOL_REGEX)) {
 		const results = import.meta.env.MODE !== 'test' ? await getLiveUnicodeCharInfo(utf8) : getMockUnicodeCharInfo(utf8);
 		charData.push({ char: utf8, results });
 	}
