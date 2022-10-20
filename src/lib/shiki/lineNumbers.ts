@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { dev } from '$app/environment';
 import path from 'path';
 import type { HtmlRendererOptions, IShikiTheme } from 'shiki';
 import { getHighlighter, loadTheme } from 'shiki';
@@ -9,7 +10,9 @@ export const highlighter = await getHighlighter({ theme });
 
 async function getLocalTheme(themeName: string): Promise<IShikiTheme> {
 	const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
-	const themePath = path.resolve(path.join(__dirname, 'themes', `${themeName}.json`));
+	const themePath = dev
+		? path.resolve(path.join(__dirname, 'themes', `${themeName}.json`))
+		: path.resolve(path.join(__dirname, '../../', 'client', `${themeName}.json`));
 	return await loadTheme(themePath);
 }
 
