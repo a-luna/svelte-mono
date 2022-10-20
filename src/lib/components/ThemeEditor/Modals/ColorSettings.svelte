@@ -7,7 +7,7 @@
 		convertPropNameToDisplayName,
 		CSS_VAR_NAME_REGEX,
 		PROP_NAME_REGEX,
-	} from '$lib/themes';
+	} from '$lib/theme';
 
 	export let editorId: string;
 	export let propName = '';

@@ -4,7 +4,7 @@
 	import Modal from '$lib/components/Shared/Modal.svelte';
 	import { getAppStore, getThemeEditorStore } from '$lib/context';
 	import { ColorParser } from '$lib/parser';
-	import { getCssValueForColor } from '$lib/themes';
+	import { getCssValueForColor } from '$lib/theme';
 	import type { ThemeColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import ColorSettings from './ColorSettings.svelte';

@@ -1,4 +1,4 @@
-import { convertThemePalettesToCss } from '$lib/themes';
+import { convertThemePalettesToCss } from '$lib/theme';
 import type { AppStore, ColorPalette, ColorPickerState, ThemeEditorStore } from '$lib/types';
 import type { Readable, Writable } from 'svelte/store';
 import { derived } from 'svelte/store';

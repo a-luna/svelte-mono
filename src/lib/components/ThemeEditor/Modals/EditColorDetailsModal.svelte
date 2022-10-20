@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Modal from '$lib/components/Shared/Modal.svelte';
 	import { getThemeEditorStore } from '$lib/context';
-	import { copyThemeColor } from '$lib/themes';
+	import { copyThemeColor } from '$lib/theme';
 	import type { ThemeColor, ThemeColorShallowCopy } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import ColorSettings from './ColorSettings.svelte';

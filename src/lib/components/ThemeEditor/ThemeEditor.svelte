@@ -10,7 +10,7 @@
 	import UserTheme from '$lib/components/ThemeEditor/UserTheme/UserTheme.svelte';
 	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
 	import { createThemeEditorStore } from '$lib/stores/themeEditor';
-	import { downloadUserThemeJson } from '$lib/themes';
+	import { downloadUserThemeJson } from '$lib/theme';
 	import type { AppStore, ColorPickerState, ComponentColor, ThemeEditorStore, UserThemeImported } from '$lib/types';
 	import { getThemeEditorSlotExampleCode } from '$lib/util';
 	import { HighlightSvelte } from 'svelte-highlight';
@@ -37,8 +37,8 @@
 	// UserTheme -> ComponentTheme, and ColorPalette -> PropertySet
 	//
 	// ThemeSet is a list of ComponentThemes and metadata, each ComponentTheme is a list of PropertySets
-	// For example, ather than storing only color values, the Button PropertySet should also contain font-size, padding, etc. values for buttons
-	// The Palette component is doing too much, separating the X11Palettes/ColorPalettes use cases into two components should have been done yesterday
+	// For example, other than storing only color values, the Button PropertySet should also contain font-size, padding, etc. values for buttons
+	// The Palette component is doing too much, separating the X11Palettes/ColorPalettes use cases into two, new components (ColorPalette/PropertySet) should have been done yesterday
 	// Requires changes to the UI to allow user to switch between component themes, change values and save the ThemeSet to file
 	//
 	// Now, when exporting to JSON, the object will be a list of ComponentThemes with a few metadata fields:

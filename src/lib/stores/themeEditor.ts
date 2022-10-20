@@ -1,6 +1,6 @@
 import { createEmptyColorPalette } from '$lib/color';
 import { defaultThemeEditorState } from '$lib/constants';
-import { getCssValueForColor } from '$lib/themes';
+import { getCssValueForColor } from '$lib/theme';
 import type { CssColor, ThemeColor, ThemeEditorState, ThemeEditorStore } from '$lib/types';
 import { writable } from 'svelte/store';
 

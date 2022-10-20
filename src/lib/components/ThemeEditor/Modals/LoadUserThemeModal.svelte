@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Modal from '$lib/components/Shared/Modal.svelte';
-	import { importUserThemeFromFile } from '$lib/themes';
+	import { importUserThemeFromFile } from '$lib/theme';
 	import type { UserThemeImported } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import Highlight from 'svelte-highlight';

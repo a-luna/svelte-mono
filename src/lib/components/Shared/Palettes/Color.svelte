@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { colorNameisCustomized } from '$lib/color';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { getCssValueForColor } from '$lib/themes';
+	import { getCssValueForColor } from '$lib/theme';
 	import type { ColorFormat, ComponentColor, ThemeColor } from '$lib/types';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
