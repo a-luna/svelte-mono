@@ -8,7 +8,7 @@ categories: ['Hugo', 'Javascript']
 summary: "I decided to document how I implemented a search feature with Hugo and Lunr.js on my personal blog site. Since this is a static site the search functionality is performed entirely within the client's browser. My solution uses vanilla JS DOM manipulation to render the search results. I believe that my approach includes features that are markedly different from the implementations I encountered while researching this task, features which enhance the overall search UX."
 resources:
   - name: cover
-    src: images/cover.jpg
+    src: cover.jpg
     params:
       credit: 'Photo by Brian McMahon on Unsplash'
   - name: search_input
@@ -97,7 +97,7 @@ If you are still with me, let's get started! There are quite a few things that w
   <li>Write javascript to render the search results on the page.</li>
 </ol>
 
-### Codepen with Final Code
+## Codepen with Final Code
 
 You can inspect the final HTML, CSS and JavaScript with the CodePen below. Please note that the search results will be slightly different from the search form on this page since the CodePen only includes (roughly) the first 500 words of the content from each page:
 
@@ -154,7 +154,7 @@ Create a file in the root of the `layouts` folder named `index.json` and add the
 
 Most of this should be self-explanatory. The only line that I am calling attention to is the `if` statement in **Line 3**. For my site, I have pages of types other than `post` that I need to make searchable, so my template includes these other page types with the code below:
 
-```go-html-template
+```go-html-template {linenos=table,hl_lines=[1],linenostart=3}
 {{- if in (slice "post" "flask_api_tutorial" "projects") $page.Type -}}
 ```
 
@@ -512,7 +512,9 @@ async function initSearchIndex() {
 
 function searchBoxFocused() {
 	document.querySelector('.search-container').classList.add('focused');
-	document.getElementById('search').addEventListener('focusout', () => searchBoxFocusOut());
+	document
+		.getElementById('search')
+		.addEventListener('focusout', () => searchBoxFocusOut());
 }
 
 function searchBoxFocusOut() {
@@ -545,7 +547,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		searchInput.addEventListener('keydown', (event) => {
 			if (event.keyCode == 13) handleSearchQuery(event);
 		});
-		document.querySelector('.search-error').addEventListener('animationend', removeAnimation);
+		document
+			.querySelector('.search-error')
+			.addEventListener('animationend', removeAnimation);
 		document
 			.querySelector('.fa-search')
 			.addEventListener('click', (event) => handleSearchQuery(event));
@@ -1008,20 +1012,28 @@ function createSearchResultBlurb(query, pageContent) {
       </li>
       <li>
         <p><strong>Line 93: </strong>The first thing that we do is call <code>createQueryStringRegex</code>, providing <code>query</code> as the only argument. Add the code below to <code>search.js</code>:</p>
-{{< highlight javascript "linenos=table,linenostart=130" >}}
+	  </li>
+	</ul>
+</div>
+
+```javascript {linenos=table,linenostart=130}
 function createQueryStringRegex(query) {
-  const searchTerms = query.split(" ");
-  if (searchTerms.length == 1) {
-    return query;
-  }
-  query = "";
-  for (const term of searchTerms) {
-    query += `${term}|`;
-  }
-  query = query.slice(0, -1);
-  return `(${query})`;
+	const searchTerms = query.split(' ');
+	if (searchTerms.length == 1) {
+		return query;
+	}
+	query = '';
+	for (const term of searchTerms) {
+		query += `${term}|`;
+	}
+	query = query.slice(0, -1);
+	return `(${query})`;
 }
-{{< / highlight >}}
+```
+
+<div class="code-details">
+    <ul>
+      <li>
         <p>This function creates a regular expression from the user's search query which is designed to find all occurrences of any term in the search query within any given piece of text. This regular expression is created by performing the following steps:</p>
         <ol class="requirements teal">
             <li>Call <code>query.split(" ")</code> to produce a list of search terms.</li>
@@ -1071,17 +1083,25 @@ function createQueryStringRegex(query) {
       </li>
       <li>
         <p><strong>Line 117: </strong>After we break out of the inner <code>for</code> loop, the first thing we do is call the <code>tokenize</code> function, providing <code>searchResultText</code> as the only argument. The code for this function is given below, add it to <code>search.js</code>:</p>
-{{< highlight javascript "linenos=table,linenostart=143" >}}
+	  </li>
+	</ul>
+</div>
+
+```javascript {linenos=table,linenostart=143}
 function tokenize(input) {
-  const wordMatches = Array.from(input.matchAll(WORD_REGEX), (m) => m);
-  return wordMatches.map((m) => ({
-    word: m[0],
-    start: m.index,
-    end: m.index + m[0].length,
-    length: m[0].length,
-  }));
+	const wordMatches = Array.from(input.matchAll(WORD_REGEX), (m) => m);
+	return wordMatches.map((m) => ({
+		word: m[0],
+		start: m.index,
+		end: m.index + m[0].length,
+		length: m[0].length
+	}));
 }
-{{< / highlight >}}
+```
+
+<div class="code-details">
+  <ul>
+    <li>
       <p>This function takes an <code>input</code> string and uses the <code>WORD_REGEX</code> regular expression to capture the individual words from the string. The return value is an array of objects containing (for each word) the word itself, the start/end indices where the word is located within the <code>input</code> string, and the length of the word.</p>
       <p>The <code>tokenize</code> function is called with the current value of <code>searchResultText</code>, storing the tokenized list of words in the <code>searchResultWords</code> variable.</p>
       </li>
@@ -1090,7 +1110,11 @@ function tokenize(input) {
       </li>
       <li>
         <p><strong>Lines 119-121: </strong>If <code>searchResultText</code> contains any words longer than 50 characters, they need to be broken into smaller pieces. This task is performed by calling the <code>fixPageBreakers</code> function. Add the code below to <code>search.js</code>:</p>
-{{< highlight javascript "linenos=table,linenostart=153" >}}
+	  </li>
+	</ul>
+</div>
+
+```javascript {linenos=table,linenostart=153}
 function fixPageBreakers(input, largeWords) {
   largeWords.forEach((word) => {
     const chunked = chunkify(word.word, 20);
@@ -1116,35 +1140,45 @@ output += input.slice(start, end) + " ";
 }
 return output;
 }
-{{< / highlight >}}
+```
 
-<p>I won't explain the <code>fixPageBreakers</code> and <code>chunkify</code> functions in great detail since they are fairly self-explanatory. The <code>largeWords</code> argument contains a list of extremely long words and we iterate through this list calling <code>chunkify</code> for each word.</p>
-<p><code>chunkify</code> accepts two arguments, a word that needs to be broken into chunks (<code>input</code>) and <code>chunkSize</code> which is the length of each chunk. The most important thing to note about <code>chunkify</code> is that the return value is a single string, not a list of "chunks". This string is constructed by concatenating the chunks into a single string, separated by space characters.</p>
-<p>The string returned from <code>chunkify</code> is used to replace the original really long word in the <code>input</code> string. After doing so for all words in <code>largeWords</code>, the <code>input</code> string (which no longer has any really long words) is returned.</p>
-</li>
-<li>
-<p><strong>Line 122: </strong>At this point we are still within the main <code>for</code> loop. Before beginning the next iteration, we check the length of <code>searchResultText</code> (in words). If the number of words is greater than or equal to the value <code>MAX_SUMMARY_LENGTH</code>, we break out of the <code>for</code> loop.</p>
-</li>
-<li>
-<p><strong>Line 124: </strong>After constructing <code>searchResultText</code>, the first thing we do is call <code>ellipsize</code>. The code for this function is given below, please add it to <code>search.js</code>:</p>
-{{< highlight javascript "linenos=table,linenostart=179" >}}
+<div class="code-details">
+  <ul>
+    <li>
+		<p>I won't explain the <code>fixPageBreakers</code> and <code>chunkify</code> functions in great detail since they are fairly self-explanatory. The <code>largeWords</code> argument contains a list of extremely long words and we iterate through this list calling <code>chunkify</code> for each word.</p>
+		<p><code>chunkify</code> accepts two arguments, a word that needs to be broken into chunks (<code>input</code>) and <code>chunkSize</code> which is the length of each chunk. The most important thing to note about <code>chunkify</code> is that the return value is a single string, not a list of "chunks". This string is constructed by concatenating the chunks into a single string, separated by space characters.</p>
+		<p>The string returned from <code>chunkify</code> is used to replace the original really long word in the <code>input</code> string. After doing so for all words in <code>largeWords</code>, the <code>input</code> string (which no longer has any really long words) is returned.</p>
+		</li>
+		<li>
+		<p><strong>Line 122: </strong>At this point we are still within the main <code>for</code> loop. Before beginning the next iteration, we check the length of <code>searchResultText</code> (in words). If the number of words is greater than or equal to the value <code>MAX_SUMMARY_LENGTH</code>, we break out of the <code>for</code> loop.</p>
+		</li>
+		<li>
+		<p><strong>Line 124: </strong>After constructing <code>searchResultText</code>, the first thing we do is call <code>ellipsize</code>. The code for this function is given below, please add it to <code>search.js</code>:</p>
+	  </li>
+	</ul>
+</div>
+
+```javascript {linenos=table,linenostart=179}
 function ellipsize(input, maxLength) {
-const words = tokenize(input);
-if (words.length <= maxLength) {
-return input;
+	const words = tokenize(input);
+	if (words.length <= maxLength) {
+		return input;
+	}
+	return input.slice(0, words[maxLength].end) + '...';
 }
-return input.slice(0, words[maxLength].end) + "...";
-}
-{{< / highlight >}}
-<p>This function is very simple. It requires two parameters: an <code>input</code> string and a number (<code>maxLength</code>) which is the maximum number of words allowed in the <code>input</code> string. First, the <code>tokenize</code> function is called, which produces a list with an object for every word in the <code>input</code> string. If the number of words in <code>input</code> is less than or equal to <code>maxLength</code>, the original string is returned, unmodified.</p>
-<p>However, if the number of words is greater than <code>maxLength</code>, the string is truncated in an intelligent way. Using the <code>words</code> list produced by the <code>tokenize</code> function, we know that the last word that is allowed is <code>words[maxLength]</code>. The <code>end</code> property is the index of the last character of this word within the <code>input</code> string. This allows us to create a substring from the start of <code>input</code> to the location of the end of the last allowed word. The return value is the truncated string with an ellipsis appended (<code>...</code>).</p>
-</li>
-<li>
-<p><strong>Line 124-127: </strong>The last thing we do to <code>searchResultText</code> is call the <code>replace</code> method using the <code>searchQueryRegex</code> created earlier in <span class="bold-text">Line 85</span> as the first argument (this regular expression is designed to capture any search term entered by the user). Any matches in <code>searchResultText</code> for this regular expression will be replaced by the second argument, <code>'&lt;strong&gt;$&&lt;/strong&gt;'</code>. The special syntax <code>$&</code> represents the substring that matched the regular expression (i.e., the search term).</p>
-<p>Summarizing the above, calling the <code>replace</code> method finds all occurrences of any search term entered by the user within <code>searchResultText</code> and wraps the search term in a <code>&lt;strong&gt;</code> element. This will make all search terms appear in <span class="bold-text">bold font weight</span> when rendered as HTML.</p>
-</li>
-</ul>
+```
 
+<div class="code-details">
+  <ul>
+    <li>
+		<p>This function is very simple. It requires two parameters: an <code>input</code> string and a number (<code>maxLength</code>) which is the maximum number of words allowed in the <code>input</code> string. First, the <code>tokenize</code> function is called, which produces a list with an object for every word in the <code>input</code> string. If the number of words in <code>input</code> is less than or equal to <code>maxLength</code>, the original string is returned, unmodified.</p>
+		<p>However, if the number of words is greater than <code>maxLength</code>, the string is truncated in an intelligent way. Using the <code>words</code> list produced by the <code>tokenize</code> function, we know that the last word that is allowed is <code>words[maxLength]</code>. The <code>end</code> property is the index of the last character of this word within the <code>input</code> string. This allows us to create a substring from the start of <code>input</code> to the location of the end of the last allowed word. The return value is the truncated string with an ellipsis appended (<code>...</code>).</p>
+		</li>
+		<li>
+		<p><strong>Line 124-127: </strong>The last thing we do to <code>searchResultText</code> is call the <code>replace</code> method using the <code>searchQueryRegex</code> created earlier in <span class="bold-text">Line 85</span> as the first argument (this regular expression is designed to capture any search term entered by the user). Any matches in <code>searchResultText</code> for this regular expression will be replaced by the second argument, <code>'&lt;strong&gt;$&&lt;/strong&gt;'</code>. The special syntax <code>$&</code> represents the substring that matched the regular expression (i.e., the search term).</p>
+		<p>Summarizing the above, calling the <code>replace</code> method finds all occurrences of any search term entered by the user within <code>searchResultText</code> and wraps the search term in a <code>&lt;strong&gt;</code> element. This will make all search terms appear in <span class="bold-text">bold font weight</span> when rendered as HTML.</p>
+	</li>
+  </ul>
 </div>
 
 If you are still here and you are still awake, that is seriously impressive! The `createSearchResultBlurb` function takes care of items #1 and #2 in [the list of features provided earlier](#unique-features), hopefully that makes the insane level of detail provided understandable.
@@ -1270,8 +1304,7 @@ function updateSearchResults(query, results) {
 		.join('');
 	const searchResultListItems = document.querySelectorAll('.search-results ul li');
 	document.getElementById('results-count').innerHTML = searchResultListItems.length;
-	document.getElementById('results-count-text').innerHTML =
-		searchResultListItems.length > 1 ? 'results' : 'result';
+	document.getElementById('results-count-text').innerHTML = searchResultListItems.length > 1 ? 'results' : 'result';
 	searchResultListItems.forEach(
 		(li) => (li.firstElementChild.style.color = getColorForSearchResult(li.dataset.score))
 	);
@@ -1279,7 +1312,10 @@ function updateSearchResults(query, results) {
 
 function createSearchResultBlurb(query, pageContent) {
 	const searchQueryRegex = new RegExp(createQueryStringRegex(query), 'gmi');
-	const searchQueryHits = Array.from(pageContent.matchAll(searchQueryRegex), (m) => m.index);
+	const searchQueryHits = Array.from(
+		pageContent.matchAll(searchQueryRegex),
+		(m) => m.index
+	);
 	const sentenceBoundaries = Array.from(
 		pageContent.matchAll(SENTENCE_BOUNDARY_REGEX),
 		(m) => m.index
@@ -1378,8 +1414,7 @@ function showSearchResults() {
 
 function scrollToTop() {
 	const toTopInterval = setInterval(function () {
-		const supportedScrollTop =
-			document.body.scrollTop > 0 ? document.body : document.documentElement;
+		const supportedScrollTop = document.body.scrollTop > 0 ? document.body : document.documentElement;
 		if (supportedScrollTop.scrollTop > 0) {
 			supportedScrollTop.scrollTop = supportedScrollTop.scrollTop - 50;
 		}
@@ -1492,14 +1527,18 @@ document.addEventListener('DOMContentLoaded', function () {
 		searchInput.addEventListener('keydown', (event) => {
 			if (event.keyCode == 13) handleSearchQuery(event);
 		});
-		document.querySelector('.search-error').addEventListener('animationend', removeAnimation);
+		document
+			.querySelector('.search-error')
+			.addEventListener('animationend', removeAnimation);
 		document
 			.querySelector('.fa-search')
 			.addEventListener('click', (event) => handleSearchQuery(event));
 	}
 	document
 		.querySelectorAll('.clear-search-results')
-		.forEach((button) => button.addEventListener('click', () => handleClearSearchButtonClicked()));
+		.forEach((button) => 
+			button.addEventListener('click', () => handleClearSearchButtonClicked())
+		);
 });
 ```
 
