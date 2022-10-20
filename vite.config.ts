@@ -4,7 +4,7 @@ import type { UserConfig } from 'vite';
 const config: UserConfig = {
 	plugins: [sveltekit()],
 	optimizeDeps: {
-		exclude: ['node-fetch', 'mdsvex', 'highlight.js', 'highlight.js/lib/core']
+		exclude: ['node-html-parser', 'node-fetch', 'mdsvex', 'highlight.js', 'highlight.js/lib/core']
 	}
 };
 
