@@ -1120,7 +1120,21 @@ button {
 		font-size: 0.7rem;
 	}
 	#demo-text #byte-map-demo {
-		margin: 0.5rem 0 0.5rem 1.5rem;
+		margin: 0.5rem 0 1.5rem 1.5rem;
+	}
+	#demo-text #byte-map-demo code {
+		font-size: 9px;
+	}
+	#demo-text #byte-map-demo .chunk-label {
+		font-size: 12px;
+	}
+	#demo-text #byte-map-demo .chunk-id {
+		flex: 0 0 20px;
+		margin: 0 5px 0 0;
+	}
+	#demo-text #byte-map-demo .input-chunk .bit,
+	#demo-text #byte-map-demo .output-chunk .bit {
+		width: 14px;
 	}
 	.byte-number,
 	.chunk-number,
