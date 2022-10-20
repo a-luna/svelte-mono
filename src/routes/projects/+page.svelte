@@ -34,7 +34,7 @@
 	}
 
 	@media (min-width: 768px) {
-		\ h2 {
+		h2 {
 			font-size: 2.3rem;
 		}
 		.projects {
