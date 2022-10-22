@@ -1,11 +1,10 @@
 <script lang="ts">
+	import ByLine from '$lib/components/BlogPost/ByLine.svelte';
 	import CoverImage from '$lib/components/BlogPost/CoverImage.svelte';
+	import PostNav from '$lib/components/BlogPost/PostNav.svelte';
 	import TableOfContents from '$lib/components/BlogPost/TableOfContents/TableOfContents.svelte';
-	import Comments from '$lib/components/Comments.svelte';
-	import Reactions from '$lib/components/Reactions.svelte';
-	import { GH_USER, MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
+	import { MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
 	import type { BlogPost, Result } from '$lib/types';
-	import { formatDateString } from '$lib/util';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
@@ -105,26 +104,17 @@
 </svelte:head>
 
 <article
-	class="mx-auto mb-16 mt-8 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8"
+	class="mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
 >
 	<h1>{blogPost?.title}</h1>
 	<div class="bg mtd-6 mt-4 flex w-full justify-between sm:flex-row sm:items-center">
-		<p class="flex items-center">{GH_USER}</p>
-		<p class="min-w-32 flex items-center text-gray-600 dark:text-gray-400 md:mt-0">
-			{#if blogPost?.ghMetadata?.issueUrl}
-				<a href={blogPost.ghMetadata.issueUrl} rel="external" class="no-underline" target="_blank">
-					<span class="mr-4 font-mono text-xs text-gray-700 text-opacity-70 dark:text-gray-300"
-						>{blogPost.ghMetadata?.reactions?.total_count} reactions</span
-					>
-				</a>
-			{/if}
-			{formatDateString(published)}
-		</p>
+		<ByLine {published} />
 	</div>
 	<CoverImage coverImage={blogPost.coverImage} />
-	<div class="gradient -mx-4 my-4 flex h-1 w-[100vw] sm:mx-0 sm:w-full" />
 	{#if blogPost.hasToc && blogPost.toc}
 		<TableOfContents toc={blogPost.toc} />
+	{:else}
+		<div class="gradient -mx-4 mt-4 mb-8 flex h-1 w-[100vw] sm:mx-0 sm:w-full" />
 	{/if}
 	<div
 		class="prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:flex-1 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
@@ -132,28 +122,30 @@
 		{@html blogPost?.content}
 	</div>
 </article>
-<div class="mx-auto max-w-2xl">
-	<div class="prose mb-12 border-t border-b border-blue-800 p-4 dark:prose-invert">
-		{#if blogPost?.ghMetadata?.reactions?.total_count > 0}
-			Reactions: <Reactions
-				issueUrl={blogPost.ghMetadata?.issueUrl}
-				reactions={blogPost.ghMetadata?.reactions}
-			/>
-		{:else}
-			<a href={blogPost?.ghMetadata?.issueUrl}>Leave a reaction </a>
-			if you liked this post! 🧡
-		{/if}
-	</div>
-	<div class="mb-8">
-		<Comments ghMetadata={blogPost?.ghMetadata} />
-	</div>
+<div class="px-4 sm:px-8">
+	<PostNav slug={blogPost.slug} />
 </div>
 
 <style lang="postcss">
 	h1 {
-		font-size: 1.9rem;
+		font-size: 1.6rem;
 		font-weight: 400;
 		line-height: 1.2;
-		color: var(--tw-prose-headings);
+		color: var(--post-title-text-color);
+		line-height: 1.3;
+		text-shadow: 2.5px 2.5px var(--post-title-text-shadow-color),
+			2.25px 2.25px var(--post-title-text-shadow-color), 2px 2px var(--post-title-text-shadow-color),
+			1.75px 1.75px var(--post-title-text-shadow-color),
+			1.5px 1.5px var(--post-title-text-shadow-color),
+			1.25px 1.25px var(--post-title-text-shadow-color), 1px 1px var(--post-title-text-shadow-color),
+			0.75px 0.75px var(--post-title-text-shadow-color),
+			0.5px 0.5px var(--post-title-text-shadow-color),
+			0.25px 0.25px var(--post-title-text-shadow-color);
+	}
+	@media (min-width: 640px) {
+		h1 {
+			font-size: 2.25rem;
+			font-weight: 500;
+		}
 	}
 </style>
