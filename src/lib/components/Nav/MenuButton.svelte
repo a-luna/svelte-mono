@@ -23,20 +23,24 @@
 <style lang="postcss">
 	.menu-button {
 		padding: 0.5rem;
-		border: 2px solid var(--white);
+		border-width: 2px;
+		border-style: solid;
+		border-color: var(--white);
 		background-color: var(--page-bg-color);
 		color: var(--white);
 		font-size: 1.5rem;
 		z-index: 5;
+		transition: all 350ms ease-out;
 	}
 	.menu-button:hover {
-		border: 2px solid var(--accent-color);
+		border-color: var(--accent-color);
 		color: var(--accent-color);
+		background-color: var(--black-tint2);
 	}
 	.menu-button.open {
 		border-color: var(--accent-color);
 		background-color: var(--accent-color);
-		color: var(--page-bg-color);
+		color: var(--black-tint2);
 	}
 	.icon-wrapper {
 		width: 28px;
