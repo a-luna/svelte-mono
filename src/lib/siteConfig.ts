@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 
-export const SITE_URL = dev ? 'http://localhost:3504' : 'https://aluna-portfolio.netlify.app';
+export const SITE_URL = dev ? 'http://localhost:3504' : 'https://portfolio.aaronluna.dev';
 export const GH_USER = 'a-luna';
 export const APPROVED_POSTERS_GH_USERNAME = [GH_USER];
 export const PUBLISH_TAGS = ['Published'];
