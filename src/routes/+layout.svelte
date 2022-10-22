@@ -1,10 +1,22 @@
-<script>
+<script lang="ts">
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
+	import { getBodyIsScrollable } from '$lib/stores';
+	import { getScrollbarWidth } from '$lib/util';
+	import type { Writable } from 'svelte/store';
 	import '../tailwind.css';
 
 	export const prerender = true;
+	let bodyIsScrollable: Writable<boolean>;
+
+	$: if (typeof window !== 'undefined') bodyIsScrollable = getBodyIsScrollable();
+	$: scrollBarWidth = getScrollbarWidth();
+	$: if (typeof window !== 'undefined' && $bodyIsScrollable) {
+		document.body.style.paddingRight = '0px';
+	} else if (typeof window !== 'undefined') {
+		document.body.style.paddingRight = `${scrollBarWidth}px`;
+	}
 </script>
 
 <svelte:head>

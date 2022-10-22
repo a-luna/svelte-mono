@@ -23,3 +23,16 @@ export function createLocalStorageValue<T extends JsonValue>(
 export const userRepos = createLocalStorageValue<GHRepo[]>('repos', []);
 
 export const blogPosts = writable<BlogPost[]>([]);
+
+function checkBodyIsScrollable(el: HTMLElement): Writable<boolean> {
+	return writable<boolean>(false, (set) => {
+		if (typeof window === 'undefined') {
+			return;
+		}
+		const ro = new ResizeObserver(() => el && set(el.scrollHeight > window.innerHeight));
+		ro.observe(el);
+		return () => ro.disconnect();
+	});
+}
+
+export const getBodyIsScrollable = (): Writable<boolean> => checkBodyIsScrollable(document.body);
