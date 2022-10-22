@@ -2,6 +2,7 @@ import { dev } from '$app/environment';
 
 export const SITE_URL = dev ? 'http://localhost:3504' : 'https://portfolio.aaronluna.dev';
 export const GH_USER = 'a-luna';
+export const AUTHOR_NAME = 'Aaron Luna';
 export const APPROVED_POSTERS_GH_USERNAME = [GH_USER];
 export const PUBLISH_TAGS = ['Published'];
 export const GH_USER_REPO = `${GH_USER}/portfolio-site`; // used for pulling github issues and offering comments
@@ -14,6 +15,7 @@ export const MY_TWITTER_HANDLE = 'aaronlunadev';
 export const MY_EMAIL = 'contact@aaronluna.dev';
 export const BLOG_POST_FOLDER = 'src/lib/content/blog';
 export const API_TUTORIAL_FOLDER = 'src/lib/content/flask-api-tutorial';
+export const ASSETS_FOLDER = `${SITE_URL}`;
 export const BLOG_IMAGE_ROOT = `${SITE_URL}/images/blog`;
 export const API_TUTORIAL_IMAGE_ROOT = `${SITE_URL}/images/flask-api-tutorial/post_images`;
 export const MEDIA_ROOT = `${SITE_URL}/media`;
