@@ -12,9 +12,9 @@
 
 	$: if (typeof window !== 'undefined') bodyIsScrollable = getBodyIsScrollable();
 	$: scrollBarWidth = getScrollbarWidth();
-	$: if (typeof window !== 'undefined' && $bodyIsScrollable) {
+	$: if (bodyIsScrollable && $bodyIsScrollable) {
 		document.body.style.paddingRight = '0px';
-	} else if (typeof window !== 'undefined') {
+	} else if (bodyIsScrollable && scrollBarWidth) {
 		document.body.style.paddingRight = `${scrollBarWidth}px`;
 	}
 </script>

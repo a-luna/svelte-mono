@@ -98,6 +98,8 @@ export type BlogPost = {
 	ghMetadata: GHMetadata;
 };
 
+export type BlogPostDateMap = Pick<BlogPost, 'slug' | 'date' | 'title'>;
+
 export type GHMetadata = {
 	issueUrl: string;
 	commentsUrl: string;
