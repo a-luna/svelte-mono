@@ -156,8 +156,9 @@
 	--magenta-tint1: hsl(298 89% 52%);
 	--magenta-tint2: hsl(298 89% 57%);
 
-	--accent-color: hsl(78.8 98.1% 58.6%);
-	--accent-color-dim: hsl(78.8 98.1% 28.6%);
+	/* --accent-color: hsl(78.8 98.1% 58.6%); */
+	--accent-color: hsl(148, 100%, 50%);
+	--accent-color-dim: hsl(148 98.1% 28.6%);
 
 	--yellow-icon: hsl(55.3 96.5% 66.3%);
 	--green-icon: hsl(78.4 95.2% 67.1%);
@@ -215,6 +216,10 @@
 		var(--black-tint1a),
 		rgba(0, 0, 0, 0)
 	);
+
+	/* Post Title */
+	--post-title-text-shadow-color: var(--dark-gray-shade1);
+	--post-title-text-color: #00FF77;
 
 	--shadow-color: 194deg 84% 18%;
 	--shadow-elevation-medium: -1px 1px 1.6px hsl(var(--shadow-color) / 0.36),

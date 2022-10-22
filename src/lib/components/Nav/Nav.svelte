@@ -31,7 +31,13 @@
 		flex-flow: row nowrap;
 		gap: 2rem;
 		margin: 0 auto;
-		padding: 0 1.5rem;
+		padding: 0 1rem;
+	}
+
+	@media (min-width: 640px) {
+		.nav-container {
+			padding: 0 1.5rem;
+		}
 	}
 
 	@media (min-width: 768px) {

@@ -19,6 +19,9 @@
 				<NavLink href="/">Home</NavLink>
 			</div>
 			<div on:click={() => (open = false)}>
+				<NavLink href="/projects">Projects</NavLink>
+			</div>
+			<div on:click={() => (open = false)}>
 				<NavLink href="/blog">Blog</NavLink>
 			</div>
 			<div on:click={() => (open = false)}>

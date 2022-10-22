@@ -19,14 +19,10 @@
 		color: var(--white-shade2);
 		border-radius: 0;
 	}
-	a:hover {
-		color: var(--gray-shade2);
-	}
-	a.active {
-		color: var(--accent-color);
-	}
+	a:hover,
+	a.active,
 	a.active:hover {
-		color: var(--accent-color-dim);
+		color: var(--accent-color);
 	}
 
 	@media (min-width: 768px) {
