@@ -20,10 +20,10 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
-function markdownConversions(blogPost: BlogPost): string {
+async function markdownConversions(blogPost: BlogPost): Promise<string> {
 	let convertedMarkdown = convertLinkedImages(blogPost.content, blogPost.images);
-	convertedMarkdown = convertInfoBoxes(convertedMarkdown);
-	convertedMarkdown = convertAlertBoxes(convertedMarkdown);
+	convertedMarkdown = await convertInfoBoxes(convertedMarkdown);
+	convertedMarkdown = await convertAlertBoxes(convertedMarkdown);
 	return convertVideos(convertedMarkdown);
 }
 
@@ -35,7 +35,7 @@ function htmlConversions(html: string, blogPost: BlogPost): string {
 
 export async function convertContentToHtml(blogPost: BlogPost): Promise<BlogPost> {
 	blogPost.codeBlocks = identifyCodeBlocks(blogPost.content);
-	let content = markdownConversions(blogPost);
+	let content = await markdownConversions(blogPost);
 	const html = await unified()
 		.use(remarkParse)
 		.use(remarkShiki, { highlighter, parseMeta })

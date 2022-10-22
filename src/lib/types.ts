@@ -68,7 +68,9 @@ export type BlogImage = {
 };
 
 export type CodeBlock = {
+	shiki: boolean;
 	id: string;
+	index: number;
 	lang: string;
 	lineNumbers: boolean;
 	lineNumberStart: number;

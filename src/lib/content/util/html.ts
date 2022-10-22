@@ -1,6 +1,11 @@
 import type { CodeBlock, HtmlHeading, TocSection } from '$lib/types';
-import parse from 'node-html-parser';
-import { copySvgIcon, HTML_HEADING_REGEX, TOX_TEST_RESULTS_REGEX } from './constants';
+import {
+	CODE_BLOCK_END_REGEX,
+	CODE_BLOCK_START_REGEX,
+	copySvgIcon,
+	HTML_HEADING_REGEX,
+	TOX_TEST_RESULTS_REGEX
+} from './constants';
 
 export const transformHeadings = (html: string): string =>
 	html.replace(
@@ -59,33 +64,89 @@ function createTocSection(
 
 export function transformCodeBlocks(html: string, codeBlocks: CodeBlock[]): string {
 	if (!codeBlocks.length) return html;
-	const document = parse(html);
-	const foundCodeBlocks = document.querySelectorAll('pre.shiki');
-	if (codeBlocks.length !== foundCodeBlocks.length) return html;
+	const sMatches = Array.from(html.matchAll(CODE_BLOCK_START_REGEX));
+	const eMatches = Array.from(html.matchAll(CODE_BLOCK_END_REGEX));
+	if (codeBlocks.length !== sMatches.length || codeBlocks.length !== eMatches.length) return html;
 
-	foundCodeBlocks.forEach((pre, i) => {
-		let topRow = '<span class="top-row">';
-		topRow += '<span class="space-filler"></span>';
-		topRow += `<span class="lang-name">${codeBlocks[i]?.lang}</span>`;
-		topRow += `<button class="copy-button" type="button" data-code-block-id="${codeBlocks[i]?.id}" title="Copy code to clipboard">${copySvgIcon}</button>`;
-		topRow += `</span>`;
-
-		const highlighted = pre.firstChild
-			.toString()
-			.replace(
-				'<code>',
-				`<code id="${codeBlocks[i]?.id}" class="language-${
-					codeBlocks[i]?.lang || 'none'
-				}" data-lang="${codeBlocks[i]?.lang || 'none'}" >`
-			);
-		let newPre = `<pre class="shiki" style="background-color: #141414">${highlighted}</pre>`;
-		if (codeBlocks[i]?.lineNumbers) {
-			newPre = `<pre class="shiki linenos" style="background-color: #141414; --start: ${codeBlocks[i]?.lineNumberStart}">${highlighted}</pre>`;
+	const totalMatches = sMatches.length;
+	const updatedBlocks: {
+		codeBlock: string;
+		length: number;
+		originalLength: number;
+		offset: number;
+		shiki: boolean;
+	}[] = [];
+	Array.from({ length: totalMatches }, (_, i) => i).forEach((i) => {
+		const blockStart = sMatches[i];
+		if (blockStart) {
+			const match = blockStart?.[0];
+			const { index, groups } = blockStart;
+			if (groups?.shiki) {
+				const codeStart = (index ?? 0) + (match?.length ?? 0);
+				const codeEnd = eMatches[i]?.index ?? 0;
+				const blockStart = index ?? 0;
+				const blockEnd = (eMatches[i]?.index ?? 0) + (eMatches[i]?.[0]?.length ?? 0);
+				const originalLength = blockEnd - blockStart;
+				const highlighted = html.slice(codeStart, codeEnd);
+				const codeBlock = createWrappedCodeBlock(
+					highlighted,
+					groups?.bgColor ?? '#141414',
+					codeBlocks[i]?.id ?? '',
+					codeBlocks[i]?.lang ?? '',
+					codeBlocks[i]?.lineNumbers ?? false,
+					codeBlocks[i]?.lineNumberStart ?? 1
+				);
+				const offset = codeBlock.length - originalLength;
+				updatedBlocks.push({
+					codeBlock,
+					length: codeBlock.length,
+					originalLength,
+					offset,
+					shiki: true
+				});
+			} else {
+				updatedBlocks.push({
+					codeBlock: '',
+					length: 0,
+					originalLength: 0,
+					offset: 0,
+					shiki: false
+				});
+			}
 		}
-
-		const wrapper = parse(`<div class="shiki-wrapper" tabindex="0">${topRow}${newPre}</div>`);
-		pre.replaceWith(wrapper);
 	});
 
-	return document.toString();
+	let totalOffSet = 0;
+	Array.from({ length: updatedBlocks.length }, (_, i) => i).forEach((i) => {
+		if (updatedBlocks[i]?.shiki) {
+			const codeBlock = updatedBlocks[i]?.codeBlock;
+			const blockStart = (sMatches[i]?.index ?? 0) + totalOffSet;
+			const blockEnd = (eMatches[i]?.index ?? 0) + (eMatches[i]?.[0]?.length ?? 0) + totalOffSet;
+			html = `${html.slice(0, blockStart)}${codeBlock}${html.slice(blockEnd)}`;
+			totalOffSet += updatedBlocks[i]?.offset ?? 0;
+		}
+	});
+	return html;
+}
+
+function createWrappedCodeBlock(
+	highlighted: string,
+	bgColor: string,
+	codeBlockId: string,
+	lang: string,
+	lineNumbers: boolean,
+	lineNumberStart: number
+): string {
+	let topRow = '<span class="top-row">';
+	topRow += '<span class="space-filler"></span>';
+	topRow += `<span class="lang-name">${lang}</span>`;
+	topRow += `<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">${copySvgIcon}</button>`;
+	topRow += `</span>`;
+
+	let newPre = `<pre class="shiki" style="background-color: #141414">`;
+	if (lineNumbers) {
+		newPre = `<pre class="shiki linenos" style="background-color: ${bgColor}; --start: ${lineNumberStart}">`;
+	}
+
+	return `<div class="shiki-wrapper" tabindex="0">${topRow}${newPre}<code id="${codeBlockId}" class="language-${lang}" data-lang="${lang}">${highlighted}</code></pre></div>`;
 }

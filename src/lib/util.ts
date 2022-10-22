@@ -52,3 +52,14 @@ export function getScrollbarWidth() {
 	outer?.parentNode?.removeChild(outer);
 	return scrollbarWidth;
 }
+
+export async function replaceAsync(
+	string: string,
+	regexp: RegExp,
+	replacerFunction: (match: RegExpMatchArray) => Promise<string>
+) {
+	const replacements = await Promise.all(
+		Array.from(string.matchAll(regexp), (match) => replacerFunction(match))
+	);
+	return string.replace(regexp, () => replacements.shift() ?? '');
+}
