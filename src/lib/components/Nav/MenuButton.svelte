@@ -30,7 +30,7 @@
 		z-index: 5;
 	}
 	.menu-button:hover {
-		border: 3px solid var(--accent-color);
+		border: 2px solid var(--accent-color);
 		color: var(--accent-color);
 	}
 	.menu-button.open {

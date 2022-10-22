@@ -799,6 +799,11 @@ article figure {
 	margin: 0 0 2rem 0;
 }
 
+.post-image figure {
+	margin: 0 0 1rem 0;
+	width: 100%;
+}
+
 article .hero-buttons a {
 	color: var(--black-tint1);
 	background-color: var(--accent-color);
@@ -922,23 +927,31 @@ a.feature-card:hover > div {
   CUSTOM SCROLLBARS! 
   - https://css-tricks.com/strut-your-stuff-with-a-custom-scrollbar/
   */
-body {
-	overflow: scroll; /* https://maxschmitt.me/posts/react-prevent-layout-shift-body-scrollable/ */
-}
 body::-webkit-scrollbar {
-	width: 0.5rem;
+	width: 0.75rem;
+}
+body {
+	--scrollbarBG: var(--page-bg-color);
+	--thumbBG: var(--teal);
+	overflow: scroll; /* https://maxschmitt.me/posts/react-prevent-layout-shift-body-scrollable/ */
+	scrollbar-width: thin;
+	scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 }
 body::-webkit-scrollbar-track {
-	background-color: var(--page-bg-color);
+	background: var(--scrollbarBG);
 }
 body::-webkit-scrollbar-thumb {
-	background: linear-gradient(
-		to bottom,
-		hsl(252, 89%, 67%) 10%,
-		var(--teal),
-		hsl(252, 89%, 67%) 90%
-	);
-	border-radius: 2px;
+	background-color: var(--thumbBG);
+	border-radius: 0;
+	border: 2px solid var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+	scrollbar-color: var(--thumbBG);
+	background-color: var(--thumbBG);
+	border-radius: 0;
+}
+body::-webkit-scrollbar-corner {
+	background: var(--scrollbarBG);
 }
 
 /* 
