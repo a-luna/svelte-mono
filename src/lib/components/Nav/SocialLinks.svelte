@@ -23,7 +23,7 @@
 		align-items: center;
 		gap: 1.25rem;
 		padding: 0.5rem;
-		background-color: var(--purple-icon);
+		background-color: var(--cmd-purple2);
 	}
 	.desktop {
 		display: none;

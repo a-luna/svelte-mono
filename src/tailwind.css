@@ -160,11 +160,11 @@
 	--accent-color: hsl(148, 100%, 50%);
 	--accent-color-dim: hsl(148 98.1% 28.6%);
 
-	--yellow-icon: hsl(55.3 96.5% 66.3%);
-	--green-icon: hsl(78.4 95.2% 67.1%);
-	--blue-icon: hsl(169.4 93.7% 75.1%);
-	--purple-icon: hsl(251.9 89.3% 66.9%);
-	--pink-icon: hsl(286.5 88.1% 60.4%);
+	--yellow-icon: hsl(60, 100%, 57%);
+	--green-icon: hsl(148, 100%, 57%);
+	--blue-icon: hsl(180, 100%, 57%);
+	--purple-icon: hsl(268, 100%, 57%);;
+	--pink-icon: hsl(300, 100%, 57%);
 	--default-icon: var(--white);
 
 	/* Custom properties from the old site */
@@ -191,6 +191,7 @@
 	--cmd-blue3: hsl(180, 100%, 50%);
 	--cmd-purple1-hov: hsl(261, 100%, 35%);
 	--cmd-purple1: hsl(261, 100%, 45%);
+	--cmd-purple2: hsl(261, 100%, 55%);
 	--cmd-purple3: hsl(261, 100%, 72%);
 	--cmd-magenta3: hsl(300, 100%, 50%);
 	--cmd-pink2: hsl(338, 100%, 56%);

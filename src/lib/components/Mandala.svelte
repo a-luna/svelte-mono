@@ -166,7 +166,7 @@
 		--mandala-primary: var(--gray-shade6);
 		--mandala-accent-1: var(--blue-icon);
 		--mandala-accent-2: var(--pink-icon);
-		--mandala-accent-3: var(--yellow-icon);
+		--mandala-accent-3: var(--accent-color);
 		--mandala-accent-4: var(--purple-icon);
 		display: flex;
 		justify-content: center;
