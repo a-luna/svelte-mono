@@ -38,5 +38,7 @@ function checkBodyIsScrollable(el: HTMLElement): Writable<boolean> {
 export const getBodyIsScrollable = (): Writable<boolean> => checkBodyIsScrollable(document.body);
 
 export const blogPostDateMap: Readable<BlogPostDateMap[]> = derived(blogPosts, ($blogPosts) =>
-	$blogPosts.map(({ slug, date, title }) => ({ slug, date, title }))
+	$blogPosts
+		.map(({ slug, date, title }) => ({ slug, date, title }))
+		.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
 );
