@@ -17,17 +17,17 @@ resources:
 
 ## Introduction
 
-The **Task-based Asynchronous Pattern (TAP)** is the recommended way to write asynchronous code for .NET applications. [As I explained in my last post](/2018/01/29/parallel-async-csharp-best-practices-tpl/), TAP is intended to replace the Asynchronous Programming Model (APM) and the Event-based Asynchronous Pattern (EAP), however many classes in the .NET framework still use these older patterns. Fortunately, these can be turned into TAP-style "awaitable" methods with relative ease. By doing so, you reap the benefits that come from working with Task (and Task<T>) objects. In this post, I will convert a set of APM-style methods from the System.Net.Sockets namespace to TAP methods and provide an end-to-end example of how to use them in a generic TCP socket server.
+The **Task-based Asynchronous Pattern (TAP)** is the recommended way to write asynchronous code for .NET applications. [As I explained in my last post](/2018/01/29/parallel-async-csharp-best-practices-tpl/), TAP is intended to replace the Asynchronous Programming Model (APM) and the Event-based Asynchronous Pattern (EAP), however many classes in the .NET framework still use these older patterns. Fortunately, these can be turned into TAP-style "awaitable" methods with relative ease. By doing so, you reap the benefits that come from working with `Task` (and `Task<T>`) objects. In this post, I will convert a set of APM-style methods from the `System.Net.Sockets` namespace to TAP methods and provide an end-to-end example of how to use them in a generic TCP socket server.
 
 All of the code examples in this post can be downloaded as individual .cs files at my gist link below:
 
 <div class="center"><a href="https://gist.github.com/a-luna/e5f275de9a5b111f08b5e38be7042f04" class="eyeballs" target="_blank">Task-based Socket Extension Methods (C&#35; TPL) [gist.github.com]</a></div>
 
-I'll go through the various Socket methods in the order they would occur for a simple scenario: Connect to a remote host and send a short text message that is received and read by the server over TCP. This code also uses a Result object for all return values. The code for the Result class will also be covered.
+I'll go through the various `Socket` methods in the order they would occur for a simple scenario: Connect to a remote host and send a short text message that is received and read by the server over TCP. This code also uses a `Result` object for all return values. The code for the `Result` class will also be covered.
 
 ## Connect
 
-We begin with the assumption that a remote end point exists, defined by an IP address and port number, that is bound and listening for incoming connetions with a TCP socket. We will refer to this side of our example as the **server**. The other side which attempts to connect to this end point by calling ```ConnectWithTimeoutAsync``` will be refered to as the **client**. ```ConnectWithTimeoutAsync``` is an extension method that wraps the BeginConnect/EndConnect methods of the Socket class and returns a Task<Result> object:
+We begin with the assumption that a remote end point exists, defined by an IP address and port number, that is bound and listening for incoming connetions with a TCP socket. We will refer to this side of our example as the **server**. The other side which attempts to connect to this end point by calling `ConnectWithTimeoutAsync` will be refered to as the **client**. `ConnectWithTimeoutAsync` is an extension method that wraps the `BeginConnect`/`EndConnect` methods of the `Socket` class and returns a `Task<Result>` object:
 
 ```csharp
 namespace AaronLuna.TplSockets
@@ -78,7 +78,7 @@ namespace AaronLuna.TplSockets
 }
 ```
 
-Note that this method requires a timeout value. The timeout behavior is achieved through use of Task.WhenAny. Since the same timeout behavior has been applied to all of the socket methods (where appropriate) let's take a closer look at how this is done:
+Note that this method requires a `timeoutMs` value. The timeout behavior is achieved through use of `Task.WhenAny`. Since the same timeout behavior has been applied to all of the socket methods (where appropriate) let's take a closer look at how this is done:
 
 ```csharp
 if (connectTask == await Task.WhenAny(connectTask, Task.Delay(timeoutMs)).ConfigureAwait(false))
@@ -91,13 +91,13 @@ else
 }
 ```
 
-We pass 2 tasks into Task.WhenAny: connectTask and Task.Delay(timeoutMs). Whichever one of these tasks completes first will be returned. Let's say timeoutMs = 5000, which is a timeout value of five seconds. If the task returned from Task.WhenAny is connectTask, the connection was successful and we await the result. However if connectTask is not returned, that means our socket was unable to connect to the endpoint after trying for five seconds and a TimeoutException is thrown. The exception is handled by calling Result.Fail(string error), a static method which returns an instance of Result with Success = false and a string containing the Message property of the exception.
+We pass 2 tasks into `Task.WhenAny`: `connectTask` and `Task.Delay(timeoutMs)`. Whichever one of these tasks completes first will be returned. Let's say `timeoutMs = 5000`, which is a timeout value of five seconds. If the task returned from `Task.WhenAny` is connectTask, the connection was successful and we await the result. However if `connectTask` is not returned, that means our socket was unable to connect to the endpoint after trying for five seconds and a `TimeoutException` is thrown. The exception is handled by calling `Result.Fail(string error)`, a static method which returns an instance of `Result` with `Success = false` and a string containing the `Message` property of the exception.
 
 ## Result Class, Explained
 
-The Result<T> class encapsulates all information pertaining to the outcome of a task, conveniently providing an error message in case the task failed and an object instance in case the task succeeded.
+The `Result<T>` class encapsulates all information pertaining to the outcome of a task, conveniently providing an error message in case the task failed and an object instance in case the task succeeded.
 
-I was introduced to the Result class by [this blog post](http://enterprisecraftsmanship.com/2015/03/20/functional-c-handling-failures-input-errors/) by Vladimir Khorikov, part of a series that applies Functional programming techniques to C#. He has made the code available on [github](https://github.com/vkhorikov/CSharpFunctionalExtensions), but I am still using the basic version below:
+I was introduced to the `Result` class by [this blog post](http://enterprisecraftsmanship.com/2015/03/20/functional-c-handling-failures-input-errors/) by Vladimir Khorikov, part of a series that applies Functional programming techniques to C#. He has made the code available on [github](https://github.com/vkhorikov/CSharpFunctionalExtensions), but I am still using the basic version below:
 
 ```csharp
 namespace AaronLuna.Common.Result
@@ -164,7 +164,7 @@ namespace AaronLuna.Common.Result
 
 ## Accept
 
-Ok, back to our socket example. On the other side of our connectTask, the server is waiting for incoming connections inside the ```AcceptAsync``` method, which wraps the BeginAccept/EndAcceppt method pair:
+Ok, back to our socket example. On the other side of our `connectTask`, the server is waiting for incoming connections inside the `AcceptAsync` method, which wraps the `BeginAccept`/`EndAcceppt` method pair:
 
 ```csharp
 namespace AaronLuna.TplSockets
@@ -201,7 +201,7 @@ namespace AaronLuna.TplSockets
 
 ## Receive
 
-After ```ConnectWithTimeoutAsync``` and ```AcceptAsync``` have successfully ran to completion, the server will have a new Socket instance, which is named transferSocket in the code example above. The server will use this socket to receive data from the client. I created two diferent ```ReceiveAsync``` methods, one with the same timeout behavior as ```ConnectWithTimeoutAsync``` and one without:
+After `ConnectWithTimeoutAsync` and `AcceptAsync` have successfully ran to completion, the server will have a new `Socket` instance, which is named `transferSocket` in the code example above. The server will use this socket to receive data from the client. I created two diferent `ReceiveAsync` methods, one with the same timeout behavior as `ConnectWithTimeoutAsync` and one without:
 
 ```csharp
 namespace AaronLuna.TplSockets
@@ -275,7 +275,7 @@ namespace AaronLuna.TplSockets
 
 ## Send
 
-On the client side, I created an equivalent ```SendWithTimeoutAsync``` method, but did not create the version without the timeout. My reasoning for this is that a Send operation is an active process while a Receive operation is a passive one. There are situations where a socket may be waiting for a Send operation on the other side to begin, without any way to predict how long it's going to take until receiving data. In those cases a timeout would not be helpful. This is obviously not the case with a Send operation:
+On the client side, I created an equivalent `SendWithTimeoutAsync` method, but did not create the version without the timeout. My reasoning for this is that a `Send` operation is an active process while a `Receive` operation is a passive one. There are situations where a socket may be waiting for a `Send` operation on the other side to begin, without any way to predict how long it's going to take until receiving data. In those cases a timeout would not be helpful. This is obviously not the case with a `Send` operation:
 
 ```csharp
 namespace AaronLuna.TplSockets
@@ -325,7 +325,7 @@ namespace AaronLuna.TplSockets
 
 ## Client/Server Example
 
-It's time to put these pieces together and demonstrate how to use these methods and the Result objects:
+It's time to put these pieces together and demonstrate how to use these methods and the `Result` objects:
 
 ```csharp
 namespace AaronLuna.TplSockets

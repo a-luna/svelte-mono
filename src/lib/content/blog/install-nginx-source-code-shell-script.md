@@ -134,7 +134,7 @@ _**PLEASE DO NOT USE A FOLDER IN YOUR USER'S HOME DIRECTORY**_. If you plan on u
       <li>
         <a href="https://www.pcre.org">https://www.pcre.org</a>
 {{< alert_box >}}
-NGINX requires the original PCRE library, <span class="bold-italics">NOT PCRE2
+NGINX requires the original PCRE library, __*NOT PCRE2*__
 {{< /alert_box >}}
       </li>
       <li>
@@ -308,18 +308,8 @@ make[1]: Leaving directory '/opt/src_files/nginx-1.15.6'</span></code></pre>
     <li><code>-y</code> will create the .deb package non-interactively, accepting the default value for all prompts that are normally presented to the user.</li>
   </ul>
   <pre><code><span class="cmd-prompt">/opt/src_files/nginx-1.15.6 $</span> <span class="cmd-input">sudo checkinstall --install=no -y</span>
-<span class="cmd-comment">#removed installation messages
-#eventually, you should see a message like this:</span>
-<span class="cmd-results">**********************************************************************
-
-Done. The new package has been saved to
-
-/opt/src_files/nginx-1.15.6/nginx_1.15.6-1_amd64.deb
-You can install it in your system anytime using:
-
-      dpkg -i nginx_1.15.6-1_amd64.deb
-
-**********************************************************************</span></code></pre>
+<span class="cmd-comment">#removed installation messages<br>#eventually, you should see a message like this:</span>
+<span class="cmd-results">&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;<br><br>Done. The new package has been saved to<br><br>/opt/src_files/nginx-1.15.6/nginx_1.15.6-1_amd64.deb<br>You can install it in your system anytime using:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;dpkg -i nginx_1.15.6-1_amd64.deb<br><br></span>&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;<br></code></pre>
   </li>
   <li>
     <p>You can examine the contents of the .deb package to see the target location of all files that will be copied to your system during installation:</p>
@@ -445,6 +435,7 @@ title=Web Server (Nginx, HTTP + HTTPS)
 description=Small, but very powerful and efficient web server
 ports=80,443/tcp
 ```
+
   <p>Save and close the file.</p>
   </li>
   <li>
@@ -479,6 +470,7 @@ KillMode=mixed
 [Install]
 WantedBy=multi-user.target
 ```
+
   <p>Save and close the file.</p>
   </li>
   <li>

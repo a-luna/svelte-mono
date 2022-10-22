@@ -86,7 +86,7 @@ Type "help", "copyright", "credits" or "license" for more information.</span>
 <span class="cmd-repl-prompt">>>></span> <span class="cmd-repl-input">decorated_function = simple_decorator(undecorated_function)</span></code></pre>
 
 {{< info_box >}}
-Please note the difference between calling a function (<code>undecorated_function()</code>) and passing a function as a parameter to another function (<code>simple_decorator(undecorated_function)</code>). If we had executed <code>simple_decorator(undecorated_function())</code>, we would not see the effect of the wrapper function. The behavior would be the same as when we executed <code>undecorated_function()</code>.
+Please note the difference between calling a function (`undecorated_function()`) and passing a function as a parameter to another function (`simple_decorator(undecorated_function)`). If we had executed `simple_decorator(undecorated_function())`, we would not see the effect of the wrapper function. The behavior would be the same as when we executed `undecorated_function()`.
 {{< /info_box >}}
 
 Finally, we execute <code>decorated_function()</code>:

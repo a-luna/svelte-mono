@@ -18,11 +18,11 @@ While creating the [TPL Socket extension methods](/2018/02/04/csharp-tpl-socket-
 
 <div class="center"><a href="https://gist.github.com/a-luna/bd93686ace9f6f22acf0a7032fc41777" class="eyeballs" target="_blank">Network Utilities: IP Parsing/Retrieving (C&#35; .NET Core 2.0) [gist.github.com]</a></div>
 
-This library targets the .NET Core 2.0 framework and therefore can be used on Windows, MacOS and any Linux system where the framework is installed. All methods are explicitly designed for IPv4 addresses and return (or accept as parameters) ```System.Net.IPAddress``` objects.
+This library targets the .NET Core 2.0 framework and therefore can be used on Windows, MacOS and any Linux system where the framework is installed. All methods are explicitly designed for IPv4 addresses and return (or accept as parameters) `System.Net.IPAddress` objects.
 
 ## IPv4 Parsing
 
-The first method, ```ParseSingleIPv4Address``` is less useful than the rest of the library since it requires the input string to already be in proper IPv4 format, "a.b.c.d". I am presenting it first because other methods in the library which process unformatted text eventually call ```ParseSingleIPv4Address``` to produce a ```System.Net.IPAddress``` object.
+The first method, `ParseSingleIPv4Address` is less useful than the rest of the library since it requires the input string to already be in proper IPv4 format, "a.b.c.d". I am presenting it first because other methods in the library which process unformatted text eventually call `ParseSingleIPv4Address` to produce a `System.Net.IPAddress` object.
 
 This method calls string.Split on the input string to produce 4 substrings containing the IP address bytes, each byte is validated to ensure it is within the allowed range (0,255). Conveniently, the IPAddress class contains a constructor that accepts a byte array.  This constructor is used to produce the IPAddress object represented by the input string.
 
@@ -68,7 +68,7 @@ namespace AaronLuna.Common.Network
 }
 ```
 
-The next method parses all IPv4 addresses from a block of text using a regular expression. Each match is then fed into ```ParseSingleIPv4Address``` to produce a list of IPAddress objects. This method is much more useful than the previous since it accepts any text and produces a list of IPAddress objects.
+The next method parses all IPv4 addresses from a block of text using a regular expression. Each match is then fed into `ParseSingleIPv4Address` to produce a list of IPAddress objects. This method is much more useful than the previous since it accepts any text and produces a list of IPAddress objects.
 
 ```csharp
 namespace AaronLuna.Common.Network
@@ -147,7 +147,7 @@ mask  : 1111 1111 - 1111 1111 - 1111 1111 - 0000 0000       mask  : 1111 1111 - 
 
 This time the values match, meaning 192.168.2.2 is within the CIDR range defined by 192.168.2.0/24.
 
-I created a method to perform the same process, ```IpAddressIsInCidrRange```. This function uses the ```ParseIPv4Addresses method``` to parse both the IP address to check and the network address from the CIDR mask. The number of bits that correspond to the network routing is also parsed from the CIDR mask and all values are validated to ensure they are within their allowed range.
+I created a method to perform the same process, `IpAddressIsInCidrRange`. This function uses the `ParseIPv4Addresses method` to parse both the IP address to check and the network address from the CIDR mask. The number of bits that correspond to the network routing is also parsed from the CIDR mask and all values are validated to ensure they are within their allowed range.
 
 ```csharp
 namespace AaronLuna.Common.Network
@@ -208,7 +208,7 @@ namespace AaronLuna.Common.Network
 }
 ```
 
-This function is used primarily within my code to check if an IP address is within one of the CIDR blocks reserved for private networks, i.e. check if a given address is a public or private IP address. I created a method named ```IpAddressIsInPrivateAddressSpace``` with overloads that accept either a string value or IPAddress object:
+This function is used primarily within my code to check if an IP address is within one of the CIDR blocks reserved for private networks, i.e. check if a given address is a public or private IP address. I created a method named `IpAddressIsInPrivateAddressSpace` with overloads that accept either a string value or IPAddress object:
 
 ```csharp
 namespace AaronLuna.Common.Network

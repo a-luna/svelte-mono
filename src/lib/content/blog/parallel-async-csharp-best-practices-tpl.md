@@ -16,7 +16,7 @@ resources:
 
 C&#35; classes contain [a mixture of three asynchronous patterns](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/):
 
-* [Asynchronous Programming Model (APM)](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/asynchronous-programming-model-apm) uses the IAsyncResult interface and requires async methods to be defined as Begin*Process* and End*Process* methods (e.g., `<code>BeginSend</code>`/`<code>EndSend</code>` methods for asynchronous Socket send operations).
+* [Asynchronous Programming Model (APM)](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/asynchronous-programming-model-apm) uses the IAsyncResult interface and requires async methods to be defined as Begin*Process* and End*Process* methods (e.g., `BeginSend`/`EndSend` methods for asynchronous Socket send operations).
 * [Event-based Asynchronous Pattern (EAP)](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/event-based-asynchronous-pattern-eap) was introduced with .NET Framework 2.0 and requires that asynchronous method names end with &#34;Async&#34; and uses event types, delegates, and custom EventArgs classes.
 * [Task-based Asynchronous pattern (TAP)](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap) was introduced in .NET Framework 4.0 and Microsoft recommends that you use TAP for new projects. TAP uses Task-objects and only requires a single asynchronous method which can be "awaited", in contrast to APM and EAP which require more than one method to achieve asynchrony. Like EAP, you should end your TAP method names with "Async".
 

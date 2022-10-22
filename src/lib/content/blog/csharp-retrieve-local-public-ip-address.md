@@ -22,7 +22,7 @@ Let's finish off the [NetworkUtilities class from the previous post](/2018/02/24
 
 ## Retrieve Local IP Address (Requires Internet)
 
-The method below, ```GetLocalIPv4AddressRequiresInternet```, retrieves the local IP address, and does so in a fairly clever way (IMHO). Internet access is required because the method uses a ```System.Net.Socket``` object to connect to [Google's Public DNS service](https://developers.google.com/speed/public-dns/docs/intro). When the connection is made, the Socket's LocalEndPoint property contains the local IP address of our machine. Our goal of retrieving the local IP address is handled, essesntially, with just 2 lines of code:
+The method below, `GetLocalIPv4AddressRequiresInternet`, retrieves the local IP address, and does so in a fairly clever way (IMHO). Internet access is required because the method uses a `System.Net.Socket` object to connect to [Google's Public DNS service](https://developers.google.com/speed/public-dns/docs/intro). When the connection is made, the Socket's LocalEndPoint property contains the local IP address of our machine. Our goal of retrieving the local IP address is handled, essesntially, with just 2 lines of code:
 
 ```csharp
 namespace AaronLuna.Common.Network
@@ -63,11 +63,11 @@ namespace AaronLuna.Common.Network
 
 We have to do a bit more work if we decide that relying on an external service is not an option. Obviously, if there is only a single network adapter on our machine the task is easier but this is often not the case.
 
-So, where do we start in this scenario? The ```System.Net.NetworkInformation``` namespace contains the static method [NetworkInterface.GetAllNetworkInterfaces](https://docs.microsoft.com/en-us/dotnet/api/system.net.networkinformation.networkinterface.getallnetworkinterfaces?view=netframework-4.7.1#System_Net_NetworkInformation_NetworkInterface_GetAllNetworkInterfaces) which returns an array of objects describing every network interface available on the current computer. Then, with this information and a LINQ query, I create a list containing all local IPv4 addresses.
+So, where do we start in this scenario? The `System.Net.NetworkInformation` namespace contains the static method [NetworkInterface.GetAllNetworkInterfaces](https://docs.microsoft.com/en-us/dotnet/api/system.net.networkinformation.networkinterface.getallnetworkinterfaces?view=netframework-4.7.1#System_Net_NetworkInformation_NetworkInterface_GetAllNetworkInterfaces) which returns an array of objects describing every network interface available on the current computer. Then, with this information and a LINQ query, I create a list containing all local IPv4 addresses.
 
-You may have noticed that ```GetLocalIpAddressNoInternet``` requires a string parameter named localNetworkCidrIp. This is the LAN configuration in CIDR notation. If you are unfamiliar with CIDR notation or basic networking concepts, please read [this helpful article from DigitalOcean](https://www.digitalocean.com/community/tutorials/understanding-ip-addresses-subnets-and-cidr-notation-for-networking).
+You may have noticed that `GetLocalIpAddressNoInternet` requires a string parameter named localNetworkCidrIp. This is the LAN configuration in CIDR notation. If you are unfamiliar with CIDR notation or basic networking concepts, please read [this helpful article from DigitalOcean](https://www.digitalocean.com/community/tutorials/understanding-ip-addresses-subnets-and-cidr-notation-for-networking).
 
-In the previous post I explicitly walked through the process of checking if an IP address exists within the address space defined by a CIDR block. This process is implemented by the ```IpAddressIsInCidrRange``` method.
+In the previous post I explicitly walked through the process of checking if an IP address exists within the address space defined by a CIDR block. This process is implemented by the `IpAddressIsInCidrRange` method.
 
 Each local IP address is checked to see if it exists within the LAN specified by the cidrMask, and the first matching address is returned as the local IP address:
 
@@ -130,7 +130,7 @@ namespace AaronLuna.Common.Network
 
 I was unable to determine any way to get the public IP without relying on an external system, and this makes sense since the public IP is really the address of the router and not the local machine. I thought that it might be possible to get the public IP from the router itself through telnet, but the process would vary greatly for each router and I couldn't even determine if it was possible to telnet into my router without installing a custom firmware.
 
-The method below, ```GetPublicIPv4AddressAsync```, is extremely reliable and fast. The website which tells us our public IP address does not serve up an HTML doc that requires parsing, only a string containing our public IP:
+The method below, `GetPublicIPv4AddressAsync`, is extremely reliable and fast. The website which tells us our public IP address does not serve up an HTML doc that requires parsing, only a string containing our public IP:
 
 ```csharp
 namespace AaronLuna.Common.Network
