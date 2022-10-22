@@ -259,13 +259,13 @@ body {
 
 	--code-block-bg-color: #141414;
 
-	background-color: var(--dark-gray-shade2);
+	background-color: var(--black-tint1);
 	font-family: 'Roboto', Arial, Helvetica, sans-serif;
 	letter-spacing: 0.4px;
 }
 
 kbd {
-	font-size: 0.85em;
+	font-size: 0.8em;
 	margin: 0 1px;
 	padding: 3px 4px;
 	color: var(--cmd-yellow3);
@@ -459,7 +459,7 @@ pre:not(.shiki) {
 	counter-increment: step calc(var(--start, 1) - 1);
 	overflow-x: auto;
 	max-width: 100%;
-	padding: 0.5rem 1rem 0 1rem;
+	padding: 0.5rem 1rem;
 }
 
 .shiki.linenos code {
@@ -739,6 +739,17 @@ pre:not(.shiki) {
 	text-decoration: underline;
 }
 
+.center {
+	text-align: center;
+	margin: 20px 0;
+}
+
+article a.eyeballs {
+	font-size: 1.2rem;
+	font-weight: 500;
+	color: var(--accent-color);
+}
+
 article figure {
 	text-align: center;
 	display: block;
@@ -779,6 +790,35 @@ article figure {
 .vid-flex .device-mock figcaption {
 	margin: 10px 0 0 0;
 	background-color: var(--page-bg-color);
+}
+
+.hero-buttons {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-evenly;
+	margin: 0 0 2rem 0;
+}
+
+article .hero-buttons a {
+	color: var(--black-tint1);
+	background-color: var(--accent-color);
+	text-align: center;
+	white-space: pre;
+	flex: 0 1 40%;
+	font-size: 1.5em;
+	margin: 0;
+	padding: 10px 20px;
+	transition: all 0.4s linear;
+	box-shadow: var(--outer-shadow);
+}
+
+article .hero-buttons a:hover,
+article .hero-buttons a:active,
+article .hero-buttons a:focus,
+article .hero-buttons a:active:hover {
+	color: var(--black-tint1);
+	background-color: var(--accent-color-dim);
+	text-decoration: none;
 }
 
 .gradient {
