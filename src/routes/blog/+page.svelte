@@ -31,12 +31,12 @@
 
 <svelte:head>
 	<title>{SITE_TITLE} Blog Index</title>
-	<meta name="description" content={`Latest ${SITE_TITLE} posts`} />
+	<meta name="description" content={`Latest Blog Posts`} />
 </svelte:head>
 
 <svelte:window on:keyup={focusSearch} />
 
-<section class="portfolio">
+<section class="article-list">
 	<h1>Blog</h1>
 	<p class="search-desc">Use the search below to filter by title.</p>
 	<div class="input-wrapper">

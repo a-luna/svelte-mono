@@ -13,15 +13,29 @@ export const VIDEO_REGEX =
 	/{{< autoplay_video video="(?<name>[\w]+)"(?: device="(?<device>mobile|desktop)")?(?: width="(?<width>[\d]+)px")? >}}/g;
 
 export const HTML_HEADING_REGEX =
-	/<h(?<level>2|3|4|5|6) id="(?<slug>[a-z-]+)">(?<text>.+)<\/(?:h2|h3|h4|h5|h6)>/g;
+	/<h(?<level>2|3|4|5|6) id="(?<slug>[a-z-_]+)">(?<text>.+)<\/(?:h2|h3|h4|h5|h6)>/g;
 
 export const TOX_TEST_RESULTS_REGEX =
 	/test session starts [=]+(?:\s)?([\s\S][^=]*)(?:\s)?[=]+ [\d]+ passed/g;
 
 export const CODE_BLOCK_START_REGEX =
-	/<pre(?: class="(?<shiki>shiki)" style="background-color: (?<bgColor>#[A-Fa-f0-9]{6,6})")?><code(?:>)?/g;
+	/<pre(?: class="(?<shiki>shiki)" style="background-color: (?<bgColor>#[A-Fa-f0-9]{6,6})")?>?(?:<code(?:>)?)?/g;
 
 export const CODE_BLOCK_END_REGEX = /<\/pre>/g;
 
+export const FA_BULLET_LIST_REGEX = /<div class="fa-bullet-list">/g;
+
+export const FA_BULLET_REGEX =
+	/<p class="fa-bullet-list-item(?: complete)?(?: in-progress)?"><span class="fa (?<star>(?:fa-star)(?:-o)?(?:-half-o)?) fa-bullet-icon"><\/span>(?<text>.+)<\/p>/g;
+
 export const copySvgIcon =
 	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" stroke="currentColor" fill="currentColor" class="s-x0McpB_FEdHb" style="stroke-width: 0; padding: 0px; height: 13px"><path d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"></path></svg>';
+
+export const starOutlineSvgIcon =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" stroke="currentColor" fill="currentColor" style="stroke-width: 0; padding: 0;" class="s-x0McpB_FEdHb"><path d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg>';
+
+export const halfStarSvgIcon =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" stroke="currentColor" fill="currentColor" style="stroke-width: 0; padding: 0;" class="s-x0McpB_FEdHb"><path d="M508.55 171.51L362.18 150.2 296.77 17.81C290.89 5.98 279.42 0 267.95 0c-11.4 0-22.79 5.9-28.69 17.81l-65.43 132.38-146.38 21.29c-26.25 3.8-36.77 36.09-17.74 54.59l105.89 103-25.06 145.48C86.98 495.33 103.57 512 122.15 512c4.93 0 10-1.17 14.87-3.75l130.95-68.68 130.94 68.7c4.86 2.55 9.92 3.71 14.83 3.71 18.6 0 35.22-16.61 31.66-37.4l-25.03-145.49 105.91-102.98c19.04-18.5 8.52-50.8-17.73-54.6zm-121.74 123.2l-18.12 17.62 4.28 24.88 19.52 113.45-102.13-53.59-22.38-11.74.03-317.19 51.03 103.29 11.18 22.63 25.01 3.64 114.23 16.63-82.65 80.38z"></path></svg>';
+
+export const fullStarSvgIcon =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" stroke="currentColor" fill="currentColor" style="stroke-width: 0; padding: 0;" class="s-x0McpB_FEdHb"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path></svg>';

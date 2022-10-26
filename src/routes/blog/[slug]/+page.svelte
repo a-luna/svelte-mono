@@ -107,9 +107,7 @@
 	class="mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
 >
 	<h1>{blogPost?.title}</h1>
-	<div class="bg mtd-6 mt-4 flex w-full justify-between sm:flex-row sm:items-center">
-		<ByLine {published} />
-	</div>
+	<ByLine {published} />
 	<CoverImage coverImage={blogPost.coverImage} />
 	{#if blogPost.hasToc && blogPost.toc}
 		<TableOfContents toc={blogPost.toc} />
@@ -128,24 +126,25 @@
 
 <style lang="postcss">
 	h1 {
-		font-size: 1.6rem;
-		font-weight: 400;
+		font-size: 2rem;
+		font-weight: 700;
 		line-height: 1.2;
 		color: var(--post-title-text-color);
+		-webkit-text-fill-color: var(--post-title-text-color);
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: var(--post-title-text-stroke);
 		line-height: 1.3;
-		text-shadow: 2.5px 2.5px var(--post-title-text-shadow-color),
-			2.25px 2.25px var(--post-title-text-shadow-color), 2px 2px var(--post-title-text-shadow-color),
+		/* text-shadow: 2px 2px var(--post-title-text-shadow-color),
 			1.75px 1.75px var(--post-title-text-shadow-color),
 			1.5px 1.5px var(--post-title-text-shadow-color),
 			1.25px 1.25px var(--post-title-text-shadow-color), 1px 1px var(--post-title-text-shadow-color),
 			0.75px 0.75px var(--post-title-text-shadow-color),
 			0.5px 0.5px var(--post-title-text-shadow-color),
-			0.25px 0.25px var(--post-title-text-shadow-color);
+			0.25px 0.25px var(--post-title-text-shadow-color); */
 	}
 	@media (min-width: 640px) {
 		h1 {
 			font-size: 2.25rem;
-			font-weight: 500;
 		}
 	}
 </style>

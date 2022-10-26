@@ -6,14 +6,14 @@
 
 <div class="post-image">
 	<figure>
-		<img src={coverImage.src} alt={coverImage.caption} />
-		<figcaption><p>{coverImage.caption}</p></figcaption>
+		<img src={coverImage?.src} alt={coverImage?.caption} />
+		<figcaption><p>{coverImage?.caption}</p></figcaption>
 	</figure>
 </div>
 
 <style lang="postcss">
 	.post-image {
-		margin: 1rem 0 0 0;
+		margin: 0.5rem 0 0 0;
 	}
 	figcaption {
 		color: var(--body-text-color);

@@ -10,7 +10,6 @@ module.exports = {
 						'--tw-prose-invert-headings': 'var(--white-shade2)',
 						'--tw-prose-invert-code': 'var(--code-text-color1)',
 						'line-height': '1.6',
-						// these customizations are explained here https://youtu.be/-FzemNMcOGs
 						'h2, h3, h4, h5, h6': {
 							'font-family': 'raleway, sans-serif',
 							fontWeight: '400'

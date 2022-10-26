@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 
 	$: isActive = $page.url.pathname === $$props.href;
 
-	export let href;
+	export let href: string;
 </script>
 
 <a

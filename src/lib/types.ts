@@ -35,48 +35,48 @@ export type HttpError = { status: number; message: string };
 export type HttpResult = { success: true; value: Response } | { success: false; error: HttpError };
 export type Result = { success: true } | { success: false; error: string };
 
-export type FrontMatterResources = {
+export interface FrontMatterResources {
 	name: string;
 	src: string;
 	params?: {
 		credit: string;
 	};
 	title?: string;
-};
+}
 
-export type PartialFrontMatter = {
+export interface PartialFrontMatter {
 	slug: string;
 	resources: FrontMatterResources[];
-};
+}
 
-export type HtmlHeading = {
+export interface HtmlHeading {
 	level: number;
 	slug: string;
 	text: string;
 	index: number;
-};
+}
 
-export type TocSection = {
+export interface TocSection {
 	heading: HtmlHeading;
 	children: TocSection[];
-};
+}
 
-export type BlogImage = {
+export interface BlogImage {
 	name: string;
 	src: string;
 	caption?: string;
-};
+}
 
-export type CodeBlock = {
+export interface CodeBlock {
 	shiki: boolean;
 	id: string;
 	index: number;
 	lang: string;
 	lineNumbers: boolean;
 	lineNumberStart: number;
-};
+}
 
-export type BlogPost = {
+export interface BlogPost {
 	type: 'blog';
 	content: string;
 	title: string;
@@ -96,20 +96,33 @@ export type BlogPost = {
 	images: { [k: string]: BlogImage };
 	codeBlocks?: CodeBlock[];
 	ghMetadata: GHMetadata;
-};
+}
 
 export type BlogPostDateMap = Pick<BlogPost, 'slug' | 'date' | 'title'>;
 
-export type GHMetadata = {
+export interface TutorialSection extends BlogPost {
+	lead: string;
+	series_weight: number;
+	series_title: string;
+	series_part: string;
+	series_part_lead: string;
+	git_release_name: string;
+	url_git_rel_browse: string;
+	url_git_rel_zip: string;
+	url_git_rel_tar: string;
+	url_git_rel_diff: string;
+}
+
+export interface GHMetadata {
 	issueUrl: string;
 	commentsUrl: string;
 	title: string;
 	created_at: string;
 	updated_at: string;
 	reactions: GHReactions;
-};
+}
 
-export type GHReactions = {
+export interface GHReactions {
 	total_count: number;
 	'+1': number;
 	'-1': number;
@@ -119,7 +132,7 @@ export type GHReactions = {
 	heart: number;
 	rocket: number;
 	eyes: number;
-};
+}
 
 export type GHComment = {
 	body: string;
@@ -132,7 +145,7 @@ export type GHComment = {
 	reactions: GHReactions;
 };
 
-export type GHUser = {
+export interface GHUser {
 	login: string;
 	id: number;
 	node_id: string;
@@ -151,9 +164,9 @@ export type GHUser = {
 	received_events_url: string;
 	type: 'User';
 	site_admin: boolean;
-};
+}
 
-export type GithubIssue = {
+export interface GithubIssue {
 	user: GHUser;
 	labels: {
 		name: string;
@@ -165,9 +178,9 @@ export type GithubIssue = {
 	html_url: string;
 	comments_url: string;
 	reactions: GHReactions;
-};
+}
 
-export type GHRepo = {
+export interface GHRepo {
 	id: number;
 	node_id: string;
 	name: string;
@@ -249,7 +262,7 @@ export type GHRepo = {
 	temp_clone_token: string;
 	network_count: number;
 	subscribers_count: number;
-};
+}
 
 export type JsonValue =
 	| string

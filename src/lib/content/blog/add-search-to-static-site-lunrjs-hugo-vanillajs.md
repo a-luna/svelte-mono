@@ -1124,21 +1124,21 @@ function fixPageBreakers(input, largeWords) {
 }
 
 function chunkify(input, chunkSize) {
-let output = "";
-let totalChunks = (input.length / chunkSize) | 0;
-let lastChunkIsUneven = input.length % chunkSize > 0;
-if (lastChunkIsUneven) {
-totalChunks += 1;
-}
-for (let i = 0; i < totalChunks; i++) {
-let start = i \* chunkSize;
-let end = start + chunkSize;
-if (lastChunkIsUneven && i === totalChunks - 1) {
-end = input.length;
-}
-output += input.slice(start, end) + " ";
-}
-return output;
+  let output = "";
+  let totalChunks = (input.length / chunkSize) | 0;
+  let lastChunkIsUneven = input.length % chunkSize > 0;
+  if (lastChunkIsUneven) {
+    totalChunks += 1;
+  }
+  for (let i = 0; i < totalChunks; i++) {
+    let start = i \* chunkSize;
+    let end = start + chunkSize;
+    if (lastChunkIsUneven && i === totalChunks - 1) {
+      end = input.length;
+    }
+    output += input.slice(start, end) + " ";
+  }
+  return output;
 }
 ```
 
@@ -1160,11 +1160,11 @@ return output;
 
 ```javascript {linenos=table,linenostart=179}
 function ellipsize(input, maxLength) {
-	const words = tokenize(input);
-	if (words.length <= maxLength) {
-		return input;
-	}
-	return input.slice(0, words[maxLength].end) + '...';
+  const words = tokenize(input);
+  if (words.length <= maxLength) {
+  	return input;
+  }
+  return input.slice(0, words[maxLength].end) + '...';
 }
 ```
 
@@ -1189,21 +1189,21 @@ Before moving on to the next implementation detail, add the code below to <coee>
 
 ```javascript {linenos=table,linenostart=204}
 if (!String.prototype.matchAll) {
-	String.prototype.matchAll = function (regex) {
-		'use strict';
-		function ensureFlag(flags, flag) {
-			return flags.includes(flag) ? flags : flags + flag;
-		}
-		function* matchAll(str, regex) {
-			const localCopy = new RegExp(regex, ensureFlag(regex.flags, 'g'));
-			let match;
-			while ((match = localCopy.exec(str))) {
-				match.index = localCopy.lastIndex - match[0].length;
-				yield match;
-			}
-		}
-		return matchAll(this, regex);
-	};
+  String.prototype.matchAll = function (regex) {
+  	'use strict';
+  	function ensureFlag(flags, flag) {
+  	  return flags.includes(flag) ? flags : flags + flag;
+  	}
+  	function* matchAll(str, regex) {
+  	  const localCopy = new RegExp(regex, ensureFlag(regex.flags, 'g'));
+  	  let match;
+  	  while ((match = localCopy.exec(str))) {
+  	  	match.index = localCopy.lastIndex - match[0].length;
+  	  	yield match;
+  	  }
+  	}
+  	return matchAll(this, regex);
+  };
 }
 ```
 
@@ -1217,16 +1217,16 @@ Add the code below to `search.js`:
 
 ```javascript {linenos=table,linenostart=187}
 function getColorForSearchResult(score) {
-	const highQualityHue = 171;
-	const lowQualityHue = 212;
-	return adjustHue(highQualityHue, lowQualityHue, score);
+  const highQualityHue = 171;
+  const lowQualityHue = 212;
+  return adjustHue(highQualityHue, lowQualityHue, score);
 }
 
 function adjustHue(hue1, hue2, score) {
-	if (score > 3) return `hsl(${hue1}, 100%, 50%)`;
-	const hueAdjust = (parseFloat(score) / 3) * (hue1 - hue2);
-	const newHue = hue2 + Math.floor(hueAdjust);
-	return `hsl(${newHue}, 100%, 50%)`;
+  if (score > 3) return `hsl(${hue1}, 100%, 50%)`;
+  const hueAdjust = (parseFloat(score) / 3) * (hue1 - hue2);
+  const newHue = hue2 + Math.floor(hueAdjust);
+  return `hsl(${newHue}, 100%, 50%)`;
 }
 ```
 
@@ -1252,18 +1252,18 @@ First, add the highlighted line below to the `handleSearchQuery` function:
 
 ```javascript {linenos=table,linenostart=33,hl_lines=[13]}
 function handleSearchQuery(event) {
-	event.preventDefault();
-	const query = document.getElementById('search').value.trim().toLowerCase();
-	if (!query) {
-		displayErrorMessage('Please enter a search term');
-		return;
-	}
-	const results = searchSite(query);
-	if (!results.length) {
-		displayErrorMessage('Your search returned no results');
-		return;
-	}
-	renderSearchResults(query, results);
+  event.preventDefault();
+  const query = document.getElementById('search').value.trim().toLowerCase();
+  if (!query) {
+  	displayErrorMessage('Please enter a search term');
+  	return;
+  }
+  const results = searchSite(query);
+  if (!results.length) {
+  	displayErrorMessage('Your search returned no results');
+  	return;
+  }
+  renderSearchResults(query, results);
 }
 ```
 
@@ -1279,162 +1279,162 @@ Obviously, we need to implement the `renderSearchResults` function. Next, add th
 
 ```javascript {linenos=table,linenostart=93,hl_lines=["1-31","128-145"]}
 function renderSearchResults(query, results) {
-	clearSearchResults();
-	updateSearchResults(query, results);
-	showSearchResults();
-	scrollToTop();
+  clearSearchResults();
+  updateSearchResults(query, results);
+  showSearchResults();
+  scrollToTop();
 }
 
 function clearSearchResults() {
-	const results = document.querySelector('.search-results ul');
-	while (results.firstChild) results.removeChild(results.firstChild);
+  const results = document.querySelector('.search-results ul');
+  while (results.firstChild) results.removeChild(results.firstChild);
 }
 
 function updateSearchResults(query, results) {
-	document.getElementById('query').innerHTML = query;
-	document.querySelector('.search-results ul').innerHTML = results
-		.map(
-			(hit) => `
-    <li class="search-result-item" data-score="${hit.score.toFixed(2)}">
-      <a href="${hit.href}" class="search-result-page-title">${hit.title}</a>
-      <p>${createSearchResultBlurb(query, hit.content)}</p>
-    </li>
-    `
-		)
-		.join('');
-	const searchResultListItems = document.querySelectorAll('.search-results ul li');
-	document.getElementById('results-count').innerHTML = searchResultListItems.length;
-	document.getElementById('results-count-text').innerHTML = searchResultListItems.length > 1 ? 'results' : 'result';
-	searchResultListItems.forEach(
-		(li) => (li.firstElementChild.style.color = getColorForSearchResult(li.dataset.score))
-	);
+  document.getElementById('query').innerHTML = query;
+  document.querySelector('.search-results ul').innerHTML = results
+  	.map(
+  	  (hit) => `
+  <li class="search-result-item" data-score="${hit.score.toFixed(2)}">
+    <a href="${hit.href}" class="search-result-page-title">${hit.title}</a>
+    <p>${createSearchResultBlurb(query, hit.content)}</p>
+  </li>
+  `
+  	)
+  	.join('');
+  const searchResultListItems = document.querySelectorAll('.search-results ul li');
+  document.getElementById('results-count').innerHTML = searchResultListItems.length;
+  document.getElementById('results-count-text').innerHTML = searchResultListItems.length > 1 ? 'results' : 'result';
+  searchResultListItems.forEach(
+  	(li) => (li.firstElementChild.style.color = getColorForSearchResult(li.dataset.score))
+  );
 }
 
 function createSearchResultBlurb(query, pageContent) {
-	const searchQueryRegex = new RegExp(createQueryStringRegex(query), 'gmi');
-	const searchQueryHits = Array.from(
-		pageContent.matchAll(searchQueryRegex),
-		(m) => m.index
-	);
-	const sentenceBoundaries = Array.from(
-		pageContent.matchAll(SENTENCE_BOUNDARY_REGEX),
-		(m) => m.index
-	);
-	let searchResultText = '';
-	let lastEndOfSentence = 0;
-	for (const hitLocation of searchQueryHits) {
-		if (hitLocation > lastEndOfSentence) {
-			for (let i = 0; i < sentenceBoundaries.length; i++) {
-				if (sentenceBoundaries[i] > hitLocation) {
-					const startOfSentence = i > 0 ? sentenceBoundaries[i - 1] + 1 : 0;
-					const endOfSentence = sentenceBoundaries[i];
-					lastEndOfSentence = endOfSentence;
-					parsedSentence = pageContent.slice(startOfSentence, endOfSentence).trim();
-					searchResultText += `${parsedSentence} ... `;
-					break;
-				}
-			}
-		}
-		const searchResultWords = tokenize(searchResultText);
-		const pageBreakers = searchResultWords.filter((word) => word.length > 50);
-		if (pageBreakers.length > 0) {
-			searchResultText = fixPageBreakers(searchResultText, pageBreakers);
-		}
-		if (searchResultWords.length >= MAX_SUMMARY_LENGTH) break;
-	}
-	return ellipsize(searchResultText, MAX_SUMMARY_LENGTH).replace(
-		searchQueryRegex,
-		'<strong>$&</strong>'
-	);
+  const searchQueryRegex = new RegExp(createQueryStringRegex(query), 'gmi');
+  const searchQueryHits = Array.from(
+  	pageContent.matchAll(searchQueryRegex),
+  	(m) => m.index
+  );
+  const sentenceBoundaries = Array.from(
+  	pageContent.matchAll(SENTENCE_BOUNDARY_REGEX),
+  	(m) => m.index
+  );
+  let searchResultText = '';
+  let lastEndOfSentence = 0;
+  for (const hitLocation of searchQueryHits) {
+  	if (hitLocation > lastEndOfSentence) {
+  	  for (let i = 0; i < sentenceBoundaries.length; i++) {
+  	  	if (sentenceBoundaries[i] > hitLocation) {
+  	  	  const startOfSentence = i > 0 ? sentenceBoundaries[i - 1] + 1 : 0;
+  	  	  const endOfSentence = sentenceBoundaries[i];
+  	  	  lastEndOfSentence = endOfSentence;
+  	  	  parsedSentence = pageContent.slice(startOfSentence, endOfSentence).trim();
+  	  	  searchResultText += `${parsedSentence} ... `;
+  	  	  break;
+  	  	}
+  	  }
+  	}
+  	const searchResultWords = tokenize(searchResultText);
+  	const pageBreakers = searchResultWords.filter((word) => word.length > 50);
+  	if (pageBreakers.length > 0) {
+  	  searchResultText = fixPageBreakers(searchResultText, pageBreakers);
+  	}
+  	if (searchResultWords.length >= MAX_SUMMARY_LENGTH) break;
+  }
+  return ellipsize(searchResultText, MAX_SUMMARY_LENGTH).replace(
+  	searchQueryRegex,
+  	'<strong>$&</strong>'
+  );
 }
 
 function createQueryStringRegex(query) {
-	const searchTerms = query.split(' ');
-	if (searchTerms.length == 1) {
-		return query;
-	}
-	query = '';
-	for (const term of searchTerms) {
-		query += `${term}|`;
-	}
-	query = query.slice(0, -1);
-	return `(${query})`;
+  const searchTerms = query.split(' ');
+  if (searchTerms.length == 1) {
+  	return query;
+  }
+  query = '';
+  for (const term of searchTerms) {
+  	query += `${term}|`;
+  }
+  query = query.slice(0, -1);
+  return `(${query})`;
 }
 
 function tokenize(input) {
-	const wordMatches = Array.from(input.matchAll(WORD_REGEX), (m) => m);
-	return wordMatches.map((m) => ({
-		word: m[0],
-		start: m.index,
-		end: m.index + m[0].length,
-		length: m[0].length
-	}));
+  const wordMatches = Array.from(input.matchAll(WORD_REGEX), (m) => m);
+  return wordMatches.map((m) => ({
+  	word: m[0],
+  	start: m.index,
+  	end: m.index + m[0].length,
+  	length: m[0].length
+  }));
 }
 
 function fixPageBreakers(input, largeWords) {
-	largeWords.forEach((word) => {
-		const chunked = chunkify(word.word, 20);
-		input = input.replace(word.word, chunked);
-	});
-	return input;
+  largeWords.forEach((word) => {
+  	const chunked = chunkify(word.word, 20);
+  	input = input.replace(word.word, chunked);
+  });
+  return input;
 }
 
 function chunkify(input, chunkSize) {
-	let output = '';
-	let totalChunks = (input.length / chunkSize) | 0;
-	let lastChunkIsUneven = input.length % chunkSize > 0;
-	if (lastChunkIsUneven) {
-		totalChunks += 1;
-	}
-	for (let i = 0; i < totalChunks; i++) {
-		let start = i * chunkSize;
-		let end = start + chunkSize;
-		if (lastChunkIsUneven && i === totalChunks - 1) {
-			end = input.length;
-		}
-		output += input.slice(start, end) + ' ';
-	}
-	return output;
+  let output = '';
+  let totalChunks = (input.length / chunkSize) | 0;
+  let lastChunkIsUneven = input.length % chunkSize > 0;
+  if (lastChunkIsUneven) {
+  	totalChunks += 1;
+  }
+  for (let i = 0; i < totalChunks; i++) {
+  	let start = i * chunkSize;
+  	let end = start + chunkSize;
+  	if (lastChunkIsUneven && i === totalChunks - 1) {
+  	  end = input.length;
+  	}
+  	output += input.slice(start, end) + ' ';
+  }
+  return output;
 }
 
 function ellipsize(input, maxLength) {
-	const words = tokenize(input);
-	if (words.length <= maxLength) {
-		return input;
-	}
-	return input.slice(0, words[maxLength].end) + '...';
+  const words = tokenize(input);
+  if (words.length <= maxLength) {
+  	return input;
+  }
+  return input.slice(0, words[maxLength].end) + '...';
 }
 
 function showSearchResults() {
-	document.querySelector('.primary').classList.add('hide-element');
-	document.querySelector('.search-results').classList.remove('hide-element');
-	document.getElementById('site-search').classList.add('expanded');
-	document.getElementById('clear-search-results-sidebar').classList.remove('hide-element');
+  document.querySelector('.primary').classList.add('hide-element');
+  document.querySelector('.search-results').classList.remove('hide-element');
+  document.getElementById('site-search').classList.add('expanded');
+  document.getElementById('clear-search-results-sidebar').classList.remove('hide-element');
 }
 
 function scrollToTop() {
-	const toTopInterval = setInterval(function () {
-		const supportedScrollTop = document.body.scrollTop > 0 ? document.body : document.documentElement;
-		if (supportedScrollTop.scrollTop > 0) {
-			supportedScrollTop.scrollTop = supportedScrollTop.scrollTop - 50;
-		}
-		if (supportedScrollTop.scrollTop < 1) {
-			clearInterval(toTopInterval);
-		}
-	}, 10);
+  const toTopInterval = setInterval(function () {
+  	const supportedScrollTop = document.body.scrollTop > 0 ? document.body : document.documentElement;
+  	if (supportedScrollTop.scrollTop > 0) {
+  	  supportedScrollTop.scrollTop = supportedScrollTop.scrollTop - 50;
+  	}
+  	if (supportedScrollTop.scrollTop < 1) {
+  	  clearInterval(toTopInterval);
+  	}
+  }, 10);
 }
 
 function getColorForSearchResult(score) {
-	const warmColorHue = 171;
-	const coolColorHue = 212;
-	return adjustHue(warmColorHue, coolColorHue, score);
+  const warmColorHue = 171;
+  const coolColorHue = 212;
+  return adjustHue(warmColorHue, coolColorHue, score);
 }
 
 function adjustHue(hue1, hue2, score) {
-	if (score > 3) return `hsl(${hue1}, 100%, 50%)`;
-	const hueAdjust = (parseFloat(score) / 3) * (hue1 - hue2);
-	const newHue = hue2 + Math.floor(hueAdjust);
-	return `hsl(${newHue}, 100%, 50%)`;
+  if (score > 3) return `hsl(${hue1}, 100%, 50%)`;
+  const hueAdjust = (parseFloat(score) / 3) * (hue1 - hue2);
+  const newHue = hue2 + Math.floor(hueAdjust);
+  return `hsl(${newHue}, 100%, 50%)`;
 }
 ```
 
@@ -1507,38 +1507,38 @@ Finally, we need a way to clear the search results and display the page content 
 
 ```javascript {linenos=table,linenostart=252,hl_lines=["1-12","29-33"]}
 function handleClearSearchButtonClicked() {
-	hideSearchResults();
-	clearSearchResults();
-	document.getElementById('search').value = '';
+  hideSearchResults();
+  clearSearchResults();
+  document.getElementById('search').value = '';
 }
 
 function hideSearchResults() {
-	document.getElementById('clear-search-results-sidebar').classList.add('hide-element');
-	document.getElementById('site-search').classList.remove('expanded');
-	document.querySelector('.search-results').classList.add('hide-element');
-	document.querySelector('.primary').classList.remove('hide-element');
+  document.getElementById('clear-search-results-sidebar').classList.add('hide-element');
+  document.getElementById('site-search').classList.remove('expanded');
+  document.querySelector('.search-results').classList.add('hide-element');
+  document.querySelector('.primary').classList.remove('hide-element');
 }
 
 initSearchIndex();
 document.addEventListener('DOMContentLoaded', function () {
-	if (document.getElementById('search-form') != null) {
-		const searchInput = document.getElementById('search');
-		searchInput.addEventListener('focus', () => searchBoxFocused());
-		searchInput.addEventListener('keydown', (event) => {
-			if (event.keyCode == 13) handleSearchQuery(event);
-		});
-		document
-			.querySelector('.search-error')
-			.addEventListener('animationend', removeAnimation);
-		document
-			.querySelector('.fa-search')
-			.addEventListener('click', (event) => handleSearchQuery(event));
-	}
-	document
-		.querySelectorAll('.clear-search-results')
-		.forEach((button) => 
-			button.addEventListener('click', () => handleClearSearchButtonClicked())
-		);
+  if (document.getElementById('search-form') != null) {
+  	const searchInput = document.getElementById('search');
+  	searchInput.addEventListener('focus', () => searchBoxFocused());
+  	searchInput.addEventListener('keydown', (event) => {
+  	  if (event.keyCode == 13) handleSearchQuery(event);
+  	});
+  	document
+  	  .querySelector('.search-error')
+  	  .addEventListener('animationend', removeAnimation);
+  	document
+  	  .querySelector('.fa-search')
+  	  .addEventListener('click', (event) => handleSearchQuery(event));
+  }
+  document
+  	.querySelectorAll('.clear-search-results')
+  	.forEach((button) => 
+  	   button.addEventListener('click', () => handleClearSearchButtonClicked())
+  	);
 });
 ```
 

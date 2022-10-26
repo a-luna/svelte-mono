@@ -8,17 +8,18 @@ export const PUBLISH_TAGS = ['Published'];
 export const GH_USER_REPO = `${GH_USER}/portfolio-site`; // used for pulling github issues and offering comments
 export const REPO_URL = `https://github.com/${GH_USER_REPO}`;
 export const API_BASE_URL = `https://api.github.com`;
-export const SITE_TITLE = 'Project Portfolio';
-export const SITE_DESCRIPTION = 'Completed and nearly';
-export const DEFAULT_OG_IMAGE = '/AaronLuna.jpg';
+export const SITE_TITLE = 'Aaron Luna - Full Stack Developer';
+export const SITE_DESCRIPTION = 'Your passport to the world of Aaron Luna';
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/AaronLuna.jpg`;
 export const MY_TWITTER_HANDLE = 'aaronlunadev';
 export const MY_EMAIL = 'contact@aaronluna.dev';
 export const BLOG_POST_FOLDER = 'src/lib/content/blog';
 export const API_TUTORIAL_FOLDER = 'src/lib/content/flask-api-tutorial';
-export const ASSETS_FOLDER = `${SITE_URL}`;
 export const BLOG_IMAGE_ROOT = `${SITE_URL}/images/blog`;
-export const API_TUTORIAL_IMAGE_ROOT = `${SITE_URL}/images/flask-api-tutorial/post_images`;
+export const API_TUTORIAL_IMAGE_ROOT = `${SITE_URL}/images/flask-api-tutorial`;
 export const MEDIA_ROOT = `${SITE_URL}/media`;
+export const BLOG_POST_URL_ROOT = `${SITE_URL}/blog`;
+export const API_TUTORIAL_URL_ROOT = `${SITE_URL}/series/flask-api-tutorial`;
 
 // dont forget process.env.GH_TOKEN
 // if supplied, raises rate limit from 60 to 5000

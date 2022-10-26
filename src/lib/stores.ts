@@ -1,4 +1,4 @@
-import type { BlogPost, BlogPostDateMap, GHRepo, JsonValue } from '$lib/types';
+import type { BlogPost, BlogPostDateMap, GHRepo, JsonValue, TutorialSection } from '$lib/types';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 
@@ -23,6 +23,7 @@ export function createLocalStorageValue<T extends JsonValue>(
 export const userRepos = createLocalStorageValue<GHRepo[]>('repos', []);
 
 export const blogPosts = writable<BlogPost[]>([]);
+export const tutorialSections = writable<TutorialSection[]>([]);
 
 function checkBodyIsScrollable(el: HTMLElement): Writable<boolean> {
 	return writable<boolean>(false, (set) => {

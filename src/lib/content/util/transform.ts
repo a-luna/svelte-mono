@@ -4,13 +4,15 @@ import {
 	convertInfoBoxes,
 	convertLinkedImages,
 	convertVideos,
+	FA_BULLET_LIST_REGEX,
 	generateTableOfContents,
 	identifyCodeBlocks,
 	transformCodeBlocks,
+	transformFaBulletLists,
 	transformHeadings
 } from '$lib/content';
 import { highlighter, parseMeta } from '$lib/shiki';
-import type { BlogPost, TocSection } from '$lib/types';
+import type { BlogPost, TocSection, TutorialSection } from '$lib/types';
 import remarkShiki from '@stefanprobst/remark-shiki';
 import rehypeFormat from 'rehype-format';
 import rehypeRaw from 'rehype-raw';
@@ -30,10 +32,15 @@ async function markdownConversions(blogPost: BlogPost): Promise<string> {
 function htmlConversions(html: string, blogPost: BlogPost): string {
 	let convertedHtml = transformHeadings(html);
 	convertedHtml = transformCodeBlocks(convertedHtml, blogPost?.codeBlocks || []);
+	if (FA_BULLET_LIST_REGEX.test(html)) {
+		convertedHtml = transformFaBulletLists(convertedHtml);
+	}
 	return colorizeToxResults(convertedHtml);
 }
 
-export async function convertContentToHtml(blogPost: BlogPost): Promise<BlogPost> {
+export async function convertContentToHtml(
+	blogPost: BlogPost
+): Promise<BlogPost | TutorialSection> {
 	blogPost.codeBlocks = identifyCodeBlocks(blogPost.content);
 	let content = await markdownConversions(blogPost);
 	const html = await unified()

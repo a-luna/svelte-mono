@@ -1148,7 +1148,7 @@ Even though we only implemented one of the five CRUD operations specified in **T
     <p class="fa-bullet-list-item complete"><span class="fa fa-star fa-bullet-icon"></span>New users can register by providing an email address and password</p>
     <p class="fa-bullet-list-item complete"><span class="fa fa-star fa-bullet-icon"></span>Existing users can obtain a JWT by providing their email address and password</p>
     <p class="fa-bullet-list-item complete"><span class="fa fa-star fa-bullet-icon"></span>JWT contains the following claims: time the token was issued, time the token expires, a value that identifies the user, and a flag that indicates if the user has administrator access</p>
-    <p class="fa-bullet-list-item complete""><span class="fa fa-star fa-bullet-icon"></span>JWT is sent in access_token field of HTTP response after successful authentication with email/password</p>
+    <p class="fa-bullet-list-item complete"><span class="fa fa-star fa-bullet-icon"></span>JWT is sent in access_token field of HTTP response after successful authentication with email/password</p>
     <p class="fa-bullet-list-item complete"><span class="fa fa-star fa-bullet-icon"></span>JWTs must expire after 1 hour (in production)</p>
     <p class="fa-bullet-list-item complete"><span class="fa fa-star fa-bullet-icon"></span>JWT is sent by client in Authorization field of request header</p>
     <p class="fa-bullet-list-item complete"><span class="fa fa-star fa-bullet-icon"></span>Requests must be rejected if JWT has been modified</p>

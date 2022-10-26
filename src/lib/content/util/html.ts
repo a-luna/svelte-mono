@@ -3,7 +3,11 @@ import {
 	CODE_BLOCK_END_REGEX,
 	CODE_BLOCK_START_REGEX,
 	copySvgIcon,
+	FA_BULLET_REGEX,
+	fullStarSvgIcon,
+	halfStarSvgIcon,
 	HTML_HEADING_REGEX,
+	starOutlineSvgIcon,
 	TOX_TEST_RESULTS_REGEX
 } from './constants';
 
@@ -96,12 +100,11 @@ export function transformCodeBlocks(html: string, codeBlocks: CodeBlock[]): stri
 					codeBlocks[i]?.lineNumbers ?? false,
 					codeBlocks[i]?.lineNumberStart ?? 1
 				);
-				const offset = codeBlock.length - originalLength;
 				updatedBlocks.push({
 					codeBlock,
 					length: codeBlock.length,
 					originalLength,
-					offset,
+					offset: codeBlock.length - originalLength,
 					shiki: true
 				});
 			} else {
@@ -150,3 +153,16 @@ function createWrappedCodeBlock(
 
 	return `<div class="shiki-wrapper" tabindex="0">${topRow}${newPre}<code id="${codeBlockId}" class="language-${lang}" data-lang="${lang}">${highlighted}</code></pre></div>`;
 }
+
+const starSvgMap: { [k: string]: string } = {
+	'fa-star-o': starOutlineSvgIcon,
+	'fa-star': fullStarSvgIcon,
+	'fa-star-half-o': halfStarSvgIcon
+};
+
+export const transformFaBulletLists = (html: string): string =>
+	html.replace(
+		FA_BULLET_REGEX,
+		(match: string, p1: string, p2: string): string =>
+			`<div class="fa-bullet ${p1}">${starSvgMap[p1]}</div><div class="fa-bullet-text ${p1}">${p2}</div>`
+	);
