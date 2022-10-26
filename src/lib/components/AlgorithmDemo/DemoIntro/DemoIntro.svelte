@@ -137,7 +137,6 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 0.75rem;
-		font-size: 0.8rem;
 		margin: 0.75rem 0 0 0.25rem;
 	}
 	ul {
@@ -146,7 +145,6 @@
 
 	@media screen and (min-width: 762px) {
 		.details-content {
-			font-size: 0.9rem;
 			margin: 1.25rem 0 0 0.75rem;
 		}
 	}

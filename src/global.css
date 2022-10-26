@@ -500,7 +500,8 @@ button {
 .demo-steps .input-byte,
 .demo-steps .base64,
 .demo-steps .dec,
-.demo-steps .base64-char {
+.demo-steps .base64-char,
+.demo-steps .whitespace {
 	font-size: 10px;
 }
 
@@ -1114,7 +1115,7 @@ button {
 	.details-content > *,
 	#demo-text p {
 		line-height: 1.5;
-		font-size: 1rem;
+		font-size: 0.9rem;
 	}
 	#demo-text code {
 		font-size: 0.7rem;
@@ -1147,7 +1148,8 @@ button {
 	.demo-steps .input-byte,
 	.demo-steps .base64,
 	.demo-steps .dec,
-	.demo-steps .base64-char {
+	.demo-steps .base64-char,
+	.demo-steps .whitespace {
 		font-size: 11px;
 	}
 	.encoded-byte,

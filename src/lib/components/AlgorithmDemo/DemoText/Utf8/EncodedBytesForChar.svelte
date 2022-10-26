@@ -145,7 +145,7 @@
 	}
 	.whitespace .utf8-char {
 		align-self: center;
-		margin: auto 0;
+		margin: auto 0 auto 7px;
 	}
 
 	.combined-utf8-char-map .utf8-char {
@@ -165,9 +165,10 @@
 	}
 	.char-name,
 	.codepoint {
-		white-space: nowrap;
+		text-align: left;
 		align-self: center;
 		margin: 0 0 0 1rem;
+		white-space: nowrap;
 	}
 	:global(#demo-text) .whitespace .utf8-char,
 	:global(#demo-text) .whitespace .hex-bytes code,
