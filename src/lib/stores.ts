@@ -1,4 +1,11 @@
-import type { BlogPost, BlogPostDateMap, GHRepo, JsonValue, TutorialSection } from '$lib/types';
+import type {
+	BlogPost,
+	BlogPostDateMap,
+	GHRepo,
+	JsonValue,
+	TutorialSection,
+	TutorialSectionNumberMap
+} from '$lib/types';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 
@@ -20,8 +27,7 @@ export function createLocalStorageValue<T extends JsonValue>(
 	return store;
 }
 
-export const userRepos = createLocalStorageValue<GHRepo[]>('repos', []);
-
+export const userRepos = writable<GHRepo[]>([]);
 export const blogPosts = writable<BlogPost[]>([]);
 export const tutorialSections = writable<TutorialSection[]>([]);
 
@@ -43,3 +49,36 @@ export const blogPostDateMap: Readable<BlogPostDateMap[]> = derived(blogPosts, (
 		.map(({ slug, date, title }) => ({ slug, date, title }))
 		.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
 );
+
+export const tutorialSectionNumberMap: Readable<TutorialSectionNumberMap[]> = derived(
+	tutorialSections,
+	($tutorialSections) =>
+		$tutorialSections
+			.map(({ slug, series_weight, series_part, lead }) => ({
+				slug,
+				series_weight,
+				series_part,
+				lead
+			}))
+			.sort((a, b) => a.series_weight - b.series_weight)
+);
+
+/* c8 ignore start */
+function syncWidth(el: HTMLElement): Writable<number> {
+	return writable<number>(null, (set) => {
+		if (!el) {
+			return;
+		}
+		const ro = new ResizeObserver(() => el && set(el.offsetWidth));
+		ro.observe(el);
+		return () => ro.disconnect();
+	});
+}
+
+export const getPageWidth = (): Writable<number> => {
+	if (typeof window !== 'undefined') {
+		const svelteDiv = document.getElementById('svelte');
+		return svelteDiv ? syncWidth(svelteDiv) : null;
+	}
+};
+/* c8 ignore stop */

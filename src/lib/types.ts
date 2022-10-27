@@ -113,6 +113,11 @@ export interface TutorialSection extends BlogPost {
 	url_git_rel_diff: string;
 }
 
+export type TutorialSectionNumberMap = Pick<
+	TutorialSection,
+	'slug' | 'lead' | 'series_part' | 'series_weight'
+>;
+
 export interface GHMetadata {
 	issueUrl: string;
 	commentsUrl: string;
