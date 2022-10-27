@@ -1,6 +1,6 @@
 <script lang="ts">
-	import TocSection from '$lib/components/BlogPost/TableOfContents/TocSection.svelte';
 	import Chevron from '$lib/components/Icons/Chevron.svelte';
+	import TocSection from '$lib/components/TableOfContents/TocSection.svelte';
 	import type { TocSection as TocSectionType } from '$lib/types';
 	import { slide } from 'svelte/transition';
 
@@ -40,7 +40,14 @@
 		flex: 1;
 		width: 100%;
 		padding: 0;
+	}
+
+	:global(.blog #table-of-contents) {
 		margin: 1rem 0 0 0;
+	}
+
+	:global(.tutorial #table-of-contents) {
+		margin: 0;
 	}
 
 	#table-of-contents ::marker {
@@ -109,12 +116,22 @@
 		list-style: none;
 		color: var(--accent-color);
 		background-color: var(--black-tint2);
-		border: 2px solid var(--accent-color);
-		font-size: 1.25rem;
+		font-size: 1rem;
 		line-height: 1;
 		padding: 11px 5px;
 		cursor: pointer;
 		white-space: nowrap;
+	}
+
+	:global(.blog #table-of-contents > summary) {
+		border: 2px solid var(--accent-color);
+	}
+
+	:global(.tutorial #table-of-contents > summary) {
+		border-top: none;
+		border-left: 2px solid var(--accent-color);
+		border-right: 2px solid var(--accent-color);
+		border-bottom: none;
 	}
 
 	#table-of-contents[open] > summary {
@@ -144,5 +161,11 @@
 	.toc-wrapper {
 		background-color: var(--black-tint2);
 		border: 2px solid var(--accent-color);
+	}
+
+	@media (min-width: 640px) {
+		#table-of-contents > summary {
+			font-size: 1.25rem;
+		}
 	}
 </style>
