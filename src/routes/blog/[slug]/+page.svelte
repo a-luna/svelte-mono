@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ByLine from '$lib/components/BlogPost/ByLine.svelte';
 	import CoverImage from '$lib/components/BlogPost/CoverImage.svelte';
 	import PostNav from '$lib/components/BlogPost/PostNav.svelte';
-	import TableOfContents from '$lib/components/BlogPost/TableOfContents/TableOfContents.svelte';
+	import ByLine from '$lib/components/ByLine.svelte';
+	import TableOfContents from '$lib/components/TableOfContents/TableOfContents.svelte';
 	import { MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
 	import type { BlogPost, Result } from '$lib/types';
 	import { onMount } from 'svelte';
@@ -104,11 +104,11 @@
 </svelte:head>
 
 <article
-	class="mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
+	class="blog mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
 >
 	<h1>{blogPost?.title}</h1>
 	<ByLine {published} />
-	<CoverImage coverImage={blogPost.coverImage} />
+	<CoverImage slug={blogPost.slug} caption={blogPost.coverImage?.caption ?? ''} />
 	{#if blogPost.hasToc && blogPost.toc}
 		<TableOfContents toc={blogPost.toc} />
 	{:else}
@@ -119,10 +119,8 @@
 	>
 		{@html blogPost?.content}
 	</div>
-</article>
-<div class="px-4 sm:px-8">
 	<PostNav slug={blogPost.slug} />
-</div>
+</article>
 
 <style lang="postcss">
 	h1 {

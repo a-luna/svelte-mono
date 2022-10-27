@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-	<title>{SITE_TITLE}</title>
+	<title>{SITE_TITLE} Full Stack Developer</title>
 	<link rel="canonical" href={SITE_URL} />
 	<link rel="alternate" type="application/rss+xml" href={SITE_URL + '/api/rss.xml'} />
 	<meta property="og:url" content={SITE_URL} />
@@ -42,6 +42,7 @@
 			libraries and web applications on the frontend.
 		</p>
 		<p class="normal-text">The list is filterable by language/technology used and project type.</p>
+		<p class="normal-text"><a href="series/flask-api-tutorial/overview">Flask API Tutorial</a></p>
 	</div>
 	<Mandala />
 </div>

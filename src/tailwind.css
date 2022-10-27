@@ -913,6 +913,11 @@ pre .key-item {
 	color: #ff0;
 }
 
+.icon-inline {
+	display: inline-block;
+	width: 14px;
+}
+
 .fa-bullet-list {
 	display: grid;
 	grid-template-columns: 16px 1fr;

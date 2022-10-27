@@ -7,25 +7,29 @@
 </script>
 
 <div class="api-tutorial-section">
-	<a href="flask-api-tutorial/{section?.slug}" class="section-name"><h4>{section?.lead}</h4></a>
+	<a href={section?.slug} class="section-name"><h4>{section?.lead}</h4></a>
 	<div class="section-summary">{section?.description}</div>
 	<div class="github-links">
-		<a href={section?.url_git_rel_browse}
-			><div class="icon"><Code /></div>
-			<span class="label">Code</span></a
-		>
-		<a href={section?.url_git_rel_diff}
-			><div class="icon"><Code /></div>
-			<span class="label">Diff</span></a
-		>
-		<a href={section?.url_git_rel_zip}
-			><div class="icon"><ArrowDown /></div>
-			<span class="label">.zip</span></a
-		>
-		<a href={section?.url_git_rel_tar}
-			><div class="icon"><ArrowDown /></div>
-			<span class="label">.tar.gz</span></a
-		>
+		<div class="links-left">
+			<a href={section?.url_git_rel_browse}
+				><div class="icon"><Code /></div>
+				<span class="label">Code</span></a
+			>
+			<a href={section?.url_git_rel_diff}
+				><div class="icon"><Code /></div>
+				<span class="label">Diff</span></a
+			>
+		</div>
+		<div class="links-right">
+			<a href={section?.url_git_rel_zip}
+				><div class="icon"><ArrowDown /></div>
+				<span class="label">.zip</span></a
+			>
+			<a href={section?.url_git_rel_tar}
+				><div class="icon"><ArrowDown /></div>
+				<span class="label">.tar.gz</span></a
+			>
+		</div>
 	</div>
 </div>
 
@@ -39,7 +43,7 @@
 		border-color: var(--dark-gray);
 		color: var(--white);
 		background-color: var(--black);
-		padding: 2rem;
+		padding: 1rem;
 	}
 
 	.api-tutorial-section:hover {
@@ -53,7 +57,7 @@
 		color: var(--accent-color);
 		text-decoration: none;
 		line-height: 1.3;
-		transition: all 350ms ease-out;
+		transition: background-color 350ms ease-out, color 350ms ease-out;
 	}
 
 	.section-summary {
@@ -63,40 +67,107 @@
 	}
 
 	.github-links {
+		flex: 1;
 		display: flex;
 		flex-flow: row nowrap;
-		gap: 0.25rem;
-		justify-content: space-between;
+		gap: 0.5rem;
 		align-items: center;
 		line-height: 1;
 		margin: 1rem 0 0 0;
 	}
 
-	.github-links a {
+	.links-left,
+	.links-right {
+		flex: 1;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-evenly;
+		gap: 0.5rem;
+	}
+
+	.links-left a,
+	.links-right a {
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
 		align-items: center;
 		gap: 0.5rem;
-		font-size: 1rem;
-		color: var(--purple-icon);
-		background-color: var(--black);
-		border: 1px solid var(--purple-icon);
+		font-size: 0.825rem;
 		box-shadow: none;
 		font-weight: 500;
 		text-align: center;
 		white-space: nowrap;
-		min-width: 110px;
-		padding: 0.5rem 1rem;
-		transition: all 0.3s linear;
+		min-width: 80px;
+		padding: 0.5rem 0.5rem;
+	}
+
+	.links-left a {
+		color: var(--green-icon);
+		background-color: var(--black);
+		border: 1px solid var(--green-icon);
+	}
+
+	.links-left a:hover {
+		background-color: var(--dark-gray-shade1);
+	}
+
+	.links-right a {
+		color: var(--blue-icon);
+		background-color: var(--black);
+		border: 1px solid var(--blue-icon);
+	}
+
+	.links-right a:hover {
+		background-color: var(--dark-gray-shade1);
 	}
 
 	.github-links .icon {
-		height: 16px;
+		height: 13px;
 	}
 
-	.github-links a:hover {
-		color: var(--black);
-		background-color: var(--purple-icon);
+	@media (min-width: 520px) {
+		.github-links {
+			flex-flow: row nowrap;
+			justify-content: space-evenly;
+		}
+		.github-links a {
+			flex: 1;
+			font-size: 0.9rem;
+			padding: 0.5rem 1rem;
+		}
+		.links-left,
+		.links-right {
+			flex: 1;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-evenly;
+			gap: 0.5rem;
+		}
+	}
+
+	@media (min-width: 640px) {
+		.api-tutorial-section {
+			padding: 2rem;
+		}
+
+		.github-links {
+			gap: 1rem;
+		}
+
+		.github-links a {
+			gap: 0.5rem;
+			font-size: 1rem;
+			min-width: 110px;
+			padding: 0.5rem 1rem;
+		}
+
+		.links-left,
+		.links-right {
+			gap: 1rem;
+		}
+
+		.github-links .icon {
+			height: 14px;
+		}
 	}
 </style>

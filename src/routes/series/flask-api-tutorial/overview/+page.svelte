@@ -1,18 +1,25 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import CoverImage from '$lib/components/ApiTutorial/CoverImage.svelte';
 	import SectionSummary from '$lib/components/ApiTutorial/SectionSummary.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import { tutorialSections } from '$lib/stores';
+	import type { BlogImage } from '$lib/types';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	const coverImage: BlogImage = {
+		name: 'cover',
+		src: '',
+		caption: 'Photo by Matt Howard on Unsplash'
+	};
+
 	$: allTutorialSections = data.allTutorialSections;
 
 	$: if (browser && Object.keys(allTutorialSections).length)
 		$tutorialSections = allTutorialSections;
-	$: list = $tutorialSections
-		.filter((section) => section.slug !== 'overview')
-		.sort((a, b) => a.series_weight - b.series_weight);
+	$: list = $tutorialSections.sort((a, b) => a.series_weight - b.series_weight);
 </script>
 
 <svelte:head>
@@ -21,7 +28,8 @@
 </svelte:head>
 
 <section class="article-list">
-	<h1>Flask API Tutorial</h1>
+	<h1>How To: Create a Flask API with JWT-Based Authentication</h1>
+	<CoverImage slug={'part-0'} caption={coverImage?.caption ?? ''} />
 	<p>
 		This tutorial series provides step-by-step instructions and in-depth explanations to guide you
 		through the process of creating a robust, production-quality REST API. The toolstack consists of
@@ -57,7 +65,7 @@
 	}
 	h1 {
 		margin: 0 0 1rem 0;
-		font-size: 2.2rem;
+		font-size: 1.7rem;
 		line-height: 2.25rem;
 		font-weight: 500;
 		letter-spacing: -0.025em;
@@ -88,7 +96,7 @@
 
 	@media (min-width: 768px) {
 		h1 {
-			font-size: 3rem;
+			font-size: 2.2rem;
 			line-height: 1;
 		}
 		h3 {

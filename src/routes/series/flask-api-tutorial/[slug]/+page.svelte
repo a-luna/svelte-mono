@@ -1,8 +1,10 @@
 <script lang="ts">
-	import ByLine from '$lib/components/BlogPost/ByLine.svelte';
-	import CoverImage from '$lib/components/BlogPost/CoverImage.svelte';
-	import PostNav from '$lib/components/BlogPost/PostNav.svelte';
-	import TableOfContents from '$lib/components/BlogPost/TableOfContents/TableOfContents.svelte';
+	import CoverImage from '$lib/components/ApiTutorial/CoverImage.svelte';
+	import GithubLinks from '$lib/components/ApiTutorial/GithubLinks.svelte';
+	import PostNav from '$lib/components/ApiTutorial/PostNav.svelte';
+	import TutorialSections from '$lib/components/ApiTutorial/TutorialSections.svelte';
+	import ByLine from '$lib/components/ByLine.svelte';
+	import TableOfContents from '$lib/components/TableOfContents/TableOfContents.svelte';
 	import { MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
 	import type { Result, TutorialSection } from '$lib/types';
 	import { onMount } from 'svelte';
@@ -104,31 +106,29 @@
 </svelte:head>
 
 <article
-	class="mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
+	class="tutorial mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
 >
 	<h1>{tutorialSection?.title}</h1>
 	<ByLine {published} />
-	<CoverImage coverImage={tutorialSection.coverImage} />
-	{#if tutorialSection.hasToc && tutorialSection.toc}
-		<TableOfContents toc={tutorialSection.toc} />
-	{:else}
-		<div class="gradient -mx-4 mt-4 mb-8 flex h-1 w-[100vw] sm:mx-0 sm:w-full" />
-	{/if}
+	<CoverImage slug={tutorialSection.slug} caption={tutorialSection.coverImage?.caption ?? ''} />
+	<PostNav compact={true} slug={tutorialSection.slug} />
+	<TutorialSections />
+	<TableOfContents toc={tutorialSection?.toc ?? []} />
+	<GithubLinks section={tutorialSection} />
 	<div
 		class="prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:flex-1 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
 	>
 		{@html tutorialSection?.content}
 	</div>
-</article>
-<div class="px-4 sm:px-8">
 	<PostNav slug={tutorialSection.slug} />
-</div>
+</article>
 
 <style lang="postcss">
 	h1 {
 		font-size: 2rem;
-		font-weight: 500;
+		font-weight: 400;
 		line-height: 1.2;
+		letter-spacing: 0.75px;
 		color: var(--accent-color);
 		-webkit-text-fill-color: var(--accent-color);
 		-webkit-text-stroke-width: 1px;
