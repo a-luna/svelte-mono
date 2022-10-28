@@ -6,8 +6,6 @@ import type {
 	EncoderInputChunk,
 	OutputChunk,
 	StringEncoding,
-	Utf8ComplexCharacterMap,
-	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
 import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
@@ -82,34 +80,6 @@ export function explainCombinedUtf8Chars(utf8: Utf8StringComposition): string {
 	const pluralMaybe =
 		totalWithCombined > 1 ? `${totalWithCombined} emojis that are` : `${totalWithCombined} emoji that is`;
 	return `Why so many bytes? You provided ${pluralMaybe} actually comprised of several characters (You can view these separated characters by toggling the <code style="${style}">+</code> button).`;
-}
-
-export function getUtf8ByteMapHtml(input: string): string {
-	const byteMapOpenTag = 'div class="utf8-byte-map"';
-	const utf8ByteMap = getSimpleUtf8StringDecomposition(input);
-	const byteMapHtml = utf8ByteMap.charMap.map((byteMap) => {
-		if (byteMap.isCombined) {
-			return byteMap.charMap.map((combinedByteMap) => getStandardUtf8ByteMapHtml(combinedByteMap)).join('\n');
-		} else {
-			return getStandardUtf8ByteMapHtml(byteMap);
-		}
-	});
-	return `<${byteMapOpenTag}>${byteMapHtml.join('\n')}</div>`;
-}
-
-function getStandardUtf8ByteMapHtml(byteMap: Utf8StandardCharacterMap | Utf8ComplexCharacterMap): string {
-	const utf8Char = byteMap.encoded === '%EF%B8%8F' ? 'VS16' : byteMap.encoded === '%E2%80%8D' ? 'ZWJ' : byteMap.char;
-	const openTag =
-		byteMap.encoded === '%EF%B8%8F'
-			? 'code class="variation"'
-			: byteMap.encoded === '%E2%80%8D'
-			? 'code class="zwj"'
-			: byteMap.hexBytes.length === 1 && byteMap.hexBytes[0] === '20'
-			? 'code class="whitespace"'
-			: 'code class="char"';
-	const hexBytes = `<${openTag}>${getHexBytesHtml(byteMap.hexBytes)}</code>`;
-	const wrapperOpenTag = 'div class="utf8-bytes-for-char"';
-	return `<${wrapperOpenTag}><${openTag}>${utf8Char}</code>${hexBytes}</div>`;
 }
 
 export function describeInputByte(

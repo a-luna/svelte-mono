@@ -33,9 +33,6 @@ export function validateTextEncoding(input: string, encoding: StringEncoding): R
 		const error = 'You must provide a value to encode, text box is empty.';
 		return { success: false, error: Error(error) };
 	}
-	if (!encoding) {
-		return { success: false, error: Error('Encoding type must be specified.') };
-	}
 	switch (encoding) {
 		case 'ascii':
 			return validateAsciiString(input);
@@ -111,8 +108,6 @@ export function validateUtf8String(input: string): Result<string> {
 		const roundtrip = decodeURIComponent(getSimpleUtf8StringDecomposition(input).encoded);
 		if (roundtrip === input) {
 			return { success: true, value: input };
-		} else {
-			return { success: false, error: Error(`Error occurred when encoding URI component: ${input}`) };
 		}
 	} catch (ex: unknown) {
 		return { success: false, error: Error(`Error occurred when encoding URI component: ${input}\n${ex.toString()}`) };
