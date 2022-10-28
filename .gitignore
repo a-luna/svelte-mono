@@ -3,6 +3,8 @@ build/
 functions/
 /.svelte-kit
 /.svelte
+
+pnpm-lock.yaml
  
 # Dependency directories
 node_modules/
