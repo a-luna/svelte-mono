@@ -87,9 +87,8 @@
 
 	.links-left a,
 	.links-right a {
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: center;
+		display: grid;
+		grid-template-rows: auto;
 		align-items: center;
 		gap: 0.5rem;
 		font-size: 0.825rem;
@@ -102,6 +101,7 @@
 	}
 
 	.links-left a {
+		grid-template-columns: 1fr 20px 33px 1fr;
 		color: var(--green-icon);
 		background-color: var(--black);
 		border: 1px solid var(--green-icon);
@@ -112,6 +112,7 @@
 	}
 
 	.links-right a {
+		grid-template-columns: 1fr 13px 38px 1fr;
 		color: var(--blue-icon);
 		background-color: var(--black);
 		border: 1px solid var(--blue-icon);
@@ -123,6 +124,13 @@
 
 	.github-links .icon {
 		height: 13px;
+		justify-self: flex-end;
+		grid-column: 2 / span 1;
+	}
+
+	.github-links .label {
+		justify-self: flex-start;
+		grid-column: 3 / span 1;
 	}
 
 	@media (min-width: 520px) {
@@ -155,7 +163,6 @@
 		}
 
 		.github-links a {
-			gap: 0.5rem;
 			font-size: 1rem;
 			min-width: 110px;
 			padding: 0.5rem 1rem;
