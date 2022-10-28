@@ -41,7 +41,6 @@ const getChunkBytesHtml = (chunk: EncoderInputChunk | OutputChunk, chunkIndex: n
 	Array.from({ length: chunk.bytes.length }, (_, i) => getByteNumHtml(3 * chunkIndex + i + 1, chunkIndex));
 const getChunkB64CharsHtml = (totalB64Chars: number, chunkIndex: number) =>
 	Array.from({ length: totalB64Chars }, (_, i) => getB64CharNumHtml(4 * chunkIndex + i + 1, chunkIndex)).join(', ');
-const getHexBytesHtml = (hex: string[]): string => hex.map((b) => `<span>${b}</span>`).join(' ');
 
 export const getBase64AlphabetVerbose = (encoding: Base64Encoding) =>
 	encoding === 'base64' ? 'standard Base64 alphabet' : 'URL-safe Base64 alphabet';
