@@ -12,6 +12,8 @@ export const HTTP_METHODS = [
 	'CONNECT'
 ] as const;
 
+export const HTTP_AUTH_TYPES = ['Basic', 'Token'] as const;
+
 export const ICON_NAMES = ['circle', 'fork', 'github', 'star'] as const;
 
 export const ICON_COLORS = ['yellow', 'green', 'blue', 'purple', 'pink', 'default'] as const;

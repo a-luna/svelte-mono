@@ -1,6 +1,6 @@
 import { API_KEY } from '$env/static/private';
 import { api } from '$lib/api';
-import { GH_USER } from '$lib/siteConfig';
+import { API_BASE_URL, GH_USER } from '$lib/siteConfig';
 import { error } from '@sveltejs/kit';
 import { compile } from 'mdsvex';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -13,7 +13,11 @@ import type { RequestEvent, RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) => {
 	const endpoint = `repos/${GH_USER}/${params.repo}/readme`;
-	const result = await api.get(endpoint, API_KEY, 'application/vnd.github.html');
+	const result = await api.get(
+		`${API_BASE_URL}/${endpoint}`,
+		{ type: 'Token', token: API_KEY },
+		'application/vnd.github.html'
+	);
 	if (!result.success) {
 		throw error(result.error.status, result.error.message);
 	}

@@ -1,11 +1,10 @@
-import { API_BASE_URL } from '$lib/siteConfig';
-import type { HttpMethod, HttpResult } from '$lib/types';
+import type { HttpAuthToken, HttpMethod, HttpResult } from '$lib/types';
 
 async function send(args: {
 	method: HttpMethod;
 	path: string;
 	data: { [k: string]: string };
-	token: string;
+	token: HttpAuthToken;
 	acceptMediaType: string;
 }): Promise<Response> {
 	const { method, path, data, token, acceptMediaType } = { ...args };
@@ -18,17 +17,16 @@ async function send(args: {
 	}
 
 	if (token) {
-		opts.headers['Authorization'] = `Token ${token}`;
+		opts.headers['Authorization'] = `${token.type} ${token.token}`;
 	}
 
 	if (acceptMediaType) {
 		opts.headers['Accept'] = acceptMediaType;
 	}
-
-	return fetch(`${API_BASE_URL}/${path}`, opts);
+	return fetch(path, opts);
 }
 
-async function get(path: string, token: string, acceptMediaType = ''): Promise<HttpResult> {
+async function get(path: string, token: HttpAuthToken, acceptMediaType = ''): Promise<HttpResult> {
 	const data = {};
 	const response = await send({ method: 'GET', path, data, token, acceptMediaType });
 	if (!response.ok) {
@@ -40,7 +38,7 @@ async function get(path: string, token: string, acceptMediaType = ''): Promise<H
 async function post(
 	path: string,
 	data: { [k: string]: string },
-	token: string,
+	token: HttpAuthToken,
 	acceptMediaType = ''
 ): Promise<HttpResult> {
 	const response = await send({ method: 'POST', path, data, token, acceptMediaType });

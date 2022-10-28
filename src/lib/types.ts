@@ -22,6 +22,7 @@ import type XState from '$lib/components/Icons/Language/XState.svelte';
 import type {
 	BACKEND_CATEGORIES,
 	FRONTEND_CATEGORIES,
+	HTTP_AUTH_TYPES,
 	HTTP_METHODS,
 	ICON_COLORS,
 	ICON_NAMES,
@@ -34,6 +35,12 @@ import type {
 export type HttpError = { status: number; message: string };
 export type HttpResult = { success: true; value: Response } | { success: false; error: HttpError };
 export type Result = { success: true } | { success: false; error: string };
+export type HttpAuthType = typeof HTTP_AUTH_TYPES[number];
+
+export interface HttpAuthToken {
+	type: HttpAuthType;
+	token: string;
+}
 
 export interface FrontMatterResources {
 	name: string;
