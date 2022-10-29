@@ -1,7 +1,0 @@
-[[build.env]]
-name = "BP_NODE_RUN_SCRIPTS"
-value = "build"
-
-[[build.env]]
-name = "NODE_ENV"
-value = "dev"
