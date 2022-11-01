@@ -4,12 +4,12 @@
 	import SectionSummary from '$lib/components/ApiTutorial/SectionSummary.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import { tutorialSections } from '$lib/stores';
-	import type { BlogImage } from '$lib/types';
+	import type { BlogResource } from '$lib/types';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	const coverImage: BlogImage = {
+	const coverImage: BlogResource = {
 		name: 'cover',
 		src: '',
 		caption: 'Photo by Matt Howard on Unsplash'
@@ -82,6 +82,9 @@
 		font-weight: 500;
 		letter-spacing: -0.025em;
 	}
+	ul {
+		list-style: none;
+	}
 	li {
 		margin: 0 0 2rem 0;
 		font-size: 1.125rem;
@@ -96,8 +99,9 @@
 
 	@media (min-width: 768px) {
 		h1 {
-			font-size: 2.2rem;
-			line-height: 1;
+			font-size: 2.5rem;
+			line-height: 1.2;
+			letter-spacing: 0.4px;
 		}
 		h3 {
 			font-size: 2.25rem;
