@@ -18,7 +18,6 @@ export const BLOG_POST_FOLDER = 'src/lib/content/blog';
 export const API_TUTORIAL_FOLDER = 'src/lib/content/flask-api-tutorial';
 export const BLOG_IMAGE_ROOT = `${SITE_URL}/images/blog`;
 export const API_TUTORIAL_IMAGE_ROOT = `${SITE_URL}/images/flask-api-tutorial`;
-export const MEDIA_ROOT = `${SITE_URL}/media`;
 export const BLOG_POST_URL_ROOT = `${SITE_URL}/blog`;
 export const API_TUTORIAL_URL_ROOT = `${SITE_URL}/series/flask-api-tutorial`;
 

@@ -22,11 +22,20 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
+const markdownToHtmlProcessor = unified()
+	.use(remarkParse)
+	.use(remarkShiki, { highlighter, parseMeta })
+	.use(remarkRehype, { allowDangerousHtml: true })
+	.use(rehypeRaw)
+	.use(rehypeSlug)
+	.use(rehypeFormat)
+	.use(rehypeStringify);
+
 async function markdownConversions(blogPost: BlogPost): Promise<string> {
-	let convertedMarkdown = convertLinkedImages(blogPost.content, blogPost.images);
+	let convertedMarkdown = convertLinkedImages(blogPost.content, blogPost.resources);
 	convertedMarkdown = await convertInfoBoxes(convertedMarkdown);
 	convertedMarkdown = await convertAlertBoxes(convertedMarkdown);
-	return convertVideos(convertedMarkdown);
+	return convertVideos(convertedMarkdown, blogPost.resources);
 }
 
 function htmlConversions(html: string, blogPost: BlogPost): string {
@@ -43,15 +52,7 @@ export async function convertContentToHtml(
 ): Promise<BlogPost | TutorialSection> {
 	blogPost.codeBlocks = identifyCodeBlocks(blogPost.content);
 	let content = await markdownConversions(blogPost);
-	const html = await unified()
-		.use(remarkParse)
-		.use(remarkShiki, { highlighter, parseMeta })
-		.use(remarkRehype, { allowDangerousHtml: true })
-		.use(rehypeRaw)
-		.use(rehypeSlug)
-		.use(rehypeFormat)
-		.use(rehypeStringify)
-		.process(content.trim());
+	const html = await markdownToHtmlProcessor.process(content.trim());
 	content = String(html).trim();
 
 	let toc: TocSection[] = [];

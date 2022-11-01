@@ -68,7 +68,7 @@ export interface TocSection {
 	children: TocSection[];
 }
 
-export interface BlogImage {
+export interface BlogResource {
 	name: string;
 	src: string;
 	caption?: string;
@@ -99,8 +99,8 @@ export interface BlogPost {
 	canonical: string;
 	slug: string;
 	date: string;
-	coverImage: BlogImage;
-	images: { [k: string]: BlogImage };
+	coverImage: BlogResource;
+	resources: { [k: string]: BlogResource };
 	codeBlocks?: CodeBlock[];
 	ghMetadata: GHMetadata;
 }

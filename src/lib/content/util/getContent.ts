@@ -5,11 +5,12 @@ import {
 	API_TUTORIAL_URL_ROOT,
 	BLOG_IMAGE_ROOT,
 	BLOG_POST_FOLDER,
-	BLOG_POST_URL_ROOT
+	BLOG_POST_URL_ROOT,
+	SITE_URL
 } from '$lib/siteConfig';
 import type {
-	BlogImage,
 	BlogPost,
+	BlogResource,
 	FrontMatterResources,
 	GHMetadata,
 	TutorialSection
@@ -26,6 +27,12 @@ const getGHMetaDataNullObject = (date: Date): GHMetadata => ({
 });
 
 const checkMarkdownFile = (fileName: string): boolean => extname(fileName) === '.md';
+
+const parseBlogPost = (path: string, content: string, data: { [k: string]: unknown }): BlogPost =>
+	parseMarkdownFile(path, BLOG_IMAGE_ROOT, BLOG_POST_URL_ROOT, content, data);
+
+const getResourceUrl = (res: FrontMatterResources, slug: string, imageFolder: string): string =>
+	res.name.startsWith('img') ? `${imageFolder}/${slug}/${res.src}` : `${SITE_URL}/${res.src}`;
 
 export async function listLocalContent(): Promise<BlogPost[]> {
 	const localContent: BlogPost[] = [];
@@ -45,6 +52,31 @@ export async function listTutorialSections(): Promise<TutorialSection[]> {
 		tutorialSections.push(parseTutorialSection(_path, content, data));
 	}
 	return tutorialSections;
+}
+
+function parseTutorialSection(
+	path: string,
+	content: string,
+	data: { [k: string]: unknown }
+): TutorialSection {
+	const tutorialSection = parseMarkdownFile(
+		path,
+		API_TUTORIAL_IMAGE_ROOT,
+		API_TUTORIAL_URL_ROOT,
+		content,
+		data
+	) as TutorialSection;
+	tutorialSection.lead = data.lead as string;
+	tutorialSection.series_weight = data.series_weight as number;
+	tutorialSection.series_title = data.series_title as string;
+	tutorialSection.series_part = data.series_part as string;
+	tutorialSection.series_part_lead = data.series_part_lead as string;
+	tutorialSection.git_release_name = data.git_release_name as string;
+	tutorialSection.url_git_rel_browse = data.url_git_rel_browse as string;
+	tutorialSection.url_git_rel_zip = data.url_git_rel_zip as string;
+	tutorialSection.url_git_rel_tar = data.url_git_rel_tar as string;
+	tutorialSection.url_git_rel_diff = data.url_git_rel_diff as string;
+	return tutorialSection;
 }
 
 function parseMarkdownFile(
@@ -73,37 +105,9 @@ function parseMarkdownFile(
 		slug,
 		date: date.toISOString(),
 		coverImage: getCoverImage(slug, imageFolder, data.resources as FrontMatterResources[]),
-		images: getArticleImages(slug, imageFolder, data.resources as FrontMatterResources[]),
+		resources: getArticleResources(slug, imageFolder, data.resources as FrontMatterResources[]),
 		ghMetadata: getGHMetaDataNullObject(date)
 	};
-}
-
-const parseBlogPost = (path: string, content: string, data: { [k: string]: unknown }): BlogPost =>
-	parseMarkdownFile(path, BLOG_IMAGE_ROOT, BLOG_POST_URL_ROOT, content, data);
-
-function parseTutorialSection(
-	path: string,
-	content: string,
-	data: { [k: string]: unknown }
-): TutorialSection {
-	const tutorialSection = parseMarkdownFile(
-		path,
-		API_TUTORIAL_IMAGE_ROOT,
-		API_TUTORIAL_URL_ROOT,
-		content,
-		data
-	) as TutorialSection;
-	tutorialSection.lead = data.lead as string;
-	tutorialSection.series_weight = data.series_weight as number;
-	tutorialSection.series_title = data.series_title as string;
-	tutorialSection.series_part = data.series_part as string;
-	tutorialSection.series_part_lead = data.series_part_lead as string;
-	tutorialSection.git_release_name = data.git_release_name as string;
-	tutorialSection.url_git_rel_browse = data.url_git_rel_browse as string;
-	tutorialSection.url_git_rel_zip = data.url_git_rel_zip as string;
-	tutorialSection.url_git_rel_tar = data.url_git_rel_tar as string;
-	tutorialSection.url_git_rel_diff = data.url_git_rel_diff as string;
-	return tutorialSection;
 }
 
 async function* getMarkdownFiles(dir: string): AsyncGenerator<string> {
@@ -121,30 +125,30 @@ async function* getMarkdownFiles(dir: string): AsyncGenerator<string> {
 function getCoverImage(
 	slug: string,
 	imageFolder: string,
-	resources: FrontMatterResources[]
-): BlogImage {
-	const coverImageRes = resources.find((res) => res.name === 'cover');
+	frontMatterRes: FrontMatterResources[]
+): BlogResource {
+	const cover = frontMatterRes.find((res) => res.name === 'cover');
 	return {
 		src: `${imageFolder}/post_images/${slug}.jpg`,
-		name: coverImageRes?.name ?? '',
-		caption: coverImageRes?.params?.credit ?? ''
+		name: cover?.name ?? '',
+		caption: cover?.params?.credit ?? ''
 	};
 }
 
-function getArticleImages(
+function getArticleResources(
 	slug: string,
 	imageFolder: string,
-	resources: FrontMatterResources[]
-): { [k: string]: BlogImage } {
-	const articleImages = resources.filter((res) => res.name !== 'cover');
-	const images: { [k: string]: BlogImage } = {};
+	frontMatterRes: FrontMatterResources[]
+): { [k: string]: BlogResource } {
+	const articleImages = frontMatterRes.filter((res) => res.name !== 'cover');
+	const resources: { [k: string]: BlogResource } = {};
 	articleImages.forEach(
 		(img) =>
-			(images[img.name] = {
+			(resources[img.name] = {
 				name: img.name,
-				src: `${imageFolder}/${slug}/${img.src}`,
+				src: getResourceUrl(img, slug, imageFolder),
 				caption: img.title ?? ''
 			})
 	);
-	return images;
+	return resources;
 }

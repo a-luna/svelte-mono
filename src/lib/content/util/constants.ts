@@ -10,13 +10,12 @@ export const ALERT_BOX_REGEX =
 export const LINKED_IMAGE_REGEX = /{{< linked_image (?<name>.+) >}}/g;
 
 export const VIDEO_REGEX =
-	/{{< autoplay_video video="(?<name>[\w]+)"(?: device="(?<device>mobile|desktop)")?(?: width="(?<width>[\d]+)px")? >}}/g;
+	/{{< autoplay_video video="(?<video>[\w]+)"(?: device="(?<device>mobile|desktop)")?(?: width="(?<width>[\d]+)px")? >}}/g;
 
 export const HTML_HEADING_REGEX =
-	/<h(?<level>2|3|4|5|6) id="(?<slug>[a-z-_]+)">(?<text>.+)<\/(?:h2|h3|h4|h5|h6)>/g;
+	/<h(?<level>2|3|4|5|6) id="(?<slug>[0-9a-z-_]+)">(?<text>.+)<\/(?:h2|h3|h4|h5|h6)>/g;
 
-export const TOX_TEST_RESULTS_REGEX =
-	/test session starts [=]+(?:\s)?([\s\S][^=]*)(?:\s)?[=]+ [\d]+ passed/g;
+export const TOX_TEST_RESULTS_REGEX = /test session starts [=]{50,50}([\s\S][^=]*)[=]+/g;
 
 export const CODE_BLOCK_START_REGEX =
 	/<pre(?: class="(?<shiki>shiki)" style="background-color: (?<bgColor>#[A-Fa-f0-9]{6,6})")?>?(?:<code(?:>)?)?/g;

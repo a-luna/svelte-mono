@@ -39,6 +39,11 @@
 		object-fit: cover;
 		background-color: grey;
 	}
+
+	ul,
+	ol {
+		list-style: revert;
+	}
 }
 :root {
 	--test: #141414;
@@ -314,7 +319,6 @@ article figure {
 }
 
 article figure img {
-	margin: auto;
 	border: 1px solid var(--mid-gray2);
 }
 
@@ -327,11 +331,10 @@ img {
 
 figcaption p {
 	text-align: center;
-	color: #0ff;
+	color: var(--gray-shade3);
 	font-weight: 400;
 	font-size: 0.9rem;
 	font-style: italic;
-	margin: 0.5rem 0 0 0;
 }
 
 .flex-row,
@@ -395,7 +398,7 @@ figcaption p {
 }
 
 ul.alert {
-	margin: 0 0 20px 2em;
+	margin: 0.25rem 0 0 1.25em;
 	padding: 0;
 }
 
@@ -803,13 +806,8 @@ article figure {
 	border-radius: 10px;
 }
 
-.vid-flex .device-mock:first-child figure {
+.vid-flex .device-mock figure {
 	background-color: var(--page-bg-color);
-}
-
-.vid-flex .device-mock:last-child figure {
-	background-color: var(--black);
-	border: 1px solid var(--dark-gray-shade2);
 }
 
 .vid-flex .device-mock figcaption {
@@ -958,33 +956,34 @@ div.requirements {
 
 table.tutorial thead .table-number,
 table.tutorial thead .table-title {
-	font-size: 0.95em;
+	font-size: 0.95rem;
 }
 
 table.tutorial thead th.column-header,
 table.tutorial thead th.column-header:first-child,
 table.tutorial thead th.column-header:last-child {
-	font-size: 0.95em;
+	font-size: 0.95rem;
 	vertical-align: bottom;
 }
 
 table.tutorial thead th.column-header sup,
 table.tutorial tbody td sup,
 table.tutorial tfoot td sup {
-	font-size: 0.8em;
+	font-size: 0.8rem;
 }
 
 table.tutorial tbody td {
-	font-size: 0.875em;
+	font-size: 0.875rem;
 }
 
 table.tutorial code {
-	font-size: 0.875em;
+	font-size: 0.875rem;
 }
 
 table.tutorial tbody td,
 table.tutorial thead th.column-header {
 	padding: 3px 5px;
+	line-height: 1.3;
 }
 
 table.tutorial tbody td:first-child,
@@ -1012,7 +1011,7 @@ table.tutorial tfoot code {
 }
 
 .tutorial .table-wrapper {
-	margin: 0 auto 1em;
+	margin: 0 auto 1rem;
 }
 
 .tutorial tr:first-child td.table-footer {
@@ -1025,16 +1024,16 @@ table.tutorial tfoot code {
 }
 
 .table-wrapper {
-	font-size: 0.95em;
+	font-size: 0.95rem;
 	line-height: 1.2;
 	width: 100%;
-	margin: 0 auto 2em;
+	margin: 0 auto 2rem;
 	padding: 0;
 	white-space: nowrap;
 }
 
 ul .table-wrapper {
-	margin: 1em auto;
+	margin: 1rem auto;
 }
 
 .responsive {
@@ -1052,6 +1051,7 @@ ul .table-wrapper {
 	color: #d8d8d8;
 	background-color: var(--page-bg-color);
 	margin: 0 auto;
+	line-height: 1.2;
 }
 
 .responsive th {
@@ -1063,7 +1063,7 @@ ul .table-wrapper {
 
 .responsive tbody th {
 	color: #d8d8d8;
-	font-size: 0.8em;
+	font-size: 0.8rem;
 	font-weight: 400;
 }
 
@@ -1134,12 +1134,12 @@ th.last-column,
 }
 
 .table-wrapper thead td {
-	font-size: 0.85em;
+	font-size: 0.85rem;
 	font-weight: 400;
 }
 
 .table-wrapper tfoot td {
-	font-size: 0.8em;
+	font-size: 0.8rem;
 	font-weight: 300;
 }
 
@@ -1164,7 +1164,7 @@ th.last-column,
 .table-wrapper thead .table-number,
 .table-wrapper thead .table-title {
 	color: #a9fb68;
-	font-size: 0.9em;
+	font-size: 0.9rem;
 	font-weight: 400;
 }
 
@@ -1217,7 +1217,7 @@ th.last-column,
 }
 
 .responsive .sub-heading {
-	font-size: 0.85em;
+	font-size: 0.85rem;
 }
 
 .responsive .numeric {
@@ -1242,7 +1242,7 @@ tr:nth-child(odd) {
 }
 
 table.aws-hosting-costs {
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 }
 
 .gradient {
@@ -1418,7 +1418,7 @@ body::-webkit-scrollbar-corner {
 	margin: 0;
 }
 
-.mac-book-mock {
+.desktop-device-mock {
 	border-top: none;
 	border-top: 10px solid var(--black);
 	border-left: 10px solid var(--black);
@@ -1461,9 +1461,10 @@ body::-webkit-scrollbar-corner {
 	background-color: var(--white-shade3);
 }
 
-.mobile-device-mock {
+.mobile-device {
 	border: 8px solid var(--black);
 	border-radius: 10px;
+	outline: 1px solid var(--dark-gray-shade2);
 	margin: 0;
 }
 

@@ -37,7 +37,6 @@ module.exports = {
 						'blockquote p:last-of-type::after': {
 							content: ''
 						},
-
 						'code::before': false,
 						'code::after': false,
 						code: {
@@ -78,12 +77,23 @@ module.exports = {
 							color: 'unset'
 						},
 						'article p strong': {
+							marginTop: '0',
+							marginRight: 'auto',
+							marginBottom: '0',
+							marginLeft: 'auto',
 							color: 'var(--white-shade2)'
 						},
 						'article .alert strong, article .note strong, article .requirements strong, article  blockquote p strong':
 							{
 								color: 'currentColor'
 							},
+						'article figure p': {
+							margin: '0'
+						},
+						'article figure img': {
+							marginTop: '0',
+							marginBottom: '0'
+						},
 						'ul, ul.alert': {
 							'list-style': 'square'
 						},

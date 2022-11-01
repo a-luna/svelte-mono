@@ -1,7 +1,7 @@
-import { MEDIA_ROOT } from '$lib/siteConfig';
-import type { BlogImage, CodeBlock } from '$lib/types';
-import { capitalize, getRandomHexString, replaceAsync } from '$lib/util';
+import type { BlogResource, CodeBlock } from '$lib/types';
+import { getRandomHexString, replaceAsync } from '$lib/util';
 import rehypeFormat from 'rehype-format';
+import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
@@ -14,6 +14,13 @@ import {
 	LINKED_IMAGE_REGEX,
 	VIDEO_REGEX
 } from './constants';
+
+const simpleMarkdownToHtmlProcessor = unified()
+	.use(remarkParse)
+	.use(remarkRehype, { allowDangerousHtml: true })
+	.use(rehypeRaw)
+	.use(rehypeFormat)
+	.use(rehypeStringify);
 
 export function identifyCodeBlocks(markdown: string): CodeBlock[] {
 	const cfMatches = Array.from(markdown.matchAll(CODE_FENCE_REGEX)).map((m) => ({
@@ -58,35 +65,37 @@ async function convertAlertBoxToHtml(match: RegExpMatchArray): Promise<string> {
 
 async function convertMarkdownSnippetToHtml(match: RegExpMatchArray): Promise<string> {
 	const markdown = match[1] ?? '';
-	const file = await unified()
-		.use(remarkParse)
-		.use(remarkRehype)
-		.use(rehypeFormat)
-		.use(rehypeStringify)
-		.process(markdown);
+	const file = await simpleMarkdownToHtmlProcessor.process(markdown);
 	return String(file);
 }
 
-export const convertLinkedImages = (markdown: string, images: { [k: string]: BlogImage }): string =>
+export const convertLinkedImages = (
+	markdown: string,
+	resources: { [k: string]: BlogResource }
+): string =>
 	markdown.replace(
 		LINKED_IMAGE_REGEX,
 		(match: string, p1: string): string =>
-			`<figure id="${images[p1]?.name}"><a href="${images[p1]?.src}"><img src="${images[p1]?.src}" loading="lazy" alt="${images[p1]?.caption}"></a><figcaption><p>${images[p1]?.caption}</p></figcaption></figure>`
+			`<figure id="${resources[p1]?.name}"><a href="${resources[p1]?.src}"><img src="${resources[p1]?.src}" loading="lazy" alt="${resources[p1]?.caption}"></a><figcaption><p>${resources[p1]?.caption}</p></figcaption></figure>`
 	);
 
-export const convertVideos = (markdown: string): string =>
+export const convertVideos = (markdown: string, resources: { [k: string]: BlogResource }): string =>
 	markdown.replace(VIDEO_REGEX, (match: string, p1: string, p2: string, p3: string): string => {
-		if (!p2) {
-			return `<div class="vid-wrapper"><figure id="vid-search_input"><video style="width:${p3}px" autoplay="" playsinline="" loop="" muted="" controls=""><source src="${MEDIA_ROOT}/${p1}.mp4" type="video/mp4">Sorry, your browser doesn't support embedded videos, but don't worry, you can <a href${MEDIA_ROOT}/${p1}.mp4">download it</a> and watch it with your favorite video player!</video><figcaption><p>Search Input Form (Error Messages)</p></figcaption></figure></div>`;
-		} else {
-			let deviceMockup = '';
-			const caption = `${capitalize(p2)} Experience`;
-			if (p2 === 'desktop') {
-				deviceMockup = `<div class="mac-book-screen"><video class="mac-book-mock" autoplay="" playsinline="" loop="" muted="" controls=""><source src="${MEDIA_ROOT}/${p1}.mp4" type="video/mp4">Sorry, your browser doesn't support embedded videos, but don't worry, you can <a href="${MEDIA_ROOT}/${p1}.mp4">download it</a> and watch it with your favorite video player!</video></div><div class="mac-book-bottom"><div class="mac-book-indent-wrapper"><div class="mac-book-indent-top"></div><div class="mac-book-indent-bottom"></div></div></div>`;
-			}
-			if (p2 === 'mobile') {
-				deviceMockup = `<video class="mobile-device-mock" style="width:${p3}px" autoplay="" playsinline="" loop="" muted="" controls=""><source src="${MEDIA_ROOT}/${p1}.mp4" type="video/mp4">Sorry, your browser doesn't support embedded videos, but don't worry, you can <a href="${MEDIA_ROOT}/${p1}.mp4">download it</a> and watch it with your favorite video player!</video>`;
-			}
-			return `<div class="device-mock"><figure id="vid-search_results_${p2}">${deviceMockup}</figure><figcaption><p>${caption}</p></figcaption></div>`;
+		let videoElement = `<video`;
+		if (p2) {
+			videoElement += ` class="${p2}-device-mock"`;
 		}
+		if (p3) {
+			videoElement += ` style="width:${p3}px"`;
+		}
+		videoElement += ` autoplay="" playsinline="" loop="" muted="" controls="">`;
+		videoElement += `<source src="${resources[p1]?.src}" type="video/mp4">Sorry, your browser doesn't support embedded videos, but don't worry, you can <a href="${resources[p1]?.src}">download it</a> and watch it with your favorite video player!</video>`;
+		if (p2 === 'desktop') {
+			videoElement = `<div class="mac-book-screen">${videoElement}</div><div class="mac-book-bottom"><div class="mac-book-indent-wrapper"><div class="mac-book-indent-top"></div><div class="mac-book-indent-bottom"></div></div></div>`;
+		}
+		if (p2 === 'mobile') {
+			videoElement = `<div class="mobile-device">${videoElement}</div>`;
+		}
+		const figureElement = `<figure id="vid-${resources[p1]?.name}">${videoElement}<figcaption><p>${resources[p1]?.caption}</p></figcaption></figure>`;
+		return `<div class="${p2 ? 'device-mock' : 'vid-wrapper'}">${figureElement}</div>`;
 	});
