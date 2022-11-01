@@ -556,7 +556,7 @@ pre:not(.shiki) {
 
 .shiki-wrapper .top-row {
 	display: grid;
-	grid-template-columns: 1fr auto 24px;
+	grid-template-columns: auto 24px 1fr ;
 	grid-template-rows: 24px;
 }
 
@@ -576,7 +576,7 @@ pre:not(.shiki) {
 	border-bottom: 1px solid var(--dark-gray-shade2);
 	border-left: none;
 
-	grid-column: 1 / span 1;
+	grid-column: 3 / span 1;
 }
 
 .shiki-wrapper .lang-name,
@@ -599,7 +599,7 @@ pre:not(.shiki) {
 	padding: 5px 4px 5px 8px;
 	letter-spacing: 0.5px;
 
-	grid-column: 2 / span 1;
+	grid-column: 1 / span 1;
 }
 
 .shiki-wrapper .copy-button,
@@ -617,7 +617,7 @@ pre:not(.shiki) {
 	padding: 5px 8px 5px 4px;
 	cursor: pointer;
 
-	grid-column: 3 / span 1;
+	grid-column: 2 / span 1;
 }
 .orange {
 	color: hsl(20 100% 50%);

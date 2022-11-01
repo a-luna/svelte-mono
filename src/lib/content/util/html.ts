@@ -141,9 +141,9 @@ function createWrappedCodeBlock(
 	lineNumberStart: number
 ): string {
 	let topRow = '<span class="top-row">';
-	topRow += '<span class="space-filler"></span>';
 	topRow += `<span class="lang-name">${lang}</span>`;
 	topRow += `<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">${copySvgIcon}</button>`;
+	topRow += '<span class="space-filler"></span>';
 	topRow += `</span>`;
 
 	let newPre = `<pre class="shiki" style="background-color: #141414">`;
