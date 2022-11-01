@@ -62,14 +62,10 @@
 		color: var(--accent-color);
 	}
 
-	#table-of-contents :global(a) {
+	#table-of-contents :global(a),
+	#table-of-contents :global(a:hover) {
 		color: var(--accent-color);
 		transition: all 350ms ease-out;
-	}
-
-	#table-of-contents :global(a:hover) {
-		color: var(--page-bg-color);
-		background-color: var(--accent-color);
 	}
 
 	#table-of-contents :global(code),

@@ -67,14 +67,10 @@
 		color: var(--accent-color);
 	}
 
-	#github-links a {
+	#github-links a,
+	#github-links a:hover {
 		color: var(--accent-color);
 		transition: all 350ms ease-out;
-	}
-
-	#github-links a:hover {
-		color: var(--page-bg-color);
-		background-color: var(--accent-color);
 	}
 
 	.github-links-wrapper ul {

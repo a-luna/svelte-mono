@@ -7,10 +7,10 @@
 
 	export let tutorialSection: TutorialSection;
 	let secId: string;
-	let secElement: HTMLDetailsElement;
 	let tocId: string;
-	let tocElement: HTMLDetailsElement;
 	let ghId: string;
+	let secElement: HTMLDetailsElement;
+	let tocElement: HTMLDetailsElement;
 	let ghElement: HTMLDetailsElement;
 
 	function getSections(): { [k: string]: HTMLDetailsElement } {

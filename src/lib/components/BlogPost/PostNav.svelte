@@ -40,7 +40,9 @@
 		width: 100%;
 	}
 	.post-nav-prev a,
-	.post-nav-next a {
+	.post-nav-next a,
+	.post-nav-prev a:hover,
+	.post-nav-next a:hover {
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 0.5rem;
@@ -49,15 +51,6 @@
 		color: var(--accent-color);
 		text-decoration: none;
 		transition: all 350ms ease-out;
-	}
-	.post-nav-prev a:hover,
-	.post-nav-next a:hover {
-		font-weight: 400;
-		color: var(--black-tint3);
-		background-color: var(--accent-color);
-		text-decoration: none;
-		border-bottom: none;
-		box-shadow: none;
 	}
 	.post-nav-prev a {
 		justify-content: flex-start;

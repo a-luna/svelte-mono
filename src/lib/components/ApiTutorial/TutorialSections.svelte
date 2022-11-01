@@ -58,14 +58,10 @@
 		color: var(--accent-color);
 	}
 
-	#tutorial-sections a {
+	#tutorial-sections a,
+	#tutorial-sections a:hover {
 		color: var(--accent-color);
 		transition: all 350ms ease-out;
-	}
-
-	#tutorial-sections a:hover {
-		color: var(--page-bg-color);
-		background-color: var(--accent-color);
 	}
 
 	.tutorial-sections-wrapper ul {
