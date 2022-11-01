@@ -62,12 +62,7 @@
 		<ul class="">
 			{#each list as item}
 				<li>
-					<BlogSummary
-						slug={item.slug}
-						title={item.title}
-						publishDate={new Date(item.date)}
-						ghMetadata={item.ghMetadata}
-					>
+					<BlogSummary slug={item.slug} title={item.title} publishDate={new Date(item.date)}>
 						{item.description}
 					</BlogSummary>
 				</li>
@@ -141,6 +136,9 @@
 		line-height: 2rem;
 		font-weight: 700;
 		letter-spacing: -0.025em;
+	}
+	ul {
+		list-style: none;
 	}
 	li {
 		margin: 0 0 2rem 0;

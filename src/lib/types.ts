@@ -102,7 +102,6 @@ export interface BlogPost {
 	coverImage: BlogResource;
 	resources: { [k: string]: BlogResource };
 	codeBlocks?: CodeBlock[];
-	ghMetadata: GHMetadata;
 }
 
 export type BlogPostDateMap = Pick<BlogPost, 'slug' | 'date' | 'title'>;
@@ -124,15 +123,6 @@ export type TutorialSectionNumberMap = Pick<
 	TutorialSection,
 	'slug' | 'lead' | 'series_part' | 'series_weight'
 >;
-
-export interface GHMetadata {
-	issueUrl: string;
-	commentsUrl: string;
-	title: string;
-	created_at: string;
-	updated_at: string;
-	reactions: GHReactions;
-}
 
 export interface GHReactions {
 	total_count: number;

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import type { GHMetadata, GHReactions } from '$lib/types';
+import type { GHReactions } from '$lib/types';
 
 export const HTTP_METHODS = [
 	'GET',
@@ -96,13 +95,4 @@ export const nullGHReactions: GHReactions = {
 	heart: 0,
 	rocket: 0,
 	eyes: 0
-};
-
-export const nullGHMetadata: GHMetadata = {
-	issueUrl: '',
-	commentsUrl: '',
-	title: '',
-	created_at: '',
-	updated_at: '',
-	reactions: nullGHReactions
 };

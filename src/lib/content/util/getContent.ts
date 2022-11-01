@@ -1,4 +1,3 @@
-import { nullGHMetadata } from '$lib/constants';
 import {
 	API_TUTORIAL_FOLDER,
 	API_TUTORIAL_IMAGE_ROOT,
@@ -8,23 +7,11 @@ import {
 	BLOG_POST_URL_ROOT,
 	SITE_URL
 } from '$lib/siteConfig';
-import type {
-	BlogPost,
-	BlogResource,
-	FrontMatterResources,
-	GHMetadata,
-	TutorialSection
-} from '$lib/types';
+import type { BlogPost, BlogResource, FrontMatterResources, TutorialSection } from '$lib/types';
 import { unslugify } from '$lib/util';
 import { promises as fs } from 'fs';
 import grayMatter from 'gray-matter';
 import { basename, extname, resolve } from 'path';
-
-const getGHMetaDataNullObject = (date: Date): GHMetadata => ({
-	...nullGHMetadata,
-	created_at: date.toISOString(),
-	updated_at: date.toISOString()
-});
 
 const checkMarkdownFile = (fileName: string): boolean => extname(fileName) === '.md';
 
@@ -105,8 +92,7 @@ function parseMarkdownFile(
 		slug,
 		date: date.toISOString(),
 		coverImage: getCoverImage(slug, imageFolder, data.resources as FrontMatterResources[]),
-		resources: getArticleResources(slug, imageFolder, data.resources as FrontMatterResources[]),
-		ghMetadata: getGHMetaDataNullObject(date)
+		resources: getArticleResources(slug, imageFolder, data.resources as FrontMatterResources[])
 	};
 }
 
