@@ -9,7 +9,8 @@ import { unified } from 'unified';
 import {
 	ALERT_BOX_REGEX,
 	CODE_BLOCK_START_REGEX,
-	CODE_FENCE_REGEX,
+	CODE_FENCE_END_REGEX,
+	CODE_FENCE_START_REGEX,
 	INFO_BOX_REGEX,
 	LINKED_IMAGE_REGEX,
 	VIDEO_REGEX
@@ -23,19 +24,32 @@ const simpleMarkdownToHtmlProcessor = unified()
 	.use(rehypeStringify);
 
 export function identifyCodeBlocks(markdown: string): CodeBlock[] {
-	const cfMatches = Array.from(markdown.matchAll(CODE_FENCE_REGEX)).map((m) => ({
+	const cfsMatches = Array.from(markdown.matchAll(CODE_FENCE_START_REGEX)).map((m) => ({
 		shiki: true,
 		id: `code-block-${getRandomHexString(4)}`,
 		index: m.index ?? 0,
 		groups: m.groups
 	}));
-	const htmlMatches = Array.from(markdown.matchAll(CODE_BLOCK_START_REGEX)).map((m) => ({
+	const cfeMatches = Array.from(markdown.matchAll(CODE_FENCE_END_REGEX)).map((m) => ({
+		index: m.index ?? 0
+	}));
+	if (cfsMatches.length !== cfeMatches.length) return [];
+
+	let htmlMatches = Array.from(markdown.matchAll(CODE_BLOCK_START_REGEX)).map((m) => ({
 		shiki: false,
 		id: '',
 		index: m.index ?? 0,
 		groups: {}
 	}));
-	return [...cfMatches, ...htmlMatches]
+	const cfBoundaries = Array.from({ length: cfsMatches.length }, (_, i) => i).map((i) => ({
+		start: cfsMatches[i]?.index ?? 0,
+		end: cfeMatches?.[i]?.index ?? 0
+	}));
+	htmlMatches = htmlMatches.filter(
+		(m) => !cfBoundaries.some((cf) => m.index > cf.start && cf.end > m.index)
+	);
+
+	return [...cfsMatches, ...htmlMatches]
 		.sort((a, b) => a.index - b.index)
 		.map(({ shiki, id, index, groups }) => ({
 			shiki,

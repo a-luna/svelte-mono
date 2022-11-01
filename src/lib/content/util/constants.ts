@@ -1,5 +1,7 @@
-export const CODE_FENCE_REGEX =
+export const CODE_FENCE_START_REGEX =
 	/```(?<lang>[\w-]+)(?:\s{)?(?:(?<linenos>linenos)=table)?(?:,)?(?:linenostart=(?<start1>[\d]+)|hl_lines=\[(?<highlight1>.+)\])?(?:,)?(?:hl_lines=\[(?<highlight2>.+)\]|linenostart=(?<start2>[\d]+))?(?:})?/g;
+
+export const CODE_FENCE_END_REGEX = /\n```\n/g;
 
 export const INFO_BOX_REGEX =
 	/{{< info_box >}}(?:\s)?(?:<p>)?([\s\S][^{]*)(?:<\/p>)?(?:\s)?{{< \/info_box >}}/g;
