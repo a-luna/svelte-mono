@@ -1,10 +1,8 @@
 <script lang="ts">
 	import CoverImage from '$lib/components/ApiTutorial/CoverImage.svelte';
-	import GithubLinks from '$lib/components/ApiTutorial/GithubLinks.svelte';
 	import PostNav from '$lib/components/ApiTutorial/PostNav.svelte';
-	import TutorialSections from '$lib/components/ApiTutorial/TutorialSections.svelte';
+	import ToggleGroup from '$lib/components/ApiTutorial/ToggleGroup.svelte';
 	import ByLine from '$lib/components/ByLine.svelte';
-	import TableOfContents from '$lib/components/TableOfContents/TableOfContents.svelte';
 	import { MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
 	import type { Result, TutorialSection } from '$lib/types';
 	import { onMount } from 'svelte';
@@ -112,9 +110,7 @@
 	<ByLine {published} />
 	<CoverImage slug={tutorialSection.slug} caption={tutorialSection.coverImage?.caption ?? ''} />
 	<PostNav compact={true} slug={tutorialSection.slug} />
-	<TutorialSections />
-	<TableOfContents toc={tutorialSection?.toc ?? []} />
-	<GithubLinks section={tutorialSection} />
+	<ToggleGroup {tutorialSection} />
 	<div
 		class="prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:flex-1 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
 	>

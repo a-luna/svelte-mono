@@ -1,18 +1,26 @@
 <script lang="ts">
 	import Chevron from '$lib/components/Icons/Chevron.svelte';
 	import type { TutorialSection } from '$lib/types';
+	import { getRandomHexString } from '$lib/util';
 	import { slide } from 'svelte/transition';
 
+	export let id = `gh-${getRandomHexString(4)}`;
+	export let detailsElement: HTMLDetailsElement;
 	export let section: TutorialSection;
-	let detailsElement: HTMLDetailsElement;
 	let open = false;
+
+	import { createEventDispatcher } from 'svelte';
+	const toggleDetailsElement = createEventDispatcher<{
+		toggleSection: { sectionId: string };
+	}>();
+
+	function handleSectionToggled() {
+		open = detailsElement.open;
+		toggleDetailsElement('toggleSection', { sectionId: id });
+	}
 </script>
 
-<details
-	id="github-links"
-	bind:this={detailsElement}
-	on:toggle={() => (open = detailsElement.open)}
->
+<details id="github-links" bind:this={detailsElement} on:toggle={() => handleSectionToggled()}>
 	<summary>
 		<div class="summary-wrapper">
 			<div class="details-icon"><Chevron /></div>

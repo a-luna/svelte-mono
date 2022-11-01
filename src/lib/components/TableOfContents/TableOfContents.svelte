@@ -2,18 +2,26 @@
 	import Chevron from '$lib/components/Icons/Chevron.svelte';
 	import TocSection from '$lib/components/TableOfContents/TocSection.svelte';
 	import type { TocSection as TocSectionType } from '$lib/types';
+	import { getRandomHexString } from '$lib/util';
+	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
+	export let id = `toc-${getRandomHexString(4)}`;
 	export let toc: TocSectionType[];
-	let detailsElement: HTMLDetailsElement;
+	export let detailsElement: HTMLDetailsElement;
 	let open = false;
+
+	const toggleDetailsElement = createEventDispatcher<{
+		toggleSection: { sectionId: string };
+	}>();
+
+	function handleSectionToggled() {
+		open = detailsElement.open;
+		toggleDetailsElement('toggleSection', { sectionId: id });
+	}
 </script>
 
-<details
-	id="table-of-contents"
-	bind:this={detailsElement}
-	on:toggle={() => (open = detailsElement.open)}
->
+<details id="table-of-contents" bind:this={detailsElement} on:toggle={() => handleSectionToggled()}>
 	<summary>
 		<div class="summary-wrapper">
 			<div class="details-icon"><Chevron /></div>
