@@ -2,7 +2,8 @@
 	import { AUTHOR_NAME, SITE_URL } from '$lib/siteConfig';
 	import { formatDateString } from '$lib/util';
 
-	export let published: Date;
+	export let published = new Date(0);
+	export let nameOnly = false;
 
 	$: authorImage = `${SITE_URL}/AaronLuna.jpg`;
 </script>
@@ -10,7 +11,9 @@
 <div class="author">
 	<div class="avatar"><img height="40px" width="40px" src={authorImage} alt="" /></div>
 	<span class="author-name">{AUTHOR_NAME}</span>
-	<span class="publish-date">on {formatDateString(published)}</span>
+	{#if !nameOnly}
+		<span class="publish-date">on {formatDateString(published)}</span>
+	{/if}
 </div>
 
 <style lang="postcss">

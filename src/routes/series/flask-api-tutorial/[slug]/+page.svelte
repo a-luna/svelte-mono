@@ -107,7 +107,7 @@
 	class="tutorial mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
 >
 	<h1>{tutorialSection?.title}</h1>
-	<ByLine {published} />
+	<ByLine nameOnly={true} />
 	<CoverImage slug={tutorialSection.slug} caption={tutorialSection.coverImage?.caption ?? ''} />
 	<PostNav compact={true} slug={tutorialSection.slug} />
 	<ToggleGroup {tutorialSection} />
