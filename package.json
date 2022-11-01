@@ -11,7 +11,7 @@
 		"dokku": "npm install",
 		"build": "svelte-kit sync && vite build && ln -s -f build/index.js server.js",
 		"preview": "vite preview --host",
-		"sync": "svelte-kit sync && pnpm-lock-export",
+		"sync": "svelte-kit sync && pnpm-lock-export && npm i --package-lock-only",
 		"check": "svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
@@ -31,7 +31,7 @@
 		"parse-link-header": "^2.0.0",
 		"path-browserify": "^1.0.1",
 		"rehype-autolink-headings": "^6.1.1",
-		"rehype-slug": "^5.0.1",
+		"rehype-slug": "^5.1.0",
 		"rehype-stringify": "^9.0.3",
 		"remark-abbr": "^1.4.1",
 		"remark-frontmatter": "^4.0.1",
@@ -49,13 +49,11 @@
 		"unified": "^10.1.2",
 		"vfile": "^5.3.5",
 		"vfile-reporter": "^7.0.4",
-		"vite": "^3.2.1"
-	},
-	"devDependencies": {
+		"vite": "^3.2.2",
 		"@pnpm/logger": "^2.1.1",
 		"@stefanprobst/remark-shiki": "^2.1.0",
-		"@typescript-eslint/eslint-plugin": "^5.41.0",
-		"@typescript-eslint/parser": "^5.41.0",
+		"@typescript-eslint/eslint-plugin": "^5.42.0",
+		"@typescript-eslint/parser": "^5.42.0",
 		"autoprefixer": "^10.4.13",
 		"eslint": "^8.26.0",
 		"eslint-config-prettier": "^8.5.0",
@@ -77,9 +75,10 @@
 		"svelte-check": "^2.9.2",
 		"svelte-icons": "^2.1.0",
 		"svelte-preprocess": "^4.10.7",
-		"tslib": "^2.4.0",
+		"tslib": "^2.4.1",
 		"typescript": "^4.8.4",
 		"vite-imagetools": "^4.0.11"
 	},
+	"devDependencies": {},
 	"type": "module"
 }
