@@ -124,29 +124,6 @@ export type TutorialSectionNumberMap = Pick<
 	'slug' | 'lead' | 'series_part' | 'series_weight'
 >;
 
-export interface GHReactions {
-	total_count: number;
-	'+1': number;
-	'-1': number;
-	laugh: number;
-	hooray: number;
-	confused: number;
-	heart: number;
-	rocket: number;
-	eyes: number;
-}
-
-export type GHComment = {
-	body: string;
-	user: GHUser;
-	created_at: Date;
-	updated_at: Date;
-	html_url: string;
-	issue_url: string;
-	author_association: string;
-	reactions: GHReactions;
-};
-
 export interface GHUser {
 	login: string;
 	id: number;
@@ -166,20 +143,6 @@ export interface GHUser {
 	received_events_url: string;
 	type: 'User';
 	site_admin: boolean;
-}
-
-export interface GithubIssue {
-	user: GHUser;
-	labels: {
-		name: string;
-	}[];
-	title: string;
-	body: string;
-	created_at: Date;
-	updated_at: Date;
-	html_url: string;
-	comments_url: string;
-	reactions: GHReactions;
 }
 
 export interface GHRepo {

@@ -1,11 +1,6 @@
-import type {
-	FilterSetting,
-	FilterSettingDetails,
-	GHRepo,
-	LanguageOrTech,
-	RepoWithMetaData
-} from '$lib/types';
+import type { FilterSetting, GHRepo, LanguageOrTech, RepoWithMetaData } from '$lib/types';
 import { isUserRepo } from '$lib/util';
+import { nullRepoWithMetadata } from './constants';
 
 export const repoDataDepot: {
 	[key: string]: {
@@ -113,25 +108,19 @@ export const repoDataDepot: {
 	}
 };
 
-export function updateProjectMetaData(project: GHRepo): RepoWithMetaData {
-	if (isUserRepo(project.name)) {
-		return {
-			name: project.name,
-			description: project.description,
-			starCount: project.stargazers_count,
-			forkCount: project.forks_count,
-			repoUrl: project.html_url,
-			starsUrl: project.stargazers_url,
-			forksUrl: project.forks_url,
-			primaryLanguage: repoDataDepot[project.name].primaryLanguage,
-			primaryCategory: repoDataDepot[project.name].primaryCategory,
-			languages: repoDataDepot[project.name].languages,
-			categories: repoDataDepot[project.name].categories
-		};
-	}
-}
-
-export const categoryMetaData = {};
-
-export const getCategoryDetails = (name: FilterSetting): FilterSettingDetails =>
-	categoryMetaData[name];
+export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
+	isUserRepo(project.name)
+		? {
+				name: project.name,
+				description: project.description,
+				starCount: project.stargazers_count,
+				forkCount: project.forks_count,
+				repoUrl: project.html_url,
+				starsUrl: project.stargazers_url,
+				forksUrl: project.forks_url,
+				primaryLanguage: repoDataDepot?.[project.name]?.primaryLanguage ?? 'allLanguages',
+				primaryCategory: repoDataDepot?.[project.name]?.primaryCategory ?? 'allCategories',
+				languages: repoDataDepot?.[project.name]?.languages ?? ['allLanguages'],
+				categories: repoDataDepot?.[project.name]?.categories ?? ['allCategories']
+		  }
+		: nullRepoWithMetadata;

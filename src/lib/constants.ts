@@ -1,4 +1,4 @@
-import type { GHReactions } from '$lib/types';
+import type { RepoWithMetaData } from './types';
 
 export const HTTP_METHODS = [
 	'GET',
@@ -42,6 +42,7 @@ export const TECH_LIST = [
 ] as const;
 
 export const REPO_NAMES = [
+	'null',
 	'aaronluna.dev',
 	'async-file-server',
 	'console-progress-bar',
@@ -85,14 +86,16 @@ export const PROJECT_CATEGORIES = [
 	...FRONTEND_CATEGORIES
 ] as const;
 
-export const nullGHReactions: GHReactions = {
-	total_count: 0,
-	'+1': 0,
-	'-1': 0,
-	laugh: 0,
-	hooray: 0,
-	confused: 0,
-	heart: 0,
-	rocket: 0,
-	eyes: 0
+export const nullRepoWithMetadata: RepoWithMetaData = {
+	name: 'null',
+	description: '',
+	starCount: 0,
+	forkCount: 0,
+	repoUrl: '',
+	starsUrl: '',
+	forksUrl: '',
+	primaryLanguage: 'allLanguages',
+	primaryCategory: 'allProjects',
+	languages: ['allLanguages'],
+	categories: ['allCategories']
 };
