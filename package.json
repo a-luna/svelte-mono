@@ -75,11 +75,10 @@
 		"vfile": "^5.3.5",
 		"vfile-reporter": "^7.0.4",
 		"vite": "^3.2.2",
+		"@stefanprobst/remark-shiki": "^2.1.0",
+		"@types/node": "^18.11.9",
 		"vite-imagetools": "^4.0.11"
 	},
-	"devDependencies": {
-		"@stefanprobst/remark-shiki": "^2.1.0",
-		"@types/node": "^18.11.9"
-	},
+	"devDependencies": {},
 	"type": "module"
 }
