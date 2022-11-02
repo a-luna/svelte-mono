@@ -10,11 +10,13 @@
 </script>
 
 <div class:mobile={mobile && open} class:desktop={!mobile} class="social">
-	<a href="http://github.com/a-luna"><Github /></a>
-	<a href="https://www.linkedin.com/in/aaron-luna-reno-nv/"><LinkedIn /></a>
-	<a href="https://twitter.com/aaronlunadev/"><Twitter /></a>
-	<a href="https://codepen.io/a-luna/"><Codepen /></a>
-	<a href="mailto:contact@aaronluna.dev"><Email /></a>
+	<a href="http://github.com/a-luna"><Github title={'Link to my Github profile'} /></a>
+	<a href="https://www.linkedin.com/in/aaron-luna-reno-nv/"
+		><LinkedIn title={'Link to my LinkedIn profile'} /></a
+	>
+	<a href="https://twitter.com/aaronlunadev/"><Twitter title={'Link to my Twitter profile'} /></a>
+	<a href="https://codepen.io/a-luna/"><Codepen title={'Link to my Codepen profile'} /></a>
+	<a href="mailto:contact@aaronluna.dev"><Email title={'Link to send me an email'} /></a>
 </div>
 
 <style lang="postcss">
