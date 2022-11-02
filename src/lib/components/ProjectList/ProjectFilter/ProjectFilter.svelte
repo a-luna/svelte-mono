@@ -9,7 +9,7 @@
 	import { fade } from 'svelte/transition';
 
 	export let id = `radio-${getRandomHexString(4)}`;
-	export let title: string = null;
+	export let title: string = '';
 	export let startOptionNumber = 1;
 	export let noFilterSetting: FilterSettingType = null;
 	export let filterSettings: FilterSettingType[];

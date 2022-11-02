@@ -2,9 +2,9 @@
 	import IconBase from '$lib/components/Icons/IconBase.svelte';
 
 	export let fill: string = 'currentColor';
-	export let width: string = null;
-	export let height: string = null;
-	export let title: string = null;
+	export let width: string = '';
+	export let height: string = '';
+	export let title: string = '';
 	export let strokeWidth = '1px';
 	export let padding = '0';
 </script>

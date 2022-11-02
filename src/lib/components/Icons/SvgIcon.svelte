@@ -6,7 +6,7 @@
 
 	export let icon: IconName;
 	export let size: string;
-	export let margin: string = null;
+	export let margin: string = '';
 
 	const icons = {
 		circle: Circle,
