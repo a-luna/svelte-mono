@@ -3,11 +3,11 @@
 
 	export let stroke: string = 'currentColor';
 	export let fill: string = 'currentColor';
-	export let width: string = null;
-	export let height: string = null;
-	export let x: string = null;
-	export let y: string = null;
-	export let title: string = null;
+	export let width: string = '';
+	export let height: string = '';
+	export let x: string = '';
+	export let y: string = '';
+	export let title: string = '';
 	export let strokeWidth = '0';
 	export let padding = '0';
 </script>

@@ -7,9 +7,10 @@
 	export let selected = false;
 
 	$: details = getFilterSettingDetails(value);
-	$: color = `var(--${details.color}-icon)`;
+	$: color = hovered || selected ? 'var(--black)' : `var(--${details.color}-icon)`;
+	$: bgColor = hovered || selected ? `var(--${details.color}-icon)` : 'var(--black)';
 	$: displayName = details.displayName;
-	$: style = `--category-color: ${color}`;
+	$: style = `color: ${color}; background-color: ${bgColor}`;
 </script>
 
 <div class="filter-setting" class:hovered class:selected {style}>
@@ -23,17 +24,6 @@
 		align-items: center;
 		font-weight: 400;
 		line-height: 1;
-
-		color: var(--category-color);
-		background-color: inherit;
-	}
-	.hovered {
-		background-color: inherit;
-	}
-	.selected,
-	.hovered.selected {
-		color: var(--page-bg-color);
-		background-color: var(--category-color);
 	}
 	.filter-value {
 		white-space: nowrap;

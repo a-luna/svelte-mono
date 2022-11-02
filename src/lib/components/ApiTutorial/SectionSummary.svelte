@@ -11,24 +11,33 @@
 	<div class="section-summary">{section?.description}</div>
 	<div class="github-links">
 		<div class="links-left">
-			<a href={section?.url_git_rel_browse}
-				><div class="icon"><Code /></div>
-				<span class="label">Code</span></a
+			<a href={section?.url_git_rel_browse} title="View source for this tutorial section">
+				<div class="icon"><Code /></div>
+				<span class="label">Code</span>
+			</a>
+			<a
+				href={section?.url_git_rel_diff}
+				title="View source diff between this section and the previous"
 			>
-			<a href={section?.url_git_rel_diff}
-				><div class="icon"><Code /></div>
-				<span class="label">Diff</span></a
-			>
+				<div class="icon"><Code /></div>
+				<span class="label">Diff</span>
+			</a>
 		</div>
 		<div class="links-right">
-			<a href={section?.url_git_rel_zip}
-				><div class="icon"><ArrowDown /></div>
-				<span class="label">.zip</span></a
+			<a
+				href={section?.url_git_rel_zip}
+				title="Download source code for this tutorial section (.zip file)"
 			>
-			<a href={section?.url_git_rel_tar}
-				><div class="icon"><ArrowDown /></div>
-				<span class="label">.tar.gz</span></a
+				<div class="icon"><ArrowDown /></div>
+				<span class="label">.zip</span>
+			</a>
+			<a
+				href={section?.url_git_rel_tar}
+				title="Download source code for this tutorial section (.tar.gz file)"
 			>
+				<div class="icon"><ArrowDown /></div>
+				<span class="label">.tar.gz</span>
+			</a>
 		</div>
 	</div>
 </div>
@@ -108,7 +117,8 @@
 	}
 
 	.links-left a:hover {
-		background-color: var(--dark-gray-shade1);
+		background-color: var(--green-icon);
+		color: var(--black);
 	}
 
 	.links-right a {
@@ -119,7 +129,8 @@
 	}
 
 	.links-right a:hover {
-		background-color: var(--dark-gray-shade1);
+		background-color: var(--blue-icon);
+		color: var(--black);
 	}
 
 	.github-links .icon {

@@ -46,10 +46,8 @@
 		} else {
 			const color = getFilterSettingColor(value);
 			bgColor =
-				current === value
+				current === value || hoveredValue === value
 					? `var(--${color}-icon)`
-					: hoveredValue === value
-					? 'var(--dark-gray-shade1)'
 					: 'var(--page-bg-color)';
 			borderStyle = ` border: 1px solid var(--${color}-icon)`;
 		}
