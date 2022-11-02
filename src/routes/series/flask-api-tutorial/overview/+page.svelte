@@ -4,10 +4,11 @@
 	import SectionSummary from '$lib/components/ApiTutorial/SectionSummary.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import { tutorialSections } from '$lib/stores';
-	import type { BlogResource } from '$lib/types';
+	import type { BlogResource, TutorialSection } from '$lib/types';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	let list: TutorialSection[];
 
 	const coverImage: BlogResource = {
 		name: 'cover',
@@ -19,7 +20,8 @@
 
 	$: if (browser && Object.keys(allTutorialSections).length)
 		$tutorialSections = allTutorialSections;
-	$: list = $tutorialSections.sort((a, b) => a.series_weight - b.series_weight);
+	$: if (tutorialSections && $tutorialSections.length)
+		list = $tutorialSections.sort((a, b) => a.series_weight - b.series_weight);
 </script>
 
 <svelte:head>

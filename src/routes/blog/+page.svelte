@@ -7,6 +7,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	let lists: BlogPost[];
 	$: allBlogPosts = data.allBlogPosts;
 
 	$: if (browser && Object.keys(allBlogPosts).length) $blogPosts = allBlogPosts;
@@ -19,14 +20,15 @@
 
 	let isTruncated = $blogPosts.length > 20;
 	let search: string;
-	$: list = $blogPosts
-		.filter((item) => {
-			if (search) {
-				return item.title.toLowerCase().includes(search.toLowerCase());
-			}
-			return true;
-		})
-		.slice(0, isTruncated ? 2 : $blogPosts.length);
+	$: if (blogPosts && $blogPosts.length)
+		list = $blogPosts
+			.filter((item) => {
+				if (search) {
+					return item.title.toLowerCase().includes(search.toLowerCase());
+				}
+				return true;
+			})
+			.slice(0, isTruncated ? 2 : $blogPosts.length);
 </script>
 
 <svelte:head>
