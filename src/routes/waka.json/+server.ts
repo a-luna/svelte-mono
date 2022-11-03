@@ -10,8 +10,8 @@ export const GET: RequestHandler = async ({ url, setHeaders }: RequestEvent) => 
 	if (url.searchParams.has('range')) {
 		range = url.searchParams.get('range') ?? 'last_7_days';
 	}
-	const endpoint = `stats/${range}`;
-	const result = await api.get(`${WAKA_API_BASE_URL}/${endpoint}`, {
+	const endpoint = `${WAKA_API_BASE_URL}/stats/${range}`;
+	const result = await api.get(endpoint, {
 		type: 'Basic',
 		token: encode(WAKATIME_API_KEY)
 	});

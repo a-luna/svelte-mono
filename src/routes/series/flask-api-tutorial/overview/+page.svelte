@@ -60,7 +60,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		padding: 0 1rem;
-		margin: 2rem auto 4rem auto;
+		margin: 1rem auto 4rem auto;
 		justify-content: center;
 		align-items: flex-start;
 		max-width: 42rem;

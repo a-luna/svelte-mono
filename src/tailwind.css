@@ -394,7 +394,6 @@ figcaption p {
 	border-radius: 4px;
 	overflow-wrap: normal;
 	overflow-x: auto;
-	padding: 5px;
 }
 
 ul.alert {
@@ -410,8 +409,7 @@ ul.alert li {
 .alert-flex,
 .note-flex {
 	display: flex;
-	flex-flow: row nowrap;
-	align-items: stretch;
+	flex-flow: column nowrap;
 	background-color: var(--widget-bg-color);
 	border-radius: 0;
 }
@@ -424,23 +422,44 @@ ul.alert li {
 	border: 1px solid var(--alert);
 }
 
-.alert-icon,
-.note-icon {
-	font-size: 2em;
-	margin: auto 5px;
-	text-align: center;
+.alert-top,
+.note-top {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	gap: 5px;
+	line-height: 1;
+	color: var(--widget-bg-color);
+	padding: 4px 0;
 }
 
-.alert-icon svg,
-.note-icon svg {
-	width: 30px;
+.alert-top {
+	background-color: var(--alert);
+}
+
+.note-top {
+	background-color: var(--note);
+}
+
+.alert-icon,
+.note-icon {
+	height: 16px;
+	width: 22px;
+	padding: 0 0 0 5px;
+}
+
+.alert-title,
+.note-title {
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: 0.5px;
 }
 
 .alert-message,
 .note-message {
 	display: flex;
 	text-align: left;
-	margin: 0 5px;
+	padding: 5px 7px;
 }
 
 .alert-message p,
@@ -556,7 +575,7 @@ pre:not(.shiki) {
 
 .shiki-wrapper .top-row {
 	display: grid;
-	grid-template-columns: auto 24px 1fr ;
+	grid-template-columns: auto 24px 1fr;
 	grid-template-rows: 24px;
 }
 
@@ -823,7 +842,7 @@ article figure {
 }
 
 .post-image figure {
-	margin: 0 0 1rem 0;
+	margin: 0 0 2rem 0;
 	width: 100%;
 }
 
