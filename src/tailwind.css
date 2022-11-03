@@ -458,6 +458,7 @@ ul.alert li {
 .alert-message,
 .note-message {
 	display: flex;
+	flex-flow: column nowrap;
 	text-align: left;
 	padding: 5px 7px;
 }

@@ -2,12 +2,9 @@ import type { CodeBlock, HtmlHeading, TocSection } from '$lib/types';
 import {
 	CODE_BLOCK_END_REGEX,
 	CODE_BLOCK_START_REGEX,
-	copySvgIcon,
 	FA_BULLET_REGEX,
-	fullStarSvgIcon,
-	halfStarSvgIcon,
+	getSvgIcon,
 	HTML_HEADING_REGEX,
-	starOutlineSvgIcon,
 	TOX_TEST_RESULTS_REGEX
 } from './constants';
 
@@ -140,9 +137,10 @@ function createWrappedCodeBlock(
 	lineNumbers: boolean,
 	lineNumberStart: number
 ): string {
+	const svgIcon = getSvgIcon('copy');
 	let topRow = '<span class="top-row">';
 	topRow += `<span class="lang-name">${lang}</span>`;
-	topRow += `<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">${copySvgIcon}</button>`;
+	topRow += `<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">${svgIcon}</button>`;
 	topRow += '<span class="space-filler"></span>';
 	topRow += `</span>`;
 
@@ -155,9 +153,9 @@ function createWrappedCodeBlock(
 }
 
 const starSvgMap: { [k: string]: string } = {
-	'fa-star-o': starOutlineSvgIcon,
-	'fa-star': fullStarSvgIcon,
-	'fa-star-half-o': halfStarSvgIcon
+	'fa-star': getSvgIcon('fullStar'),
+	'fa-star-half-o': getSvgIcon('halfStar'),
+	'fa-star-o': getSvgIcon('star')
 };
 
 export const transformFaBulletLists = (html: string): string =>
