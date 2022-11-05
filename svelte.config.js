@@ -13,9 +13,6 @@ const config = {
 		}),
 		mdsvex({ extensions: ['.svx', '.md'] })
 	],
-	serviceWorker: {
-		register: false
-	},
 	kit: {
 		adapter: adapter({ out: 'build' })
 	}
