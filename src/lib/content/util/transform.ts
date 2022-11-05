@@ -1,9 +1,9 @@
 import {
 	colorizeToxResults,
-	convertAlertBoxes,
 	convertInfoBoxes,
 	convertLinkedImages,
 	convertVideos,
+	convertWarningBoxes,
 	FA_BULLET_LIST_REGEX,
 	generateTableOfContents,
 	identifyCodeBlocks,
@@ -12,7 +12,7 @@ import {
 	transformHeadings
 } from '$lib/content';
 import { highlighter, parseMeta } from '$lib/shiki';
-import type { BlogPost, TocSection, TutorialSection } from '$lib/types';
+import type { BlogPost, CodeBlock, ResourceMap, TocSection, TutorialSection } from '$lib/types';
 import remarkShiki from '@stefanprobst/remark-shiki';
 import rehypeFormat from 'rehype-format';
 import rehypeRaw from 'rehype-raw';
@@ -31,34 +31,34 @@ const markdownToHtmlProcessor = unified()
 	.use(rehypeFormat)
 	.use(rehypeStringify);
 
-async function markdownConversions(blogPost: BlogPost): Promise<string> {
-	let convertedMarkdown = convertLinkedImages(blogPost.content, blogPost.resources);
-	convertedMarkdown = await convertInfoBoxes(convertedMarkdown);
-	convertedMarkdown = await convertAlertBoxes(convertedMarkdown);
-	return convertVideos(convertedMarkdown, blogPost.resources);
+async function convertMarkdownToHtml(content: string, resources: ResourceMap): Promise<string> {
+	let markdown = convertLinkedImages(content, resources);
+	markdown = await convertInfoBoxes(markdown);
+	markdown = await convertWarningBoxes(markdown);
+	markdown = convertVideos(markdown, resources);
+	const html = await markdownToHtmlProcessor.process(markdown.trim());
+	return String(html).trim();
 }
 
-function htmlConversions(html: string, blogPost: BlogPost): string {
-	let convertedHtml = transformHeadings(html);
-	convertedHtml = transformCodeBlocks(convertedHtml, blogPost?.codeBlocks || []);
+function transformHtml(html: string, codeBlocks: CodeBlock[]): string {
+	let content = transformHeadings(html);
+	content = transformCodeBlocks(content, codeBlocks);
 	if (FA_BULLET_LIST_REGEX.test(html)) {
-		convertedHtml = transformFaBulletLists(convertedHtml);
+		content = transformFaBulletLists(content);
 	}
-	return colorizeToxResults(convertedHtml);
+	return colorizeToxResults(content);
 }
 
 export async function convertContentToHtml(
 	blogPost: BlogPost
 ): Promise<BlogPost | TutorialSection> {
-	blogPost.codeBlocks = identifyCodeBlocks(blogPost.content);
-	let content = await markdownConversions(blogPost);
-	const html = await markdownToHtmlProcessor.process(content.trim());
-	content = String(html).trim();
+	const codeBlocks = identifyCodeBlocks(blogPost.content);
+	let content = await convertMarkdownToHtml(blogPost.content, blogPost.resources);
 
 	let toc: TocSection[] = [];
 	if (blogPost.hasToc) {
 		toc = generateTableOfContents(content);
 	}
-	content = htmlConversions(content, blogPost);
-	return { ...blogPost, content, toc };
+	content = transformHtml(content, codeBlocks);
+	return { ...blogPost, content, codeBlocks, toc };
 }

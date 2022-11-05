@@ -83,7 +83,7 @@ module.exports = {
 							marginLeft: 'auto',
 							color: 'var(--white-shade2)'
 						},
-						'article .alert strong, article .note strong, article .requirements strong, article  blockquote p strong':
+						'article .custom-block strong, article .requirements strong, article blockquote p strong':
 							{
 								color: 'currentColor'
 							},
@@ -94,7 +94,7 @@ module.exports = {
 							marginTop: '0',
 							marginBottom: '0'
 						},
-						'ul, ul.alert': {
+						'ul, ul.custom-block': {
 							'list-style': 'square'
 						},
 						'li, ul, ol': {

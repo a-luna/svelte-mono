@@ -74,6 +74,10 @@ export interface BlogResource {
 	caption?: string;
 }
 
+export interface ResourceMap {
+	[k: string]: BlogResource;
+}
+
 export interface CodeBlock {
 	shiki: boolean;
 	id: string;
@@ -100,7 +104,7 @@ export interface BlogPost {
 	slug: string;
 	date: string;
 	coverImage: BlogResource;
-	resources: { [k: string]: BlogResource };
+	resources: ResourceMap;
 	codeBlocks?: CodeBlock[];
 }
 

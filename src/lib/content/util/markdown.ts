@@ -1,3 +1,13 @@
+import {
+	CODE_BLOCK_START_REGEX,
+	CODE_FENCE_END_REGEX,
+	CODE_FENCE_START_REGEX,
+	getSvgIcon,
+	INFO_BOX_REGEX,
+	LINKED_IMAGE_REGEX,
+	VIDEO_REGEX,
+	WARNING_BOX_REGEX
+} from '$lib/content';
 import type { BlogResource, CodeBlock } from '$lib/types';
 import { getRandomHexString, replaceAsync } from '$lib/util';
 import rehypeFormat from 'rehype-format';
@@ -6,16 +16,6 @@ import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
-import {
-	ALERT_BOX_REGEX,
-	CODE_BLOCK_START_REGEX,
-	CODE_FENCE_END_REGEX,
-	CODE_FENCE_START_REGEX,
-	getSvgIcon,
-	INFO_BOX_REGEX,
-	LINKED_IMAGE_REGEX,
-	VIDEO_REGEX
-} from './constants';
 
 const simpleMarkdownToHtmlProcessor = unified()
 	.use(remarkParse)
@@ -65,19 +65,19 @@ export function identifyCodeBlocks(markdown: string): CodeBlock[] {
 export const convertInfoBoxes = async (markdown: string): Promise<string> =>
 	await replaceAsync(markdown, INFO_BOX_REGEX, convertInfoBoxToHtml);
 
-export const convertAlertBoxes = async (markdown: string): Promise<string> =>
-	await replaceAsync(markdown, ALERT_BOX_REGEX, convertAlertBoxToHtml);
+export const convertWarningBoxes = async (markdown: string): Promise<string> =>
+	await replaceAsync(markdown, WARNING_BOX_REGEX, convertWarningBoxToHtml);
 
 async function convertInfoBoxToHtml(match: RegExpMatchArray): Promise<string> {
 	const html = await convertMarkdownSnippetToHtml(match);
 	const svgIcon = getSvgIcon('note');
-	return `<div class="note note-flex"><div class="note-top"><div class="note-icon">${svgIcon}</div><span class="note-title">NOTE</span></div><div class="note-message"><p>${html}</p></div></div>`;
+	return `<div class="note custom-block"><div class="custom-block-top"><div class="custom-block-icon">${svgIcon}</div><span class="custom-block-title">NOTE</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
 }
 
-async function convertAlertBoxToHtml(match: RegExpMatchArray): Promise<string> {
+async function convertWarningBoxToHtml(match: RegExpMatchArray): Promise<string> {
 	const html = await convertMarkdownSnippetToHtml(match);
-	const svgIcon = getSvgIcon('alert');
-	return `<div class="alert alert-flex"><div class="alert-top"><div class="alert-icon">${svgIcon}</div><span class="alert-title">WARNING</span></div><div class="alert-message"><p>${html}</p></div></div>`;
+	const svgIcon = getSvgIcon('warning');
+	return `<div class="warning custom-block"><div class="custom-block-top"><div class="custom-block-icon">${svgIcon}</div><span class="custom-block-title">WARNING</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
 }
 
 async function convertMarkdownSnippetToHtml(match: RegExpMatchArray): Promise<string> {
