@@ -83,10 +83,9 @@ module.exports = {
 							marginLeft: 'auto',
 							color: 'var(--white-shade2)'
 						},
-						'article .custom-block strong, article .requirements strong, article blockquote p strong':
-							{
-								color: 'currentColor'
-							},
+						'article .custom-block strong, article .requirements strong, article blockquote p strong': {
+							color: 'currentColor'
+						},
 						'article figure p': {
 							margin: '0'
 						},
@@ -130,6 +129,9 @@ module.exports = {
 						},
 						'ul > li::marker': {
 							color: 'inherit'
+						},
+						'table tfoot td p': {
+							margin: '0 0 3px 9px'
 						}
 					}
 				}

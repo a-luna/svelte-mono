@@ -381,6 +381,20 @@ figcaption p {
 	width: 16px;
 }
 
+.level-3,
+.level-4,
+.level-5,
+.level-6 {
+	font-size: 1.1rem;
+}
+
+.level-3 code,
+.level-4 code,
+.level-5 code,
+.level-6 code {
+	font-size: 1rem;
+}
+
 .heading-text {
 	display: flex;
 	flex-flow: row nowrap;
@@ -1016,7 +1030,7 @@ table.tutorial tbody td {
 }
 
 table.tutorial code {
-	font-size: 0.875rem;
+	font-size: 0.7rem;
 }
 
 table.tutorial tbody td,
@@ -1036,11 +1050,7 @@ table.tutorial thead th.column-header:last-child {
 }
 
 table tfoot td p:first-child {
-	margin: 0;
-}
-
-table tfoot td p {
-	margin: 0 0 3px 9px;
+	margin: 0 0 3px 0;
 }
 
 table.tutorial tfoot code {

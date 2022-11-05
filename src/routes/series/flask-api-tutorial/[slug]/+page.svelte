@@ -90,10 +90,7 @@
 	<meta property="og:title" content={tutorialSection?.title} />
 	<meta name="Description" content={tutorialSection?.description} />
 	<meta property="og:description" content={tutorialSection?.description} />
-	<meta
-		name="twitter:card"
-		content={tutorialSection?.coverImage.src ? 'summary_large_image' : 'summary'}
-	/>
+	<meta name="twitter:card" content={tutorialSection?.coverImage.src ? 'summary_large_image' : 'summary'} />
 	<meta name="twitter:creator" content={'@' + MY_TWITTER_HANDLE} />
 	<meta name="twitter:title" content={tutorialSection?.title} />
 	<meta name="twitter:description" content={tutorialSection?.description} />
@@ -103,9 +100,7 @@
 	{/if}
 </svelte:head>
 
-<article
-	class="tutorial mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
->
+<article class="tutorial">
 	<h1>{tutorialSection?.title}</h1>
 	<ByLine nameOnly={true} />
 	<CoverImage slug={tutorialSection.slug} caption={tutorialSection.coverImage?.caption ?? ''} />
@@ -120,11 +115,20 @@
 </article>
 
 <style lang="postcss">
+	article {
+		display: flex;
+		flex-flow: column nowrap;
+		padding: 0 1.5rem;
+		margin: 1rem auto;
+		justify-content: center;
+		align-items: flex-start;
+		width: 100%;
+		max-width: var(--max-width);
+	}
 	h1 {
 		font-size: 2rem;
 		font-weight: 700;
 		line-height: 1.2;
-		letter-spacing: 0.75px;
 		color: var(--post-title-text-color);
 		-webkit-text-fill-color: var(--post-title-text-color);
 		-webkit-text-stroke-width: 1px;
@@ -139,8 +143,22 @@
 			0.25px 0.25px var(--post-title-text-shadow-color); */
 	}
 	@media (min-width: 640px) {
+		article {
+			padding: 0 2rem;
+		}
 		h1 {
 			font-size: 2.25rem;
+		}
+	}
+	@media (min-width: 640px) {
+		article {
+			padding: 0 1.5rem;
+		}
+	}
+	@media (min-width: 768px) {
+		article {
+			margin: 2rem auto;
+			padding: 0;
 		}
 	}
 </style>

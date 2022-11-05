@@ -90,10 +90,7 @@
 	<meta property="og:title" content={blogPost?.title} />
 	<meta name="Description" content={blogPost?.description} />
 	<meta property="og:description" content={blogPost?.description} />
-	<meta
-		name="twitter:card"
-		content={blogPost?.coverImage.src ? 'summary_large_image' : 'summary'}
-	/>
+	<meta name="twitter:card" content={blogPost?.coverImage.src ? 'summary_large_image' : 'summary'} />
 	<meta name="twitter:creator" content={'@' + MY_TWITTER_HANDLE} />
 	<meta name="twitter:title" content={blogPost?.title} />
 	<meta name="twitter:description" content={blogPost?.description} />
@@ -103,9 +100,7 @@
 	{/if}
 </svelte:head>
 
-<article
-	class="blog mx-auto mb-8 mt-4 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8 md:mt-8"
->
+<article class="blog">
 	<h1>{blogPost?.title}</h1>
 	<ByLine {published} />
 	<CoverImage slug={blogPost.slug} caption={blogPost.coverImage?.caption ?? ''} />
@@ -123,6 +118,16 @@
 </article>
 
 <style lang="postcss">
+	article {
+		display: flex;
+		flex-flow: column nowrap;
+		padding: 0 1.5rem;
+		margin: 1rem auto;
+		justify-content: center;
+		align-items: flex-start;
+		width: 100%;
+		max-width: var(--max-width);
+	}
 	h1 {
 		font-size: 2rem;
 		font-weight: 700;
@@ -141,8 +146,22 @@
 			0.25px 0.25px var(--post-title-text-shadow-color); */
 	}
 	@media (min-width: 640px) {
+		article {
+			padding: 0 2rem;
+		}
 		h1 {
 			font-size: 2.25rem;
+		}
+	}
+	@media (min-width: 640px) {
+		article {
+			padding: 0 1.5rem;
+		}
+	}
+	@media (min-width: 768px) {
+		article {
+			margin: 2rem auto;
+			padding: 0;
 		}
 	}
 </style>
