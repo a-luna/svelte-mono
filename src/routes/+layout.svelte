@@ -1,25 +1,29 @@
 <script lang="ts">
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
-	import { SITE_TITLE } from '$lib/siteConfig';
-	import { getBodyIsScrollable } from '$lib/stores';
-	import { getScrollbarWidth } from '$lib/util';
+	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
+	import { getPageHeight } from '$lib/stores';
 	import type { Writable } from 'svelte/store';
 	import '../tailwind.css';
 
 	export const prerender = true;
-	let bodyIsScrollable: Writable<boolean>;
+	let pageHeight: Writable<number>;
+	let windowHeight: number;
+	let scrollY: number;
+	let showScrollToTopButton: boolean;
 
-	$: if (typeof window !== 'undefined') bodyIsScrollable = getBodyIsScrollable();
-	$: scrollBarWidth = getScrollbarWidth();
-	$: if (bodyIsScrollable && $bodyIsScrollable) {
-		document.body.style.paddingRight = '0px';
-	} else if (bodyIsScrollable && scrollBarWidth) {
-		document.body.style.paddingRight = `${scrollBarWidth}px`;
-	}
+	$: if (typeof window !== 'undefined') pageHeight = getPageHeight();
+	$: if (typeof window !== 'undefined')
+		showScrollToTopButton = $pageHeight > windowHeight && scrollY > 0;
 </script>
 
+<svelte:window bind:innerHeight={windowHeight} bind:scrollY />
+
 <svelte:head>
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color={THEME_COLOR} />
+	<meta name="msapplication-TileColor" content={THEME_COLOR} />
+	<meta name="theme-color" content={THEME_COLOR} media="(prefers-color-scheme: light)" />
+	<meta name="theme-color" content={THEME_COLOR} media="(prefers-color-scheme: dark)" />
 	<link
 		rel="alternate"
 		type="application/rss+xml"
@@ -33,7 +37,9 @@
 </div>
 <main>
 	<slot />
-	<ScrollToTopButton />
+	{#if showScrollToTopButton}
+		<ScrollToTopButton />
+	{/if}
 </main>
 
 <style lang="postcss">
@@ -42,8 +48,7 @@
 		flex-flow: column nowrap;
 		justify-content: center;
 		background-color: hsla(0 0% 0% / 0);
-		max-width: 700px;
-		margin: 0 auto;
+		width: 100%;
 	}
 	main {
 		display: flex;
