@@ -11,7 +11,7 @@
 		scrollbar-gutter: stable;
 	}
 	:focus-visible {
-		outline-color: var(--accent-color);
+		outline: 2px solid var(--accent-color);
 	}
 	::selection {
 		color: var(--black);
@@ -46,7 +46,7 @@
 	}
 }
 :root {
-	--test: #141414;
+	--max-width: 712px;
 
 	--no-hue: 0;
 	--red-hue: 0;
@@ -248,7 +248,7 @@
 	--post-title-text-shadow-color3: hsl(0 0% 25% / 0.5); */
 
 	/* Post Title */
-	--post-title-text-color: var(--accent-color);
+	--post-title-text-color: var(--white-shade2);
 	--post-title-text-stroke: var(--black-tint2);
 	--post-title-text-shadow-color: hsl(0 0% 30% / 0.8);
 
@@ -532,11 +532,11 @@ pre:not(.shiki) {
 }
 
 .shiki.linenos code .line:last-child {
-	padding: 0 1rem 0.5rem 0.5rem;
+	padding: 0 1rem 0.25rem 0.5rem;
 }
 
 .shiki.linenos code .line:first-child:last-child {
-	padding: 0.5rem 1rem 0.5rem 0.5rem;
+	padding: 0.25rem 1rem 0.25rem 0.5rem;
 }
 
 .shiki .line {
@@ -1129,6 +1129,7 @@ th.column-header,
 	border: 1px solid var(--accent-color);
 	vertical-align: middle;
 	text-align: center;
+	padding: 0;
 }
 
 th.first-column,
@@ -1294,6 +1295,7 @@ body::-webkit-scrollbar-thumb {
 	background-color: var(--page-bg-color);
 	color: var(--body-text);
 	width: 100%;
+	min-width: 340px;
 }
 
 .copyable-text-area {

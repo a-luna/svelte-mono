@@ -1,13 +1,12 @@
 <script lang="ts">
 	import ArrowLeft from '$lib/components/Icons/ArrowLeft.svelte';
 	import ArrowRight from '$lib/components/Icons/ArrowRight.svelte';
-	import { getPageWidth, tutorialSectionNumberMap } from '$lib/stores';
+	import { tutorialSectionNumberMap } from '$lib/stores';
 	import type { TutorialSectionNumberMap } from '$lib/types';
-	import type { Writable } from 'svelte/store';
 
 	export let slug: string;
 	export let compact = false;
-	let pageWidth: Writable<number>;
+	let pageWidth: number;
 
 	const part0: TutorialSectionNumberMap = {
 		lead: 'Project Overview',
@@ -16,10 +15,9 @@
 		series_part: 'Overview'
 	};
 
-	$: if (typeof window !== 'undefined') pageWidth = getPageWidth();
 	$: flexStyle = compact ? 'flex-flow: row nowrap;' : 'flex-flow: column nowrap;';
 	$: fontSize = compact
-		? $pageWidth > 640
+		? pageWidth > 640
 			? 'font-size: 1.2rem;'
 			: 'font-size: 1;'
 		: 'font-size: inherit;';
@@ -44,6 +42,8 @@
 	$: previousLabel = compact ? previous?.series_part : previous?.lead;
 	$: nextLabel = compact ? next?.series_part : next?.lead;
 </script>
+
+<svelte:window bind:innerWidth={pageWidth} />
 
 <div class="post-nav" style={navStyles}>
 	<div class="post-nav-prev">

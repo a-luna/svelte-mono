@@ -98,8 +98,8 @@
 	<meta name="twitter:title" content={tutorialSection?.title} />
 	<meta name="twitter:description" content={tutorialSection?.description} />
 	{#if tutorialSection?.coverImage}
-		<meta property="og:image" content={tutorialSection.coverImage.src} />
-		<meta name="twitter:image" content={tutorialSection.coverImage.src} />
+		<meta property="og:image" content={tutorialSection?.coverImage?.src} />
+		<meta name="twitter:image" content={tutorialSection?.coverImage?.src} />
 	{/if}
 </svelte:head>
 
@@ -122,13 +122,13 @@
 <style lang="postcss">
 	h1 {
 		font-size: 2rem;
-		font-weight: 400;
+		font-weight: 700;
 		line-height: 1.2;
 		letter-spacing: 0.75px;
-		color: var(--accent-color);
-		-webkit-text-fill-color: var(--accent-color);
+		color: var(--post-title-text-color);
+		-webkit-text-fill-color: var(--post-title-text-color);
 		-webkit-text-stroke-width: 1px;
-		-webkit-text-stroke-color: var(--post-title-text-color);
+		-webkit-text-stroke-color: var(--post-title-text-stroke);
 		line-height: 1.3;
 		/* text-shadow: 2px 2px var(--post-title-text-shadow-color),
 			1.75px 1.75px var(--post-title-text-shadow-color),

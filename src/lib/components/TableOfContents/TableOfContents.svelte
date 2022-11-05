@@ -6,9 +6,9 @@
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
-	export let id = `toc-${getRandomHexString(4)}`;
 	export let toc: TocSectionType[];
-	export let detailsElement: HTMLDetailsElement;
+	export let detailsElement: HTMLDetailsElement | undefined = undefined;
+	export const id = `toc-${getRandomHexString(4)}`;
 	let open = false;
 
 	const toggleDetailsElement = createEventDispatcher<{
@@ -16,6 +16,7 @@
 	}>();
 
 	function handleSectionToggled() {
+		if (!detailsElement) return;
 		open = detailsElement.open;
 		toggleDetailsElement('toggleSection', { sectionId: id });
 	}

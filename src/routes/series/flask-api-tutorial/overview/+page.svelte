@@ -43,7 +43,7 @@
 	</p>
 	<h3>All Sections</h3>
 	{#if list.length}
-		<ul class="">
+		<ul data-sveltekit-prefetch>
 			{#each list as item}
 				<li>
 					<SectionSummary section={item} />

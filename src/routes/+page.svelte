@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import Mandala from '$lib/components/Mandala.svelte';
-	import {
-		DEFAULT_OG_IMAGE,
-		MY_TWITTER_HANDLE,
-		SITE_DESCRIPTION,
-		SITE_TITLE,
-		SITE_URL
-	} from '$lib/siteConfig';
+	import { DEFAULT_OG_IMAGE, MY_TWITTER_HANDLE, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
 	import { userRepos } from '$lib/stores';
 	import type { PageData } from './$types';
 
@@ -35,11 +29,11 @@
 </svelte:head>
 
 <div class="main-header portfolio">
-	<div class="main-header-content mr-auto">
+	<div class="main-header-content">
 		<p class="subheading"><span>Hello, I'm a full-stack developer from Reno, NV.</span></p>
 		<p class="normal-text">
-			The projects listed below range from REST APIs and CLI apps on the backend to component
-			libraries and web applications on the frontend.
+			The projects listed below range from REST APIs and CLI apps on the backend to component libraries and web
+			applications on the frontend.
 		</p>
 		<p class="normal-text">The list is filterable by language/technology used and project type.</p>
 		<p class="normal-text"><a href="series/flask-api-tutorial/overview">Flask API Tutorial</a></p>
@@ -51,18 +45,20 @@
 	.main-header {
 		background: var(--page-bg-color);
 		display: grid;
-		grid-template-columns: 10% 5% repeat(6, 1fr) 5% 10%;
+		grid-template-columns: repeat(6, 1fr);
 		grid-template-rows: 1fr auto 1fr auto 1fr auto 1fr auto 1fr auto;
 		width: 100%;
 		max-height: 365px;
 		margin: 0 auto;
+		padding: 0 1rem;
 	}
 	.main-header-content {
 		font-family: 'Roboto Mono', menlo, consolas, monospace;
 		margin: 0 auto;
 		z-index: 2;
 		position: relative;
-		grid-column: 2 / span 8;
+		max-width: var(--max-width);
+		grid-column: 1 / span 6;
 		grid-row: 1 / span 10;
 	}
 	.main-header-content h2 span,
@@ -82,6 +78,12 @@
 	}
 
 	@media (min-width: 640px) {
+		.main-header {
+			padding: 0;
+		}
+		.main-header-content {
+			padding: 0 1.5rem;
+		}
 		.subheading {
 			font-size: 1.4rem;
 		}
@@ -91,9 +93,11 @@
 	}
 
 	@media (min-width: 768px) {
+		.main-header {
+			padding: 0;
+		}
 		.main-header-content {
-			max-width: 700px;
-			grid-column: 3 / span 6;
+			padding: 0;
 		}
 	}
 

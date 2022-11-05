@@ -14,9 +14,8 @@
 <div class="about-me-bullets prose prose-invert">
 	<div class="bullet bullet-1"><Keyboard /></div>
 	<span class="about-me-1"
-		>I am a software engineer living and working in Reno, NV. I enjoy music and sports (especially
-		baseball and basketball) and I am especially interested in the changing landscape of legalized
-		gambling on sporting events.</span
+		>I am a software engineer living and working in Reno, NV. I enjoy music and sports (especially baseball and
+		basketball) and I am especially interested in the changing landscape of legalized gambling on sporting events.</span
 	>
 	<div class="bullet bullet-2"><Code /></div>
 	<span class="about-me-2"
@@ -29,11 +28,10 @@
 		<strong>AngularJS</strong>, <strong>React</strong>, and
 		<strong>Svelte</strong>.
 		<span
-			>Recently, I dove head-first into the world of static-site generators (aka the <strong
-				>JAMStack</strong
-			>), creating sites with <strong>Hugo</strong>
-			and <strong>Gatsby</strong>. I have migrated Wordpress sites to Gatsby, created entirely new
-			sites with <strong>Contentful</strong>/<strong>Sanity</strong>
+			>Recently, I dove head-first into the world of static-site generators (aka the <strong>JAMStack</strong>),
+			creating sites with <strong>Hugo</strong>
+			and <strong>Gatsby</strong>. I have migrated Wordpress sites to Gatsby, created entirely new sites with
+			<strong>Contentful</strong>/<strong>Sanity</strong>
 			and deployed static-sites to <strong>AWS</strong>,
 			<strong>Netlify</strong>
 			and <strong>Github</strong>. I also have extensive experience developing web applications with
@@ -44,12 +42,10 @@
 	>
 	<div class="bullet bullet-3"><Handshake /></div>
 	<span class="about-me-3"
-		>I am always interested in hearing about new opportunities and taking on new projects, feel free
-		to contact me
+		>I am always interested in hearing about new opportunities and taking on new projects, feel free to contact me
 		<a href="mailto:contact@aaronluna.dev" target="_blank">via email</a>,
 		<a href="https://www.linkedin.com/in/aaron-luna-reno-nv/" target="_blank">LinkedIn</a>
-		or <a href="https://twitter.com/alunablog/" target="_blank">Twitter</a>. You can take a look at
-		my
+		or <a href="https://twitter.com/alunablog/" target="_blank">Twitter</a>. You can take a look at my
 		<a href="https://github.com/a-luna" target="_blank">github profile</a> to see my personal projects.</span
 	>
 </div>
@@ -63,7 +59,7 @@
 		column-gap: 1rem;
 		margin: 0 auto;
 		line-height: 1.6;
-		max-width: 700px;
+		max-width: var(--max-width);
 		padding: 0 1rem;
 	}
 	.my-photo {
