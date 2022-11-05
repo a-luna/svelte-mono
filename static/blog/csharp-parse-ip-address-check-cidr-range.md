@@ -121,7 +121,7 @@ Another common scenario is checking if an IP address exists within a range defin
 
 This can be easily demonstrated. Let's use the CIDR range **192.168.2.0/24**, which defines a network value **192.168.2.0** and associated netmask **255.255.255.0**. Let's check if two IP addresses are part of this address range. First, let's check **192.168.0.15**:
 
-```bash
+```text
            192         168           0          15                     192         168           2           0
 ip    : 1100 0000 - 1010 1000 - 0000 0000 - 0000 1111       cidr  : 1100 0000 - 1010 1000 - 0000 0010 - 0000 0000
            255         255         255           0                     255         255         255           0
@@ -135,7 +135,7 @@ The results do not match, 192.168.0.0 != 192.168.2.0 which means 192.168.0.15 is
 
 Next, let's check 192.168.2.2 using the same process:
 
-```bash
+```text
            192         168           2           2                     192         168           2           0
 ip    : 1100 0000 - 1010 1000 - 0000 0010 - 0000 0010       cidr  : 1100 0000 - 1010 1000 - 0000 0010 - 0000 0000
            255         255         255           0                     255         255         255           0
@@ -200,7 +200,7 @@ namespace AaronLuna.Common.Network
             var cidrAddressBytes = BitConverter.ToInt32(cidrAddress.GetAddressBytes(), 0);
             var cidrMaskBytes = IPAddress.HostToNetworkOrder(-1 << (32 - netmaskBitCount));
 
-            var ipIsInRange = (ipAddressBytes &#38; cidrMaskBytes) == (cidrAddressBytes &#38; cidrMaskBytes);
+            var ipIsInRange = (ipAddressBytes & cidrMaskBytes) == (cidrAddressBytes & cidrMaskBytes);
 
             return ipIsInRange;
         }
@@ -221,7 +221,7 @@ namespace AaronLuna.Common.Network
         public const string CidrPrivateAddressBlockB = "172.16.0.0/12";
         public const string CidrPrivateAddressBlockC = "192.168.0.0/16";
 
-        public static bool IpAddressIsWithinPrivateAddressSpace(string ipv4string)
+        public static bool IpAddressIsInPrivateAddressSpace(string ipv4string)
         {
             var checkIp = ParseIPv4Addresses(ipv4string)[0];
 

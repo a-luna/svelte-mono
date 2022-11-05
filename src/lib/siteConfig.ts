@@ -20,11 +20,11 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/AaronLuna.jpg`;
 export const MY_TWITTER_HANDLE = 'aaronlunadev';
 export const MY_EMAIL = 'contact@aaronluna.dev';
 
-export const BLOG_POST_FOLDER = 'src/lib/content/blog';
+export const BLOG_POST_FOLDER = 'blog';
 export const BLOG_IMAGE_ROOT = `${SITE_URL}/images/blog`;
 export const BLOG_POST_URL_ROOT = `${SITE_URL}/blog`;
 
-export const API_TUTORIAL_FOLDER = 'src/lib/content/flask-api-tutorial';
+export const API_TUTORIAL_FOLDER = 'flask-api-tutorial';
 export const API_TUTORIAL_IMAGE_ROOT = `${SITE_URL}/images/flask-api-tutorial`;
 export const API_TUTORIAL_URL_ROOT = `${SITE_URL}/series/flask-api-tutorial`;
 

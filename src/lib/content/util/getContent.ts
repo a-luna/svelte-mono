@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import {
 	API_TUTORIAL_FOLDER,
 	API_TUTORIAL_IMAGE_ROOT,
@@ -11,9 +12,10 @@ import type { BlogPost, BlogResource, FrontMatterResources, TutorialSection } fr
 import { unslugify } from '$lib/util';
 import { promises as fs } from 'fs';
 import grayMatter from 'gray-matter';
-import { basename, extname, resolve } from 'path';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const checkMarkdownFile = (fileName: string): boolean => extname(fileName) === '.md';
+const checkMarkdownFile = (fileName: string): boolean => path.extname(fileName) === '.md';
 
 const parseBlogPost = (path: string, content: string, data: { [k: string]: unknown }): BlogPost =>
 	parseMarkdownFile(path, BLOG_IMAGE_ROOT, BLOG_POST_URL_ROOT, content, data);
@@ -23,7 +25,8 @@ const getResourceUrl = (res: FrontMatterResources, slug: string, imageFolder: st
 
 export async function listLocalContent(): Promise<BlogPost[]> {
 	const localContent: BlogPost[] = [];
-	for await (const _path of getMarkdownFiles(BLOG_POST_FOLDER)) {
+	const blogPostFolder = getMarkdownFolder(BLOG_POST_FOLDER);
+	for await (const _path of getMarkdownFiles(blogPostFolder)) {
 		const src = await fs.readFile(_path, 'utf8');
 		const { content, data } = grayMatter(src);
 		localContent.push(parseBlogPost(_path, content, data));
@@ -33,7 +36,8 @@ export async function listLocalContent(): Promise<BlogPost[]> {
 
 export async function listTutorialSections(): Promise<TutorialSection[]> {
 	const tutorialSections: TutorialSection[] = [];
-	for await (const _path of getMarkdownFiles(API_TUTORIAL_FOLDER)) {
+	const apiTutorialFolder = getMarkdownFolder(API_TUTORIAL_FOLDER);
+	for await (const _path of getMarkdownFiles(apiTutorialFolder)) {
 		const src = await fs.readFile(_path, 'utf8');
 		const { content, data } = grayMatter(src);
 		tutorialSections.push(parseTutorialSection(_path, content, data));
@@ -41,11 +45,26 @@ export async function listTutorialSections(): Promise<TutorialSection[]> {
 	return tutorialSections;
 }
 
-function parseTutorialSection(
-	path: string,
-	content: string,
-	data: { [k: string]: unknown }
-): TutorialSection {
+function getMarkdownFolder(conentType: 'blog' | 'flask-api-tutorial'): string {
+	const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
+	return dev
+		? path.resolve(path.join(__dirname, '../../../../', `static/${conentType}`))
+		: path.resolve(path.join(__dirname, '../../', `client/${conentType}`));
+}
+
+async function* getMarkdownFiles(dir: string): AsyncGenerator<string> {
+	const dirents = await fs.readdir(dir, { withFileTypes: true });
+	for (const dirent of dirents) {
+		const filePath = path.resolve(dir, dirent.name);
+		if (dirent.isDirectory()) {
+			yield* getMarkdownFiles(filePath);
+		} else if (checkMarkdownFile(dirent.name)) {
+			yield filePath;
+		}
+	}
+}
+
+function parseTutorialSection(path: string, content: string, data: { [k: string]: unknown }): TutorialSection {
 	const tutorialSection = parseMarkdownFile(
 		path,
 		API_TUTORIAL_IMAGE_ROOT,
@@ -67,13 +86,13 @@ function parseTutorialSection(
 }
 
 function parseMarkdownFile(
-	path: string,
+	filePath: string,
 	imageFolder: string,
 	urlRoot: string,
 	content: string,
 	data: { [k: string]: unknown }
 ): BlogPost {
-	const slug = (data.slug as string) ?? basename(path, '.md');
+	const slug = (data.slug as string) ?? path.basename(filePath, '.md');
 	const date = new Date((data.date as string) ?? 0);
 	const hasToc = Object.keys(data).includes('toc') ? (data.toc as boolean) : false;
 	const tags = [...(data.categories as string[])].map((tag) => tag.toLowerCase());
@@ -96,23 +115,7 @@ function parseMarkdownFile(
 	};
 }
 
-async function* getMarkdownFiles(dir: string): AsyncGenerator<string> {
-	const dirents = await fs.readdir(dir, { withFileTypes: true });
-	for (const dirent of dirents) {
-		const path = resolve(dir, dirent.name);
-		if (dirent.isDirectory()) {
-			yield* getMarkdownFiles(path);
-		} else if (checkMarkdownFile(dirent.name)) {
-			yield path;
-		}
-	}
-}
-
-function getCoverImage(
-	slug: string,
-	imageFolder: string,
-	frontMatterRes: FrontMatterResources[]
-): BlogResource {
+function getCoverImage(slug: string, imageFolder: string, frontMatterRes: FrontMatterResources[]): BlogResource {
 	const cover = frontMatterRes.find((res) => res.name === 'cover');
 	return {
 		src: `${imageFolder}/post_images/${slug}.jpg`,
