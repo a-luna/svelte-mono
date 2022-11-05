@@ -1000,14 +1000,9 @@ The two are in fact related. The lock icon indicates that the API endpoint requi
   </div>
 </div>
 
-<div class="alert alert-flex">
-  <div class="alert-icon">
-    <i class="fa fa-exclamation-triangle"></i>
-  </div>
-  <div class="alert-message">
-    <p>There's one more thing to note about the Swagger UI page, the <code>User</code> model is shown at the bottom of the page (also on the <code>/auth/user</code> component under <strong>Responses</strong>). Any API model that you register with the API or an API namespcace will be rendered in this location (we registered <code>user_model</code> with the <code>auth_ns</code> namespace in <code>src/flask_api_tutorial/api/auth/endpoints.py</code>).</p>
-  </div>
-</div>
+{{< alert_box >}}
+There's one more thing to note about the Swagger UI page, the <code>User</code> model is shown at the bottom of the page (also on the <code>/auth/user</code> component under <strong>Responses</strong>). Any API model that you register with the API or an API namespcace will be rendered in this location (we registered <code>user_model</code> with the <code>auth_ns</code> namespace in <code>src/flask_api_tutorial/api/auth/endpoints.py</code>).
+{{< /alert_box >}}
 
 Let's see what happens if we attempt to send a request to `/auth/user` as the component is currently configured. First, expand the component by clicking anywhere on the blue bar, click **Try it out**, then click **Execute**:
 
@@ -1212,7 +1207,7 @@ The `BlacklistedToken` class is pretty simple, but please note the following:
 <span class="cmd-repl-prompt">>>></span> <span class="cmd-repl-input">datetime.utcnow()</span>
 <span class="cmd-repl-results">datetime.datetime(2019, 8, 8, 9, 52, 6, 793105)</span></code></pre>
         <p>Working with <code>datetime</code> objects can be a source of insidious bugs that are very difficult to diagnose. For a thorough explanation of best practices that will prevent such issues, read <a href="https://lo.calho.st/dev-culture/the-problem-with-pythons-datetime-class/" target="_blank">this post by Travis Mick</a>. The TL;DR version boils down to two guidelines:</p>
-        <ul class="alert bold-text">
+        <ul class="warning bold-text">
           <li>Always ensure that your code produces and handles <code style="background-color: #252525; font-weight: 400">datetime</code> objects that are timezone-aware.</li>
           <li>Always ensure that the <code style="background-color: #252525; font-weight: 400">datetime</code> objects produced and utilized by your code are localized to the UTC timezone when written to the database (i.e., <code style="background-color: #252525; font-weight: 400">tzinfo=datetime.timezone.utc</code>).</li>
         </ul>

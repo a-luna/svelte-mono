@@ -409,6 +409,12 @@ figcaption p {
 	--hue: 180;
 }
 
+ul.warning,
+ul.note {
+	--text-color: hsla(var(--hue) var(--max-sat) var(--text-light) / var(--text-alpha));
+	color: var(--text-color);
+}
+
 .custom-block {
 	--border-color: hsla(var(--hue) var(--max-sat) var(--border-light) / var(--border-alpha));
 	--text-color: hsla(var(--hue) var(--max-sat) var(--text-light) / var(--text-alpha));
@@ -930,6 +936,10 @@ pre .project-structure-key-wrapper {
 pre .key-item {
 	flex: 0 0 auto;
 	margin: 2px 5px;
+}
+
+.italics {
+	font-style: italic;;
 }
 
 .requirements .in-progress {

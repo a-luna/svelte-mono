@@ -193,7 +193,7 @@ Note the revision number (``v60``) and commit ID (``3cced9be``) in the Powershel
 
 To sum up, Azure DevOps provides a simple way to create a continuous deployment process for your Heroku app. The most important points to remember are:
 
-<ul class="alert">
+<ul class="warning">
 <li><strong>Enable continuous integration</strong> in the Triggers section of your build pipeline. If you forget to do this, your build process will fail to trigger when a new commit is made.</li>
 <li><strong>Create a Heroku API token</strong> that is only used for authenticating automated deployment tasks.</li>
 <li><strong>Add the API token as a secret variable</strong> to your build pipeline to prevent the token from being displayed in log messages.</li>
