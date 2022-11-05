@@ -4,7 +4,7 @@
 
 <div class="project-card-link">
 	<div class="icon">
-		<Arrow width={'24px'} height={'24px'} />
+		<Arrow />
 	</div>
 </div>
 

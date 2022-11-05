@@ -2,14 +2,12 @@
 	import IconBase from '$lib/components/Icons/IconBase.svelte';
 
 	export let fill: string = 'currentColor';
-	export let width: string = '';
-	export let height: string = '';
 	export let title: string = '';
 	export let strokeWidth = '0';
 	export let padding = '0';
 </script>
 
-<IconBase viewBox="0 0 24 24" {width} {height} {fill} {strokeWidth} {padding} {title}>
+<IconBase viewBox="0 0 24 24" {fill} {strokeWidth} {padding} {title}>
 	<path
 		fill="currentColor"
 		d="M13.78 18.29c0 .12.15 0 0 0zm-3.35-2.7c.39.17-.31-.6 0 0zm-5.03.28c.15.26 0-.12 0 0zm5.6.39c-.27-.42-.2.06 0 .32c.48.47.18-.26 0-.32z"
