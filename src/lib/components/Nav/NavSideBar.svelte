@@ -8,8 +8,8 @@
 
 {#if open}
 	<aside
-		in:fly|local={{ duration: 1000, delay: 200, x: -300 }}
-		out:fade={{ duration: 750, delay: 750 }}
+		in:fly|local={{ duration: 1000, x: -300 }}
+		out:fade={{ duration: 750 }}
 		class="nav-sidebar absolute md:hidden"
 		id="nav-sidebar"
 		class:open

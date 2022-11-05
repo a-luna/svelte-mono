@@ -9,7 +9,7 @@
 </script>
 
 <div class="nav-wrapper">
-	<div class="nav-container items-center justify-between md:items-end md:justify-start">
+	<div class="nav-container">
 		<NavBrand />
 		<NavItems />
 		<SocialLinks mobile={false} {open} />
@@ -21,33 +21,35 @@
 <style lang="postcss">
 	.nav-wrapper {
 		width: 100%;
-		padding: 1.5rem 0;
+		max-width: var(--max-width);
+		padding: 0;
+		margin: 0 auto;
 		background-color: inherit;
 	}
 
 	.nav-container {
-		background-color: inherit;
 		display: flex;
 		flex-flow: row nowrap;
-		gap: 2rem;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1.5rem;
+		background-color: inherit;
 		margin: 0 auto;
-		padding: 0 1rem;
+		padding: 1rem 1.5rem;
 	}
 
 	@media (min-width: 640px) {
 		.nav-container {
-			padding: 0 1.5rem;
+			margin: 0;
 		}
 	}
 
 	@media (min-width: 768px) {
 		.nav-container {
-			padding: 0;
-		}
-	}
-	@media (min-width: 1024px) {
-		.nav-container {
-			gap: 3rem;
+			justify-content: flex-start;
+			align-items: flex-end;
+			padding: 1.5rem 0;
+			margin: 0;
 		}
 	}
 </style>
