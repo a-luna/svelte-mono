@@ -7,19 +7,13 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	let lists: BlogPost[];
-	$: allBlogPosts = data.allBlogPosts;
-
-	$: if (browser && Object.keys(allBlogPosts).length) $blogPosts = allBlogPosts;
 	let list: BlogPost[];
-
 	let inputEl: HTMLInputElement;
-	function focusSearch(e: KeyboardEvent) {
-		if (e.key === '/' && inputEl) inputEl.select();
-	}
-
 	let isTruncated = $blogPosts.length > 20;
 	let search: string;
+
+	$: allBlogPosts = data.allBlogPosts;
+	$: if (browser && Object.keys(allBlogPosts).length) $blogPosts = allBlogPosts;
 	$: if (blogPosts && $blogPosts.length)
 		list = $blogPosts
 			.filter((item) => {
@@ -29,6 +23,12 @@
 				return true;
 			})
 			.slice(0, isTruncated ? 2 : $blogPosts.length);
+
+	$: categories = [...new Set($blogPosts.map((p) => p.tags).flat())];
+
+	function focusSearch(e: KeyboardEvent) {
+		if (e.key === '/' && inputEl) inputEl.select();
+	}
 </script>
 
 <svelte:head>
@@ -38,8 +38,8 @@
 
 <svelte:window on:keyup={focusSearch} />
 
-<section class="article-list">
-	<h1>Blog</h1>
+<section class="article-list" data-sveltekit-prefetch>
+	<h1 class="section-header">Blog</h1>
 	<p class="search-desc">Use the search below to filter by title.</p>
 	<div class="input-wrapper">
 		<input
@@ -61,7 +61,7 @@
 		<h3>All Posts</h3>
 	{/if}
 	{#if list.length}
-		<ul class="">
+		<ul>
 			{#each list as item}
 				<li>
 					<BlogSummary slug={item.slug} title={item.title} publishDate={new Date(item.date)}>
@@ -72,9 +72,7 @@
 		</ul>
 		{#if isTruncated}
 			<div class="button-wrapper">
-				<button on:click={() => (isTruncated = false)} class="load-more-button">
-					Load More Posts...
-				</button>
+				<button on:click={() => (isTruncated = false)} class="load-more-button"> Load More Posts... </button>
 			</div>
 		{/if}
 	{:else if search}
@@ -90,20 +88,17 @@
 
 <style lang="postcss">
 	section {
+		--section-color: var(--blue-icon);
 		display: flex;
 		flex-flow: column nowrap;
-		padding: 0 1rem;
-		margin: 2rem auto 4rem auto;
+		margin: 0 auto 4rem auto;
 		justify-content: center;
 		align-items: flex-start;
-		max-width: 42rem;
+		max-width: var(--max-width);
+		padding: 0 1.5rem;
 	}
 	h1 {
-		margin: 0 0 1rem 0;
-		font-size: 1.875rem;
-		line-height: 2.25rem;
-		font-weight: 700;
-		letter-spacing: -0.025em;
+		flex: 1;
 	}
 	.search-desc {
 		margin: 0 0 1rem 0;
@@ -164,18 +159,17 @@
 
 	@media (min-width: 640px) {
 		section {
-			padding: 0 2rem;
+			padding: 0 1.5rem;
 		}
 	}
 
 	@media (min-width: 768px) {
-		h1 {
-			font-size: 3rem;
-			line-height: 1;
-		}
 		h3 {
-			font-size: 2.25rem;
+			font-size: 1.75rem;
 			line-height: 2.5rem;
+		}
+		section {
+			padding: 0;
 		}
 	}
 </style>

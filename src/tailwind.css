@@ -300,6 +300,18 @@ body {
 	letter-spacing: 0.4px;
 }
 
+.section-header {
+	font-family: 'Roboto Mono', menlo, consolas, monospace;
+	font-size: 1.7rem;
+	line-height: 1.5;
+	color: var(--page-bg-color);
+	background-color: var(--section-color);
+	padding: 0 0.25rem;
+	font-weight: 500;
+	width: 100%;
+	margin: 1.5rem 0 2rem 0;
+}
+
 kbd {
 	font-size: 0.8em;
 	margin: 0 1px;
@@ -1489,4 +1501,10 @@ body::-webkit-scrollbar-corner {
 	flex: 0 0 16px;
 	border-radius: 100px;
 	background-color: var(--gray-shade5);
+}
+
+@media (min-width: 640px) {
+	.section-header {
+		font-size: 2rem;
+	}
 }
