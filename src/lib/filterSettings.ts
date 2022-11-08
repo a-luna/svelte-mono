@@ -60,42 +60,42 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		icon: AllProjects,
 		size: 16
 	},
-	AWS: {
+	aws: {
 		displayName: 'AWS/Boto3',
 		color: 'yellow',
 		hasIcon: true,
 		icon: Aws,
 		size: 20
 	},
-	CSharp: {
+	csharp: {
 		displayName: 'C#',
 		color: 'blue',
 		hasIcon: true,
 		icon: Microsoft,
 		size: 16
 	},
-	Cypress: {
+	cypress: {
 		displayName: 'Cypress',
 		color: 'green',
 		hasIcon: true,
 		icon: Cypress,
 		size: 16
 	},
-	FastAPI: {
+	fastAPI: {
 		displayName: 'FastAPI',
 		color: 'blue',
 		hasIcon: true,
 		icon: FastApi,
 		size: 16
 	},
-	Flask: {
+	flask: {
 		displayName: 'Flask',
 		color: 'pink',
 		hasIcon: true,
 		icon: Flask,
 		size: 20
 	},
-	Hugo: {
+	hugo: {
 		displayName: 'Hugo',
 		color: 'pink',
 		hasIcon: true,
@@ -109,91 +109,91 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		icon: Lxml,
 		size: 16
 	},
-	Puppeteer: {
+	puppeteer: {
 		displayName: 'Puppeteer',
 		color: 'blue',
 		hasIcon: true,
 		icon: Puppeteer,
 		size: 20
 	},
-	Pydantic: {
+	pydantic: {
 		displayName: 'Pydantic',
 		color: 'green',
 		hasIcon: true,
 		icon: Python,
 		size: 16
 	},
-	Python: {
+	python: {
 		displayName: 'Python',
 		color: 'green',
 		hasIcon: true,
 		icon: Python,
 		size: 16
 	},
-	Redis: {
+	redis: {
 		displayName: 'Redis',
 		color: 'pink',
 		hasIcon: true,
 		icon: Redis,
 		size: 16
 	},
-	RegExp: {
+	regexp: {
 		displayName: 'Regular Expressions',
 		color: 'blue',
 		hasIcon: true,
 		icon: RegExp,
 		size: 16
 	},
-	Shell: {
+	shell: {
 		displayName: 'Shell',
 		color: 'yellow',
 		hasIcon: true,
 		icon: Shell,
 		size: 16
 	},
-	SQLAlchemy: {
+	sqlalchemy: {
 		displayName: 'SQLAlchemy',
 		color: 'yellow',
 		hasIcon: true,
 		icon: Database,
 		size: 16
 	},
-	SQLite: {
+	sqlite: {
 		displayName: 'SQLite',
 		color: 'pink',
 		hasIcon: true,
 		icon: Sqlite,
 		size: 16
 	},
-	Svelte: {
+	svelte: {
 		displayName: 'Svelte',
 		color: 'pink',
 		hasIcon: true,
 		icon: Svelte,
 		size: 18
 	},
-	TailwindCSS: {
+	tailwindCSS: {
 		displayName: 'TailwindCSS',
 		color: 'blue',
 		hasIcon: true,
 		icon: Tailwind,
 		size: 16
 	},
-	TypeScript: {
+	typescript: {
 		displayName: 'TypeScript',
 		color: 'blue',
 		hasIcon: true,
 		icon: TypeScript,
 		size: 15
 	},
-	XPath: {
+	xpath: {
 		displayName: 'XPath',
 		color: 'green',
 		hasIcon: true,
 		icon: Xml,
 		size: 16
 	},
-	XState: {
+	xstate: {
 		displayName: 'XState',
 		color: 'yellow',
 		hasIcon: true,
@@ -258,6 +258,11 @@ const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } 
 		color: 'pink',
 		hasIcon: false
 	},
+	virtualization: {
+		displayName: 'Virtualization',
+		color: 'pink',
+		hasIcon: false
+	},
 	web_scraping: {
 		displayName: 'Web Scraping',
 		color: 'yellow',
@@ -278,4 +283,4 @@ const nullFilterSettingDetails: FilterSettingDetails = {
 };
 
 export const getFilterSettingDetails = (name: FilterSetting): FilterSettingDetails =>
-	filterSettingDetailsDatabase?.[name] ?? nullFilterSettingDetails;
+	filterSettingDetailsDatabase?.[name.toLowerCase()] ?? nullFilterSettingDetails;

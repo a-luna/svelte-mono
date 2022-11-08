@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import BlogSummary from '$lib/components/BlogPost/BlogSummary.svelte';
+	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import { blogPosts } from '$lib/stores';
 	import type { BlogPost } from '$lib/types';
@@ -11,6 +12,7 @@
 	let inputEl: HTMLInputElement;
 	let isTruncated = $blogPosts.length > 20;
 	let search: string;
+	// let filteredCategory: string;
 
 	$: allBlogPosts = data.allBlogPosts;
 	$: if (browser && Object.keys(allBlogPosts).length) $blogPosts = allBlogPosts;
@@ -23,8 +25,6 @@
 				return true;
 			})
 			.slice(0, isTruncated ? 2 : $blogPosts.length);
-
-	$: categories = [...new Set($blogPosts.map((p) => p.tags).flat())];
 
 	function focusSearch(e: KeyboardEvent) {
 		if (e.key === '/' && inputEl) inputEl.select();
@@ -64,7 +64,7 @@
 		<ul>
 			{#each list as item}
 				<li>
-					<BlogSummary slug={item.slug} title={item.title} publishDate={new Date(item.date)}>
+					<BlogSummary slug={item.slug} title={item.title} publishDate={new Date(item.date)} tags={item.tags}>
 						{item.description}
 					</BlogSummary>
 				</li>

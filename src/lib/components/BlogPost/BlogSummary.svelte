@@ -1,17 +1,41 @@
 <script lang="ts">
-	import { formatDateString } from '$lib/util';
+	import type { LanguageOrTech, ProjectCategory as ProjectCategoryType } from '$lib/types';
+	import { formatDateString, isLanguageOrTech, isProjectCategory } from '$lib/util';
+	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
+	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 
 	export let slug = '';
 	export let title = 'Untitled post';
 	export let publishDate: Date = new Date(0);
+	export let tags: string[] = [];
+	const categories: ProjectCategoryType[] = [];
+	const techList: LanguageOrTech[] = [];
 
 	$: href = `blog/${slug}`;
+	$: tags.forEach((tag) => {
+		if (isProjectCategory(tag)) {
+			categories.push(tag);
+		}
+	});
+	$: tags.forEach((tag) => {
+		if (isLanguageOrTech(tag)) {
+			techList.push(tag);
+		}
+	});
 </script>
 
 <div class="blog-summary">
 	<div class="blog-summary-top">
-		<a {href} class="post-title"><h4>{title}</h4></a>
+		{#if techList.length && techList[0]}
+			<FilterSettingWithIcon value={techList[0]} isPrimaryLang={true} />
+		{/if}
 		<div class="published">{formatDateString(publishDate)}</div>
+	</div>
+	<a {href} class="post-title"><h4>{title}</h4></a>
+	<div class="tags">
+		{#each categories as category}
+			<ProjectCategory {category} />
+		{/each}
 	</div>
 	<p class="description"><slot /></p>
 </div>
@@ -26,7 +50,7 @@
 		border-color: var(--dark-gray);
 		color: var(--white);
 		background-color: var(--black);
-		padding: 1rem;
+		padding: 1.5rem;
 	}
 
 	.blog-summary:hover {
@@ -35,13 +59,13 @@
 
 	.blog-summary-top {
 		display: flex;
-		flex-flow: column nowrap;
-		gap: 0.25rem;
+		flex-flow: row nowrap;
+		justify-content: space-between;
 	}
 
 	.post-title,
 	.post-title:hover {
-		font-size: 1.4rem;
+		font-size: 1.5rem;
 		font-weight: 400;
 		color: var(--accent-color);
 		text-decoration: none;
@@ -50,19 +74,34 @@
 	}
 
 	.published {
-		font-size: 0.95rem;
-		color: var(--gray-shade3);
+		font-size: 0.9rem;
+		color: var(--white-shade3);
 	}
 
 	.description {
-		font-size: 0.9rem;
+		font-size: 1rem;
 		color: var(--white-shade3);
 		line-height: 1.5;
 	}
 
-	@media (min-width: 640px) {
+	.tags {
+		display: flex;
+		flex-flow: row wrap;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		align-items: center;
+	}
+
+	@media (min-width: 768px) {
 		.blog-summary {
-			padding: 2rem;
+			padding: 1.5rem;
+		}
+		.post-title,
+		.post-title:hover {
+			font-size: 1.6rem;
+		}
+		.description {
+			font-size: 1rem;
 		}
 	}
 </style>

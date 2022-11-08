@@ -63,6 +63,7 @@ export const BACKEND_CATEGORIES = [
 	'dev_tools',
 	'devops',
 	'fastapi_plugins',
+	'virtualization',
 	'web_scraping'
 ] as const;
 

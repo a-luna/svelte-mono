@@ -1225,7 +1225,7 @@ th.last-column,
 .table-wrapper thead td,
 .table-wrapper tfoot td {
 	background-color: #1a1a1a;
-	color: var(--tw-prose-body);
+	color: var(--white-shade3);
 	border: none;
 	padding: 5px;
 	text-align: left;

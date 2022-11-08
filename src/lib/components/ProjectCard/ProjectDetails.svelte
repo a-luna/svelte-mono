@@ -6,18 +6,21 @@
 
 	export let project: RepoWithMetaData;
 	const otherLangsTitle = 'Other Languages/Technologies Used:';
+
+	$: categories = project?.categories || [];
+	$: languages = project?.languages || [];
 </script>
 
 {#if project}
 	<div class="project-card-details">
 		<div class="details-top">
 			<div class="lang-stats-wrapper">
-				<FilterSettingWithIcon value={project.primaryLanguage} />
+				<FilterSettingWithIcon value={project.primaryLanguage} isPrimaryLang={true} />
 				<GithubStats {project} />
 			</div>
 			<h2 class="project-name">{project.name}</h2>
 			<div class="category-list">
-				{#each project.categories as category}
+				{#each categories as category}
 					{#if !['frontend', 'backend'].includes(category)}
 						<ProjectCategory {category} />
 					{/if}
@@ -26,11 +29,11 @@
 			<p class="project-description">{project.description}</p>
 		</div>
 		<div class="details-bottom">
-			{#if project.languages.length > 0}
+			{#if languages.length > 0}
 				<div class="language-list-wrapper">
 					<span class="all-langage-list-title">{otherLangsTitle}</span>
 					<div class="all-language-list">
-						{#each project.languages as language}
+						{#each languages as language}
 							<FilterSettingWithIcon value={language} />
 						{/each}
 					</div>
@@ -93,7 +96,7 @@
 	.all-langage-list-title {
 		font-size: 0.85rem;
 		font-style: italic;
-		color: var(--accent-color);
+		color: var(--gray-shade3);
 	}
 
 	.category-list {
