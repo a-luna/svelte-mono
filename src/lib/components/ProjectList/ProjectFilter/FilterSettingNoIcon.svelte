@@ -22,7 +22,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		font-weight: 400;
+		font-weight: 500;
 		line-height: 1;
 	}
 	.filter-value {

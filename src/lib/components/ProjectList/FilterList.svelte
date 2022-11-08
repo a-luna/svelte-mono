@@ -14,6 +14,7 @@
 	bind:selectedValue={filterProjectType}
 	id={'radio-type'}
 	title={'Filter By Project Type'}
+	filterGroup={'project_type'}
 	filterSettings={['backend', 'frontend']}
 	noFilterSetting={'allProjects'}
 />
@@ -21,6 +22,7 @@
 	bind:selectedValue={filterCategory}
 	id={'radio-category'}
 	title={'Filter By Category'}
+	filterGroup={'category'}
 	filterSettings={categories}
 	noFilterSetting={'allCategories'}
 />
@@ -28,6 +30,7 @@
 	bind:selectedValue={filterLanguage}
 	id={'radio-language'}
 	title={'Filter By Language/Tech'}
+	filterGroup={'language_or_tech'}
 	filterSettings={languages}
 	noFilterSetting={'allLanguages'}
 />

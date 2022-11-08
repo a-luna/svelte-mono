@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { getFilterSettingDetails } from '$lib/filterSettings';
-	import type { FilterSetting } from '$lib/types';
+	import type { FilterSetting, ProjectTypeDetails } from '$lib/types';
 
 	export let value: FilterSetting;
 	export let hovered = false;
 	export let selected = false;
+	let details: ProjectTypeDetails;
 	let iconColor: string;
 
-	$: details = getFilterSettingDetails(value);
+	$: details = getFilterSettingDetails(value) as unknown as ProjectTypeDetails;
 	$: iconColor = details ? `var(--${details.color}-icon)` : '--accent-color';
 	$: displayName = details.displayName;
 	$: iconSize = details?.size ?? 16;

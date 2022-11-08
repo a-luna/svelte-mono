@@ -42,7 +42,7 @@
 		} else {
 			const color = getFilterSettingColor(value);
 			bgColor = current === value || hoveredValue === value ? `var(--${color}-icon)` : 'var(--page-bg-color)';
-			borderStyle = ` border: 1px solid var(--${color}-icon)`;
+			borderStyle = ` border: 2px solid var(--${color}-icon)`;
 		}
 		return `background-color: ${bgColor};${borderStyle}`;
 	}

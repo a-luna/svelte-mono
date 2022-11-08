@@ -20,239 +20,262 @@ import Tailwind from '$lib/components/Icons/Language/Tailwind.svelte';
 import TypeScript from '$lib/components/Icons/Language/TypeScript.svelte';
 import Xml from '$lib/components/Icons/Language/XML.svelte';
 import XState from '$lib/components/Icons/Language/XState.svelte';
-import type { FilterSetting, FilterSettingDatabase, FilterSettingDetails } from '$lib/types';
+import type {
+	FilterSetting,
+	FilterSettingDetailsDatabase,
+	FilterSettingDetails,
+	ProjectCategoryDetails,
+	ProjectTypeDetails
+} from '$lib/types';
 
-export const filterSettingDatabase: FilterSettingDatabase = {
+const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	allProjects: {
-		hasIcon: true,
-		icon: AllProjects,
 		displayName: 'All Projects',
 		color: 'green',
-		size: 16
-	},
-	allCategories: {
-		hasIcon: false,
-		displayName: 'All Categories',
-		color: 'default',
-		size: 16
-	},
-	allLanguages: {
 		hasIcon: true,
 		icon: AllProjects,
-		displayName: 'All Languages',
-		color: 'blue',
 		size: 16
 	},
 	frontend: {
-		hasIcon: true,
-		icon: Frontend,
 		displayName: 'Frontend',
 		color: 'pink',
+		hasIcon: true,
+		icon: Frontend,
 		size: 16
 	},
 	backend: {
-		hasIcon: true,
-		icon: Backend,
 		displayName: 'Backend',
 		color: 'blue',
+		hasIcon: true,
+		icon: Backend,
 		size: 16
-	},
-	AWS: {
-		hasIcon: true,
-		icon: Aws,
-		displayName: 'AWS/Boto3',
-		color: 'yellow',
-		size: 20
-	},
-	CSharp: {
-		hasIcon: true,
-		icon: Microsoft,
-		displayName: 'C#',
-		color: 'blue',
-		size: 16
-	},
-	Cypress: {
-		hasIcon: true,
-		icon: Cypress,
-		displayName: 'Cypress',
-		color: 'green',
-		size: 16
-	},
-	FastAPI: {
-		hasIcon: true,
-		icon: FastApi,
-		displayName: 'FastAPI',
-		color: 'blue',
-		size: 16
-	},
-	Flask: {
-		hasIcon: true,
-		icon: Flask,
-		displayName: 'Flask',
-		color: 'pink',
-		size: 20
-	},
-	Hugo: {
-		hasIcon: true,
-		icon: Hugo,
-		displayName: 'Hugo',
-		color: 'pink',
-		size: 16
-	},
-	lxml: {
-		hasIcon: true,
-		icon: Lxml,
-		displayName: 'lxml',
-		color: 'yellow',
-		size: 16
-	},
-	Puppeteer: {
-		hasIcon: true,
-		icon: Puppeteer,
-		displayName: 'Puppeteer',
-		color: 'blue',
-		size: 20
-	},
-	Pydantic: {
-		hasIcon: true,
-		icon: Python,
-		displayName: 'Pydantic',
-		color: 'green',
-		size: 16
-	},
-	Python: {
-		hasIcon: true,
-		icon: Python,
-		displayName: 'Python',
-		color: 'green',
-		size: 16
-	},
-	Redis: {
-		hasIcon: true,
-		icon: Redis,
-		displayName: 'Redis',
-		color: 'pink',
-		size: 16
-	},
-	RegExp: {
-		hasIcon: true,
-		icon: RegExp,
-		displayName: 'Regular Expressions',
-		color: 'blue',
-		size: 16
-	},
-	Shell: {
-		hasIcon: true,
-		icon: Shell,
-		displayName: 'Shell',
-		color: 'yellow',
-		size: 16
-	},
-	SQLAlchemy: {
-		hasIcon: true,
-		icon: Database,
-		displayName: 'SQLAlchemy',
-		color: 'yellow',
-		size: 16
-	},
-	SQLite: {
-		hasIcon: true,
-		icon: Sqlite,
-		displayName: 'SQLite',
-		color: 'pink',
-		size: 16
-	},
-	Svelte: {
-		hasIcon: true,
-		icon: Svelte,
-		displayName: 'Svelte',
-		color: 'pink',
-		size: 18
-	},
-	TailwindCSS: {
-		hasIcon: true,
-		icon: Tailwind,
-		displayName: 'TailwindCSS',
-		color: 'blue',
-		size: 16
-	},
-	TypeScript: {
-		hasIcon: true,
-		icon: TypeScript,
-		displayName: 'TypeScript',
-		color: 'blue',
-		size: 15
-	},
-	XPath: {
-		hasIcon: true,
-		icon: Xml,
-		displayName: 'XPath',
-		color: 'green',
-		size: 16
-	},
-	XState: {
-		hasIcon: true,
-		icon: XState,
-		displayName: 'XState',
-		color: 'yellow',
-		size: 16
-	},
-	api_development: {
-		hasIcon: false,
-		displayName: 'REST API',
-		color: 'purple'
-	},
-	blog_portfolio_sites: {
-		hasIcon: false,
-		displayName: 'Blog/Portfolio Site',
-		color: 'green'
-	},
-	cli_apps: {
-		hasIcon: false,
-		displayName: 'CLI App',
-		color: 'yellow'
-	},
-	component_library: {
-		hasIcon: false,
-		displayName: 'Component Library',
-		color: 'pink'
-	},
-	cryptography: {
-		hasIcon: false,
-		displayName: 'Cryptography',
-		color: 'blue'
-	},
-	dev_tools: {
-		hasIcon: false,
-		displayName: 'Dev Tools',
-		color: 'blue'
-	},
-	devops: {
-		hasIcon: false,
-		displayName: 'DevOps',
-		color: 'yellow'
-	},
-	docs_guides: {
-		hasIcon: false,
-		displayName: 'Documentation',
-		color: 'green'
-	},
-	fastapi_plugins: {
-		hasIcon: false,
-		displayName: 'FastAPI Plugin',
-		color: 'purple'
-	},
-	web_app: {
-		hasIcon: false,
-		displayName: 'Web App',
-		color: 'pink'
-	},
-	web_scraping: {
-		hasIcon: false,
-		displayName: 'Web Scraping',
-		color: 'yellow'
 	}
 };
 
+const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
+	allLanguages: {
+		displayName: 'All Languages',
+		color: 'blue',
+		hasIcon: true,
+		icon: AllProjects,
+		size: 16
+	},
+	AWS: {
+		displayName: 'AWS/Boto3',
+		color: 'yellow',
+		hasIcon: true,
+		icon: Aws,
+		size: 20
+	},
+	CSharp: {
+		displayName: 'C#',
+		color: 'blue',
+		hasIcon: true,
+		icon: Microsoft,
+		size: 16
+	},
+	Cypress: {
+		displayName: 'Cypress',
+		color: 'green',
+		hasIcon: true,
+		icon: Cypress,
+		size: 16
+	},
+	FastAPI: {
+		displayName: 'FastAPI',
+		color: 'blue',
+		hasIcon: true,
+		icon: FastApi,
+		size: 16
+	},
+	Flask: {
+		displayName: 'Flask',
+		color: 'pink',
+		hasIcon: true,
+		icon: Flask,
+		size: 20
+	},
+	Hugo: {
+		displayName: 'Hugo',
+		color: 'pink',
+		hasIcon: true,
+		icon: Hugo,
+		size: 16
+	},
+	lxml: {
+		displayName: 'lxml',
+		color: 'yellow',
+		hasIcon: true,
+		icon: Lxml,
+		size: 16
+	},
+	Puppeteer: {
+		displayName: 'Puppeteer',
+		color: 'blue',
+		hasIcon: true,
+		icon: Puppeteer,
+		size: 20
+	},
+	Pydantic: {
+		displayName: 'Pydantic',
+		color: 'green',
+		hasIcon: true,
+		icon: Python,
+		size: 16
+	},
+	Python: {
+		displayName: 'Python',
+		color: 'green',
+		hasIcon: true,
+		icon: Python,
+		size: 16
+	},
+	Redis: {
+		displayName: 'Redis',
+		color: 'pink',
+		hasIcon: true,
+		icon: Redis,
+		size: 16
+	},
+	RegExp: {
+		displayName: 'Regular Expressions',
+		color: 'blue',
+		hasIcon: true,
+		icon: RegExp,
+		size: 16
+	},
+	Shell: {
+		displayName: 'Shell',
+		color: 'yellow',
+		hasIcon: true,
+		icon: Shell,
+		size: 16
+	},
+	SQLAlchemy: {
+		displayName: 'SQLAlchemy',
+		color: 'yellow',
+		hasIcon: true,
+		icon: Database,
+		size: 16
+	},
+	SQLite: {
+		displayName: 'SQLite',
+		color: 'pink',
+		hasIcon: true,
+		icon: Sqlite,
+		size: 16
+	},
+	Svelte: {
+		displayName: 'Svelte',
+		color: 'pink',
+		hasIcon: true,
+		icon: Svelte,
+		size: 18
+	},
+	TailwindCSS: {
+		displayName: 'TailwindCSS',
+		color: 'blue',
+		hasIcon: true,
+		icon: Tailwind,
+		size: 16
+	},
+	TypeScript: {
+		displayName: 'TypeScript',
+		color: 'blue',
+		hasIcon: true,
+		icon: TypeScript,
+		size: 15
+	},
+	XPath: {
+		displayName: 'XPath',
+		color: 'green',
+		hasIcon: true,
+		icon: Xml,
+		size: 16
+	},
+	XState: {
+		displayName: 'XState',
+		color: 'yellow',
+		hasIcon: true,
+		icon: XState,
+		size: 16
+	}
+};
+
+const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } = {
+	allCategories: {
+		displayName: 'All Categories',
+		color: 'default',
+		hasIcon: false
+	},
+	api_development: {
+		displayName: 'REST API',
+		color: 'purple',
+		hasIcon: false
+	},
+	blog_portfolio_sites: {
+		displayName: 'Blog/Portfolio Site',
+		color: 'green',
+		hasIcon: false
+	},
+	cli_apps: {
+		displayName: 'CLI App',
+		color: 'yellow',
+		hasIcon: false
+	},
+	component_library: {
+		displayName: 'Component Library',
+		color: 'pink',
+		hasIcon: false
+	},
+	cryptography: {
+		displayName: 'Cryptography',
+		color: 'blue',
+		hasIcon: false
+	},
+	dev_tools: {
+		displayName: 'Dev Tools',
+		color: 'blue',
+		hasIcon: false
+	},
+	devops: {
+		displayName: 'DevOps',
+		color: 'yellow',
+		hasIcon: false
+	},
+	docs_guides: {
+		displayName: 'Documentation',
+		color: 'green',
+		hasIcon: false
+	},
+	fastapi_plugins: {
+		displayName: 'FastAPI Plugin',
+		color: 'purple',
+		hasIcon: false
+	},
+	web_app: {
+		displayName: 'Web App',
+		color: 'pink',
+		hasIcon: false
+	},
+	web_scraping: {
+		displayName: 'Web Scraping',
+		color: 'yellow',
+		hasIcon: false
+	}
+};
+
+export const filterSettingDetailsDatabase: FilterSettingDetailsDatabase = {
+	...projectTypeDetailsDatabase,
+	...projectCategoriesDetailsDatabase,
+	...langorTechDetailsDatabase
+};
+
+const nullFilterSettingDetails: FilterSettingDetails = {
+	displayName: '',
+	color: 'green',
+	hasIcon: false
+};
+
 export const getFilterSettingDetails = (name: FilterSetting): FilterSettingDetails =>
-	filterSettingDatabase[name];
+	filterSettingDetailsDatabase?.[name] ?? nullFilterSettingDetails;

@@ -32,6 +32,18 @@ import type {
 	TECH_LIST
 } from '$lib/constants';
 
+export type HttpMethod = typeof HTTP_METHODS[number];
+export type HttpAuthType = typeof HTTP_AUTH_TYPES[number];
+export type IconName = typeof ICON_NAMES[number];
+export type IconColor = typeof ICON_COLORS[number];
+export type RepoName = typeof REPO_NAMES[number];
+export type ProjectType = typeof PROJECT_TYPES[number];
+export type FrontendCategory = typeof FRONTEND_CATEGORIES[number];
+export type BackendCategory = typeof BACKEND_CATEGORIES[number];
+export type ProjectCategory = typeof PROJECT_CATEGORIES[number];
+export type LanguageOrTech = typeof TECH_LIST[number];
+export type FilterSetting = ProjectType | ProjectCategory | LanguageOrTech | '';
+
 export type HttpError = { status: number; message: string };
 export type HttpResult = { success: true; value: Response } | { success: false; error: HttpError };
 export type Result<T = void> = { success: true; value: T } | { success: false; error: string };
@@ -110,16 +122,16 @@ export interface BlogPost {
 export type BlogPostDateMap = Pick<BlogPost, 'slug' | 'date' | 'title'>;
 
 export interface TutorialSection extends BlogPost {
-	lead: string;
-	series_weight: number;
-	series_title: string;
-	series_part: string;
-	series_part_lead: string;
-	git_release_name: string;
-	url_git_rel_browse: string;
-	url_git_rel_zip: string;
-	url_git_rel_tar: string;
-	url_git_rel_diff: string;
+	lead?: string;
+	series_weight?: number;
+	series_title?: string;
+	series_part?: string;
+	series_part_lead?: string;
+	git_release_name?: string;
+	url_git_rel_browse?: string;
+	url_git_rel_zip?: string;
+	url_git_rel_tar?: string;
+	url_git_rel_diff?: string;
 }
 
 export type TutorialSectionNumberMap = Pick<TutorialSection, 'slug' | 'lead' | 'series_part' | 'series_weight'>;
@@ -229,17 +241,6 @@ export interface GHRepo {
 	subscribers_count?: number;
 }
 
-export type HttpMethod = typeof HTTP_METHODS[number];
-export type IconName = typeof ICON_NAMES[number];
-export type IconColor = typeof ICON_COLORS[number];
-export type RepoName = typeof REPO_NAMES[number];
-export type ProjectType = typeof PROJECT_TYPES[number];
-export type FrontendCategory = typeof FRONTEND_CATEGORIES[number];
-export type BackendCategory = typeof BACKEND_CATEGORIES[number];
-export type ProjectCategory = typeof PROJECT_CATEGORIES[number];
-export type LanguageOrTech = typeof TECH_LIST[number];
-export type FilterSetting = ProjectType | ProjectCategory | LanguageOrTech;
-
 export interface RepoWithMetaData {
 	name: RepoName;
 	description: string;
@@ -279,14 +280,19 @@ export type Icon =
 	| typeof Xml
 	| typeof XState;
 
-export interface FilterSettingDetails {
+export interface ProjectCategoryDetails {
 	displayName: string;
 	color: IconColor;
 	hasIcon: boolean;
-	icon?: Icon;
-	size?: number;
 }
 
-export interface FilterSettingDatabase {
+export interface ProjectTypeDetails extends ProjectCategoryDetails {
+	icon: Icon;
+	size: number;
+}
+
+export type FilterSettingDetails = ProjectTypeDetails | ProjectCategoryDetails;
+
+export interface FilterSettingDetailsDatabase {
 	[k: string]: FilterSettingDetails;
 }
