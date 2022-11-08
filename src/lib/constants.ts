@@ -1,15 +1,6 @@
 import type { RepoWithMetaData } from './types';
 
-export const HTTP_METHODS = [
-	'GET',
-	'POST',
-	'PUT',
-	'PATCH',
-	'DELETE',
-	'HEAD',
-	'OPTIONS',
-	'CONNECT'
-] as const;
+export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'CONNECT'] as const;
 
 export const HTTP_AUTH_TYPES = ['Basic', 'Token'] as const;
 
@@ -63,12 +54,7 @@ export const REPO_NAMES = [
 
 export const PROJECT_TYPES = ['allProjects', 'backend', 'frontend'] as const;
 
-export const FRONTEND_CATEGORIES = [
-	'blog_portfolio_sites',
-	'docs_guides',
-	'web_app',
-	'component_library'
-] as const;
+export const FRONTEND_CATEGORIES = ['blog_portfolio_sites', 'docs_guides', 'web_app', 'component_library'] as const;
 
 export const BACKEND_CATEGORIES = [
 	'api_development',
@@ -80,11 +66,7 @@ export const BACKEND_CATEGORIES = [
 	'web_scraping'
 ] as const;
 
-export const PROJECT_CATEGORIES = [
-	'allCategories',
-	...BACKEND_CATEGORIES,
-	...FRONTEND_CATEGORIES
-] as const;
+export const PROJECT_CATEGORIES = ['allCategories', ...BACKEND_CATEGORIES, ...FRONTEND_CATEGORIES] as const;
 
 export const nullRepoWithMetadata: RepoWithMetaData = {
 	name: 'null',

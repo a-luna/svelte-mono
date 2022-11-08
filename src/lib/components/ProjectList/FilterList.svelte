@@ -7,9 +7,7 @@
 	export let filterCategory: FilterSetting;
 	export let filterLanguage: FilterSetting;
 	const categories: FilterSetting[] = [...BACKEND_CATEGORIES, ...FRONTEND_CATEGORIES].sort();
-	const languages: FilterSetting[] = [...TECH_LIST]
-		.filter((lang) => lang !== 'allLanguages')
-		.sort();
+	const languages: FilterSetting[] = [...TECH_LIST].filter((lang) => lang !== 'allLanguages').sort();
 </script>
 
 <ProjectFilter

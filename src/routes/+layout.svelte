@@ -24,12 +24,7 @@
 	<meta name="msapplication-TileColor" content={THEME_COLOR} />
 	<meta name="theme-color" content={THEME_COLOR} media="(prefers-color-scheme: light)" />
 	<meta name="theme-color" content={THEME_COLOR} media="(prefers-color-scheme: dark)" />
-	<link
-		rel="alternate"
-		type="application/rss+xml"
-		title={'RSS Feed for ' + SITE_TITLE}
-		href="/rss.xml"
-	/>
+	<link rel="alternate" type="application/rss+xml" title={'RSS Feed for ' + SITE_TITLE} href="/rss.xml" />
 </svelte:head>
 
 <div id="top" class="header-wrapper">

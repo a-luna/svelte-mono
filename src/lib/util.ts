@@ -9,20 +9,17 @@ export const getRandomHexString = (length: number): string =>
 		.map((n) => Number(n).toString(16))
 		.join('');
 
-export const getRandomArrayItem = <T>(array: readonly T[]): T =>
-	array[Math.floor(Math.random() * array.length)];
+export const getRandomArrayItem = <T>(array: readonly T[]): T => array[Math.floor(Math.random() * array.length)];
 
 export const getCSSPropValue = (element: HTMLElement, propName: string): string =>
 	getComputedStyle(element).getPropertyValue(propName);
 
-export const isUserRepo = (repoName: string): repoName is RepoName =>
-	REPO_NAMES.includes(repoName as RepoName);
+export const isUserRepo = (repoName: string): repoName is RepoName => REPO_NAMES.includes(repoName as RepoName);
 
 export const isValidLanguage = (language: string): language is LanguageOrTech =>
 	TECH_LIST.includes(language as LanguageOrTech);
 
-export const capitalize = (s: string): string =>
-	s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
+export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
 
 export const slugify = (text: string): string =>
 	text
@@ -58,8 +55,6 @@ export async function replaceAsync(
 	regexp: RegExp,
 	replacerFunction: (match: RegExpMatchArray) => Promise<string>
 ) {
-	const replacements = await Promise.all(
-		Array.from(string.matchAll(regexp), (match) => replacerFunction(match))
-	);
+	const replacements = await Promise.all(Array.from(string.matchAll(regexp), (match) => replacerFunction(match)));
 	return string.replace(regexp, () => replacements.shift() ?? '');
 }
