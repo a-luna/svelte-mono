@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"strict": true,
 		"allowUnreachableCode": false,
-		"exactOptionalPropertyTypes": true,
+
+		"exactOptionalPropertyTypes": false,
 		"noImplicitAny": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
