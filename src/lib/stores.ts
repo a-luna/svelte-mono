@@ -1,4 +1,4 @@
-import type { BlogPost, BlogPostDateMap, GHRepo, TutorialSection, TutorialSectionNumberMap } from '$lib/types';
+import type { BlogPost, BlogPostDateMap, GHRepo, Result, TutorialSection, TutorialSectionNumberMap } from '$lib/types';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 
@@ -22,7 +22,7 @@ export const tutorialSectionNumberMap: Readable<TutorialSectionNumberMap[]> = de
 				series_part,
 				lead
 			}))
-			.sort((a, b) => a.series_weight - b.series_weight)
+			.sort((a, b) => (a?.series_weight ?? 0) - (b?.series_weight ?? 0))
 );
 
 /* c8 ignore start */
@@ -37,11 +37,13 @@ function syncHeight(el: HTMLElement): Writable<number> {
 	});
 }
 
-export const getPageHeight = (): Writable<number> | undefined | null => {
-	if (typeof window !== 'undefined') {
-		const svelteDiv = document.getElementById('svelte');
-		return svelteDiv ? syncHeight(svelteDiv) : null;
+export const getPageHeight = (): Result<Writable<number>> => {
+	if (typeof window === 'undefined') {
+		return { success: false, error: 'This function must be run in browser (client-side)' };
 	}
-	return undefined;
+	const svelteDiv = document.getElementById('svelte');
+	return svelteDiv
+		? { success: true, value: syncHeight(svelteDiv) }
+		: { success: false, error: 'The DOM element with id="svelte" does not exist' };
 };
 /* c8 ignore stop */

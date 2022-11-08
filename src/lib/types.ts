@@ -34,8 +34,7 @@ import type {
 
 export type HttpError = { status: number; message: string };
 export type HttpResult = { success: true; value: Response } | { success: false; error: HttpError };
-export type Result = { success: true } | { success: false; error: string };
-export type HttpAuthType = typeof HTTP_AUTH_TYPES[number];
+export type Result<T = void> = { success: true; value: T } | { success: false; error: string };
 
 export interface HttpAuthToken {
 	type: HttpAuthType;

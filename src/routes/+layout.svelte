@@ -12,9 +12,13 @@
 	let scrollY: number;
 	let showScrollToTopButton: boolean;
 
-	$: if (typeof window !== 'undefined') pageHeight = getPageHeight();
-	$: if (typeof window !== 'undefined')
-		showScrollToTopButton = $pageHeight > windowHeight && scrollY > 0;
+	$: if (typeof window !== 'undefined') {
+		const result = getPageHeight();
+		if (result.success) {
+			pageHeight = result.value;
+		}
+	}
+	$: if (typeof window !== 'undefined') showScrollToTopButton = $pageHeight > windowHeight && scrollY > 0;
 </script>
 
 <svelte:window bind:innerHeight={windowHeight} bind:scrollY />
