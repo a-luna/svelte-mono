@@ -46,7 +46,7 @@
 	}
 }
 :root {
-	--max-width: 712px;
+	--max-width: 725px;
 
 	--no-hue: 0;
 	--red-hue: 0;
@@ -1007,9 +1007,12 @@ div.requirements {
 
 /* TABLE STYLES */
 
-table.tutorial thead .table-number,
+table.tutorial thead .table-number {
+	font-size: 1rem;
+}
+
 table.tutorial thead .table-title {
-	font-size: 0.95rem;
+	font-size: 0.85rem;
 }
 
 table.tutorial thead th.column-header,
@@ -1019,24 +1022,36 @@ table.tutorial thead th.column-header:last-child {
 	vertical-align: bottom;
 }
 
-table.tutorial thead th.column-header sup,
-table.tutorial tbody td sup,
-table.tutorial tfoot td sup {
+table.tutorial thead th.column-header sup {
 	font-size: 0.8rem;
+	top: -6px;
+	right: 3px
+}
+
+table.tutorial tbody td sup {
+	font-size: 0.7rem;
+    top: -6px;
+    right: 1px;
+}
+
+table.tutorial tfoot td sup {
+    font-size: 0.75rem;
+    top: -4px;
+    right: 1px;
 }
 
 table.tutorial tbody td {
-	font-size: 0.875rem;
+	font-size: 0.8rem;
 }
 
 table.tutorial code {
-	font-size: 0.7rem;
+	font-size: 0.675rem;
 }
 
 table.tutorial tbody td,
 table.tutorial thead th.column-header {
 	padding: 3px 5px;
-	line-height: 1.3;
+	line-height: 1.25;
 }
 
 table.tutorial tbody td:first-child,
@@ -1052,6 +1067,11 @@ table.tutorial thead th.column-header:last-child {
 table tfoot td p:first-child {
 	margin: 0 0 3px 0;
 }
+
+table.tutorial tfoor td {
+	margin: 0 0 8px 0;
+}
+
 
 table.tutorial tfoot code {
 	color: #0ff;
@@ -1077,7 +1097,8 @@ table.tutorial tfoot code {
 	line-height: 1.2;
 	width: 100%;
 	margin: 0 auto 2rem;
-	padding: 0;
+	padding: 0.25rem;
+	background-color: #1a1a1a;
 	white-space: nowrap;
 }
 
@@ -1097,7 +1118,7 @@ ul .table-wrapper {
 	width: auto;
 	table-layout: auto;
 	border: none;
-	color: #d8d8d8;
+	color: var(--gray-shade3);
 	background-color: var(--page-bg-color);
 	margin: 0 auto;
 	line-height: 1.2;
@@ -1107,24 +1128,23 @@ ul .table-wrapper {
 	font-weight: 700;
 	border: none;
 	background-color: var(--page-bg-color);
-	color: #d8d8d8;
+	color: var(--gray-shade3);
 }
 
 .responsive tbody th {
-	color: #d8d8d8;
+	color: var(--gray-shade3);
 	font-size: 0.8rem;
 	font-weight: 400;
 }
 
 .responsive tbody td {
-	color: #d8d8d8;
+	color: var(--gray-shade3);
 	border: 1px solid var(--accent-color);
 }
 
 .responsive tfoot {
 	padding-top: 10px;
 }
-
 .responsive table a {
 	color: var(--accent-color);
 	font-weight: 500;
@@ -1144,7 +1164,7 @@ ul .table-wrapper {
 th.column-header,
 .responsive thead tr th {
 	background-color: var(--accent-color);
-	color: var(--dark-gray-shade2);
+	color: var(--page-bg-color);
 	line-height: 0.8;
 	border: 1px solid var(--accent-color);
 	vertical-align: middle;
@@ -1196,7 +1216,7 @@ th.last-column,
 .table-wrapper thead td,
 .table-wrapper tfoot td {
 	background-color: var(--page-bg-color);
-	color: #d8d8d8;
+	color: var(--tw-prose-body);
 	border: none;
 	padding: 5px;
 	text-align: left;
@@ -1211,11 +1231,15 @@ th.last-column,
 	padding-bottom: 10px;
 }
 
-.table-wrapper thead .table-number,
+.table-wrapper thead .table-number {
+	color: var(--white);
+	font-weight: 700;
+}
+
 .table-wrapper thead .table-title {
-	color: #a9fb68;
-	font-size: 0.9rem;
+	color: var(--tw-prose-body);
 	font-weight: 400;
+	font-size: 0.8rem;
 }
 
 .table-wrapper tbody td {
@@ -1236,7 +1260,7 @@ th.last-column,
 
 .table-wrapper .aws-hosting-costs tbody th {
 	background-color: var(--page-bg-color);
-	color: #d8d8d8;
+	color: var(--gray-shade3);
 	border-bottom: none;
 	border-top: 1px solid #7f7f7f;
 	border-left: 1px solid #7f7f7f;
