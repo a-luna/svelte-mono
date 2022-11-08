@@ -1,10 +1,8 @@
 import { dev } from '$app/environment';
 import {
-	API_TUTORIAL_FOLDER,
 	API_TUTORIAL_IMAGE_ROOT,
 	API_TUTORIAL_URL_ROOT,
 	BLOG_IMAGE_ROOT,
-	BLOG_POST_FOLDER,
 	BLOG_POST_URL_ROOT,
 	SITE_URL
 } from '$lib/siteConfig';
@@ -15,6 +13,9 @@ import grayMatter from 'gray-matter';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+export const listBlogPosts = async (): Promise<BlogPost[]> => getAllContent('blog');
+export const listTutorialSections = async (): Promise<TutorialSection[]> => getAllContent('flask-api-tutorial');
+
 const checkMarkdownFile = (fileName: string): boolean => path.extname(fileName) === '.md';
 
 const parseBlogPost = (path: string, content: string, data: { [k: string]: unknown }): BlogPost =>
@@ -23,33 +24,26 @@ const parseBlogPost = (path: string, content: string, data: { [k: string]: unkno
 const getResourceUrl = (res: FrontMatterResources, slug: string, imageFolder: string): string =>
 	res.name.startsWith('img') ? `${imageFolder}/${slug}/${res.src}` : `${SITE_URL}/${res.src}`;
 
-export async function listLocalContent(): Promise<BlogPost[]> {
-	const localContent: BlogPost[] = [];
-	const blogPostFolder = getMarkdownFolder(BLOG_POST_FOLDER);
-	for await (const _path of getMarkdownFiles(blogPostFolder)) {
+async function getAllContent(contentType: 'blog' | 'flask-api-tutorial'): Promise<BlogPost[] | TutorialSection[]> {
+	const contentList: BlogPost[] | TutorialSection[] = [];
+	const markdownFolder = getMarkdownFolder(contentType);
+	for await (const _path of getMarkdownFiles(markdownFolder)) {
 		const src = await fs.readFile(_path, 'utf8');
 		const { content, data } = grayMatter(src);
-		localContent.push(parseBlogPost(_path, content, data));
+		if (contentType === 'blog') {
+			contentList.push(parseBlogPost(_path, content, data));
+		} else {
+			contentList.push(parseTutorialSection(_path, content, data));
+		}
 	}
-	return localContent;
+	return contentList;
 }
 
-export async function listTutorialSections(): Promise<TutorialSection[]> {
-	const tutorialSections: TutorialSection[] = [];
-	const apiTutorialFolder = getMarkdownFolder(API_TUTORIAL_FOLDER);
-	for await (const _path of getMarkdownFiles(apiTutorialFolder)) {
-		const src = await fs.readFile(_path, 'utf8');
-		const { content, data } = grayMatter(src);
-		tutorialSections.push(parseTutorialSection(_path, content, data));
-	}
-	return tutorialSections;
-}
-
-function getMarkdownFolder(conentType: 'blog' | 'flask-api-tutorial'): string {
+function getMarkdownFolder(contentType: 'blog' | 'flask-api-tutorial'): string {
 	const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 	return dev
-		? path.resolve(path.join(__dirname, '../../../../', `static/${conentType}`))
-		: path.resolve(path.join(__dirname, '../../', `client/${conentType}`));
+		? path.resolve(path.join(__dirname, '../../../', `static/${contentType}`))
+		: path.resolve(path.join(__dirname, '../../', `client/${contentType}`));
 }
 
 async function* getMarkdownFiles(dir: string): AsyncGenerator<string> {
@@ -71,7 +65,7 @@ function parseTutorialSection(path: string, content: string, data: { [k: string]
 		API_TUTORIAL_URL_ROOT,
 		content,
 		data
-	) as TutorialSection;
+	) as unknown as TutorialSection;
 	tutorialSection.lead = data.lead as string;
 	tutorialSection.series_weight = data.series_weight as number;
 	tutorialSection.series_title = data.series_title as string;

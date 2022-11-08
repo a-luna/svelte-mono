@@ -1,9 +1,9 @@
-import { listLocalContent } from '$lib/content';
+import { listBlogPosts } from '$lib/content';
 import { json } from '@sveltejs/kit';
 import type { RequestEvent, RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ setHeaders }: RequestEvent) => {
-	const allBlogPosts = [...(await listLocalContent())].sort(
+	const allBlogPosts = [...(await listBlogPosts())].sort(
 		(a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
 	);
 
