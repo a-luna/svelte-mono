@@ -35,23 +35,25 @@
 	beforeNavigate(() => Object.values(getSections()).forEach((sec) => (sec.open = false)));
 </script>
 
-<TutorialSections
-	bind:id={secId}
-	bind:detailsElement={secElement}
-	on:toggleSection={({ detail: { sectionId } }) => toggle(sectionId)}
-/>
-<TableOfContents
-	bind:id={tocId}
-	bind:detailsElement={tocElement}
-	toc={tutorialSection?.toc ?? []}
-	on:toggleSection={({ detail: { sectionId } }) => toggle(sectionId)}
-/>
-<GithubLinks
-	bind:id={ghId}
-	bind:detailsElement={ghElement}
-	section={tutorialSection}
-	on:toggleSection={({ detail: { sectionId } }) => toggle(sectionId)}
-/>
+<div class="toggle-groups">
+	<TutorialSections
+		bind:id={secId}
+		bind:detailsElement={secElement}
+		on:toggleSection={({ detail: { sectionId } }) => toggle(sectionId)}
+	/>
+	<TableOfContents
+		bind:id={tocId}
+		bind:detailsElement={tocElement}
+		toc={tutorialSection?.toc ?? []}
+		on:toggleSection={({ detail: { sectionId } }) => toggle(sectionId)}
+	/>
+	<GithubLinks
+		bind:id={ghId}
+		bind:detailsElement={ghElement}
+		section={tutorialSection}
+		on:toggleSection={({ detail: { sectionId } }) => toggle(sectionId)}
+	/>
+</div>
 
 <style lang="postcss">
 </style>

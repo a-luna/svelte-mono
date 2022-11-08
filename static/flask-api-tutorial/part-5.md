@@ -134,10 +134,10 @@ Now, you might be wondering how this can be accomplished if we only expose two e
         <table class="tutorial">
             <thead>
                 <tr>
-                    <td colspan="4" class="table-number">Table 1</td>
+                    <td colspan="5" class="table-number">Table 1</td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="table-title">Widget API endpoint specifications</td>
+                    <td colspan="5" class="table-title">Widget API endpoint specifications</td>
                 </tr>
                 <tr>
                     <th scope="col" class="first-column column-header">Endpoint Name</th>
@@ -242,16 +242,18 @@ def add_user(email, admin, password):
 {{< info_box >}}
 Explaining how to create a command with click is beyond the scope of this tutorial. Thankfully, the click documentation is exceptional. If you are interested, you can find everything you need to understand the `add_user` function in the links below:
 
-* [Basic Concepts - Creating a Command](https://click.palletsprojects.com/en/7.x/quickstart/#basic-concepts-creating-a-command)
-* [Echoing](https://click.palletsprojects.com/en/7.x/quickstart/#echoing)
-* [Adding Parameters](https://click.palletsprojects.com/en/7.x/quickstart/#adding-parameters)
-* [Basic Arguments](https://click.palletsprojects.com/en/7.x/arguments/#basic-arguments)
-* [Boolean Flags](https://click.palletsprojects.com/en/7.x/options/#boolean-flags)
-* [Password Prompts](https://click.palletsprojects.com/en/7.x/options/#password-prompts)
-* [Help Texts](https://click.palletsprojects.com/en/7.x/documentation/#help-texts)
-* [Documenting Arguments](https://click.palletsprojects.com/en/7.x/documentation/#documenting-arguments)
-* [Command Short Help](https://click.palletsprojects.com/en/7.x/documentation/#command-short-help)
-* [ANSI Colors](https://click.palletsprojects.com/en/7.x/utils/#ansi-colors)
+<ul class="list-of-links">
+  <li><a href="https://click.palletsprojects.com/en/7.x/quickstart/#basic-concepts-creating-a-command">Basic Concepts - Creating a Command</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/quickstart/#echoing">Echoing</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/quickstart/#adding-parameters">Adding Parameters</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/arguments/#basic-arguments">Basic Arguments</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/options/#boolean-flags">Boolean Flags</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/options/#password-prompts">Password Prompts</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/documentation/#help-texts">Help Texts</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/documentation/#documenting-arguments">Documenting Arguments</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/documentation/#command-short-help">Command Short Help</a></li>
+  <li><a href="https://click.palletsprojects.com/en/7.x/utils/#ansi-colors">ANSI Colors</a></li>
+</ul>
 
 Finally, the Flask documentation explains [how to add custom commands to the Flask CLI](https://flask.palletsprojects.com/en/1.0.x/cli/#custom-commands). Coincidentally, the example given in the documentation is a command to create a new user.
 {{< /info_box >}}

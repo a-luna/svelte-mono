@@ -168,9 +168,7 @@
 	--accent-color-dim-light: 29%;
 
 	--accent-color: hsl(var(--accent-color-hue) var(--accent-color-sat) var(--accent-color-light));
-	--accent-color-dim: hsl(
-		var(--accent-color-hue) var(--accent-color-sat) calc(var(--accent-color-light) - 30%)
-	);
+	--accent-color-dim: hsl(var(--accent-color-hue) var(--accent-color-sat) calc(var(--accent-color-light) - 30%));
 	/* --accent-color: hsl(148, 100%, 50%);
 	--accent-color-dim: hsl(148 98.1% 28.6%); */
 
@@ -203,6 +201,7 @@
 	--cmd-mid-gray2: hsl(0, 0%, 50%);
 	--cmd-light-gray2: hsl(0, 0%, 70%);
 	--cmd-off-white2: hsl(0, 0%, 85%);
+	--cmd-orange1: hsl(10, 100%, 57%);
 	--cmd-gold1: hsl(45, 100%, 40%);
 	--cmd-gold2: hsl(45, 100%, 68%);
 	--cmd-gold3: hsl(45, 100%, 65%);
@@ -248,14 +247,13 @@
 	--post-title-text-shadow-color3: hsl(0 0% 25% / 0.5); */
 
 	/* Post Title */
-	--post-title-text-color: var(--white-shade2);
+	--post-title-text-color: var(--white-shade1);
 	--post-title-text-stroke: var(--black-tint2);
 	--post-title-text-shadow-color: hsl(0 0% 30% / 0.8);
 
 	--shadow-color: 194deg 84% 18%;
 	--shadow-elevation-medium: -1px 1px 1.6px hsl(var(--shadow-color) / 0.36),
-		-3.3px 3.3px 5.3px -0.8px hsl(var(--shadow-color) / 0.36),
-		-8.2px 8.2px 13px -1.7px hsl(var(--shadow-color) / 0.36),
+		-3.3px 3.3px 5.3px -0.8px hsl(var(--shadow-color) / 0.36), -8.2px 8.2px 13px -1.7px hsl(var(--shadow-color) / 0.36),
 		-20px 20px 31.8px -2.5px hsl(var(--shadow-color) / 0.36);
 
 	scroll-behavior: smooth;
@@ -286,12 +284,7 @@ body {
 	--g-color-2-dim: hsl(215 9% 20%);
 	--g-color-3-dim: hsl(256 9% 20%);
 	--gradient: linear-gradient(to right, var(--g-color-1), var(--g-color-2));
-	--gradient-dim: linear-gradient(
-		to bottom right,
-		var(--g-color-1-dim),
-		var(--g-color-2-dim),
-		var(--g-color-3-dim)
-	);
+	--gradient-dim: linear-gradient(to bottom right, var(--g-color-1-dim), var(--g-color-2-dim), var(--g-color-3-dim));
 
 	--code-block-bg-color: #141414;
 
@@ -424,7 +417,9 @@ figcaption p {
 }
 
 ul.warning,
-ul.note {
+ul.note,
+.warning .bold-text,
+.note .bold-text {
 	--text-color: hsla(var(--hue) var(--max-sat) var(--text-light) / var(--text-alpha));
 	color: var(--text-color);
 }
@@ -501,6 +496,14 @@ ul.custom-block li {
 
 .custom-block-message code {
 	color: var(--body-text);
+}
+
+.custom-block-message ul {
+	margin: 0.5rem 0 0.5rem 2.25em;
+}
+
+.list-of-links li::marker {
+	color: var(--accent-color);
 }
 
 pre:not(.shiki) {
@@ -770,7 +773,7 @@ pre:not(.shiki) {
 }
 
 .cmd-hl-gold {
-	background-color: var(--cmd-gold1);
+	background-color: var(--cmd-orange1);
 	color: var(--widget-bg-color);
 }
 
@@ -814,6 +817,12 @@ pre:not(.shiki) {
 .emphasis {
 	font-weight: 700;
 	text-decoration: underline;
+}
+article p .bold-text,
+article ul .bold-text,
+article p .emphasis,
+article ul .emphasis {
+	color: var(--white-shade2);
 }
 
 .center {
@@ -953,7 +962,7 @@ pre .key-item {
 }
 
 .italics {
-	font-style: italic;;
+	font-style: italic;
 }
 
 .requirements .in-progress {
@@ -1025,19 +1034,19 @@ table.tutorial thead th.column-header:last-child {
 table.tutorial thead th.column-header sup {
 	font-size: 0.8rem;
 	top: -6px;
-	right: 3px
+	right: 3px;
 }
 
 table.tutorial tbody td sup {
 	font-size: 0.7rem;
-    top: -6px;
-    right: 1px;
+	top: -6px;
+	right: 1px;
 }
 
 table.tutorial tfoot td sup {
-    font-size: 0.75rem;
-    top: -4px;
-    right: 1px;
+	font-size: 0.75rem;
+	top: -4px;
+	right: 1px;
 }
 
 table.tutorial tbody td {
@@ -1072,7 +1081,6 @@ table.tutorial tfoor td {
 	margin: 0 0 8px 0;
 }
 
-
 table.tutorial tfoot code {
 	color: #0ff;
 	background-color: var(--page-bg-color);
@@ -1097,8 +1105,9 @@ table.tutorial tfoot code {
 	line-height: 1.2;
 	width: 100%;
 	margin: 0 auto 2rem;
-	padding: 0.25rem;
+	padding: 0.75rem 0.5rem;
 	background-color: #1a1a1a;
+	border: 1px solid var(--dark-gray-shade2);
 	white-space: nowrap;
 }
 
@@ -1138,7 +1147,7 @@ ul .table-wrapper {
 }
 
 .responsive tbody td {
-	color: var(--gray-shade3);
+	color: var(--white-shade3);
 	border: 1px solid var(--accent-color);
 }
 
@@ -1215,7 +1224,7 @@ th.last-column,
 
 .table-wrapper thead td,
 .table-wrapper tfoot td {
-	background-color: var(--page-bg-color);
+	background-color: #1a1a1a;
 	color: var(--tw-prose-body);
 	border: none;
 	padding: 5px;
@@ -1226,20 +1235,17 @@ th.last-column,
 	font-weight: 400;
 }
 
-.table-wrapper thead .table-title {
-	font-style: italic;
-	padding-bottom: 10px;
-}
-
 .table-wrapper thead .table-number {
 	color: var(--white);
-	font-weight: 700;
+	font-weight: 500;
 }
 
 .table-wrapper thead .table-title {
-	color: var(--tw-prose-body);
+	color: var(--white);
+	font-style: italic;
 	font-weight: 400;
 	font-size: 0.8rem;
+	padding-bottom: 10px;
 }
 
 .table-wrapper tbody td {
@@ -1302,12 +1308,12 @@ th.last-column,
 	text-align: left;
 }
 
-tr:nth-child(even) {
-	background-color: var(--widget-bg-color);
+tr:nth-child(odd) {
+	background-color: var(--black-tint1);
 }
 
-tr:nth-child(odd) {
-	background-color: var(--page-bg-color);
+tr:nth-child(even) {
+	background-color: var(--black-tint3);
 }
 
 .pricing-table-1 {

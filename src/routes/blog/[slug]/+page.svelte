@@ -130,7 +130,7 @@
 	}
 	h1 {
 		font-size: 2rem;
-		font-weight: 700;
+		font-weight: 500;
 		line-height: 1.2;
 		color: var(--post-title-text-color);
 		-webkit-text-fill-color: var(--post-title-text-color);

@@ -14,7 +14,6 @@
 	let tutorialSection: TutorialSection;
 
 	$: tutorialSection = data.tutorialSection;
-	$: published = tutorialSection?.date ? new Date(tutorialSection.date) : new Date(0);
 	$: if (pageLoaded && !buttonsEnabled) enableCopyCodeButtons();
 
 	async function copyCodeToClipboard(codeToCopy: string, button: HTMLElement) {
@@ -37,7 +36,7 @@
 	async function copyToClipboard(text: string): Promise<Result> {
 		if (typeof window !== 'undefined') {
 			await navigator.clipboard.writeText(text);
-			return { success: true };
+			return { success: true, value: undefined };
 		}
 		return { success: false, error: 'Error! Failed to copy text to clipboard.' };
 	}
@@ -52,7 +51,7 @@
 				})
 			});
 			navigator.clipboard.write([clipboardItem]);
-			return { success: true };
+			return { success: true, value: undefined };
 		} else {
 			return { success: false, error: 'Error! Failed to copy text to clipboard.' };
 		}
@@ -104,8 +103,10 @@
 	<h1>{tutorialSection?.title}</h1>
 	<ByLine nameOnly={true} />
 	<CoverImage slug={tutorialSection.slug} caption={tutorialSection.coverImage?.caption ?? ''} />
-	<PostNav compact={true} slug={tutorialSection.slug} />
-	<ToggleGroup {tutorialSection} />
+	<div class="post-nav-wrapper">
+		<PostNav compact={true} slug={tutorialSection.slug} />
+		<ToggleGroup {tutorialSection} />
+	</div>
 	<div
 		class="prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:flex-1 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
 	>
@@ -127,7 +128,7 @@
 	}
 	h1 {
 		font-size: 2rem;
-		font-weight: 700;
+		font-weight: 500;
 		line-height: 1.2;
 		color: var(--post-title-text-color);
 		-webkit-text-fill-color: var(--post-title-text-color);
@@ -141,6 +142,12 @@
 			0.75px 0.75px var(--post-title-text-shadow-color),
 			0.5px 0.5px var(--post-title-text-shadow-color),
 			0.25px 0.25px var(--post-title-text-shadow-color); */
+	}
+	.post-nav-wrapper {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 0.5rem;
+		width: 100%;
 	}
 	@media (min-width: 640px) {
 		article {
