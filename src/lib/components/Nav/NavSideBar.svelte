@@ -15,18 +15,10 @@
 		class:open
 	>
 		<nav>
-			<div on:click={() => (open = false)}>
-				<NavLink href="/">Home</NavLink>
-			</div>
-			<div on:click={() => (open = false)}>
-				<NavLink href="/projects">Projects</NavLink>
-			</div>
-			<div on:click={() => (open = false)}>
-				<NavLink href="/blog">Blog</NavLink>
-			</div>
-			<div on:click={() => (open = false)}>
-				<NavLink href="/about">About</NavLink>
-			</div>
+			<NavLink href="/" on:click={() => (open = false)}>Home</NavLink>
+			<NavLink href="/projects" on:click={() => (open = false)}>Projects</NavLink>
+			<NavLink href="/blog" on:click={() => (open = false)}>Blog</NavLink>
+			<NavLink href="/about" on:click={() => (open = false)}>About</NavLink>
 			<SocialLinks mobile={true} {open} />
 		</nav>
 	</aside>

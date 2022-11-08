@@ -4,11 +4,10 @@
 	export let open = false;
 </script>
 
-<div
+<button
 	class="menu-button block md:hidden"
 	class:open
 	aria-label="menu"
-	role="button"
 	tabindex="0"
 	aria-controls="nav-sidebar"
 	aria-haspopup="menu"
@@ -18,7 +17,7 @@
 	<div class="icon-wrapper">
 		<Menu />
 	</div>
-</div>
+</button>
 
 <style lang="postcss">
 	.menu-button {

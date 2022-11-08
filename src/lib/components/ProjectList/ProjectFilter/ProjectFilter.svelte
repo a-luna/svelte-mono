@@ -11,10 +11,10 @@
 	export let id = `radio-${getRandomHexString(4)}`;
 	export let title: string = '';
 	export let startOptionNumber = 1;
-	export let noFilterSetting: FilterSettingType = null;
+	export let noFilterSetting: FilterSettingType = '';
 	export let filterSettings: FilterSettingType[];
-	export let hoveredValue: FilterSettingType = null;
-	export let selectedValue: FilterSettingType = null;
+	export let hoveredValue: FilterSettingType = '';
+	export let selectedValue: FilterSettingType = '';
 	export let expanded = false;
 	const dispatch = createEventDispatcher();
 
@@ -35,20 +35,13 @@
 		return details.color;
 	}
 
-	function getLabelStyles(
-		current: FilterSettingType,
-		hoveredValue: FilterSettingType,
-		value: FilterSettingType
-	) {
+	function getLabelStyles(current: FilterSettingType, hoveredValue: FilterSettingType, value: FilterSettingType) {
 		let [bgColor, borderStyle] = ['', ''];
 		if (settingHasIcon(value)) {
 			bgColor = current !== value ? 'var(--black-tint2)' : 'var(--dark-gray-shade1)';
 		} else {
 			const color = getFilterSettingColor(value);
-			bgColor =
-				current === value || hoveredValue === value
-					? `var(--${color}-icon)`
-					: 'var(--page-bg-color)';
+			bgColor = current === value || hoveredValue === value ? `var(--${color}-icon)` : 'var(--page-bg-color)';
 			borderStyle = ` border: 1px solid var(--${color}-icon)`;
 		}
 		return `background-color: ${bgColor};${borderStyle}`;
@@ -64,49 +57,39 @@
 
 <div class="project-list-filter">
 	{#if title}
-		<div class="filter-title" class:expanded on:click={() => (expanded = !expanded)}>
+		<button class="filter-title" class:expanded on:click={() => (expanded = !expanded)}>
 			<div class="title-icon" class:expanded>
 				<Chevron />
 			</div>
 			{title}
-		</div>
+		</button>
 	{/if}
 	{#if expanded}
-		<div
-			in:fade={{ delay: 500 }}
-			out:fade={{ delay: 300 }}
-			class="filter-settings"
-			style={settingsListStyle}
-		>
+		<div in:fade={{ delay: 500 }} out:fade={{ delay: 300 }} class="filter-settings" style={settingsListStyle}>
 			{#if noFilterSetting}
-				<input
-					type="radio"
-					bind:group={selectedValue}
-					name={id}
-					id="{id}-option-0"
-					value={noFilterSetting}
-				/>
+				<input type="radio" bind:group={selectedValue} name={id} id="{id}-option-0" value={noFilterSetting} />
 				<label
 					for="{id}-option-0"
 					class:hovered={hoveredValue === noFilterSetting}
 					class:selected={selectedValue === noFilterSetting}
 					style={getLabelStyles(selectedValue, hoveredValue, noFilterSetting)}
 					class:expanded
-					on:click={() => changeFilterSetting(noFilterSetting)}
 					on:mouseenter={() => (hoveredValue = noFilterSetting)}
-					on:mouseleave={() => (hoveredValue = null)}
+					on:mouseleave={() => (hoveredValue = '')}
 				>
 					{#if settingHasIcon(noFilterSetting)}
 						<FilterSettingWithIcon
 							hovered={hoveredValue === noFilterSetting}
 							selected={selectedValue === noFilterSetting}
 							value={noFilterSetting}
+							on:click={() => changeFilterSetting(noFilterSetting)}
 						/>
 					{:else}
 						<FilterSettingNoIcon
 							hovered={hoveredValue === noFilterSetting}
 							selected={selectedValue === noFilterSetting}
 							value={noFilterSetting}
+							on:click={() => changeFilterSetting(noFilterSetting)}
 						/>
 					{/if}
 				</label>
@@ -124,21 +107,22 @@
 					class:hovered={hoveredValue === setting}
 					class:selected={selectedValue === setting}
 					style={getLabelStyles(selectedValue, hoveredValue, setting)}
-					on:click={() => changeFilterSetting(setting)}
 					on:mouseenter={() => (hoveredValue = setting)}
-					on:mouseleave={() => (hoveredValue = null)}
+					on:mouseleave={() => (hoveredValue = '')}
 				>
 					{#if settingHasIcon(setting)}
 						<FilterSettingWithIcon
 							hovered={hoveredValue === setting}
 							selected={selectedValue === setting}
 							value={setting}
+							on:click={() => changeFilterSetting(setting)}
 						/>
 					{:else}
 						<FilterSettingNoIcon
 							hovered={hoveredValue === setting}
 							selected={selectedValue === setting}
 							value={setting}
+							on:click={() => changeFilterSetting(setting)}
 						/>
 					{/if}
 				</label>
@@ -160,6 +144,7 @@
 		gap: 1rem;
 		align-items: center;
 		color: var(--white);
+		background-color: var(--black);
 		font-size: 1.2rem;
 		cursor: pointer;
 		width: 100%;

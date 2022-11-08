@@ -10,6 +10,7 @@
 	class="m-0 inline-block rounded-lg p-0 leading-none tracking-wider transition-all md:mx-2 md:px-3 md:py-2"
 	class:active={isActive}
 	{href}
+	on:click
 	><span class="leading-4"><slot /> </span>
 </a>
 

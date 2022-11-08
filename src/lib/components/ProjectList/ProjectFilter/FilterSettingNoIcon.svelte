@@ -13,9 +13,9 @@
 	$: style = `color: ${color}; background-color: ${bgColor}`;
 </script>
 
-<div class="filter-setting" class:hovered class:selected {style}>
+<button class="filter-setting" class:hovered class:selected {style} on:click>
 	<span class="filter-value">{displayName}</span>
-</div>
+</button>
 
 <style lang="postcss">
 	.filter-setting {

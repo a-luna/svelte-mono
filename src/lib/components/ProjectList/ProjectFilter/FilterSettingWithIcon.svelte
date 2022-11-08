@@ -16,12 +16,12 @@
 	$: iconStyle = `height: ${iconSize}px; width: ${iconSize}px; color: ${iconColor}; margin: 0 ${marginRight}px 0 ${marginLeft}px;`;
 </script>
 
-<div class="filter-setting" class:selected class:hovered>
+<button class="filter-setting" class:selected class:hovered on:click>
 	<div class="icon-wrapper" style={iconStyle}>
 		<svelte:component this={details?.icon} {...{ fill: iconColor }} />
 	</div>
 	<span class="filter-value">{displayName}</span>
-</div>
+</button>
 
 <style lang="postcss">
 	.filter-setting {

@@ -19,7 +19,7 @@
 	</button>
 	<button
 		class="reset-filters"
-		disabled={!filterApplied || showFilters}
+		disabled={!filterApplied}
 		title="Reset Filters"
 		on:click={() => dispatch('resetFilter')}
 	>
