@@ -6,7 +6,7 @@ aliases:
 date: "2019-01-20"
 menu_section: "blog"
 toc: true
-categories: ["DevOps"]
+categories: ["DevOps", "Shell"]
 summary: "If you create Heroku apps, you know that the only built-in options for deployment are 1) the Heroku CLI or 2) integration with a github repo. If you don't want your application's code to be publicly accessible, this results in a tedious routine of manually pushing your changes to Heroku. With Azure DevOps, you can create flexible build pipelines to automate various tasks: running tests, creating binaries, publishing artifacts, etc. In this post, I will go through the steps to create a simple build pipeline that automatically pushes the latest code to Heroku when changes are committed to a Azure DevOps repo."
 resources:
   - name: cover

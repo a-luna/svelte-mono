@@ -5,6 +5,7 @@ date: "2019-02-06"
 menu_section: "blog"
 categories:
   - Python
+  - dev_tools
 aliases:
     - /2019/02/06/error-handling-python-result-class/
 summary: "In a previous post, I explained how concepts from functional programming can be incorporated with object-oriented code to improve the tedious and mandatory task of error handling and input validation through the use of the Result class. That post explained how to implement the Result class in C#. Since I have been writing mostly Python code lately, I created a new implementation and documented its use. Due to Python's duck-typing, this implementation is (IMO) more natural and makes reasoning about the code it supports much easier."

@@ -6,7 +6,7 @@ aliases:
 date: "2018-01-18"
 menu_section: "blog"
 toc: true
-categories: ["AWS"]
+categories: ["AWS", "devops"]
 summary: "In this post, I explore the different pricing models that Amazon offers for EC2 and RDS instances and estimate the cost to host four different website configurations for one year. What amount should I expect to pay to host my website with the same AWS instances when I'm no longer eligible for the free usage tier? I answer this and many other questions that you know you wonder about but are just too damn embarrassed to admit in public."
 resources:
   - name: cover

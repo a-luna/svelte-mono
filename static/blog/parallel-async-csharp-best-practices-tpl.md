@@ -5,7 +5,7 @@ aliases:
     - /2018/01/29/parallel-async-csharp-best-practices-tpl/
 date: "2018-01-29"
 menu_section: "blog"
-categories: ["dotnet"]
+categories: ["CSharp", "dev_tools"]
 summary: "Do the acronyms APM, EAP, and TAP mean anything to you? Have you ever wondered why there appears to be multiple redundant implementations of the same method in the .NET Framework? If so, you've come to the right place. I'll try and explain why Microsoft felt the need to create three entirely distinct asynchronous programming patterns within the .NET framework and provide a few best practices to follow when writing asynchronous C# code."
 resources:
   - name: cover

@@ -5,7 +5,7 @@ aliases:
     - /2018/03/16/csharp-retrieve-local-public-ip-address/
 date: "2018-03-16"
 menu_section: "blog"
-categories: ["dotnet"]
+categories: ["CSharp", "dev_tools"]
 summary: "Have you ever wondered what is the correct way to determine either the local or public IP address of your PC? In this post, I explore various methods using built-in classes from the .NET Core framework. I attempt to determine my public/private IP address without the assistance of an external service, in order to eliminate any dependencies."
 resources:
   - name: cover

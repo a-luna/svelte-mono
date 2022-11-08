@@ -5,7 +5,7 @@ aliases:
     - /2018/01/19/casting-type-conversion-best-practices-c-sharp/
 date: "2018-01-19"
 menu_section: "blog"
-categories: ["dotnet"]
+categories: ["CSharp", "dev_tools"]
 summary: "Type casting or type converting is a common occurrance in C#, and as the language has evolved new methods and operators have been introduced that handle type conversion in varying ways. Over the years, I have built up my own set of best practices and decided to get them out of my head with the goal of soliciting feedback and hopefully refining them further."
 resources:
   - name: cover

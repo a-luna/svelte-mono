@@ -9,6 +9,7 @@ toc: true
 menu_section: "blog"
 categories:
   - Python
+  - dev_tools
 summary: 'Decorators can be a daunting topic when first encountered. While the Zen of Python states "There should be one-- and preferably only one --obvious way to do it", there are many, equally valid ways to implement the same decorator. These different methods can be categorized as either function-based, class-based, or a hybrid of both. In this post I will explain the design and behavior of Python decorators and provide examples of decorators that I frequently use in my own code.'
 resources:
   - name: cover

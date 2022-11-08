@@ -5,7 +5,7 @@ aliases:
     - /2018/01/15/how-to-monitor-aws-free-tier-usage/
 date: "2018-01-15"
 menu_section: "blog"
-categories: ["AWS"]
+categories: ["AWS", "devops"]
 summary: ""
 resources:
   - name: cover

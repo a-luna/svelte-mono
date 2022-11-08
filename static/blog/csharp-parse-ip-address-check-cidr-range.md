@@ -5,7 +5,7 @@ aliases:
     - /2018/02/24/csharp-parse-ip-address-check-cidr-range/
 date: "2018-02-24"
 menu_section: "blog"
-categories: ["dotnet"]
+categories: ["CSharp", "dev_tools"]
 summary: "Parsing things from text is like death and taxes, it is an absolute certainty that there will be a requirement requiring you to accept a blob of text as an input, wave a magic wand, and voila! You produce a beautiful object as the output of your function. In this post, I demonstrate how to parse IPv4 addresses from text (single or all IPs in text), as well as additional helper methods that work with IP addresses."
 resources:
   - name: cover

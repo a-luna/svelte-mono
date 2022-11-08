@@ -4,7 +4,7 @@ slug: 'add-search-to-static-site-lunrjs-hugo-vanillajs'
 date: '2020-06-30'
 menu_section: 'blog'
 toc: true
-categories: ['Hugo', 'Javascript']
+categories: ['Hugo', 'Javascript', 'frontend']
 summary: "I decided to document how I implemented a search feature with Hugo and Lunr.js on my personal blog site. Since this is a static site the search functionality is performed entirely within the client's browser. My solution uses vanilla JS DOM manipulation to render the search results. I believe that my approach includes features that are markedly different from the implementations I encountered while researching this task, features which enhance the overall search UX."
 resources:
   - name: cover
