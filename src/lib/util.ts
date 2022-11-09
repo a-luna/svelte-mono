@@ -9,7 +9,8 @@ export const getRandomHexString = (length: number): string =>
 		.map((n) => Number(n).toString(16))
 		.join('');
 
-export const getRandomArrayItem = <T>(array: readonly T[]): T => array[Math.floor(Math.random() * array.length)];
+export const getRandomArrayItem = <T>(array: readonly T[], defaultValue: T): T =>
+	array?.[Math.floor(Math.random() * array.length)] ?? defaultValue;
 
 export const getCSSPropValue = (element: HTMLElement, propName: string): string =>
 	getComputedStyle(element).getPropertyValue(propName);

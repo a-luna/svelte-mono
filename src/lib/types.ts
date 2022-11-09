@@ -1,24 +1,43 @@
-import type AllProjects from '$lib/components/Icons/Category/AllProjects.svelte';
-import type Aws from '$lib/components/Icons/Language/AWS.svelte';
-import type Cypress from '$lib/components/Icons/Language/Cypress.svelte';
-import type Database from '$lib/components/Icons/Language/Database.svelte';
-import type FastApi from '$lib/components/Icons/Language/FastAPI.svelte';
-import type Flask from '$lib/components/Icons/Language/Flask.svelte';
-import type Hugo from '$lib/components/Icons/Language/Hugo.svelte';
-import type Lxml from '$lib/components/Icons/Language/lxml.svelte';
-import type Microsoft from '$lib/components/Icons/Language/Microsoft.svelte';
-import type NoTechFilter from '$lib/components/Icons/Language/NoTechFilter.svelte';
-import type Puppeteer from '$lib/components/Icons/Language/Puppeteer.svelte';
-import type Python from '$lib/components/Icons/Language/Python.svelte';
-import type Redis from '$lib/components/Icons/Language/Redis.svelte';
-import type RegExp from '$lib/components/Icons/Language/RegExp.svelte';
-import type Shell from '$lib/components/Icons/Language/Shell.svelte';
-import type Sqlite from '$lib/components/Icons/Language/Sqlite.svelte';
-import type Svelte from '$lib/components/Icons/Language/Svelte.svelte';
-import type Tailwind from '$lib/components/Icons/Language/Tailwind.svelte';
-import type TypeScript from '$lib/components/Icons/Language/TypeScript.svelte';
-import type Xml from '$lib/components/Icons/Language/XML.svelte';
-import type XState from '$lib/components/Icons/Language/XState.svelte';
+import type {
+	AllProjects,
+	AndroidMask,
+	AudioCassette,
+	Aws,
+	BoltSpellCast,
+	CyberEye,
+	Cypress,
+	Database,
+	DustCloud,
+	FastApi,
+	FireSilhouette,
+	Flask,
+	Heptagram,
+	HighFive,
+	Hugo,
+	Lxml,
+	Microsoft,
+	MoebiusStar,
+	Moon,
+	NoTechFilter,
+	Orbital,
+	Puppeteer,
+	Python,
+	RamProfile,
+	Redis,
+	RegExp,
+	Shell,
+	Spatter,
+	Sqlite,
+	Stairs3D,
+	Static,
+	Svelte,
+	SverdIFjell,
+	Tailwind,
+	Teleport,
+	TypeScript,
+	Xml,
+	XState
+} from '$lib/components/Icons';
 import type {
 	BACKEND_CATEGORIES,
 	FRONTEND_CATEGORIES,
@@ -257,7 +276,7 @@ export interface RepoWithMetaData {
 
 export type UserRepos = { [key: string]: RepoWithMetaData };
 
-export type Icon =
+export type FilterSettingIcon =
 	| typeof AllProjects
 	| typeof Aws
 	| typeof Cypress
@@ -280,6 +299,25 @@ export type Icon =
 	| typeof Xml
 	| typeof XState;
 
+export type NavIcon =
+	| typeof AndroidMask
+	| typeof AudioCassette
+	| typeof CyberEye
+	| typeof DustCloud
+	| typeof BoltSpellCast
+	| typeof FireSilhouette
+	| typeof Heptagram
+	| typeof HighFive
+	| typeof MoebiusStar
+	| typeof Moon
+	| typeof Orbital
+	| typeof RamProfile
+	| typeof Spatter
+	| typeof Stairs3D
+	| typeof Static
+	| typeof SverdIFjell
+	| typeof Teleport;
+
 export interface ProjectCategoryDetails {
 	displayName: string;
 	color: IconColor;
@@ -287,7 +325,7 @@ export interface ProjectCategoryDetails {
 }
 
 export interface ProjectTypeDetails extends ProjectCategoryDetails {
-	icon: Icon;
+	icon: FilterSettingIcon;
 	size: number;
 }
 
