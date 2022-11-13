@@ -70,50 +70,40 @@ export function transformCodeBlocks(html: string, codeBlocks: CodeBlock[]): stri
 	if (codeBlocks.length !== sMatches.length || codeBlocks.length !== eMatches.length) return html;
 
 	const totalMatches = sMatches.length;
-	const updatedBlocks: {
-		codeBlock: string;
-		length: number;
-		originalLength: number;
-		offset: number;
-		shiki: boolean;
-	}[] = [];
-	Array.from({ length: totalMatches }, (_, i) => i).forEach((i) => {
+	const updatedBlocks: CodeBlockUpdateDetails[] = Array.from({ length: totalMatches }, (_, i) => i).map((i) => {
 		const blockStart = sMatches[i];
-		if (blockStart) {
-			const match = blockStart?.[0];
-			const { index, groups } = blockStart;
-			if (groups?.shiki) {
-				const codeStart = (index ?? 0) + (match?.length ?? 0);
-				const codeEnd = eMatches[i]?.index ?? 0;
-				const blockStart = index ?? 0;
-				const blockEnd = (eMatches[i]?.index ?? 0) + (eMatches[i]?.[0]?.length ?? 0);
-				const originalLength = blockEnd - blockStart;
-				const highlighted = html.slice(codeStart, codeEnd);
-				const codeBlock = createWrappedCodeBlock(
-					highlighted,
-					groups?.bgColor ?? '#141414',
-					codeBlocks[i]?.id ?? '',
-					codeBlocks[i]?.lang ?? '',
-					codeBlocks[i]?.lineNumbers ?? false,
-					codeBlocks[i]?.lineNumberStart ?? 1
-				);
-				updatedBlocks.push({
-					codeBlock,
-					length: codeBlock.length,
-					originalLength,
-					offset: codeBlock.length - originalLength,
-					shiki: true
-				});
-			} else {
-				updatedBlocks.push({
-					codeBlock: '',
-					length: 0,
-					originalLength: 0,
-					offset: 0,
-					shiki: false
-				});
-			}
+		const match = blockStart?.[0];
+		const { index, groups } = blockStart || { index: 0, groups: { shiki: false, bgColor: '' } };
+		if (groups?.shiki) {
+			const codeStart = (index ?? 0) + (match?.length ?? 0);
+			const codeEnd = eMatches[i]?.index ?? 0;
+			const blockStart = index ?? 0;
+			const blockEnd = (eMatches[i]?.index ?? 0) + (eMatches[i]?.[0]?.length ?? 0);
+			const originalLength = blockEnd - blockStart;
+			const highlighted = html.slice(codeStart, codeEnd);
+			const codeBlock = createWrappedCodeBlock(
+				highlighted,
+				groups?.bgColor ?? '#141414',
+				codeBlocks[i]?.id ?? '',
+				codeBlocks[i]?.lang ?? '',
+				codeBlocks[i]?.lineNumbers ?? false,
+				codeBlocks[i]?.lineNumberStart ?? 1
+			);
+			return {
+				codeBlock,
+				length: codeBlock.length,
+				originalLength,
+				offset: codeBlock.length - originalLength,
+				shiki: true
+			};
 		}
+		return {
+			codeBlock: '',
+			length: 0,
+			originalLength: 0,
+			offset: 0,
+			shiki: false
+		};
 	});
 
 	let totalOffSet = 0;

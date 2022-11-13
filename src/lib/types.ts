@@ -340,3 +340,11 @@ export type FilterSettingDetails = ProjectTypeDetails | ProjectCategoryDetails;
 export interface FilterSettingDetailsDatabase {
 	[k: string]: FilterSettingDetails;
 }
+
+export interface CodeBlockUpdateDetails {
+	codeBlock: string;
+	length: number;
+	originalLength: number;
+	offset: number;
+	shiki: boolean;
+}
