@@ -446,7 +446,7 @@
 		"diffEditor.removedTextBackground": "#FF408130",
 		"dropdown.background": "#212121",
 		"dropdown.border": "#FFFFFF10",
-		"editor.background": "#121212",
+		"editor.background": "#1a1a1a",
 		"editor.findMatchBackground": "#FFFFFF15",
 		"editor.findMatchBorder": "#00000000",
 		"editor.findMatchHighlightBackground": "#FFFFFF15",

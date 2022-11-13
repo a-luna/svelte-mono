@@ -29,7 +29,7 @@
 		"editor.findMatchBorder": "#80cbc4",
 		"editor.findMatchHighlightBackground": "#00000050",
 		"editor.findMatchHighlightBorder": "#ffffff30",
-		"editor.foreground": "#8f93a2",
+		"editor.foreground": "#B4B4B4",
 		"editor.lineHighlightBackground": "#00000050",
 		"editor.selectionBackground": "#717cb450",
 		"editor.selectionHighlightBackground": "#ffcc0020",
@@ -531,10 +531,27 @@
 	},
 	"tokenColors": [
 		{
-			"scope": ["comment", "punctuation.definition.comment", "string.quoted.docstring"],
+			"scope": ["meta.function-call.generic.python"],
 			"settings": {
-				"foreground": "#464B5D",
+				"foreground": "#FFFFFF"
+			}
+		},
+		{
+			"scope": "comment, punctuation.definition.comment",
+			"settings": {
+				"foreground": "#616263",
 				"fontStyle": "italic"
+			}
+		},
+		{
+			"scope": [
+				"string.quoted.docstring.multi.python",
+				"string.quoted.docstring.multi.python punctuation.definition.string.begin.python",
+				"string.quoted.docstring.multi.python punctuation.definition.string.end.python",
+				"string.quoted.docstring.multi.python constant.character.escape.python"
+			],
+			"settings": {
+				"foreground": "#616263"
 			}
 		},
 		{
@@ -777,10 +794,7 @@
 			}
 		},
 		{
-			"scope": [
-				"tag.decorator.js entity.name.tag.js",
-				"tag.decorator.js punctuation.definition.tag.js"
-			],
+			"scope": ["tag.decorator.js entity.name.tag.js", "tag.decorator.js punctuation.definition.tag.js"],
 			"settings": {
 				"foreground": "#82AAFF",
 				"fontStyle": "italic"
@@ -876,9 +890,7 @@
 			}
 		},
 		{
-			"scope": [
-				"text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown"
-			],
+			"scope": ["text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown"],
 			"settings": {
 				"foreground": "#80869E50"
 			}
@@ -1276,11 +1288,7 @@
 			}
 		},
 		{
-			"scope": [
-				"keyword.control.conditional",
-				"keyword.operator.ternary",
-				"keyword.control.switch"
-			],
+			"scope": ["keyword.control.conditional", "keyword.operator.ternary", "keyword.control.switch"],
 			"settings": {
 				"foreground": "#FF7F00",
 				"fontStyle": "italic bold"
@@ -1315,11 +1323,7 @@
 			}
 		},
 		{
-			"scope": [
-				"keyword.operator.logical",
-				"keyword.operator.assignment.compound.bitwise",
-				"keyword.operator.bitwise"
-			],
+			"scope": ["keyword.operator.logical", "keyword.operator.assignment.compound.bitwise", "keyword.operator.bitwise"],
 			"settings": {
 				"foreground": "#FFAEAE",
 				"fontStyle": "italic bold"
@@ -1354,20 +1358,9 @@
 			}
 		},
 		{
-			"scope": [
-				"string.quoted.double",
-				"punctuation.definition.string.begin",
-				"punctuation.definition.string.end"
-			],
+			"scope": ["string.quoted.single", "string.quoted.double"],
 			"settings": {
-				"foreground": "#FF00FF",
-				"fontStyle": ""
-			}
-		},
-		{
-			"scope": ["string.quoted.single"],
-			"settings": {
-				"foreground": "#FFBF00",
+				"foreground": "#FF44FF",
 				"fontStyle": ""
 			}
 		},
@@ -1831,11 +1824,7 @@
 			}
 		},
 		{
-			"scope": [
-				"constant.language.undefined",
-				"keyword.operator.expression.void",
-				"constant.language.null"
-			],
+			"scope": ["constant.language.undefined", "keyword.operator.expression.void", "constant.language.null"],
 			"settings": {
 				"foreground": "#B4B4B4",
 				"fontStyle": ""
@@ -2018,12 +2007,7 @@
 			}
 		},
 		{
-			"scope": [
-				"string.quoted.single",
-				"string.quoted.double",
-				"punctuation.definition.string.begin",
-				"punctuation.definition.string.end"
-			],
+			"scope": ["punctuation.definition.string.begin", "punctuation.definition.string.end"],
 			"settings": {
 				"foreground": "#FF44FF"
 			}

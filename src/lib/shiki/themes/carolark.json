@@ -96,7 +96,7 @@
 		"dropdown.foreground": "#c2fd99",
 		"dropdown.listBackground": "#457be7",
 		//editor
-		"editor.background": "#27336b",
+		"editor.background": "#1a1a1a",
 		"editor.foreground": "#c2fd99",
 		"editorLineNumber.foreground": "#c2fd99",
 		"editorLineNumber.activeForeground": "#6ef3a5",
@@ -313,12 +313,7 @@
 		},
 		{
 			"name": "CSS: Selectors",
-			"scope": [
-				"meta.selector",
-				"meta.selector entity",
-				"meta.selector entity punctuation",
-				"entity.name.tag.css"
-			],
+			"scope": ["meta.selector", "meta.selector entity", "meta.selector entity punctuation", "entity.name.tag.css"],
 			"settings": {
 				"foreground": "#7a3e9d"
 			}
@@ -332,11 +327,7 @@
 		},
 		{
 			"name": "CSS: Property Values",
-			"scope": [
-				"meta.property-value",
-				"meta.property-value constant.other",
-				"support.constant.property-value"
-			],
+			"scope": ["meta.property-value", "meta.property-value constant.other", "support.constant.property-value"],
 			"settings": {
 				"foreground": "#448c27"
 			}

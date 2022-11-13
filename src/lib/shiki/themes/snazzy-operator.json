@@ -497,7 +497,7 @@
 	"colors": {
 		"foreground": "#eff0eb",
 		"editorLink.activeForeground": "#ff5c57",
-		"editor.background": "#282a36",
+		"editor.background": "#1a1a1a",
 		"editorCursor.foreground": "#97979b",
 		"editor.findMatchHighlightBackground": "#54555e",
 		"editor.findRangeHighlightBackground": "#54555e",

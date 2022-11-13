@@ -2,7 +2,7 @@
 	"name": "Svelte Dark",
 	"type": "dark",
 	"colors": {
-		"editor.background": "#141414",
+		"editor.background": "#1a1a1a",
 		"editor.foreground": "#eeffff",
 		"activityBarBadge.background": "#007acc",
 		"sideBarTitle.foreground": "#bbbbbb"
@@ -162,10 +162,7 @@
 		},
 		{
 			"name": "HTML Attributes",
-			"scope": [
-				"text.html.basic entity.other.attribute-name.html",
-				"text.html.basic entity.other.attribute-name"
-			],
+			"scope": ["text.html.basic entity.other.attribute-name.html", "text.html.basic entity.other.attribute-name"],
 			"settings": { "fontStyle": "italic", "foreground": "#09fbd3" }
 		},
 		{
@@ -210,10 +207,7 @@
 		},
 		{
 			"name": "Decorators",
-			"scope": [
-				"tag.decorator.js entity.name.tag.js",
-				"tag.decorator.js punctuation.definition.tag.js"
-			],
+			"scope": ["tag.decorator.js entity.name.tag.js", "tag.decorator.js punctuation.definition.tag.js"],
 			"settings": { "fontStyle": "italic", "foreground": "#ebf3f7" }
 		},
 		{
@@ -294,9 +288,7 @@
 		},
 		{
 			"name": "Markdown - Markup Raw Inline Punctuation",
-			"scope": [
-				"text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown"
-			],
+			"scope": ["text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown"],
 			"settings": { "foreground": "#65737E" }
 		},
 		{

@@ -2,7 +2,7 @@
 	"name": "Lexer Dark Theme",
 	"type": "dark",
 	"colors": {
-		"editor.background": "#262B42",
+		"editor.background": "#1a1a1a",
 		"editor.foreground": "#00e2aa",
 		"sideBar.background": "#262B42",
 		"sideBar.foreground": "#b9bed1",
@@ -139,13 +139,7 @@
 		},
 		{
 			"name": "Number, Constant, Function Argument, Tag Attribute, Embedded",
-			"scope": [
-				"support.constant",
-				"constant.character",
-				"constant.escape",
-				"keyword.other.unit",
-				"keyword.other"
-			],
+			"scope": ["support.constant", "constant.character", "constant.escape", "keyword.other.unit", "keyword.other"],
 			"settings": {
 				"foreground": "#cd4496",
 				"fontStyle": "bold underline"
@@ -265,10 +259,7 @@
 		},
 		{
 			"name": "HTML Attributes",
-			"scope": [
-				"text.html.basic entity.other.attribute-name.html",
-				"text.html.basic entity.other.attribute-name"
-			],
+			"scope": ["text.html.basic entity.other.attribute-name.html", "text.html.basic entity.other.attribute-name"],
 			"settings": {
 				"fontStyle": "italic",
 				"foreground": "#FFCB6B"
@@ -332,10 +323,7 @@
 		},
 		{
 			"name": "Decorators",
-			"scope": [
-				"tag.decorator.js entity.name.tag.js",
-				"tag.decorator.js punctuation.definition.tag.js"
-			],
+			"scope": ["tag.decorator.js entity.name.tag.js", "tag.decorator.js punctuation.definition.tag.js"],
 			"settings": {
 				"fontStyle": "italic",
 				"foreground": "#82AAFF"
@@ -444,9 +432,7 @@
 		},
 		{
 			"name": "Markdown - Markup Raw Inline Punctuation",
-			"scope": [
-				"text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown"
-			],
+			"scope": ["text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown"],
 			"settings": {
 				"foreground": "#65737E"
 			}

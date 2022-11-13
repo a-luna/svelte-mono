@@ -124,13 +124,7 @@
 		},
 		{
 			"name": "Class name",
-			"scope": [
-				"entity.name.class",
-				"entity.name.module",
-				"entity.name.type",
-				"storage.identifier",
-				"support.class"
-			],
+			"scope": ["entity.name.class", "entity.name.module", "entity.name.type", "storage.identifier", "support.class"],
 			"settings": {
 				"foreground": "#00a0e4"
 			}
@@ -248,12 +242,7 @@
 		},
 		{
 			"name": "StyleSheet Property value",
-			"scope": [
-				"support.constant.css",
-				"support.constant.scss",
-				"support.constant.less",
-				"support.constant.sass"
-			],
+			"scope": ["support.constant.css", "support.constant.scss", "support.constant.less", "support.constant.sass"],
 			"settings": {
 				"foreground": "#98c379"
 			}
@@ -267,12 +256,7 @@
 		},
 		{
 			"name": "StyleSheet Variable String",
-			"scope": [
-				"variable.css.string",
-				"variable.scss.string",
-				"variable.less.string",
-				"variable.sass.string"
-			],
+			"scope": ["variable.css.string", "variable.scss.string", "variable.less.string", "variable.sass.string"],
 			"settings": {
 				"foreground": "#e5c07b"
 			}
@@ -286,12 +270,7 @@
 		},
 		{
 			"name": "StyleSheet Number",
-			"scope": [
-				"constant.numeric.css",
-				"constant.numeric.scss",
-				"constant.numeric.less",
-				"constant.numeric.sass"
-			],
+			"scope": ["constant.numeric.css", "constant.numeric.scss", "constant.numeric.less", "constant.numeric.sass"],
 			"settings": {
 				"foreground": "#E373CE"
 			}
@@ -478,7 +457,7 @@
 		"dropdown.background": "#1d1f23",
 		"diffEditor.insertedTextBackground": "#00809B33",
 		"dropdown.border": "#181A11",
-		"editor.background": "#121212",
+		"editor.background": "#1a1a1a",
 		"editor.foreground": "#f8f8f0",
 		"editorError.foreground": "#c24038",
 		"editorRuler.foreground": "#484848",
