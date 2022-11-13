@@ -2,9 +2,9 @@ import { blogPosts } from '$lib/stores';
 import type { BlogPost } from '$lib/types';
 import { error } from '@sveltejs/kit';
 import { get } from 'svelte/store';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ params, fetch }) => {
+export const load: PageServerLoad = async ({ params, fetch }) => {
 	let allBlogPosts: BlogPost[];
 	const storedValue = get(blogPosts);
 	if (!storedValue || !storedValue.length) {

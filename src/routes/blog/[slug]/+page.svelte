@@ -3,79 +3,22 @@
 	import PostNav from '$lib/components/BlogPost/PostNav.svelte';
 	import ByLine from '$lib/components/ByLine.svelte';
 	import TableOfContents from '$lib/components/TableOfContents/TableOfContents.svelte';
+	import { enableCopyCodeButtons, updateHeadingElements } from '$lib/content/browser';
 	import { MY_TWITTER_HANDLE, SITE_URL } from '$lib/siteConfig';
-	import type { BlogPost, Result } from '$lib/types';
+	import type { BlogPost } from '$lib/types';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	let pageLoaded = false;
 	let buttonsEnabled = false;
+	let headingsUpdated = false;
 	let blogPost: BlogPost;
 
 	$: blogPost = data.blogPost;
 	$: published = blogPost?.date ? new Date(blogPost.date) : new Date(0);
-	$: if (pageLoaded && !buttonsEnabled) enableCopyCodeButtons();
-
-	async function copyCodeToClipboard(codeToCopy: string, button: HTMLElement) {
-		let resultClass: string;
-		try {
-			let result = await copyToClipboard(codeToCopy);
-			if (!result.success) {
-				result = await copyToClipboardSafari(codeToCopy);
-			}
-			if (!result.success) {
-				console.error(`Failed to copy: ${result.error}`);
-			}
-			resultClass = result.success ? 'success' : 'error';
-		} catch (err) {
-			console.error(`Failed to copy: ${err}`);
-			resultClass = 'error';
-		}
-		toggleClass(button.parentNode as HTMLElement, resultClass);
-	}
-	async function copyToClipboard(text: string): Promise<Result> {
-		if (typeof window !== 'undefined') {
-			await navigator.clipboard.writeText(text);
-			return { success: true };
-		}
-		return { success: false, error: 'Error! Failed to copy text to clipboard.' };
-	}
-
-	async function copyToClipboardSafari(textToCopy: string): Promise<Result> {
-		if (typeof ClipboardItem && navigator.clipboard.write) {
-			const clipboardItem = new ClipboardItem({
-				'text/plain': new Promise((r) => setTimeout(r, 10)).then(() => {
-					return new Promise(async (resolve) => {
-						resolve(new Blob([textToCopy]));
-					});
-				})
-			});
-			navigator.clipboard.write([clipboardItem]);
-			return { success: true };
-		} else {
-			return { success: false, error: 'Error! Failed to copy text to clipboard.' };
-		}
-	}
-
-	function toggleClass(element: HTMLElement | null, className: string) {
-		if (element) {
-			element.blur();
-			element.classList.add(className);
-			setTimeout(function () {
-				element.classList.remove(className);
-			}, 2000);
-		}
-	}
-
-	function enableCopyCodeButtons() {
-		document.querySelectorAll<HTMLElement>('[data-code-block-id]').forEach((e) => {
-			const codeBlockId = e.dataset.codeBlockId;
-			const codeToCopy = document.querySelector<HTMLElement>(`#${codeBlockId}`)?.innerText ?? '';
-			e.addEventListener('click', () => copyCodeToClipboard(codeToCopy, e));
-		});
-		buttonsEnabled = true;
-	}
+	$: if (pageLoaded && !buttonsEnabled) buttonsEnabled = enableCopyCodeButtons();
+	$: if (pageLoaded && !headingsUpdated) headingsUpdated = updateHeadingElements();
 
 	onMount(() => (pageLoaded = true));
 </script>
@@ -110,7 +53,7 @@
 		<div class="gradient -mx-4 mt-4 mb-8 flex h-1 w-[100vw] sm:mx-0 sm:w-full" />
 	{/if}
 	<div
-		class="prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:flex-1 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
+		class="prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
 	>
 		{@html blogPost?.content}
 	</div>
