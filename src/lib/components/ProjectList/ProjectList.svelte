@@ -3,39 +3,22 @@
 	import FilterControls from '$lib/components/ProjectList/FilterControls.svelte';
 	import FilterList from '$lib/components/ProjectList/FilterList.svelte';
 	import { getFilterSettingDetails } from '$lib/filterSettings';
-	import { updateProjectMetaData } from '$lib/projectMetaData';
-	import { userRepos } from '$lib/stores';
 	import type { FilterSetting, RepoWithMetaData } from '$lib/types';
-	import { isUserRepo } from '$lib/util';
 	import { slide } from 'svelte/transition';
 
+	export let allRepos: RepoWithMetaData[];
 	let filterProjectType: FilterSetting = 'allProjects';
 	let filterCategory: FilterSetting = 'allCategories';
 	let filterLanguage: FilterSetting = 'allLanguages';
-	let allRepos: RepoWithMetaData[] = [];
 	let filtered: RepoWithMetaData[] = [];
-	let initialized = false;
 	let showFilters = false;
 
 	$: filterApplied =
-		filterProjectType !== 'allProjects' ||
-		filterCategory !== 'allCategories' ||
-		filterLanguage !== 'allLanguages';
-	$: if ($userRepos) {
-		allRepos = Object.values($userRepos)
-			.filter((r) => isUserRepo(r.name))
-			.map(updateProjectMetaData);
-		initialized = true;
-	}
-	$: if (initialized && (filterProjectType || filterCategory || filterLanguage)) {
+		filterProjectType !== 'allProjects' || filterCategory !== 'allCategories' || filterLanguage !== 'allLanguages';
+	$: if (filterProjectType || filterCategory || filterLanguage) {
 		filterProjects(allRepos, filterProjectType, filterCategory, filterLanguage);
 	}
-	$: description = getFilterDescription(
-		filtered,
-		filterProjectType,
-		filterCategory,
-		filterLanguage
-	);
+	$: description = getFilterDescription(filtered, filterProjectType, filterCategory, filterLanguage);
 
 	function getFilterDescription(
 		projects: RepoWithMetaData[],
@@ -55,9 +38,7 @@
 				? ` ${getFilterSettingDetails(type).displayName}`
 				: type === 'allProjects'
 				? ` ${getFilterSettingDetails(category).displayName}`
-				: ` ${getFilterSettingDetails(type).displayName}, ${
-						getFilterSettingDetails(category).displayName
-				  }`;
+				: ` ${getFilterSettingDetails(type).displayName}, ${getFilterSettingDetails(category).displayName}`;
 		return language === 'allLanguages'
 			? `${projects.length}${projectType}${projectPlural}`
 			: `${projects.length}${projectType}${projectPlural} that ${involvePlural} ${

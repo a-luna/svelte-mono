@@ -1,11 +1,14 @@
 <script lang="ts">
+	import { userRepos } from '$lib/stores';
 	import ProjectList from '$lib/components/ProjectList/ProjectList.svelte';
+
+	$: allRepos = $userRepos.repos;
 </script>
 
 <div class="projects-outer portfolio">
 	<div class="projects">
 		<h1 class="section-header">Projects</h1>
-		<ProjectList />
+		<ProjectList {allRepos} />
 	</div>
 </div>
 

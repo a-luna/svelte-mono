@@ -274,6 +274,11 @@ export interface RepoWithMetaData {
 	categories?: FilterSetting[];
 }
 
+export interface CachedProjectData {
+	repos: RepoWithMetaData[];
+	cachedAt: string;
+}
+
 export type UserRepos = { [key: string]: RepoWithMetaData };
 
 export type FilterSettingIcon =

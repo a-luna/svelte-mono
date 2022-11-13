@@ -1,14 +1,6 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import Mandala from '$lib/components/Mandala.svelte';
 	import { DEFAULT_OG_IMAGE, MY_TWITTER_HANDLE, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
-	import { userRepos } from '$lib/stores';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
-	$: allRepos = data.allRepos;
-
-	$: if (browser && Object.keys(allRepos).length) $userRepos = allRepos;
 </script>
 
 <svelte:head>
