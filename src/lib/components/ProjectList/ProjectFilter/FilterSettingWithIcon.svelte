@@ -3,7 +3,6 @@
 	import type { FilterSetting, ProjectTypeDetails } from '$lib/types';
 
 	export let value: FilterSetting;
-	export let isPrimaryLang = false;
 	export let hovered = false;
 	export let selected = false;
 	let details: ProjectTypeDetails;
@@ -12,12 +11,9 @@
 	$: details = getFilterSettingDetails(value) as unknown as ProjectTypeDetails;
 	$: iconColor = details ? `var(--${details.color}-icon)` : '--accent-color';
 	$: displayName = details.displayName;
-	$: defaultIconSize = details?.size ?? 16;
-	$: primaryLanguageSize = defaultIconSize + 2;
-	$: iconSize = isPrimaryLang ? primaryLanguageSize : defaultIconSize;
+	$: iconSize = details?.size ?? 16;
 	$: marginRight = Math.max(5, 23 - iconSize);
 	$: marginLeft = marginRight - 7;
-	$: fontSize = isPrimaryLang ? '1.1rem' : '1rem';
 	$: iconStyle = `height: ${iconSize}px; width: ${iconSize}px; color: ${iconColor}; margin: 0 ${marginRight}px 0 ${marginLeft}px;`;
 </script>
 
@@ -25,7 +21,7 @@
 	<div class="icon-wrapper" style={iconStyle}>
 		<svelte:component this={details?.icon} {...{ fill: iconColor }} />
 	</div>
-	<span class="filter-value" style="font-size: {fontSize}">{displayName}</span>
+	<span class="filter-value">{displayName}</span>
 </button>
 
 <style lang="postcss">
@@ -50,6 +46,7 @@
 		vertical-align: middle;
 	}
 	.filter-value {
+		font-size: 1rem;
 		white-space: nowrap;
 	}
 </style>

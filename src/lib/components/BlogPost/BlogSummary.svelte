@@ -1,35 +1,22 @@
 <script lang="ts">
 	import type { LanguageOrTech, ProjectCategory as ProjectCategoryType } from '$lib/types';
-	import { formatDateString, isLanguageOrTech, isProjectCategory } from '$lib/util';
+	import { formatDateString } from '$lib/util';
 	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 
-	export let slug = '';
+	export let href = '/';
 	export let title = 'Untitled post';
 	export let publishDate: Date = new Date(0);
-	export let tags: string[] = [];
-	const categories: ProjectCategoryType[] = [];
-	const techList: LanguageOrTech[] = [];
-
-	$: href = `blog/${slug}`;
-	$: tags.forEach((tag) => {
-		if (isProjectCategory(tag)) {
-			categories.push(tag);
-		}
-	});
-	$: tags.forEach((tag) => {
-		if (isLanguageOrTech(tag)) {
-			techList.push(tag);
-		}
-	});
+	export let categories: ProjectCategoryType[] = [];
+	export let language: LanguageOrTech = 'allLanguages';
 </script>
 
 <div class="blog-summary">
 	<div class="blog-summary-top">
-		{#if techList.length && techList[0]}
-			<FilterSettingWithIcon value={techList[0]} isPrimaryLang={true} />
-		{/if}
 		<div class="published">{formatDateString(publishDate)}</div>
+		{#if language}
+			<FilterSettingWithIcon value={language} />
+		{/if}
 	</div>
 	<a {href} class="post-title"><h4>{title}</h4></a>
 	<div class="tags">
@@ -74,13 +61,13 @@
 	}
 
 	.published {
-		font-size: 0.9rem;
-		color: var(--white-shade3);
+		font-size: 1rem;
+		color: var(--white);
 	}
 
 	.description {
-		font-size: 1rem;
-		color: var(--white-shade3);
+		font-size: 0.9rem;
+		color: var(--white-shade5);
 		line-height: 1.5;
 	}
 

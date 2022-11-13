@@ -15,7 +15,7 @@
 	<div class="project-card-details">
 		<div class="details-top">
 			<div class="lang-stats-wrapper">
-				<FilterSettingWithIcon value={project.primaryLanguage} isPrimaryLang={true} />
+				<FilterSettingWithIcon value={project.primaryLanguage} />
 				<GithubStats {project} />
 			</div>
 			<h2 class="project-name">{project.name}</h2>
@@ -128,7 +128,7 @@
 			font-size: 1.75rem;
 		}
 		.project-description {
-			font-size: 0.9rem;
+			font-size: 1rem;
 		}
 	}
 </style>

@@ -6,8 +6,15 @@ import {
 	BLOG_POST_URL_ROOT,
 	SITE_URL
 } from '$lib/siteConfig';
-import type { BlogPost, BlogResource, FrontMatterResources, TutorialSection } from '$lib/types';
-import { unslugify } from '$lib/util';
+import type {
+	BlogPost,
+	BlogResource,
+	FrontMatterResources,
+	LanguageOrTech,
+	ProjectCategory,
+	TutorialSection
+} from '$lib/types';
+import { isLanguageOrTech, isProjectCategory, unslugify } from '$lib/util';
 import { promises as fs } from 'fs';
 import grayMatter from 'gray-matter';
 import path from 'path';
@@ -17,9 +24,6 @@ export const listBlogPosts = async (): Promise<BlogPost[]> => getAllContent('blo
 export const listTutorialSections = async (): Promise<TutorialSection[]> => getAllContent('flask-api-tutorial');
 
 const checkMarkdownFile = (fileName: string): boolean => path.extname(fileName) === '.md';
-
-const parseBlogPost = (path: string, content: string, data: { [k: string]: unknown }): BlogPost =>
-	parseMarkdownFile(path, BLOG_IMAGE_ROOT, BLOG_POST_URL_ROOT, content, data);
 
 const getResourceUrl = (res: FrontMatterResources, slug: string, imageFolder: string): string =>
 	res.name.startsWith('img') ? `${imageFolder}/${slug}/${res.src}` : `${SITE_URL}/${res.src}`;
@@ -58,6 +62,12 @@ async function* getMarkdownFiles(dir: string): AsyncGenerator<string> {
 	}
 }
 
+function parseBlogPost(path: string, content: string, data: { [k: string]: unknown }): BlogPost {
+	const blogPost = parseMarkdownFile(path, BLOG_IMAGE_ROOT, BLOG_POST_URL_ROOT, content, data);
+	blogPost.href = `blog/${blogPost.slug}`;
+	return blogPost;
+}
+
 function parseTutorialSection(path: string, content: string, data: { [k: string]: unknown }): TutorialSection {
 	const tutorialSection = parseMarkdownFile(
 		path,
@@ -66,6 +76,7 @@ function parseTutorialSection(path: string, content: string, data: { [k: string]
 		content,
 		data
 	) as unknown as TutorialSection;
+	tutorialSection.href = tutorialSection.slug;
 	tutorialSection.lead = data.lead as string;
 	tutorialSection.series_weight = data.series_weight as number;
 	tutorialSection.series_title = data.series_title as string;
@@ -89,7 +100,17 @@ function parseMarkdownFile(
 	const slug = (data.slug as string) ?? path.basename(filePath, '.md');
 	const date = new Date((data.date as string) ?? 0);
 	const hasToc = Object.keys(data).includes('toc') ? (data.toc as boolean) : false;
-	const tags = [...(data.categories as string[])].map((tag) => tag.toLowerCase());
+	const tags = [...(data.categories as string[])];
+	const categories: ProjectCategory[] = [];
+	const techList: LanguageOrTech[] = [];
+
+	tags.forEach((tag) => {
+		if (isProjectCategory(tag)) {
+			categories.push(tag);
+		} else if (isLanguageOrTech(tag)) {
+			techList.push(tag);
+		}
+	});
 
 	return {
 		type: 'blog' as const,
@@ -99,8 +120,10 @@ function parseMarkdownFile(
 		description: (data.summary as string) ?? content.trim().split('\n')[0] ?? '',
 		frontmatter: data.data as { [k: string]: string },
 		hasToc,
-		category: tags.at(0) ?? '',
-		tags,
+		category: categories.at(0) ?? 'allCategories',
+		categories,
+		language: techList.at(0) ?? 'allLanguages',
+		techList,
 		canonical: `${urlRoot}/${slug}`,
 		slug,
 		date: date.toISOString(),
@@ -123,9 +146,9 @@ function getArticleResources(
 	imageFolder: string,
 	frontMatterRes: FrontMatterResources[]
 ): { [k: string]: BlogResource } {
-	const articleImages = frontMatterRes.filter((res) => res.name !== 'cover');
+	const articleResources = frontMatterRes.filter((res) => res.name !== 'cover');
 	const resources: { [k: string]: BlogResource } = {};
-	articleImages.forEach(
+	articleResources.forEach(
 		(img) =>
 			(resources[img.name] = {
 				name: img.name,

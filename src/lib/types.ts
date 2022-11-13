@@ -128,10 +128,13 @@ export interface BlogPost {
 	};
 	hasToc: boolean;
 	toc?: TocSection[];
-	category: string;
-	tags: string[];
+	category: ProjectCategory;
+	language: LanguageOrTech;
+	categories: ProjectCategory[];
+	techList: LanguageOrTech[];
 	canonical: string;
 	slug: string;
+	href?: string;
 	date: string;
 	coverImage: BlogResource;
 	resources: ResourceMap;
