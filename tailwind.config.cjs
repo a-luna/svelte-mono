@@ -15,7 +15,7 @@ module.exports = {
 							fontWeight: '400'
 						},
 						blockquote: {
-							fontSize: '.9rem',
+							fontSize: '.85rem',
 							fontWeight: '400',
 							fontStyle: 'italic',
 							color: 'var(--accent-color)',
@@ -26,6 +26,9 @@ module.exports = {
 						},
 						'blockquote p': {
 							margin: '0'
+						},
+						'blockquote code': {
+							color: 'var(--tw-prose-body)'
 						},
 						'blockquote ul': {
 							padding: '0',
@@ -46,8 +49,7 @@ module.exports = {
 							background: 'var(--black-tint3)',
 							border: 'none',
 							'border-radius': '4px',
-							fontStyle: 'normal',
-							padding: '1px 3px'
+							fontStyle: 'normal'
 						},
 						'article a': {
 							fontWeight: '400',

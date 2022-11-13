@@ -201,7 +201,8 @@
 	--cmd-mid-gray2: hsl(0, 0%, 50%);
 	--cmd-light-gray2: hsl(0, 0%, 70%);
 	--cmd-off-white2: hsl(0, 0%, 85%);
-	--cmd-orange1: hsl(10, 100%, 57%);
+	--cmd-red1: hsl(0, 100%, 57%);
+	--cmd-orange1: hsl(20, 100%, 57%);
 	--cmd-gold1: hsl(45, 100%, 40%);
 	--cmd-gold2: hsl(45, 100%, 68%);
 	--cmd-gold3: hsl(45, 100%, 65%);
@@ -230,7 +231,7 @@
 	--cmd-comments: var(--cmd-blue3);
 	--cmd-repl-prompt: var(--cmd-blue3);
 	--cmd-repl-comment: var(--cmd-mid-gray2);
-	--cmd-warning: var(--cmd-pink3);
+	--cmd-warning: var(--cmd-red1);
 	--cmd-hl-border: var(--cmd-yellow3);
 	--hl-line-bg: linear-gradient(
 		to right,
@@ -317,13 +318,14 @@ kbd {
 }
 
 article a.hanchor {
-	color: var(--gray-shade5);
+	display: none;
+	color: var(--accent-color);
 	background-color: var(--page-bg-color);
 	box-shadow: none;
 }
 
-article a.hanchor:hover {
-	color: var(--accent-color);
+article .hovered a.hanchor {
+	display: block;
 }
 
 article figure {
@@ -385,7 +387,8 @@ figcaption p {
 .level-4 code,
 .level-5 code,
 .level-6 code {
-	font-size: 1rem;
+	color: var(--tw-prose-headings);
+	font-size: 0.875em;
 }
 
 .heading-text {
@@ -416,10 +419,16 @@ figcaption p {
 	--hue: 180;
 }
 
+ul.warning {
+	margin: 0 0 1.25rem 1.25em
+}
+
 ul.warning,
 ul.note,
 .warning .bold-text,
-.note .bold-text {
+.note .bold-text,
+.warning strong,
+.note strong {
 	--text-color: hsla(var(--hue) var(--max-sat) var(--text-light) / var(--text-alpha));
 	color: var(--text-color);
 }
@@ -502,6 +511,10 @@ ul.custom-block li {
 	margin: 0.5rem 0 0.5rem 2.25em;
 }
 
+.code-details ul li blockquote strong {
+	color: var(--accent-color);
+}
+
 .list-of-links li::marker {
 	color: var(--accent-color);
 }
@@ -514,21 +527,10 @@ pre:not(.shiki) {
 }
 
 .underline--magical code {
-	color: inherit;
+	color: var(--tw-prose-headings);
 	background-color: inherit;
 	border: none;
 	padding: 0;
-}
-
-.underline--magical h2 code {
-	font-size: 1.2rem;
-}
-
-.underline--magical h3 code,
-.underline--magical h4 code,
-.underline--magical h5 code,
-.underline--magical h6 code {
-	font-size: 1.1rem;
 }
 
 .shiki code {
@@ -811,6 +813,7 @@ pre:not(.shiki) {
 	font-weight: 700;
 }
 .bold-italics {
+	color: var(--white-shade2);
 	font-weight: 700;
 	font-style: italic;
 }

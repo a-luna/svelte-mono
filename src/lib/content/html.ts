@@ -1,4 +1,4 @@
-import type { CodeBlock, HtmlHeading, TocSection } from '$lib/types';
+import type { CodeBlock, CodeBlockUpdateDetails, HtmlHeading, TocSection } from '$lib/types';
 import {
 	CODE_BLOCK_END_REGEX,
 	CODE_BLOCK_START_REGEX,
@@ -7,12 +7,6 @@ import {
 	HTML_HEADING_REGEX,
 	TOX_TEST_RESULTS_REGEX
 } from './constants';
-
-export const transformHeadings = (html: string): string =>
-	html.replace(
-		HTML_HEADING_REGEX,
-		'<span class="heading-text level-$<level>"><a href="#$<slug>" class="hanchor hanchor-self" title="Link to this section"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" stroke="currentColor" fill="currentColor" class="s-x0McpB_FEdHb" style="stroke-width: 0; padding: 0px;"><path d="M440.667 182.109l7.143-40c1.313-7.355-4.342-14.109-11.813-14.109h-74.81l14.623-81.891C377.123 38.754 371.468 32 363.997 32h-40.632a12 12 0 0 0-11.813 9.891L296.175 128H197.54l14.623-81.891C213.477 38.754 207.822 32 200.35 32h-40.632a12 12 0 0 0-11.813 9.891L132.528 128H53.432a12 12 0 0 0-11.813 9.891l-7.143 40C33.163 185.246 38.818 192 46.289 192h74.81L98.242 320H19.146a12 12 0 0 0-11.813 9.891l-7.143 40C-1.123 377.246 4.532 384 12.003 384h74.81L72.19 465.891C70.877 473.246 76.532 480 84.003 480h40.632a12 12 0 0 0 11.813-9.891L151.826 384h98.634l-14.623 81.891C234.523 473.246 240.178 480 247.65 480h40.632a12 12 0 0 0 11.813-9.891L315.472 384h79.096a12 12 0 0 0 11.813-9.891l7.143-40c1.313-7.355-4.342-14.109-11.813-14.109h-74.81l22.857-128h79.096a12 12 0 0 0 11.813-9.891zM261.889 320h-98.634l22.857-128h98.634l-22.857 128z"></path></svg></a><h$<level> id="$<slug>"><span class="underline--magical">$<text></span></h$<level>></span>'
-	);
 
 export const colorizeToxResults = (html: string): string =>
 	html.replace(TOX_TEST_RESULTS_REGEX, (match): string => {
@@ -27,6 +21,14 @@ export const colorizeToxResults = (html: string): string =>
 export const generateTableOfContents = (html: string): TocSection[] =>
 	createTocSection(1, 0, html.length, createHtmlHeadingMap(html));
 
+export function transformHeadings(html: string): string {
+	const svgIcon = getSvgIcon('hash');
+	return html.replace(
+		HTML_HEADING_REGEX,
+		`<span class="heading-text level-$<level>"><h$<level> id="$<slug>"><span class="underline--magical">$<text></span></h$<level>><a href="#$<slug>" class="hanchor hanchor-self" title="Link to this section">${svgIcon}</a></span>`
+	);
+}
+
 function createHtmlHeadingMap(html: string): { [k: number]: HtmlHeading[] } {
 	const headings = Array.from(html.matchAll(HTML_HEADING_REGEX)).map((m) => ({
 		level: parseInt(m?.groups?.level ?? '0'),
@@ -36,8 +38,7 @@ function createHtmlHeadingMap(html: string): { [k: number]: HtmlHeading[] } {
 	}));
 	const hmap: { [k: number]: HtmlHeading[] } = {};
 	Array.from({ length: 5 }, (_, i) => i + 2).forEach(
-		(level) =>
-			(hmap[level] = headings.filter((h) => h.level === level).sort((a, b) => a.index - b.index))
+		(level) => (hmap[level] = headings.filter((h) => h.level === level).sort((a, b) => a.index - b.index))
 	);
 	return hmap;
 }
@@ -48,9 +49,7 @@ function createTocSection(
 	sectionEnd: number,
 	hmap: { [k: number]: HtmlHeading[] }
 ): TocSection[] {
-	const levelMap = hmap?.[level + 1]?.filter(
-		(h) => h.index >= sectionStart && sectionEnd > h.index
-	);
+	const levelMap = hmap?.[level + 1]?.filter((h) => h.index >= sectionStart && sectionEnd > h.index);
 	if (!levelMap || !levelMap.length) {
 		return [];
 	}
