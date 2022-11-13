@@ -20,7 +20,7 @@
 
 	$: if (browser && Object.keys(allTutorialSections).length) $tutorialSections = allTutorialSections;
 	$: if (tutorialSections && $tutorialSections.length)
-		list = $tutorialSections.sort((a, b) => a.series_weight - b.series_weight);
+		list = $tutorialSections.sort((a, b) => (a?.series_weight ?? 0) - (b?.series_weight ?? 0));
 </script>
 
 <svelte:head>

@@ -49,16 +49,14 @@ function transformHtml(html: string, codeBlocks: CodeBlock[]): string {
 	return colorizeToxResults(content);
 }
 
-export async function convertContentToHtml(
-	blogPost: BlogPost
-): Promise<BlogPost | TutorialSection> {
+export async function convertContentToHtml(blogPost: BlogPost): Promise<BlogPost | TutorialSection> {
 	const codeBlocks = identifyCodeBlocks(blogPost.content);
-	let content = await convertMarkdownToHtml(blogPost.content, blogPost.resources);
+	let html = await convertMarkdownToHtml(blogPost.content, blogPost.resources);
 
 	let toc: TocSection[] = [];
 	if (blogPost.hasToc) {
-		toc = generateTableOfContents(content);
+		toc = generateTableOfContents(html);
 	}
-	content = transformHtml(content, codeBlocks);
-	return { ...blogPost, content, codeBlocks, toc };
+	html = transformHtml(html, codeBlocks);
+	return { ...blogPost, content: html, codeBlocks, toc };
 }

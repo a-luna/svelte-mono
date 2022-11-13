@@ -34,21 +34,19 @@ export function identifyCodeBlocks(markdown: string): CodeBlock[] {
 	const cfeMatches = Array.from(markdown.matchAll(CODE_FENCE_END_REGEX)).map((m) => ({
 		index: m.index ?? 0
 	}));
-	if (cfsMatches.length !== cfeMatches.length) return [];
-
 	let htmlMatches = Array.from(markdown.matchAll(CODE_BLOCK_START_REGEX)).map((m) => ({
 		shiki: false,
 		id: '',
 		index: m.index ?? 0,
 		groups: {}
 	}));
+	if (cfsMatches.length !== cfeMatches.length) return [];
+
 	const cfBoundaries = Array.from({ length: cfsMatches.length }, (_, i) => i).map((i) => ({
 		start: cfsMatches[i]?.index ?? 0,
-		end: cfeMatches?.[i]?.index ?? 0
+		end: cfeMatches[i]?.index ?? 0
 	}));
-	htmlMatches = htmlMatches.filter(
-		(m) => !cfBoundaries.some((cf) => m.index > cf.start && cf.end > m.index)
-	);
+	htmlMatches = htmlMatches.filter((m) => !cfBoundaries.some((cf) => m.index > cf.start && cf.end > m.index));
 
 	return [...cfsMatches, ...htmlMatches]
 		.sort((a, b) => a.index - b.index)
@@ -86,10 +84,7 @@ async function convertMarkdownSnippetToHtml(match: RegExpMatchArray): Promise<st
 	return String(file);
 }
 
-export const convertLinkedImages = (
-	markdown: string,
-	resources: { [k: string]: BlogResource }
-): string =>
+export const convertLinkedImages = (markdown: string, resources: { [k: string]: BlogResource }): string =>
 	markdown.replace(
 		LINKED_IMAGE_REGEX,
 		(match: string, p1: string): string =>

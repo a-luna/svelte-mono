@@ -9,7 +9,7 @@
 	$: displayName = details?.displayName;
 </script>
 
-<div class="project-category" style="color: {categoryColor}; border: 1.5px solid {categoryColor};">
+<div class="project-category" style="color: {categoryColor}; border: 1px solid {categoryColor};">
 	{displayName}
 </div>
 
@@ -18,5 +18,6 @@
 		padding: 0.5rem;
 		background-color: inherit;
 		font-weight: 500;
+		line-height: 1;
 	}
 </style>

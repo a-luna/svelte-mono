@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import BlogSummary from '$lib/components/BlogPost/BlogSummary.svelte';
-	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import { blogPosts } from '$lib/stores';
 	import type { BlogPost } from '$lib/types';
@@ -64,7 +63,13 @@
 		<ul>
 			{#each list as item}
 				<li>
-					<BlogSummary slug={item.slug} title={item.title} publishDate={new Date(item.date)} tags={item.tags}>
+					<BlogSummary
+						href={item.href}
+						title={item.title}
+						publishDate={new Date(item.date)}
+						categories={item.categories}
+						language={item.language}
+					>
 						{item.description}
 					</BlogSummary>
 				</li>

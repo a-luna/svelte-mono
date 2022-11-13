@@ -4,37 +4,37 @@
 	import Code from '../Icons/Code.svelte';
 
 	export let section: TutorialSection;
+	let href: string | undefined = '';
+	let lead: string | undefined = '';
+	let description: string | undefined = '';
+	let url_git_rel_browse: string | undefined = '';
+	let url_git_rel_zip: string | undefined = '';
+	let url_git_rel_tar: string | undefined = '';
+	let url_git_rel_diff: string | undefined = '';
+
+	$: ({ href, lead, description, url_git_rel_browse, url_git_rel_zip, url_git_rel_tar, url_git_rel_diff } = section);
 </script>
 
 <div class="api-tutorial-section">
-	<a href={section?.slug} class="section-name"><h4>{section?.lead}</h4></a>
-	<div class="section-summary">{section?.description}</div>
+	<a {href} class="section-name"><h4>{lead}</h4></a>
+	<div class="section-summary">{description}</div>
 	<div class="github-links">
 		<div class="links-left">
-			<a href={section?.url_git_rel_browse} title="View source for this tutorial section">
+			<a href={url_git_rel_browse} title="View source for this tutorial section">
 				<div class="icon"><Code /></div>
 				<span class="label">Code</span>
 			</a>
-			<a
-				href={section?.url_git_rel_diff}
-				title="View source diff between this section and the previous"
-			>
+			<a href={url_git_rel_diff} title="View source diff between this section and the previous">
 				<div class="icon"><Code /></div>
 				<span class="label">Diff</span>
 			</a>
 		</div>
 		<div class="links-right">
-			<a
-				href={section?.url_git_rel_zip}
-				title="Download source code for this tutorial section (.zip file)"
-			>
+			<a href={url_git_rel_zip} title="Download source code for this tutorial section (.zip file)">
 				<div class="icon"><ArrowDown /></div>
 				<span class="label">.zip</span>
 			</a>
-			<a
-				href={section?.url_git_rel_tar}
-				title="Download source code for this tutorial section (.tar.gz file)"
-			>
+			<a href={url_git_rel_tar} title="Download source code for this tutorial section (.tar.gz file)">
 				<div class="icon"><ArrowDown /></div>
 				<span class="label">.tar.gz</span>
 			</a>

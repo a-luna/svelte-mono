@@ -370,7 +370,7 @@ However, if the token is invalid/expired or there is some other issue preventing
       <p>If a client sends a request to a protected resource that requires administrator privileges, and the token is valid/not expired <span class="bold-italics">but the user does not have administrator privileges</span>, the server's response will be nearly the same as the response when the token is invalid/expired. The only difference is that the error code must be <code>insufficient_scope</code>, and the status code of the response must be 403 (<code>HTTPStatus.FORBIDDEN</code>)</p>
       <p><a href="https://tools.ietf.org/html/rfc6750#section-3.1" target="_blank">Per section 3.1 of RFC6750</a>:</p>
       <blockquote class="rfc"><strong>insufficient_scope</strong>
-      <p style="margin: 0 0 0 1em">The request requires higher privileges than provided by the access token.  The resource server SHOULD respond with the HTTP 403 (Forbidden) status code and MAY include the "scope" attribute with the scope necessary to access the protected resource.</p>
+      <p style="margin: 0 0 0 1em">The request requires higher privileges than provided by the access token.  The resource server <strong>SHOULD</strong> respond with the HTTP 403 (Forbidden) status code and <strong>MAY</strong> include the "scope" attribute with the scope necessary to access the protected resource.</p>
       </blockquote>
     </li>
   </ul>
@@ -381,12 +381,7 @@ However, if the token is invalid/expired or there is some other issue preventing
 We can implement the responses required when a request for a protected resource must be rejected with a pair of function decorators. It is important to understand how these decorators are designed and how this design is driven by the need to obey the specifications from <a href="https://tools.ietf.org/html/rfc6750" target="_blank">RFC6750</a>.
 
 {{< info_box >}}
-<p>Understanding how decorators work and how to create them can be a daunting topic. I recommend reading at least one of the following articles:</p>
-<ul class="list-of-links">
-  <li><a href="https://realpython.com/primer-on-python-decorators/" target="_blank">Primer on Python Decorators (Real Python)</a></li>
-  <li><a href="https://blog.apcelent.com/python-decorator-tutorial-with-example.html" target="_blank">Python Decorator Tutorial with Example (Apcelent Tech Blog)</a></li>
-  <li><a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators" target="_blank">How to make a chain of function decorators? (Stack Overflow)</a></li>
-</ul>
+<p>Understanding how decorators work and how to create them can be a daunting topic. If you need a refresher on what actually happens when you decorate a function, check out my <a href="/blog/intro-to-python-decorators">Introduction to Decorators in Python</a>.</p>
 {{< /info_box >}}
 
 Create a new file named `decorators.py` in `src/flask_api_tutorial/api/auth` and add the content below:
