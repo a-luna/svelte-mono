@@ -17,7 +17,6 @@ import type {
 	Lxml,
 	Microsoft,
 	MoebiusStar,
-	Moon,
 	NoTechFilter,
 	Orbital,
 	Puppeteer,
@@ -317,7 +316,6 @@ export type NavIcon =
 	| typeof Heptagram
 	| typeof HighFive
 	| typeof MoebiusStar
-	| typeof Moon
 	| typeof Orbital
 	| typeof RamProfile
 	| typeof Spatter

@@ -7,7 +7,6 @@ import FireSilhouette from './FireSilhouette.svelte';
 import Heptagram from './Heptagram.svelte';
 import HighFive from './HighFive.svelte';
 import MoebiusStar from './MoebiusStar.svelte';
-import Moon from './Moon.svelte';
 import Orbital from './Orbital.svelte';
 import RamProfile from './RamProfile.svelte';
 import Spatter from './Spatter.svelte';
@@ -27,7 +26,6 @@ export {
 	Heptagram,
 	HighFive,
 	MoebiusStar,
-	Moon,
 	Orbital,
 	RamProfile,
 	Spatter,
