@@ -243,7 +243,7 @@ class LoginUser(Resource):
         email = request_data.get("email")
         password = request_data.get("password")
         return process_login_request(email, password)
-  ```
+```
 
 There are two minor differences in the implementation of the `LoginUser` resource and the `RegisterUser` resource:
 
