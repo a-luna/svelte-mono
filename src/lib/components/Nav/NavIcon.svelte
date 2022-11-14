@@ -13,7 +13,6 @@
 		RamProfile,
 		Spatter,
 		Stairs3D,
-		Static,
 		Summits,
 		SverdIFjell,
 		Teleport
@@ -35,7 +34,6 @@
 		RamProfile,
 		Spatter,
 		Stairs3D,
-		Static,
 		Summits,
 		SverdIFjell,
 		Teleport

@@ -28,7 +28,6 @@ import type {
 	Spatter,
 	Sqlite,
 	Stairs3D,
-	Static,
 	Svelte,
 	SverdIFjell,
 	Tailwind,
@@ -320,7 +319,6 @@ export type NavIcon =
 	| typeof RamProfile
 	| typeof Spatter
 	| typeof Stairs3D
-	| typeof Static
 	| typeof SverdIFjell
 	| typeof Teleport;
 

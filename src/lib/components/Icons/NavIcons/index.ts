@@ -10,7 +10,6 @@ import MoebiusStar from './MoebiusStar.svelte';
 import Orbital from './Orbital.svelte';
 import RamProfile from './RamProfile.svelte';
 import Spatter from './Spatter.svelte';
-import Static from './Static.svelte';
 import Stairs3D from './Stairs3D.svelte';
 import Summits from './Summits.svelte';
 import SverdIFjell from './SverdIFjell.svelte';
@@ -29,7 +28,6 @@ export {
 	Orbital,
 	RamProfile,
 	Spatter,
-	Static,
 	Stairs3D,
 	Summits,
 	SverdIFjell,
