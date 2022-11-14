@@ -318,14 +318,23 @@ kbd {
 }
 
 article a.hanchor {
-	display: none;
+	position: absolute;
+	z-index: -1;
+	pointer-events: none;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s, opacity .75s ease-out;
 	color: var(--accent-color);
 	background-color: var(--page-bg-color);
 	box-shadow: none;
 }
 
 article .hovered a.hanchor {
-	display: block;
+	position: static;
+	z-index: auto;
+	pointer-events: auto;
+	visibility: visible;
+	opacity: 1;
 }
 
 article figure {
