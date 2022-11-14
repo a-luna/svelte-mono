@@ -30,11 +30,7 @@
 		</div>
 	</summary>
 	{#if open}
-		<div
-			class="toc-wrapper"
-			in:slide={{ duration: 300, delay: 100 }}
-			out:slide={{ duration: 300, delay: 100 }}
-		>
+		<div class="toc-wrapper" in:slide={{ duration: 300, delay: 100 }} out:slide={{ duration: 300, delay: 100 }}>
 			<ul>
 				{#each toc as section}
 					<TocSection {section} />
@@ -121,7 +117,7 @@
 		list-style: none;
 		color: var(--accent-color);
 		background-color: var(--black-tint2);
-		font-size: 1rem;
+		font-size: 1.25rem;
 		line-height: 1;
 		padding: 11px 5px;
 		cursor: pointer;
@@ -166,11 +162,5 @@
 	.toc-wrapper {
 		background-color: var(--black-tint2);
 		border: 2px solid var(--accent-color);
-	}
-
-	@media (min-width: 640px) {
-		#table-of-contents > summary {
-			font-size: 1.25rem;
-		}
 	}
 </style>

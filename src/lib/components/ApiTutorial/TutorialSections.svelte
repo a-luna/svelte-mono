@@ -95,7 +95,7 @@
 		border-left: 2px solid var(--accent-color);
 		border-right: 2px solid var(--accent-color);
 		border-bottom: none;
-		font-size: 1rem;
+		font-size: 1.25rem;
 		line-height: 1;
 		padding: 11px 5px;
 		cursor: pointer;
@@ -129,11 +129,5 @@
 	.tutorial-sections-wrapper {
 		background-color: var(--black-tint2);
 		border: 2px solid var(--accent-color);
-	}
-
-	@media (min-width: 640px) {
-		#tutorial-sections > summary {
-			font-size: 1.25rem;
-		}
 	}
 </style>
