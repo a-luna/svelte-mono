@@ -83,14 +83,14 @@
 		display: flex;
 		flex-flow: column nowrap;
 		line-height: 1;
-		gap: 0.3rem;
 		margin: 1rem 0 0 0;
 	}
 
 	.all-langage-list-title {
 		font-size: 0.85rem;
 		font-style: italic;
-		color: var(--gray-shade3);
+		color: var(--accent-color);
+		margin: 0 0 0.2rem 0;
 	}
 
 	.category-list {
@@ -104,6 +104,7 @@
 		display: flex;
 		flex-flow: row wrap;
 		font-size: 0.85rem;
+		gap: 0.25rem;
 	}
 
 	.all-language-list :global(.filter-setting) {

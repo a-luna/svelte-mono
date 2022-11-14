@@ -46,7 +46,8 @@
 		vertical-align: middle;
 	}
 	.filter-value {
-		font-size: 1rem;
+		font-size: 0.9rem;
+		letter-spacing: 0.6px;
 		white-space: nowrap;
 	}
 </style>
