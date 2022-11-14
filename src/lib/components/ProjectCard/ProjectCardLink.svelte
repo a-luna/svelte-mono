@@ -25,7 +25,7 @@
 		border-bottom-color: var(--project-card-border-color);
 
 		grid-column: 4 / span 1;
-		grid-row: 1 / span 2;
+		grid-row: 1 / span 3;
 	}
 
 	.icon {

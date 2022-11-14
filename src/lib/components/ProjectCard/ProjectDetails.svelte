@@ -14,10 +14,6 @@
 {#if project}
 	<div class="project-card-details">
 		<div class="details-top">
-			<div class="lang-stats-wrapper">
-				<FilterSettingWithIcon value={project.primaryLanguage} />
-				<GithubStats {project} />
-			</div>
 			<h2 class="project-name">{project.name}</h2>
 			<div class="category-list">
 				{#each categories as category}
@@ -50,23 +46,21 @@
 		justify-content: space-between;
 		justify-items: start;
 		align-items: flex-start;
-		gap: 1rem;
 
 		grid-column: 2 / span 1;
-		grid-row: 2 / span 2;
+		grid-row: 4 / span 1;
 	}
 
 	.details-top,
 	.details-bottom {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 0.75rem;
+		gap: 1rem;
 		width: 100%;
 	}
 
-	.lang-stats-wrapper {
-		display: flex;
-		justify-content: space-between;
+	.project-name {
+		line-height: 1;
 	}
 
 	h2 {
@@ -103,8 +97,7 @@
 		display: flex;
 		flex-flow: row wrap;
 		font-size: 0.85rem;
-		gap: 0.5rem;
-		margin: 0.25rem 0;
+		gap: 0.75rem;
 	}
 
 	.all-language-list {

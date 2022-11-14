@@ -1,6 +1,8 @@
 <script lang="ts">
 	import ProjectCardLink from '$lib/components/ProjectCard/ProjectCardLink.svelte';
 	import ProjectDetails from '$lib/components/ProjectCard/ProjectDetails.svelte';
+	import GithubStats from '$lib/components/ProjectCard/GithubStats.svelte';
+	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 	import type { RepoWithMetaData } from '$lib/types';
 
 	export let project: RepoWithMetaData;
@@ -9,11 +11,22 @@
 </script>
 
 <a href={projectUrl} class="project-card">
+	<div class="lang-stats-wrapper">
+		<FilterSettingWithIcon value={project.primaryLanguage} />
+		<GithubStats {project} />
+	</div>
 	<ProjectDetails {project} />
 	<ProjectCardLink />
 </a>
 
 <style lang="postcss">
+	.lang-stats-wrapper {
+		display: flex;
+		justify-content: space-between;
+
+		grid-column: 2 / span 1;
+		grid-row: 2 / span 1;
+	}
 	.project-card:hover {
 		color: var(--body-text);
 		border-color: var(--accent-color);
@@ -21,7 +34,7 @@
 	.project-card {
 		display: grid;
 		grid-template-columns: 2rem 1fr auto 48px;
-		grid-template-rows: 2rem calc(48px - 2rem) 1fr 2rem;
+		grid-template-rows: 1rem calc(48px - 2rem) 1rem 1fr 2rem;
 		align-content: flex-start;
 
 		width: 100%;
