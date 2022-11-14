@@ -29,7 +29,7 @@ import type {
 } from '$lib/types';
 
 const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
-	allProjects: {
+	allprojects: {
 		displayName: 'All Projects',
 		color: 'green',
 		hasIcon: true,
@@ -53,7 +53,7 @@ const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 };
 
 const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
-	allLanguages: {
+	alllanguages: {
 		displayName: 'All Languages',
 		color: 'blue',
 		hasIcon: true,
@@ -81,7 +81,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		icon: Cypress,
 		size: 16
 	},
-	fastAPI: {
+	fastapi: {
 		displayName: 'FastAPI',
 		color: 'blue',
 		hasIcon: true,
@@ -172,7 +172,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		icon: Svelte,
 		size: 18
 	},
-	tailwindCSS: {
+	tailwindcss: {
 		displayName: 'TailwindCSS',
 		color: 'blue',
 		hasIcon: true,
@@ -203,7 +203,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 };
 
 const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } = {
-	allCategories: {
+	allcategories: {
 		displayName: 'All Categories',
 		color: 'default',
 		hasIcon: false
