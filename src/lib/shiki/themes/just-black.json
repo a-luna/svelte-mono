@@ -1245,7 +1245,7 @@
 		{
 			"scope": "comment.block",
 			"settings": {
-				"foreground": "#7F0000",
+				"foreground": "#800080",
 				"fontStyle": ""
 			}
 		},
@@ -1664,7 +1664,7 @@
 		{
 			"scope": "punctuation.definition.comment",
 			"settings": {
-				"foreground": "#7F0000",
+				"foreground": "#800080",
 				"fontStyle": ""
 			}
 		},
@@ -1761,8 +1761,8 @@
 		{
 			"scope": "comment",
 			"settings": {
-				"foreground": "#666666",
-				"fontStyle": ""
+				"foreground": "#800080",
+				"fontStyle": "italic"
 			}
 		},
 		{
