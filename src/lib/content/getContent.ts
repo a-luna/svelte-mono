@@ -65,6 +65,7 @@ async function* getMarkdownFiles(dir: string): AsyncGenerator<string> {
 function parseBlogPost(path: string, content: string, data: { [k: string]: unknown }): BlogPost {
 	const blogPost = parseMarkdownFile(path, BLOG_IMAGE_ROOT, BLOG_POST_URL_ROOT, content, data);
 	blogPost.href = `blog/${blogPost.slug}`;
+	blogPost.url = `${SITE_URL}/${blogPost.href}`;
 	return blogPost;
 }
 
@@ -77,6 +78,7 @@ function parseTutorialSection(path: string, content: string, data: { [k: string]
 		data
 	) as unknown as TutorialSection;
 	tutorialSection.href = tutorialSection.slug;
+	tutorialSection.url = `${SITE_URL}/${tutorialSection.href}`;
 	tutorialSection.lead = data.lead as string;
 	tutorialSection.series_weight = data.series_weight as number;
 	tutorialSection.series_title = data.series_title as string;
@@ -135,7 +137,7 @@ function parseMarkdownFile(
 function getCoverImage(slug: string, imageFolder: string, frontMatterRes: FrontMatterResources[]): BlogResource {
 	const cover = frontMatterRes.find((res) => res.name === 'cover');
 	return {
-		src: `${imageFolder}/post_images/${slug}.jpg`,
+		src: `${imageFolder}/${slug}.jpg`,
 		name: cover?.name ?? '',
 		caption: cover?.params?.credit ?? ''
 	};

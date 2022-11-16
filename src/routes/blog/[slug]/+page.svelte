@@ -25,10 +25,8 @@
 
 <svelte:head>
 	<title>{blogPost?.title}</title>
-	<meta name="description" content="swyxkit blog" />
-
-	<link rel="canonical" href={SITE_URL} />
-	<meta property="og:url" content={SITE_URL} />
+	<link rel="canonical" href={blogPost?.url} />
+	<meta property="og:url" content={blogPost?.url} />
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={blogPost?.title} />
 	<meta name="Description" content={blogPost?.description} />

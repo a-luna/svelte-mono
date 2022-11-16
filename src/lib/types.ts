@@ -133,6 +133,7 @@ export interface BlogPost {
 	canonical: string;
 	slug: string;
 	href?: string;
+	url?: string;
 	date: string;
 	coverImage: BlogResource;
 	resources: ResourceMap;
