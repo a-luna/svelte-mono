@@ -24,3 +24,5 @@ export interface UnicodeCharInfo {
 	utf8HexBytes: string[];
 	utf8DecBytes: number[];
 }
+
+export type HttpResponse = { char: string; results: UnicodeCharInfo[] }[]

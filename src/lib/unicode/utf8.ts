@@ -1,8 +1,9 @@
 import type {
 	ByteEncodingMap,
+	Result,
 	Utf8ComplexCharacterMap,
 	Utf8StandardCharacterMap,
-	Utf8StringComposition,
+	Utf8StringComposition
 } from '$lib/types';
 import { COMPLEX_SYMBOL_REGEX, getUnicodeCharInfo } from '$lib/unicode';
 import {
@@ -10,12 +11,21 @@ import {
 	hexStringFromByte,
 	hexStringToByte,
 	strictUriEncode,
-	unicodeCodepointFromUtf8ByteArray,
+	unicodeCodepointFromUtf8ByteArray
 } from '$lib/util';
 import { validateAsciiBytes } from '$lib/validation';
 
-export async function getFullUtf8StringDecomposition(s: string): Promise<Utf8StringComposition> {
-	const unicodeInfo = await getUnicodeCharInfo(s);
+export async function getUtf8StringDecomposition(s: string): Promise<Utf8StringComposition> {
+	const result = await getFullUtf8StringDecomposition(s);
+	return result.success ? result.value : getSimpleUtf8StringDecomposition(s);
+}
+
+async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8StringComposition>> {
+	const result = await getUnicodeCharInfo(s);
+	if (!result.success) {
+		return {success: false, error: result.error};
+	}
+	const unicodeInfo = result.value;
 	const complexCharMap: Utf8ComplexCharacterMap[] = unicodeInfo.map(({ char, results }) => {
 		const charMap = results.map((charData) => {
 			return {
@@ -51,8 +61,9 @@ export async function getFullUtf8StringDecomposition(s: string): Promise<Utf8Str
 		return complexCharMap;
 	});
 	const bytes = complexCharMap.map((charMap) => charMap.bytes).flat();
-	return {
+	const stringDecomp = {
 		utf8: s,
+		hasCharacterNames: true,
 		hasCombinedChars: complexCharMap.some((charMap) => charMap.isCombined),
 		stringLength: complexCharMap.length,
 		encoded: complexCharMap.map((charMap) => charMap.encoded).join(''),
@@ -61,6 +72,7 @@ export async function getFullUtf8StringDecomposition(s: string): Promise<Utf8Str
 		bytes,
 		charMap: complexCharMap,
 	};
+	return { success: true, value: stringDecomp };
 }
 
 export function getSimpleUtf8StringDecomposition(s: string): Utf8StringComposition {
@@ -73,6 +85,7 @@ export function getSimpleUtf8StringDecomposition(s: string): Utf8StringCompositi
 			const decimalCodepoint = codepoints?.dec;
 			return {
 				char,
+				isCombined: false,
 				isASCII: validateAsciiBytes(bytes),
 				hexBytes: charData.map((data) => data.hex),
 				bytes,
@@ -102,6 +115,7 @@ export function getSimpleUtf8StringDecomposition(s: string): Utf8StringCompositi
 	const bytes = complexCharMap.map((charMap) => charMap.bytes).flat();
 	return {
 		utf8: s,
+		hasCharacterNames: false,
 		hasCombinedChars: complexCharMap.some((charMap) => charMap.isCombined),
 		stringLength: complexCharMap.length,
 		encoded: strictUriEncode(s),

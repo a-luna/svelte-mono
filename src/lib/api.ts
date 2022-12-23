@@ -3,7 +3,7 @@ import type { HttpMethod, HttpResult } from './types';
 const getApiBaseUrl = (): string =>
 	import.meta.env.MODE === 'production' ? 'https://unicode-api.aaronluna.dev/v1' : 'http://localhost:3507/v1';
 
-function send(args: { method: HttpMethod; path: string; data: { [k: string]: string } }): Promise<Response> {
+async function send(args: { method: HttpMethod; path: string; data: { [k: string]: string } }): Promise<HttpResult> {
 	const { method, path, data } = { ...args };
 	const opts = { method };
 	const headers = { Accept: 'application/json' };
@@ -14,16 +14,21 @@ function send(args: { method: HttpMethod; path: string; data: { [k: string]: str
 	}
 
 	opts['headers'] = headers;
-	return fetch(`${getApiBaseUrl()}/${path}`, opts);
+	try {
+		const response = await fetch(`${getApiBaseUrl()}/${path}`, opts);
+		if (!response.ok) {
+			return { success: false, error: { status: response.status, message: response.statusText }, value: null };
+		}
+		return { success: true, value: response, error: null };
+	} catch(error) {
+		return { success: false, error: { status: 400, message: error }, value: null };
+	}
+	
 }
 
 async function get(path: string): Promise<HttpResult> {
 	const data = {};
-	const response = await send({ method: 'GET', path, data });
-	if (!response.ok) {
-		return { success: false, error: { status: response.status, message: response.statusText }, value: null };
-	}
-	return { success: true, value: response, error: null };
+	return await send({ method: 'GET', path, data });
 }
 
 export const api = { get };

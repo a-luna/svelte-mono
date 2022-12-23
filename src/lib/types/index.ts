@@ -6,9 +6,9 @@ export type {
 	EncodingMachineStateStore,
 	EncodingStateToEventMap,
 	NavButtonEventDispatcher,
-	XStateSendEvent,
+	XStateSendEvent
 } from './alias';
-export type { HttpError, HttpMethod, HttpResult, UnicodeCharInfo } from './api';
+export type { HttpError, HttpMethod, HttpResponse, HttpResult, UnicodeCharInfo } from './api';
 export type { AppSettings } from './AppSettings';
 export type { AppState } from './AppState';
 export type { AppStore } from './AppStore';
@@ -37,10 +37,11 @@ export type {
 	ButtonSize,
 	Encoding,
 	StringEncoding,
-	TextEncoding,
+	TextEncoding
 } from './Literals';
 export type { OutputChunk } from './OutputChunk';
 export type { Result } from './Result';
 export type { SelectMenuOption } from './SelectMenuOption';
 export type { ByteEncodingMap, Utf8ComplexCharacterMap, Utf8StandardCharacterMap, Utf8StringComposition } from './utf8';
 export type { MappedLiteral, MappedStringLiteralPick } from './Utilities';
+

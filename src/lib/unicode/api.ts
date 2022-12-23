@@ -1,35 +1,48 @@
-import { api } from '$lib/api';
-import type { UnicodeCharInfo } from '$lib/types';
+import type { HttpResponse, Result, UnicodeCharInfo } from '$lib/types';
 import { strictUriEncode } from '$lib/util';
 import { COMPLEX_SYMBOL_REGEX } from '.';
 import { apiMocks } from './mocks';
 
-export async function getUnicodeCharInfo(s: string): Promise<{ char: string; results: UnicodeCharInfo[] }[]> {
-	const charData: { char: string; results: UnicodeCharInfo[] }[] = [];
+export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse>> {
+	const charData: HttpResponse = [];
 	for (const utf8 of s.match(COMPLEX_SYMBOL_REGEX)) {
-		const results = import.meta.env.MODE !== 'test' ? await getLiveUnicodeCharInfo(utf8) : getMockUnicodeCharInfo(utf8);
-		charData.push({ char: utf8, results });
+		const fetchMethod = import.meta.env.MODE !== 'test' ? fetchUnicodeCharInfo : mockFetchUnicodeCharInfo;
+		try {
+			const results = await fetchMethod(utf8);
+			charData.push({ char: utf8, results });
+		} catch(error) {
+			return {success: false, error: Error("Request for unicode character details failed, please check internet connection.")}
+		}		
 	}
-	return charData.flat();
+	return {success: true, value: charData.flat()};
 }
 
-async function getLiveUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
-	return await api.get(getUrlForApiRequest(utf8)).then<UnicodeCharInfo[]>((result) => {
-		if (!result.success) {
-			const { status, message } = result.error;
-			throw `API Request Failed! Error: ${message} (${status})`;
+async function fetchUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
+	const response = await fetch(getUrlForApiRequest(utf8), {
+		method: 'GET',
+		headers: { Accept: 'application/json' }
+	})
+	if (response.ok) {
+		const results = response.text().then<UnicodeCharInfo[]>((t) => JSON.parse(t));
+		if (results) {
+			return results;
+		} else {
+			return Promise.reject(new Error(response.statusText))
 		}
-		const response = result.value;
-		return response.text().then<UnicodeCharInfo[]>((t) => JSON.parse(t));
-	});
+	} else {
+		return Promise.reject("Unknown error occurred!");
+	  }
 }
+
+const getApiBaseUrl = (): string =>
+	import.meta.env.MODE === 'production' ? 'https://unicode-api.aaronluna.dev/v1' : 'http://localhost:3507/v1';
 
 function getUrlForApiRequest(utf8: string): string {
 	const endpoint = `characters/${strictUriEncode(utf8)}`;
-	return `${endpoint}?show_props=ENCODED_STRINGS&show_props=ENCODED_BYTES`
+	return `${getApiBaseUrl()}/${endpoint}?show_props=ENCODED_STRINGS&show_props=ENCODED_BYTES`
 }
 
-function getMockUnicodeCharInfo(utf8: string): UnicodeCharInfo[] {
+function mockFetchUnicodeCharInfo(utf8: string): UnicodeCharInfo[] {
 	const encodedChar = strictUriEncode(utf8);
 	if (Object.keys(apiMocks).includes(encodedChar)) {
 		return apiMocks[encodedChar];

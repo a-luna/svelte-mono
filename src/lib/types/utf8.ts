@@ -33,6 +33,7 @@ export interface Utf8ComplexCharacterMap {
 
 export interface Utf8StringComposition {
 	utf8: string;
+	hasCharacterNames: boolean;
 	hasCombinedChars: boolean;
 	stringLength: number;
 	encoded: string;

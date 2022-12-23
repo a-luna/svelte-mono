@@ -5,6 +5,7 @@
 	import type { Utf8StandardCharacterMap } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
+	export let hasCharacterNames: boolean;
 	export let anyCharsAreCombined: boolean;
 	export let anyCharsAreExpanded: boolean;
 	export let char: string;
@@ -64,7 +65,9 @@
 							{/each}
 						</div>
 						<span class="codepoint">{codepoint}</span>
-						<span class="char-name">{unicodeName}</span>
+						{#if hasCharacterNames}
+							<span class="char-name">{unicodeName}</span>
+						{/if}
 					</div>
 				{/each}
 			</div>
@@ -93,7 +96,9 @@
 		</div>
 		{#if !anyCharsAreCombined || anyCharsAreExpanded}
 			<span class="codepoint">{codepoints[0]}</span>
-			<span class="char-name">{unicodeNames[0]}</span>
+			{#if hasCharacterNames}
+				<span class="char-name">{unicodeNames[0]}</span>
+			{/if}
 		{/if}
 	</div>
 {/if}

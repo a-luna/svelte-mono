@@ -2,7 +2,7 @@
 	import EncodedBytesForChar from '$lib/components/AlgorithmDemo/DemoText/Utf8/EncodedBytesForChar.svelte';
 	import ToggleExpandAllCharacters from '$lib/components/AlgorithmDemo/DemoText/Utf8/ToggleExpandAllCharacters.svelte';
 	import type { Utf8StringComposition } from '$lib/types';
-	import { getFullUtf8StringDecomposition } from '$lib/unicode';
+	import { getUtf8StringDecomposition } from '$lib/unicode';
 	import { fade } from 'svelte/transition';
 
 	export let input: string = '';
@@ -54,7 +54,7 @@
 	}
 </script>
 
-{#await getFullUtf8StringDecomposition(input) then utf8ByteMap}
+{#await getUtf8StringDecomposition(input) then utf8ByteMap}
 	<div class="utf8-byte-map-wrapper">
 		{#if hasMultipleCombinedChars}
 			<ToggleExpandAllCharacters bind:toggled={allCharsAreExpanded} on:click={() => toggleAllChars()} />
@@ -62,6 +62,7 @@
 		<div class="utf8-byte-map">
 			{#each utf8ByteMap.charMap as { char, isASCII, encoded, hexBytes, isCombined, charMap, unicodeNames, codepoints }, i}
 				<EncodedBytesForChar
+					hasCharacterNames={utf8ByteMap.hasCharacterNames}
 					bind:this={charByteMapComponents[i]}
 					bind:anyCharsAreExpanded
 					{anyCharsAreCombined}
@@ -82,12 +83,14 @@
 				<ul>
 					{#if hasZeroWidthJoiner}
 						<li class="zwj">
-							<strong>ZWJ:</strong>{zwj1}<strong><a href={zwjUrl} target="_blank">{zwj2}</a></strong>{zwj3}
+							<strong>ZWJ:</strong>{zwj1}<strong><a href={zwjUrl} target="_blank" rel="noreferrer">{zwj2}</a></strong
+							>{zwj3}
 						</li>
 					{/if}
 					{#if hasVarSelector}
 						<li class="variation">
-							<strong>VS16:</strong>{vs1}<strong><a href={varUrl} target="_blank">{vs2}</a></strong>{vs3}
+							<strong>VS16:</strong>{vs1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs2}</a></strong
+							>{vs3}
 						</li>
 					{/if}
 					{#if hasWhiteSpace || inputHasWhiteSpace}

@@ -74,7 +74,9 @@
 	</p>
 {:else if $state.matches({ createInputChunks: 'regularIdle' }) || $state.matches({ createInputChunks: 'autoPlayIdle' })}
 	<p>
-		In mathematics, this value is called the <strong><a href={wikiUrl} target="_blank">Least Common Multple</a></strong>
+		In mathematics, this value is called the <strong
+			><a href={wikiUrl} target="_blank" rel="noreferrer">Least Common Multple</a></strong
+		>
 		or <strong>LCM</strong>. The <strong>LCM</strong> of 8 and 6 is 24.
 		<span class="external-link"><a href={lcmSolveUrl} target="_blank">(click here for a step-by-step proof)</a></span>
 	</p>

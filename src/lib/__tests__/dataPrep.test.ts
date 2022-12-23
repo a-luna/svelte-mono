@@ -17,6 +17,7 @@ describe('validateEncoderInputChunks', () => {
 			ascii: 'dog',
 			utf8: {
 				utf8: 'dog',
+				hasCharacterNames: false,
 				hasCombinedChars: false,
 				stringLength: 3,
 				encoded: 'dog',
@@ -119,6 +120,7 @@ describe('validateEncoderInputChunks', () => {
 			ascii: 'do',
 			utf8: {
 				utf8: 'do',
+				hasCharacterNames: false,
 				hasCombinedChars: false,
 				stringLength: 2,
 				encoded: 'do',
@@ -202,6 +204,7 @@ describe('validateEncoderInputChunks', () => {
 			ascii: ' do',
 			utf8: {
 				utf8: ' do',
+				hasCharacterNames: false,
 				hasCombinedChars: false,
 				stringLength: 3,
 				encoded: '%20do',
@@ -304,6 +307,7 @@ describe('validateEncoderInputChunks', () => {
 			ascii: ' d',
 			utf8: {
 				utf8: ' d',
+				hasCharacterNames: false,
 				hasCombinedChars: false,
 				stringLength: 2,
 				encoded: '%20d',
