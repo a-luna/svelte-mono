@@ -11,6 +11,9 @@
 	export let inputText: string = '';
 	export let dropdownShown = false;
 	export let inHelpDocs = false;
+	let noInputText = true;
+	let options: SelectMenuOption[] = [];
+	let bestMatch: string = '';
 	const dispatch = createEventDispatcher();
 	const { state, demoState } = getAppContext();
 
@@ -23,26 +26,26 @@
 	const menuId = 'select-string-encoding';
 	const menuLabel = '';
 
-	$: noInputText = !inputText || inputText.length === 0;
-	$: options =
-		inHelpDocs || $demoState.test
-			? allOptions
-			: noInputText
-			? [allOptions[1]]
-			: allOptions.filter((option) => $demoState.validInputEncodings.includes(option.value.toString()));
-	$: bestMatch = inHelpDocs
-		? 'ascii'
-		: noInputText || !$demoState.validInputEncodings.length
-		? 'utf8'
-		: $demoState.validInputEncodings.at(0);
-	$: value = isStringEncoding(bestMatch) ? bestMatch : null;
+	$: {
+		noInputText = !inputText || inputText.length === 0;
+		options =
+			inHelpDocs || $demoState.test
+				? allOptions
+				: noInputText
+				? [allOptions[1]]
+				: allOptions.filter((option) => $demoState.validInputEncodings.includes(option.value.toString()));
+		bestMatch = inHelpDocs
+			? 'ascii'
+			: noInputText || !$demoState.validInputEncodings.length
+			? 'utf8'
+			: $demoState.validInputEncodings.at(0);
+		value = isStringEncoding(bestMatch) ? bestMatch : null;
+		dispatch('inputTextEncodingChanged', value);
+	}
 	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });
 	$: disabled = inHelpDocs || $demoState.test ? false : noInputText || controlsDisabled;
 
-	function handleStringEncodingChanged(stringEncoding: StringEncoding) {
-		value = stringEncoding;
-		dispatch('inputTextEncodingChanged', value);
-	}
+	const handleStringEncodingChanged = (stringEncoding: StringEncoding) => (value = stringEncoding);
 </script>
 
 <Select

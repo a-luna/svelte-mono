@@ -18,7 +18,6 @@
 		!$state.matches('inactive') &&
 		inputText === $state.context.input.inputText &&
 		!$state.context.input.validationResult.success;
-	$: console.log(`inputText (InputForm.svelte): ${inputText}`);
 </script>
 
 <div class="input-form">

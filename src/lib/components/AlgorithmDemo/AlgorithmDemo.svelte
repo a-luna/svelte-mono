@@ -51,11 +51,6 @@
 	// 	console.log({ utf8: getSimpleUtf8StringDecomposition(test2) });
 	// }
 
-	function handleInputTextEncodingChanged(stringEncoding: StringEncoding) {
-		console.log(`handling event: inputTextEncodingChanged(value=${stringEncoding})`);
-		inputTextEncoding = stringEncoding;
-	}
-
 	function openHelpDocsModal(helpModalSettings: { helpTopicIndex: number; expanded: boolean }) {
 		const { helpTopicIndex, expanded } = helpModalSettings;
 		if (!$state.context.autoplay) {
@@ -158,7 +153,7 @@
 <InputForm
 	bind:inputText
 	bind:outputBase64Encoding
-	on:inputTextEncodingChanged={(e) => handleInputTextEncodingChanged(e.detail)}
+	on:inputTextEncodingChanged={(e) => (inputTextEncoding = e.detail)}
 	on:openHelpModal={(e) => openHelpDocsModal(e.detail)}
 	on:submit={() => submitForm(inputText)}
 />
