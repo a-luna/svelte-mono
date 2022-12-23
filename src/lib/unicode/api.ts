@@ -26,9 +26,7 @@ async function getLiveUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> 
 
 function getUrlForApiRequest(utf8: string): string {
 	const endpoint = `characters/${strictUriEncode(utf8)}`;
-	const q = new URLSearchParams();
-	q.set("show_props", "ALL");
-	return `${endpoint}?${q}`
+	return `${endpoint}?show_props=ENCODED_STRINGS&show_props=ENCODED_BYTES`
 }
 
 function getMockUnicodeCharInfo(utf8: string): UnicodeCharInfo[] {
