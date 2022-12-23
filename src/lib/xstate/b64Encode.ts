@@ -6,7 +6,7 @@ import {
 	defaultEncoderInputChunk,
 	defaultEncoderOutput,
 	defaultHexByteMap,
-	defaultOutputChunk,
+	defaultOutputChunk
 } from '$lib/constants';
 import { validateEncoderInput } from '$lib/dataPrep';
 import { isTextEncoding } from '$lib/typeguards';
@@ -18,7 +18,7 @@ import type {
 	EncoderOutput,
 	HexByteMap,
 	OutputChunk,
-	StringEncoding,
+	StringEncoding
 } from '$lib/types';
 import { assign, createMachine } from 'xstate';
 

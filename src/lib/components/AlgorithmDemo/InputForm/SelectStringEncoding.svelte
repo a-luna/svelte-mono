@@ -3,6 +3,7 @@
 	import { getAppContext } from '$lib/stores/context';
 	import { isStringEncoding } from '$lib/typeguards';
 	import type { SelectMenuOption, StringEncoding } from '$lib/types';
+	import { createEventDispatcher } from 'svelte';
 
 	export let width = '100%';
 	export let fontSize = '0.875rem';
@@ -10,6 +11,7 @@
 	export let inputText: string = '';
 	export let dropdownShown = false;
 	export let inHelpDocs = false;
+	const dispatch = createEventDispatcher();
 	const { state, demoState } = getAppContext();
 
 	const allOptions: SelectMenuOption[] = [
@@ -37,7 +39,10 @@
 	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });
 	$: disabled = inHelpDocs || $demoState.test ? false : noInputText || controlsDisabled;
 
-	const handleStringEncodingChanged = (stringEncoding: StringEncoding) => (value = stringEncoding);
+	function handleStringEncodingChanged(stringEncoding: StringEncoding) {
+		value = stringEncoding;
+		dispatch('inputTextEncodingChanged', value);
+	}
 </script>
 
 <Select

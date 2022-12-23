@@ -14,16 +14,21 @@ export async function getUnicodeCharInfo(s: string): Promise<{ char: string; res
 }
 
 async function getLiveUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
-	const endpoint = `char/${strictUriEncode(utf8)} `;
-	return await api.get(endpoint).then<UnicodeCharInfo[]>((result) => {
+	return await api.get(getUrlForApiRequest(utf8)).then<UnicodeCharInfo[]>((result) => {
 		if (!result.success) {
 			const { status, message } = result.error;
 			throw `API Request Failed! Error: ${message} (${status})`;
 		}
 		const response = result.value;
-		const charInfo: UnicodeCharInfo[] = response.text().then<UnicodeCharInfo[]>((t) => JSON.parse(t));
-		return charInfo;
+		return response.text().then<UnicodeCharInfo[]>((t) => JSON.parse(t));
 	});
+}
+
+function getUrlForApiRequest(utf8: string): string {
+	const endpoint = `characters/${strictUriEncode(utf8)}`;
+	const q = new URLSearchParams();
+	q.set("show_props", "ALL");
+	return `${endpoint}?${q}`
 }
 
 function getMockUnicodeCharInfo(utf8: string): UnicodeCharInfo[] {

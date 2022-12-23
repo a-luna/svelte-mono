@@ -4,6 +4,7 @@ export type ByteEncodingMap = { byte: number; hex: string; start: number; end: n
 
 export interface Utf8StandardCharacterMap {
 	char: string;
+	isCombined: boolean;
 	isASCII: boolean;
 	hexBytes: string[];
 	bytes: number[];

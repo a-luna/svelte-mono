@@ -5,10 +5,9 @@
 	import SelectStringEncoding from '$lib/components/AlgorithmDemo/InputForm/SelectStringEncoding.svelte';
 	import InputTextBox from '$lib/components/InputTextBox.svelte';
 	import { getAppContext } from '$lib/stores/context';
-	import type { Base64Encoding, StringEncoding } from '$lib/types';
+	import type { Base64Encoding } from '$lib/types';
 
 	export let inputText: string;
-	export let inputTextEncoding: StringEncoding = 'ascii';
 	export let outputBase64Encoding: Base64Encoding = 'base64';
 	const { state } = getAppContext();
 
@@ -19,6 +18,7 @@
 		!$state.matches('inactive') &&
 		inputText === $state.context.input.inputText &&
 		!$state.context.input.validationResult.success;
+	$: console.log(`inputText (InputForm.svelte): ${inputText}`);
 </script>
 
 <div class="input-form">
@@ -31,7 +31,7 @@
 	</div>
 	<span class="input-encoding-label form-label">Text Encoding</span>
 	<div class="input-encoding">
-		<SelectStringEncoding bind:value={inputTextEncoding} {inputText} />
+		<SelectStringEncoding {inputText} on:inputTextEncodingChanged />
 	</div>
 	<span class="output-encoding-label form-label">Output Encoding</span>
 	<div class="output-encoding">

@@ -1,7 +1,7 @@
 import type { HttpMethod, HttpResult } from './types';
 
 const getApiBaseUrl = (): string =>
-	import.meta.env.MODE === 'production' ? 'https://unicode-api.aaronluna.dev/api/v1' : 'http://localhost:3507/api/v1';
+	import.meta.env.MODE === 'production' ? 'https://unicode-api.aaronluna.dev/v1' : 'http://localhost:3507/v1';
 
 function send(args: { method: HttpMethod; path: string; data: { [k: string]: string } }): Promise<Response> {
 	const { method, path, data } = { ...args };

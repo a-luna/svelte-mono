@@ -8,7 +8,7 @@ import type {
 	EncoderInput,
 	HexByteMap,
 	Result,
-	StringEncoding,
+	StringEncoding
 } from '$lib/types';
 import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
 import {
@@ -16,7 +16,7 @@ import {
 	byteArrayToBinaryStringArray,
 	divmod,
 	hexStringFromByteArray,
-	stringToByteArray,
+	stringToByteArray
 } from '$lib/util';
 import { validateAsciiBytes, validateBase64Encoding, validateTextEncoding } from '$lib/validation';
 

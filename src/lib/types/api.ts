@@ -9,7 +9,7 @@ export type HttpResult =
 export interface UnicodeCharInfo {
 	character: string;
 	name: string;
-	codePoint: string;
+	codepoint: string;
 	block: string;
 	plane: string;
 	category: string;
@@ -17,10 +17,10 @@ export interface UnicodeCharInfo {
 	combiningClass: string;
 	isMirrored: boolean;
 	htmlEntities: string[];
-	encoded: string;
+	uriEncoded: string;
 	utf8: string;
 	utf16: string;
 	utf32: string;
-	hexBytes: string[];
-	decBytes: number[];
+	utf8HexBytes: string[];
+	utf8DecBytes: number[];
 }

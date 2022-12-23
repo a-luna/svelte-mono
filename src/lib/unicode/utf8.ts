@@ -20,14 +20,15 @@ export async function getFullUtf8StringDecomposition(s: string): Promise<Utf8Str
 		const charMap = results.map((charData) => {
 			return {
 				char: charData.character,
-				isASCII: validateAsciiBytes(charData.decBytes),
-				hexBytes: charData.hexBytes,
-				bytes: charData.decBytes,
-				codepoint: charData.codePoint,
+				isCombined: false,
+				isASCII: validateAsciiBytes(charData.utf8DecBytes),
+				hexBytes: charData.utf8HexBytes,
+				bytes: charData.utf8DecBytes,
+				codepoint: charData.codepoint,
 				unicodeName: charData.name,
 				unicodeBlock: charData.block,
-				totalBytes: charData.decBytes.length,
-				encoded: charData.encoded,
+				totalBytes: charData.utf8DecBytes.length,
+				encoded: charData.uriEncoded,
 			};
 		});
 		const bytes = charMap.map((charMap) => charMap.bytes).flat();

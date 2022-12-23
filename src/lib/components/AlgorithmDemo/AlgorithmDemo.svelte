@@ -12,7 +12,6 @@
 	import { alert } from '$lib/stores/alert';
 	import { getAppContext } from '$lib/stores/context';
 	import type { Base64Encoding, StringEncoding } from '$lib/types';
-	import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
 	import { copyToClipboard } from '$lib/util';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
 	import { createTestSet } from '$lib/xstate/b64Encode.test/testSetGenerator';
@@ -45,11 +44,16 @@
 	$: bottomRowHeight = $demoState.isMobileDisplay ? 'auto' : '260px';
 	$: formTitleFontSize = $demoState.isMobileDisplay ? '1.6rem' : '1.9rem';
 
-	$: if ($demoState.dev) {
-		const test = '∑ßåœ ≈ ∆c';
-		console.log({ utf8: getSimpleUtf8StringDecomposition(test) });
-		const test2 = '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾';
-		console.log({ utf8: getSimpleUtf8StringDecomposition(test2) });
+	// $: if ($demoState.dev) {
+	// 	const test = '∑ßåœ ≈ ∆c';
+	// 	console.log({ utf8: getSimpleUtf8StringDecomposition(test) });
+	// 	const test2 = '🦦👨‍🌾🫥🏃🏿‍♀️☝🏾';
+	// 	console.log({ utf8: getSimpleUtf8StringDecomposition(test2) });
+	// }
+
+	function handleInputTextEncodingChanged(stringEncoding: StringEncoding) {
+		console.log(`handling event: inputTextEncodingChanged(value=${stringEncoding})`);
+		inputTextEncoding = stringEncoding;
 	}
 
 	function openHelpDocsModal(helpModalSettings: { helpTopicIndex: number; expanded: boolean }) {
@@ -153,8 +157,8 @@
 </div>
 <InputForm
 	bind:inputText
-	bind:inputTextEncoding
 	bind:outputBase64Encoding
+	on:inputTextEncodingChanged={(e) => handleInputTextEncodingChanged(e.detail)}
 	on:openHelpModal={(e) => openHelpDocsModal(e.detail)}
 	on:submit={() => submitForm(inputText)}
 />
