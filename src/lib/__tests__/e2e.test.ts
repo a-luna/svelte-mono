@@ -23,7 +23,7 @@ describe('basic', () => {
 		});
 	});
 
-	test('smoke test', async () => {
+	test.skip('smoke test', async () => {
 		const pageTester = new PageTester(page);
 		await pageTester.goto();
 		await pageTester.changeInputText('test');
