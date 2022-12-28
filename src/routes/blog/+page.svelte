@@ -2,26 +2,24 @@
 	import BlogSummary from '$lib/components/BlogPost/BlogSummary.svelte';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
-	import { blogPosts } from '$lib/stores';
 	import type { BlogPost } from '$lib/types';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	let list: BlogPost[];
 	let inputEl: HTMLInputElement;
-	let isTruncated = $blogPosts.length > 20;
+	let isTruncated = data.allBlogPosts.length > 20;
 	let search: string;
 	// let filteredCategory: string;
 
-	$: if (data.allBlogPosts && Object.keys(data.allBlogPosts).length) $blogPosts = data.allBlogPosts;
-	list = $blogPosts
+	$: list = data.allBlogPosts
 		.filter((item) => {
 			if (search) {
 				return item.title.toLowerCase().includes(search.toLowerCase());
 			}
 			return true;
 		})
-		.slice(0, isTruncated ? 2 : $blogPosts.length);
+		.slice(0, isTruncated ? 2 : data.allBlogPosts.length);
 
 	function focusSearch(e: KeyboardEvent) {
 		if (e.key === '/' && inputEl) inputEl.select();
@@ -113,7 +111,6 @@
 		display: block;
 		background-color: var(--black);
 		color: var(--white-shade2);
-		border-radius: 0.375rem;
 		border: 1px solid var(--gray-shade6);
 		padding: 0.5rem 1rem;
 		width: 100%;
