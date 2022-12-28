@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
-	import { SITE_DESCRIPTION, SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
+	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
 	import { getPageHeight } from '$lib/stores';
 	import type { Writable } from 'svelte/store';
 	import '../tailwind.css';
@@ -30,7 +30,6 @@
 	<meta name="msapplication-TileColor" content={THEME_COLOR} />
 	<meta name="theme-color" content={THEME_COLOR} />
 	<link rel="alternate" type="application/rss+xml" title={'RSS Feed for ' + SITE_TITLE} href="/rss.xml" />
-	<meta name="description" content={SITE_DESCRIPTION} />
 </svelte:head>
 
 <div id="top" class="header-wrapper">

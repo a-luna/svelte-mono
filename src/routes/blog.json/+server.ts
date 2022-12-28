@@ -1,4 +1,4 @@
-import { listBlogPosts } from '$lib/server/getContent';
+import { listBlogPosts } from '$lib/server';
 import { json } from '@sveltejs/kit';
 import type { RequestEvent, RequestHandler } from './$types';
 

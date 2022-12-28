@@ -3,7 +3,7 @@
 	import SectionSummary from '$lib/components/ApiTutorial/SectionSummary.svelte';
 	import { SITE_URL } from '$lib/siteConfig';
 	import { tutorialSections } from '$lib/stores';
-	import type { BlogPost, BlogResource, TutorialSection } from '$lib/types';
+	import type { BlogPost, TutorialSection } from '$lib/types';
 	import { nullBlogPost } from '$lib/constants';
 	import type { PageData } from './$types';
 	import ContentLayout from '$lib/components/ContentLayout.svelte';
