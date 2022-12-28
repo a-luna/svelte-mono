@@ -65,6 +65,7 @@
 	#table-of-contents :global(a),
 	#table-of-contents :global(a:hover) {
 		color: var(--accent-color);
+		background-color: var(--toggle-group-bg-color);
 		transition: all 350ms ease-out;
 	}
 

@@ -83,6 +83,7 @@
 		font-size: 1.4rem;
 		font-weight: 400;
 		color: var(--accent-color);
+		background-color: var(--page-bg-color);
 		text-decoration: none;
 		line-height: 1.3;
 		transition: background-color 350ms ease-out, color 350ms ease-out;

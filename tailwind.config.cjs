@@ -28,7 +28,8 @@ module.exports = {
 							margin: '0'
 						},
 						'blockquote code': {
-							color: 'var(--tw-prose-body)'
+							color: 'var(--tw-prose-body)',
+							background: 'var(--black-tint2);'
 						},
 						'blockquote ul': {
 							padding: '0',
@@ -49,7 +50,8 @@ module.exports = {
 							background: 'var(--black-tint3)',
 							border: 'none',
 							'border-radius': '4px',
-							fontStyle: 'normal'
+							fontStyle: 'normal',
+							padding: '0 2px'
 						},
 						'article a': {
 							fontWeight: '400',
