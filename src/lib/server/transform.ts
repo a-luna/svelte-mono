@@ -10,7 +10,7 @@ import {
 	transformCodeBlocks,
 	transformFaBulletLists,
 	transformHeadings
-} from '$lib/content';
+} from '$lib/server';
 import { highlighter, parseMeta } from '$lib/shiki';
 import type { BlogPost, CodeBlock, ResourceMap, TocSection, TutorialSection } from '$lib/types';
 import remarkShiki from '@stefanprobst/remark-shiki';

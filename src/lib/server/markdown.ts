@@ -7,9 +7,9 @@ import {
 	LINKED_IMAGE_REGEX,
 	VIDEO_REGEX,
 	WARNING_BOX_REGEX
-} from '$lib/content';
+} from '$lib/server';
 import type { BlogResource, CodeBlock } from '$lib/types';
-import { getRandomHexString, replaceAsync } from '$lib/util';
+import { getRandomHexString, replaceAsync } from '$lib/server/util';
 import rehypeFormat from 'rehype-format';
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';

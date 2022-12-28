@@ -6,7 +6,7 @@ import {
 	getSvgIcon,
 	HTML_HEADING_REGEX,
 	TOX_TEST_RESULTS_REGEX
-} from './constants';
+} from '$lib/server';
 
 export const colorizeToxResults = (html: string): string =>
 	html.replace(TOX_TEST_RESULTS_REGEX, (match): string => {

@@ -1,4 +1,4 @@
-import { listTutorialSections } from '$lib/content';
+import { listTutorialSections } from '$lib/server/getContent';
 import { json } from '@sveltejs/kit';
 import type { RequestEvent, RequestHandler } from './$types';
 

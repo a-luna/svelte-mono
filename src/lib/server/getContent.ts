@@ -14,13 +14,13 @@ import type {
 	ProjectCategory,
 	TutorialSection
 } from '$lib/types';
-import { isLanguageOrTech, isProjectCategory, unslugify } from '$lib/util';
+import { isLanguageOrTech, isProjectCategory, unslugify } from '$lib/server/util';
 import { promises as fs } from 'fs';
 import grayMatter from 'gray-matter';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-export const listBlogPosts = async (): Promise<BlogPost[]> => getAllContent('blog');
+export const listBlogPosts = async (): Promise<BlogPost[]> => getAllContent('blog_posts');
 export const listTutorialSections = async (): Promise<TutorialSection[]> => getAllContent('flask-api-tutorial');
 
 const checkMarkdownFile = (fileName: string): boolean => path.extname(fileName) === '.md';
@@ -28,13 +28,15 @@ const checkMarkdownFile = (fileName: string): boolean => path.extname(fileName) 
 const getResourceUrl = (res: FrontMatterResources, slug: string, imageFolder: string): string =>
 	res.name.startsWith('img') ? `${imageFolder}/${slug}/${res.src}` : `${SITE_URL}/${res.src}`;
 
-async function getAllContent(contentType: 'blog' | 'flask-api-tutorial'): Promise<BlogPost[] | TutorialSection[]> {
+async function getAllContent(
+	contentType: 'blog_posts' | 'flask-api-tutorial'
+): Promise<BlogPost[] | TutorialSection[]> {
 	const contentList: BlogPost[] | TutorialSection[] = [];
 	const markdownFolder = getMarkdownFolder(contentType);
 	for await (const _path of getMarkdownFiles(markdownFolder)) {
 		const src = await fs.readFile(_path, 'utf8');
 		const { content, data } = grayMatter(src);
-		if (contentType === 'blog') {
+		if (contentType === 'blog_posts') {
 			contentList.push(parseBlogPost(_path, content, data));
 		} else {
 			contentList.push(parseTutorialSection(_path, content, data));
@@ -43,7 +45,7 @@ async function getAllContent(contentType: 'blog' | 'flask-api-tutorial'): Promis
 	return contentList;
 }
 
-function getMarkdownFolder(contentType: 'blog' | 'flask-api-tutorial'): string {
+function getMarkdownFolder(contentType: 'blog_posts' | 'flask-api-tutorial'): string {
 	const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 	return dev
 		? path.resolve(path.join(__dirname, '../../../', `static/${contentType}`))

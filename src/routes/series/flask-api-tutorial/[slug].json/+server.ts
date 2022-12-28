@@ -1,4 +1,4 @@
-import { convertContentToHtml } from '$lib/content';
+import { convertContentToHtml } from '$lib/server';
 import { tutorialSections } from '$lib/stores';
 import type { TutorialSection } from '$lib/types';
 import { error, json } from '@sveltejs/kit';
@@ -13,7 +13,6 @@ export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) 
 	}
 
 	tutorialSection = (await convertContentToHtml(tutorialSection)) as TutorialSection;
-	const temp = { ...tutorialSection, content: tutorialSection.content.slice(0, 100) };
 	setHeaders({ 'Cache-Control': `max-age=0, s-maxage=${3600}` });
 	return json(tutorialSection);
 };
