@@ -16,11 +16,7 @@
 	};
 
 	$: flexStyle = compact ? 'flex-flow: row nowrap;' : 'flex-flow: column nowrap;';
-	$: fontSize = compact
-		? pageWidth > 640
-			? 'font-size: 1.2rem;'
-			: 'font-size: 1;'
-		: 'font-size: inherit;';
+	$: fontSize = compact ? (pageWidth > 640 ? 'font-size: 1.2rem;' : 'font-size: 1;') : 'font-size: inherit;';
 	$: lineHeight = compact ? 'line-height: 1;' : 'line-height: 1.3;';
 	$: borderStyle = compact
 		? 'border: none;'
@@ -35,10 +31,7 @@
 	$: iconStyles = compact ? 'margin: 0;' : 'margin: 2px 0 0 0;';
 	$: postIndex = $tutorialSectionNumberMap.findIndex((post) => post.slug === slug);
 	$: previous = postIndex > 0 ? $tutorialSectionNumberMap.at(postIndex - 1) : part0;
-	$: next =
-		postIndex < $tutorialSectionNumberMap.length - 1
-			? $tutorialSectionNumberMap.at(postIndex + 1)
-			: null;
+	$: next = postIndex < $tutorialSectionNumberMap.length - 1 ? $tutorialSectionNumberMap.at(postIndex + 1) : null;
 	$: previousLabel = compact ? previous?.series_part : previous?.lead;
 	$: nextLabel = compact ? next?.series_part : next?.lead;
 </script>
@@ -82,6 +75,7 @@
 		gap: 0.5rem;
 		font-weight: 400;
 		color: var(--accent-color);
+		background-color: var(--page-bg-color);
 		text-decoration: none;
 		transition: background-color 350ms ease-out, color 350ms ease-out;
 	}

@@ -28,6 +28,7 @@
 		display: flex;
 		gap: 5px;
 		color: var(--white-shade5);
+		text-decoration: none;
 	}
 	.gh-url:hover {
 		color: var(--white);

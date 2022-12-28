@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { beforeNavigate } from '$app/navigation';
 	import Chevron from '$lib/components/Icons/Chevron.svelte';
 	import TocSection from '$lib/components/TableOfContents/TocSection.svelte';
 	import type { TocSection as TocSectionType } from '$lib/types';
@@ -20,6 +21,12 @@
 		open = detailsElement.open;
 		toggleDetailsElement('toggleSection', { sectionId: id });
 	}
+
+	beforeNavigate(() => {
+		if (detailsElement) {
+			detailsElement.open = false;
+		}
+	});
 </script>
 
 <details id="table-of-contents" bind:this={detailsElement} on:toggle={() => handleSectionToggled()}>
@@ -45,10 +52,6 @@
 		flex: 1;
 		width: 100%;
 		padding: 0;
-	}
-
-	:global(.blog #table-of-contents) {
-		margin: 1rem 0 0 0;
 	}
 
 	:global(.tutorial #table-of-contents) {
@@ -116,7 +119,7 @@
 		display: list-item;
 		list-style: none;
 		color: var(--accent-color);
-		background-color: var(--black-tint2);
+		background-color: var(--toggle-group-bg-color);
 		font-size: 1.25rem;
 		line-height: 1;
 		padding: 11px 5px;
@@ -136,7 +139,7 @@
 	}
 
 	#table-of-contents[open] > summary {
-		color: var(--widget-bg-color);
+		color: var(--page-bg-color);
 		font-weight: 500;
 		background-color: var(--accent-color);
 	}
@@ -160,7 +163,7 @@
 	}
 
 	.toc-wrapper {
-		background-color: var(--black-tint2);
+		background-color: var(--toggle-group-bg-color);
 		border: 2px solid var(--accent-color);
 	}
 </style>

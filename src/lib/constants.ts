@@ -1,4 +1,4 @@
-import type { RepoWithMetaData } from './types';
+import type { BlogPost, RepoWithMetaData } from '$lib/types';
 
 export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'CONNECT'] as const;
 
@@ -81,4 +81,28 @@ export const nullRepoWithMetadata: RepoWithMetaData = {
 	primaryCategory: 'allProjects',
 	languages: ['allLanguages'],
 	categories: ['allCategories']
+};
+
+export const nullBlogPost: BlogPost = {
+	type: 'blog',
+	content: '',
+	title: '',
+	subtitle: '',
+	description: '',
+	frontmatter: {},
+	hasToc: false,
+	category: 'allCategories',
+	language: 'allLanguages',
+	categories: [],
+	techList: [],
+	canonical: '',
+	slug: '',
+	url: '',
+	date: '',
+	coverImage: {
+		name: '',
+		src: '',
+		caption: ''
+	},
+	resources: {}
 };

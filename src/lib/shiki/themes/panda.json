@@ -532,7 +532,7 @@
 		"merge.currentContentBackground": "#B084EB40",
 		"merge.incomingHeaderBackground": "#45A9F990",
 		"merge.incomingContentBackground": "#FFB86C40",
-		"editor.background": "#1a1a1a",
+		"editor.background": "#141414",
 		"editor.foreground": "#E6E6E6",
 		"editorCursor.foreground": "#FF4B82",
 		"editorRuler.foreground": "#B084EB60",

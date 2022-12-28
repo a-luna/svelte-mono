@@ -10,6 +10,7 @@
 	let open = false;
 
 	import { createEventDispatcher } from 'svelte';
+	import { beforeNavigate } from '$app/navigation';
 	const toggleDetailsElement = createEventDispatcher<{
 		toggleSection: { sectionId: string };
 	}>();
@@ -18,6 +19,12 @@
 		open = detailsElement.open;
 		toggleDetailsElement('toggleSection', { sectionId: id });
 	}
+
+	beforeNavigate(() => {
+		if (detailsElement) {
+			detailsElement.open = false;
+		}
+	});
 </script>
 
 <details id="github-links" bind:this={detailsElement} on:toggle={() => handleSectionToggled()}>
@@ -107,7 +114,7 @@
 		display: list-item;
 		list-style: none;
 		color: var(--accent-color);
-		background-color: var(--black-tint2);
+		background-color: var(--toggle-group-bg-color);
 		border-top: none;
 		border-left: 2px solid var(--accent-color);
 		border-right: 2px solid var(--accent-color);
@@ -144,7 +151,7 @@
 	}
 
 	.github-links-wrapper {
-		background-color: var(--black-tint2);
+		background-color: var(--toggle-group-bg-color);
 		border: 2px solid var(--accent-color);
 	}
 </style>

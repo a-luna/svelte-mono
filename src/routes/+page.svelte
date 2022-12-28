@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Mandala from '$lib/components/Mandala.svelte';
+	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { DEFAULT_OG_IMAGE, MY_TWITTER_HANDLE, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
 </script>
 
 <svelte:head>
-	<title>{SITE_TITLE} Full Stack Developer</title>
+	<title>Welcome! | {SITE_TITLE}</title>
 	<link rel="canonical" href={SITE_URL} />
 	<link rel="alternate" type="application/rss+xml" href={SITE_URL + '/api/rss.xml'} />
 	<meta property="og:url" content={SITE_URL} />
@@ -20,81 +21,74 @@
 	<meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
 </svelte:head>
 
-<div class="main-header portfolio">
-	<div class="main-header-content">
-		<p class="subheading"><span>Hello, I'm a full-stack developer from Reno, NV.</span></p>
-		<p class="normal-text">
-			The projects listed below range from REST APIs and CLI apps on the backend to component libraries and web
-			applications on the frontend.
-		</p>
-		<p class="normal-text">The list is filterable by language/technology used and project type.</p>
-		<p class="normal-text"><a href="series/flask-api-tutorial/overview">Flask API Tutorial</a></p>
+<div class="intro">
+	<div class="intro-content">
+		<SectionLayout section={'home'} title={'Hello'}>
+			<p class="subheading"><span>I'm a full-stack developer from Reno, NV.</span></p>
+			<p class="normal-text">
+				The projects listed below range from REST APIs and CLI apps on the backend to component libraries and web
+				applications on the frontend.
+			</p>
+			<p class="normal-text">The list is filterable by language/technology used and project type.</p>
+			<p class="normal-text"><a href="series/flask-api-tutorial/overview">Flask API Tutorial</a></p>
+		</SectionLayout>
 	</div>
 	<Mandala />
 </div>
 
 <style lang="postcss">
-	.main-header {
+	.intro {
 		background: var(--page-bg-color);
 		display: grid;
-		grid-template-columns: repeat(6, 1fr);
-		grid-template-rows: 1fr auto 1fr auto 1fr auto 1fr auto 1fr auto;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
 		width: 100%;
 		max-height: 365px;
 		margin: 0 auto;
-		padding: 0 1rem;
 	}
-	.main-header-content {
+	.intro-content {
 		font-family: 'Roboto Mono', menlo, consolas, monospace;
 		margin: 0 auto;
 		z-index: 2;
 		position: relative;
 		max-width: var(--max-width);
-		grid-column: 1 / span 6;
-		grid-row: 1 / span 10;
-	}
-	.main-header-content h2 span,
-	.subheading span {
-		color: var(--page-bg-color);
+		grid-column: 1;
+		grid-row: 1;
+		padding: 0;
 	}
 
 	.subheading {
-		background-color: var(--accent-color);
+		color: var(--accent-color);
 		padding: 0.25rem;
-		font-size: 1.2rem;
-		margin: 1.5rem 0 0 0;
+		font-size: 1.3rem;
+		font-weight: 500;
+		line-height: 1;
 	}
-	.main-header-content .normal-text {
+	.intro-content .normal-text {
 		font-size: 0.9rem;
-		margin: 2rem 0 0 0;
+		margin: 1.5rem 0 0 0;
 	}
 
 	@media (min-width: 640px) {
-		.main-header {
+		.intro {
 			padding: 0;
-		}
-		.main-header-content {
-			padding: 0 1.5rem;
 		}
 		.subheading {
 			font-size: 1.4rem;
 		}
-		.main-header-content .normal-text {
+		.intro-content .normal-text {
 			font-size: 1rem;
 		}
 	}
 
 	@media (min-width: 768px) {
-		.main-header {
-			padding: 0;
-		}
-		.main-header-content {
+		.intro {
 			padding: 0;
 		}
 	}
 
 	@media (min-width: 1024px) {
-		.main-header {
+		.intro {
 			max-height: 450px;
 		}
 	}

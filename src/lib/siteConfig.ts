@@ -1,7 +1,7 @@
 import { dev } from '$app/environment';
 
 export const SITE_URL = dev ? 'http://localhost:3504' : 'https://portfolio.aaronluna.dev';
-export const SITE_TITLE = 'Aaron Luna |';
+export const SITE_TITLE = 'Aaron Luna';
 export const SITE_DESCRIPTION = 'Your passport to the world of Aaron Luna';
 export const THEME_COLOR = '#BDFF2E';
 

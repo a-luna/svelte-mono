@@ -52,7 +52,7 @@
 
 <style lang="postcss">
 	.post-image {
-		margin: 0.5rem 0 0 0;
+		margin: 0;
 	}
 	figcaption {
 		color: var(--body-text-color);

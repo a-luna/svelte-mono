@@ -1,9 +1,11 @@
 <script lang="ts">
 	import type { TutorialSection } from '$lib/types';
-	import ArrowDown from '../Icons/ArrowDown.svelte';
-	import Code from '../Icons/Code.svelte';
+	import ArrowDown from '$lib/components/Icons/ArrowDown.svelte';
+	import Code from '$lib/components/Icons/Code.svelte';
+	import PreviewImage from '$lib/components/ApiTutorial/PreviewImage.svelte';
 
 	export let section: TutorialSection;
+	let slug: string = '';
 	let href: string | undefined = '';
 	let lead: string | undefined = '';
 	let description: string | undefined = '';
@@ -12,11 +14,21 @@
 	let url_git_rel_tar: string | undefined = '';
 	let url_git_rel_diff: string | undefined = '';
 
-	$: ({ href, lead, description, url_git_rel_browse, url_git_rel_zip, url_git_rel_tar, url_git_rel_diff } = section);
+	$: ({ slug, href, lead, description, url_git_rel_browse, url_git_rel_zip, url_git_rel_tar, url_git_rel_diff } =
+		section);
 </script>
 
 <div class="api-tutorial-section">
-	<a {href} class="section-name"><h4>{lead}</h4></a>
+	<div class="summary-top">
+		<div class="top-left">
+			<div class="image">
+				<a {href}><PreviewImage {slug} /></a>
+			</div>
+		</div>
+		<div class="top-right">
+			<a {href} class="section-name"><h4>{lead}</h4></a>
+		</div>
+	</div>
 	<div class="section-summary">{description}</div>
 	<div class="github-links">
 		<div class="links-left">
@@ -59,6 +71,13 @@
 		border-color: var(--accent-color);
 	}
 
+	h4 {
+		color: inherit;
+		font-family: 'Roboto', Arial, Helvetica, sans-serif;
+		margin: 0;
+		line-height: 1.3;
+	}
+
 	.section-name,
 	.section-name:hover {
 		font-size: 1.4rem;
@@ -75,6 +94,30 @@
 		line-height: 1.5;
 	}
 
+	.summary-top {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 1.5rem;
+	}
+
+	.image {
+		height: 150px;
+		width: 100%;
+		background-color: var(--black-tint2);
+	}
+
+	.top-left .image :global(img) {
+		height: 100%;
+		margin: 0;
+	}
+
+	.top-right {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
 	.github-links {
 		flex: 1;
 		display: flex;
@@ -82,7 +125,7 @@
 		gap: 0.5rem;
 		align-items: center;
 		line-height: 1;
-		margin: 1rem 0 0 0;
+		margin: 0;
 	}
 
 	.links-left,
@@ -144,7 +187,7 @@
 		grid-column: 3 / span 1;
 	}
 
-	@media (min-width: 520px) {
+	@media (min-width: 600px) {
 		.github-links {
 			flex-flow: row nowrap;
 			justify-content: space-evenly;
@@ -166,7 +209,7 @@
 
 	@media (min-width: 640px) {
 		.api-tutorial-section {
-			padding: 2rem;
+			padding: 1.5rem;
 		}
 
 		.github-links {

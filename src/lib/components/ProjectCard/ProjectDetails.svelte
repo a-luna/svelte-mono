@@ -46,6 +46,7 @@
 		justify-content: space-between;
 		justify-items: start;
 		align-items: flex-start;
+		gap: 1rem;
 
 		grid-column: 2 / span 1;
 		grid-row: 4 / span 1;
@@ -68,6 +69,7 @@
 		letter-spacing: 0.8px;
 		line-height: 1.4;
 		font-weight: 400;
+		margin: 0.5rem 0;
 	}
 
 	.project-description {
@@ -83,14 +85,13 @@
 		display: flex;
 		flex-flow: column nowrap;
 		line-height: 1;
-		margin: 1rem 0 0 0;
+		gap: 0.5rem;
 	}
 
 	.all-langage-list-title {
 		font-size: 0.85rem;
 		font-style: italic;
 		color: var(--accent-color);
-		margin: 0 0 0.2rem 0;
 	}
 
 	.category-list {

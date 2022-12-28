@@ -20,14 +20,7 @@
 <div class="mandala-wrapper">
 	<div class="mandala-container animate-colors">
 		<div class="mandala-translate">
-			<svg
-				{width}
-				{height}
-				viewBox="0 0 675 675"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-				class="mandala"
-			>
+			<svg {width} {height} viewBox="0 0 675 675" fill="none" xmlns="http://www.w3.org/2000/svg" class="mandala">
 				<defs>
 					<path d="M337.5,337.5 m-320,0 a320,320 0 1,1 640,0 a320,320 0 1,1 -640,0" id="circle1" />
 					<path d="M337.5,337.5 m-280,0 a280,280 0 1,1 560,0 a280,280 0 1,1 -560,0" id="circle2" />
@@ -46,26 +39,24 @@
 						repeatCount="indefinite"
 					/>
 					<textPath textLength="2010" href="#circle1">
-						&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
+						&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
 							>&#47;</tspan
-						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
+						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan
 							>&#47;</tspan
-						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
+						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
+						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
 							>&#47;</tspan
-						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
+						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan
 							>&#47;</tspan
-						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
+						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
+						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
 							>&#47;</tspan
-						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
+						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan
 							>&#47;</tspan
-						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>
+						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
+						>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
+							>&#47;</tspan
+						>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>
 					</textPath>
 				</text>
 				<text class="mandala-accent-2" dy="70" textLength="1760">
@@ -99,20 +90,14 @@
 						repeatCount="indefinite"
 					/>
 					<textPath textLength="1507" href="#circle3">
-						<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan
-						>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan
-							>&#123;</tspan
-						>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan
-							>&#123;</tspan
+						<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan
+						>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan
+						>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan
+						>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan
 						>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan
-						>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan
-							>&#125;</tspan
-						>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan
-							>&#123;</tspan
-						>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan
-							>&#123;</tspan
-						>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan
-						>&#125;&nbsp;&nbsp;
+						>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan
+						>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan
+						>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;
 					</textPath>
 				</text>
 				<text class="mandala-accent-4" dy="70" textLength="1257">
@@ -159,8 +144,8 @@
 		transition: all 1s ease-in-out;
 		width: 100%;
 		z-index: 1;
-		grid-column: 1 / span 10;
-		grid-row: 1 / span 10;
+		grid-column: 1;
+		grid-row: 1;
 	}
 	.mandala-container {
 		--mandala-primary: var(--gray-shade6);

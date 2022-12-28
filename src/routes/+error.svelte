@@ -1,6 +1,6 @@
-<script>
-	import { dev } from '$app/environment';
+<script lang="ts">
 	import { page } from '$app/stores';
+	import { SITE_TITLE } from '$lib/siteConfig';
 
 	const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
 
@@ -12,13 +12,13 @@
 		message = 'Sorry! If you think this URL is broken, please let me know!';
 	}
 
-	function displayPathname(str) {
+	function displayPathname(str: string) {
 		return decodeURIComponent(str).replaceAll('-', ' ');
 	}
 </script>
 
 <svelte:head>
-	<title>{title}</title>
+	<title>{title} | {SITE_TITLE}</title>
 </svelte:head>
 
 <section class="container prose mx-auto py-12 dark:prose-invert">
@@ -34,9 +34,6 @@
 		<p class="">If you believe this was a bug, please let me know!</p>
 	{:else}
 		<p class="font-mono">{message}</p>
-	{/if}
-	{#if dev && $page.error.stack}
-		<pre class="mono overflow-scroll bg-gray-800 p-8">{$page.error.stack}</pre>
 	{/if}
 </section>
 

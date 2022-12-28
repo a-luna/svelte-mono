@@ -1793,7 +1793,7 @@
 		"inputOption.activeForeground": "#ffffff",
 		"input.placeholderForeground": "#a6a6a6",
 		"textLink.foreground": "#778ede",
-		"editor.background": "#1a1a1a",
+		"editor.background": "#141414",
 		"editor.foreground": "#bfc9d7",
 		"editorLineNumber.foreground": "#868686",
 		"editorCursor.foreground": "#aeafad",

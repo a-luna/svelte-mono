@@ -46,7 +46,7 @@
 	}
 }
 :root {
-	--max-width: 725px;
+	--max-width: 704px;
 
 	--no-hue: 0;
 	--red-hue: 0;
@@ -221,7 +221,7 @@
 	--cmd-pink3: hsl(342, 100%, 64%);
 
 	/* Command-line/Python REPL */
-	--widget-bg-color: #1a1a1a;
+	--widget-bg-color: #141414;
 	--cmd-lineno: var(--cmd-light-gray2);
 	--cmd-lineno-hl: var(--cmd-yellow3);
 	--cmd-prompt: var(--cmd-mid-gray2);
@@ -279,6 +279,11 @@ body {
 	--nodejs-color-h: 256;
 	--css-color-h: 298;
 
+	--home-section-color: var(--accent-color);
+	--projects-section-color: var(--pink-icon);
+	--blog-section-color: var(--blue-icon);
+	--about-section-color: var(--green-icon);
+
 	--g-color-1: var(--indigo);
 	--g-color-2: var(--teal);
 	--g-color-1-dim: hsl(185 9% 20%);
@@ -288,22 +293,13 @@ body {
 	--gradient-dim: linear-gradient(to bottom right, var(--g-color-1-dim), var(--g-color-2-dim), var(--g-color-3-dim));
 
 	--code-block-bg-color: #141414;
+	--code-block-border-color: var(--dark-gray-shade2);
+
+	--toggle-group-bg-color: var(--black-tint2);
 
 	background-color: var(--black-tint1);
 	font-family: 'Roboto', Arial, Helvetica, sans-serif;
 	letter-spacing: 0.4px;
-}
-
-.section-header {
-	font-family: 'Roboto Mono', menlo, consolas, monospace;
-	font-size: 1.7rem;
-	line-height: 1.5;
-	color: var(--page-bg-color);
-	background-color: var(--section-color);
-	padding: 0 0.25rem;
-	font-weight: 500;
-	width: 100%;
-	margin: 1.5rem 0 2rem 0;
 }
 
 kbd {
@@ -312,7 +308,7 @@ kbd {
 	padding: 3px 4px;
 	color: var(--cmd-yellow3);
 	background-color: var(--black-tint3);
-	border: 0.5px solid var(--gray-shade5);
+	border: 0.5px solid var(--dark-gray-shade2);
 	border-radius: 4px;
 	box-shadow: var(--outer-shadow);
 }
@@ -893,7 +889,7 @@ article figure {
 }
 
 .post-image figure {
-	margin: 0 0 2rem 0;
+	margin: 0;
 	width: 100%;
 }
 
@@ -1118,7 +1114,7 @@ table.tutorial tfoot code {
 	width: 100%;
 	margin: 0 auto 2rem;
 	padding: 0.75rem 0.5rem;
-	background-color: #1a1a1a;
+	background-color: #141414;
 	border: 1px solid var(--dark-gray-shade2);
 	white-space: nowrap;
 }
@@ -1236,7 +1232,7 @@ th.last-column,
 
 .table-wrapper thead td,
 .table-wrapper tfoot td {
-	background-color: #1a1a1a;
+	background-color: #141414;
 	color: var(--white-shade3);
 	border: none;
 	padding: 5px;
@@ -1564,11 +1560,11 @@ body::-webkit-scrollbar-corner {
 .mobile-device-button {
 	flex: 0 0 16px;
 	border-radius: 100px;
-	background-color: var(--gray-shade5);
+	background-color: var(--dark-gray-shade2);
 }
 
-@media (min-width: 640px) {
-	.section-header {
-		font-size: 2rem;
+@media (min-width: 815px) {
+	:root {
+		--max-width: 725px;
 	}
 }

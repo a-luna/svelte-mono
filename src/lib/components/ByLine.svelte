@@ -3,7 +3,6 @@
 	import { formatDateString } from '$lib/util';
 
 	export let published = new Date(0);
-	export let nameOnly = false;
 
 	$: authorImage = `${SITE_URL}/AaronLuna.jpg`;
 </script>
@@ -11,9 +10,7 @@
 <div class="author">
 	<div class="avatar"><img height="40px" width="40px" src={authorImage} alt="" /></div>
 	<span class="author-name">{AUTHOR_NAME}</span>
-	{#if !nameOnly}
-		<span class="publish-date">on {formatDateString(published)}</span>
-	{/if}
+	<span class="publish-date">on {formatDateString(published)}</span>
 </div>
 
 <style lang="postcss">
@@ -21,12 +18,11 @@
 		display: flex;
 		gap: 0.3rem;
 		align-items: center;
-		margin: 0.5rem 0 0 0;
 	}
 	.avatar {
 		line-height: 0;
 		display: inline-block;
-		margin: 5px;
+		margin: 0 5px;
 		border: 2px solid var(--black-tint3);
 		border-radius: 50%;
 		height: 40px;
@@ -34,6 +30,9 @@
 	}
 	.avatar img {
 		border-radius: 50%;
+	}
+	:global(.tutorial) .publish-date {
+		display: none;
 	}
 	.author-name,
 	.publish-date {

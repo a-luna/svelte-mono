@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import BlogSummary from '$lib/components/BlogPost/BlogSummary.svelte';
+	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import { blogPosts } from '$lib/stores';
 	import type { BlogPost } from '$lib/types';
@@ -13,17 +13,15 @@
 	let search: string;
 	// let filteredCategory: string;
 
-	$: allBlogPosts = data.allBlogPosts;
-	$: if (browser && Object.keys(allBlogPosts).length) $blogPosts = allBlogPosts;
-	$: if (blogPosts && $blogPosts.length)
-		list = $blogPosts
-			.filter((item) => {
-				if (search) {
-					return item.title.toLowerCase().includes(search.toLowerCase());
-				}
-				return true;
-			})
-			.slice(0, isTruncated ? 2 : $blogPosts.length);
+	$: if (data.allBlogPosts && Object.keys(data.allBlogPosts).length) $blogPosts = data.allBlogPosts;
+	list = $blogPosts
+		.filter((item) => {
+			if (search) {
+				return item.title.toLowerCase().includes(search.toLowerCase());
+			}
+			return true;
+		})
+		.slice(0, isTruncated ? 2 : $blogPosts.length);
 
 	function focusSearch(e: KeyboardEvent) {
 		if (e.key === '/' && inputEl) inputEl.select();
@@ -31,79 +29,76 @@
 </script>
 
 <svelte:head>
-	<title>{SITE_TITLE} Blog Index</title>
+	<title>Blog | {SITE_TITLE}</title>
 	<meta name="description" content={`Latest Blog Posts`} />
 </svelte:head>
 
 <svelte:window on:keyup={focusSearch} />
 
-<section class="article-list" data-sveltekit-prefetch>
-	<h1 class="section-header">Blog</h1>
-	<p class="search-desc">Use the search below to filter by title.</p>
-	<div class="input-wrapper">
-		<input
-			aria-label="Search articles"
-			type="text"
-			bind:value={search}
-			bind:this={inputEl}
-			placeholder="Hit / to search"
-		/><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-			><path
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-				d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-			/></svg
-		>
-	</div>
-	{#if !search}
-		<h3>All Posts</h3>
-	{/if}
-	{#if list.length}
-		<ul>
-			{#each list as item}
-				<li>
-					<BlogSummary
-						href={item.href}
-						title={item.title}
-						publishDate={new Date(item.date)}
-						categories={item.categories}
-						language={item.language}
-					>
-						{item.description}
-					</BlogSummary>
-				</li>
-			{/each}
-		</ul>
-		{#if isTruncated}
-			<div class="button-wrapper">
-				<button on:click={() => (isTruncated = false)} class="load-more-button"> Load More Posts... </button>
-			</div>
-		{/if}
-	{:else if search}
-		<div class="prose dark:prose-invert">
-			No posts found for
-			<code>{search}</code>.
+<SectionLayout section={'blog'}>
+	<section class="article-list">
+		<p class="search-desc">Use the search below to filter by title.</p>
+		<div class="input-wrapper">
+			<input
+				aria-label="Search articles"
+				type="text"
+				bind:value={search}
+				bind:this={inputEl}
+				placeholder="Hit / to search"
+			/><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+				><path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+				/></svg
+			>
 		</div>
-		<button class="bg-slate-500 p-2" on:click={() => (search = '')}>Clear your search</button>
-	{:else}
-		<div class="prose dark:prose-invert">No blogposts found!</div>
-	{/if}
-</section>
+		{#if !search}
+			<h3>All Posts</h3>
+		{/if}
+		{#if list.length}
+			<ul data-sveltekit-preload-data="hover">
+				{#each list as item}
+					<li>
+						<BlogSummary
+							slug={item.slug}
+							href={item.href}
+							title={item.title}
+							publishDate={new Date(item.date)}
+							categories={item.categories}
+							language={item.language}
+						>
+							{item.description}
+						</BlogSummary>
+					</li>
+				{/each}
+			</ul>
+			{#if isTruncated}
+				<div class="button-wrapper">
+					<button on:click={() => (isTruncated = false)} class="load-more-button"> Load More Posts... </button>
+				</div>
+			{/if}
+		{:else if search}
+			<div class="prose dark:prose-invert">
+				No posts found for
+				<code>{search}</code>.
+			</div>
+			<button class="bg-slate-500 p-2" on:click={() => (search = '')}>Clear your search</button>
+		{:else}
+			<div class="prose dark:prose-invert">No blogposts found!</div>
+		{/if}
+	</section>
+</SectionLayout>
 
 <style lang="postcss">
 	section {
-		--section-color: var(--blue-icon);
 		display: flex;
 		flex-flow: column nowrap;
 		margin: 0 auto 4rem auto;
 		justify-content: center;
 		align-items: flex-start;
-		max-width: var(--max-width);
-		padding: 0 1.5rem;
-	}
-	h1 {
-		flex: 1;
+		width: 100%;
 	}
 	.search-desc {
 		margin: 0 0 1rem 0;
@@ -116,7 +111,7 @@
 	}
 	input {
 		display: block;
-		background-color: var(--black-tint1);
+		background-color: var(--black);
 		color: var(--white-shade2);
 		border-radius: 0.375rem;
 		border: 1px solid var(--gray-shade6);
@@ -141,6 +136,7 @@
 	}
 	ul {
 		list-style: none;
+		padding: 0;
 	}
 	li {
 		margin: 0 0 2rem 0;
@@ -162,19 +158,10 @@
 		line-height: 1;
 	}
 
-	@media (min-width: 640px) {
-		section {
-			padding: 0 1.5rem;
-		}
-	}
-
 	@media (min-width: 768px) {
 		h3 {
 			font-size: 1.75rem;
 			line-height: 2.5rem;
-		}
-		section {
-			padding: 0;
 		}
 	}
 </style>

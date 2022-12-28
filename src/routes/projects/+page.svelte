@@ -1,37 +1,24 @@
 <script lang="ts">
 	import { userRepos } from '$lib/stores';
 	import ProjectList from '$lib/components/ProjectList/ProjectList.svelte';
+	import { MY_TWITTER_HANDLE, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
+	import SectionLayout from '$lib/components/SectionLayout.svelte';
+
+	const description =
+		'A curated list of my open-source projects. Use the filters to narrow down the list by project type or technology/programming language.';
 
 	$: allRepos = $userRepos.repos;
 </script>
 
-<div class="projects-outer portfolio">
-	<div class="projects">
-		<h1 class="section-header">Projects</h1>
-		<ProjectList {allRepos} />
-	</div>
-</div>
+<svelte:head>
+	<meta property="og:type" content="article" />
+	<meta name="Description" content={description} />
+	<meta property="og:description" content={description} />
+	<meta name="twitter:card" content={'summary'} />
+	<meta name="twitter:creator" content={'@' + MY_TWITTER_HANDLE} />
+	<meta name="twitter:description" content={description} />
+</svelte:head>
 
-<style lang="postcss">
-	.projects-outer {
-		--section-color: var(--pink-icon);
-		z-index: 3;
-	}
-	.projects {
-		margin: 0 auto;
-		padding: 0 1.5rem 1.5rem 1.5rem;
-		max-width: var(--max-width);
-	}
-
-	@media (min-width: 640px) {
-		.projects {
-			padding: 0 2rem 2rem 2rem;
-		}
-	}
-
-	@media (min-width: 768px) {
-		.projects {
-			padding: 0 0 3rem 0;
-		}
-	}
-</style>
+<SectionLayout section={'projects'}>
+	<ProjectList {allRepos} />
+</SectionLayout>

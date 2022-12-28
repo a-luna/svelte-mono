@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { beforeNavigate } from '$app/navigation';
 	import GithubLinks from '$lib/components/ApiTutorial/GithubLinks.svelte';
 	import TutorialSections from '$lib/components/ApiTutorial/TutorialSections.svelte';
 	import TableOfContents from '$lib/components/TableOfContents/TableOfContents.svelte';
@@ -31,8 +30,6 @@
 			});
 		}
 	}
-
-	beforeNavigate(() => Object.values(getSections()).forEach((sec) => (sec.open = false)));
 </script>
 
 <div class="toggle-groups">

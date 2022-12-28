@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { beforeNavigate } from '$app/navigation';
 	import Chevron from '$lib/components/Icons/Chevron.svelte';
 	import { tutorialSections } from '$lib/stores';
 	import { getRandomHexString } from '$lib/util';
@@ -17,6 +18,12 @@
 		open = detailsElement.open;
 		toggleDetailsElement('toggleSection', { sectionId: id });
 	}
+
+	beforeNavigate(() => {
+		if (detailsElement) {
+			detailsElement.open = false;
+		}
+	});
 </script>
 
 <details id="tutorial-sections" bind:this={detailsElement} on:toggle={() => handleSectionToggled()}>
@@ -90,7 +97,7 @@
 		display: list-item;
 		list-style: none;
 		color: var(--accent-color);
-		background-color: var(--black-tint2);
+		background-color: var(--toggle-group-bg-color);
 		border-top: 2px solid var(--accent-color);
 		border-left: 2px solid var(--accent-color);
 		border-right: 2px solid var(--accent-color);
@@ -103,7 +110,7 @@
 	}
 
 	#tutorial-sections[open] > summary {
-		color: var(--widget-bg-color);
+		color: var(--page-bg-color);
 		font-weight: 500;
 		background-color: var(--accent-color);
 	}
@@ -127,7 +134,7 @@
 	}
 
 	.tutorial-sections-wrapper {
-		background-color: var(--black-tint2);
+		background-color: var(--toggle-group-bg-color);
 		border: 2px solid var(--accent-color);
 	}
 </style>

@@ -96,7 +96,7 @@
 		"dropdown.foreground": "#c2fd99",
 		"dropdown.listBackground": "#457be7",
 		//editor
-		"editor.background": "#1a1a1a",
+		"editor.background": "#141414",
 		"editor.foreground": "#c2fd99",
 		"editorLineNumber.foreground": "#c2fd99",
 		"editorLineNumber.activeForeground": "#6ef3a5",
