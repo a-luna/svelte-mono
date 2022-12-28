@@ -1,5 +1,5 @@
 ---
-title: "Network Utility Methods Part 2: Retrieving Local and Public IP Addresses"
+title: "Network Utility Methods Part 2"
 slug: "csharp-retrieve-local-public-ip-address"
 aliases:
     - /2018/03/16/csharp-retrieve-local-public-ip-address/

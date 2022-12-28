@@ -1,5 +1,5 @@
 ---
-title: "Network Utility Methods Part 1: Parsing IP Addresses, Handling CIDR Ranges and Netmasks"
+title: "Network Utility Methods Part 1"
 slug: "csharp-parse-ip-address-check-cidr-range"
 aliases:
     - /2018/02/24/csharp-parse-ip-address-check-cidr-range/

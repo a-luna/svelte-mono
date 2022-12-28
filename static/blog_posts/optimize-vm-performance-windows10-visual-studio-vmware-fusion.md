@@ -1,5 +1,5 @@
 ---
-title: "How to Optimize Performance of Windows 10 and Visual Studio in VMWare Fusion"
+title: "Optimize Windows and Visual Studio Performance in VMWare Fusion"
 slug: "optimize-vm-performance-windows10-visual-studio-vmware-fusion"
 aliases:
     - /2018/01/26/optimize-om-performance-windows10-visual-studio-vmware-fusion/
