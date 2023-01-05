@@ -17,7 +17,7 @@ describe('verify encoding process using ascii-encoded strings', async () => {
 	});
 
 	beforeEach(async () => {
-		browser = await chromium.launch({ headless: false });
+		browser = await chromium.launch({ headless: true });
 		page = await browser.newPage();
 	});
 
