@@ -7,10 +7,9 @@
 		"src/**/*.js",
 		"src/**/*.ts",
 		"src/**/*.svelte",
-		"src/lib/__test__/**/*.ts",
+		"tests/*.ts",
 
 		// these are the eslint-only inclusions
-		"playwright.config.ts",
 		"svelte.config.js",
 		"vite.config.js",
 		"netlify-plugin-pnpm/index.js"

@@ -21,7 +21,7 @@ export default defineConfig({
 		},
 		coverage: {
 			skipFull: true,
-			exclude: [...configDefaults.exclude, '<rootDir>/src/lib/xstate/b64Encode.test/*'],
+			exclude: [...configDefaults.exclude, '**/b64Encode.test/**', '**/tests/**', '**/.svelte-kit/**'],
 		},
 		testTimeout: 30_000,
 		hookTimeout: 30_000,
