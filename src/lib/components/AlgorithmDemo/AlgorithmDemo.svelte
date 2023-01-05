@@ -110,7 +110,7 @@
 			}
 		}
 
-		if (!$demoState.dev) return;
+		if ($demoState.prod) return;
 		if (key === 'KeyC') {
 			console.log({ context: $state.context });
 		}
@@ -152,8 +152,8 @@
 </div>
 <InputForm
 	bind:inputText
+	bind:inputTextEncoding
 	bind:outputBase64Encoding
-	on:inputTextEncodingChanged={(e) => (inputTextEncoding = e.detail)}
 	on:openHelpModal={(e) => openHelpDocsModal(e.detail)}
 	on:submit={() => submitForm(inputText)}
 />
