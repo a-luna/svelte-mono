@@ -153,7 +153,7 @@ export const defaultDecoderOutput: DecoderOutput = {
 
 export const defaultEncoderInput: EncoderInput = {
 	inputText: '',
-	inputEncoding: 'ascii',
+	inputEncoding: 'utf8',
 	outputEncoding: 'base64',
 	validationResult: { success: true },
 	bytes: [],
