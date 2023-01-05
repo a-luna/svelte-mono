@@ -3,21 +3,17 @@
 	import { getAppContext } from '$lib/stores/context';
 	import { isStringEncoding } from '$lib/typeguards';
 	import type { SelectMenuOption, StringEncoding } from '$lib/types';
-	import { createEventDispatcher } from 'svelte';
 
 	export let width = '100%';
 	export let fontSize = '0.875rem';
 	export let value: StringEncoding = 'ascii';
-	export let inputText: string = '';
+	export let disabled = false;
 	export let dropdownShown = false;
 	export let inHelpDocs = false;
-	let noInputText = true;
-	let options: SelectMenuOption[] = [];
-	let bestMatch: string = '';
-	const dispatch = createEventDispatcher();
+	let userSelectionMade = false;
 	const { state, demoState } = getAppContext();
 
-	const allOptions: SelectMenuOption[] = [
+	const options: SelectMenuOption[] = [
 		{ label: 'ASCII', value: 'ascii', optionNumber: 1, active: false },
 		{ label: 'UTF-8', value: 'utf8', optionNumber: 2, active: false },
 		{ label: 'hex', value: 'hex', optionNumber: 3, active: false },
@@ -26,26 +22,22 @@
 	const menuId = 'select-string-encoding';
 	const menuLabel = '';
 
-	$: {
-		noInputText = !inputText || inputText.length === 0;
-		options =
-			inHelpDocs || $demoState.test
-				? allOptions
-				: noInputText
-				? [allOptions[1]]
-				: allOptions.filter((option) => $demoState.validInputEncodings.includes(option.value.toString()));
-		bestMatch = inHelpDocs
-			? 'ascii'
-			: noInputText || !$demoState.validInputEncodings.length
-			? 'utf8'
-			: $demoState.validInputEncodings.at(0);
-		value = isStringEncoding(bestMatch) ? bestMatch : null;
-		dispatch('inputTextEncodingChanged', value);
+	$: if ($state.context.resetForm) {
+		userSelectionMade = false;
 	}
-	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });
-	$: disabled = inHelpDocs || $demoState.test ? false : noInputText || controlsDisabled;
+	$: bestMatch = inHelpDocs
+		? 'ascii'
+		: !$demoState.validInputEncodings.length
+		? 'utf8'
+		: $demoState.validInputEncodings.at(0);
+	$: if (!userSelectionMade && !$demoState.test) {
+		value = isStringEncoding(bestMatch) ? bestMatch : null;
+	}
 
-	const handleStringEncodingChanged = (stringEncoding: StringEncoding) => (value = stringEncoding);
+	function handleStringEncodingChanged(stringEncoding: StringEncoding) {
+		userSelectionMade = true;
+		value = stringEncoding;
+	}
 </script>
 
 <Select
