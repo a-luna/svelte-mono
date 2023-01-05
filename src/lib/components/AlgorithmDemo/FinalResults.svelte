@@ -103,7 +103,7 @@
 	}
 	@media screen and (min-width: 762px) {
 		.demo-results {
-			gap: 1rem;
+			gap: 2rem;
 		}
 		.result {
 			font-size: 0.75rem;

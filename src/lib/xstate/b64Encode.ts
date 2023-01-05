@@ -6,7 +6,7 @@ import {
 	defaultEncoderInputChunk,
 	defaultEncoderOutput,
 	defaultHexByteMap,
-	defaultOutputChunk
+	defaultOutputChunk,
 } from '$lib/constants';
 import { validateEncoderInput } from '$lib/dataPrep';
 import { isTextEncoding } from '$lib/typeguards';
@@ -18,7 +18,7 @@ import type {
 	EncoderOutput,
 	HexByteMap,
 	OutputChunk,
-	StringEncoding
+	StringEncoding,
 } from '$lib/types';
 import { assign, createMachine } from 'xstate';
 
@@ -47,32 +47,6 @@ export interface EncodingContext {
 	input: EncoderInput;
 	output: EncoderOutput;
 }
-
-export const initialEncodingContext: EncodingContext = {
-	resetForm: false,
-	autoplay: false,
-	skipDemo: false,
-	byteMaps: [defaultHexByteMap],
-	byteIndex: 0,
-	currentByte: defaultHexByteMap,
-	updatedByteMaps: [],
-	remainingBytes: 0,
-	updatedInputChunks: [],
-	inputChunkIndex: 0,
-	currentInputChunk: defaultEncoderInputChunk,
-	remainingInputChunks: 0,
-	updatedOutputChunks: [],
-	outputChunkIndex: 0,
-	currentOutputChunk: defaultOutputChunk,
-	remainingOutputChunks: 0,
-	base64Maps: [defaultBase64ByteMap],
-	updatedBase64Maps: [],
-	base64CharIndex: 0,
-	currentBase64Char: defaultBase64ByteMap,
-	remainingBase64Chars: 0,
-	input: defaultEncoderInput,
-	output: defaultEncoderOutput,
-};
 
 export interface EncodingSchema {
 	states: {
@@ -186,6 +160,32 @@ export type EncodingTypeStates = {
 		| 'verifyResults'
 		| 'finished';
 	context: EncodingContext;
+};
+
+export const initialEncodingContext: EncodingContext = {
+	resetForm: false,
+	autoplay: false,
+	skipDemo: false,
+	byteMaps: [defaultHexByteMap],
+	byteIndex: 0,
+	currentByte: defaultHexByteMap,
+	updatedByteMaps: [],
+	remainingBytes: 0,
+	updatedInputChunks: [],
+	inputChunkIndex: 0,
+	currentInputChunk: defaultEncoderInputChunk,
+	remainingInputChunks: 0,
+	updatedOutputChunks: [],
+	outputChunkIndex: 0,
+	currentOutputChunk: defaultOutputChunk,
+	remainingOutputChunks: 0,
+	base64Maps: [defaultBase64ByteMap],
+	updatedBase64Maps: [],
+	base64CharIndex: 0,
+	currentBase64Char: defaultBase64ByteMap,
+	remainingBase64Chars: 0,
+	input: defaultEncoderInput,
+	output: defaultEncoderOutput,
 };
 
 export const encodingMachine =
