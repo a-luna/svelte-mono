@@ -19,10 +19,8 @@ export interface UnicodeCharInfo {
 	htmlEntities: string[];
 	uriEncoded: string;
 	utf8: string;
-	utf16: string;
-	utf32: string;
 	utf8HexBytes: string[];
 	utf8DecBytes: number[];
 }
 
-export type HttpResponse = { char: string; results: UnicodeCharInfo[] }[]
+export type HttpResponse = { char: string; results: UnicodeCharInfo[] }[];

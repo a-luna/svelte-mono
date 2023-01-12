@@ -42,7 +42,7 @@ const getApiBaseUrl = (): string =>
 
 function getUrlForApiRequest(utf8: string): string {
 	const endpoint = `characters/${strictUriEncode(utf8)}`;
-	return `${getApiBaseUrl()}/${endpoint}?show_props=ENCODED_STRINGS&show_props=ENCODED_BYTES`;
+	return `${getApiBaseUrl()}/${endpoint}?show_props=UTF8`;
 }
 
 function mockFetchUnicodeCharInfo(utf8: string): UnicodeCharInfo[] {
