@@ -86,6 +86,9 @@ export function createDemoStateStore(state: EncodingMachineStateStore): Readable
 		const showBase64Table = () =>
 			$state.matches({ encodeInput: 'explainByteMapping' }) || $state.matches('encodeOutput');
 
+		const getUtf8StringDecomposition = () =>
+			$state.context.input.inputEncoding === 'utf8' && $state.matches({ encodeInput: 'idle' });
+
 		return {
 			dev: import.meta.env.MODE === 'development',
 			test: import.meta.env.MODE === 'test',
@@ -104,6 +107,7 @@ export function createDemoStateStore(state: EncodingMachineStateStore): Readable
 			showOutputBytes: showOutputBytes(),
 			showAsciiTable: showAsciiTable(),
 			showBase64Table: showBase64Table(),
+			getUtf8StringDecomposition: getUtf8StringDecomposition(),
 		};
 	});
 }

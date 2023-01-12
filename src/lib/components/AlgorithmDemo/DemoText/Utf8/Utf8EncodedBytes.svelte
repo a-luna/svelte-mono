@@ -1,19 +1,24 @@
 <script lang="ts">
 	import EncodedBytesForChar from '$lib/components/AlgorithmDemo/DemoText/Utf8/EncodedBytesForChar.svelte';
 	import ToggleExpandAllCharacters from '$lib/components/AlgorithmDemo/DemoText/Utf8/ToggleExpandAllCharacters.svelte';
+	import { getAppContext } from '$lib/stores/context';
 	import type { Utf8StringComposition } from '$lib/types';
 	import { getUtf8StringDecomposition } from '$lib/unicode';
 	import { fade } from 'svelte/transition';
 
-	export let input: string = '';
+	let utf8ByteMap: Utf8StringComposition;
 	let charByteMapComponents: Record<number, EncodedBytesForChar> = {};
 	let anyCharsAreExpanded = false;
 	let allCharsAreExpanded = false;
 	let hasVarSelector = false;
 	let hasZeroWidthJoiner = false;
 	let hasWhiteSpace = false;
-	let utf8ByteMap: Utf8StringComposition;
+	const { state, demoState } = getAppContext();
+	utf8ByteMap = $state.context.input.utf8;
 
+	$: if ($demoState.getUtf8StringDecomposition) {
+		getUtf8ByteMap();
+	}
 	$: expandableCharMaps = Object.values(charByteMapComponents).filter((charMap) => charMap.isCombined);
 	$: anyCharsAreCombined = utf8ByteMap?.hasCombinedChars;
 	$: hasMultipleCombinedChars = expandableCharMaps.length > 1;
@@ -32,6 +37,10 @@
 	const vs1 = ' Stands for ';
 	const vs2 = 'Variation Selector-16';
 	const vs3 = ' which is a non-printing character that requests that a character should be displayed as an emoji.';
+
+	async function getUtf8ByteMap() {
+		utf8ByteMap = await getUtf8StringDecomposition($state.context.input.inputText);
+	}
 
 	function handleCharacterToggled() {
 		const expandedCharMaps = expandableCharMaps.filter((charMap) => charMap.expanded);
@@ -54,53 +63,50 @@
 	}
 </script>
 
-{#await getUtf8StringDecomposition(input) then utf8ByteMap}
-	<div class="utf8-byte-map-wrapper">
-		{#if hasMultipleCombinedChars}
-			<ToggleExpandAllCharacters bind:toggled={allCharsAreExpanded} on:click={() => toggleAllChars()} />
-		{/if}
-		<div class="utf8-byte-map">
-			{#each utf8ByteMap.charMap as { char, isASCII, encoded, hexBytes, isCombined, charMap, unicodeNames, codepoints }, i}
-				<EncodedBytesForChar
-					hasCharacterNames={utf8ByteMap.hasCharacterNames}
-					bind:this={charByteMapComponents[i]}
-					bind:anyCharsAreExpanded
-					{anyCharsAreCombined}
-					{char}
-					{isASCII}
-					{encoded}
-					{hexBytes}
-					{codepoints}
-					{unicodeNames}
-					{isCombined}
-					{charMap}
-					on:toggled={() => handleCharacterToggled()}
-				/>
-			{/each}
-		</div>
-		{#if showLegend}
-			<div transition:fade class="legend">
-				<ul>
-					{#if hasZeroWidthJoiner}
-						<li class="zwj">
-							<strong>ZWJ:</strong>{zwj1}<strong><a href={zwjUrl} target="_blank" rel="noreferrer">{zwj2}</a></strong
-							>{zwj3}
-						</li>
-					{/if}
-					{#if hasVarSelector}
-						<li class="variation">
-							<strong>VS16:</strong>{vs1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs2}</a></strong
-							>{vs3}
-						</li>
-					{/if}
-					{#if hasWhiteSpace || inputHasWhiteSpace}
-						<li class="whitespace"><strong>SP:</strong> 0x20 is the hex value of the space character</li>
-					{/if}
-				</ul>
-			</div>
-		{/if}
+<div class="utf8-byte-map-wrapper">
+	{#if hasMultipleCombinedChars}
+		<ToggleExpandAllCharacters bind:toggled={allCharsAreExpanded} on:click={() => toggleAllChars()} />
+	{/if}
+	<div class="utf8-byte-map">
+		{#each utf8ByteMap.charMap as { char, isASCII, encoded, hexBytes, isCombined, charMap, unicodeNames, codepoints }, i}
+			<EncodedBytesForChar
+				hasCharacterNames={utf8ByteMap.hasCharacterNames}
+				bind:this={charByteMapComponents[i]}
+				bind:anyCharsAreExpanded
+				{anyCharsAreCombined}
+				{char}
+				{isASCII}
+				{encoded}
+				{hexBytes}
+				{codepoints}
+				{unicodeNames}
+				{isCombined}
+				{charMap}
+				on:toggled={() => handleCharacterToggled()}
+			/>
+		{/each}
 	</div>
-{/await}
+	{#if showLegend}
+		<div transition:fade class="legend">
+			<ul>
+				{#if hasZeroWidthJoiner}
+					<li class="zwj">
+						<strong>ZWJ:</strong>{zwj1}<strong><a href={zwjUrl} target="_blank" rel="noreferrer">{zwj2}</a></strong
+						>{zwj3}
+					</li>
+				{/if}
+				{#if hasVarSelector}
+					<li class="variation">
+						<strong>VS16:</strong>{vs1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs2}</a></strong>{vs3}
+					</li>
+				{/if}
+				{#if hasWhiteSpace || inputHasWhiteSpace}
+					<li class="whitespace"><strong>SP:</strong> 0x20 is the hex value of the space character</li>
+				{/if}
+			</ul>
+		</div>
+	{/if}
+</div>
 
 <style lang="postcss">
 	.utf8-byte-map-wrapper {

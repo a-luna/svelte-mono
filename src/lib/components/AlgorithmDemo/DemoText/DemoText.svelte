@@ -50,7 +50,7 @@
 		{#if $state.context.output.utf8.hasCombinedChars}
 			<p>{@html explainCombinedUtf8Chars($state.context.output.utf8)}</p>
 		{/if}
-		<Utf8EncodedBytes input={$state.context.input.inputText} />
+		<Utf8EncodedBytes />
 	{/if}
 {:else if $state.matches({ encodeInput: 'autoPlayEncodeByte' }) || $state.matches({ encodeInput: 'encodeByte' })}
 	<p>

@@ -18,4 +18,5 @@ export interface DemoStore {
 	showOutputBytes: boolean;
 	showAsciiTable: boolean;
 	showBase64Table: boolean;
+	getUtf8StringDecomposition: boolean;
 }
