@@ -6,7 +6,6 @@
 	import type { Writable } from 'svelte/store';
 	import '../tailwind.css';
 
-	export const prerender = true;
 	let pageHeight: Writable<number>;
 	let windowHeight: number;
 	let scrollY: number;
