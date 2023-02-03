@@ -14,26 +14,28 @@
 		border-radius: 4px;
 		background-color: transparent;
 
-		grid-column: 4 / span 2;
-		grid-row: 1 / span 2;
-		place-self: start end;
+		grid-column: 4 / span 1;
+		grid-row: 1 / span 1;
+		place-self: stretch;
 	}
 
 	button {
+		display: flex;
 		cursor: pointer;
 		color: var(--black2);
+		background-color: var(--red4);
 		width: 0.9rem;
-		height: 0.95rem;
+		height: 0.9rem;
 		border: none;
+		border-top-right-radius: 4px;
 		padding: 1px;
-		align-self: flex-start;
 	}
 
-	button,
 	button:hover,
 	button:active,
 	button:focus,
 	button:active:focus {
-		background-color: transparent;
+		background-color: var(--black2);
+		color: var(--red4);
 	}
 </style>

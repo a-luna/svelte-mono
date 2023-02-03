@@ -42,8 +42,8 @@
 <style lang="postcss">
 	.alert {
 		display: grid;
-		grid-template-columns: 0.5rem 25px 1fr 8px 0.5rem;
-		grid-template-rows: 0.5rem auto 1fr auto 0.5rem;
+		grid-template-columns: 0.9rem 30px 1fr 0.9rem;
+		grid-template-rows: 0.9rem 1fr 0.9rem;
 		justify-content: flex-start;
 		align-items: center;
 		color: var(--black4);
@@ -61,8 +61,8 @@
 	}
 	.icon {
 		grid-column: 2 / span 1;
-		grid-row: 2 / span 3;
-		place-self: center;
+		grid-row: 2 / span 1;
+		place-self: end center;
 	}
 	span {
 		font-size: 0.875rem;
@@ -73,6 +73,6 @@
 		padding: 0 0 0 1rem;
 
 		grid-column: 3 / span 1;
-		grid-row: 2 / span 3;
+		grid-row: 2 / span 1;
 	}
 </style>
