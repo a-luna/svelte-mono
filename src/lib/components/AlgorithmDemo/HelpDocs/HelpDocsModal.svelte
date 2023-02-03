@@ -54,7 +54,9 @@
 				<ul>
 					{#each encodingHelpSections as { title }, i}
 						<li>
-							<span class="nav-link" class:current-section={index === i} on:click={() => (index = i)}>{title}</span>
+							<button class="nav-link" class:current-section={index === i} on:click={() => (index = i)}
+								><span>{title}</span></button
+							>
 						</li>
 					{/each}
 				</ul>
@@ -75,10 +77,10 @@
 					<ul>
 						{#each encodingHelpSections as { title }, i}
 							<li>
-								<span
+								<button
 									class="nav-link"
 									class:current-section={index === i}
-									on:click={() => handleSectionChangedMobile(i)}>{title}</span
+									on:click={() => handleSectionChangedMobile(i)}><span>{title}</span></button
 								>
 							</li>
 						{/each}
@@ -86,25 +88,23 @@
 				</div>
 			{/if}
 			<div class="help-docs-content-wrapper">
-				<div class="nav-prev-column" on:click={() => prev()} />
 				<div class="help-docs-content">
 					<svelte:component this={encodingHelpSections[index].component} />
 				</div>
-				<div class="nav-next-column" on:click={() => next()} />
 			</div>
 			<div class="nav-buttons">
 				{#if index > 0}
-					<div class="nav nav-prev" on:click={() => prev()}>
+					<button class="nav nav-prev" on:click={() => prev()}>
 						<div class="nav-icon"><ChevronLeft /></div>
 						<span class="nav-link">Prev</span>
-					</div>
+					</button>
 				{/if}
 				<div class="placeholder" />
 				{#if index < encodingHelpSections.length - 1}
-					<div class="nav nav-next" on:click={() => next()}>
+					<button class="nav nav-next" on:click={() => next()}>
 						<span class="nav-link">Next</span>
 						<div class="nav-icon"><ChevronRight /></div>
-					</div>
+					</button>
 				{/if}
 			</div>
 		</div>

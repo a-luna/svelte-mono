@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Alert from '$lib/components/Alert.svelte';
+	import Alert from '$lib/components/Alert/Alert.svelte';
 	import MainForm from '$lib/components/AlgorithmDemo/MainForm.svelte';
 	import { demoUIState } from '$lib/stores/demoState';
 

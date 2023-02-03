@@ -667,7 +667,7 @@ button {
 	align-items: baseline;
 	background-color: var(--help-docs-border-color);
 	color: var(--black2);
-	font-size: 1rem;
+	font-size: 0.85rem;
 	font-weight: 700;
 	letter-spacing: 0.6px;
 	line-height: 1;
@@ -685,17 +685,13 @@ button {
 }
 
 .help-docs-content-wrapper {
-	display: grid;
+	display: flex;
 	flex: 1;
-	grid-template-columns: 16px 1fr 16px;
-	padding: 0.5rem 0;
+	padding: 0.5rem 1rem;
 }
 
 .help-docs-content {
 	overflow: auto;
-	padding: 0.5rem 0;
-
-	grid-column: 2 / span 1;
 }
 
 .help-docs-nav {
@@ -717,13 +713,43 @@ button {
 	margin: 0 0 0.5rem 0;
 }
 
-.help-docs-nav .nav-link {
+.help-docs-nav button.nav-link,
+.help-docs button.nav {
 	cursor: pointer;
+	background-color: transparent;
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	height: auto;
+}
+
+div[id*="modal"] .help-docs,
+div[id*="modal"] .help-docs button:hover,
+div[id*="modal"] .help-docs button:focus,
+div[id*="modal"] .help-docs button:active,
+div[id*="modal"] .help-docs button:active:focus {
+	background-color: transparent;
+}
+
+.help-docs-nav button.nav-link {
 	color: var(--default-border-color);
 }
 
-.help-docs-nav .nav-link.current-section {
+.help-docs-nav button.nav-link:hover,
+.help-docs-nav button.nav-link:focus,
+.help-docs-nav button.nav-link:active,
+.help-docs-nav button.nav-link:active:focus,
+.help-docs-nav button.nav-link.current-section {
 	color: var(--white4);
+}
+
+.help-docs button.nav,
+.help-docs button.nav:hover,
+.help-docs button.nav:focus,
+.help-docs button.nav:active,
+.help-docs button.nav:active:focus {
+	color: var(--nav-button-active-bg-color);
+
 }
 
 .help-docs-content {

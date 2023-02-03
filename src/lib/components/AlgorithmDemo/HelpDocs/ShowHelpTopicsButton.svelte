@@ -35,8 +35,8 @@
 	}
 	button {
 		color: var(--black2);
-		width: 1.1rem;
-		height: 1.1rem;
+		width: 1rem;
+		height: 1rem;
 		border: none;
 		padding: 0;
 		align-self: flex-start;

@@ -19,26 +19,21 @@
 	}
 
 	.button-wrapper {
-		border-top-right-radius: 5px;
+		padding: 0;
+		border-top-left-radius: 0px;
 	}
 	button {
 		color: var(--black2);
-		width: 1.1rem;
-		height: 1.1em;
+		width: 1rem;
+		height: 1rem;
 		border: none;
 		padding: 0;
 		align-self: flex-start;
 	}
 
 	@media screen and (min-width: 762px) {
-		.button-wrapper {
-			padding: 0;
-			border-top-left-radius: 0px;
-		}
 		button {
 			color: var(--light-gray4);
-			width: 1rem;
-			height: 1rem;
 		}
 		button:hover,
 		button:active,

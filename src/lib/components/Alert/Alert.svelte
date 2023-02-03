@@ -3,8 +3,9 @@
 	import { onDestroy } from 'svelte';
 	import FaExclamationTriangle from 'svelte-icons/fa/FaExclamationTriangle.svelte';
 	import { fade, slide } from 'svelte/transition';
+	import CloseAlertButton from './CloseAlertButton.svelte';
 
-	export let duration = 5000;
+	export let duration = 3000;
 	let timeout: NodeJS.Timeout;
 	let shown: boolean;
 
@@ -16,7 +17,7 @@
 			shown = false;
 		} else {
 			shown = true;
-			if (duration > 0) {
+			if (duration) {
 				timeout = setTimeout(() => {
 					shown = false;
 					$alert = '';
@@ -29,13 +30,8 @@
 </script>
 
 {#if $alert && shown}
-	<div
-		role="alert"
-		in:slide={{ duration: 1000 }}
-		out:fade={{ duration: 500 }}
-		on:click={() => (shown = false)}
-		class="alert"
-	>
+	<div role="alert" in:slide={{ duration: 1000 }} out:fade={{ duration: 500 }} class="alert">
+		<CloseAlertButton on:click={() => (shown = false)} />
 		<div class="icon">
 			<FaExclamationTriangle />
 		</div>
@@ -46,8 +42,8 @@
 <style lang="postcss">
 	.alert {
 		display: grid;
-		grid-template-columns: 25px auto;
-		gap: 1rem;
+		grid-template-columns: 0.5rem 25px 1fr 8px 0.5rem;
+		grid-template-rows: 0.5rem auto 1fr auto 0.5rem;
 		justify-content: flex-start;
 		align-items: center;
 		color: var(--black4);
@@ -60,9 +56,13 @@
 		z-index: 20;
 		width: 300px;
 		white-space: pre-wrap;
-		padding: 0.5rem;
 		margin: 1.5rem auto 0 auto;
 		border-radius: 6px;
+	}
+	.icon {
+		grid-column: 2 / span 1;
+		grid-row: 2 / span 3;
+		place-self: center;
 	}
 	span {
 		font-size: 0.875rem;
@@ -70,5 +70,9 @@
 		font-style: italic;
 		text-align: left;
 		white-space: pre-wrap;
+		padding: 0 0 0 1rem;
+
+		grid-column: 3 / span 1;
+		grid-row: 2 / span 3;
 	}
 </style>
