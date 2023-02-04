@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
 	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
@@ -29,6 +30,14 @@
 	<meta name="msapplication-TileColor" content={THEME_COLOR} />
 	<meta name="theme-color" content={THEME_COLOR} />
 	<link rel="alternate" type="application/rss+xml" title={'RSS Feed for ' + SITE_TITLE} href="/rss.xml" />
+	{#if !dev}
+		<script
+			async
+			defer
+			data-website-id="a0c0f9c7-cb88-4e9b-ad30-be3c8b0c9571"
+			src="https://aluna-umami.netlify.app/umami.js"
+		></script>
+	{/if}
 </svelte:head>
 
 <div id="top" class="header-wrapper">
