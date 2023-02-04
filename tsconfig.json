@@ -1,10 +1,8 @@
 {
 	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
-		"target": "es2021",
 		"strict": true,
 		"allowUnreachableCode": false,
-
 		"exactOptionalPropertyTypes": false,
 		"noImplicitAny": true,
 		"noImplicitOverride": true,
@@ -19,10 +17,19 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
+		"types": ["vite/client"],
 		"paths": {
 			"$lib": ["./src/lib"],
 			"$lib/*": ["./src/lib/*"]
-		}
+		},
+		"rootDirs": ["..", "./types"],
+		"importsNotUsedAsValues": "error",
+		"isolatedModules": true,
+		"preserveValueImports": true,
+		"lib": ["esnext", "DOM", "DOM.Iterable"],
+		"moduleResolution": "node",
+		"module": "esnext",
+		"target": "es2021"
 	}
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
