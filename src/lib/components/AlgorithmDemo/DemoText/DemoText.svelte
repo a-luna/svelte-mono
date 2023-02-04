@@ -78,7 +78,9 @@
 			><a href={wikiUrl} target="_blank" rel="noreferrer">Least Common Multple</a></strong
 		>
 		or <strong>LCM</strong>. The <strong>LCM</strong> of 8 and 6 is 24.
-		<span class="external-link"><a href={lcmSolveUrl} target="_blank">(click here for a step-by-step proof)</a></span>
+		<span class="external-link"
+			><a href={lcmSolveUrl} rel="noopener noreferrer" target="_blank">(click here for a step-by-step proof)</a></span
+		>
 	</p>
 	<p>
 		What can we do with this information?

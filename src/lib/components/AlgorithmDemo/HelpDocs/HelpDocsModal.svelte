@@ -54,7 +54,7 @@
 				<ul>
 					{#each encodingHelpSections as { title }, i}
 						<li>
-							<button class="nav-link" class:current-section={index === i} on:click={() => (index = i)}
+							<button class="nav-link" class:current-section={index === i} on:click={() => handleSectionChanged(i)}
 								><span>{title}</span></button
 							>
 						</li>
