@@ -8,6 +8,9 @@ import { fileURLToPath } from 'url';
 const theme = await getLocalTheme('just-black');
 export const highlighter = await getHighlighter({ theme });
 
+export const parseMeta = (meta: string | undefined): HtmlRendererOptions['lineOptions'] =>
+	meta && meta.length ? parseHighlightLines(meta).map((line) => ({ line, classes: ['hl'] })) ?? [] : [];
+
 async function getLocalTheme(themeName: string): Promise<IShikiTheme> {
 	const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 	const themePath = dev
@@ -41,12 +44,4 @@ function parseHighlightLines(meta: string): number[] {
 		return [];
 	}
 	return lineNumbers;
-}
-
-export function parseMeta(meta: string | undefined): HtmlRendererOptions['lineOptions'] {
-	if (!meta || !meta.length) {
-		return [];
-	}
-	const lineOptions = parseHighlightLines(meta).map((line) => ({ line, classes: ['hl'] })) ?? [];
-	return lineOptions;
 }
