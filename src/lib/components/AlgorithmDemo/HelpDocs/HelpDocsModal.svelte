@@ -38,7 +38,7 @@
 		}
 	}
 
-	function handleSectionChangedMobile(newSection: number) {
+	function handleSectionChanged(newSection: number) {
 		index = newSection;
 		helpTopicsExpanded = false;
 	}
@@ -77,10 +77,8 @@
 					<ul>
 						{#each encodingHelpSections as { title }, i}
 							<li>
-								<button
-									class="nav-link"
-									class:current-section={index === i}
-									on:click={() => handleSectionChangedMobile(i)}><span>{title}</span></button
+								<button class="nav-link" class:current-section={index === i} on:click={() => handleSectionChanged(i)}
+									><span>{title}</span></button
 								>
 							</li>
 						{/each}
