@@ -3,7 +3,7 @@
 	import ToggleExpandAllCharacters from '$lib/components/AlgorithmDemo/DemoText/Utf8/ToggleExpandAllCharacters.svelte';
 	import { getAppContext } from '$lib/stores/context';
 	import type { Utf8StringComposition } from '$lib/types';
-	import { getUtf8StringDecomposition } from '$lib/unicode';
+	import { getUtf8StringDecomposition } from '$lib/unicode/utf8';
 	import { fade } from 'svelte/transition';
 
 	let utf8ByteMap: Utf8StringComposition;

@@ -3,15 +3,16 @@ import type {
 	Result,
 	Utf8ComplexCharacterMap,
 	Utf8StandardCharacterMap,
-	Utf8StringComposition
+	Utf8StringComposition,
 } from '$lib/types';
-import { COMPLEX_SYMBOL_REGEX, getUnicodeCharInfo } from '$lib/unicode';
+import { getUnicodeCharInfo } from '$lib/unicode/api';
+import { COMPLEX_SYMBOL_REGEX } from '$lib/unicode/regex';
 import {
 	genericStringToByteArray,
 	hexStringFromByte,
 	hexStringToByte,
 	strictUriEncode,
-	unicodeCodepointFromUtf8ByteArray
+	unicodeCodepointFromUtf8ByteArray,
 } from '$lib/util';
 import { validateAsciiBytes } from '$lib/validation';
 
@@ -23,7 +24,7 @@ export async function getUtf8StringDecomposition(s: string): Promise<Utf8StringC
 async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8StringComposition>> {
 	const result = await getUnicodeCharInfo(s);
 	if (!result.success) {
-		return {success: false, error: result.error};
+		return { success: false, error: result.error };
 	}
 	const unicodeInfo = result.value;
 	const complexCharMap: Utf8ComplexCharacterMap[] = unicodeInfo.map(({ char, results }) => {

@@ -1,6 +1,6 @@
 import type { HttpResponse, Result, UnicodeCharInfo } from '$lib/types';
+import { COMPLEX_SYMBOL_REGEX } from '$lib/unicode/regex';
 import { strictUriEncode } from '$lib/util';
-import { COMPLEX_SYMBOL_REGEX } from '.';
 import { apiMocks } from './mocks';
 
 export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse>> {

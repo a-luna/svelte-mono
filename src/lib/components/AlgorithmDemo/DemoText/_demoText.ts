@@ -8,7 +8,7 @@ import type {
 	StringEncoding,
 	Utf8StringComposition,
 } from '$lib/types';
-import { getSimpleUtf8StringDecomposition } from '$lib/unicode';
+import { getSimpleUtf8StringDecomposition } from '$lib/unicode/utf8';
 import { decimalToBinaryString, hexStringFromByte, parseGroupId, stringToByteArray } from '$lib/util';
 
 const convertNumber = (num: number) =>
