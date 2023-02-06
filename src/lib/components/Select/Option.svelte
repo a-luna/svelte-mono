@@ -10,7 +10,7 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<div
+<button
 	class="menu-item"
 	class:active
 	style="font-size: {fontSize}"
@@ -24,17 +24,27 @@
 	<slot>
 		{label}
 	</slot>
-</div>
+</button>
 
 <style lang="postcss">
-	div {
+	button {
 		display: block;
+		cursor: pointer;
+		flex: 1;
+		background-color: transparent;
 		color: var(--select-text-color);
+		border: none;
+		height: auto;
 		line-height: 1.25rem;
 		padding: 0.5rem 1rem;
-		cursor: pointer;
+		z-index: 10;
+		width: 100%;
 	}
 
+	button:hover,
+	button:focus,
+	button:active,
+	button:active:focus,
 	.active {
 		background-color: var(--selected-item-bg-color);
 	}

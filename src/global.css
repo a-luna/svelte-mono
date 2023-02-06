@@ -180,6 +180,12 @@ main.encode {
 	--form-title-text-color: hsl(171 100% 63% / 0.7);
 	--form-title-text-shadow-color: hsla(301 93% 71% / 0.25);
 
+	/* Drop Down Lists */
+	--dropdown-bg-color: hsl(171 45% 53%);
+	--dropdown-text-color: var(--black2);
+	--dropdown-border-color: hsl(171 60% 58%);
+	--selected-item-bg-color: hsl(171 90% 63%);
+
 	/* Algorithm Demo Nav Buttons (Manual Mode) */
 	--nav-button-text-color: var(--black2);
 	--nav-button-bg-color: hsla(171 100% 63% / 0.45);
@@ -253,12 +259,6 @@ main {
 	--list-button-focus-outline-color: var(--nav-button-autoplay-bg-color);
 	--list-button-disabled-bg-color: var(--button-disabled-bg-color);
 	--list-button-disabled-text-color: var(--button-disabled-text-color);
-
-	/* Select Menu - Dropdown List */
-	--dropdown-bg-color: var(--nav-button-hover-bg-color);
-	--dropdown-text-color: var(--nav-button-text-color);
-	--dropdown-border-color: var(--nav-button-border-color);
-	--selected-item-bg-color: var(--nav-button-active-bg-color);
 
 	/* Help Docs */
 	--help-docs-bg-color: hsl(0, 0%, 16%);

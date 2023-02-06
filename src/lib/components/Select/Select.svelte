@@ -38,6 +38,7 @@
 	}
 
 	export function handleOptionClicked(selectedOptionNumber: number) {
+		console.log(`I"M HERE!!!: Clicked #${selectedOptionNumber}`);
 		if (options.length > 0) {
 			options.forEach((menuOption) => (menuOption.active = false));
 			selectedOption = options.find((menuOption) => menuOption.optionNumber == selectedOptionNumber);
@@ -107,7 +108,6 @@
 
 <style lang="postcss">
 	button {
-		display: inline-flex;
 		display: inline-flex;
 		justify-content: space-between;
 		align-items: center;
