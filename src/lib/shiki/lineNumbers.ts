@@ -11,12 +11,18 @@ export const highlighter = await getHighlighter({ theme });
 export const parseMeta = (meta: string | undefined): HtmlRendererOptions['lineOptions'] =>
 	meta && meta.length ? parseHighlightLines(meta).map((line) => ({ line, classes: ['hl'] })) ?? [] : [];
 
-async function getLocalTheme(themeName: string): Promise<IShikiTheme> {
+async function getLocalTheme(themeName: string): Promise<IShikiTheme | undefined> {
 	const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 	const themePath = dev
 		? path.resolve(path.join(__dirname, 'themes', `${themeName}.json`))
 		: path.resolve(path.join(__dirname, '../../', 'client', `${themeName}.json`));
-	return await loadTheme(themePath);
+	let theme: IShikiTheme | undefined = undefined;
+	try {
+		theme = await loadTheme(themePath);
+	} catch (err) {
+		console.log(`Error resolving path: ${themePath}`);
+	}
+	return theme;
 }
 
 function parseHighlightLines(meta: string): number[] {
