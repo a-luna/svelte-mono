@@ -4,11 +4,11 @@
 
 	export let published = new Date(0);
 
-	$: authorImage = `${SITE_URL}/AaronLuna.jpg`;
+	$: authorImage = `${SITE_URL}/avatar.png`;
 </script>
 
 <div class="author">
-	<div class="avatar"><img height="40px" width="40px" src={authorImage} alt="" /></div>
+	<div class="avatar"><img src={authorImage} alt="" /></div>
 	<span class="author-name">{AUTHOR_NAME}</span>
 	<span class="publish-date">on {formatDateString(published)}</span>
 </div>
@@ -18,18 +18,26 @@
 		display: flex;
 		gap: 0.3rem;
 		align-items: center;
+		line-height: 0;
 	}
 	.avatar {
-		line-height: 0;
 		display: inline-block;
 		margin: 0 5px;
-		border: 2px solid var(--black-tint3);
+		border-width: 2px;
+		border-style: solid;
+		border-color: var(--accent-color-dim);
 		border-radius: 50%;
-		height: 40px;
-		width: 40px;
+		height: 50px;
+		width: 50px;
+		transition: border-color 0.3s ease-in;
+	}
+	.avatar:has(img:hover) {
+		border-color: var(--accent-color);
 	}
 	.avatar img {
 		border-radius: 50%;
+		border-color: var(--post-title-text-color);
+		background-color: var(--gray-shade6);
 	}
 	:global(.tutorial) .publish-date {
 		display: none;
