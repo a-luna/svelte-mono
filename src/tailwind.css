@@ -433,7 +433,8 @@ ul.note,
 .warning .bold-text,
 .note .bold-text,
 .warning strong,
-.note strong {
+.note strong,
+article .custom-block p .emphasis {
 	--text-color: hsla(var(--hue) var(--max-sat) var(--text-light) / var(--text-alpha));
 	color: var(--text-color);
 }
