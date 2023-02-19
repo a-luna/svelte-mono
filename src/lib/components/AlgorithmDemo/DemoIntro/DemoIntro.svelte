@@ -61,7 +61,9 @@
 				that topic:
 			</p>
 			<ul>
-				<li><OpenHelpDocsButton label={'Base64 encoding'} helpTopic={'what-is-base64'} on:openHelpModal /></li>
+				<li>
+					<OpenHelpDocsButton label={'Base64 encoding'} helpTopic={'what-is-base64'} on:openHelpModal />
+				</li>
 				<li>
 					<OpenHelpDocsButton label={'ASCII'} helpTopic={'text-encoding-ascii'} on:openHelpModal /> and
 					<OpenHelpDocsButton label={'UTF-8 encoding'} helpTopic={'text-encoding-utf8'} on:openHelpModal />
@@ -74,11 +76,8 @@
 					/>
 				</li>
 				<li>
-					<OpenHelpDocsButton label={'Standard'} helpTopic={'base64-alphabet'} on:openHelpModal /> vs. <OpenHelpDocsButton
-						label={'URL-safe Base64 alphabet'}
-						helpTopic={'base64url-alphabet'}
-						on:openHelpModal
-					/>
+					<OpenHelpDocsButton label={'Standard'} helpTopic={'base64-alphabet'} on:openHelpModal /> vs.
+					<OpenHelpDocsButton label={'URL-safe Base64 alphabet'} helpTopic={'base64url-alphabet'} on:openHelpModal />
 				</li>
 			</ul>
 			<p>
@@ -143,7 +142,7 @@
 		margin: 0;
 	}
 
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		.details-content {
 			margin: 1.25rem 0 0 0.75rem;
 		}

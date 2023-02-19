@@ -15,7 +15,7 @@
 		margin: auto;
 		padding: 0 2px;
 	}
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		kbd {
 			height: 13px;
 			line-height: 13px;

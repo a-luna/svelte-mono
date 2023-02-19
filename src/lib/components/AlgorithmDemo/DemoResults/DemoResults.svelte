@@ -150,7 +150,7 @@
 		justify-self: flex-start;
 		gap: 1.5rem;
 	}
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		h3 {
 			font-size: 1rem;
 		}

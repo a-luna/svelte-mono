@@ -21,7 +21,7 @@
 		color: var(--pri-color);
 	}
 
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		div {
 			width: 15px;
 		}

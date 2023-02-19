@@ -254,7 +254,7 @@
 		font-weight: 700;
 		transition: background-color 0.35s ease-in-out;
 	}
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		.top-row {
 			grid-template-columns: auto auto 1fr auto;
 			grid-template-rows: auto;

@@ -31,7 +31,7 @@
 		align-self: flex-start;
 	}
 
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		button {
 			color: var(--light-gray4);
 		}

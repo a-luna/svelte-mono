@@ -94,7 +94,7 @@ export function createDemoStateStore(state: EncodingMachineStateStore): Readable
 			test: import.meta.env.MODE === 'test',
 			prod: import.meta.env.MODE === 'production',
 			pageWidth: $pageWidth,
-			isMobileDisplay: $pageWidth < 762,
+			isMobileDisplay: $pageWidth < 764,
 			machineState: machineState(),
 			machineSubState: machineSubState(),
 			startedSubProcess: startedSubProcess(),

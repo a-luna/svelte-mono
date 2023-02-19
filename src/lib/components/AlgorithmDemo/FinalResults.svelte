@@ -101,7 +101,7 @@
 	.output-value .encoding-type {
 		color: var(--nav-button-autoplay-bg-color);
 	}
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		.demo-results {
 			gap: 2rem;
 		}

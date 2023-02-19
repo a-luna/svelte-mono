@@ -15,11 +15,12 @@
 	const { demoState, demoUIState } = getAppContext();
 
 	$: $demoUIState.modalOpen = !closed;
-	$: showContentsPanel = $demoState.pageWidth >= 762;
+	$: showContentsPanel = $demoState.pageWidth >= 764;
 	$: displayedSectionTitle = helpTopicsExpanded ? 'Help Topics' : encodingHelpSections[index].title;
 
 	const getNextIndex = (i: number) => (i + 1) % encodingHelpSections.length;
-	const getPrevIndex = (i: number) => (i > 0 ? (i - 1) % encodingHelpSections.length : encodingHelpSections.length - 1);
+	const getPrevIndex = (i: number) =>
+		i > 0 ? (i - 1) % encodingHelpSections.length : encodingHelpSections.length - 1;
 	const next = () => (index = getNextIndex(index));
 	const prev = () => (index = getPrevIndex(index));
 
@@ -54,8 +55,10 @@
 				<ul>
 					{#each encodingHelpSections as { title }, i}
 						<li>
-							<button class="nav-link" class:current-section={index === i} on:click={() => handleSectionChanged(i)}
-								><span>{title}</span></button
+							<button
+								class="nav-link"
+								class:current-section={index === i}
+								on:click={() => handleSectionChanged(i)}><span>{title}</span></button
 							>
 						</li>
 					{/each}
@@ -77,8 +80,10 @@
 					<ul>
 						{#each encodingHelpSections as { title }, i}
 							<li>
-								<button class="nav-link" class:current-section={index === i} on:click={() => handleSectionChanged(i)}
-									><span>{title}</span></button
+								<button
+									class="nav-link"
+									class:current-section={index === i}
+									on:click={() => handleSectionChanged(i)}><span>{title}</span></button
 								>
 							</li>
 						{/each}

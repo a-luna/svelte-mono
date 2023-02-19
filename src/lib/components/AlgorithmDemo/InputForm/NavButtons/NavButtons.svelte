@@ -31,7 +31,7 @@
 		align-items: center;
 		flex: 1;
 	}
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		.algo-nav-buttons {
 			grid-template-columns: repeat(7, minmax(67px, 1fr));
 			grid-template-rows: auto 33px;

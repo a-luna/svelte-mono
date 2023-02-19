@@ -31,7 +31,7 @@
 		width: 343px;
 		min-height: 100vh;
 	}
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		.base64-algo-demo {
 			box-sizing: border-box;
 			grid-template-columns: auto;

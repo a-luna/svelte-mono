@@ -30,7 +30,7 @@
 		display: none;
 	}
 
-	@media screen and (min-width: 762px) {
+	@media screen and (min-width: 764px) {
 		summary {
 			font-size: 1.4rem;
 		}

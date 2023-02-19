@@ -1122,7 +1122,7 @@ div[id*="modal"] .help-docs button:active:focus {
 	margin: auto;
 }
 
-@media screen and (min-width: 762px) {
+@media screen and (min-width: 764px) {
 	html,
 	body {
 		background-color: var(--dark-gray1);
