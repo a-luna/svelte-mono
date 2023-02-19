@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Default",
+  "compilerOptions": {
+	"module": "es2020",
+	"lib": ["esnext", "DOM"],
+	"target": "esnext",
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+	"importsNotUsedAsValues": "error",
+	"resolveJsonModule": true,
+	"sourceMap": true,
+	"baseUrl": ".",
+	"allowJs": true,
+	"checkJs": true,
+	"paths": {
+		"$lib": ["src/lib"],
+		"$lib/*": ["src/lib/*"]
+	}
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*", "tests/**/*"]
+}
+
