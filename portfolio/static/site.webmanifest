@@ -1,0 +1,16 @@
+{
+	"name": "aaronluna.dev",
+	"short_name": "aaronluna.dev",
+	"display": "standalone",
+	"id": "aaronluna-dev",
+	"start_url": "/?source=pwa",
+	"scope": "/",
+	"description": "Aaron Luna's personal website, blog and portfolio",
+	"lang": "en-US",
+	"theme_color": "#BDFF2E",
+	"background_color": "#0D0D0D",
+	"icons": [
+		{ "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+		{ "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+	]
+}
