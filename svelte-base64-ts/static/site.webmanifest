@@ -1,0 +1,16 @@
+{
+	"name": "Base64 Algorithm Demo",
+	"short_name": "base64-demo",
+	"display": "standalone",
+	"id": "base64-demo",
+	"start_url": "/?source=pwa",
+	"scope": "/",
+	"description": "Base64 is a way to encode binary data into an ASCII character set in order to transmit the data without loss or modification.",
+	"lang": "en-US",
+	"theme_color": "#FA70F8",
+	"background_color": "#333333",
+	"icons": [
+		{ "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+		{ "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+	]
+}
