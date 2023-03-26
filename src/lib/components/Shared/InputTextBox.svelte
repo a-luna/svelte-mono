@@ -52,14 +52,13 @@
 
 <style lang="postcss">
 	input {
-		--input-text-default-font-size: 1rem;
-		--input-text-default-text-size: 1rem;
 		--input-text-default-text-color: var(--black1);
 		--input-text-default-background-color: var(--white4);
 		--input-text-default-border-color: var(--black1);
 		--input-text-default-border-radius: 4px;
-		--input-text-default-padding: 0.25rem 0.5rem;
+		--input-text-default-font-size: 1rem;
 		--input-text-default-line-height: 19px;
+		--input-text-default-padding: 0.25rem 0.5rem;
 		--input-text-default-focus-ring-color: var(--blue4);
 		--input-text-default-invalid-text-color: var(--red3);
 		--input-text-default-invalid-focus-ring-color: var(--red3);
@@ -74,11 +73,11 @@
 		border: 1px solid var(--input-text-border-color, var(--input-text-default-border-color));
 		border-radius: var(--input-text-border-radius, var(--input-text-default-border-radius));
 		-webkit-border-radius: var(--input-text-border-radius, var(--input-text-default-border-radius));
+		font-size: var(--input-text-font-size, var(--input-text-default-font-size));
+		line-height: var(--input-text-line-height, var(--input-text-default-line-height));
 		padding: var(--input-text-padding, var(--input-text-default-padding));
 		margin: auto 0;
 		width: 100%;
-		font-size: var(--input-text-font-size, var(--input-text-default-text-size));
-		line-height: var(--input-text-line-height, var(--input-text-default-line-height));
 	}
 	input:focus {
 		box-shadow: 0 0 0 2px var(--input-text-focus-ring-color, var(--input-text-default-focus-ring-color));

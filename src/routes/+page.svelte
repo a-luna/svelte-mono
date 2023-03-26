@@ -39,3 +39,7 @@
 <ThemeEditor {editorId}>
 	<ColorSpaceSelector />
 </ThemeEditor>
+
+<!-- <ThemeEditor {editorId}>
+	<InputTextBox inputText={'Hello, world!'} />
+</ThemeEditor> -->
