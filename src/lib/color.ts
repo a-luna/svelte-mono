@@ -417,10 +417,11 @@ function getX11ColorsOrderedByHue(): CssColor[][] {
 		.map(({ name, result: { value } }) => ({ ...value, name }));
 
 	const allColors = removeDuplicateColors(allColorsWithDupes);
-	const colors = allColors.filter((c) => c.hsl.s > 0 && c.hsl.l < 95).sort(sortColors);
-	const noSaturation = allColors.filter((c) => c.hsl.s === 0).sort(sortColors);
-	const maxLightness = allColors.filter((c) => c.hsl.l >= 95).sort(sortColors);
-	return [colors, [...noSaturation, ...maxLightness]];
+	const colors = allColors.filter(({ hsl }) => hsl.s > 0 && hsl.l < 95).sort(sortColors);
+	const noSaturation = allColors.filter(({ hsl }) => hsl.s === 0).sort(sortColors);
+	const maxLightness = allColors.filter(({ hsl }) => hsl.l >= 95).sort(sortColors);
+	const grays = [...noSaturation, ...maxLightness];
+	return [colors, removeDuplicateColors(grays)];
 }
 
 function getColorsInHueRange(hueStart: number, hueEnd: number, colors: CssColor[]): CssColor[] {
@@ -438,7 +439,7 @@ const removeDuplicateColors = (colors: CssColor[]): CssColor[] =>
 const combineColorNames = (colors: CssColor[]): string =>
 	[...new Set(colors.map((c) => (c?.name ? c.name : '')))].filter((n) => n).join('/');
 
-const sortColors = (a: CssColor, b: CssColor): number => a.hsl.h - b.hsl.h || a.hsl.s - b.hsl.s || a.hsl.l - b.hsl.l;
+const sortColors = (a: CssColor, b: CssColor): number => a.hsl.l - b.hsl.l || a.hsl.s - b.hsl.s || a.hsl.h - b.hsl.h ;
 
 export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
 	const id = getRandomHexString(4);
@@ -481,15 +482,21 @@ function adjustHue(hsl: HslColor, hueChange: number): CssColor {
 }
 
 export const getComplementaryColor = (color: CssColor): CssColor => adjustHue(color.hsl, 180);
-export const getSplitComplementaryColors = (color: CssColor): CssColor[] => [
-	adjustHue(color.hsl, 150),
-	adjustHue(color.hsl, 210),
-];
+
 export const getAnalogousColors = (color: CssColor): CssColor[] => [
 	adjustHue(color.hsl, 30),
 	adjustHue(color.hsl, -30),
 ];
+export const getSplitComplementaryColors = (color: CssColor): CssColor[] =>
+	getAnalogousColors(getComplementaryColor(color));
+
 export const getTriadicColors = (color: CssColor): CssColor[] => [adjustHue(color.hsl, 120), adjustHue(color.hsl, 240)];
+
+const getRectangularColors = (color: CssColor, hueChange: number): CssColor[] => [
+	adjustHue(color.hsl, hueChange),
+	adjustHue(color.hsl, 180),
+	adjustHue(color.hsl, 180 + hueChange),
+];
 export const getTetradicColors = (color: CssColor): CssColor[] => getRectangularColors(color, -60);
 export const getSquareColors = (color: CssColor): CssColor[] => getRectangularColors(color, 90);
 
@@ -539,10 +546,6 @@ function adjustLightness(hsl: HslColor, lightChange: number): Result<CssColor> {
 		};
 	}
 	return parseColorFromString(hslaToString({ ...hsl, l: newLightness }));
-}
-
-function getRectangularColors(color: CssColor, hueChange: number): CssColor[] {
-	return [adjustHue(color.hsl, hueChange), adjustHue(color.hsl, 180), adjustHue(color.hsl, 180 + hueChange)];
 }
 
 export const copyCssColor = (color: CssColor): CssColor => ({
