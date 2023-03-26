@@ -33,8 +33,8 @@
 		<button type="button" title={buttonToolTip} on:click={() => dispatch('colorSelected', color)}>
 			<ColorSwatch
 				color={color.color}
-				swatchWidth={displayColorName ? '25px' : '30px'}
-				swatchHeight={displayColorName ? '15px' : '20px'}
+				swatchWidth={displayColorName ? '25px' : '28px'}
+				swatchHeight={displayColorName ? '15px' : '15px'}
 			/>
 		</button>
 		{#if hasCustomName && displayColorName}
@@ -102,7 +102,7 @@
 	}
 
 	.x11-color button {
-		height: 24px;
+		height: 19px;
 	}
 
 	.color-name-wrapper {

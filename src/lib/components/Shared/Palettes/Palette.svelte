@@ -13,28 +13,38 @@
 	export let displayColorName = false;
 	export let alwaysExpanded = false;
 	export let columns = 4;
-	export let slideContent = false;
+	export let x11Palette = false;
 	export let contentHeight = null;
 	let colorRefs: Record<string, Color> = {};
 	const dispatch = createEventDispatcher();
 
 	$: hasColors = palette.colors.length > 0;
 	$: color = palette.componentColor;
-	$: accordionContentPadding = slideContent ? 'padding: 6px 24px 12px 24px;' : 'padding: 0.5rem;';
+	$: accordionContentPadding = x11Palette ? 'padding: 0 0 3px 0;' : 'padding: 0.5rem;';
 	$: accordionContentHeight = contentHeight ? `height: ${contentHeight};` : '';
-	$: accordionButtonPadding = alwaysExpanded ? 'padding: 6px 1px 0px 1px;' : 'padding: 0.5rem;';
-	$: accordionButtonBorder =
-		expanded && hasColors
-			? 'border-top-left-radius: var(--border-radius, var(--default-border-radius));; border-top-right-radius: var(--border-radius, var(--default-border-radius));; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; border-top: 1px solid var(--active-border-color, var(--black2)); border-bottom: none; border-right: 1px solid var(--active-border-color, var(--black2)); border-left: 1px solid var(--active-border-color, var(--black2));'
-			: expanded && !hasColors
-			? 'border: 1px solid var(--active-border-color, var(--black2)); border-radius: var(--border-radius, var(--default-border-radius));'
-			: 'border: 1px solid var(--border-color, var(--black2)); border-radius: var(--border-radius, var(--default-border-radius));';
-	$: accordionStyles = `--border-color: var(--${color}-fg-color); --text-color: var(--${color}-fg-color); --hover-border-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --hover-bg-color: var(--${color}-hover-bg-color); --active-bg-color: var(--${color}-hover-bg-color); --color-wrapper-bg-color: var(--${color}-cw-bg-color);`;
+	$: accordionButtonWidth = x11Palette ? 'width: 320px;' : 'width: 100%;';
+	$: accordionButtonCursor = x11Palette ? 'cursor: default;' : 'cursor: pointer;';
+	$: accordionButtonPadding = x11Palette
+		? 'padding: 7px 0 10px 0;'
+		: alwaysExpanded
+		? 'padding: 6px 1px 0px 1px;'
+		: 'padding: 0.5rem;';
+	$: accordionButtonBorder = x11Palette
+		? `border-radius: 0; border: none;`
+		: expanded && hasColors
+		? 'border-top-left-radius: var(--border-radius, var(--default-border-radius));; border-top-right-radius: var(--border-radius, var(--default-border-radius));; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; border-top: 1px solid var(--active-border-color, var(--black2)); border-bottom: none; border-right: 1px solid var(--active-border-color, var(--black2)); border-left: 1px solid var(--active-border-color, var(--black2));'
+		: expanded && !hasColors
+		? 'border: 1px solid var(--active-border-color, var(--black2)); border-radius: var(--border-radius, var(--default-border-radius));'
+		: 'border: 1px solid var(--border-color, var(--black2)); border-radius: var(--border-radius, var(--default-border-radius));';
+	$: accordionStylesSlide = `--text-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --hover-bg-color: var(--${color}-hover-bg-color); --active-bg-color: var(--${color}-hover-bg-color); --color-wrapper-bg-color: var(--${color}-cw-bg-color);`;
+	$: accordionStyles = x11Palette
+		? `${accordionStylesSlide} border: none;`
+		: `${accordionStylesSlide} --border-color: var(--${color}-fg-color); --hover-border-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color);`;
 	$: accordionCollapsedStyles = `--bg-color: var(--${color}-bg-color);`;
 	$: accordionExpandedStyles = `--bg-color: var(--${color}-hover-bg-color);`;
 	$: paletteGrid = displayColorName
 		? 'grid-template-columns: 100%; justify-items: flex-start; gap: 0.5rem; '
-		: `grid-template-columns: repeat(${columns}, minmax(0, 1fr)); grid-template-rows: auto auto auto 1fr; justify-items: center; gap: 6px 0px; `;
+		: `grid-template-columns: repeat(${columns}, minmax(0, 1fr)); grid-auto-rows: auto; justify-items: center; row-gap: 6px; `;
 	$: if (palette?.updated) {
 		if (!expanded) {
 			togglePalette();
@@ -59,7 +69,7 @@
 		class="accordion-button transition-color"
 		class:active={expanded}
 		type="button"
-		style="{accordionButtonPadding} {accordionButtonBorder}"
+		style="{accordionButtonWidth} {accordionButtonPadding} {accordionButtonBorder} {accordionButtonCursor}"
 		aria-expanded="false"
 		aria-controls="accordion-content-{palette.id}"
 		on:click={() => togglePalette()}
@@ -73,6 +83,7 @@
 			transition:slide|local
 			id="accordion-content-{palette.id}"
 			class="accordion-content transition"
+			class:x11-palette={x11Palette}
 			style="display: grid; {paletteGrid} {accordionContentPadding} {accordionContentHeight}"
 			aria-labelledby="accordion-heading-{palette.id}"
 		>
@@ -141,6 +152,11 @@
 		border-right: 1px solid var(--active-border-color, var(--black2));
 		border-left: 1px solid var(--active-border-color, var(--black2));
 		margin: 0 auto;
+	}
+
+	.x11-palette {
+		border: none;
+		border-radius: 0;
 	}
 
 	:global(.collapsed) {

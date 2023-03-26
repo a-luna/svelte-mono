@@ -20,6 +20,8 @@
 	$: flexStyle = alignSelf ? `align-self: ${alignSelf};` : '';
 	$: widthStyle = wrapperWidth
 		? `width: ${wrapperWidth}; min-width: var(--button-size);`
+		: classList.includes('square-button')
+		? 'min-width: var(--square-button-size);'
 		: 'min-width: var(--button-size);';
 	$: style = [hueStyle, flexStyle, widthStyle, gridStyle].filter((s) => s !== '').join(' ');
 
@@ -69,6 +71,10 @@
 		--button-hover-fg-color: var(--black4);
 	}
 
+	:global(.x11-swatches) button {
+		--button-size: var(--square-button-size);
+	}
+
 	button {
 		--default-border-radius: 6px;
 
@@ -99,6 +105,19 @@
 		color: var(--button-active-fg-color);
 		outline: 1px solid transparent;
 		outline-offset: 1px;
+	}
+
+	:global(.x11-swatches) button:active,
+	:global(.x11-swatches) button:focus,
+	:global(.x11-swatches) button:active:focus {
+		outline: 1.5px solid black;
+	}
+
+	:global(.x11-swatches) button:active,
+	:global(.x11-swatches) button:focus,
+	:global(.x11-swatches) button:active:focus,
+	:global(.x11-swatches) button.active {
+		background-color: var(--button-active-fg-color);
 	}
 
 	button[disabled],
