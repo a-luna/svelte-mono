@@ -2,9 +2,9 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { tutorialSections } from '$lib/stores';
 	import { getRandomHexString } from '$lib/util';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let id = `sec-${getRandomHexString(4)}`;
 	export let detailsElement: HTMLDetailsElement;

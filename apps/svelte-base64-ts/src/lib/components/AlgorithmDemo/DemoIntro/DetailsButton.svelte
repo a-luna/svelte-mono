@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	export let expanded: boolean;
 </script>
 

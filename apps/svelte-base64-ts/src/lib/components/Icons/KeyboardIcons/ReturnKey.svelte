@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 </script>
 
 <kbd title="Return Key"><BasicIconRenderer icon={'returnright'} /><span>Return</span></kbd>

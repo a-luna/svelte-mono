@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { isBase64Encoding } from '$lib/typeguards';
 	import type { Base64Encoding } from '$lib/types';
-	import { InputSelectList } from '../../../../../node_modules/@a-luna/shared-ui';
-	import type { SelectListOption } from '../../../../../node_modules/@a-luna/shared-ui/types';
+	import { InputSelectList } from '@a-luna/shared-ui';
+	import type { SelectListOption } from '@a-luna/shared-ui/types';
 
 	export let value: Base64Encoding = 'base64';
 	export let disabled = false;

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { TutorialSection } from '$lib/types';
 	import { getRandomHexString } from '$lib/util';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { slide } from 'svelte/transition';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let id = `gh-${getRandomHexString(4)}`;
 	export let detailsElement: HTMLDetailsElement;

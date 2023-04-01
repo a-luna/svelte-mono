@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getRandomHexString } from '$lib/util';
-	import { BasicIconRenderer } from '../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 
 	export let modalId = `modal-${getRandomHexString(4)}`;
 	export let title = '';

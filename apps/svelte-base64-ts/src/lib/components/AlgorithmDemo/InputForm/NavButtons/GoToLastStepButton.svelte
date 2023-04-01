@@ -3,7 +3,7 @@
 	import { getAppContext } from '$lib/stores/context';
 	import type { EncodingStateToEventMap } from '$lib/types';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
-	import { BasicIconRenderer } from '../../../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 
 	export let buttonNumber: number = 0;
 	const { state } = getAppContext();

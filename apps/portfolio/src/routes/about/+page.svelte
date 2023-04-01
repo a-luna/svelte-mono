@@ -4,14 +4,7 @@
 	import { SITE_URL } from '$lib/siteConfig';
 	import type { IconColor } from '$lib/types';
 	import { getRandomArrayItem } from '$lib/util';
-	import { BasicIconRenderer } from '../../../node_modules/@a-luna/shared-ui';
-	import LanguageTechIconRenderer from '../../../node_modules/@a-luna/shared-ui/components/Icons/LanguageTechIconRenderer.svelte';
-	import SocialIconRenderer from '../../../node_modules/@a-luna/shared-ui/components/Icons/SocialIconRenderer.svelte';
-	import {
-		BASIC_ICON_NAMES,
-		LANGTECH_ICON_NAMES,
-		SOCIAL_ICON_NAMES,
-	} from '../../../node_modules/@a-luna/shared-ui/constants';
+	import { BasicIconRenderer, BASIC_ICON_NAMES, LANGTECH_ICON_NAMES, LanguageTechIconRenderer, SocialIconRenderer, SOCIAL_ICON_NAMES } from '@a-luna/shared-ui';
 	import { NAV_ICONS, PROJECT_CATEGORY_ICONS } from '../../lib/components/Icons';
 
 	const getRandomIconColor = () =>

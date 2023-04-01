@@ -11,7 +11,7 @@
 		"start": "vite preview --host",
 		"build": "svelte-kit sync && vite build",
 		"preview": "vite preview --host --port 4504",
-		"sync": "svelte-kit sync && pnpm-lock-export && npm i --package-lock-only",
+		"sync": "svelte-kit sync",
 		"sync:up": "pnpm --filter portfolio update && svelte-kit sync && pnpm-lock-export && npm i --package-lock-only && find . -name '.DS_Store' -type f -delete",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
@@ -22,7 +22,7 @@
 		"story:preview": "histoire preview --port 6504"
 	},
 	"dependencies": {
-		"@a-luna/shared-ui": "workspace:*",
+		"@a-luna/shared-ui": "0.0.1",
 		"@pnpm/logger": "^5.0.0",
 		"@stefanprobst/remark-shiki": "2.1.0",
 		"@sveltejs/adapter-node": "^1.2.3",
@@ -45,7 +45,6 @@
 		"node-html-parser": "^6.1.5",
 		"parse-link-header": "^2.0.0",
 		"path-browserify": "^1.0.1",
-		"pnpm-lock-export": "workspace:^",
 		"postcss": "^8.4.21",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.8.7",

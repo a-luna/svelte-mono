@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { blogPostDateMap } from '$lib/stores';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 
 	export let slug: string;
 

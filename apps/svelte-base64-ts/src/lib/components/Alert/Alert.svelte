@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { alert } from '$lib/stores/alert';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { onDestroy } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 	import CloseAlertButton from './CloseAlertButton.svelte';
 
 	export let duration = 3000;

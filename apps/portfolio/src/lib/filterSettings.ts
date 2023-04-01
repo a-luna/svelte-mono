@@ -8,29 +8,27 @@ import type {
 } from '$lib/types';
 import {
 	Asterisk as AllProjects,
-	Code as Lxml,
-	Database,
-	ShellPrompt as Shell,
-} from '../../node_modules/@a-luna/shared-ui/components/Icons/Basic';
-import {
 	Aws,
 	Cypress,
+	Database,
 	FastApi,
 	Flask,
 	Hugo,
+	Code as Lxml,
 	Microsoft,
 	Playwright,
 	Puppeteer,
 	Python,
 	Redis,
 	RegExp,
+	ShellPrompt as Shell,
 	Sqlite,
 	Svelte,
 	Tailwind,
 	TypeScript,
-	Xml,
 	XState,
-} from '../../node_modules/@a-luna/shared-ui/components/Icons/LanguageTech';
+	Xml,
+} from '@a-luna/shared-ui';
 
 const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	allprojects: {

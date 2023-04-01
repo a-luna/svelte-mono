@@ -4,8 +4,8 @@
 	import { encodingHelpSections } from '$lib/components/AlgorithmDemo/HelpDocs/_helpSections';
 	import Modal from '$lib/components/Modal.svelte';
 	import { getAppContext } from '$lib/stores/context';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { slide } from 'svelte/transition';
-	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 
 	export let index = 0;
 	export let helpTopicsExpanded = false;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import NavButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButton.svelte';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
-	import { BasicIconRenderer } from '../../../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 
 	export let buttonNumber: number = 0;
 	let defaultNavAction: EncodingEvent = { type: 'GO_TO_FIRST_STEP' };

@@ -1,8 +1,8 @@
 // import AllProjects from './AllProjects.svelte';
 import Backend from '$lib/components/Icons/Category/Backend.svelte';
-import { Asterisk as AllProjects } from '../../../../../node_modules/@a-luna/shared-ui';
-import Frontend from './Frontend.svelte';
-import NoCategoryFilter from './NoCategoryFilter.svelte';
+import Frontend from '$lib/components/Icons/Category/Frontend.svelte';
+import NoCategoryFilter from '$lib/components/Icons/Category/NoCategoryFilter.svelte';
+import { Asterisk as AllProjects } from '@a-luna/shared-ui';
 
 export { AllProjects, Backend, Frontend, NoCategoryFilter };
 

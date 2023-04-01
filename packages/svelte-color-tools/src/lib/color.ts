@@ -439,7 +439,7 @@ const removeDuplicateColors = (colors: CssColor[]): CssColor[] =>
 const combineColorNames = (colors: CssColor[]): string =>
 	[...new Set(colors.map((c) => (c?.name ? c.name : '')))].filter((n) => n).join('/');
 
-const sortColors = (a: CssColor, b: CssColor): number => a.hsl.l - b.hsl.l || a.hsl.s - b.hsl.s || a.hsl.h - b.hsl.h ;
+const sortColors = (a: CssColor, b: CssColor): number => a.hsl.l - b.hsl.l || a.hsl.s - b.hsl.s || a.hsl.h - b.hsl.h;
 
 export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
 	const id = getRandomHexString(4);

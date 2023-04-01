@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PreviewImage from '$lib/components/ApiTutorial/PreviewImage.svelte';
 	import type { TutorialSection } from '$lib/types';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 
 	export let section: TutorialSection;
 	let slug = '';

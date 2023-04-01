@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { createEventDispatcher, onMount, tick } from 'svelte';
-	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 
 	export let value: string = '';
 	let textInput: HTMLInputElement;

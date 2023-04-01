@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 </script>
 
 <a href="#top" title="Scroll To Top"><BasicIconRenderer icon={'doubleup'} width={'100%'} height={'30px'} /></a>

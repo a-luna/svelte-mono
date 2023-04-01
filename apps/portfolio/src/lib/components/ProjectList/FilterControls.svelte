@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let showFilters: boolean;
 	export let filterApplied: boolean;

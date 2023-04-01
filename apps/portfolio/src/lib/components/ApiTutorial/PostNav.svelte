@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tutorialSectionNumberMap } from '$lib/stores';
 	import type { TutorialSectionNumberMap } from '$lib/types';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 
 	export let slug: string;
 	export let compact = false;

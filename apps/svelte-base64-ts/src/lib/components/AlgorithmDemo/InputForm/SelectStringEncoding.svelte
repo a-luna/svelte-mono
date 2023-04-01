@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { isStringEncoding } from '$lib/typeguards';
 	import type { StringEncoding } from '$lib/types';
-	import { InputSelectList } from '../../../../../node_modules/@a-luna/shared-ui';
-	import type { SelectListOption } from '../../../../../node_modules/@a-luna/shared-ui/types';
+	import { InputSelectList } from '@a-luna/shared-ui';
+	import type { SelectListOption } from '@a-luna/shared-ui/types';
 
 	export let value: StringEncoding = 'ascii';
 	export let disabled = false;

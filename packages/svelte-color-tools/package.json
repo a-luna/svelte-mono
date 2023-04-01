@@ -22,7 +22,7 @@
 		"release:github": "env-cmd conventional-github-releaser -p angular"
 	},
 	"devDependencies": {
-		"@a-luna/shared-ui": "workspace:*",
+		"@a-luna/shared-ui": "0.0.1",
 		"@a-luna/svelte-simple-tables": "^0.0.29",
 		"@babel/core": "^7.21.3",
 		"@babel/preset-env": "^7.20.2",

@@ -4,9 +4,9 @@
 	import { getFilterSettingDetails } from '$lib/filterSettings';
 	import type { FilterSetting as FilterSettingType } from '$lib/types';
 	import { getRandomHexString } from '$lib/util';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 
 	export let id = `radio-${getRandomHexString(4)}`;
 	export let title = '';

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
-	import SocialIconRenderer from '../../../../node_modules/@a-luna/shared-ui/components/Icons/SocialIconRenderer.svelte';
+	import { BasicIconRenderer, SocialIconRenderer } from '@a-luna/shared-ui';
 
 	export let mobile = false;
 	export let open = false;

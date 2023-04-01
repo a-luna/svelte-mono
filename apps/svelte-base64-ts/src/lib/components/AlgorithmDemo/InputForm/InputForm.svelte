@@ -5,7 +5,7 @@
 	import SelectStringEncoding from '$lib/components/AlgorithmDemo/InputForm/SelectStringEncoding.svelte';
 	import { getAppContext } from '$lib/stores/context';
 	import type { Base64Encoding, StringEncoding } from '$lib/types';
-	import { InputTextBox } from '../../../../../node_modules/@a-luna/shared-ui';
+	import { InputTextBox } from '@a-luna/shared-ui';
 
 	export let inputText: string;
 	export let inputTextEncoding: StringEncoding = 'utf8';

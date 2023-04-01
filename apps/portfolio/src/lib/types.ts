@@ -29,32 +29,30 @@ import type {
 	REPO_NAMES,
 	TECH_LIST,
 } from '$lib/constants';
-import type { Asterisk as NoTechFilter } from '../../node_modules/@a-luna/shared-ui';
 import type {
 	Asterisk as AllProjects,
-	Code as Lxml,
-	Database,
-	ShellPrompt as Shell,
-} from '../../node_modules/@a-luna/shared-ui/components/Icons/Basic';
-import type {
 	Aws,
 	Cypress,
+	Database,
 	FastApi,
 	Flask,
 	Hugo,
+	Code as Lxml,
 	Microsoft,
+	Asterisk as NoTechFilter,
 	Playwright,
 	Puppeteer,
 	Python,
 	Redis,
 	RegExp,
+	ShellPrompt as Shell,
 	Sqlite,
 	Svelte,
 	Tailwind,
 	TypeScript,
-	Xml,
 	XState,
-} from '../../node_modules/@a-luna/shared-ui/components/Icons/LanguageTech';
+	Xml,
+} from '@a-luna/shared-ui';
 
 export type HttpMethod = (typeof HTTP_METHODS)[number];
 export type HttpAuthType = (typeof HTTP_AUTH_TYPES)[number];

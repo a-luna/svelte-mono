@@ -2,7 +2,7 @@
 	import { app } from '$lib/stores/app';
 	import type { ButtonColor, ButtonSize } from '$lib/types';
 	import { getCSSPropValue } from '$lib/util';
-	import { ColorParser, type HslColor } from '././../../../node_modules/@a-luna/shared-ui';
+	import { ColorParser, type HslColor } from '@a-luna/shared-ui';
 
 	export let size: ButtonSize = 'sm';
 	export let color: ButtonColor = 'blue';

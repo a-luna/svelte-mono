@@ -1,13 +1,14 @@
 <script lang="ts">
-	import Globe from '$lib/components/Icons/Globe.svelte';
-	import HandLizard from '$lib/components/Icons/HandLizard.svelte';
+	import { BasicIconRenderer } from "@a-luna/shared-ui/dist";
+
+
 </script>
 
 <section>
 	<div class="warning">
 		<p class="warning__headline">The internet</p>
 		<p class="warning__code">
-			<HandLizard /><Globe />
+			<BasicIconRenderer icon={'handlizard'} /><BasicIconRenderer icon={'globe'} />
 		</p>
 		<p class="warning__headline">You are not connected to it</p>
 	</div>

@@ -4,9 +4,8 @@
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { DEFAULT_OG_IMAGE, MY_TWITTER_HANDLE, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
 	import { initialFadePerformed } from '$lib/stores';
+	import { ColorParser, SocialIconRenderer } from '@a-luna/shared-ui';
 	import { onMount } from 'svelte';
-	import { ColorParser } from '../../node_modules/@a-luna/shared-ui';
-	import SocialIconRenderer from '../../node_modules/@a-luna/shared-ui/components/Icons/SocialIconRenderer.svelte';
 
 	const test = [
 		// Hex

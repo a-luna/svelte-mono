@@ -3,9 +3,9 @@
 	import TocSection from '$lib/components/TableOfContents/TocSection.svelte';
 	import type { TocSection as TocSectionType } from '$lib/types';
 	import { getRandomHexString } from '$lib/util';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let toc: TocSectionType[];
 	export let detailsElement: HTMLDetailsElement | undefined = undefined;

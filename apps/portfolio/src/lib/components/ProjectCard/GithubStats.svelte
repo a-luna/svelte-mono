@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { RepoWithMetaData } from '$lib/types';
-	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 
 	export let project: RepoWithMetaData;
 </script>
