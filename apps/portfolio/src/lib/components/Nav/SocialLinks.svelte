@@ -29,6 +29,7 @@
 		align-items: center;
 		gap: 1.25rem;
 		padding: 0.5rem 1rem;
+		height: 40px;
 		background-color: hsl(261, 100%, 55%);
 		background-color: oklch(51.8% 0.304 286.07);
 	}

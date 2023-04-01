@@ -12,8 +12,11 @@
 	nav {
 		background-color: inherit;
 		font-size: 1.1rem;
-		grid-template-columns: repeat(3, auto);
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: 40px;
 		flex: 1;
 		justify-items: center;
+		line-height: 1;
+		place-content: center;
 	}
 </style>

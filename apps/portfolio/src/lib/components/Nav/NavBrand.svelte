@@ -12,9 +12,6 @@
 </a>
 
 <style lang="postcss">
-	a {
-		margin: 7px 0 0 0;
-	}
 	.nav-brand {
 		display: flex;
 		flex-flow: row nowrap;

@@ -47,7 +47,7 @@
 	@media (min-width: 768px) {
 		.nav-container {
 			justify-content: flex-start;
-			align-items: baseline;
+			align-items: flex-start;
 			padding: 1.5rem 0;
 			margin: 0;
 		}

@@ -7,7 +7,6 @@
 </script>
 
 <a
-	class="m-0 inline-block rounded-lg p-0 leading-none tracking-wider transition-all md:mx-2 md:px-3 md:py-2"
 	class:active={isActive}
 	{href}
 	on:click
@@ -21,6 +20,9 @@
 		background-color: var(--page-bg-color);
 		border-radius: 0;
 		transition: color 0.3s, background-color 0.3s;
+		line-height: 1;
+		letter-spacing: 1.5px;
+		place-self: center;
 	}
 
 	a:hover {
