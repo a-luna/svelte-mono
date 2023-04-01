@@ -2,20 +2,23 @@
 	import { SITE_TITLE, SITE_URL } from '$lib/siteConfig';
 	import { capitalize } from '$lib/util';
 
-	export let section: string = '';
+	export let section = '';
 	export let title = capitalize(section);
 	export let pageTitle = `${title} | ${SITE_TITLE}`;
 </script>
 
 <svelte:head>
-	<title>{title}</title>
+	<title>{title} | {SITE_TITLE}</title>
 	<link rel="canonical" href={`${SITE_URL}/${section}`} />
 	<meta property="og:title" content={pageTitle} />
 </svelte:head>
 
-<div class="section-outer">
-	<div class="section">
-		<h1 class="section-header" style="background-color: var(--{section}-section-color);">{title}</h1>
+<div class="section {section}">
+	<div class="section-outer">
+		{#if $$slots.insert}
+			<slot name="insert" />
+		{/if}
+		<h1 class="section-header">{title}</h1>
 		<slot />
 	</div>
 </div>
@@ -37,7 +40,7 @@
 		font-size: 1.7rem;
 		line-height: 1.5;
 		color: var(--page-bg-color);
-		padding: 0 0.25rem;
+		padding: 0.25rem 0.5rem;
 		font-weight: 500;
 		width: 100%;
 		margin: 1.5rem 0 2rem 0;

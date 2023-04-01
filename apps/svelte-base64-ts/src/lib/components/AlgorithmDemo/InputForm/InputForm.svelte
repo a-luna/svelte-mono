@@ -3,9 +3,9 @@
 	import NavButtons from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButtons.svelte';
 	import SelectBase64Encoding from '$lib/components/AlgorithmDemo/InputForm/SelectBase64Encoding.svelte';
 	import SelectStringEncoding from '$lib/components/AlgorithmDemo/InputForm/SelectStringEncoding.svelte';
-	import InputTextBox from '$lib/components/InputTextBox.svelte';
 	import { getAppContext } from '$lib/stores/context';
 	import type { Base64Encoding, StringEncoding } from '$lib/types';
+	import { InputTextBox } from '../../../../../node_modules/@a-luna/shared-ui';
 
 	export let inputText: string;
 	export let inputTextEncoding: StringEncoding = 'utf8';
@@ -27,7 +27,13 @@
 		<OpenHelpDocsButton label={'Help Docs'} name="help-docs-button-input-form" on:openHelpModal />
 	</div>
 	<div class="input-text">
-		<InputTextBox bind:inputText disabled={controlsDisabled} {error} style={inputTextBoxStyles} on:submit />
+		<InputTextBox
+			bind:inputText
+			disabled={controlsDisabled}
+			error={Boolean(error)}
+			style={inputTextBoxStyles}
+			on:submit
+		/>
 	</div>
 	<span class="input-encoding-label form-label">Text Encoding</span>
 	<div class="input-encoding">

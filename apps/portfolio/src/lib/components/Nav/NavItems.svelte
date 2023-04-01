@@ -3,15 +3,9 @@
 </script>
 
 <nav class="hidden md:grid">
-	<div>
-		<NavLink href="/projects">Projects</NavLink>
-	</div>
-	<div>
-		<NavLink href="/blog">Blog</NavLink>
-	</div>
-	<div>
-		<NavLink href="/about">About</NavLink>
-	</div>
+	<NavLink href="/projects">Projects</NavLink>
+	<NavLink href="/blog">Blog</NavLink>
+	<NavLink href="/about">About</NavLink>
 </nav>
 
 <style lang="postcss">

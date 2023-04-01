@@ -117,7 +117,6 @@ function parseMarkdownFile(
 	});
 
 	return {
-		type: 'blog' as const,
 		content,
 		title: (data.title as string) ?? unslugify(slug),
 		subtitle: '',

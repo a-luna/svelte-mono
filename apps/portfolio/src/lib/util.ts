@@ -10,7 +10,7 @@ export const getRandomHexString = (length: number): string =>
 		.join('');
 
 export const getRandomArrayItem = <T>(array: readonly T[], defaultValue: T): T =>
-	array?.[Math.floor(Math.random() * array.length)] ?? defaultValue;
+	array.at(Math.floor(Math.random() * array.length)) ?? defaultValue;
 
 export const getCSSPropValue = (element: HTMLElement, propName: string): string =>
 	getComputedStyle(element).getPropertyValue(propName);
@@ -27,7 +27,7 @@ export const slugify = (text: string): string =>
 		.normalize('NFKD')
 		.toLowerCase()
 		.trim()
-		.replace(/\s+/g, '-')
+		.replace(/[\s_]+/g, '-')
 		.replace(/([^A-Za-z0-9-])+/g, '')
 		.replace(/--+/g, '-')
 		.replace(/(^-|-$)/g, '');

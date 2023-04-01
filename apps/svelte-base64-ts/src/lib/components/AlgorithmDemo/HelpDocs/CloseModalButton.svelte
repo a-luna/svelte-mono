@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Close from '$lib/components/Icons/Close.svelte';
+	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 </script>
 
 <div class="button-wrapper">
 	<button type="button" class="btn-close" aria-label="Close" title="Close Help Docs" on:click>
-		<Close />
+		<BasicIconRenderer icon={'close'} />
 	</button>
 </div>
 

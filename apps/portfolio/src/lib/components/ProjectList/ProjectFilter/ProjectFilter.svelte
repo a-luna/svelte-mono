@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Chevron from '$lib/components/Icons/Chevron.svelte';
 	import FilterSettingNoIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingNoIcon.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 	import { getFilterSettingDetails } from '$lib/filterSettings';
@@ -7,9 +6,11 @@
 	import { getRandomHexString } from '$lib/util';
 	import { createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 
 	export let id = `radio-${getRandomHexString(4)}`;
-	export let title: string = '';
+	export let title = '';
+	export let filterGroup: 'icon' | 'no-icon';
 	export let startOptionNumber = 1;
 	export let noFilterSetting: FilterSettingType = '';
 	export let filterSettings: FilterSettingType[];
@@ -55,11 +56,11 @@
 	}
 </script>
 
-<div class="project-list-filter">
+<div class="project-list-filter {filterGroup}">
 	{#if title}
 		<button class="filter-title" class:expanded on:click={() => (expanded = !expanded)}>
 			<div class="title-icon" class:expanded>
-				<Chevron />
+				<BasicIconRenderer icon={'chevron'} />
 			</div>
 			{title}
 		</button>
@@ -72,7 +73,6 @@
 					for="{id}-option-0"
 					class:hovered={hoveredValue === noFilterSetting}
 					class:selected={selectedValue === noFilterSetting}
-					style={getLabelStyles(selectedValue, hoveredValue, noFilterSetting)}
 					class:expanded
 					on:mouseenter={() => (hoveredValue = noFilterSetting)}
 					on:mouseleave={() => (hoveredValue = '')}
@@ -104,9 +104,9 @@
 				/>
 				<label
 					for="{id}-option-{i + startOptionNumber}"
+					class={getFilterSettingColor(setting)}
 					class:hovered={hoveredValue === setting}
 					class:selected={selectedValue === setting}
-					style={getLabelStyles(selectedValue, hoveredValue, setting)}
 					on:mouseenter={() => (hoveredValue = setting)}
 					on:mouseleave={() => (hoveredValue = '')}
 				>
@@ -160,7 +160,7 @@
 	.filter-settings {
 		display: flex;
 		flex-flow: row wrap;
-		gap: 0.5rem;
+		gap: 0.75rem;
 		flex: 1;
 	}
 	input[type='radio'] {
@@ -175,5 +175,9 @@
 	}
 	.filter-settings label:hover {
 		color: var(--accent-color);
+	}
+	.filter-setings label.selected,
+	.filter-setings label.hovered {
+		background-color: var(--default-icon);
 	}
 </style>

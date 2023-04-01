@@ -2,11 +2,10 @@
 	import CloseModalButton from '$lib/components/AlgorithmDemo/HelpDocs/CloseModalButton.svelte';
 	import ShowHelpTopicsButton from '$lib/components/AlgorithmDemo/HelpDocs/ShowHelpTopicsButton.svelte';
 	import { encodingHelpSections } from '$lib/components/AlgorithmDemo/HelpDocs/_helpSections';
-	import ChevronLeft from '$lib/components/Icons/ChevronLeft.svelte';
-	import ChevronRight from '$lib/components/Icons/ChevronRight.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import { getAppContext } from '$lib/stores/context';
 	import { slide } from 'svelte/transition';
+	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 
 	export let index = 0;
 	export let helpTopicsExpanded = false;
@@ -16,11 +15,10 @@
 
 	$: $demoUIState.modalOpen = !closed;
 	$: showContentsPanel = $demoState.pageWidth >= 764;
-	$: displayedSectionTitle = helpTopicsExpanded ? 'Help Topics' : encodingHelpSections[index].title;
+	$: displayedSectionTitle = helpTopicsExpanded ? 'Help Topics' : encodingHelpSections[index]?.title;
 
 	const getNextIndex = (i: number) => (i + 1) % encodingHelpSections.length;
-	const getPrevIndex = (i: number) =>
-		i > 0 ? (i - 1) % encodingHelpSections.length : encodingHelpSections.length - 1;
+	const getPrevIndex = (i: number) => (i > 0 ? (i - 1) % encodingHelpSections.length : encodingHelpSections.length - 1);
 	const next = () => (index = getNextIndex(index));
 	const prev = () => (index = getPrevIndex(index));
 
@@ -55,10 +53,8 @@
 				<ul>
 					{#each encodingHelpSections as { title }, i}
 						<li>
-							<button
-								class="nav-link"
-								class:current-section={index === i}
-								on:click={() => handleSectionChanged(i)}><span>{title}</span></button
+							<button class="nav-link" class:current-section={index === i} on:click={() => handleSectionChanged(i)}
+								><span>{title}</span></button
 							>
 						</li>
 					{/each}
@@ -80,10 +76,8 @@
 					<ul>
 						{#each encodingHelpSections as { title }, i}
 							<li>
-								<button
-									class="nav-link"
-									class:current-section={index === i}
-									on:click={() => handleSectionChanged(i)}><span>{title}</span></button
+								<button class="nav-link" class:current-section={index === i} on:click={() => handleSectionChanged(i)}
+									><span>{title}</span></button
 								>
 							</li>
 						{/each}
@@ -92,13 +86,13 @@
 			{/if}
 			<div class="help-docs-content-wrapper">
 				<div class="help-docs-content">
-					<svelte:component this={encodingHelpSections[index].component} />
+					<svelte:component this={encodingHelpSections[index]?.component} />
 				</div>
 			</div>
 			<div class="nav-buttons">
 				{#if index > 0}
 					<button class="nav nav-prev" on:click={() => prev()}>
-						<div class="nav-icon"><ChevronLeft /></div>
+						<div class="nav-icon"><BasicIconRenderer icon={'chevronleft'} /></div>
 						<span class="nav-link">Prev</span>
 					</button>
 				{/if}
@@ -106,7 +100,7 @@
 				{#if index < encodingHelpSections.length - 1}
 					<button class="nav nav-next" on:click={() => next()}>
 						<span class="nav-link">Next</span>
-						<div class="nav-icon"><ChevronRight /></div>
+						<div class="nav-icon"><BasicIconRenderer icon={'chevronright'} /></div>
 					</button>
 				{/if}
 			</div>

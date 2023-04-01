@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { userRepos } from '$lib/stores';
 	import ProjectList from '$lib/components/ProjectList/ProjectList.svelte';
-	import { MY_TWITTER_HANDLE, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
+	import { MY_TWITTER_HANDLE } from '$lib/siteConfig';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 
 	const description =

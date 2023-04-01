@@ -26,8 +26,12 @@
 <svelte:window bind:innerHeight={windowHeight} bind:scrollY />
 
 <svelte:head>
-	<link rel="mask-icon" href="/safari-pinned-tab.svg" color={THEME_COLOR} />
-	<meta name="msapplication-TileColor" content={THEME_COLOR} />
+	<link rel="icon" href="/favicon.ico?v=1.1" sizes="any" />
+	<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1.1" />
+	<link rel="manifest" href="/site.webmanifest?v=1.1" />
+	<meta name="apple-mobile-web-app-title" content="aaronluna.dev" />
+	<meta name="application-name" content="aaronluna.dev" />
 	<meta name="theme-color" content={THEME_COLOR} />
 	<link rel="alternate" type="application/rss+xml" title={'RSS Feed for ' + SITE_TITLE} href="/rss.xml" />
 	{#if !dev}
@@ -55,7 +59,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: center;
-		background-color: hsla(0 0% 0% / 0);
+		background-color: var(--page-bg-color);
 		width: 100%;
 	}
 	main {

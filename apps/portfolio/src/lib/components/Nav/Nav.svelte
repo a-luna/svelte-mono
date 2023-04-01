@@ -31,7 +31,7 @@
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
-		align-items: flex-start;
+		align-items: baseline;
 		gap: 1.5rem;
 		background-color: inherit;
 		margin: 0 auto;
@@ -47,7 +47,7 @@
 	@media (min-width: 768px) {
 		.nav-container {
 			justify-content: flex-start;
-			align-items: flex-end;
+			align-items: baseline;
 			padding: 1.5rem 0;
 			margin: 0;
 		}

@@ -1,32 +1,36 @@
-import AllProjects from '$lib/components/Icons/Category/AllProjects.svelte';
-import Backend from '$lib/components/Icons/Category/Backend.svelte';
-import Frontend from '$lib/components/Icons/Category/Frontend.svelte';
-import Aws from '$lib/components/Icons/Language/AWS.svelte';
-import Cypress from '$lib/components/Icons/Language/Cypress.svelte';
-import Database from '$lib/components/Icons/Language/Database.svelte';
-import FastApi from '$lib/components/Icons/Language/FastAPI.svelte';
-import Flask from '$lib/components/Icons/Language/Flask.svelte';
-import Hugo from '$lib/components/Icons/Language/Hugo.svelte';
-import Lxml from '$lib/components/Icons/Language/lxml.svelte';
-import Microsoft from '$lib/components/Icons/Language/Microsoft.svelte';
-import Puppeteer from '$lib/components/Icons/Language/Puppeteer.svelte';
-import Python from '$lib/components/Icons/Language/Python.svelte';
-import Redis from '$lib/components/Icons/Language/Redis.svelte';
-import RegExp from '$lib/components/Icons/Language/RegExp.svelte';
-import Shell from '$lib/components/Icons/Language/Shell.svelte';
-import Sqlite from '$lib/components/Icons/Language/Sqlite.svelte';
-import Svelte from '$lib/components/Icons/Language/Svelte.svelte';
-import Tailwind from '$lib/components/Icons/Language/Tailwind.svelte';
-import TypeScript from '$lib/components/Icons/Language/TypeScript.svelte';
-import Xml from '$lib/components/Icons/Language/XML.svelte';
-import XState from '$lib/components/Icons/Language/XState.svelte';
+import { Backend, Frontend } from '$lib/components/Icons';
 import type {
 	FilterSetting,
-	FilterSettingDetailsDatabase,
 	FilterSettingDetails,
+	FilterSettingDetailsDatabase,
 	ProjectCategoryDetails,
-	ProjectTypeDetails
+	ProjectTypeDetails,
 } from '$lib/types';
+import {
+	Asterisk as AllProjects,
+	Code as Lxml,
+	Database,
+	ShellPrompt as Shell,
+} from '../../node_modules/@a-luna/shared-ui/components/Icons/Basic';
+import {
+	Aws,
+	Cypress,
+	FastApi,
+	Flask,
+	Hugo,
+	Microsoft,
+	Playwright,
+	Puppeteer,
+	Python,
+	Redis,
+	RegExp,
+	Sqlite,
+	Svelte,
+	Tailwind,
+	TypeScript,
+	Xml,
+	XState,
+} from '../../node_modules/@a-luna/shared-ui/components/Icons/LanguageTech';
 
 const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	allprojects: {
@@ -34,252 +38,264 @@ const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		color: 'green',
 		hasIcon: true,
 		icon: AllProjects,
-		size: 16
+		size: 16,
 	},
 	frontend: {
 		displayName: 'Frontend',
 		color: 'pink',
 		hasIcon: true,
 		icon: Frontend,
-		size: 16
+		size: 16,
 	},
 	backend: {
 		displayName: 'Backend',
 		color: 'blue',
 		hasIcon: true,
 		icon: Backend,
-		size: 16
-	}
+		size: 16,
+	},
 };
 
 const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	alllanguages: {
 		displayName: 'All Languages',
-		color: 'blue',
+		color: 'red',
 		hasIcon: true,
 		icon: AllProjects,
-		size: 16
+		size: 16,
 	},
 	aws: {
 		displayName: 'AWS/Boto3',
-		color: 'yellow',
+		color: 'purple',
 		hasIcon: true,
 		icon: Aws,
-		size: 20
+		size: 20,
 	},
 	csharp: {
 		displayName: 'C#',
-		color: 'blue',
+		color: 'orange',
 		hasIcon: true,
 		icon: Microsoft,
-		size: 16
+		size: 16,
 	},
 	cypress: {
 		displayName: 'Cypress',
-		color: 'green',
+		color: 'yellow-green',
 		hasIcon: true,
 		icon: Cypress,
-		size: 16
+		size: 16,
 	},
 	fastapi: {
 		displayName: 'FastAPI',
-		color: 'blue',
+		color: 'green',
 		hasIcon: true,
 		icon: FastApi,
-		size: 16
+		size: 16,
 	},
 	flask: {
 		displayName: 'Flask',
-		color: 'pink',
+		color: 'teal',
 		hasIcon: true,
 		icon: Flask,
-		size: 20
+		size: 20,
 	},
 	hugo: {
 		displayName: 'Hugo',
-		color: 'pink',
+		color: 'blue',
 		hasIcon: true,
 		icon: Hugo,
-		size: 16
+		size: 16,
 	},
 	lxml: {
 		displayName: 'lxml',
-		color: 'yellow',
+		color: 'dark-blue',
 		hasIcon: true,
 		icon: Lxml,
-		size: 16
+		size: 16,
+	},
+	playwright: {
+		displayName: 'Playwright',
+		color: 'yellow',
+		hasIcon: true,
+		icon: Playwright,
+		size: 20,
 	},
 	puppeteer: {
 		displayName: 'Puppeteer',
-		color: 'blue',
+		color: 'red',
 		hasIcon: true,
 		icon: Puppeteer,
-		size: 20
+		size: 20,
 	},
 	pydantic: {
 		displayName: 'Pydantic',
-		color: 'green',
+		color: 'pink',
 		hasIcon: true,
 		icon: Python,
-		size: 16
+		size: 16,
 	},
 	python: {
 		displayName: 'Python',
 		color: 'green',
 		hasIcon: true,
 		icon: Python,
-		size: 16
+		size: 16,
 	},
 	redis: {
 		displayName: 'Redis',
-		color: 'pink',
+		color: 'red',
 		hasIcon: true,
 		icon: Redis,
-		size: 16
+		size: 16,
 	},
 	regexp: {
 		displayName: 'Regular Expressions',
 		color: 'blue',
 		hasIcon: true,
 		icon: RegExp,
-		size: 16
+		size: 16,
 	},
 	shell: {
 		displayName: 'Shell',
-		color: 'yellow',
+		color: 'teal',
 		hasIcon: true,
 		icon: Shell,
-		size: 16
+		size: 16,
 	},
 	sqlalchemy: {
 		displayName: 'SQLAlchemy',
-		color: 'yellow',
+		color: 'purple',
 		hasIcon: true,
 		icon: Database,
-		size: 16
+		size: 16,
 	},
 	sqlite: {
 		displayName: 'SQLite',
-		color: 'pink',
+		color: 'yellow-green',
 		hasIcon: true,
 		icon: Sqlite,
-		size: 16
+		size: 16,
 	},
 	svelte: {
 		displayName: 'Svelte',
-		color: 'pink',
+		color: 'yellow',
 		hasIcon: true,
 		icon: Svelte,
-		size: 18
+		size: 18,
 	},
 	tailwindcss: {
 		displayName: 'TailwindCSS',
-		color: 'blue',
+		color: 'orange',
 		hasIcon: true,
 		icon: Tailwind,
-		size: 16
+		size: 16,
 	},
 	typescript: {
 		displayName: 'TypeScript',
-		color: 'blue',
+		color: 'dark-blue',
 		hasIcon: true,
 		icon: TypeScript,
-		size: 15
+		size: 15,
 	},
 	xpath: {
 		displayName: 'XPath',
-		color: 'green',
+		color: 'orange',
 		hasIcon: true,
 		icon: Xml,
-		size: 16
+		size: 16,
 	},
 	xstate: {
 		displayName: 'XState',
 		color: 'yellow',
 		hasIcon: true,
 		icon: XState,
-		size: 16
-	}
+		size: 16,
+	},
 };
 
 const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } = {
 	allcategories: {
 		displayName: 'All Categories',
 		color: 'default',
-		hasIcon: false
+		hasIcon: false,
 	},
-	api_development: {
+	rest_api: {
 		displayName: 'REST API',
-		color: 'purple',
-		hasIcon: false
+		color: 'green',
+		hasIcon: false,
 	},
 	blog_portfolio_sites: {
 		displayName: 'Blog/Portfolio Site',
-		color: 'green',
-		hasIcon: false
+		color: 'yellow-green',
+		hasIcon: false,
 	},
 	cli_apps: {
 		displayName: 'CLI App',
 		color: 'yellow',
-		hasIcon: false
+		hasIcon: false,
 	},
 	component_library: {
 		displayName: 'Component Library',
-		color: 'pink',
-		hasIcon: false
+		color: 'orange',
+		hasIcon: false,
 	},
 	cryptography: {
 		displayName: 'Cryptography',
-		color: 'blue',
-		hasIcon: false
+		color: 'red',
+		hasIcon: false,
+	},
+	design_patterns: {
+		displayName: 'Design Patterns',
+		color: 'dark-blue',
+		hasIcon: false,
 	},
 	dev_tools: {
 		displayName: 'Dev Tools',
-		color: 'blue',
-		hasIcon: false
+		color: 'pink',
+		hasIcon: false,
 	},
 	devops: {
 		displayName: 'DevOps',
-		color: 'yellow',
-		hasIcon: false
+		color: 'purple',
+		hasIcon: false,
 	},
 	docs_guides: {
 		displayName: 'Documentation',
-		color: 'green',
-		hasIcon: false
+		color: 'dark-blue',
+		hasIcon: false,
 	},
 	fastapi_plugins: {
 		displayName: 'FastAPI Plugin',
-		color: 'purple',
-		hasIcon: false
+		color: 'blue',
+		hasIcon: false,
 	},
 	web_app: {
 		displayName: 'Web App',
-		color: 'pink',
-		hasIcon: false
+		color: 'green',
+		hasIcon: false,
 	},
 	virtualization: {
 		displayName: 'Virtualization',
-		color: 'pink',
-		hasIcon: false
+		color: 'teal',
+		hasIcon: false,
 	},
 	web_scraping: {
 		displayName: 'Web Scraping',
-		color: 'yellow',
-		hasIcon: false
-	}
+		color: 'yellow-green',
+		hasIcon: false,
+	},
 };
 
 export const filterSettingDetailsDatabase: FilterSettingDetailsDatabase = {
 	...projectTypeDetailsDatabase,
 	...projectCategoriesDetailsDatabase,
-	...langorTechDetailsDatabase
+	...langorTechDetailsDatabase,
 };
 
 const nullFilterSettingDetails: FilterSettingDetails = {
 	displayName: '',
 	color: 'green',
-	hasIcon: false
+	hasIcon: false,
 };
 
 export const getFilterSettingDetails = (name: FilterSetting): FilterSettingDetails =>

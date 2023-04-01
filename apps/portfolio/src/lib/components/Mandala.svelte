@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
+
 	let svgSize: { width: number; height: number } = { width: 400, height: 400 };
 	let pageWidth: number;
 
@@ -6,10 +8,8 @@
 		svgSize =
 			pageWidth >= 1024
 				? { width: 675, height: 675 }
-				: pageWidth >= 768
-				? { width: 625, height: 625 }
 				: pageWidth >= 640
-				? { width: 550, height: 550 }
+				? { width: 600, height: 600 }
 				: { width: 525, height: 525 };
 	}
 	$: ({ width, height } = svgSize);
@@ -17,7 +17,7 @@
 
 <svelte:window bind:innerWidth={pageWidth} />
 
-<div class="mandala-wrapper">
+<div in:fade={{ duration: 2500 }} class="mandala-wrapper">
 	<div class="mandala-container animate-colors">
 		<div class="mandala-translate">
 			<svg {width} {height} viewBox="0 0 675 675" fill="none" xmlns="http://www.w3.org/2000/svg" class="mandala">
@@ -149,10 +149,10 @@
 	}
 	.mandala-container {
 		--mandala-primary: var(--gray-shade6);
-		--mandala-accent-1: var(--blue-icon);
-		--mandala-accent-2: var(--pink-icon);
-		--mandala-accent-3: var(--accent-color);
-		--mandala-accent-4: var(--purple-icon);
+		--mandala-accent-1: hsl(173.22 100% 65%);
+		--mandala-accent-2: hsl(322.21 100% 64%);
+		--mandala-accent-3: hsl(93.52 100% 50%);
+		--mandala-accent-4: hsl(261, 100%, 55%);
 		display: flex;
 		justify-content: center;
 		transform: translate(6rem, -5rem);
@@ -320,7 +320,7 @@
 	} */
 	@media (min-width: 495px) {
 		.mandala-container {
-			transform: translate(5rem, -5rem);
+			transform: translate(9rem, -4rem);
 		}
 	}
 	@media (min-width: 768px) {

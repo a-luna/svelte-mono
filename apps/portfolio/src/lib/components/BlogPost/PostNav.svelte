@@ -1,7 +1,6 @@
 <script lang="ts">
-	import ArrowLeft from '$lib/components/Icons/ArrowLeft.svelte';
-	import ArrowRight from '$lib/components/Icons/ArrowRight.svelte';
 	import { blogPostDateMap } from '$lib/stores';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let slug: string;
 
@@ -14,7 +13,7 @@
 	<div class="post-nav-prev">
 		{#if previous}
 			<a href={previous.slug}>
-				<div class="icon icon-prev"><ArrowLeft /></div>
+				<div class="icon icon-prev"><BasicIconRenderer icon={'arrowleft'} /></div>
 				<span class="prev-post-title post-title">{previous.title}</span>
 			</a>
 		{/if}
@@ -23,7 +22,7 @@
 		{#if next}
 			<a href={next.slug}>
 				<span class="prev-post-title post-title">{next.title}</span>
-				<div class="icon icon-next"><ArrowRight /></div>
+				<div class="icon icon-next"><BasicIconRenderer icon="arrowright" /></div>
 			</a>
 		{/if}
 	</div>

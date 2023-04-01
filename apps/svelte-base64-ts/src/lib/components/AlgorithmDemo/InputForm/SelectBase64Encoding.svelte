@@ -1,35 +1,35 @@
 <script lang="ts">
-	import Select from '$lib/components/Select/Select.svelte';
-	import type { Base64Encoding, SelectMenuOption } from '$lib/types';
+	import { isBase64Encoding } from '$lib/typeguards';
+	import type { Base64Encoding } from '$lib/types';
+	import { InputSelectList } from '../../../../../node_modules/@a-luna/shared-ui';
+	import type { SelectListOption } from '../../../../../node_modules/@a-luna/shared-ui/types';
 
-	export let width = '100%';
-	export let fontSize = '0.875rem';
 	export let value: Base64Encoding = 'base64';
 	export let disabled = false;
 	export let dropdownShown = false;
 
-	const options: SelectMenuOption[] = [
+	const options: SelectListOption[] = [
 		{ label: 'base64', value: 'base64', optionNumber: 1, active: false },
 		{ label: 'base64url', value: 'base64url', optionNumber: 2, active: false },
 	];
 	const menuId = 'select-base64-encoding';
 	const menuLabel = '';
 
-	function handleStringEncodingChanged(base64Encoding: Base64Encoding) {
-		value = base64Encoding;
+	function handleStringEncodingChanged(e: CustomEvent<{ selected: string | number }>) {
+		const b64Encoding = e.detail.selected as unknown as string;
+		if (isBase64Encoding(b64Encoding)) {
+			value = b64Encoding;
+		}
 	}
 </script>
 
-<Select
+<InputSelectList
 	{menuLabel}
 	{options}
 	selectedValue={value}
 	{menuId}
-	{width}
-	{fontSize}
 	{disabled}
 	{dropdownShown}
 	tooltip={'Select Base64 (Output) Encoding'}
-	flexStyles={'flex: 0 1 auto;'}
-	on:changed={(e) => handleStringEncodingChanged(e.detail)}
+	on:selectedOptionChanged={handleStringEncodingChanged}
 />

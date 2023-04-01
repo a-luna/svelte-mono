@@ -1,13 +1,13 @@
 <script lang="ts">
-	import NavIcon from '$lib/components/Nav/NavIcon.svelte';
+	import NavIconRenderer from '$lib/components/Icons/NavIconRenderer.svelte';
 </script>
 
 <a href="/">
 	<div class="nav-brand">
 		<div class="icon">
-			<NavIcon />
+			<NavIconRenderer />
 		</div>
-		<span>Aaron Luna</span>
+		<span class="name">Aaron Luna</span>
 	</div>
 </a>
 
@@ -20,8 +20,8 @@
 		flex-flow: row nowrap;
 		align-items: center;
 		justify-content: flex-start;
-		width: 172px;
-		padding: 0.25rem;
+		width: 180px;
+		padding: 0.25rem 0.75rem 0.25rem 0.5rem;
 		font-size: 22px;
 		font-weight: 500;
 		line-height: 1;
@@ -34,5 +34,8 @@
 	.icon {
 		width: 32px;
 		align-self: flex-start;
+	}
+	.name {
+		flex: 1;
 	}
 </style>

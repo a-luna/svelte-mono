@@ -1,0 +1,30 @@
+{
+	"extends": "./.svelte-kit/tsconfig.json",
+	"compilerOptions": {
+		"strict": true,
+		"allowUnreachableCode": false,
+		"exactOptionalPropertyTypes": false,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"outDir": "./dist"
+	},
+	"exclude": [
+		"./dist/**",
+		"../node_modules/**",
+		"./[!ambient.d.ts]**",
+		"../src/service-worker.js",
+		"../src/service-worker.ts",
+		"../src/service-worker.d.ts"
+	]
+}

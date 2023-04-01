@@ -31,5 +31,24 @@ export {
 	Stairs3D,
 	Summits,
 	SverdIFjell,
-	Teleport
+	Teleport,
+};
+
+export const NAV_ICONS = {
+	androidmask: AndroidMask,
+	audiocassette: AudioCassette,
+	boltspellcast: BoltSpellCast,
+	cybereye: CyberEye,
+	dustcloud: DustCloud,
+	firesilhouette: FireSilhouette,
+	heptagram: Heptagram,
+	highfive: HighFive,
+	moebiusstar: MoebiusStar,
+	orbital: Orbital,
+	ramprofile: RamProfile,
+	spatter: Spatter,
+	stairs3d: Stairs3D,
+	summits: Summits,
+	sverdifjell: SverdIFjell,
+	teleport: Teleport,
 };

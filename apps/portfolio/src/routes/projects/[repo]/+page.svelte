@@ -1,16 +1,18 @@
 <script lang="ts">
+	import ContentLayout from '$lib/components/ContentLayout.svelte';
+	import TableOfContents from '$lib/components/TableOfContents/TableOfContents.svelte';
+	import type { ProjectReadme } from '$lib/types';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	let project: ProjectReadme;
+
+	$: project = data.readme;
 </script>
 
-<article
-	class="mx-auto mb-16 mt-8 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8"
->
-	<div class="project-readme prose prose-invert">
-		{@html data.readme}
-	</div>
-</article>
-
-<style lang="postcss">
-</style>
+<ContentLayout content={project} contentType={'readme'}>
+	{#if project.hasToc && project.toc}
+		<TableOfContents toc={project.toc} />
+	{/if}
+	{@html project?.content}
+</ContentLayout>

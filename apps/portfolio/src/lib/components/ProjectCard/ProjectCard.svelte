@@ -29,7 +29,8 @@
 	}
 	.project-card:hover {
 		color: var(--body-text);
-		border-color: var(--accent-color);
+		border-color: hsl( 76  100%  50% );
+		border-color: oklch(92.22% 0.244 126.84);
 	}
 	.project-card {
 		display: grid;

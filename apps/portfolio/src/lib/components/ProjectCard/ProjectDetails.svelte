@@ -1,5 +1,4 @@
 <script lang="ts">
-	import GithubStats from '$lib/components/ProjectCard/GithubStats.svelte';
 	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 	import type { RepoWithMetaData } from '$lib/types';
@@ -27,7 +26,7 @@
 		<div class="details-bottom">
 			{#if languages.length > 0}
 				<div class="language-list-wrapper">
-					<span class="all-langage-list-title">{otherLangsTitle}</span>
+					<span class="all-langage-list-title green">{otherLangsTitle}</span>
 					<div class="all-language-list">
 						{#each languages as language}
 							<FilterSettingWithIcon value={language} />
@@ -89,9 +88,8 @@
 	}
 
 	.all-langage-list-title {
-		font-size: 0.85rem;
+		font-size: 0.9rem;
 		font-style: italic;
-		color: var(--accent-color);
 	}
 
 	.category-list {

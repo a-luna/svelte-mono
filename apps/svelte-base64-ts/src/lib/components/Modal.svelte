@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Close from '$lib/components/Icons/Close.svelte';
 	import { getRandomHexString } from '$lib/util';
+	import { BasicIconRenderer } from '../../../node_modules/@a-luna/shared-ui';
 
 	export let modalId = `modal-${getRandomHexString(4)}`;
-	export let title: string = '';
+	export let title = '';
 	export let closed = true;
 	export let noHeader = false;
 	export let noFooter = false;
@@ -37,7 +37,9 @@
 					{#if title}
 						<h5 id={modelLabel}>{title}</h5>
 					{/if}
-					<button type="button" class="btn-close" aria-label="Close" on:click={() => toggleModal()}><Close /></button>
+					<button type="button" class="btn-close" aria-label="Close" on:click={() => toggleModal()}
+						><BasicIconRenderer icon={'close'} /></button
+					>
 				</div>
 			{/if}
 			<div class="modal-body">

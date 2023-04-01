@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Arrow from '$lib/components/Icons/Arrow.svelte';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 </script>
 
 <div class="project-card-link">
 	<div class="icon">
-		<Arrow />
+		<BasicIconRenderer icon={'arrow'} width={'24px'} />
 	</div>
 </div>
 
@@ -29,8 +29,6 @@
 	}
 
 	.icon {
-		width: 24px;
-		height: 24px;
 		transform: rotate(45deg);
 	}
 </style>

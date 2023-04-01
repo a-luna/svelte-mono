@@ -1,23 +1,6 @@
 import { browser } from '$app/environment';
 import type { Result } from '$lib/types';
 
-export function updateHeadingElements() {
-	if (!browser) return false;
-
-	document.querySelectorAll<HTMLHeadingElement>('.heading-text').forEach((heading) => {
-		heading.addEventListener('mouseenter', () => heading.classList.add('hovered'));
-		heading.addEventListener('mouseleave', () => heading.classList.remove('hovered'));
-		heading.addEventListener('pointerenter', () => {
-			heading.classList.add('hovered');
-			setTimeout(() => heading.classList.remove('hovered'), 2000);
-		});
-		heading.parentElement?.addEventListener('pointerdown', (e) =>
-			(e?.target as unknown as HTMLElement)?.releasePointerCapture(e.pointerId)
-		);
-	});
-	return true;
-}
-
 export function enableCopyCodeButtons() {
 	if (!browser) return false;
 

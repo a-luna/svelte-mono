@@ -4,7 +4,7 @@
 
 	export let base64Encoding: Base64Encoding = 'base64';
 	export let base64TableChunkSize: number;
-	export let highlightBase64: string;
+	export let highlightBase64: string | undefined;
 	export let fontSize: string;
 	let base64MapChunked: Base64CharacterMap[][];
 

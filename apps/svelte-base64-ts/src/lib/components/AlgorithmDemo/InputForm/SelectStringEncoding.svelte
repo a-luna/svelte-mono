@@ -1,19 +1,14 @@
 <script lang="ts">
-	import Select from '$lib/components/Select/Select.svelte';
-	import { getAppContext } from '$lib/stores/context';
 	import { isStringEncoding } from '$lib/typeguards';
-	import type { SelectMenuOption, StringEncoding } from '$lib/types';
+	import type { StringEncoding } from '$lib/types';
+	import { InputSelectList } from '../../../../../node_modules/@a-luna/shared-ui';
+	import type { SelectListOption } from '../../../../../node_modules/@a-luna/shared-ui/types';
 
-	export let width = '100%';
-	export let fontSize = '0.875rem';
 	export let value: StringEncoding = 'ascii';
 	export let disabled = false;
 	export let dropdownShown = false;
-	export let inHelpDocs = false;
-	let userSelectionMade = false;
-	const { state, demoState } = getAppContext();
 
-	const options: SelectMenuOption[] = [
+	const options: SelectListOption[] = [
 		{ label: 'ASCII', value: 'ascii', optionNumber: 1, active: false },
 		{ label: 'UTF-8', value: 'utf8', optionNumber: 2, active: false },
 		{ label: 'hex', value: 'hex', optionNumber: 3, active: false },
@@ -22,34 +17,21 @@
 	const menuId = 'select-string-encoding';
 	const menuLabel = '';
 
-	$: if ($state.context.resetForm) {
-		userSelectionMade = false;
-	}
-	$: bestMatch = inHelpDocs
-		? 'ascii'
-		: !$demoState.validInputEncodings.length
-		? 'utf8'
-		: $demoState.validInputEncodings.at(0);
-	$: if (!userSelectionMade && !$demoState.test) {
-		value = isStringEncoding(bestMatch) ? bestMatch : null;
-	}
-
-	function handleStringEncodingChanged(stringEncoding: StringEncoding) {
-		userSelectionMade = true;
-		value = stringEncoding;
+	function handleStringEncodingChanged(e: CustomEvent<{ selected: string | number }>) {
+		const stringEncoding = e.detail.selected as unknown as string;
+		if (isStringEncoding(stringEncoding)) {
+			value = stringEncoding;
+		}
 	}
 </script>
 
-<Select
+<InputSelectList
 	{menuLabel}
 	{options}
 	selectedValue={value}
 	{menuId}
-	{width}
-	{fontSize}
 	{disabled}
 	{dropdownShown}
 	tooltip={'Select String (Input) Encoding'}
-	flexStyles={'flex: 0 1 auto;'}
-	on:changed={(e) => handleStringEncodingChanged(e.detail)}
+	on:selectedOptionChanged={handleStringEncodingChanged}
 />

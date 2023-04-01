@@ -1,17 +1,17 @@
 <script lang="ts">
-	import SvgIcon from '$lib/components/Icons/SvgIcon.svelte';
 	import type { RepoWithMetaData } from '$lib/types';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let project: RepoWithMetaData;
 </script>
 
 <div class="github-stats">
 	<a href={project.starsUrl} class="gh-url">
-		<SvgIcon icon={'star'} size={'16px'} />
+		<BasicIconRenderer icon={'star'} height={'16px'} />
 		<span class="stat">{project.starCount}</span>
 	</a>
 	<a href={project.forksUrl} class="gh-url">
-		<SvgIcon icon={'fork'} size={'16px'} />
+		<BasicIconRenderer icon={'fork'} height={'16px'} />
 		<span class="stat">{project.forkCount}</span>
 	</a>
 </div>

@@ -18,20 +18,32 @@
 	a {
 		font-size: 1.8rem;
 		color: var(--white-shade2);
+		background-color: var(--page-bg-color);
 		border-radius: 0;
+		transition: color 0.3s, background-color 0.3s;
 	}
-	a:hover,
+
+	a:hover {
+		color: hsl(76 100% 50%);
+		color: oklch(92.22% 0.244 126.84);
+		background-color: var(--page-bg-color);
+	}
+
 	a.active,
 	a.active:hover {
-		color: var(--accent-color);
+		color: hsl(76 100% 50%);
+		color: oklch(92.22% 0.244 126.84);
 	}
 
 	@media (min-width: 768px) {
 		a {
 			font-size: 1.1rem;
 		}
-		a.active {
-			border-bottom: 1px solid var(--accent-color);
+		a.active,
+		a.active:hover {
+			color: var(--page-bg-color);
+			background-color: hsl(76 100% 50%);
+			background-color: oklch(92.22% 0.244 126.84);
 		}
 	}
 </style>

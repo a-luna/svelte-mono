@@ -39,13 +39,13 @@
 		'optimize-vm-performance-windows10-visual-studio-vmware-fusion': Post15,
 		'packer-template-aws-ec2-ubuntu-nginx': Post16,
 		'parallel-async-csharp-best-practices-tpl': Post17,
-		'periodic-table-of-devops-tools': Post18
+		'periodic-table-of-devops-tools': Post18,
 	};
 </script>
 
 <div class="post-image">
 	<figure>
-		<img srcset={coverImages[slug]} type="image/jpeg" alt={caption} />
+		<img srcset={coverImages[slug]} alt={caption} />
 		<figcaption><p>{caption}</p></figcaption>
 	</figure>
 </div>

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ReturnRight from '$lib/components/Icons/ReturnRight.svelte';
+	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 </script>
 
-<kbd title="Return Key"><ReturnRight /><span>Return</span></kbd>
+<kbd title="Return Key"><BasicIconRenderer icon={'returnright'} /><span>Return</span></kbd>
 
 <style lang="postcss">
 	kbd {

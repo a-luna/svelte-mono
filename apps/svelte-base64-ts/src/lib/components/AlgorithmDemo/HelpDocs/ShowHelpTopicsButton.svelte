@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Minus from '$lib/components/Icons/Minus.svelte';
-	import Plus from '$lib/components/Icons/Plus.svelte';
+	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 
 	export let shown = false;
 </script>
@@ -13,9 +12,9 @@
 		title="Click to view a list of all help topics"
 	>
 		{#if shown}
-			<Minus />
+			<BasicIconRenderer icon={'minus'} />
 		{:else}
-			<Plus />
+			<BasicIconRenderer icon={'plus'} />
 		{/if}
 	</button>
 </div>

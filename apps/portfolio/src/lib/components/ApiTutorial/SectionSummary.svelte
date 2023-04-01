@@ -1,11 +1,10 @@
 <script lang="ts">
-	import type { TutorialSection } from '$lib/types';
-	import ArrowDown from '$lib/components/Icons/ArrowDown.svelte';
-	import Code from '$lib/components/Icons/Code.svelte';
 	import PreviewImage from '$lib/components/ApiTutorial/PreviewImage.svelte';
+	import type { TutorialSection } from '$lib/types';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let section: TutorialSection;
-	let slug: string = '';
+	let slug = '';
 	let href: string | undefined = '';
 	let lead: string | undefined = '';
 	let description: string | undefined = '';
@@ -31,23 +30,23 @@
 	</div>
 	<div class="section-summary">{description}</div>
 	<div class="github-links">
-		<div class="links-left">
+		<div class="links-left green">
 			<a href={url_git_rel_browse} title="View source for this tutorial section">
-				<div class="icon"><Code /></div>
+				<div class="icon"><BasicIconRenderer icon={'code'} /></div>
 				<span class="label">Code</span>
 			</a>
 			<a href={url_git_rel_diff} title="View source diff between this section and the previous">
-				<div class="icon"><Code /></div>
+				<div class="icon"><BasicIconRenderer icon={'code'} /></div>
 				<span class="label">Diff</span>
 			</a>
 		</div>
 		<div class="links-right">
 			<a href={url_git_rel_zip} title="Download source code for this tutorial section (.zip file)">
-				<div class="icon"><ArrowDown /></div>
+				<div class="icon"><BasicIconRenderer icon={'arrowdown'} /></div>
 				<span class="label">.zip</span>
 			</a>
 			<a href={url_git_rel_tar} title="Download source code for this tutorial section (.tar.gz file)">
-				<div class="icon"><ArrowDown /></div>
+				<div class="icon"><BasicIconRenderer icon={'arrowdown'} /></div>
 				<span class="label">.tar.gz</span>
 			</a>
 		</div>
@@ -68,7 +67,8 @@
 	}
 
 	.api-tutorial-section:hover {
-		border-color: var(--accent-color);
+		border-color: hsl(76 100% 50%);
+		border-color: oklch(92.22% 0.244 126.84);
 	}
 
 	h4 {
@@ -82,7 +82,6 @@
 	.section-name:hover {
 		font-size: 1.4rem;
 		font-weight: 400;
-		color: var(--accent-color);
 		background-color: var(--page-bg-color);
 		text-decoration: none;
 		line-height: 1.3;
@@ -155,25 +154,29 @@
 
 	.links-left a {
 		grid-template-columns: 1fr 20px 33px 1fr;
-		color: var(--green-icon);
+		color: hsl(76 100% 50%);
+		color: oklch(92.22% 0.244 126.84);
 		background-color: var(--black);
-		border: 1px solid var(--green-icon);
+		border: 1px solid currentColor;
 	}
 
 	.links-left a:hover {
-		background-color: var(--green-icon);
+		background-color: hsl(76 100% 50%);
+		background-color: oklch(92.22% 0.244 126.84);
 		color: var(--black);
 	}
 
 	.links-right a {
 		grid-template-columns: 1fr 13px 38px 1fr;
-		color: var(--blue-icon);
+		color: hsl(173.22 100% 65%);
+		color: oklch(90.73% 0.159 184.005);
 		background-color: var(--black);
-		border: 1px solid var(--blue-icon);
+		border: 1px solid currentColor;
 	}
 
 	.links-right a:hover {
-		background-color: var(--blue-icon);
+		background-color: hsl(173.22 100% 65%);
+		background-color: oklch(90.73% 0.159 184.005);
 		color: var(--black);
 	}
 

@@ -5,11 +5,11 @@
 	export let category: FilterSetting;
 
 	$: details = getFilterSettingDetails(category);
-	$: categoryColor = details ? `var(--${details.color}-icon)` : '--accent-color';
+	$: categoryColor = details ? details.color : 'accent-color';
 	$: displayName = details?.displayName;
 </script>
 
-<div class="project-category" style="color: {categoryColor}; border: 1px solid {categoryColor};">
+<div class="project-category {categoryColor}" style="border-width: 1px; border-style: solid;">
 	{displayName}
 </div>
 
@@ -19,5 +19,6 @@
 		background-color: inherit;
 		font-weight: 500;
 		line-height: 1;
+		
 	}
 </style>

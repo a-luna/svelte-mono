@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
-	import Chevron from '$lib/components/Icons/Chevron.svelte';
 	import { tutorialSections } from '$lib/stores';
 	import { getRandomHexString } from '$lib/util';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let id = `sec-${getRandomHexString(4)}`;
 	export let detailsElement: HTMLDetailsElement;
@@ -29,7 +29,7 @@
 <details id="tutorial-sections" bind:this={detailsElement} on:toggle={() => handleSectionToggled()}>
 	<summary>
 		<div class="summary-wrapper">
-			<div class="details-icon"><Chevron /></div>
+			<div class="details-icon"><BasicIconRenderer icon={'chevron'} /></div>
 			Tutorial Sections
 		</div>
 	</summary>

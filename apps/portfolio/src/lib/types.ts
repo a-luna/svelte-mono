@@ -1,40 +1,20 @@
 import type {
-	AllProjects,
 	AndroidMask,
 	AudioCassette,
-	Aws,
 	BoltSpellCast,
 	CyberEye,
-	Cypress,
-	Database,
 	DustCloud,
-	FastApi,
 	FireSilhouette,
-	Flask,
 	Heptagram,
 	HighFive,
-	Hugo,
-	Lxml,
-	Microsoft,
 	MoebiusStar,
-	NoTechFilter,
 	Orbital,
-	Puppeteer,
-	Python,
 	RamProfile,
-	Redis,
-	RegExp,
-	Shell,
 	Spatter,
-	Sqlite,
 	Stairs3D,
-	Svelte,
+	Summits,
 	SverdIFjell,
-	Tailwind,
 	Teleport,
-	TypeScript,
-	Xml,
-	XState
 } from '$lib/components/Icons';
 import type {
 	BACKEND_CATEGORIES,
@@ -43,22 +23,50 @@ import type {
 	HTTP_METHODS,
 	ICON_COLORS,
 	ICON_NAMES,
+	NAV_ICON_NAMES,
 	PROJECT_CATEGORIES,
 	PROJECT_TYPES,
 	REPO_NAMES,
-	TECH_LIST
+	TECH_LIST,
 } from '$lib/constants';
+import type { Asterisk as NoTechFilter } from '../../node_modules/@a-luna/shared-ui';
+import type {
+	Asterisk as AllProjects,
+	Code as Lxml,
+	Database,
+	ShellPrompt as Shell,
+} from '../../node_modules/@a-luna/shared-ui/components/Icons/Basic';
+import type {
+	Aws,
+	Cypress,
+	FastApi,
+	Flask,
+	Hugo,
+	Microsoft,
+	Playwright,
+	Puppeteer,
+	Python,
+	Redis,
+	RegExp,
+	Sqlite,
+	Svelte,
+	Tailwind,
+	TypeScript,
+	Xml,
+	XState,
+} from '../../node_modules/@a-luna/shared-ui/components/Icons/LanguageTech';
 
-export type HttpMethod = typeof HTTP_METHODS[number];
-export type HttpAuthType = typeof HTTP_AUTH_TYPES[number];
-export type IconName = typeof ICON_NAMES[number];
-export type IconColor = typeof ICON_COLORS[number];
-export type RepoName = typeof REPO_NAMES[number];
-export type ProjectType = typeof PROJECT_TYPES[number];
-export type FrontendCategory = typeof FRONTEND_CATEGORIES[number];
-export type BackendCategory = typeof BACKEND_CATEGORIES[number];
-export type ProjectCategory = typeof PROJECT_CATEGORIES[number];
-export type LanguageOrTech = typeof TECH_LIST[number];
+export type HttpMethod = (typeof HTTP_METHODS)[number];
+export type HttpAuthType = (typeof HTTP_AUTH_TYPES)[number];
+export type IconName = (typeof ICON_NAMES)[number];
+export type NavIconName = (typeof NAV_ICON_NAMES)[number];
+export type IconColor = (typeof ICON_COLORS)[number];
+export type RepoName = (typeof REPO_NAMES)[number];
+export type ProjectType = (typeof PROJECT_TYPES)[number];
+export type FrontendCategory = (typeof FRONTEND_CATEGORIES)[number];
+export type BackendCategory = (typeof BACKEND_CATEGORIES)[number];
+export type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
+export type LanguageOrTech = (typeof TECH_LIST)[number];
 export type FilterSetting = ProjectType | ProjectCategory | LanguageOrTech | '';
 
 export type HttpError = { status: number; message: string };
@@ -115,19 +123,14 @@ export interface CodeBlock {
 	lineNumberStart: number;
 }
 
-export interface BlogPost {
-	type: 'blog';
+export interface ProjectReadme {
 	content: string;
 	title: string;
-	subtitle: string;
 	description: string;
-	frontmatter: {
-		[key: string]: string;
-	};
 	hasToc: boolean;
 	toc?: TocSection[];
-	category: ProjectCategory;
-	language: LanguageOrTech;
+	category: ProjectCategory | '';
+	language: LanguageOrTech | '';
 	categories: ProjectCategory[];
 	techList: LanguageOrTech[];
 	canonical: string;
@@ -135,7 +138,15 @@ export interface BlogPost {
 	href?: string;
 	url?: string;
 	date: string;
-	coverImage: BlogResource;
+	coverImage?: BlogResource;
+	codeBlocks?: CodeBlock[];
+}
+
+export interface BlogPost extends ProjectReadme {
+	subtitle: string;
+	frontmatter: {
+		[key: string]: string;
+	};
 	resources: ResourceMap;
 	codeBlocks?: CodeBlock[];
 }
@@ -270,10 +281,11 @@ export interface RepoWithMetaData {
 	repoUrl: string;
 	starsUrl: string;
 	forksUrl: string;
-	primaryLanguage: FilterSetting;
-	primaryCategory: FilterSetting;
-	languages?: FilterSetting[];
-	categories?: FilterSetting[];
+	primaryLanguage: LanguageOrTech;
+	primaryCategory: ProjectType;
+	languages?: LanguageOrTech[];
+	categories?: ProjectCategory[];
+	updatedAt: string;
 }
 
 export interface CachedProjectData {
@@ -294,6 +306,7 @@ export type FilterSettingIcon =
 	| typeof Lxml
 	| typeof Microsoft
 	| typeof NoTechFilter
+	| typeof Playwright
 	| typeof Puppeteer
 	| typeof Python
 	| typeof Redis
@@ -320,6 +333,7 @@ export type NavIcon =
 	| typeof RamProfile
 	| typeof Spatter
 	| typeof Stairs3D
+	| typeof Summits
 	| typeof SverdIFjell
 	| typeof Teleport;
 

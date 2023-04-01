@@ -58,4 +58,8 @@
 		background-color: var(--button-disabled-bg-color);
 		border: 1px solid var(--button-disabled-border-color);
 	}
+	input:focus-visible,
+	input:focus:active {
+		outline-offset: 1px;
+	}
 </style>

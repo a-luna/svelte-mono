@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Menu from '$lib/components/Icons/Menu.svelte';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let open = false;
 </script>
@@ -15,7 +15,7 @@
 	on:click={() => (open = !open)}
 >
 	<div class="icon-wrapper">
-		<Menu />
+		<BasicIconRenderer icon={'menu'} />
 	</div>
 </button>
 

@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, test } from 'vitest';
 
-describe('base64 encoding demo', () => {
+describe('verify encoding process using AlgorithmDemo component', () => {
 	let container: HTMLElement;
 
 	afterEach(() => {

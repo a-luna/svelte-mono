@@ -28,7 +28,7 @@ If you _**DuckDuckGo**_ or _**bing!**_ the phrase "add search to static site", y
 
 I decided to document my Hugo/Lunr.js solution because unlike other guides I found while researching this subject, my implementation:
 
-<ul class="requirements teal" style="font-size: 0.9em">
+<ul class="requirements teal">
   <li>Uses Vanilla JS and does not require jQuery for DOM manipulation/JSON fetching functions.</li>
   <li>Generates the JSON page data file file whenever the site is built by creating a simple Hugo template, <strong>NOT</strong> by npm scripts you have to manually run or integrate with a CI process.</li>
   <li>
@@ -154,7 +154,7 @@ Create a file in the root of the `layouts` folder named `index.json` and add the
 
 Most of this should be self-explanatory. The only line that I am calling attention to is the `if` statement in **Line 3**. For my site, I have pages of types other than `post` that I need to make searchable, so my template includes these other page types with the code below:
 
-```go-html-template {linenos=table,hl_lines=[1],linenostart=3}
+```go-html-template {linenos=table,linenostart=3}
 {{- if in (slice "post" "flask_api_tutorial" "projects") $page.Type -}}
 ```
 
@@ -224,7 +224,7 @@ The Lunr search index is pretty important, so let's explain how it is built from
     <li><strong>Line 1: </strong><code>search.js</code> will have two global variables: <code>pagesIndex</code> will contain the JSON page data read in from <code>index.json</code>, and <code>searchIndex</code> will contain the Lunr.js search index.</li>
     <li><strong>Lines 5-6: </strong>The client asynchronously fetches <code>index.json</code>, and stores the list of page data in the <code>pagesIndex</code> global variable.</li>
     <li><strong>Line 7: </strong>The <a href="https://lunrjs.com/docs/lunr.html"><code>lunr</code> function is a convenience method</a> that creates a new search index from a list of documents. The search index itself is immutable, all documents to be searched must be provided at this time. It is not possible to add or remove documents after the search index has been created.</li>
-    <li><strong>Lines 8-10: </strong>Within the <code>lunr</code> function, the first thing we do is define specify all fields that need to be searchable. The set of possible fields are those that exist on the JSON objects stored in <code>pagesIndex</code>. We specify that three of the four fields available on our page objects (<code>title</code>, <code>categories</code> and <code>content</code>) contain text that should be available to search.</li>
+    <li><strong>Lines 8-10: </strong>Within the <code>lunr</code> function, the first thing we do is specify all fields that need to be searchable. The set of possible fields are those that exist on the JSON objects stored in <code>pagesIndex</code>. We specify that three of the four fields available on our page objects (<code>title</code>, <code>categories</code> and <code>content</code>) contain text that should be available to search.</li>
     <li><strong>Line 11: </strong>We specify that the remaining field, <code>href</code>, will be used as the identifier. When a search is performed, the list of results will contain the <code>href</code> value, and this value can be used with <code>pagesIndex</code> to retrieve the page title and content to construct the list of search results and render them as HTML.</li>
     <li><strong>Line 12: </strong>Finally, each page object is added to the Lunr search index. This is the only time that pages can be added to the index, since the Lunr search index object is immutable.
 {{< alert_box >}}
@@ -651,7 +651,7 @@ There is a lot of information contained within the code above, so please bear wi
       </ol>
       <p>For example, if the user entered <span class="bold-italics" style="color: var(--purple3)">vanilla javascript</span>, the <code>getLunrSearchQuery</code> function would produce <span class="bold-italics" style="color: var(--purple3)">+vanilla +javascript</span>. How does modifying the query string in this way change the search behavior? Again, from the Lunr.js docs:</p>
       <blockquote>To indicate that a term must be present in matching documents the term should be prefixed with a plus (+)</blockquote>
-      <p>In this example, the effect of the <code>getLunrSearchQuery</code> function changes the search behavior from <span class="bold-italics" style="color: var(--purple3)">documents containing vanilla <span class="emphasis" style="color: var(--purple3)">OR</span> javascript</span> to <span class="bold-italics" style="color: var(--purple3)">documents containing vanilla <span class="emphasis" style="color: var(--purple3)">AND</span> javascript</span>.</p>
+      <p>In this example, the effect of the <code>getLunrSearchQuery</code> function changes the search behavior from documents containing <span class="bold-italics" style="color: var(--purple3)">"vanilla"</span> <span class="emphasis">OR</span> <span class="bold-italics" style="color: var(--purple3)">"javascript"</span> to documents containing <span style="color: var(--purple3)">"vanilla"</span> <span class="emphasis">AND</span> <span style="color: var(--purple3)">"javascript"</span>.</p>
     </li>
     <li><strong>Lines 60-65: </strong>If the modified search query does not produce any results, we will re-try with the original version of the search query, since this will return results where <span class="emphasis">ANY</span> search term is present. Please note however, that <code>query</code> and <code>originalQuery</code> will be the same value if the user entered a single-word search query. In this case, we do not need to re-try the search and an empty list is returned.</li>
     <li>

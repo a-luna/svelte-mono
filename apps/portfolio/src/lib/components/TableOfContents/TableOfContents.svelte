@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
-	import Chevron from '$lib/components/Icons/Chevron.svelte';
 	import TocSection from '$lib/components/TableOfContents/TocSection.svelte';
 	import type { TocSection as TocSectionType } from '$lib/types';
 	import { getRandomHexString } from '$lib/util';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let toc: TocSectionType[];
 	export let detailsElement: HTMLDetailsElement | undefined = undefined;
@@ -29,23 +29,25 @@
 	});
 </script>
 
-<details id="table-of-contents" bind:this={detailsElement} on:toggle={() => handleSectionToggled()}>
-	<summary>
-		<div class="summary-wrapper">
-			<div class="details-icon"><Chevron /></div>
-			Table of Contents
-		</div>
-	</summary>
-	{#if open}
-		<div class="toc-wrapper" in:slide={{ duration: 300, delay: 100 }} out:slide={{ duration: 300, delay: 100 }}>
-			<ul>
-				{#each toc as section}
-					<TocSection {section} />
-				{/each}
-			</ul>
-		</div>
-	{/if}
-</details>
+{#if toc.length}
+	<details id="table-of-contents" bind:this={detailsElement} on:toggle={() => handleSectionToggled()}>
+		<summary>
+			<div class="summary-wrapper">
+				<div class="details-icon"><BasicIconRenderer icon={'chevron'} /></div>
+				Table of Contents
+			</div>
+		</summary>
+		{#if open}
+			<div class="toc-wrapper" in:slide={{ duration: 300, delay: 100 }} out:slide={{ duration: 300, delay: 100 }}>
+				<ul>
+					{#each toc as section}
+						<TocSection {section} />
+					{/each}
+				</ul>
+			</div>
+		{/if}
+	</details>
+{/if}
 
 <style lang="postcss">
 	#table-of-contents {
@@ -80,19 +82,13 @@
 		text-decoration: none;
 	}
 
-	#table-of-contents :global(a code:hover) {
-		color: var(--black-tint3);
-		background-color: var(--accent-color);
-		transition: all 350ms ease-out;
-	}
-
 	#table-of-contents :global(p) {
 		margin: 0;
 	}
 
 	.toc-wrapper ul {
 		list-style: square;
-		margin: 1rem 0 1rem 2.5rem;
+		padding: 1rem 0 1rem 1.5rem;
 	}
 
 	.toc-wrapper :global(ul > li::marker) {
@@ -117,7 +113,6 @@
 	}
 
 	#table-of-contents > summary {
-		display: list-item;
 		list-style: none;
 		color: var(--accent-color);
 		background-color: var(--toggle-group-bg-color);
@@ -126,9 +121,11 @@
 		padding: 11px 5px;
 		cursor: pointer;
 		white-space: nowrap;
+		transition: background-color 0.3s ease-in;
 	}
 
-	:global(.blog #table-of-contents > summary) {
+	:global(.blog #table-of-contents > summary),
+	:global(.readme #table-of-contents > summary) {
 		border: 2px solid var(--accent-color);
 	}
 
@@ -141,7 +138,6 @@
 
 	#table-of-contents[open] > summary {
 		color: var(--page-bg-color);
-		font-weight: 500;
 		background-color: var(--accent-color);
 	}
 
@@ -165,6 +161,9 @@
 
 	.toc-wrapper {
 		background-color: var(--toggle-group-bg-color);
-		border: 2px solid var(--accent-color);
+		border-top: none;
+		border-right: 2px solid var(--accent-color);
+		border-bottom: 2px solid var(--accent-color);
+		border-left: 2px solid var(--accent-color);
 	}
 </style>

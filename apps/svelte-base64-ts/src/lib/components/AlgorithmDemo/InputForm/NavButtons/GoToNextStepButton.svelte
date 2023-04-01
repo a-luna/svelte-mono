@@ -1,9 +1,9 @@
 <script lang="ts">
 	import NavButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButton.svelte';
-	import NextStep from '$lib/components/Icons/NextStep.svelte';
 	import { getAppContext } from '$lib/stores/context';
 	import type { EncodingStateToEventMap } from '$lib/types';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
+	import { BasicIconRenderer } from '../../../../../../node_modules/@a-luna/shared-ui';
 
 	export let buttonNumber: number = 0;
 	const { state } = getAppContext();
@@ -30,5 +30,5 @@
 	iconWidth={'11px'}
 	testId={'next-step-button'}
 >
-	<NextStep />
+	<BasicIconRenderer icon={'stepforward'} />
 </NavButton>

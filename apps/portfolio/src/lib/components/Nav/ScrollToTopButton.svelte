@@ -1,8 +1,8 @@
 <script lang="ts">
-	import DoubleUp from '../Icons/DoubleUp.svelte';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 </script>
 
-<a href="#top" title="Scroll To Top"><DoubleUp fill="var(--black)" /></a>
+<a href="#top" title="Scroll To Top"><BasicIconRenderer icon={'doubleup'} width={'100%'} height={'30px'} /></a>
 
 <style lang="postcss">
 	a {
@@ -12,6 +12,7 @@
 		width: 3rem;
 		height: 3rem;
 		border-radius: 50%;
+		color: var(--black);
 		background: var(--accent-color);
 		opacity: 0.5;
 		z-index: 3;

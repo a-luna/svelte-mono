@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { Hsl, parseHslColorFromString } from '$lib/hsl';
 	import { app } from '$lib/stores/app';
 	import type { ButtonColor, ButtonSize } from '$lib/types';
 	import { getCSSPropValue } from '$lib/util';
+	import { ColorParser, type HslColor } from '././../../../node_modules/@a-luna/shared-ui';
 
 	export let size: ButtonSize = 'sm';
 	export let color: ButtonColor = 'blue';
 	export let disabled = false;
 	export let width = 'auto';
-	export let testid: string = null;
-	let bgColor: Hsl;
+	export let testid = '';
+	let bgColor: HslColor;
 	let edgeGradient = '';
 
 	$: fontSize = size === 'xs' ? '0.75rem' : size === 'sm' ? '0.85rem' : size === 'md' ? '1rem' : '1.2rem';
@@ -18,19 +18,25 @@
 	$: colorName = color === 'pri' ? priColor : color === 'sec' ? secColor : color;
 	$: fgColorCssPropName = disabled ? '--button-disabled-text-color' : `--fg-color-on-${colorName}`;
 	$: bgColorCssPropName = disabled ? '--button-disabled-bg-color' : `--bg-color-${colorName}`;
-	$: if (typeof window !== 'undefined')
-		bgColor = parseHslColorFromString(getCSSPropValue(document.body, bgColorCssPropName));
+	$: if (typeof window !== 'undefined') {
+		const result = ColorParser.parse(getCSSPropValue(document.body, bgColorCssPropName));
+		if (result.success) {
+			bgColor = result.value.hsl;
+		}
+	}
 	$: if (bgColor)
-		edgeGradient = `linear-gradient(to left, hsl(${bgColor.hue}deg ${bgColor.saturation}% 16%) 0%, hsl(${bgColor.hue}deg ${bgColor.saturation}% 32%) 8%, hsl(${bgColor.hue}deg ${bgColor.saturation}% 32%) 92%, hsl(${bgColor.hue}deg ${bgColor.saturation}% 16%) 100%)`;
+		edgeGradient = `linear-gradient(to left, hsl(${bgColor.h}deg ${bgColor.s}% 16%) 0%, hsl(${bgColor.h}deg ${bgColor.s}% 32%) 8%, hsl(${bgColor.h}deg ${bgColor.s}% 32%) 92%, hsl(${bgColor.h}deg ${bgColor.s}% 16%) 100%)`;
 </script>
 
-<button {disabled} class="pushable" style="font-size: {fontSize}; width: {width}" data-testid={testid} on:click>
-	<span class="shadow" />
-	<span class="edge" style="background: {edgeGradient}" />
-	<span class="front" style="color: var({fgColorCssPropName}); background: var({bgColorCssPropName})">
-		<slot />
-	</span>
-</button>
+{#if bgColor}
+	<button {disabled} class="pushable" style="font-size: {fontSize}; width: {width}" data-testid={testid} on:click>
+		<span class="shadow" />
+		<span class="edge" style="background: {edgeGradient}" />
+		<span class="front" style="color: var({fgColorCssPropName}); background: var({bgColorCssPropName})">
+			<slot />
+		</span>
+	</button>
+{/if}
 
 <style lang="postcss">
 	.pushable {

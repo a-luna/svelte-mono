@@ -1,0 +1,165 @@
+const HEX_DIGIT = `[\\dA-Fa-f]`;
+const INT_OR_PERCENT = `(?:[1-9]?\\d(?:\\.\\d+)?)|100|(?:\\.\\d+)`;
+const EIGHT_BIT_INT = `(?:(?:1?[1-9]?\\d)|10\\d|(?:2[0-4]\\d)|25[0-5])?(?:\\.\\d+)?`;
+const DEGREE = `(?:(?:[12]?[1-9]?\\d)|[12]0\\d|(?:3[0-5]\\d))(?:\\.\\d+)?)|(?:\\.\\d+`;
+const TURN = `0|0?\\.\\d+`;
+const RADIAN = `(?:(?:[0-6](?:\\.\\d+)?)|(?:\\.\\d+))`;
+const INT_OR_FLOAT = `(?:\\d*(?:\\.\\d+)?)`;
+const POS_NEG_INT_OR_FLOAT = `-?${INT_OR_FLOAT}`;
+
+const R_HEX_1_REGEX = `(?<redHex1>${HEX_DIGIT})`;
+const R_HEX_2_REGEX = `(?<redHex2>${HEX_DIGIT})`;
+const R_HEX_3_REGEX = `(?<redHex3>${HEX_DIGIT})`;
+const R_HEX_4_REGEX = `(?<redHex4>${HEX_DIGIT})`;
+const R_HEX_5_REGEX = `(?<redHex5>${HEX_DIGIT})`;
+const R_HEX_6_REGEX = `(?<redHex6>${HEX_DIGIT})`;
+const G_HEX_1_REGEX = `(?<greenHex1>${HEX_DIGIT})`;
+const G_HEX_2_REGEX = `(?<greenHex2>${HEX_DIGIT})`;
+const G_HEX_3_REGEX = `(?<greenHex3>${HEX_DIGIT})`;
+const G_HEX_4_REGEX = `(?<greenHex4>${HEX_DIGIT})`;
+const G_HEX_5_REGEX = `(?<greenHex5>${HEX_DIGIT})`;
+const G_HEX_6_REGEX = `(?<greenHex6>${HEX_DIGIT})`;
+const B_HEX_1_REGEX = `(?<blueHex1>${HEX_DIGIT})`;
+const B_HEX_2_REGEX = `(?<blueHex2>${HEX_DIGIT})`;
+const B_HEX_3_REGEX = `(?<blueHex3>${HEX_DIGIT})`;
+const B_HEX_4_REGEX = `(?<blueHex4>${HEX_DIGIT})`;
+const B_HEX_5_REGEX = `(?<blueHex5>${HEX_DIGIT})`;
+const B_HEX_6_REGEX = `(?<blueHex6>${HEX_DIGIT})`;
+const A_HEX_1_REGEX = `(?<alphaHex1>${HEX_DIGIT})`;
+const A_HEX_2_REGEX = `(?<alphaHex2>${HEX_DIGIT})`;
+const A_HEX_3_REGEX = `(?<alphaHex3>${HEX_DIGIT})`;
+
+const RGB_HEX_1_REGEX = `(?:${R_HEX_1_REGEX}${G_HEX_1_REGEX}${B_HEX_1_REGEX})`;
+const RGB_HEX_2_3_REGEX = `(?:${R_HEX_2_REGEX}${R_HEX_3_REGEX}${G_HEX_2_REGEX}${G_HEX_3_REGEX}${B_HEX_2_REGEX}${B_HEX_3_REGEX})`;
+const RGBA_HEX_4_REGEX = `(?:${R_HEX_4_REGEX}${G_HEX_4_REGEX}${B_HEX_4_REGEX}${A_HEX_1_REGEX})`;
+const RGBA_HEX_5_6_REGEX = `(?:${R_HEX_5_REGEX}${R_HEX_6_REGEX}${G_HEX_5_REGEX}${G_HEX_6_REGEX}${B_HEX_5_REGEX}${B_HEX_6_REGEX}${A_HEX_2_REGEX}${A_HEX_3_REGEX})`;
+const RGB_HEX_RAW = `^#${RGB_HEX_1_REGEX}$|^#${RGB_HEX_2_3_REGEX}$`;
+const RGBA_HEX_RAW = `^#${RGBA_HEX_4_REGEX}$|^#${RGBA_HEX_5_6_REGEX}$`;
+
+const R_DEC_1_REGEX = `(?:(?:(?<redDecimal1>${EIGHT_BIT_INT}),\\s?))`;
+const R_DEC_2_REGEX = `(?:(?<redDecimal2>${EIGHT_BIT_INT})\\s)`;
+const R_DEC_3_REGEX = `(?:(?:(?<redDecimal3>${EIGHT_BIT_INT}),\\s?))`;
+const R_DEC_4_REGEX = `(?:(?<redDecimal4>${EIGHT_BIT_INT})\\s)`;
+const G_DEC_1_REGEX = `(?:(?:(?<greenDecimal1>${EIGHT_BIT_INT}),\\s?))`;
+const G_DEC_2_REGEX = `(?:(?<greenDecimal2>${EIGHT_BIT_INT})\\s)`;
+const G_DEC_3_REGEX = `(?:(?:(?<greenDecimal3>${EIGHT_BIT_INT}),\\s?))`;
+const G_DEC_4_REGEX = `(?:(?<greenDecimal4>${EIGHT_BIT_INT})\\s)`;
+const B_DEC_1_REGEX = `(?<blueDecimal1>${EIGHT_BIT_INT})`;
+const B_DEC_2_REGEX = `(?:(?:(?<blueDecimal2>${EIGHT_BIT_INT}),\\s?))`;
+const B_DEC_3_REGEX = `(?:(?<blueDecimal3>${EIGHT_BIT_INT})\\s)`;
+
+const R_PERC_1_REGEX = `(?:(?<redPercent1>${INT_OR_PERCENT})%,\\s?)`;
+const R_PERC_2_REGEX = `(?:(?<redPercent2>${INT_OR_PERCENT})%\\s)`;
+const R_PERC_3_REGEX = `(?:(?<redPercent3>${INT_OR_PERCENT})%,\\s?)`;
+const R_PERC_4_REGEX = `(?:(?<redPercent4>${INT_OR_PERCENT})%\\s)`;
+const G_PERC_1_REGEX = `(?:(?<greenPercent1>${INT_OR_PERCENT})%,\\s?)`;
+const G_PERC_2_REGEX = `(?:(?<greenPercent2>${INT_OR_PERCENT})%\\s)`;
+const G_PERC_3_REGEX = `(?:(?<greenPercent3>${INT_OR_PERCENT})%,\\s?)`;
+const G_PERC_4_REGEX = `(?:(?<greenPercent4>${INT_OR_PERCENT})%\\s)`;
+const B_PERC_1_REGEX = `(?<bluePercent1>${INT_OR_PERCENT})%`;
+const B_PERC_2_REGEX = `(?:(?<bluePercent2>${INT_OR_PERCENT})%,\\s?)`;
+const B_PERC_3_REGEX = `(?:(?<bluePercent3>${INT_OR_PERCENT})%\\s)`;
+const A_FLOAT_1_REGEX = `(?<alphaFloat1>0?\\.\\d+)`;
+const A_FLOAT_2_REGEX = `(?<alphaFloat2>[01])`;
+const A_PERC_REGEX = `(?<alphaPercent>${INT_OR_PERCENT})%`;
+
+const RGB_DEC_REGEX = `(?:(?:${R_DEC_1_REGEX}${G_DEC_1_REGEX}|(?:${R_DEC_2_REGEX})(?:${G_DEC_2_REGEX}))${B_DEC_1_REGEX})`;
+const RGB_PERC_REGEX = `(?:(?:${R_PERC_1_REGEX}${G_PERC_1_REGEX}|${R_PERC_2_REGEX}${G_PERC_2_REGEX})${B_PERC_1_REGEX})`;
+const RGB_RAW_REGEX = `^rgb\\((?:${RGB_DEC_REGEX}|${RGB_PERC_REGEX})\\)$`;
+const RGBA_DEC_A_REGEX = `(?:${R_DEC_3_REGEX}${G_DEC_3_REGEX}${B_DEC_2_REGEX})`;
+const RGBA_PERC_A_REGEX = `(?:${R_PERC_3_REGEX}${G_PERC_3_REGEX}${B_PERC_2_REGEX})`;
+const RGBA_A_REGEX = `(?:${RGBA_DEC_A_REGEX}|${RGBA_PERC_A_REGEX})`;
+const RGBA_DEC_B_REGEX = `(?:${R_DEC_4_REGEX}${G_DEC_4_REGEX}${B_DEC_3_REGEX})`;
+const RGBA_PERC_B_REGEX = `(?:${R_PERC_4_REGEX}${G_PERC_4_REGEX}${B_PERC_3_REGEX})`;
+const RGBA_B_REGEX = `(?:${RGBA_DEC_B_REGEX}|${RGBA_PERC_B_REGEX})\\/\\s`;
+const ALPHA_REGEX = `(?:${A_FLOAT_1_REGEX}|${A_FLOAT_2_REGEX}|${A_PERC_REGEX})`;
+const RGBA_RAW_REGEX = `^(?:rgb|rgba)\\((?:${RGBA_A_REGEX}|${RGBA_B_REGEX})${ALPHA_REGEX}\\)$`;
+
+const HUE_DEG_1_REGEX = `(?:(?<hueDegree1>${DEGREE}))(?:deg)?`;
+const HUE_DEG_2_REGEX = `(?:(?<hueDegree2>${DEGREE}))(?:deg)?`;
+const HUE_TURN_1_REGEX = `(?<hueTurn1>${TURN})turn`;
+const HUE_TURN_2_REGEX = `(?<hueTurn2>${TURN})turn`;
+const HUE_RAD_1_REGEX = `(?<hueRad1>${RADIAN})rad`;
+const HUE_RAD_2_REGEX = `(?<hueRad2>${RADIAN})rad`;
+const SAT_PERC_1_REGEX = `(?<satPercent1>${INT_OR_PERCENT})`;
+const SAT_PERC_2_REGEX = `(?<satPercent2>${INT_OR_PERCENT})`;
+const SAT_PERC_3_REGEX = `(?<satPercent3>${INT_OR_PERCENT})`;
+const SAT_PERC_4_REGEX = `(?<satPercent4>${INT_OR_PERCENT})`;
+const LIT_PERC_1_REGEX = `(?<lightPercent1>${INT_OR_PERCENT})`;
+const LIT_PERC_2_REGEX = `(?<lightPercent2>${INT_OR_PERCENT})`;
+const LIT_PERC_3_REGEX = `(?<lightPercent3>${INT_OR_PERCENT})`;
+const LIT_PERC_4_REGEX = `(?<lightPercent4>${INT_OR_PERCENT})`;
+
+const HUE_1_REGEX = `(?:${HUE_DEG_1_REGEX}|${HUE_TURN_1_REGEX}|${HUE_RAD_1_REGEX})`;
+const HUE_2_REGEX = `(?:${HUE_DEG_2_REGEX}|${HUE_TURN_2_REGEX}|${HUE_RAD_2_REGEX})`;
+const SAT_LIT_1_REGEX = `(?:,\\s?${SAT_PERC_1_REGEX}%)(?:,\\s?${LIT_PERC_1_REGEX}%)`;
+const SAT_LIT_2_REGEX = `(?:\\s${SAT_PERC_2_REGEX}%)(?:\\s${LIT_PERC_2_REGEX}%)`;
+const SAT_LIT_3_REGEX = `(?:,\\s?${SAT_PERC_3_REGEX}%)(?:,\\s?${LIT_PERC_3_REGEX}%)`;
+const SAT_LIT_4_REGEX = `(?:\\s${SAT_PERC_4_REGEX}%)(?:\\s${LIT_PERC_4_REGEX}%)`;
+const SAT_LIT_REGEX_1_2 = `(?:${SAT_LIT_1_REGEX}|${SAT_LIT_2_REGEX})`;
+const SAT_LIT_REGEX_3_4 = `(?:(?:${SAT_LIT_3_REGEX},\\s?)|(?:${SAT_LIT_4_REGEX}\\s\\/\\s))`;
+const HSL_RAW_REGEX = `^hsl\\(${HUE_1_REGEX}${SAT_LIT_REGEX_1_2}\\)$`;
+const HSLA_RAW_REGEX = `^(?:hsl|hsla)\\(${HUE_2_REGEX}${SAT_LIT_REGEX_3_4}${ALPHA_REGEX}\\)$`;
+const OKHSL_RAW_REGEX = `^okhsl\\(${HUE_1_REGEX}${SAT_LIT_REGEX_1_2}\\)$`;
+const OKHSLA_RAW_REGEX = `^okhsl\\(${HUE_2_REGEX}${SAT_LIT_REGEX_3_4}${ALPHA_REGEX}\\)$`;
+
+const L1_PERC_REGEX = `(?:(?<lightPercent1>${INT_OR_FLOAT})%\\s)`;
+const L2_PERC_REGEX = `(?:(?<lightPercent2>${INT_OR_FLOAT})%\\s)`;
+const L1_DEC_REGEX = `(?:(?<lightFloat1>${INT_OR_FLOAT})\\s)`;
+const L2_DEC_REGEX = `(?:(?<lightFloat2>${INT_OR_FLOAT})\\s)`;
+const C1_PERC_REGEX = `(?:(?<chromaPercent1>${INT_OR_FLOAT})%\\s)`;
+const C2_PERC_REGEX = `(?:(?<chromaPercent2>${INT_OR_FLOAT})%\\s)`;
+const C1_FLOAT_REGEX = `(?:(?<chromaFloat1>${INT_OR_FLOAT})\\s)`;
+const C2_FLOAT_REGEX = `(?:(?<chromaFloat2>${INT_OR_FLOAT})\\s)`;
+const HUE1_DEG_REGEX = `(?:(?<hueDegree1>${DEGREE}))(?:deg)?`;
+const HUE2_DEG_REGEX = `(?:(?<hueDegree2>${DEGREE}))(?:deg)?`;
+const HUE1_TURN_REGEX = `(?<hueTurn1>${TURN})turn`;
+const HUE2_TURN_REGEX = `(?<hueTurn2>${TURN})turn`;
+const HUE1_RAD_REGEX = `(?<hueRad1>${RADIAN})rad`;
+const HUE2_RAD_REGEX = `(?<hueRad2>${RADIAN})rad`;
+
+const LIGHT1_REGEX = `(?:${L1_PERC_REGEX}|${L1_DEC_REGEX})`;
+const LIGHT2_REGEX = `(?:${L2_PERC_REGEX}|${L2_DEC_REGEX})`;
+const CHROMA1_REGEX = `(?:${C1_PERC_REGEX}|${C1_FLOAT_REGEX})`;
+const CHROMA2_REGEX = `(?:${C2_PERC_REGEX}|${C2_FLOAT_REGEX})`;
+const HUE1_REGEX = `(?:${HUE1_DEG_REGEX}|${HUE1_TURN_REGEX}|${HUE1_RAD_REGEX})`;
+const HUE2_REGEX = `(?:(?:${HUE2_DEG_REGEX}|${HUE2_TURN_REGEX}|${HUE2_RAD_REGEX})\\s\\/\\s)`;
+const LCH1_REGEX = `^lch\\(${LIGHT1_REGEX}${CHROMA1_REGEX}${HUE1_REGEX}\\)$`;
+const LCH2_REGEX = `^lch\\(${LIGHT2_REGEX}${CHROMA2_REGEX}${HUE2_REGEX}${ALPHA_REGEX}\\)$`;
+const OKLCH1_REGEX = `^oklch\\(${LIGHT1_REGEX}${CHROMA1_REGEX}${HUE1_REGEX}\\)$`;
+const OKLCH2_REGEX = `^oklch\\(${LIGHT2_REGEX}${CHROMA2_REGEX}${HUE2_REGEX}${ALPHA_REGEX}\\)$`;
+
+const A1_AXIS_PERC_REGEX = `(?:(?<aaxisPercent1>${POS_NEG_INT_OR_FLOAT})%\\s)`;
+const A2_AXIS_PERC_REGEX = `(?:(?<aaxisPercent2>${POS_NEG_INT_OR_FLOAT})%\\s)`;
+const B1_AXIS_PERC_REGEX = `(?:(?<baxisPercent1>${POS_NEG_INT_OR_FLOAT})%)`;
+const B2_AXIS_PERC_REGEX = `(?:(?<baxisPercent2>${POS_NEG_INT_OR_FLOAT})%)`;
+const A1_AXIS_DEC_REGEX = `(?:(?<aaxisFloat1>${POS_NEG_INT_OR_FLOAT})\\s)`;
+const A2_AXIS_DEC_REGEX = `(?:(?<aaxisFloat2>${POS_NEG_INT_OR_FLOAT})\\s)`;
+const B1_AXIS_DEC_REGEX = `(?:(?<baxisFloat1>${POS_NEG_INT_OR_FLOAT}))`;
+const B2_AXIS_DEC_REGEX = `(?:(?<baxisFloat2>${POS_NEG_INT_OR_FLOAT}))`;
+
+const A_AXIS1_REGEX = `(?:${A1_AXIS_PERC_REGEX}|${A1_AXIS_DEC_REGEX})`;
+const A_AXIS2_REGEX = `(?:${A2_AXIS_PERC_REGEX}|${A2_AXIS_DEC_REGEX})`;
+const B_AXIS1_REGEX = `(?:${B1_AXIS_PERC_REGEX}|${B1_AXIS_DEC_REGEX})`;
+const B_AXIS2_REGEX = `(?:${B2_AXIS_PERC_REGEX}|${B2_AXIS_DEC_REGEX}\\s\\/\\s)`;
+const LAB1_REGEX = `^lab\\(${LIGHT1_REGEX}${A_AXIS1_REGEX}${B_AXIS1_REGEX}\\)$`;
+const LAB2_REGEX = `^lab\\(${LIGHT2_REGEX}${A_AXIS2_REGEX}${B_AXIS2_REGEX}${ALPHA_REGEX}\\)$`;
+const OKLAB1_REGEX = `^oklab\\(${LIGHT1_REGEX}${A_AXIS1_REGEX}${B_AXIS1_REGEX}\\)$`;
+const OKLAB2_REGEX = `^oklab\\(${LIGHT2_REGEX}${A_AXIS2_REGEX}${B_AXIS2_REGEX}${ALPHA_REGEX}\\)$`;
+
+export const HEX_REGEX = RegExp(`${RGB_HEX_RAW}|${RGBA_HEX_RAW}`, 'i');
+export const RGB_REGEX = RegExp(`${RGB_RAW_REGEX}|${RGBA_RAW_REGEX}`, 'i');
+export const HSL_REGEX = RegExp(`${HSL_RAW_REGEX}|${HSLA_RAW_REGEX}`, 'i');
+export const OKHSL_REGEX = RegExp(`${OKHSL_RAW_REGEX}|${OKHSLA_RAW_REGEX}`, 'i');
+export const LCH_REGEX = RegExp(`${LCH1_REGEX}|${LCH2_REGEX}`, 'i');
+export const OKLCH_REGEX = RegExp(`${OKLCH1_REGEX}|${OKLCH2_REGEX}`, 'i');
+export const LAB_REGEX = RegExp(`${LAB1_REGEX}|${LAB2_REGEX}`, 'i');
+export const OKLAB_REGEX = RegExp(`${OKLAB1_REGEX}|${OKLAB2_REGEX}`, 'i');
+
+export const HEX_VAL_NAME_REGEX = /(?<value>(?:alpha|blue|green|red))(?<numFormat>hex)/i;
+export const RGB_VAL_NAME_REGEX = /(?<value>(?:alpha|blue|green|red))(?<numFormat>(?:decimal|float|percent))/i;
+export const HSL_VAL_NAME_REGEX = /(?<value>(?:alpha|hue|light|sat))(?<numFormat>(?:degree|float|percent|rad|turn))/i;
+export const LCH_VAL_NAME_REGEX =
+	/(?<value>(?:alpha|chroma|hue|light))(?<numFormat>(?:degree|float|percent|rad|turn))/i;
+export const LAB_VAL_NAME_REGEX =
+	/(?<value>(?:aaxis|alpha|baxis|light))(?<numFormat>(?:degree|float|percent|rad|turn))/i;

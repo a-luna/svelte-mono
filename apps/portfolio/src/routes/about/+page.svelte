@@ -1,47 +1,35 @@
 <script lang="ts">
-	import ContentLayout from '$lib/components/ContentLayout.svelte';
-	import Code from '$lib/components/Icons/Code.svelte';
-	import Handshake from '$lib/components/Icons/Handshake.svelte';
-	import Keyboard from '$lib/components/Icons/Keyboard.svelte';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
-	import { SITE_TITLE, SITE_URL } from '$lib/siteConfig';
-	import type { BlogPost } from '$lib/types';
+	import { ICON_COLORS } from '$lib/constants';
+	import { SITE_URL } from '$lib/siteConfig';
+	import type { IconColor } from '$lib/types';
+	import { getRandomArrayItem } from '$lib/util';
+	import { BasicIconRenderer } from '../../../node_modules/@a-luna/shared-ui';
+	import LanguageTechIconRenderer from '../../../node_modules/@a-luna/shared-ui/components/Icons/LanguageTechIconRenderer.svelte';
+	import SocialIconRenderer from '../../../node_modules/@a-luna/shared-ui/components/Icons/SocialIconRenderer.svelte';
+	import {
+		BASIC_ICON_NAMES,
+		LANGTECH_ICON_NAMES,
+		SOCIAL_ICON_NAMES,
+	} from '../../../node_modules/@a-luna/shared-ui/constants';
+	import { NAV_ICONS, PROJECT_CATEGORY_ICONS } from '../../lib/components/Icons';
 
-	const content: BlogPost = {
-		type: 'blog',
-		content: '',
-		title: 'About Me',
-		subtitle: '',
-		description: '',
-		frontmatter: {},
-		hasToc: false,
-		category: 'allCategories',
-		language: 'allLanguages',
-		categories: [],
-		techList: [],
-		canonical: `${SITE_URL}/about`,
-		slug: 'about',
-		href: `${SITE_URL}/about`,
-		url: `${SITE_URL}/about`,
-		date: '',
-		coverImage: {
-			src: `${SITE_URL}/AaronLuna.jpg`,
-			name: 'Aaron Luna',
-			caption: 'Aaron Luna'
-		},
-		resources: {}
-	};
+	const getRandomIconColor = () =>
+		getRandomArrayItem<IconColor>(
+			ICON_COLORS.filter((icon) => icon !== 'default'),
+			'blue',
+		);
 </script>
 
 <SectionLayout section={'about'} title={'About Me'}>
 	<div class="my-photo"><img src="{SITE_URL}/AaronLuna.jpg" alt="" /></div>
 	<div class="about-me-bullets prose prose-invert">
-		<div class="bullet bullet-1"><Keyboard /></div>
+		<div class="bullet bullet-1"><BasicIconRenderer icon={'keyboard'} /></div>
 		<span class="about-me-1"
 			>I am a software engineer living and working in Reno, NV. I enjoy music and sports (especially baseball and
 			basketball) and I am especially interested in the changing landscape of legalized gambling on sporting events.</span
 		>
-		<div class="bullet bullet-2"><Code /></div>
+		<div class="bullet bullet-2"><BasicIconRenderer icon={'code'} /></div>
 		<span class="about-me-2"
 			>I have 10+ years of experience developing software, starting out as a <strong>C#</strong>
 			programmer before moving to web development in 2016. Whenever possible, I prefer to work with vanilla
@@ -64,19 +52,98 @@
 				<strong>SQLAlchemy</strong>.</span
 			></span
 		>
-		<div class="bullet bullet-3"><Handshake /></div>
+		<div class="bullet bullet-3"><BasicIconRenderer icon={'handshake'} /></div>
 		<span class="about-me-3"
 			>I am always interested in hearing about new opportunities and taking on new projects, feel free to contact me
 			<a href="mailto:contact@aaronluna.dev" target="_blank" rel="noreferrer">via email</a>,
 			<a href="https://www.linkedin.com/in/aaron-luna-reno-nv/" target="_blank" rel="noreferrer">LinkedIn</a>
-			or <a href="https://twitter.com/alunablog/" target="_blank" rel="noreferrer">Twitter</a>. You can take a look at
-			my
+			or <a href="https://twitter.com/aaronlunadev/" target="_blank" rel="noreferrer">Twitter</a>. You can take a look
+			at my
 			<a href="https://github.com/a-luna" target="_blank" rel="noreferrer">github profile</a> to see my personal projects.</span
 		>
+	</div>
+
+	<div class="icon-showcase">
+		{#each Object.entries(PROJECT_CATEGORY_ICONS) as [name, icon]}
+			<div class="icon-item">
+				<div class="icon-display {getRandomIconColor()}">
+					<svelte:component this={icon} />
+				</div>
+				<span class="icon-name">{name}</span>
+			</div>
+		{/each}
+	</div>
+	<div class="icon-showcase">
+		{#each LANGTECH_ICON_NAMES as name}
+			<div class="icon-item {getRandomIconColor()}">
+				<LanguageTechIconRenderer icon={name} height={'97px'} />
+				<span class="icon-name">{name}</span>
+			</div>
+		{/each}
+	</div>
+	<div class="icon-showcase">
+		{#each Object.entries(NAV_ICONS) as [name, icon]}
+			<div class="icon-item">
+				<div class="icon-display {getRandomIconColor()}">
+					<svelte:component this={icon} />
+				</div>
+				<span class="icon-name">{name}</span>
+			</div>
+		{/each}
+	</div>
+	<div class="icon-showcase">
+		{#each SOCIAL_ICON_NAMES as name}
+			<div class="icon-item {getRandomIconColor()}">
+				<SocialIconRenderer icon={name} height={'97px'} />
+				<span class="icon-name">{name}</span>
+			</div>
+		{/each}
+	</div>
+	<div class="icon-showcase">
+		{#each BASIC_ICON_NAMES as name}
+			<div class="icon-item {getRandomIconColor()}">
+				<BasicIconRenderer icon={name} height={'97px'} />
+				<span class="icon-name">{name}</span>
+			</div>
+		{/each}
 	</div>
 </SectionLayout>
 
 <style lang="postcss">
+	.icon-showcase {
+		display: grid;
+		grid-template-columns: repeat(5, 140px);
+		grid-auto-rows: calc(140px + 45px);
+		gap: 0.5rem;
+		margin: 0.5rem auto;
+		--grid-width: calc(5 * 140px);
+		--gap-widths: calc(4 * 0.5rem);
+		width: calc(var(--grid-width) + var(--gap-widths));
+	}
+
+	.icon-item {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 1fr;
+		border: 1px solid var(--dark-gray-shade1);
+		padding: 0.5rem;
+	}
+
+	.icon-display {
+		width: 97px;
+		place-self: start center;
+	}
+
+	.icon-name {
+		color: var(--body-text);
+		word-break: break-all;
+		font-size: 1.1rem;
+		font-weight: 700;
+		place-self: center;
+		line-height: 1;
+		flex: 1;
+	}
+
 	.about-me-bullets {
 		display: grid;
 		grid-template-columns: auto 1fr;

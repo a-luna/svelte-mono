@@ -25,9 +25,9 @@
 
 	$: if ($state.context.autoplay && $state.value) eventLog.add({ type: 'AUTOPLAYING' });
 	$: if (inputText) updateInputText(inputText, inputTextEncoding, outputBase64Encoding);
-	$: if ($demoState.errorOccurred) $alert = $state.context.input.validationResult.error.message;
+	$: if ($demoState.errorOccurred) $alert = $state.context.input.validationResult.error?.message ?? '';
 	$: if ($demoState.startedSubProcess) {
-		$demoUIState.highlightHexByte = null;
+		$demoUIState.highlightHexByte = undefined;
 		$demoUIState.highlightBase64 = '';
 	}
 	$: if ($state.matches({ encodeInput: 'autoPlayEncodeByte' }) || $state.matches({ encodeInput: 'encodeByte' })) {

@@ -1,8 +1,7 @@
 <script lang="ts">
-	import ArrowLeft from '$lib/components/Icons/ArrowLeft.svelte';
-	import ArrowRight from '$lib/components/Icons/ArrowRight.svelte';
 	import { tutorialSectionNumberMap } from '$lib/stores';
 	import type { TutorialSectionNumberMap } from '$lib/types';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 
 	export let slug: string;
 	export let compact = false;
@@ -12,7 +11,7 @@
 		lead: 'Project Overview',
 		slug: 'overview',
 		series_weight: 0,
-		series_part: 'Overview'
+		series_part: 'Overview',
 	};
 
 	$: flexStyle = compact ? 'flex-flow: row nowrap;' : 'flex-flow: column nowrap;';
@@ -42,7 +41,7 @@
 	<div class="post-nav-prev">
 		{#if previous}
 			<a href={previous.slug} style={prevLinkStyles}>
-				<div class="icon icon-prev" style={iconStyles}><ArrowLeft /></div>
+				<div class="icon icon-prev" style={iconStyles}><BasicIconRenderer icon={'arrowleft'} /></div>
 				<span class="prev-post-title post-title">{previousLabel}</span>
 			</a>
 		{/if}
@@ -51,7 +50,7 @@
 		{#if next}
 			<a href={next.slug} style={nextLinkStyles}>
 				<span class="prev-post-title post-title">{nextLabel}</span>
-				<div class="icon icon-next" style={iconStyles}><ArrowRight /></div>
+				<div class="icon icon-next" style={iconStyles}><BasicIconRenderer icon={'arrowright'} /></div>
 			</a>
 		{/if}
 	</div>

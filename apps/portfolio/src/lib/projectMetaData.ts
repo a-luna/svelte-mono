@@ -1,112 +1,112 @@
-import type { CachedProjectData, FilterSetting, GHRepo, LanguageOrTech, RepoWithMetaData } from '$lib/types';
-import { isUserRepo } from '$lib/util';
 import { nullRepoWithMetadata } from '$lib/constants';
-import { addHours, parseISO, isWithinInterval } from 'date-fns';
+import type { CachedProjectData, GHRepo, LanguageOrTech, ProjectCategory, RepoWithMetaData } from '$lib/types';
+import { isUserRepo } from '$lib/util';
+import { addHours, isWithinInterval, parseISO } from 'date-fns';
 
 export const repoDataDepot: {
 	[key: string]: {
 		primaryLanguage: LanguageOrTech;
 		primaryCategory: 'frontend' | 'backend';
 		languages: LanguageOrTech[];
-		categories: FilterSetting[];
+		categories: ProjectCategory[];
 	};
 } = {
 	'aaronluna.dev': {
 		primaryLanguage: 'Hugo',
 		primaryCategory: 'frontend',
 		languages: [],
-		categories: ['blog_portfolio_sites', 'frontend']
+		categories: ['blog_portfolio_sites'],
 	},
 	'async-file-server': {
 		primaryLanguage: 'CSharp',
 		primaryCategory: 'backend',
 		languages: [],
-		categories: ['backend', 'cli_apps']
+		categories: ['cli_apps'],
 	},
 	'console-progress-bar': {
 		primaryLanguage: 'CSharp',
 		primaryCategory: 'backend',
 		languages: [],
-		categories: ['backend', 'cli_apps']
+		categories: ['cli_apps'],
 	},
 	'dotnetcore-crypto': {
 		primaryLanguage: 'CSharp',
 		primaryCategory: 'backend',
 		languages: [],
-		categories: ['backend', 'cryptography']
+		categories: ['cryptography'],
 	},
 	'fastapi-redis-cache': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['Redis', 'FastAPI'],
-		categories: ['backend', 'dev_tools', 'fastapi_plugins']
+		categories: ['dev_tools', 'fastapi_plugins'],
 	},
 	'flask-api-tutorial': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['Flask', 'Hugo', 'SQLAlchemy', 'SQLite'],
-		categories: ['backend', 'docs_guides', 'api_development']
+		categories: ['docs_guides', 'rest_api'],
 	},
 	'packer-examples': {
 		primaryLanguage: 'Shell',
 		primaryCategory: 'backend',
 		languages: ['AWS'],
-		categories: ['backend', 'dev_tools', 'devops']
+		categories: ['dev_tools', 'devops'],
 	},
 	'svelte-base64-ts': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
-		languages: ['Puppeteer', 'TypeScript', 'XState'],
-		categories: ['frontend', 'web_app']
+		languages: ['Playwright', 'TypeScript', 'XState'],
+		categories: ['web_app'],
 	},
 	'svelte-base64': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['Cypress'],
-		categories: ['frontend', 'web_app']
+		categories: ['web_app'],
 	},
 	'svelte-color-tools': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['RegExp', 'TailwindCSS', 'TypeScript'],
-		categories: ['frontend', 'component_library']
+		categories: ['component_library'],
 	},
 	'svelte-simple-tables-docs': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TailwindCSS', 'TypeScript'],
-		categories: ['docs_guides', 'frontend', 'web_app', 'component_library']
+		categories: ['docs_guides', 'web_app', 'component_library'],
 	},
 	'svelte-simple-tables': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TypeScript'],
-		categories: ['frontend', 'component_library']
+		categories: ['component_library'],
 	},
 	'unicode-api': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['FastAPI', 'Pydantic'],
-		categories: ['api_development', 'backend']
+		categories: ['rest_api'],
 	},
 	'vig-api': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['FastAPI', 'Pydantic'],
-		categories: ['api_development', 'backend']
+		categories: ['rest_api'],
 	},
 	'vig-data': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TypeScript'],
-		categories: ['frontend', 'web_app']
+		categories: ['web_app'],
 	},
 	vigorish: {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['AWS', 'lxml', 'Puppeteer', 'RegExp', 'SQLAlchemy', 'SQLite', 'XPath'],
-		categories: ['backend', 'cli_apps', 'web_scraping']
-	}
+		categories: ['cli_apps', 'web_scraping'],
+	},
 };
 
 export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
@@ -120,9 +120,10 @@ export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
 				starsUrl: project.stargazers_url,
 				forksUrl: project.forks_url,
 				primaryLanguage: repoDataDepot?.[project.name]?.primaryLanguage ?? 'allLanguages',
-				primaryCategory: repoDataDepot?.[project.name]?.primaryCategory ?? 'allCategories',
+				primaryCategory: repoDataDepot?.[project.name]?.primaryCategory ?? 'allProjects',
 				languages: repoDataDepot?.[project.name]?.languages ?? ['allLanguages'],
-				categories: repoDataDepot?.[project.name]?.categories ?? ['allCategories']
+				categories: repoDataDepot?.[project.name]?.categories ?? ['allCategories'],
+				updatedAt: project.updated_at || new Date().toISOString(),
 		  }
 		: nullRepoWithMetadata;
 
@@ -151,7 +152,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 2,
 		html_url: 'https://github.com/a-luna/aaronluna.dev',
 		stargazers_url: 'https://api.github.com/repos/a-luna/aaronluna.dev/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/aaronluna.dev/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/aaronluna.dev/forks',
 	},
 	{
 		name: 'aaronluna.dev-v2',
@@ -160,7 +161,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/aaronluna.dev-v2',
 		stargazers_url: 'https://api.github.com/repos/a-luna/aaronluna.dev-v2/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/aaronluna.dev-v2/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/aaronluna.dev-v2/forks',
 	},
 	{
 		name: 'async-file-server',
@@ -170,7 +171,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 7,
 		html_url: 'https://github.com/a-luna/async-file-server',
 		stargazers_url: 'https://api.github.com/repos/a-luna/async-file-server/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/async-file-server/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/async-file-server/forks',
 	},
 	{
 		name: 'bookit',
@@ -179,7 +180,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/bookit',
 		stargazers_url: 'https://api.github.com/repos/a-luna/bookit/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/bookit/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/bookit/forks',
 	},
 	{
 		name: 'bullet',
@@ -188,7 +189,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/bullet',
 		stargazers_url: 'https://api.github.com/repos/a-luna/bullet/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/bullet/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/bullet/forks',
 	},
 	{
 		name: 'console-progress-bar',
@@ -198,7 +199,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 10,
 		html_url: 'https://github.com/a-luna/console-progress-bar',
 		stargazers_url: 'https://api.github.com/repos/a-luna/console-progress-bar/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/console-progress-bar/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/console-progress-bar/forks',
 	},
 	{
 		name: 'dotnetcore-crypto',
@@ -208,7 +209,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/dotnetcore-crypto',
 		stargazers_url: 'https://api.github.com/repos/a-luna/dotnetcore-crypto/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/dotnetcore-crypto/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/dotnetcore-crypto/forks',
 	},
 	{
 		name: 'fastapi-redis-cache',
@@ -218,7 +219,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 18,
 		html_url: 'https://github.com/a-luna/fastapi-redis-cache',
 		stargazers_url: 'https://api.github.com/repos/a-luna/fastapi-redis-cache/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/fastapi-redis-cache/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/fastapi-redis-cache/forks',
 	},
 	{
 		name: 'flask-api-tutorial',
@@ -228,7 +229,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 13,
 		html_url: 'https://github.com/a-luna/flask-api-tutorial',
 		stargazers_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial/forks',
 	},
 	{
 		name: 'flask-api-tutorial-old',
@@ -238,7 +239,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/flask-api-tutorial-old',
 		stargazers_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial-old/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial-old/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial-old/forks',
 	},
 	{
 		name: 'flask-restapi-jwt',
@@ -247,7 +248,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/flask-restapi-jwt',
 		stargazers_url: 'https://api.github.com/repos/a-luna/flask-restapi-jwt/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/flask-restapi-jwt/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/flask-restapi-jwt/forks',
 	},
 	{
 		name: 'flask-restplus',
@@ -256,7 +257,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/flask-restplus',
 		stargazers_url: 'https://api.github.com/repos/a-luna/flask-restplus/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/flask-restplus/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/flask-restplus/forks',
 	},
 	{
 		name: 'glyphhanger',
@@ -266,7 +267,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/glyphhanger',
 		stargazers_url: 'https://api.github.com/repos/a-luna/glyphhanger/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/glyphhanger/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/glyphhanger/forks',
 	},
 	{
 		name: 'hugo-lunr',
@@ -275,7 +276,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/hugo-lunr',
 		stargazers_url: 'https://api.github.com/repos/a-luna/hugo-lunr/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/hugo-lunr/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/hugo-lunr/forks',
 	},
 	{
 		name: 'packer-examples',
@@ -285,7 +286,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 9,
 		html_url: 'https://github.com/a-luna/packer-examples',
 		stargazers_url: 'https://api.github.com/repos/a-luna/packer-examples/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/packer-examples/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/packer-examples/forks',
 	},
 	{
 		name: 'portfolio-site',
@@ -294,7 +295,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/portfolio-site',
 		stargazers_url: 'https://api.github.com/repos/a-luna/portfolio-site/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/portfolio-site/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/portfolio-site/forks',
 	},
 	{
 		name: 'python-playground',
@@ -303,7 +304,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/python-playground',
 		stargazers_url: 'https://api.github.com/repos/a-luna/python-playground/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/python-playground/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/python-playground/forks',
 	},
 	{
 		name: 'smui-example-sveltekit',
@@ -312,7 +313,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/smui-example-sveltekit',
 		stargazers_url: 'https://api.github.com/repos/a-luna/smui-example-sveltekit/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/smui-example-sveltekit/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/smui-example-sveltekit/forks',
 	},
 	{
 		name: 'svelte-base64',
@@ -322,7 +323,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 2,
 		html_url: 'https://github.com/a-luna/svelte-base64',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-base64/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-base64/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/svelte-base64/forks',
 	},
 	{
 		name: 'svelte-base64-ts',
@@ -331,7 +332,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/svelte-base64-ts',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-base64-ts/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-base64-ts/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/svelte-base64-ts/forks',
 	},
 	{
 		name: 'svelte-color-tools',
@@ -340,7 +341,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/svelte-color-tools',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-color-tools/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-color-tools/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/svelte-color-tools/forks',
 	},
 	{
 		name: 'svelte-simple-datatables',
@@ -349,7 +350,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/svelte-simple-datatables',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-simple-datatables/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-datatables/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-datatables/forks',
 	},
 	{
 		name: 'svelte-simple-tables',
@@ -358,7 +359,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/svelte-simple-tables',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables/forks',
 	},
 	{
 		name: 'svelte-simple-tables-docs',
@@ -368,7 +369,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/svelte-simple-tables-docs',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables-docs/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables-docs/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables-docs/forks',
 	},
 	{
 		name: 'svelte-toy',
@@ -377,7 +378,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/svelte-toy',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-toy/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-toy/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/svelte-toy/forks',
 	},
 	{
 		name: 'unicode-api',
@@ -386,7 +387,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/unicode-api',
 		stargazers_url: 'https://api.github.com/repos/a-luna/unicode-api/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/unicode-api/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/unicode-api/forks',
 	},
 	{
 		name: 'utterances',
@@ -395,7 +396,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/utterances',
 		stargazers_url: 'https://api.github.com/repos/a-luna/utterances/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/utterances/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/utterances/forks',
 	},
 	{
 		name: 'vig-api',
@@ -404,7 +405,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/vig-api',
 		stargazers_url: 'https://api.github.com/repos/a-luna/vig-api/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/vig-api/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/vig-api/forks',
 	},
 	{
 		name: 'vig-data',
@@ -414,7 +415,7 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/vig-data',
 		stargazers_url: 'https://api.github.com/repos/a-luna/vig-data/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/vig-data/forks'
+		forks_url: 'https://api.github.com/repos/a-luna/vig-data/forks',
 	},
 	{
 		name: 'vigorish',
@@ -423,13 +424,13 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_count: 2,
 		html_url: 'https://github.com/a-luna/vigorish',
 		stargazers_url: 'https://api.github.com/repos/a-luna/vigorish/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/vigorish/forks'
-	}
+		forks_url: 'https://api.github.com/repos/a-luna/vigorish/forks',
+	},
 ];
 
 export const initializeProjectData = (): CachedProjectData => ({
 	repos: convertGHRepos(cachedUserRepos),
-	cachedAt: new Date(0).toISOString()
+	cachedAt: new Date(0).toISOString(),
 });
 
 export const convertGHRepos = (ghRepos: GHRepo[]): RepoWithMetaData[] =>

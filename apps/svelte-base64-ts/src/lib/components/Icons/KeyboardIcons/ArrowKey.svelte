@@ -1,6 +1,5 @@
 <script lang="ts">
-	import ArrowLeft from '$lib/components/Icons/ArrowLeft.svelte';
-	import ArrowRight from '$lib/components/Icons/ArrowRight.svelte';
+	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 
 	export let arrow: 'left' | 'right';
 	export let size: 'sm' | 'md' | 'lg' = 'lg';
@@ -12,9 +11,9 @@
 
 <kbd title={tooltip} {style}>
 	{#if arrow === 'left'}
-		<ArrowLeft />
+		<BasicIconRenderer icon={'arrowleft'} />
 	{:else if arrow === 'right'}
-		<ArrowRight />
+		<BasicIconRenderer icon={'arrowright'} />
 	{/if}
 </kbd>
 

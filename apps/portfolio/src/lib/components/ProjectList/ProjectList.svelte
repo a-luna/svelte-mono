@@ -2,29 +2,40 @@
 	import ProjectCard from '$lib/components/ProjectCard/ProjectCard.svelte';
 	import FilterControls from '$lib/components/ProjectList/FilterControls.svelte';
 	import FilterList from '$lib/components/ProjectList/FilterList.svelte';
+	import { PROJECT_TYPES } from '$lib/constants';
 	import { getFilterSettingDetails } from '$lib/filterSettings';
-	import type { FilterSetting, RepoWithMetaData } from '$lib/types';
+	import type { LanguageOrTech, ProjectCategory, ProjectType, RepoWithMetaData } from '$lib/types';
+	import { slugify } from '$lib/util';
 	import { slide } from 'svelte/transition';
 
 	export let allRepos: RepoWithMetaData[];
-	let filterProjectType: FilterSetting = 'allProjects';
-	let filterCategory: FilterSetting = 'allCategories';
-	let filterLanguage: FilterSetting = 'allLanguages';
+	let filterProjectType: ProjectType = 'allProjects';
+	let filterCategory: ProjectCategory = 'allCategories';
+	let filterLanguage: LanguageOrTech = 'allLanguages';
 	let filtered: RepoWithMetaData[] = [];
 	let showFilters = false;
+
+	let projectTypes = [...PROJECT_TYPES].filter((type) => type !== 'allProjects');
+	let categories = [...new Set(allRepos.map((repo) => repo.categories).flat())]
+		.filter((category): category is ProjectCategory => !!category)
+		.filter((category) => !PROJECT_TYPES.includes(category as ProjectType));
+	let languages = [...new Set(allRepos.map((repo) => repo.languages).flat())].filter(
+		(lang): lang is LanguageOrTech => !!lang,
+	);
 
 	$: filterApplied =
 		filterProjectType !== 'allProjects' || filterCategory !== 'allCategories' || filterLanguage !== 'allLanguages';
 	$: if (filterProjectType || filterCategory || filterLanguage) {
-		filterProjects(allRepos, filterProjectType, filterCategory, filterLanguage);
+		filtered = filterProjects(allRepos, filterProjectType, filterCategory, filterLanguage);
+		[projectTypes, categories, languages] = updateFilterSettings(filtered);
 	}
 	$: description = getFilterDescription(filtered, filterProjectType, filterCategory, filterLanguage);
 
 	function getFilterDescription(
 		projects: RepoWithMetaData[],
-		type: FilterSetting,
-		category: FilterSetting,
-		language: FilterSetting
+		type: ProjectType,
+		category: ProjectCategory,
+		language: LanguageOrTech,
 	): string {
 		const projectPlural = projects.length === 1 ? ' project' : ' projects';
 		const involvePlural = projects.length === 1 ? ' involves' : ' involve';
@@ -48,10 +59,10 @@
 
 	function filterProjects(
 		projects: RepoWithMetaData[],
-		type: FilterSetting,
-		category: FilterSetting,
-		language: FilterSetting
-	) {
+		type: ProjectType,
+		category: ProjectCategory,
+		language: LanguageOrTech,
+	): RepoWithMetaData[] {
 		filtered = [...projects];
 		if (type && type !== 'allProjects') {
 			filtered = filtered.filter((project) => project.primaryCategory === type);
@@ -61,9 +72,29 @@
 		}
 		if (language && language !== 'allLanguages') {
 			filtered = filtered.filter(
-				(project) => project.primaryLanguage === language || project.languages?.includes(language)
+				(project) => project.primaryLanguage === language || project.languages?.includes(language),
 			);
 		}
+		return filtered;
+	}
+
+	function updateFilterSettings(projects: RepoWithMetaData[]): [ProjectType[], ProjectCategory[], LanguageOrTech[]] {
+		const filteredTypes = [...new Set(projects.map((repo) => repo.primaryCategory))].filter(
+			(type) => type !== 'allProjects',
+		);
+
+		const filteredCategories = [...new Set(projects.map((repo) => repo.categories).flat())]
+			.filter((category): category is ProjectCategory => !!category)
+			.filter((category) => !PROJECT_TYPES.includes(category as ProjectType))
+			.sort((a, b) => slugify(a).localeCompare(slugify(b)));
+
+		const filteredLanguages = [
+			...new Set([...projects.map((repo) => repo.languages).flat(), ...projects.map((repo) => repo.primaryLanguage)]),
+		]
+			.filter((lang): lang is LanguageOrTech => !!lang)
+			.sort((a, b) => slugify(a).localeCompare(slugify(b)));
+
+		return [filteredTypes, filteredCategories, filteredLanguages];
 	}
 
 	function resetFilter() {
@@ -79,7 +110,14 @@
 	</div>
 	{#if showFilters}
 		<div transition:slide={{ duration: 500 }} class="project-list-filter-wrapper">
-			<FilterList bind:filterProjectType bind:filterCategory bind:filterLanguage />
+			<FilterList
+				{projectTypes}
+				{categories}
+				{languages}
+				bind:filterProjectType
+				bind:filterCategory
+				bind:filterLanguage
+			/>
 		</div>
 	{/if}
 	<span class="total-results">{description}</span>

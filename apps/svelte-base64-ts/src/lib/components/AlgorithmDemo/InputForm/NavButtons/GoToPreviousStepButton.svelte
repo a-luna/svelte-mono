@@ -1,7 +1,7 @@
 <script lang="ts">
 	import NavButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButton.svelte';
-	import PreviousStep from '$lib/components/Icons/PreviousStep.svelte';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
+	import { BasicIconRenderer } from '../../../../../../node_modules/@a-luna/shared-ui';
 
 	export let buttonNumber: number = 0;
 	let defaultNavAction: EncodingEvent = { type: 'GO_TO_PREV_STEP' };
@@ -15,5 +15,5 @@
 	iconWidth={'11px'}
 	testId={'previous-step-button'}
 >
-	<PreviousStep />
+	<BasicIconRenderer icon={'stepbackward'} />
 </NavButton>

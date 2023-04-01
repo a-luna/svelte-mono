@@ -1,15 +1,13 @@
 <script lang="ts">
-	import CircleFull from '$lib/components/Icons/CircleFull.svelte';
-	import CircleOutline from '$lib/components/Icons/CircleOutline.svelte';
-
+	import { BasicIconRenderer } from '../../../../../node_modules/@a-luna/shared-ui';
 	export let expanded: boolean;
 </script>
 
 <div class="list-icon">
 	{#if expanded}
-		<CircleFull />
+		<BasicIconRenderer icon={'circlefull'} />
 	{:else}
-		<CircleOutline />
+		<BasicIconRenderer icon={'circleoutline'} />
 	{/if}
 </div>
 

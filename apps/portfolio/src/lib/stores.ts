@@ -1,15 +1,15 @@
 import { browser } from '$app/environment';
+import { initializeProjectData } from '$lib/projectMetaData';
 import type {
 	BlogPost,
 	BlogPostDateMap,
 	CachedProjectData,
 	Result,
 	TutorialSection,
-	TutorialSectionNumberMap
+	TutorialSectionNumberMap,
 } from '$lib/types';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
-import { initializeProjectData } from '$lib/projectMetaData';
 
 // export let userRepos: Writable<CachedProjectData>;
 
@@ -21,6 +21,7 @@ import { initializeProjectData } from '$lib/projectMetaData';
 // 	return result.success;
 // };
 
+export const initialFadePerformed = writable<boolean>(false);
 export const userRepos = writable<CachedProjectData>(initializeProjectData());
 export const blogPosts = writable<BlogPost[]>([]);
 export const tutorialSections = writable<TutorialSection[]>([]);
@@ -49,7 +50,7 @@ export function createLocalStorageValue<T>(key: string, defaultValue: T): Result
 export const blogPostDateMap: Readable<BlogPostDateMap[]> = derived(blogPosts, ($blogPosts) =>
 	$blogPosts
 		.map(({ slug, date, title }) => ({ slug, date, title }))
-		.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
+		.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf()),
 );
 
 export const tutorialSectionNumberMap: Readable<TutorialSectionNumberMap[]> = derived(
@@ -60,9 +61,9 @@ export const tutorialSectionNumberMap: Readable<TutorialSectionNumberMap[]> = de
 				slug,
 				series_weight,
 				series_part,
-				lead
+				lead,
 			}))
-			.sort((a, b) => (a?.series_weight ?? 0) - (b?.series_weight ?? 0))
+			.sort((a, b) => (a?.series_weight ?? 0) - (b?.series_weight ?? 0)),
 );
 
 /* c8 ignore start */

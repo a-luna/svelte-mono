@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Minus from '$lib/components/Icons/Minus.svelte';
-	import Plus from '$lib/components/Icons/Plus.svelte';
+	import { BasicIconRenderer } from '../../../../../../node_modules/@a-luna/shared-ui';
 
 	export let toggled = false;
 
@@ -12,9 +11,9 @@
 <div class="button-wrapper">
 	<button class="show-combined-emoji-button" on:click={() => (toggled = !toggled)} on:click title={tooltip}>
 		{#if toggled}
-			<Minus />
+			<BasicIconRenderer icon={'minus'} />
 		{:else}
-			<Plus />
+			<BasicIconRenderer icon={'plus'} />
 		{/if}
 	</button>
 </div>

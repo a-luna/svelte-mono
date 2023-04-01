@@ -6,7 +6,7 @@
 	import { fade } from 'svelte/transition';
 
 	export let outputBase64Encoding: Base64Encoding;
-	export let highlightHexByte: number;
+	export let highlightHexByte: number | undefined;
 	export let highlightBase64: string;
 
 	const { demoState } = getAppContext();

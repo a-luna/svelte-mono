@@ -1,7 +1,7 @@
 <script lang="ts">
 	import NavButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButton.svelte';
-	import StopAutoPlay from '$lib/components/Icons/StopAutoPlay.svelte';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
+	import { BasicIconRenderer } from '../../../../../../node_modules/@a-luna/shared-ui';
 
 	export let buttonNumber: number = 0;
 	let defaultNavAction: EncodingEvent = { type: 'STOP_AUTO_PLAY' };
@@ -14,5 +14,5 @@
 	tooltip={'Stop Autoplay'}
 	testId={'stop-autoplay-button'}
 >
-	<StopAutoPlay />
+	<BasicIconRenderer icon={'pause'} />
 </NavButton>

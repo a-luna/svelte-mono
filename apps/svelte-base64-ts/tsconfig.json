@@ -1,38 +1,22 @@
 {
 	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
-		"strict": false,
-		"moduleResolution": "node",
-		"module": "es2020",
-		"lib": ["es2020", "DOM.Iterable", "DOM"],
-		"target": "es2020",
-		/**
-			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
-			to enforce using \`import type\` instead of \`import\` for Types.
-			*/
-		"importsNotUsedAsValues": "error",
-		"isolatedModules": true,
-		"resolveJsonModule": true,
-		/**
-			To have warnings/errors of the Svelte compiler at the correct position,
-			enable source maps by default.
-			*/
-		"sourceMap": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"baseUrl": ".",
+		"strict": true,
+		"allowUnreachableCode": false,
+		"exactOptionalPropertyTypes": false,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
 		"allowJs": true,
-		"checkJs": false,
-		"paths": {
-			"$lib": ["src/lib"],
-			"$lib/*": ["src/lib/*"],
-			"$components": ["src/lib/components"],
-			"$components/*": ["src/lib/components/*"],
-			"$util": ["src/lib/util"]
-		},
+		"checkJs": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
 		"types": ["node", "svelte"]
-	},
-	"include": ["src/**/*", "tests/**/*"],
-	"exclude": ["node_modules/*", "__sapper__/*", "public/*"]
+	}
 }

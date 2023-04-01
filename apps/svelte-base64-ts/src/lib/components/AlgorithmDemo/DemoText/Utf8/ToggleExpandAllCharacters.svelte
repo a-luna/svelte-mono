@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Minus from '$lib/components/Icons/Minus.svelte';
-	import Plus from '$lib/components/Icons/Plus.svelte';
+	import { BasicIconRenderer } from '../../../../../../node_modules/@a-luna/shared-ui';
 
 	export let toggled = false;
 </script>
@@ -14,9 +13,9 @@
 	>
 		<div class="icon">
 			{#if toggled}
-				<Minus />
+				<BasicIconRenderer icon={'minus'} />
 			{:else}
-				<Plus />
+				<BasicIconRenderer icon={'plus'} />
 			{/if}
 		</div>
 		<span>{toggled ? 'Collapse All' : 'Expand All'}</span>

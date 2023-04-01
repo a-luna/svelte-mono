@@ -10,14 +10,6 @@ const staticFilesToCache = files.filter((f) => !/^\/images|\/media/.test(f) && !
 const allFilesToCache = buildFilesToCache.concat(staticFilesToCache);
 const staticAssets = new Set(allFilesToCache);
 
-console.log({
-	totalBuildFiles: build.length,
-	buildFilesToCache: buildFilesToCache.length,
-	totalStaticFiles: files.length,
-	staticFilesToCache: staticFilesToCache.length,
-	allFilesToCache: allFilesToCache.length
-});
-
 worker.addEventListener('install', (event) => {
 	event.waitUntil(
 		caches
@@ -25,7 +17,7 @@ worker.addEventListener('install', (event) => {
 			.then((cache) => cache.addAll(allFilesToCache))
 			.then(() => {
 				worker.skipWaiting();
-			})
+			}),
 	);
 });
 
@@ -38,7 +30,7 @@ worker.addEventListener('activate', (event) => {
 			}
 
 			worker.clients.claim();
-		})
+		}),
 	);
 });
 
@@ -80,7 +72,7 @@ worker.addEventListener('fetch', (event) => {
 				// set this variable to true for them and they will only be fetched once.
 				const cachedAsset = isStaticAsset && (await caches.match(event.request));
 				return cachedAsset || fetchAndCache(event.request);
-			})()
+			})(),
 		);
 	}
 });

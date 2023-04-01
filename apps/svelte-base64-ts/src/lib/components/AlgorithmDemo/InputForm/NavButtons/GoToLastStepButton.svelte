@@ -1,9 +1,9 @@
 <script lang="ts">
 	import NavButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButton.svelte';
-	import LastStep from '$lib/components/Icons/LastStep.svelte';
 	import { getAppContext } from '$lib/stores/context';
 	import type { EncodingStateToEventMap } from '$lib/types';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
+	import { BasicIconRenderer } from '../../../../../../node_modules/@a-luna/shared-ui';
 
 	export let buttonNumber: number = 0;
 	const { state } = getAppContext();
@@ -30,5 +30,5 @@
 	iconWidth={'13px'}
 	testId={'last-step-button'}
 >
-	<LastStep />
+	<BasicIconRenderer icon={'fastforward'} />
 </NavButton>

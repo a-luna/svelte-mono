@@ -1,12 +1,12 @@
-import type { CodeBlock, CodeBlockUpdateDetails, HtmlHeading, TocSection } from '$lib/types';
 import {
 	CODE_BLOCK_END_REGEX,
 	CODE_BLOCK_START_REGEX,
 	FA_BULLET_REGEX,
 	getSvgIcon,
 	HTML_HEADING_REGEX,
-	TOX_TEST_RESULTS_REGEX
+	TOX_TEST_RESULTS_REGEX,
 } from '$lib/server';
+import type { CodeBlock, CodeBlockUpdateDetails, HtmlHeading, TocSection } from '$lib/types';
 
 export const colorizeToxResults = (html: string): string =>
 	html.replace(TOX_TEST_RESULTS_REGEX, (match): string => {
@@ -25,7 +25,7 @@ export function transformHeadings(html: string): string {
 	const svgIcon = getSvgIcon('hash');
 	return html.replace(
 		HTML_HEADING_REGEX,
-		`<span class="heading-text level-$<level>"><h$<level> id="$<slug>"><span class="underline--magical">$<text></span></h$<level>><a href="#$<slug>" class="hanchor hanchor-self" title="Link to this section">${svgIcon}</a></span>`
+		`<span class="heading-text level-$<level>"><a href="#$<slug>" class="hanchor hanchor-self" title="Link to this section">${svgIcon}</a><h$<level> id="$<slug>"><span class="underline--magical">$<text></span></h$<level>></span>`,
 	);
 }
 
@@ -34,11 +34,11 @@ function createHtmlHeadingMap(html: string): { [k: number]: HtmlHeading[] } {
 		level: parseInt(m?.groups?.level ?? '0'),
 		slug: m?.groups?.slug ?? '',
 		text: m?.groups?.text ?? '',
-		index: m?.index ?? 0
+		index: m?.index ?? 0,
 	}));
 	const hmap: { [k: number]: HtmlHeading[] } = {};
 	Array.from({ length: 5 }, (_, i) => i + 2).forEach(
-		(level) => (hmap[level] = headings.filter((h) => h.level === level).sort((a, b) => a.index - b.index))
+		(level) => (hmap[level] = headings.filter((h) => h.level === level).sort((a, b) => a.index - b.index)),
 	);
 	return hmap;
 }
@@ -47,7 +47,7 @@ function createTocSection(
 	level: number,
 	sectionStart: number,
 	sectionEnd: number,
-	hmap: { [k: number]: HtmlHeading[] }
+	hmap: { [k: number]: HtmlHeading[] },
 ): TocSection[] {
 	const levelMap = hmap?.[level + 1]?.filter((h) => h.index >= sectionStart && sectionEnd > h.index);
 	if (!levelMap || !levelMap.length) {
@@ -57,7 +57,7 @@ function createTocSection(
 		const end = i < levelMap.length - 1 ? (levelMap?.[i + 1]?.index ?? 0) - 1 : sectionEnd;
 		return {
 			heading,
-			children: createTocSection(level + 1, heading.index, end, hmap)
+			children: createTocSection(level + 1, heading.index, end, hmap),
 		};
 	});
 }
@@ -86,14 +86,14 @@ export function transformCodeBlocks(html: string, codeBlocks: CodeBlock[]): stri
 				codeBlocks[i]?.id ?? '',
 				codeBlocks[i]?.lang ?? '',
 				codeBlocks[i]?.lineNumbers ?? false,
-				codeBlocks[i]?.lineNumberStart ?? 1
+				codeBlocks[i]?.lineNumberStart ?? 1,
 			);
 			return {
 				codeBlock,
 				length: codeBlock.length,
 				originalLength,
 				offset: codeBlock.length - originalLength,
-				shiki: true
+				shiki: true,
 			};
 		}
 		return {
@@ -101,7 +101,7 @@ export function transformCodeBlocks(html: string, codeBlocks: CodeBlock[]): stri
 			length: 0,
 			originalLength: 0,
 			offset: 0,
-			shiki: false
+			shiki: false,
 		};
 	});
 
@@ -124,12 +124,14 @@ function createWrappedCodeBlock(
 	codeBlockId: string,
 	lang: string,
 	lineNumbers: boolean,
-	lineNumberStart: number
+	lineNumberStart: number,
 ): string {
 	const svgIcon = getSvgIcon('copy');
 	let topRow = '<span class="top-row">';
+	topRow += `<span class="lang-name-wrapper">`;
 	topRow += `<span class="lang-name">${lang}</span>`;
 	topRow += `<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">${svgIcon}</button>`;
+	topRow += `</span>`;
 	topRow += '<span class="space-filler"></span>';
 	topRow += `</span>`;
 
@@ -144,12 +146,12 @@ function createWrappedCodeBlock(
 const starSvgMap: { [k: string]: string } = {
 	'fa-star': getSvgIcon('fullStar'),
 	'fa-star-half-o': getSvgIcon('halfStar'),
-	'fa-star-o': getSvgIcon('star')
+	'fa-star-o': getSvgIcon('star'),
 };
 
 export const transformFaBulletLists = (html: string): string =>
 	html.replace(
 		FA_BULLET_REGEX,
 		(match: string, p1: string, p2: string): string =>
-			`<div class="fa-bullet ${p1}">${starSvgMap[p1]}</div><div class="fa-bullet-text ${p1}">${p2}</div>`
+			`<div class="fa-bullet ${p1}">${starSvgMap[p1]}</div><div class="fa-bullet-text ${p1}">${p2}</div>`,
 	);

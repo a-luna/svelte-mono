@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let title: string = null;
+	export let title = '';
 	export let viewBox = '0 0 24 24';
 </script>
 

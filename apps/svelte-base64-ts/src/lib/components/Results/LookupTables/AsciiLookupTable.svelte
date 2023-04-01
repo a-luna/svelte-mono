@@ -3,7 +3,7 @@
 	import type { AsciiCharacterMap } from '$lib/types';
 
 	export let asciiTableChunkSize: number;
-	export let highlightHexByte: number;
+	export let highlightHexByte: number | undefined;
 	export let fontSize: string;
 	let asciiMapChunked: AsciiCharacterMap[][];
 

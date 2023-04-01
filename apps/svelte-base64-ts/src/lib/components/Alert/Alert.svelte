@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { alert } from '$lib/stores/alert';
 	import { onDestroy } from 'svelte';
-	import FaExclamationTriangle from 'svelte-icons/fa/FaExclamationTriangle.svelte';
 	import { fade, slide } from 'svelte/transition';
+	import { BasicIconRenderer } from '../../../../node_modules/@a-luna/shared-ui';
 	import CloseAlertButton from './CloseAlertButton.svelte';
 
 	export let duration = 3000;
@@ -33,7 +33,7 @@
 	<div role="alert" in:slide={{ duration: 1000 }} out:fade={{ duration: 500 }} class="alert">
 		<CloseAlertButton on:click={() => (shown = false)} />
 		<div class="icon">
-			<FaExclamationTriangle />
+			<BasicIconRenderer icon={'exclamationtriangle'} />
 		</div>
 		<span>{$alert}</span>
 	</div>
