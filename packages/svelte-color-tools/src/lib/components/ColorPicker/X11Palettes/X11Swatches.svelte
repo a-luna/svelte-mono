@@ -6,7 +6,7 @@
 	export let activePaletteId: string = '';
 	let swatchMap: Record<string, X11ColorSwatch> = {} as Record<string, X11ColorSwatch>;
 
-	$: if (Object.keys(swatchMap).length === x11ColorPalettes.length) activePaletteId = x11ColorPalettes[0].id;
+	$: if (Object.keys(swatchMap).length === x11ColorPalettes.length) activePaletteId = x11ColorPalettes[0]?.id ?? '';
 	$: if (activePaletteId) swatchMap[activePaletteId]?.focus();
 
 	function handleX11PaletteSelected(e: CustomEvent<{ paletteId: string }>) {

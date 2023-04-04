@@ -14,7 +14,7 @@
 	$: colorLabels = alphaEnabled
 		? [color?.hexAlpha, color?.rgbaString, color?.hslaString]
 		: [color?.hex, color?.rgbString, color?.hslString];
-	$: currentColor = colorLabels[currentLabelIndex];
+	$: currentColor = colorLabels.at(currentLabelIndex) || color.hex;
 	$: currentColorSpace = alphaEnabled
 		? ['Hex', 'RGBA', 'HSLA'][currentLabelIndex]
 		: ['Hex', 'RGB', 'HSL'][currentLabelIndex];

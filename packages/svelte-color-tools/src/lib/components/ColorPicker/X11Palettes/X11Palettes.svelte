@@ -18,35 +18,35 @@
 
 	if (x11ColorPalettes) {
 		x11ColorPalettes.forEach((p, i) => (x11PaletteMap[p.id] = i));
-		activePaletteId = x11ColorPalettes[0].id;
+		activePaletteId = x11ColorPalettes[0]?.id ?? '';
 	}
 
-	$: if (carouselElement) carouselItemSize = carouselElement.querySelector('.carousel-item').clientWidth;
+	$: if (carouselElement) carouselItemSize = carouselElement.querySelector('.carousel-item')?.clientWidth ?? 0;
 	$: activePaletteIndex = x11PaletteMap?.[activePaletteId] ?? 0;
 	$: paletteColor = x11ColorPalettes?.[activePaletteIndex]?.componentColor || 'red';
 
 	function scrollToPreviousPalette() {
 		const goToPaletteIndex = activePaletteIndex !== 0 ? activePaletteIndex - 1 : x11ColorPalettes.length - 1;
-		const goToPaletteId = x11ColorPalettes.at(goToPaletteIndex).id;
-		scrollToSelectedPalette(goToPaletteId);
+		const goToPaletteId = x11ColorPalettes.at(goToPaletteIndex)?.id;
+		if (goToPaletteId) scrollToSelectedPalette(goToPaletteId);
 	}
 
 	function scrollToNextPalette() {
 		const goToPaletteIndex = activePaletteIndex !== x11ColorPalettes.length - 1 ? activePaletteIndex + 1 : 0;
-		const goToPaletteId = x11ColorPalettes.at(goToPaletteIndex).id;
-		scrollToSelectedPalette(goToPaletteId);
+		const goToPaletteId = x11ColorPalettes.at(goToPaletteIndex)?.id;
+		if (goToPaletteId) scrollToSelectedPalette(goToPaletteId);
 	}
 
-	function handleX11PaletteSelected(e: CustomEvent<{ paletteId: string }>) {
-		const { paletteId } = e.detail;
-		scrollToSelectedPalette(paletteId);
-	}
+	const handleX11PaletteSelected = (e: CustomEvent<{ paletteId: string }>) =>
+		scrollToSelectedPalette(e.detail.paletteId);
 
 	function scrollToSelectedPalette(goToPaletteId: string) {
-		const goToPaletteIndex = x11PaletteMap[goToPaletteId];
-		const scrollDistance = (goToPaletteIndex - activePaletteIndex) * carouselItemSize;
-		activePaletteId = x11ColorPalettes.at(goToPaletteIndex).id;
-		carouselElement.scrollTo(carouselElement.scrollLeft + scrollDistance, 0);
+		const goToPaletteIndex = x11PaletteMap?.[goToPaletteId];
+		if (goToPaletteIndex) {
+			const scrollDistance = (goToPaletteIndex - activePaletteIndex) * carouselItemSize;
+			activePaletteId = x11ColorPalettes.at(goToPaletteIndex)?.id ?? '';
+			if (activePaletteId) carouselElement.scrollTo(carouselElement.scrollLeft + scrollDistance, 0);
+		}
 	}
 
 	async function handleKeydown(event: KeyboardEvent) {

@@ -1,3 +1,4 @@
+import { defaultColorPalette } from '$lib/constants';
 import { convertThemePalettesToCss } from '$lib/theme';
 import type { AppStore, ColorPalette, ColorPickerState, ThemeEditorStore } from '$lib/types';
 import type { Readable, Writable } from 'svelte/store';
@@ -8,11 +9,11 @@ export function createAppStore(
 	colorPickerState: Writable<ColorPickerState>,
 ): Readable<AppStore> {
 	return derived([themeEditorState, colorPickerState], ([$themeEditorState, $colorPickerState]) => {
-		function getThemePalette(): ColorPalette {
-			if ($themeEditorState && $themeEditorState.userTheme) {
-				return $themeEditorState.userTheme.palettes.find((p) => p.id === $themeEditorState.selectedPaletteId);
-			}
-		}
+		const getThemePalette = (): ColorPalette =>
+			$themeEditorState && $themeEditorState.userTheme
+				? $themeEditorState.userTheme.palettes.find((p) => p.id === $themeEditorState.selectedPaletteId) ??
+				  defaultColorPalette
+				: defaultColorPalette;
 
 		return {
 			x11PalettesShown: $colorPickerState?.x11PalettesShown,
