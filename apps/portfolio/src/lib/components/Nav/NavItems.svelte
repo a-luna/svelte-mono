@@ -2,7 +2,7 @@
 	import NavLink from '$lib/components/Nav/NavLink.svelte';
 </script>
 
-<nav class="hidden md:grid">
+<nav>
 	<NavLink href="/projects">Projects</NavLink>
 	<NavLink href="/blog">Blog</NavLink>
 	<NavLink href="/about">About</NavLink>
@@ -10,13 +10,18 @@
 
 <style lang="postcss">
 	nav {
+		display: none;
 		background-color: inherit;
-		font-size: 1.1rem;
-		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: 40px;
-		flex: 1;
-		justify-items: center;
 		line-height: 1;
-		place-content: center;
+		flex: 1;
+	}
+
+	@media (min-width: 768px) {
+		nav {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-evenly;
+			align-items: flex-end;
+		}
 	}
 </style>

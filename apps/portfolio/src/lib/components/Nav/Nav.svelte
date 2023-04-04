@@ -4,19 +4,25 @@
 	import NavItems from '$lib/components/Nav/NavItems.svelte';
 	import NavSideBar from '$lib/components/Nav/NavSideBar.svelte';
 	import SocialLinks from '$lib/components/Nav/SocialLinks.svelte';
+	import { onMount } from 'svelte';
+	let mounted = false;
+
+	onMount(() => (mounted = true));
 
 	let open = false;
 </script>
 
-<div class="nav-wrapper">
-	<div class="nav-container">
-		<NavBrand />
-		<NavItems />
-		<SocialLinks mobile={false} {open} />
-		<MenuButton bind:open />
-		<NavSideBar bind:open />
+{#if mounted}
+	<div class="nav-wrapper">
+		<div class="nav-container">
+			<NavBrand />
+			<NavItems />
+			<SocialLinks mobile={false} {open} />
+			<MenuButton bind:open />
+			<NavSideBar bind:open />
+		</div>
 	</div>
-</div>
+{/if}
 
 <style lang="postcss">
 	.nav-wrapper {
