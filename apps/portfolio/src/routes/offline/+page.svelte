@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { BasicIconRenderer } from "@a-luna/shared-ui/dist";
-
-
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 </script>
 
 <section>
