@@ -10,12 +10,12 @@ export function groupByProperty<T>(array: T[], property: keyof T): { [k: string]
 	return array.reduce((grouped, item) => {
 		const groupVal = item[property] as string;
 		grouped[groupVal] = grouped[groupVal] || [];
-		grouped[groupVal].push(item);
+		grouped[groupVal]?.push(item);
 		return grouped;
 	}, {} as { [k: string]: T[] });
 }
 
-export function getRandomArrayItem<T>(array: readonly T[]): T {
+export function getRandomArrayItem<T>(array: readonly T[]): T | undefined {
 	return array[Math.floor(Math.random() * array.length)];
 }
 
