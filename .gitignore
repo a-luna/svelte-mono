@@ -13,6 +13,7 @@ packages/*/coverage
 coverage
 .vscode
 .turbo
+/upload
 
 # Local Netlify folder
 .netlify

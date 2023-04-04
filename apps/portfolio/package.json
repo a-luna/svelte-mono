@@ -1,10 +1,14 @@
 {
 	"name": "@a-luna/portfolio",
 	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/a-luna/svelte-mono.git",
+		"directory": "apps/portfolio"
+	},
 	"engines": {
 		"node": "^19.0.0"
 	},
-	"packageManager": "^pnpm@7.28.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite --host --port 3504 --force",
@@ -22,15 +26,15 @@
 		"story:preview": "histoire preview --port 6504"
 	},
 	"dependencies": {
-		"@a-luna/shared-ui": "0.0.1",
+		"@a-luna/shared-ui": "*",
 		"@pnpm/logger": "^5.0.0",
 		"@stefanprobst/remark-shiki": "2.1.0",
 		"@sveltejs/adapter-node": "^1.2.3",
 		"@sveltejs/kit": "^1.15.0",
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/node": "^18.15.11",
-		"@typescript-eslint/eslint-plugin": "^5.57.0",
-		"@typescript-eslint/parser": "^5.57.0",
+		"@typescript-eslint/eslint-plugin": "^5.57.1",
+		"@typescript-eslint/parser": "^5.57.1",
 		"autoprefixer": "^10.4.14",
 		"date-fns": "^2.29.3",
 		"eslint": "^8.37.0",

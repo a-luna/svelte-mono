@@ -47,12 +47,6 @@
 		{
 			"name": "svelte-color-tools",
 			"path": "packages/svelte-color-tools"
-		},
-		{
-			"path": "packages/pnpm-lock-export"
-		},
-		{
-			"path": "packages/eslint-config-custom"
 		}
 	]
 }
