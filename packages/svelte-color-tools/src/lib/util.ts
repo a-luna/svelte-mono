@@ -1,6 +1,6 @@
-import { browser } from '$app/environment';
 import { COMPONENT_COLORS, CSS_COLOR_FORMATS, SCOPED_CSS_REGEX } from '$lib/constants';
 import type { ColorFormat, ComponentColor, CssVariable } from '$lib/types';
+import { BROWSER } from 'esm-env';
 import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
 
@@ -68,13 +68,13 @@ export const isColorFormat = (arg: string): arg is ColorFormat => CSS_COLOR_FORM
 
 export function createLocalStorageValue<T>(key: string, defaultValue: T): Writable<T> {
 	let clientValue: T;
-	if (browser) {
+	if (BROWSER) {
 		clientValue = JSON.parse(window.localStorage.getItem(key));
 		if (!clientValue) window.localStorage.setItem(key, JSON.stringify(defaultValue));
 	}
 	const store = writable(clientValue || defaultValue);
 	store.subscribe((value) => {
-		if (browser) {
+		if (BROWSER) {
 			window.localStorage.setItem(key, JSON.stringify(value));
 		}
 	});
