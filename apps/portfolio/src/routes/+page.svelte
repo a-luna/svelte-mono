@@ -202,9 +202,11 @@
 	}
 	.normal-text a.icon,
 	.normal-text a.icon:hover {
+		display: inline-block;
 		color: hsl(76 100% 50%);
 		color: oklch(92.22% 0.244 126.84);
 		background-color: var(--page-bg-color);
+		height: 16px;
 	}
 	.normal-text span {
 		color: var(--white-shade2);

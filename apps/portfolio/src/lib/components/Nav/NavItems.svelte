@@ -14,6 +14,7 @@
 		background-color: inherit;
 		line-height: 1;
 		flex: 1;
+		height: 40px;
 	}
 
 	@media (min-width: 768px) {
