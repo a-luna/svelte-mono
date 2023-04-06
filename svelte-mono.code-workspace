@@ -47,6 +47,10 @@
 		{
 			"name": "svelte-color-tools",
 			"path": "packages/svelte-color-tools"
+		},
+		{
+			"name": "lock-file-converter",
+			"path": "packages/lock-file-converter"
 		}
 	]
 }
