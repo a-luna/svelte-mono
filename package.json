@@ -1,5 +1,6 @@
 {
 	"name": "@a-luna/svelte-mono",
+	"license": "MIT",
 	"version": "0.0.1",
 	"repository": {
 		"type": "git",
@@ -9,16 +10,27 @@
 		"node": "^19.0.0"
 	},
 	"scripts": {
-		"build": "turbo run build",
-		"check": "turbo run check",
-		"build:all": "npm run build:ui && npm run build:site && npm run build:base64",
-		"build:site": "npm run build --workspace=apps/portfolio",
-		"build:base64": "npm run build --workspace=apps/svelte-base64-ts",
-		"build:ui": "npm run build --workspace=packages/shared-ui",
-		"dev:site": "npm run dev --workspace=apps/portfolio",
-		"dev:base64": "npm run dev --workspace=apps/svelte-base64-ts",
-		"format": "prettier --plugin-search-dir . --write .",
-		"lint": "turbo run lint"
+		"lint": "pnpm -r lint",
+		"format": "pnpm -r format",
+		"check": "pnpm -r check",
+		"build": "pnpm run build:all",
+		"build:all": "pnpm run build:lock && pnpm run build:ui && pnpm build:color && pnpm run build:site && pnpm run build:base64",
+		"build:lock": "pnpm --filter=@a-luna/lock-file-converter run build",
+		"build:ui": "pnpm --filter=@a-luna/shared-ui run build",
+		"build:color": "pnpm --filter=@a-luna/svelte-color-tools run build",
+		"build:site": "pnpm --filter=@a-luna/portfolio run build",
+		"build:base64": "pnpm --filter=@a-luna/svelte-base64 run build",
+		"update": "pnpm run update:all",
+		"update:all": "pnpm run update:lock && pnpm run update:ui && pnpm update:color && pnpm --filter=@a-luna/portfolio update && pnpm --filter=@a-luna/svelte-base64 update",
+		"update:lock": "pnpm --filter=@a-luna/lock-file-converter update",
+		"update:ui": "pnpm --filter=@a-luna/shared-ui update",
+		"update:color": "pnpm --filter=@a-luna/svelte-color-tools update",
+		"update:site": "pnpm run build:ui && pnpm --filter=@a-luna/portfolio update",
+		"update:base64": "pnpm run build:ui && pnpm --filter=@a-luna/svelte-base64 update",
+		"dev:site": "pnpm run update:site && pnpm --filter=@a-luna/portfolio run dev",
+		"dev:base64": "pnpm run update:base64 && pnpm --filter=@a-luna/svelte-base64 run dev",
+		"preview:site": "pnpm run update:site && pnpm run build:site && pnpm --filter=@a-luna/portfolio run preview",
+		"preview:base64": "pnpm run update:base64 && pnpm run build:base64 && pnpm --filter=@a-luna/svelte-base64-ts run preview"
 	},
 	"dependencies": {
 		"svelte": "^3.57.0"
@@ -34,7 +46,8 @@
 	"workspaces": [
 		"packages/shared-ui",
 		"packages/svelte-color-tools",
-		"packages/eslint-config-custon",
+		"packages/lock-file-converter",
+		"packages/eslint-config-custom",
 		"apps/portfolio",
 		"apps/svelte-base64-ts"
 	]
