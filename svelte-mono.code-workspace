@@ -3,7 +3,15 @@
 		"conventionalCommits.lineBreak": "\\n",
 		"conventionalCommits.promptFooter": false,
 		"conventionalCommits.promptScopes": true,
-		"conventionalCommits.scopes": ["monorepo", "portfolio", "svelte-base-64", "shared-ui", "svelte-color-tools"],
+		"conventionalCommits.scopes": [
+			"monorepo",
+			"portfolio",
+			"svelte-base-64",
+			"shared-ui",
+			"svelte-color-tools",
+			"lockfile-converter",
+			"eslint-config"
+		],
 		"editor.bracketPairColorization.enabled": true,
 		"editor.codeActionsOnSave": {
 			"source.fixAll": true,
@@ -51,6 +59,10 @@
 		{
 			"name": "lock-file-converter",
 			"path": "packages/lock-file-converter"
+		},
+		{
+			"name": "eslint-config-custom",
+			"path": "packages/eslint-config-custom"
 		}
 	]
 }
