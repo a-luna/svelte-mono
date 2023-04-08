@@ -99,6 +99,7 @@
 	}
 
 	.github-links-wrapper > ul > li {
+		font-size: 1rem;
 		margin: 0.5rem 0 0.5rem 0;
 	}
 
@@ -113,18 +114,10 @@
 
 	#github-links > summary {
 		display: list-item;
-		list-style: none;
-		color: var(--accent-color);
-		background-color: var(--toggle-group-bg-color);
 		border-top: none;
 		border-left: 2px solid var(--accent-color);
 		border-right: 2px solid var(--accent-color);
 		border-bottom: 2px solid var(--accent-color);
-		font-size: 1.25rem;
-		line-height: 1;
-		padding: 11px 5px;
-		cursor: pointer;
-		white-space: nowrap;
 	}
 
 	#github-links[open] > summary {

@@ -53,4 +53,16 @@
 </div>
 
 <style lang="postcss">
+	.toggle-groups :global(summary) {
+		display: list-item;
+		list-style: none;
+		color: var(--accent-color);
+		background-color: var(--toggle-group-bg-color);
+		font-size: 1.25rem;
+		line-height: 1;
+		padding: 1rem;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: background-color 0.3s ease-in;
+	}
 </style>

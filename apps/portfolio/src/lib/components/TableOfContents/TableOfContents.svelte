@@ -86,6 +86,10 @@
 		margin: 0;
 	}
 
+	#table-of-contents :global(ul li) {
+		font-size: 1rem;
+	}
+
 	.toc-wrapper ul {
 		list-style: square;
 		padding: 1rem 0 1rem 1.5rem;
@@ -112,20 +116,18 @@
 		display: none;
 	}
 
-	#table-of-contents > summary {
+	:global(.blog #table-of-contents > summary),
+	:global(.readme #table-of-contents > summary) {
+		display: list-item;
 		list-style: none;
 		color: var(--accent-color);
 		background-color: var(--toggle-group-bg-color);
 		font-size: 1.25rem;
 		line-height: 1;
-		padding: 11px 5px;
+		padding: 1rem;
 		cursor: pointer;
 		white-space: nowrap;
 		transition: background-color 0.3s ease-in;
-	}
-
-	:global(.blog #table-of-contents > summary),
-	:global(.readme #table-of-contents > summary) {
 		border: 2px solid var(--accent-color);
 	}
 

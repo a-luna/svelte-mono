@@ -82,6 +82,7 @@
 	}
 
 	.tutorial-sections-wrapper > ul > li {
+		font-size: 1rem;
 		margin: 0.5rem 0 0.5rem 0;
 	}
 
@@ -96,18 +97,10 @@
 
 	#tutorial-sections > summary {
 		display: list-item;
-		list-style: none;
-		color: var(--accent-color);
-		background-color: var(--toggle-group-bg-color);
 		border-top: 2px solid var(--accent-color);
 		border-left: 2px solid var(--accent-color);
 		border-right: 2px solid var(--accent-color);
 		border-bottom: none;
-		font-size: 1.25rem;
-		line-height: 1;
-		padding: 11px 5px;
-		cursor: pointer;
-		white-space: nowrap;
 	}
 
 	#tutorial-sections[open] > summary {
