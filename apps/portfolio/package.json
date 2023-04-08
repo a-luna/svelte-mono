@@ -28,7 +28,7 @@
 	},
 	"dependencies": {
 		"@a-luna/shared-ui": "workspace:^0.0.1",
-		"@jridgewell/sourcemap-codec": "^1.4.14",
+		"@jridgewell/sourcemap-codec": "^1.4.15",
 		"@pnpm/logger": "^5.0.0",
 		"@stefanprobst/remark-shiki": "2.1.0",
 		"@sveltejs/adapter-node": "^1.2.3",
@@ -42,7 +42,7 @@
 		"date-fns": "^2.29.3",
 		"devalue": "^4.3.0",
 		"esbuild": "^0.17.15",
-		"eslint": "^8.37.0",
+		"eslint": "^8.38.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"esm-env": "^1.0.0",
@@ -112,6 +112,6 @@
 		"@histoire/plugin-svelte": "^0.12.4",
 		"@pnpm/lockfile-file": "^7.0.6",
 		"histoire": "^0.12.4",
-		"typescript": "^5.0.3"
+		"typescript": "^5.0.4"
 	}
 }

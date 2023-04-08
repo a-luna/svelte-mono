@@ -10,11 +10,12 @@
 			"shared-ui",
 			"svelte-color-tools",
 			"lockfile-converter",
-			"eslint-config"
+			"eslint-config-custom"
 		],
 		"editor.bracketPairColorization.enabled": true,
 		"editor.codeActionsOnSave": {
 			"source.fixAll": true,
+			"source.fixAll.eslint": true,
 			"source.organizeImports": true
 		},
 		"editor.fontFamily": "Hack Nerd Font Mono",
