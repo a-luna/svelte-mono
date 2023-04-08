@@ -191,7 +191,7 @@
 		margin: 0 auto;
 	}
 	.intro-content {
-		font-family: 'Roboto Mono', menlo, consolas, monospace;
+		font-family: 'Noto Sans', 'Roboto Mono', menlo, consolas, monospace;
 		margin: 0 auto;
 		z-index: 2;
 		position: relative;

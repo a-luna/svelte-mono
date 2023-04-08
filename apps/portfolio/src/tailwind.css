@@ -2,6 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
+/* raleway-regular - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/raleway-v28-latin-regular.woff2') format('woff2'),
+		url('../fonts/raleway-v28-latin-regular.woff') format('woff');
+}
+
+/* roboto-300 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 300;
+	src: url('../fonts/roboto-v30-latin-300.woff2') format('woff2'),
+		url('../fonts/roboto-v30-latin-300.woff') format('woff');
+}
+
+/* roboto-regular - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/roboto-v30-latin-regular.woff2') format('woff2'),
+		url('../fonts/roboto-v30-latin-regular.woff') format('woff');
+}
+
+/* roboto-italic - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 400;
+	src: url('../fonts/roboto-v30-latin-italic.woff2') format('woff2'),
+		url('../fonts/roboto-v30-latin-italic.woff') format('woff');
+}
+
+/* roboto-500 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 500;
+	src: url('../fonts/roboto-v30-latin-500.woff2') format('woff2'),
+		url('../fonts/roboto-v30-latin-500.woff') format('woff');
+}
+
+/* roboto-700 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../fonts/roboto-v30-latin-700.woff2') format('woff2'),
+		url('../fonts/roboto-v30-latin-700.woff') format('woff');
+}
+
+/* roboto-700italic - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 700;
+	src: url('../fonts/roboto-v30-latin-700italic.woff2') format('woff2'),
+		url('../fonts/roboto-v30-latin-700italic.woff') format('woff');
+}
+
+/* noto-sans-300 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 300;
+	src: url('../fonts/noto-sans-v27-latin-300.woff2') format('woff2'),
+		url('../fonts/noto-sans-v27-latin-300.woff') format('woff');
+}
+
+/* noto-sans-regular - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/noto-sans-v27-latin-regular.woff2') format('woff2'),
+		url('../fonts/noto-sans-v27-latin-regular.woff') format('woff');
+}
+
+/* noto-sans-italic - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Noto Sans';
+	font-style: italic;
+	font-weight: 400;
+	src: url('../fonts/noto-sans-v27-latin-italic.woff2') format('woff2'),
+		url('../fonts/noto-sans-v27-latin-italic.woff') format('woff');
+}
+
+/* noto-sans-500 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 500;
+	src: url('../fonts/noto-sans-v27-latin-500.woff2') format('woff2'),
+		url('../fonts/noto-sans-v27-latin-500.woff') format('woff');
+}
+
+/* noto-sans-700 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../fonts/noto-sans-v27-latin-700.woff2') format('woff2'),
+		url('../fonts/noto-sans-v27-latin-700.woff') format('woff');
+}
+
+/* noto-sans-700italic - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Noto Sans';
+	font-style: italic;
+	font-weight: 700;
+	src: url('../fonts/noto-sans-v27-latin-700italic.woff2') format('woff2'),
+		url('../fonts/noto-sans-v27-latin-700italic.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Hack';
+	src: url('../fonts/hack-regular-subset.woff2?sha=3114f1256') format('woff2'), url('../fonts/hack-regular-subset.woff?sha=3114f1256') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+
+@font-face {
+	font-family: 'Hack';
+	src: url('../fonts/hack-italic-subset.woff2?sha=3114f1256') format('woff2'), url('../fonts/hack-italic-webfont.woff?sha=3114f1256') format('woff');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+
 @layer components {
 	body {
 		--brand-accent: var(--accent-color);
@@ -318,7 +466,7 @@ body {
 	--toggle-group-bg-color: var(--black-tint2);
 
 	background-color: var(--page-bg-color);
-	font-family: 'Roboto', Hind, 'Fira Sans', Montserrat, 'PT Sans', 'IBM Plex Sans', 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
+	font-family: 'Roboto', Inter, Arial, Helvetica, sans-serif;
 	letter-spacing: 0.4px;
 }
 
@@ -884,11 +1032,12 @@ body {
 	color: var(--white-shade2);
 }
 
-.readme .prose p,
-.readme .prose p a,
-.readme .prose ul,
-.readme .prose ul li,
-.readme .prose div.prop-group-ref {
+.prose p,
+.prose p a,
+.prose ul,
+.prose ul li,
+.prose div.prop-group-ref {
+	font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
 	font-size: 0.9rem;
 }
 

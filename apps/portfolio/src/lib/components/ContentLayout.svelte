@@ -61,6 +61,7 @@
 		margin: 1rem 0;
 	}
 	h1 {
+		font-family: 'Noto Sans', sans-serif;
 		font-size: 2rem;
 		font-weight: 700;
 		line-height: 1.2;

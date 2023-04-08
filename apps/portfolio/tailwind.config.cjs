@@ -11,8 +11,9 @@ module.exports = {
 						'--tw-prose-invert-code': 'var(--code-text-color1)',
 						'line-height': '1.6',
 						'h2, h3, h4, h5, h6': {
-							'font-family': 'raleway, sans-serif',
+							'font-family': '"Noto Sans", sans-serif',
 							fontWeight: '400',
+							letterSpacing: '0.75px',
 						},
 						blockquote: {
 							fontSize: '.95rem',
@@ -47,7 +48,7 @@ module.exports = {
 						'code::before': false,
 						'code::after': false,
 						'pre code, code': {
-							fontFamily: "'Hack Nerd Font Mono', 'Roboto Mono', menlo, monospace",
+							fontFamily: "Hack, 'Roboto Mono', menlo, monospace",
 						},
 						code: {
 							fontSize: '.85em',
