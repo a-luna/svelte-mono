@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { AUTHOR_NAME, SITE_URL } from '$lib/siteConfig';
+	import { AUTHOR_NAME } from '$lib/siteConfig';
 	import { formatDateString } from '$lib/util';
 
 	export let published = new Date(0);
 	export let contentType: string;
 
-	$: authorImage = `${SITE_URL}/avatar.png`;
+	$: authorImage = `../avatar.png`;
 	$: publishDate = contentType === 'tutorial' ? '&nbsp;' : `on ${formatDateString(published)}`;
 </script>
 

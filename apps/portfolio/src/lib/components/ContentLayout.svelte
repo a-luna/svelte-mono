@@ -79,7 +79,10 @@
 			0.25px 0.25px var(--post-title-text-shadow-color); */
 	}
 	.wrapper {
-		padding: 0 1.5rem;
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-left: var(--mobile-page-padding);
+		padding-right: var(--mobile-page-padding);
 		margin: 1rem auto;
 		width: 100%;
 		max-width: var(--max-width);
@@ -91,16 +94,8 @@
 		margin: 1rem auto;
 	}
 	@media (min-width: 640px) {
-		.wrapper {
-			padding: 0 2rem;
-		}
 		h1 {
 			font-size: 2.25rem;
-		}
-	}
-	@media (min-width: 640px) {
-		.wrapper {
-			padding: 0 1.5rem;
 		}
 	}
 	@media (min-width: 768px) {

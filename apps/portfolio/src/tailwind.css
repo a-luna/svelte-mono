@@ -170,7 +170,7 @@
 
 	::strong {
 		color: current;
-		font-weight: 600;
+		font-weight: 700;
 	}
 
 	.dark ::selection {
@@ -1305,7 +1305,7 @@ article .custom-block p .emphasis {
 	background-color: var(--bg-color);
 	border-radius: 0;
 	border: 2px solid var(--border-color);
-	font-size: 0.95em;
+	font-size: 0.85em;
 	margin: 1.5rem 0;
 	border-radius: 0;
 	overflow-wrap: normal;
@@ -1360,7 +1360,7 @@ ul.custom-block li {
 }
 
 .custom-block-message p {
-	font-size: 0.95rem;
+	font-size: 0.85rem;
 	margin: auto 0;
 	color: var(--text-color);
 }
@@ -1928,7 +1928,7 @@ div.requirements {
 
 .steps .title,
 .requirements .title {
-	font-size: 1em;
+	font-size: 0.9em;
 	font-weight: 700;
 	padding: 0;
 	margin: 0 0 5px;
@@ -1937,11 +1937,11 @@ div.requirements {
 /* TABLE STYLES */
 
 table.tutorial thead .table-number {
-	font-size: 1rem;
+	font-size: 0.9rem;
 }
 
 table.tutorial thead .table-title {
-	font-size: 1rem;
+	font-size: 0.9rem;
 }
 
 table.tutorial thead code {
@@ -1951,7 +1951,7 @@ table.tutorial thead code {
 table.tutorial thead th.column-header,
 table.tutorial thead th.column-header:first-child,
 table.tutorial thead th.column-header:last-child {
-	font-size: 0.95rem;
+	font-size: 0.85rem;
 	vertical-align: bottom;
 }
 
@@ -2029,7 +2029,7 @@ table.tutorial tfoot code {
 }
 
 .table-wrapper {
-	font-size: 0.95rem;
+	font-size: 0.85rem;
 	line-height: 1.2;
 	width: 100%;
 	margin: 0 auto 2rem;

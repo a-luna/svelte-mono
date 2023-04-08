@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import SectionSummary from '$lib/components/ApiTutorial/SectionSummary.svelte';
+	import ContentLayout from '$lib/components/ContentLayout.svelte';
+	import { nullBlogPost } from '$lib/constants';
 	import { SITE_URL } from '$lib/siteConfig';
 	import { tutorialSections } from '$lib/stores';
 	import type { BlogPost, TutorialSection } from '$lib/types';
-	import { nullBlogPost } from '$lib/constants';
 	import type { PageData } from './$types';
-	import ContentLayout from '$lib/components/ContentLayout.svelte';
 
 	export let data: PageData;
 	let list: TutorialSection[];
@@ -22,8 +22,8 @@
 		coverImage: {
 			name: 'cover',
 			src: '',
-			caption: 'Photo by Matt Howard on Unsplash'
-		}
+			caption: 'Photo by Matt Howard on Unsplash',
+		},
 	};
 
 	$: allTutorialSections = data.allTutorialSections;
@@ -68,8 +68,8 @@
 		max-width: 42rem;
 	}
 	p {
-		font-size: 1.1rem;
-		line-height: 1.5;
+		font-size: 0.9rem;
+		line-height: 1.6;
 		margin: 0;
 	}
 	h3 {
@@ -77,8 +77,8 @@
 		margin: 2rem 0 1rem 0;
 		font-size: 1.7rem;
 		line-height: 2rem;
-		font-weight: 500;
-		letter-spacing: -0.025em;
+		font-weight: 400;
+		letter-spacing: 0.75px;
 	}
 	ul {
 		list-style: none;

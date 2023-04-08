@@ -32,7 +32,10 @@
 	}
 
 	.section {
-		padding: 0 1.5rem 1.5rem 1.5rem;
+		padding-top: 0;
+		padding-bottom: 1.5rem;
+		padding-left: var(--mobile-page-padding);
+		padding-right: var(--mobile-page-padding);
 	}
 
 	.section-header {

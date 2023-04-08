@@ -89,9 +89,9 @@
 	}
 
 	.section-summary {
-		font-size: 0.9rem;
+		font-size: 0.85rem;
 		color: var(--white-shade3);
-		line-height: 1.5;
+		line-height: 1.6;
 	}
 
 	.summary-top {
