@@ -21,7 +21,7 @@
 
 <style lang="postcss">
 	.menu-button {
-		padding: 0.7rem;
+		padding: 0.75rem;
 		border-width: 3px;
 		border-style: solid;
 		border-color: var(--white);
@@ -36,6 +36,10 @@
 		color: var(--accent-color);
 	}
 	.menu-button.open {
+		position: absolute;
+		top: 15.5px;
+		right: 44px;
+
 		border-color: var(--accent-color);
 		background-color: var(--accent-color);
 		color: var(--black-tint2);

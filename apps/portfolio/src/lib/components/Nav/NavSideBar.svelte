@@ -4,21 +4,23 @@
 	import { fade, fly } from 'svelte/transition';
 
 	export let open: boolean;
+
+	const closeSideBar = () => (open = false);
 </script>
 
 {#if open}
 	<aside
-		in:fly|local={{ duration: 1000, x: -300 }}
-		out:fade={{ duration: 750 }}
+		in:fly|local={{ delay: 150, duration: 700, x: -300 }}
+		out:fade={{ delay: 100, duration: 750 }}
 		class="nav-sidebar absolute md:hidden"
 		id="nav-sidebar"
 		class:open
 	>
 		<nav>
-			<NavLink href="/" on:click={() => (open = false)}>Home</NavLink>
-			<NavLink href="/projects" on:click={() => (open = false)}>Projects</NavLink>
-			<NavLink href="/blog" on:click={() => (open = false)}>Blog</NavLink>
-			<NavLink href="/about" on:click={() => (open = false)}>About</NavLink>
+			<NavLink href="/" on:click={() => closeSideBar()} />
+			<NavLink href="/projects" on:click={() => closeSideBar()} />
+			<NavLink href="/blog" on:click={() => closeSideBar()} />
+			<NavLink href="/about" on:click={() => closeSideBar()} />
 			<SocialLinks mobile={true} {open} />
 		</nav>
 	</aside>
@@ -28,8 +30,8 @@
 	.nav-sidebar {
 		z-index: 4;
 		background-color: var(--black-tint2);
-		width: 100%;
-		height: 100%;
+		width: 100vw;
+		height: 100vh;
 		left: -100%;
 		transition: left 0.3s ease-in-out;
 	}

@@ -29,9 +29,8 @@
 <style lang="postcss">
 	.nav-wrapper {
 		width: 100%;
-		max-width: var(--max-width);
 		padding: 0;
-		margin: 0 auto;
+		margin: 0;
 		background-color: inherit;
 	}
 
@@ -40,10 +39,13 @@
 		flex-flow: row nowrap;
 		justify-content: space-between;
 		align-items: baseline;
-		gap: 1.5rem;
+		gap: 1rem;
 		background-color: inherit;
 		margin: 0 auto;
-		padding: 1rem 1.5rem;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		padding-left: var(--mobile-page-padding);
+		padding-right: var(--mobile-page-padding);
 	}
 
 	@media (min-width: 640px) {
@@ -53,9 +55,13 @@
 	}
 
 	@media (min-width: 768px) {
+		.nav-wrapper {
+			max-width: var(--max-width);
+			margin: 0 auto;
+		}
 		.nav-container {
 			justify-content: flex-start;
-			align-items: flex-start;
+			align-items: center;
 			padding: 1.5rem 0;
 			margin: 0;
 		}

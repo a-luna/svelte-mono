@@ -12,6 +12,9 @@
 </a>
 
 <style lang="postcss">
+	a {
+		height: 47px;
+	}
 	.nav-brand {
 		display: flex;
 		flex-flow: row nowrap;

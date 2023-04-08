@@ -414,6 +414,8 @@
 
 	scroll-behavior: smooth;
 
+	--mobile-page-padding: 2rem;
+
 	/* Project README */
 	--details-header-bg-color: var(--black-tint2);
 	--details-header-hover-bg-color: var(--black-tint2);
