@@ -226,11 +226,22 @@
 		.intro-content .normal-text {
 			font-size: 1rem;
 		}
+		.normal-text a.icon,
+		.normal-text a.icon:hover {
+			height: 16px;
+		}
 	}
 
 	@media (min-width: 768px) {
 		.intro {
 			padding: 0;
+		}
+		.intro-content .normal-text {
+			font-size: 1.1rem;
+		}
+		.normal-text a.icon,
+		.normal-text a.icon:hover {
+			height: 19.5px;
 		}
 	}
 

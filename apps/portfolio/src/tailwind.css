@@ -474,7 +474,22 @@ body {
 
 .normal-text svg {
 	display: inline;
-	width: 1rem;
+	width: 14px;
+	margin: 0 2px 4px 2px;
+}
+
+@media (min-width: 640px) {
+	.normal-text svg {
+		width: 16px;
+		margin: 0 2px 4px 2px;
+	}
+}
+
+@media (min-width: 768px) {
+	.normal-text svg {
+		width: 19.5px;
+		margin: 0 3px 6px 3px;
+	}
 }
 
 .home .section-header {
