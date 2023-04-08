@@ -14,7 +14,9 @@
 		title="Show/Hide Project Filters"
 		on:click={() => (showFilters = !showFilters)}
 	>
-		<div class="icon"><BasicIconRenderer icon={'filter'} /></div>
+		<div class="icon">
+			<BasicIconRenderer icon={'filter'} />
+		</div>
 	</button>
 	<button
 		class="reset-filters"
@@ -22,7 +24,9 @@
 		title="Reset Filters"
 		on:click={() => dispatch('resetFilter')}
 	>
-		<div class="icon"><BasicIconRenderer icon={'close'} height={'35px'} width={'35px'} /></div>
+		<div class="icon">
+			<BasicIconRenderer icon={'close'} height={'100%'} width={'100%'} />
+		</div>
 	</button>
 </div>
 

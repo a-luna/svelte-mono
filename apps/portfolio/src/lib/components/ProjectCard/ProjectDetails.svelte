@@ -110,6 +110,11 @@
 		margin: 0.5rem 1rem 0 0;
 	}
 
+	.all-language-list :global(.filter-value) {
+		font-size: 0.9rem;
+		color: var(--white-shade5);
+	}
+
 	@media screen and (min-width: 640px) {
 		h2 {
 			font-size: 1.5rem;

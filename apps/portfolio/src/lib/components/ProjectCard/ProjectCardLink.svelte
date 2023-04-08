@@ -15,7 +15,7 @@
 		height: 3rem;
 		justify-content: center;
 		align-items: center;
-		color: var(--white-shade5);
+		color: var(--body-text);
 		background-color: var(--project-card-border-color);
 		border-left-width: 2px;
 		border-left-style: solid;

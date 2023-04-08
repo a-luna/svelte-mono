@@ -46,8 +46,12 @@
 		vertical-align: middle;
 	}
 	.filter-value {
-		font-size: 0.9rem;
+		font-size: 1rem;
+		color: var(--white-shade5);
 		letter-spacing: 0.6px;
 		white-space: nowrap;
+	}
+	:global(.icon .filter-settings) .filter-value {
+		font-size: 0.9rem;
 	}
 </style>
