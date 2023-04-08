@@ -2364,6 +2364,12 @@ body {
 	scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 }
 
+body:has(.mobile-nav-open) {
+	overflow: hidden;
+	padding: 0 0.75rem 0.75rem 0;
+
+}
+
 body::-webkit-scrollbar-track {
 	background: var(--scrollbarBG);
 }

@@ -3,7 +3,7 @@
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
 	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
-	import { getPageHeight } from '$lib/stores';
+	import { getPageHeight, mobileNavOpen } from '$lib/stores';
 	import type { Writable } from 'svelte/store';
 	import '../tailwind.css';
 
@@ -11,7 +11,6 @@
 	let windowHeight: number;
 	let scrollY: number;
 	let showScrollToTopButton: boolean;
-	// let userReposInitialized = false;
 
 	$: if (typeof window !== 'undefined') {
 		const result = getPageHeight();
@@ -20,7 +19,6 @@
 		}
 	}
 	$: if (typeof window !== 'undefined') showScrollToTopButton = $pageHeight > windowHeight && scrollY > 0;
-	// $: if (!userReposInitialized) userReposInitialized = initializeUserRepos();
 </script>
 
 <svelte:window bind:innerHeight={windowHeight} bind:scrollY />
@@ -44,15 +42,17 @@
 	{/if}
 </svelte:head>
 
-<div id="top" class="header-wrapper">
-	<Nav />
+<div id="svelte" class:mobile-nav-open={$mobileNavOpen}>
+	<div id="top" class="header-wrapper">
+		<Nav />
+	</div>
+	<main>
+		<slot />
+		{#if showScrollToTopButton}
+			<ScrollToTopButton />
+		{/if}
+	</main>
 </div>
-<main>
-	<slot />
-	{#if showScrollToTopButton}
-		<ScrollToTopButton />
-	{/if}
-</main>
 
 <style lang="postcss">
 	.header-wrapper {
@@ -61,10 +61,17 @@
 		justify-content: center;
 		background-color: var(--page-bg-color);
 		width: 100%;
+		height: 87px;
 	}
 	main {
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: center;
+	}
+
+	@media (min-width: 768px) {
+		.header-wrapper {
+			height: 95px;
+		}
 	}
 </style>

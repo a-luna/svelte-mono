@@ -22,6 +22,7 @@ import { derived, writable } from 'svelte/store';
 // };
 
 export const initialFadePerformed = writable<boolean>(false);
+export const mobileNavOpen = writable<boolean>(false);
 export const userRepos = writable<CachedProjectData>(initializeProjectData());
 export const blogPosts = writable<BlogPost[]>([]);
 export const tutorialSections = writable<TutorialSection[]>([]);

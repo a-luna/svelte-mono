@@ -4,12 +4,14 @@
 	import NavItems from '$lib/components/Nav/NavItems.svelte';
 	import NavSideBar from '$lib/components/Nav/NavSideBar.svelte';
 	import SocialLinks from '$lib/components/Nav/SocialLinks.svelte';
+	import { mobileNavOpen } from '$lib/stores';
 	import { onMount } from 'svelte';
 	let mounted = false;
 
 	onMount(() => (mounted = true));
 
 	let open = false;
+	$: $mobileNavOpen = open;
 </script>
 
 {#if mounted}
