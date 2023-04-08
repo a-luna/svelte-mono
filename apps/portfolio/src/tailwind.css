@@ -499,13 +499,13 @@ body {
 
 .red,
 .error {
-	color: hsl(349.38 100% 59%);
-	color: oklch(65% 0.293 18.55);
+	color: hsl(3.91 100% 58%);
+	color: oklch(65.2% 0.293 29.234);
 }
 
 .orange {
-	color: hsl(31.45 100% 60%);
-	color: oklch(78% 0.203 62.72);
+	color: hsl(26.03 100% 59%);
+	color: oklch(74.9% 0.214 52.98);
 }
 
 .yellow {
@@ -525,12 +525,14 @@ body {
 	color: oklch(87.8% 0.312 137.52);
 }
 
-.teal {
+.teal,
+.projects nav a {
 	color: hsl(161.67 100% 49%);
 	color: oklch(86.7% 0.257 162.2);
 }
 
-.blue {
+.blue,
+.blog nav a {
 	color: hsl(173.22 100% 65%);
 	color: oklch(90.73% 0.159 184.005);
 }
@@ -558,13 +560,13 @@ body {
 /* START */
 
 .project-category.red {
-	border-color: hsl(349.38 100% 59%);
-	border-color: oklch(65% 0.293 18.55);
+	border-color: hsl(3.91 100% 58%);
+	border-color: oklch(65.2% 0.293 29.234);
 }
 
 .project-category.orange {
-	border-color: hsl(31.45 100% 60%);
-	border-color: oklch(78% 0.203 62.72);
+	border-color: hsl(26.03 100% 59%);
+	border-color: oklch(74.9% 0.214 52.98);
 }
 
 .project-category.yellow {
@@ -633,24 +635,24 @@ body {
 
 .no-icon label.selected.red,
 .no-icon label.hovered.red {
-	background-color: hsl(349.38 100% 59%);
-	background-color: oklch(65% 0.293 18.55);
+	background-color: hsl(3.91 100% 58%);
+	background-color: oklch(65.2% 0.293 29.234);
 }
 
 .no-icon label.red {
-	border-color: hsl(349.38 100% 59%);
-	border-color: oklch(65% 0.293 18.55);
+	border-color: hsl(3.91 100% 58%);
+	border-color: oklch(65.2% 0.293 29.234);
 }
 
 .no-icon label.selected.orange,
 .no-icon label.hovered.orange {
-	background-color: hsl(31.45 100% 60%);
-	background-color: oklch(78% 0.203 62.72);
+	background-color: hsl(26.03 100% 59%);
+	background-color: oklch(74.9% 0.214 52.98);
 }
 
 .no-icon label.orange {
-	border-color: hsl(31.45 100% 60%);
-	border-color: oklch(78% 0.203 62.72);
+	border-color: hsl(26.03 100% 59%);
+	border-color: oklch(74.9% 0.214 52.98);
 }
 
 .no-icon label.selected.yellow,
@@ -755,29 +757,29 @@ body {
 }
 
 .no-icon .filter-setting.red {
-	color: hsl(349.38 100% 59%);
-	color: oklch(65% 0.293 18.55);
+	color: hsl(3.91 100% 58%);
+	color: oklch(65.2% 0.293 29.234);
 	background-color: var(--black);
 }
 
 .no-icon .filter-setting.red.hovered,
 .no-icon .filter-setting.red.selected {
 	color: var(--black);
-	background-color: hsl(349.38 100% 59%);
-	background-color: oklch(65% 0.293 18.55);
+	background-color: hsl(3.91 100% 58%);
+	background-color: oklch(65.2% 0.293 29.234);
 }
 
 .no-icon .filter-setting.orange {
-	color: hsl(31.45 100% 60%);
-	color: oklch(78% 0.203 62.72);
+	color: hsl(26.03 100% 59%);
+	color: oklch(74.9% 0.214 52.98);
 	background-color: var(--black);
 }
 
 .no-icon .filter-setting.orange.hovered,
 .no-icon .filter-setting.orange.selected {
 	color: var(--black);
-	background-color: hsl(31.45 100% 60%);
-	background-color: oklch(78% 0.203 62.72);
+	background-color: hsl(26.03 100% 59%);
+	background-color: oklch(74.9% 0.214 52.98);
 }
 
 .no-icon .filter-setting.yellow {
