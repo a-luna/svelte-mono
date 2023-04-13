@@ -62,9 +62,8 @@
 	}
 	h1 {
 		font-family: 'Noto Sans', sans-serif;
-		font-size: 2rem;
-		font-weight: 700;
-		line-height: 1.2;
+		font-size: 1.65rem;
+		font-weight: 500;
 		color: var(--post-title-text-color);
 		-webkit-text-fill-color: var(--post-title-text-color);
 		-webkit-text-stroke-width: 1px;
@@ -83,7 +82,7 @@
 		padding-bottom: 0;
 		padding-left: var(--mobile-page-padding);
 		padding-right: var(--mobile-page-padding);
-		margin: 1rem auto;
+		margin: 1.5rem auto 1rem auto;
 		width: 100%;
 		max-width: var(--max-width);
 	}
@@ -95,12 +94,15 @@
 	}
 	@media (min-width: 640px) {
 		h1 {
-			font-size: 2.25rem;
+			font-size: 1.8rem;
 		}
 	}
 	@media (min-width: 768px) {
 		.wrapper {
 			padding: 0;
+		}
+		h1 {
+			font-size: 2rem;
 		}
 	}
 </style>

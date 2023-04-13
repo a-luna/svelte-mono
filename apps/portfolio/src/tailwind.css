@@ -1060,6 +1060,17 @@ body {
 	font-size: 0.9rem;
 }
 
+@media (min-width: 640px) {
+
+	.prose p,
+	.prose p a,
+	.prose ul,
+	.prose ul li,
+	.prose div.prop-group-ref {
+		font-size: 0.9rem;
+	}
+}
+
 article.readme .wrapper>ul {
 	margin: 1.25rem 0 1.25rem 1.25rem;
 }

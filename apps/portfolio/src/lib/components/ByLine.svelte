@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { AUTHOR_NAME } from '$lib/siteConfig';
+	import { AUTHOR_NAME, SITE_URL } from '$lib/siteConfig';
 	import { formatDateString } from '$lib/util';
 
 	export let published = new Date(0);
 	export let contentType: string;
 
-	$: authorImage = `../avatar.png`;
+	$: authorImage = `${SITE_URL}/avatar.png`;
 	$: publishDate = contentType === 'tutorial' ? '&nbsp;' : `on ${formatDateString(published)}`;
 </script>
 
@@ -23,6 +23,8 @@
 		gap: 6px;
 		align-items: center;
 		line-height: 0;
+		font-family: 'Noto Sans';
+		font-weight: 500;
 	}
 	.avatar-wrapper {
 		cursor: pointer;
@@ -62,7 +64,7 @@
 	}
 	.author-name,
 	.publish-date {
-		font-size: 0.9rem;
+		font-size: 1rem;
 		font-weight: 400;
 	}
 	.author-name {
