@@ -210,6 +210,8 @@
 	}
 	.normal-text span {
 		color: var(--white-shade2);
+		background-color: hsl(0 0% 0% / 0.2);
+		font-weight: 400;
 	}
 	.normal-text :global(.icon-wrapper) {
 		display: inline;

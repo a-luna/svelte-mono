@@ -6,9 +6,6 @@ import type { RequestEvent, RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) => {
 	const { slug } = params;
-	// const posts = get(blogPosts);
-	// if (posts) {
-	// }
 	let blogPost = get(blogPosts).find((post) => post.slug === slug);
 	if (!blogPost || !blogPost.content) {
 		throw error(404, `Error fetching blogpost matching slug: ${slug}`);

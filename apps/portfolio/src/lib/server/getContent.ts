@@ -1,10 +1,11 @@
 import { dev } from '$app/environment';
+import { isLanguageOrTech, isProjectCategory, unslugify } from '$lib/server/util';
 import {
 	API_TUTORIAL_IMAGE_ROOT,
 	API_TUTORIAL_URL_ROOT,
 	BLOG_IMAGE_ROOT,
 	BLOG_POST_URL_ROOT,
-	SITE_URL
+	SITE_URL,
 } from '$lib/siteConfig';
 import type {
 	BlogPost,
@@ -12,16 +13,15 @@ import type {
 	FrontMatterResources,
 	LanguageOrTech,
 	ProjectCategory,
-	TutorialSection
+	TutorialSection,
 } from '$lib/types';
-import { isLanguageOrTech, isProjectCategory, unslugify } from '$lib/server/util';
 import { promises as fs } from 'fs';
 import grayMatter from 'gray-matter';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-export const listBlogPosts = async (): Promise<BlogPost[]> => getAllContent('blog_posts');
-export const listTutorialSections = async (): Promise<TutorialSection[]> => getAllContent('flask-api-tutorial');
+export const listBlogPosts = async (): Promise<BlogPost[]> => await getAllContent('blog_posts');
+export const listTutorialSections = async (): Promise<TutorialSection[]> => await getAllContent('flask-api-tutorial');
 
 const checkMarkdownFile = (fileName: string): boolean => path.extname(fileName) === '.md';
 
@@ -29,7 +29,7 @@ const getResourceUrl = (res: FrontMatterResources, slug: string, imageFolder: st
 	res.name.startsWith('img') ? `${imageFolder}/${slug}/${res.src}` : `${SITE_URL}/${res.src}`;
 
 async function getAllContent(
-	contentType: 'blog_posts' | 'flask-api-tutorial'
+	contentType: 'blog_posts' | 'flask-api-tutorial',
 ): Promise<BlogPost[] | TutorialSection[]> {
 	const contentList: BlogPost[] | TutorialSection[] = [];
 	const markdownFolder = getMarkdownFolder(contentType);
@@ -77,7 +77,7 @@ function parseTutorialSection(path: string, content: string, data: { [k: string]
 		API_TUTORIAL_IMAGE_ROOT,
 		API_TUTORIAL_URL_ROOT,
 		content,
-		data
+		data,
 	) as unknown as TutorialSection;
 	tutorialSection.href = tutorialSection.slug;
 	tutorialSection.url = `${SITE_URL}/${tutorialSection.href}`;
@@ -99,7 +99,7 @@ function parseMarkdownFile(
 	imageFolder: string,
 	urlRoot: string,
 	content: string,
-	data: { [k: string]: unknown }
+	data: { [k: string]: unknown },
 ): BlogPost {
 	const slug = (data.slug as string) ?? path.basename(filePath, '.md');
 	const date = new Date((data.date as string) ?? 0);
@@ -131,7 +131,7 @@ function parseMarkdownFile(
 		slug,
 		date: date.toISOString(),
 		coverImage: getCoverImage(slug, imageFolder, data.resources as FrontMatterResources[]),
-		resources: getArticleResources(slug, imageFolder, data.resources as FrontMatterResources[])
+		resources: getArticleResources(slug, imageFolder, data.resources as FrontMatterResources[]),
 	};
 }
 
@@ -140,14 +140,14 @@ function getCoverImage(slug: string, imageFolder: string, frontMatterRes: FrontM
 	return {
 		src: `${imageFolder}/${slug}.jpg`,
 		name: cover?.name ?? '',
-		caption: cover?.params?.credit ?? ''
+		caption: cover?.params?.credit ?? '',
 	};
 }
 
 function getArticleResources(
 	slug: string,
 	imageFolder: string,
-	frontMatterRes: FrontMatterResources[]
+	frontMatterRes: FrontMatterResources[],
 ): { [k: string]: BlogResource } {
 	const articleResources = frontMatterRes.filter((res) => res.name !== 'cover');
 	const resources: { [k: string]: BlogResource } = {};
@@ -156,8 +156,8 @@ function getArticleResources(
 			(resources[img.name] = {
 				name: img.name,
 				src: getResourceUrl(img, slug, imageFolder),
-				caption: img.title ?? ''
-			})
+				caption: img.title ?? '',
+			}),
 	);
 	return resources;
 }

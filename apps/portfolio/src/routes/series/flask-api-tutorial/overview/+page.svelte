@@ -9,7 +9,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	let list: TutorialSection[];
+	let list: TutorialSection[] = [];
 	const description =
 		'This tutorial series provides step-by-step instructions and in-depth explanations to guide you through the process of creating a robust, production-quality REST API. The toolstack consists of Flask, Flask-RESTx, SQLAlchemy, pyjwt, tox and other packages. Code quality is a major focus, with considerable time dedicated to testing (using pytest), logging and tools such as coverage, flake8 and mypy. The tutorial concludes by creating a process that continuously integrates (with tox, travis/circle CI, coveralls) and deploys the API (with either Github or Azure DevOps to Heroku).';
 
@@ -28,34 +28,35 @@
 
 	$: allTutorialSections = data.allTutorialSections;
 	$: if (browser && Object.keys(allTutorialSections).length) $tutorialSections = allTutorialSections;
-	$: if (tutorialSections && $tutorialSections.length)
-		list = $tutorialSections.sort((a, b) => (a?.series_weight ?? 0) - (b?.series_weight ?? 0));
+	$: list = $tutorialSections.sort((a, b) => (a?.series_weight ?? 0) - (b?.series_weight ?? 0));
 </script>
 
-<ContentLayout {content} contentType={'tutorial'}>
-	<section class="article-list">
-		<p>
-			This tutorial series provides step-by-step instructions and in-depth explanations to guide you through the process
-			of creating a robust, production-quality REST API. The toolstack consists of Flask, Flask-RESTx, SQLAlchemy,
-			pyjwt, tox and other packages. Code quality is a major focus, with considerable time dedicated to testing (using
-			pytest), logging and tools such as coverage, flake8 and mypy. The tutorial concludes by creating a process that
-			continuously integrates (with tox, travis/circle CI, coveralls) and deploys the API (with either Github or Azure
-			DevOps to Heroku).
-		</p>
-		<h3>All Sections</h3>
-		{#if list.length}
-			<ul data-sveltekit-preload-data="hover">
-				{#each list as item}
-					<li>
-						<SectionSummary section={item} />
-					</li>
-				{/each}
-			</ul>
-		{:else}
-			<div class="prose dark:prose-invert">No tutorial sections found!</div>
-		{/if}
-	</section>
-</ContentLayout>
+{#if $tutorialSections.length}
+	<ContentLayout {content} contentType={'tutorial'}>
+		<section class="article-list">
+			<p>
+				This tutorial series provides step-by-step instructions and in-depth explanations to guide you through the
+				process of creating a robust, production-quality REST API. The toolstack consists of Flask, Flask-RESTx,
+				SQLAlchemy, pyjwt, tox and other packages. Code quality is a major focus, with considerable time dedicated to
+				testing (using pytest), logging and tools such as coverage, flake8 and mypy. The tutorial concludes by creating
+				a process that continuously integrates (with tox, travis/circle CI, coveralls) and deploys the API (with either
+				Github or Azure DevOps to Heroku).
+			</p>
+			<h3>All Sections</h3>
+			{#if list.length}
+				<ul data-sveltekit-preload-data="hover">
+					{#each list as item}
+						<li>
+							<SectionSummary section={item} />
+						</li>
+					{/each}
+				</ul>
+			{:else}
+				<div class="prose dark:prose-invert">No tutorial sections found!</div>
+			{/if}
+		</section>
+	</ContentLayout>
+{/if}
 
 <style lang="postcss">
 	section {
