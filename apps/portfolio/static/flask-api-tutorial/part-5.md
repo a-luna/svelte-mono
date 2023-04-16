@@ -129,7 +129,7 @@ Another common architectural pattern is to expose methods which allow the client
 
 Now, you might be wondering how this can be accomplished if we only expose two endpoints per resource, and CRUD defines (at leat) four different operations. Table 1 shows how we will structure the API for our `Widget` resource:
 
-<div id="table-1" class="table-wrapper">
+<div id="tutorial-part-5-table-1" class="table-wrapper">
     <div class="responsive">
         <table class="tutorial">
             <thead>
@@ -493,7 +493,7 @@ Next, run <code>flask db upgrade</code> to run the migration script on the datab
 INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade 079d26d45cc9 -> 7c66df0e878f, add widget model</span></code></pre>
 
-After the `widget` table has been added to the database, we can begin implementing the API endpoints specified in [Table 1](#table-1).
+After the `widget` table has been added to the database, we can begin implementing the API endpoints specified in [Table 1](#tutorial-part-5-table-1).
 
 ## Create Widget
 
@@ -778,7 +778,7 @@ There really isn't anything else to say about how the `info_url` attribute is pa
 
 `deadline` is the last piece of data that we must receive from the client in order to create a new widget. Utlimately, this value must be converted to a `datetime` since the `Widget` class has several `hybrid_properties` that perform comparisons or calculations that assume this is the case. The `inputs` module provides several pre-defined types that can convert request data to either a `date` or a `datetime` value. I've summarized the requirements for these types in **Table 2** below:
 
-<div class="table-wrapper">
+<div id="tutorial-part-5-table-2" class="table-wrapper">
     <div class="responsive">
         <table class="tutorial">
             <thead>
@@ -799,25 +799,25 @@ There really isn't anything else to say about how the `info_url` attribute is pa
                 <tr>
                     <td class="first-column"><code>date</code></td>
                     <td><code class="teal">YYYY<span class="orange">-</span>MM<span class="orange">-</span>DD</code></td>
-                    <td>2019-10-02</td>
+                    <td>"2019-10-02"</td>
                     <td class="last-column">N/A</td>
                 </tr>
                 <tr>
                     <td class="first-column"><code>date_from_iso8601</code></td>
                     <td><code class="teal">YYYY<span class="orange">-</span>MM<span class="orange">-</span>DD</code></td>
-                    <td>2019-10-02</td>
+                    <td>"2019-10-02"</td>
                     <td class="last-column"><a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a></td>
                 </tr>
                 <tr>
                     <td class="first-column"><code>datetime_from_iso8601</code></td>
                     <td><code class="teal">YYYY<span class="orange">-</span>MM<span class="orange">-</span>DD<span class="orange">T</span>hh<span class="orange">:</span>mm<span class="orange">:</span>ss<span class="orange">(+/-)</span>zh<span class="orange">:</span>zm</code></td>
-                    <td>2019-10-02T15:05:06-07:00</td>
+                    <td>"2019-10-02T15:05:06-07:00"</td>
                     <td class="last-column"><a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a></td>
                 </tr>
                 <tr>
                     <td class="first-column"><code>datetime_from_rfc822</code></td>
                     <td><code class="teal">DN<span class="orange">, </span>DD MN YYYY hh<span class="orange">:</span>mm<span class="orange">:</span>ss <span class="orange">(+/-)</span>zhzm</code></td>
-                    <td>Wed, 02 Oct 2019 15:05:06 -0700</td>
+                    <td>"Wed, 02 Oct 2019 15:05:06 -0700"</td>
                     <td class="last-column"><a href="https://tools.ietf.org/html/rfc5322#section-3.3" target="_blank">RFC 5322</a> <sup>3</sup></td>
                 </tr>
             </tbody>
@@ -830,8 +830,8 @@ There really isn't anything else to say about how the `info_url` attribute is pa
                       <p><sup>2</sup> <code>YYYY</code> = 4-digit year, <code>MM</code> = 2-digit month, <code>DD</code> = 2-digit day,</p>
                       <p><code>hh</code> = 2-digit hour, <code>mm</code> = 2-digit minutes, <code>ss</code> = 2-digit seconds,</p>
                       <p><code>zh</code> = 2-digit UTC offset hours, <code>zm</code> = 2-digit UTC offset minutes,</p>
-                      <p><code>DN</code> (Day Name) = "Mon" / "Tue" / "Wed" / "Thu" / "Fri" / "Sat" / "Sun",</p>
-                      <p><code>MN</code> (Month Name) = "Jan" / "Feb" / "Mar" / "Apr" / "May" / "Jun" / "Jul" / "Aug" / "Sep" / "Oct" / "Nov" / "Dec"</p>
+                      <p><code>DN</code> (Day Name) = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun",</p>
+                      <p><code>MN</code> (Month Name) = "Jan" | "Feb" | "Mar" | "Apr" | "May" | "Jun" | "Jul" | "Aug" | "Sep" | "Oct" | "Nov" | "Dec"</p>
                     </td>
                 </tr>
                 <tr>

@@ -77,8 +77,8 @@ module.exports = {
 							'box-shadow': 'none',
 						},
 						'article a code': {
-							color: 'hsl(76 100% 50%)',
-							color: 'oklch(92.22% 0.244 126.84)',
+							color: 'var(--body-text)',
+							'background-color': 'var(--black-tint3)',
 							border: 'none',
 							'border-radius': '4px',
 						},

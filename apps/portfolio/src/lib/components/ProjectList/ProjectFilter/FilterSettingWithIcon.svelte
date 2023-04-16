@@ -47,7 +47,6 @@
 	}
 	.filter-value {
 		font-size: 1rem;
-		color: var(--white-shade5);
 		letter-spacing: 0.6px;
 		white-space: nowrap;
 	}

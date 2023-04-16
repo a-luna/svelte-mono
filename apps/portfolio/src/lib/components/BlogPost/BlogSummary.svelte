@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { LanguageOrTech, ProjectCategory as ProjectCategoryType } from '$lib/types';
-	import { formatDateString } from '$lib/util';
+	import PreviewImage from '$lib/components/BlogPost/PreviewImage.svelte';
 	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
-	import PreviewImage from '$lib/components/BlogPost/PreviewImage.svelte';
+	import type { LanguageOrTech, ProjectCategory as ProjectCategoryType } from '$lib/types';
+	import { formatDateString } from '$lib/util';
 
-	export let slug: string = '';
+	export let slug = '';
 	export let href = '/';
 	export let title = 'Untitled post';
 	export let publishDate: Date = new Date(0);
@@ -98,13 +98,15 @@
 	.top-right-wrapper {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 0.5rem;
+		gap: 0.75rem;
 	}
 
 	.top-right-row {
 		display: flex;
-		flex-flow: row nowrap;
-		justify-content: space-between;
+		flex-flow: column nowrap;
+		justify-content: flex-start;
+		gap: 0.75rem;
+		line-height: 1;
 	}
 
 	h4 {
@@ -125,8 +127,8 @@
 	}
 
 	.published {
-		font-size: 0.9rem;
-		color: var(--white);
+		font-size: 1rem;
+		color: var(--white-shade5);
 	}
 
 	.description {
@@ -169,6 +171,14 @@
 		}
 		.description {
 			font-size: 0.95rem;
+		}
+	}
+
+	@media (min-width: 400px) {
+		.top-right-row {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
 		}
 	}
 </style>

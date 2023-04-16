@@ -472,16 +472,19 @@ body {
 	--button-bg-color: var(--black-tint3);
 	--button-hover-bg-color: var(--black-tint1);
 
-	--scroll-bar-start-color: var(--magenta);
+	--scroll-bar-start-color: hsl(215.63 100% 48%);
+	--scroll-bar-start-color: oklch(54.7% 0.267 260.55);
+	--scroll-bar-stop-color: hsl(261, 100%, 55%);
+	--scroll-bar-stop-color: oklch(51.8% 0.304 286.07);
 
-	--typescript-color-h: 298;
+	/* --typescript-color-h: 298;
 	--javascript-color-h: 60;
 	--shell-color-h: 256;
 	--python-color-h: 140;
 	--csharp-color-h: 168;
 	--svelte-color-h: 30;
 	--nodejs-color-h: 256;
-	--css-color-h: 298;
+	--css-color-h: 298; */
 
 	--g-color-1: var(--indigo);
 	--g-color-2: var(--teal);
@@ -490,7 +493,6 @@ body {
 	--g-color-3-dim: hsl(256 9% 20%);
 	--gradient: linear-gradient(to right, hsl(254.04 100% 55%), hsl(180 100% 49%));
 	--gradient: linear-gradient(to right, oklch(49.6% 0.307 278.18), oklch(88.4% 0.199 194.78));
-	--gradient-dim: linear-gradient(to bottom right, var(--g-color-1-dim), var(--g-color-2-dim), var(--g-color-3-dim));
 
 	--code-block-bg-color: #141414;
 	--code-block-border-color: var(--dark-gray-shade2);
