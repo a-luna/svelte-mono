@@ -12,7 +12,7 @@ module.exports = {
 						'line-height': '1.6',
 						'h2, h3, h4, h5, h6': {
 							'font-family': '"Noto Sans", sans-serif',
-							fontWeight: '400',
+							fontWeight: '300',
 							letterSpacing: '0.75px',
 						},
 						blockquote: {

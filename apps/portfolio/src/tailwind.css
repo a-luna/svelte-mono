@@ -2,14 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+/* raleway-300 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 300;
+	src: url('/fonts/raleway-v28-latin-300.woff2') format('woff2'),
+		url('/fonts/raleway-v28-latin-300.woff') format('woff');
+}
+
 /* raleway-regular - latin */
 @font-face {
 	font-display: swap;
 	font-family: 'Raleway';
 	font-style: normal;
 	font-weight: 400;
-	src: url('../fonts/raleway-v28-latin-regular.woff2') format('woff2'),
-		url('../fonts/raleway-v28-latin-regular.woff') format('woff');
+	src: url('/fonts/raleway-v28-latin-regular.woff2') format('woff2'),
+		url('/fonts/raleway-v28-latin-regular.woff') format('woff');
+}
+
+/* raleway-500 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 500;
+	src: url('/fonts/raleway-v28-latin-500.woff2') format('woff2'),
+		url('/fonts/raleway-v28-latin-500.woff') format('woff');
+}
+
+/* raleway-700 - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 700;
+	src: url('/fonts/raleway-v28-latin-700.woff2') format('woff2'),
+		url('/fonts/raleway-v28-latin-700.woff') format('woff');
 }
 
 /* roboto-300 - latin */
@@ -18,8 +48,8 @@
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 300;
-	src: url('../fonts/roboto-v30-latin-300.woff2') format('woff2'),
-		url('../fonts/roboto-v30-latin-300.woff') format('woff');
+	src: url('/fonts/roboto-v30-latin-300.woff2') format('woff2'),
+		url('/fonts/roboto-v30-latin-300.woff') format('woff');
 }
 
 /* roboto-regular - latin */
@@ -28,8 +58,8 @@
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 400;
-	src: url('../fonts/roboto-v30-latin-regular.woff2') format('woff2'),
-		url('../fonts/roboto-v30-latin-regular.woff') format('woff');
+	src: url('/fonts/roboto-v30-latin-regular.woff2') format('woff2'),
+		url('/fonts/roboto-v30-latin-regular.woff') format('woff');
 }
 
 /* roboto-italic - latin */
@@ -38,8 +68,8 @@
 	font-family: 'Roboto';
 	font-style: italic;
 	font-weight: 400;
-	src: url('../fonts/roboto-v30-latin-italic.woff2') format('woff2'),
-		url('../fonts/roboto-v30-latin-italic.woff') format('woff');
+	src: url('/fonts/roboto-v30-latin-italic.woff2') format('woff2'),
+		url('/fonts/roboto-v30-latin-italic.woff') format('woff');
 }
 
 /* roboto-500 - latin */
@@ -48,8 +78,8 @@
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 500;
-	src: url('../fonts/roboto-v30-latin-500.woff2') format('woff2'),
-		url('../fonts/roboto-v30-latin-500.woff') format('woff');
+	src: url('/fonts/roboto-v30-latin-500.woff2') format('woff2'),
+		url('/fonts/roboto-v30-latin-500.woff') format('woff');
 }
 
 /* roboto-700 - latin */
@@ -58,8 +88,8 @@
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 700;
-	src: url('../fonts/roboto-v30-latin-700.woff2') format('woff2'),
-		url('../fonts/roboto-v30-latin-700.woff') format('woff');
+	src: url('/fonts/roboto-v30-latin-700.woff2') format('woff2'),
+		url('/fonts/roboto-v30-latin-700.woff') format('woff');
 }
 
 /* roboto-700italic - latin */
@@ -68,8 +98,8 @@
 	font-family: 'Roboto';
 	font-style: italic;
 	font-weight: 700;
-	src: url('../fonts/roboto-v30-latin-700italic.woff2') format('woff2'),
-		url('../fonts/roboto-v30-latin-700italic.woff') format('woff');
+	src: url('/fonts/roboto-v30-latin-700italic.woff2') format('woff2'),
+		url('/fonts/roboto-v30-latin-700italic.woff') format('woff');
 }
 
 /* noto-sans-300 - latin */
@@ -78,8 +108,8 @@
 	font-family: 'Noto Sans';
 	font-style: normal;
 	font-weight: 300;
-	src: url('../fonts/noto-sans-v27-latin-300.woff2') format('woff2'),
-		url('../fonts/noto-sans-v27-latin-300.woff') format('woff');
+	src: url('/fonts/noto-sans-v27-latin-300.woff2') format('woff2'),
+		url('/fonts/noto-sans-v27-latin-300.woff') format('woff');
 }
 
 /* noto-sans-regular - latin */
@@ -88,8 +118,8 @@
 	font-family: 'Noto Sans';
 	font-style: normal;
 	font-weight: 400;
-	src: url('../fonts/noto-sans-v27-latin-regular.woff2') format('woff2'),
-		url('../fonts/noto-sans-v27-latin-regular.woff') format('woff');
+	src: url('/fonts/noto-sans-v27-latin-regular.woff2') format('woff2'),
+		url('/fonts/noto-sans-v27-latin-regular.woff') format('woff');
 }
 
 /* noto-sans-italic - latin */
@@ -98,8 +128,8 @@
 	font-family: 'Noto Sans';
 	font-style: italic;
 	font-weight: 400;
-	src: url('../fonts/noto-sans-v27-latin-italic.woff2') format('woff2'),
-		url('../fonts/noto-sans-v27-latin-italic.woff') format('woff');
+	src: url('/fonts/noto-sans-v27-latin-italic.woff2') format('woff2'),
+		url('/fonts/noto-sans-v27-latin-italic.woff') format('woff');
 }
 
 /* noto-sans-500 - latin */
@@ -108,8 +138,8 @@
 	font-family: 'Noto Sans';
 	font-style: normal;
 	font-weight: 500;
-	src: url('../fonts/noto-sans-v27-latin-500.woff2') format('woff2'),
-		url('../fonts/noto-sans-v27-latin-500.woff') format('woff');
+	src: url('/fonts/noto-sans-v27-latin-500.woff2') format('woff2'),
+		url('/fonts/noto-sans-v27-latin-500.woff') format('woff');
 }
 
 /* noto-sans-700 - latin */
@@ -118,8 +148,8 @@
 	font-family: 'Noto Sans';
 	font-style: normal;
 	font-weight: 700;
-	src: url('../fonts/noto-sans-v27-latin-700.woff2') format('woff2'),
-		url('../fonts/noto-sans-v27-latin-700.woff') format('woff');
+	src: url('/fonts/noto-sans-v27-latin-700.woff2') format('woff2'),
+		url('/fonts/noto-sans-v27-latin-700.woff') format('woff');
 }
 
 /* noto-sans-700italic - latin */
@@ -128,13 +158,13 @@
 	font-family: 'Noto Sans';
 	font-style: italic;
 	font-weight: 700;
-	src: url('../fonts/noto-sans-v27-latin-700italic.woff2') format('woff2'),
-		url('../fonts/noto-sans-v27-latin-700italic.woff') format('woff');
+	src: url('/fonts/noto-sans-v27-latin-700italic.woff2') format('woff2'),
+		url('/fonts/noto-sans-v27-latin-700italic.woff') format('woff');
 }
 
 @font-face {
 	font-family: 'Hack';
-	src: url('../fonts/hack-regular-subset.woff2?sha=3114f1256') format('woff2'), url('../fonts/hack-regular-subset.woff?sha=3114f1256') format('woff');
+	src: url('/fonts/hack-regular-subset.woff2?sha=3114f1256') format('woff2'), url('/fonts/hack-regular-subset.woff?sha=3114f1256') format('woff');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
@@ -143,7 +173,7 @@
 
 @font-face {
 	font-family: 'Hack';
-	src: url('../fonts/hack-italic-subset.woff2?sha=3114f1256') format('woff2'), url('../fonts/hack-italic-webfont.woff?sha=3114f1256') format('woff');
+	src: url('/fonts/hack-italic-subset.woff2?sha=3114f1256') format('woff2'), url('/fonts/hack-italic-webfont.woff?sha=3114f1256') format('woff');
 	font-weight: 400;
 	font-style: italic;
 	font-display: swap;
@@ -1211,42 +1241,47 @@ figcaption p {
 	flex: 0 0 50%;
 }
 
+/* UPDATE STARTING HERE  */
+
 .level-2 a.hanchor svg {
-	width: 24px;
+	width: 19px;
+	margin-top: 5px;
+}
+
+article .level-2 h2 {
+	font-size: 1.5rem;
+}
+
+.level-2 code {
+	color: var(--tw-prose-headings);
+	font-size: 1.4rem;
 }
 
 .level-3 a.hanchor svg {
-	width: 21px;
+	width: 16px;
+	margin-top: 4px;
+}
+
+article .level-3 h3 {
+	font-size: 1.2rem;
+}
+
+.level-3 code {
+	color: var(--tw-prose-headings);
+	font-size: 1.1rem;
 }
 
 .level-4 a.hanchor svg,
 .level-5 a.hanchor svg,
 .level-6 a.hanchor svg {
-	width: 18px;
-}
-
-article .level-2 h2 {
-	font-size: 1.75rem;
-}
-
-.level-2 code {
-	color: var(--tw-prose-headings);
-	font-size: 1.6rem;
-}
-
-article .level-3 h3 {
-	font-size: 1.5rem;
-}
-
-.level-3 code {
-	color: var(--tw-prose-headings);
-	font-size: 1.4rem;
+	width: 14px;
+	margin-top: 2px;
 }
 
 article .level-4 h4,
 article .level-5 h5,
 article .level-6 h6 {
-	font-size: 1.25rem;
+	font-size: 1.05rem;
 }
 
 .level-4 code,
@@ -1254,6 +1289,58 @@ article .level-6 h6 {
 .level-6 code {
 	color: var(--tw-prose-headings);
 	font-size: 1rem;
+}
+
+/* UPDATES END HERE  */
+
+@media (min-width: 640px) {
+	.level-2 a.hanchor svg {
+		width: 23px;
+		margin-top: 2px;
+	}
+
+	article .level-2 h2 {
+		font-size: 1.5rem;
+	}
+
+	.level-2 code {
+		color: var(--tw-prose-headings);
+		font-size: 1.4rem;
+	}
+
+	.level-3 a.hanchor svg {
+		width: 18px;
+		margin-top: 3px;
+	}
+
+	article .level-3 h3 {
+		font-size: 1.3rem;
+	}
+
+	.level-3 code {
+		color: var(--tw-prose-headings);
+		font-size: 1.2rem;
+	}
+
+	.level-4 a.hanchor svg,
+	.level-5 a.hanchor svg,
+	.level-6 a.hanchor svg {
+		width: 17px;
+		margin-top: 4px;
+	}
+
+	article .level-4 h4,
+	article .level-5 h5,
+	article .level-6 h6 {
+		font-size: 1.25rem;
+	}
+
+	.level-4 code,
+	.level-5 code,
+	.level-6 code {
+		color: var(--tw-prose-headings);
+		font-size: 1rem;
+	}
 }
 
 .heading-text {
@@ -1275,6 +1362,7 @@ summary .heading-text {
 	background-size: 100% 0.15em;
 	background-position: 0 88%;
 	transition: background-size 0.25s ease-in;
+	line-height: 1.2;
 }
 
 .code-details {
@@ -1404,6 +1492,7 @@ pre:not(.shiki) {
 	background-color: inherit;
 	border: none;
 	padding: 0;
+	letter-spacing: 0.25px;
 }
 
 .shiki code {
@@ -1990,6 +2079,7 @@ table.tutorial tbody td {
 
 table.tutorial code {
 	font-size: 0.675rem;
+	background-color: inherit;
 }
 
 table.tutorial tbody td,
@@ -2031,7 +2121,6 @@ table.tutorial tfoot code {
 }
 
 .tutorial tr td.table-footer {
-	font-weight: 400;
 	padding: 7px 0 7px 7px;
 }
 
@@ -2088,6 +2177,11 @@ ul .table-wrapper {
 .responsive tbody td {
 	color: var(--white-shade3);
 	border: 1px solid var(--accent-color);
+}
+
+#tutorial-part-5-table-2 .responsive tbody td:not(.last-column) {
+	color: hsl(322.21 100% 64%);
+	color: oklch(69.8% 0.313 346.56);
 }
 
 .responsive tfoot {
@@ -2157,8 +2251,9 @@ th.last-column,
 	font-weight: 400;
 }
 
-.table-wrapper tfoot td {
-	font-size: 0.8rem;
+.table-wrapper tfoot td,
+.table-wrapper tfoot td p {
+	font-size: 0.75rem;
 	font-weight: 300;
 }
 
@@ -2306,10 +2401,6 @@ body::-webkit-scrollbar-thumb {
 .article-list a {
 	color: var(--accent-color);
 	text-decoration-line: none;
-}
-
-.article-list a:hover {
-	color: var(--accent-color-dim);
 }
 
 a.index-card .index-card-reactions,
