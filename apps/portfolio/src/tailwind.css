@@ -1613,7 +1613,7 @@ pre:not(.shiki) {
 
 .shiki-wrapper .lang-name,
 .shiki-wrapper .copy-button {
-	color: var(--gray-shade2);
+	color: var(--gray-shade3);
 	background-color: #141414;
 	border-radius: 0;
 	font-size: inherit;
@@ -1647,10 +1647,7 @@ pre:not(.shiki) {
 	grid-column: 2 / span 1;
 }
 
-.shiki-wrapper .copy-button {
-	color: var(--gray-shade2);
-}
-
+.shiki-wrapper .success .lang-name,
 .shiki-wrapper .success .copy-button,
 .shiki-wrapper .success .copy-button:hover,
 .shiki-wrapper .success .copy-button:focus,
@@ -1660,17 +1657,15 @@ pre:not(.shiki) {
 	color: oklch(87.8% 0.312 137.52);
 }
 
-.shiki-wrapper .error .copy-button {
+.shiki-wrapper .error .lang-name,
+.shiki-wrapper .error .copy-button,
+.shiki-wrapper .error .copy-button:hover,
+.shiki-wrapper .error .copy-button:focus,
+.shiki-wrapper .error .copy-button:active,
+.shiki-wrapper .error .copy-button:active:focus {
 	color: hsl(349.38 100% 59%);
 	color: oklch(65% 0.293 18.55);
 	;
-}
-
-.shiki-wrapper .copy-button:hover,
-.shiki-wrapper .copy-button:focus,
-.shiki-wrapper .copy-button:active,
-.shiki-wrapper .copy-button:active:focus {
-	color: var(--white-shade2);
 }
 
 .light-blue {
