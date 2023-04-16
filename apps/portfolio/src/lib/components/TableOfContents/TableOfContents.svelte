@@ -87,12 +87,12 @@
 	}
 
 	#table-of-contents :global(ul li) {
-		font-size: 1rem;
+		font-size: 0.9rem;
 	}
 
 	.toc-wrapper ul {
 		list-style: square;
-		padding: 1rem 0 1rem 1.5rem;
+		padding: 1rem 0.5rem 1rem 1.5rem;
 	}
 
 	.toc-wrapper :global(ul > li::marker) {
@@ -122,23 +122,29 @@
 		list-style: none;
 		color: var(--accent-color);
 		background-color: var(--toggle-group-bg-color);
-		font-size: 1.25rem;
+		font-size: 1.1rem;
 		line-height: 1;
-		padding: 1rem;
+		padding: 0.75rem 0.5rem;
 		cursor: pointer;
 		white-space: nowrap;
 		transition: background-color 0.3s ease-in;
-		border: 2px solid var(--accent-color);
+		border: 1px solid var(--accent-color);
+	}
+
+	:global(.blog #table-of-contents[open] > summary),
+	:global(.readme #table-of-contents[open] > summary) {
+		font-weight: 500x;
 	}
 
 	:global(.tutorial #table-of-contents > summary) {
 		border-top: none;
-		border-left: 2px solid var(--accent-color);
-		border-right: 2px solid var(--accent-color);
+		border-left: 1px solid var(--accent-color);
+		border-right: 1px solid var(--accent-color);
 		border-bottom: none;
 	}
 
 	#table-of-contents[open] > summary {
+		font-weight: 500;
 		color: var(--page-bg-color);
 		background-color: var(--accent-color);
 	}
@@ -153,7 +159,7 @@
 	}
 
 	.details-icon {
-		width: 12px;
+		width: 10px;
 		transition: transform 0.3s ease-in;
 	}
 
@@ -164,8 +170,34 @@
 	.toc-wrapper {
 		background-color: var(--toggle-group-bg-color);
 		border-top: none;
-		border-right: 2px solid var(--accent-color);
-		border-bottom: 2px solid var(--accent-color);
-		border-left: 2px solid var(--accent-color);
+		border-right: 1px solid var(--accent-color);
+		border-bottom: 1px solid var(--accent-color);
+		border-left: 1px solid var(--accent-color);
+	}
+
+	@media (min-width: 640px) {
+		#table-of-contents :global(ul li) {
+			font-size: 1rem;
+		}
+		:global(.blog #table-of-contents > summary),
+		:global(.readme #table-of-contents > summary) {
+			font-size: 1.25rem;
+			padding: 1rem;
+			border: 2px solid var(--accent-color);
+		}
+		:global(.tutorial #table-of-contents > summary) {
+			border-top: none;
+			border-left: 2px solid var(--accent-color);
+			border-right: 2px solid var(--accent-color);
+			border-bottom: none;
+		}
+		.details-icon {
+			width: 12px;
+		}
+		.toc-wrapper {
+			border-right: 2px solid var(--accent-color);
+			border-bottom: 2px solid var(--accent-color);
+			border-left: 2px solid var(--accent-color);
+		}
 	}
 </style>

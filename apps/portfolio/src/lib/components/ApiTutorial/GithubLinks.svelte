@@ -115,9 +115,9 @@
 	#github-links > summary {
 		display: list-item;
 		border-top: none;
-		border-left: 2px solid var(--accent-color);
-		border-right: 2px solid var(--accent-color);
-		border-bottom: 2px solid var(--accent-color);
+		border-left: 1px solid var(--accent-color);
+		border-right: 1px solid var(--accent-color);
+		border-bottom: 1px solid var(--accent-color);
 	}
 
 	#github-links[open] > summary {
@@ -146,6 +146,18 @@
 
 	.github-links-wrapper {
 		background-color: var(--toggle-group-bg-color);
-		border: 2px solid var(--accent-color);
+		border: 1px solid var(--accent-color);
+	}
+
+	@media (min-width: 640px) {
+		#github-links > summary {
+			border-left: 2px solid var(--accent-color);
+			border-right: 2px solid var(--accent-color);
+			border-bottom: 2px solid var(--accent-color);
+		}
+
+		.github-links-wrapper {
+			border: 2px solid var(--accent-color);
+		}
 	}
 </style>

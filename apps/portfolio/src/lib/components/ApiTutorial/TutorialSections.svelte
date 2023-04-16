@@ -97,9 +97,9 @@
 
 	#tutorial-sections > summary {
 		display: list-item;
-		border-top: 2px solid var(--accent-color);
-		border-left: 2px solid var(--accent-color);
-		border-right: 2px solid var(--accent-color);
+		border-top: 1px solid var(--accent-color);
+		border-left: 1px solid var(--accent-color);
+		border-right: 1px solid var(--accent-color);
 		border-bottom: none;
 	}
 
@@ -129,6 +129,18 @@
 
 	.tutorial-sections-wrapper {
 		background-color: var(--toggle-group-bg-color);
-		border: 2px solid var(--accent-color);
+		border: 1px solid var(--accent-color);
+	}
+
+	@media (min-width: 640px) {
+		#tutorial-sections > summary {
+			border-top: 2px solid var(--accent-color);
+			border-left: 2px solid var(--accent-color);
+			border-right: 2px solid var(--accent-color);
+		}
+
+		.tutorial-sections-wrapper {
+			border: 2px solid var(--accent-color);
+		}
 	}
 </style>

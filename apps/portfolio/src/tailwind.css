@@ -494,9 +494,7 @@ body {
 
 	--code-block-bg-color: #141414;
 	--code-block-border-color: var(--dark-gray-shade2);
-
-	--toggle-group-bg-color: var(--black-tint2);
-
+	--toggle-group-bg-color: var(--code-block-bg-color);
 	background-color: var(--page-bg-color);
 	font-family: 'Roboto', Inter, Arial, Helvetica, sans-serif;
 	letter-spacing: 0.4px;

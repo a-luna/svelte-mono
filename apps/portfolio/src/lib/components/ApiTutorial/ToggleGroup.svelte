@@ -58,11 +58,17 @@
 		list-style: none;
 		color: var(--accent-color);
 		background-color: var(--toggle-group-bg-color);
-		font-size: 1.25rem;
+		font-size: 1rem;
 		line-height: 1;
 		padding: 1rem;
 		cursor: pointer;
 		white-space: nowrap;
 		transition: background-color 0.3s ease-in;
+	}
+
+	@media (min-width: 640px) {
+		.toggle-groups :global(summary) {
+			font-size: 1.25rem;
+		}
 	}
 </style>
