@@ -40,9 +40,9 @@
 			font-size: 1rem;
 			font-weight: 400;
 			padding: 0;
-			width: 80px;
+			width: 72px;
 			text-align: center;
-			padding: 15px 0;
+			padding: 12px 0;
 			background-color: var(--page-bg-color);
 			border-bottom: 1px solid var(--page-bg-color);
 			transition: border-color 0.5s, color 0.5s;
@@ -60,8 +60,8 @@
 
 		a.home.active,
 		a.home.active:hover {
-			border-bottom: 1px solid hsl(76 100% 50%);
-			border-bottom: 1px solid oklch(92.22% 0.244 126.84);
+			border-bottom: 1.5px solid hsl(76 100% 50%);
+			border-bottom: 1.5px solid oklch(92.22% 0.244 126.84);
 		}
 
 		a.blog.active {

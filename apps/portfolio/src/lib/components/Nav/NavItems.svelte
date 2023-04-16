@@ -18,9 +18,9 @@
 			display: flex;
 			flex-flow: row nowrap;
 			justify-content: space-evenly;
-			align-items: flex-end;
+			align-items: flex-start;
 			flex: 1;
-			height: 47px;
+			height: 40px;
 			background-color: inherit;
 			line-height: 1;
 		}

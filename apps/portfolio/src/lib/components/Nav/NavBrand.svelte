@@ -14,6 +14,7 @@
 <style lang="postcss">
 	a {
 		height: 47px;
+		margin: 0 0.5rem 0 0;
 	}
 	.nav-brand {
 		display: flex;

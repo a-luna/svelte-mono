@@ -39,7 +39,6 @@
 		flex-flow: row nowrap;
 		justify-content: space-between;
 		align-items: baseline;
-		gap: 1rem;
 		background-color: inherit;
 		margin: 0 auto;
 		padding-top: 1rem;
@@ -61,7 +60,7 @@
 		}
 		.nav-container {
 			justify-content: flex-start;
-			align-items: center;
+			align-items: flex-start;
 			padding: 1.5rem 0;
 			margin: 0;
 		}

@@ -27,7 +27,7 @@
 	.social {
 		flex-flow: row nowrap;
 		align-items: center;
-		gap: 1.25rem;
+		gap: 1rem;
 		padding: 0.5rem 1rem;
 		height: 50px;
 		background-color: hsl(261, 100%, 55%);
@@ -66,7 +66,7 @@
 			display: none;
 		}
 		a {
-			width: 18px;
+			width: 20px;
 		}
 	}
 </style>
