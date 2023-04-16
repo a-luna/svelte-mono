@@ -126,14 +126,14 @@ function createWrappedCodeBlock(
 	lineNumbers: boolean,
 	lineNumberStart: number,
 ): string {
-	const svgIcon = getSvgIcon('copy');
-	let topRow = '<span class="top-row">';
-	topRow += `<span class="lang-name-wrapper">`;
-	topRow += `<span class="lang-name">${lang}</span>`;
-	topRow += `<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">${svgIcon}</button>`;
-	topRow += `</span>`;
-	topRow += '<span class="space-filler"></span>';
-	topRow += `</span>`;
+	const svgIcon = getSvgIcon('copy', 4);
+	let topRow = '\n\t<span class="top-row">\n';
+	topRow += `\t\t<span class="lang-name-wrapper">\n`;
+	topRow += `\t\t\t<span class="lang-name">${lang}</span>\n`;
+	topRow += `\t\t\t<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">${svgIcon}\t\t\t</button>\n`;
+	topRow += `\t\t</span>\n`;
+	topRow += '\t\t<span class="space-filler"></span>\n';
+	topRow += `\t</span>\n`;
 
 	let newPre = `<pre class="shiki" style="background-color: #141414">`;
 	if (lineNumbers) {

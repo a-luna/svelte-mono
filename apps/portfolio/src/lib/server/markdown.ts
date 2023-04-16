@@ -6,16 +6,17 @@ import {
 	INFO_BOX_REGEX,
 	LINKED_IMAGE_REGEX,
 	VIDEO_REGEX,
-	WARNING_BOX_REGEX
+	WARNING_BOX_REGEX,
 } from '$lib/server';
-import type { BlogResource, CodeBlock } from '$lib/types';
 import { getRandomHexString, replaceAsync } from '$lib/server/util';
+import type { BlogResource, CodeBlock } from '$lib/types';
 import rehypeFormat from 'rehype-format';
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
+import type { CodeFenceCaptureGroups } from './types';
 
 const simpleMarkdownToHtmlProcessor = unified()
 	.use(remarkParse)
@@ -29,22 +30,22 @@ export function identifyCodeBlocks(markdown: string): CodeBlock[] {
 		shiki: true,
 		id: `code-block-${getRandomHexString(4)}`,
 		index: m.index ?? 0,
-		groups: m.groups
+		groups: m.groups as unknown as CodeFenceCaptureGroups,
 	}));
 	const cfeMatches = Array.from(markdown.matchAll(CODE_FENCE_END_REGEX)).map((m) => ({
-		index: m.index ?? 0
+		index: m.index ?? 0,
 	}));
 	let htmlMatches = Array.from(markdown.matchAll(CODE_BLOCK_START_REGEX)).map((m) => ({
 		shiki: false,
 		id: '',
 		index: m.index ?? 0,
-		groups: {}
+		groups: {} as CodeFenceCaptureGroups,
 	}));
 	if (cfsMatches.length !== cfeMatches.length) return [];
 
 	const cfBoundaries = Array.from({ length: cfsMatches.length }, (_, i) => i).map((i) => ({
 		start: cfsMatches[i]?.index ?? 0,
-		end: cfeMatches[i]?.index ?? 0
+		end: cfeMatches[i]?.index ?? 0,
 	}));
 	htmlMatches = htmlMatches.filter((m) => !cfBoundaries.some((cf) => m.index > cf.start && cf.end > m.index));
 
@@ -56,7 +57,7 @@ export function identifyCodeBlocks(markdown: string): CodeBlock[] {
 			index,
 			lang: groups?.lang ?? '',
 			lineNumbers: Boolean(groups?.linenos),
-			lineNumberStart: parseInt(groups?.start1 || groups?.start2 || '1')
+			lineNumberStart: parseInt(groups?.start1 || groups?.start2 || '1'),
 		}));
 }
 
@@ -69,13 +70,13 @@ export const convertWarningBoxes = async (markdown: string): Promise<string> =>
 async function convertInfoBoxToHtml(match: RegExpMatchArray): Promise<string> {
 	const html = await convertMarkdownSnippetToHtml(match);
 	const svgIcon = getSvgIcon('note');
-	return `<div class="note custom-block"><div class="custom-block-top"><div class="custom-block-icon">${svgIcon}</div><span class="custom-block-title">NOTE</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
+	return `<div class="note custom-block"><div class="custom-block-top"><div class="custom-block-icon">${svgIcon}</div>\n<span class="custom-block-title">NOTE</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
 }
 
 async function convertWarningBoxToHtml(match: RegExpMatchArray): Promise<string> {
 	const html = await convertMarkdownSnippetToHtml(match);
 	const svgIcon = getSvgIcon('warning');
-	return `<div class="warning custom-block"><div class="custom-block-top"><div class="custom-block-icon">${svgIcon}</div><span class="custom-block-title">WARNING</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
+	return `<div class="warning custom-block"><div class="custom-block-top"><div class="custom-block-icon">${svgIcon}</div>\n<span class="custom-block-title">WARNING</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
 }
 
 async function convertMarkdownSnippetToHtml(match: RegExpMatchArray): Promise<string> {
@@ -88,7 +89,7 @@ export const convertLinkedImages = (markdown: string, resources: { [k: string]: 
 	markdown.replace(
 		LINKED_IMAGE_REGEX,
 		(match: string, p1: string): string =>
-			`<figure id="${resources[p1]?.name}"><a href="${resources[p1]?.src}"><img src="${resources[p1]?.src}" loading="lazy" alt="${resources[p1]?.caption}"></a><figcaption><p>${resources[p1]?.caption}</p></figcaption></figure>`
+			`<figure id="${resources[p1]?.name}"><a href="${resources[p1]?.src}"><img src="${resources[p1]?.src}" loading="lazy" alt="${resources[p1]?.caption}"></a><figcaption><p>${resources[p1]?.caption}</p></figcaption></figure>`,
 	);
 
 export const convertVideos = (markdown: string, resources: { [k: string]: BlogResource }): string =>
