@@ -1,9 +1,9 @@
 <script lang="ts">
-	import AddColorButton from '$lib/components/ThemeEditor/PaletteControls/AddColorButton.svelte';
-	import DeselectColorButton from '$lib/components/ThemeEditor/PaletteControls/DeselectColorButton.svelte';
-	import SelectedColor from '$lib/components/ThemeEditor/PaletteControls/SelectedColor.svelte';
-	import SelectedPalette from '$lib/components/ThemeEditor/PaletteControls/SelectedPalette.svelte';
-	import UpdateColorButton from '$lib/components/ThemeEditor/PaletteControls/UpdateColorButton.svelte';
+	import AddColorButton from '$lib/components/ComponentEditor/PaletteControls/AddColorButton.svelte';
+	import DeselectColorButton from '$lib/components/ComponentEditor/PaletteControls/DeselectColorButton.svelte';
+	import SelectedColor from '$lib/components/ComponentEditor/PaletteControls/SelectedColor.svelte';
+	import SelectedPalette from '$lib/components/ComponentEditor/PaletteControls/SelectedPalette.svelte';
+	import UpdateColorButton from '$lib/components/ComponentEditor/PaletteControls/UpdateColorButton.svelte';
 	import { getAppStore, getColorPickerStore, getThemeEditorStore } from '$lib/context';
 	import type { ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';

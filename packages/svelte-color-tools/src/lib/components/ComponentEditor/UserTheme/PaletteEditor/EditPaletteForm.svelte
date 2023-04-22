@@ -1,6 +1,6 @@
 <script lang="ts">
+	import DeletePaletteButton from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/DeletePaletteButton.svelte';
 	import ComponentColorSelector from '$lib/components/Shared/ComponentColorSelector/ComponentColorSelector.svelte';
-	import DeletePaletteButton from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/DeletePaletteButton.svelte';
 	import type { ColorPalette } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';

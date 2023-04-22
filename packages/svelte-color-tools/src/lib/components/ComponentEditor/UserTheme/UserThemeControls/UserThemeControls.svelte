@@ -1,10 +1,10 @@
 <script lang="ts">
-	import CloseUserThemeButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/CloseUserThemeButton.svelte';
-	import EditPalettesButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/EditPalettesButton.svelte';
-	import EditSettingsButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/EditSettingsButton.svelte';
-	import ExportUserThemeButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/ExportUserThemeButton.svelte';
-	import FinishEditingButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/FinishEditingButton.svelte';
-	import SaveUserThemeButton from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/SaveUserThemeButton.svelte';
+	import CloseUserThemeButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/CloseUserThemeButton.svelte';
+	import EditPalettesButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/EditPalettesButton.svelte';
+	import EditSettingsButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/EditSettingsButton.svelte';
+	import ExportUserThemeButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/ExportUserThemeButton.svelte';
+	import FinishEditingButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/FinishEditingButton.svelte';
+	import SaveUserThemeButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/SaveUserThemeButton.svelte';
 	import { getAppStore, getThemeEditorStore } from '$lib/context';
 	import type { ColorPalette, ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';

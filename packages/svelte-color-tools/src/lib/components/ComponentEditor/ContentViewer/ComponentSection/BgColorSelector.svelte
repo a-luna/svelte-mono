@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { parseColorFromString } from '$lib/color';
+	import BgColorOptions from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/BgColorOptions.svelte';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import Select from '$lib/components/Shared/Select/Select.svelte';
-	import BgColorOptions from '$lib/components/ThemeEditor/ContentViewer/ComponentSection/BgColorOptions.svelte';
 	import type { SelectMenuOption } from '$lib/types';
 
 	export let value: string = '#00000000';

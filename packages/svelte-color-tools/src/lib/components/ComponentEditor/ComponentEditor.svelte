@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { createEmptyColorPalette } from '$lib/color';
 	import ColorPicker from '$lib/components/ColorPicker/ColorPicker.svelte';
-	import ContentViewer from '$lib/components/ThemeEditor/ContentViewer/ContentViewer.svelte';
-	import AddColorToPaletteModal from '$lib/components/ThemeEditor/Modals/AddColorToPaletteModal.svelte';
-	import EditColorDetailsModal from '$lib/components/ThemeEditor/Modals/EditColorDetailsModal.svelte';
-	import EditThemeSettingsModal from '$lib/components/ThemeEditor/Modals/EditThemeSettingsModal/EditThemeSettingsModal.svelte';
-	import LoadUserThemeModal from '$lib/components/ThemeEditor/Modals/LoadUserThemeModal.svelte';
-	import PaletteControls from '$lib/components/ThemeEditor/PaletteControls/PaletteControls.svelte';
-	import UserTheme from '$lib/components/ThemeEditor/UserTheme/UserTheme.svelte';
+	import ContentViewer from '$lib/components/ComponentEditor/ContentViewer/ContentViewer.svelte';
+	import AddColorToPaletteModal from '$lib/components/ComponentEditor/Modals/AddColorToPaletteModal.svelte';
+	import EditColorDetailsModal from '$lib/components/ComponentEditor/Modals/EditColorDetailsModal.svelte';
+	import EditThemeSettingsModal from '$lib/components/ComponentEditor/Modals/EditThemeSettingsModal/EditThemeSettingsModal.svelte';
+	import LoadUserThemeModal from '$lib/components/ComponentEditor/Modals/LoadUserThemeModal.svelte';
+	import PaletteControls from '$lib/components/ComponentEditor/PaletteControls/PaletteControls.svelte';
+	import UserTheme from '$lib/components/ComponentEditor/UserTheme/UserTheme.svelte';
 	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
 	import { createThemeEditorStore } from '$lib/stores/themeEditor';
 	import { downloadUserThemeJson } from '$lib/theme';

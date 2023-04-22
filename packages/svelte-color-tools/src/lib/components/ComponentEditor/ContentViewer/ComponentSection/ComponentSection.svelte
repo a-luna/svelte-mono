@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { parseColorFromString } from '$lib/color';
+	import BgColorSelector from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/BgColorSelector.svelte';
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
-	import BgColorSelector from '$lib/components/ThemeEditor/ContentViewer/ComponentSection/BgColorSelector.svelte';
 	import { alphaBgPattern } from '$lib/constants';
 	import { getAppStore } from '$lib/context';
 	import type { ComponentColor } from '$lib/types';
@@ -55,6 +55,7 @@
 		--select-menu-height: 30px;
 		--select-menu-margin: 0 6px 0 0;
 		--select-menu-padding: 4px 10px;
+		--swatch-size: 15px;
 
 		display: flex;
 		align-items: center;

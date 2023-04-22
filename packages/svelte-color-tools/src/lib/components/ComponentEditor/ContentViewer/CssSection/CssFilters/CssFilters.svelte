@@ -1,7 +1,7 @@
 <script lang="ts">
+	import IgnoreTailwindsCheckbox from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/IgnoreTailwindsCheckbox.svelte';
+	import RuleSelectorList from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/RuleSelectorList.svelte';
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
-	import IgnoreTailwindsCheckbox from '$lib/components/ThemeEditor/ContentViewer/CssSection/CssFilters/IgnoreTailwindsCheckbox.svelte';
-	import RuleSelectorList from '$lib/components/ThemeEditor/ContentViewer/CssSection/CssFilters/RuleSelectorList.svelte';
 	import { getThemeEditorStore } from '$lib/context';
 	import type { ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';

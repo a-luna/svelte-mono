@@ -1,6 +1,6 @@
 <script lang="ts">
-	import LoadUserThemeButton from '$lib/components/ThemeEditor/UserTheme/InitializeUserTheme/LoadUserThemeButton.svelte';
-	import NewUserThemeButton from '$lib/components/ThemeEditor/UserTheme/InitializeUserTheme/NewUserThemeButton.svelte';
+	import LoadUserThemeButton from '$lib/components/ComponentEditor/UserTheme/InitializeUserTheme/LoadUserThemeButton.svelte';
+	import NewUserThemeButton from '$lib/components/ComponentEditor/UserTheme/InitializeUserTheme/NewUserThemeButton.svelte';
 	import { COMPONENT_COLORS } from '$lib/constants';
 	import type { ComponentColor } from '$lib/types';
 	import { getRandomArrayItem } from '$lib/util';

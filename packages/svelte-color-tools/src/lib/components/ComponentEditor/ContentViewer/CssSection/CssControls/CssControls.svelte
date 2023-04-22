@@ -1,6 +1,6 @@
 <script lang="ts">
-	import SelectAllCustomPropsButton from '$lib/components/ThemeEditor/ContentViewer/CssSection/CssControls/SelectAllCustomPropsButton.svelte';
-	import SelectNoneCustomPropsButton from '$lib/components/ThemeEditor/ContentViewer/CssSection/CssControls/SelectNoneCustomPropsButton.svelte';
+	import SelectAllCustomPropsButton from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssControls/SelectAllCustomPropsButton.svelte';
+	import SelectNoneCustomPropsButton from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssControls/SelectNoneCustomPropsButton.svelte';
 	import type { ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 

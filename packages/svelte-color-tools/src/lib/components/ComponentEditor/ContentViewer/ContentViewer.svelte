@@ -1,6 +1,6 @@
 <script lang="ts">
-	import ContentSections from '$lib/components/ThemeEditor/ContentViewer/ContentSections.svelte';
-	import ContentSelector from '$lib/components/ThemeEditor/ContentViewer/ContentSelector.svelte';
+	import ContentSections from '$lib/components/ComponentEditor/ContentViewer/ContentSections.svelte';
+	import ContentSelector from '$lib/components/ComponentEditor/ContentViewer/ContentSelector.svelte';
 	import type { ComponentColor } from '$lib/types';
 	import irBlack from 'svelte-highlight/styles/ir-black';
 

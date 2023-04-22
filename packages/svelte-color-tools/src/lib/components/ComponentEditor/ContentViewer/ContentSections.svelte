@@ -1,7 +1,7 @@
 <script lang="ts">
-	import ComponentSection from '$lib/components/ThemeEditor/ContentViewer/ComponentSection/ComponentSection.svelte';
-	import CssSection from '$lib/components/ThemeEditor/ContentViewer/CssSection/CssSection.svelte';
-	import JsonSection from '$lib/components/ThemeEditor/ContentViewer/JsonSection/JsonSection.svelte';
+	import ComponentSection from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/ComponentSection.svelte';
+	import CssSection from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssSection.svelte';
+	import JsonSection from '$lib/components/ComponentEditor/ContentViewer/JsonSection/JsonSection.svelte';
 	import { getThemeEditorStore } from '$lib/context';
 	import type { ComponentColor } from '$lib/types';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import AddPaletteButton from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/AddPaletteButton.svelte';
-	import EditPaletteForm from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/EditPaletteForm.svelte';
+	import AddPaletteButton from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/AddPaletteButton.svelte';
+	import EditPaletteForm from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/EditPaletteForm.svelte';
 	import { getThemeEditorStore } from '$lib/context';
 	import type { ComponentColor } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';

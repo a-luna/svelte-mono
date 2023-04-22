@@ -1,7 +1,7 @@
 <script lang="ts">
-	import CssControls from '$lib/components/ThemeEditor/ContentViewer/CssSection/CssControls/CssControls.svelte';
-	import CssCustomPropTable from '$lib/components/ThemeEditor/ContentViewer/CssSection/CssCustomPropTable.svelte';
-	import CssFilters from '$lib/components/ThemeEditor/ContentViewer/CssSection/CssFilters/CssFilters.svelte';
+	import CssControls from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssControls/CssControls.svelte';
+	import CssCustomPropTable from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssCustomPropTable.svelte';
+	import CssFilters from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/CssFilters.svelte';
 	import type { ComponentColor, CssVariable } from '$lib/types';
 	import { getAllCssVariables } from '$lib/util';
 	import type { TableState } from '@a-luna/svelte-simple-tables/types';

@@ -1,8 +1,8 @@
 <script lang="ts">
+	import ColorFormatSelector from '$lib/components/ComponentEditor/Modals/EditThemeSettingsModal/ColorFormatSelector.svelte';
 	import ComponentColorSelector from '$lib/components/Shared/ComponentColorSelector/ComponentColorSelector.svelte';
 	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import Modal from '$lib/components/Shared/Modal.svelte';
-	import ColorFormatSelector from '$lib/components/ThemeEditor/Modals/EditThemeSettingsModal/ColorFormatSelector.svelte';
 	import { getThemeEditorStore } from '$lib/context';
 	import type { ColorFormat, ComponentColor, UserThemeFromFile } from '$lib/types';
 	import { createEventDispatcher, tick } from 'svelte';

@@ -1,9 +1,9 @@
 <script lang="ts">
+	import InitializeUserTheme from '$lib/components/ComponentEditor/UserTheme/InitializeUserTheme/InitializeUserTheme.svelte';
+	import PaletteEditor from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/PaletteEditor.svelte';
+	import ThemeName from '$lib/components/ComponentEditor/UserTheme/ThemeName.svelte';
+	import UserThemeControls from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/UserThemeControls.svelte';
 	import ColorPalettes from '$lib/components/Shared/Palettes/ColorPalettes.svelte';
-	import InitializeUserTheme from '$lib/components/ThemeEditor/UserTheme/InitializeUserTheme/InitializeUserTheme.svelte';
-	import PaletteEditor from '$lib/components/ThemeEditor/UserTheme/PaletteEditor/PaletteEditor.svelte';
-	import ThemeName from '$lib/components/ThemeEditor/UserTheme/ThemeName.svelte';
-	import UserThemeControls from '$lib/components/ThemeEditor/UserTheme/UserThemeControls/UserThemeControls.svelte';
 	import { getAppStore, getThemeEditorStore } from '$lib/context';
 	import type { ColorFormat, ColorPalette, ComponentColor } from '$lib/types';
 

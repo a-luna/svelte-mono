@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
-	import ComponentCssEditor from '$lib/components/ThemeEditor/ComponentEditor.svelte';
+	import ComponentCssEditor from '$lib/components/ComponentEditor/ComponentEditor.svelte';
 	import type { PitchFx } from '$lib/table/PitchFx';
 	import type { TableSettings } from '@a-luna/svelte-simple-tables/types';
 

@@ -55,7 +55,8 @@
 		border-radius: 4px;
 	}
 
-	:global(#x11-palettes) .swatch-overlay {
+	:global(#x11-palettes) .swatch-overlay,
+	:global(.dropdown) .swatch-overlay {
 		border-radius: 0;
 	}
 

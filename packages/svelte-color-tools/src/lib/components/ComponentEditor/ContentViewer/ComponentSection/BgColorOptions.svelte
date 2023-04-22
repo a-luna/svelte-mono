@@ -29,11 +29,6 @@
 		on:click={() => dispatch('click', option.optionNumber)}
 		on:click={(e) => handleOptionClicked(e.detail)}
 	>
-		<ColorSwatch
-			color={parseColorFromString(String(option.value)).value}
-			swatchWidth={'15px'}
-			swatchHeight={'15px'}
-			style={'border: 1px solid var(--black4);'}
-		/>
+		<ColorSwatch color={parseColorFromString(String(option.value)).value} style={'border: 1px solid var(--black4);'} />
 	</Option>
 {/each}
