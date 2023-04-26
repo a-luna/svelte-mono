@@ -91,6 +91,10 @@
 		gap: 1rem;
 	}
 
+	.blog-summary :global(.filter-value) {
+		color: var(--white-shade5);
+	}
+
 	.blog-summary:hover {
 		border-color: var(--accent-color);
 	}
