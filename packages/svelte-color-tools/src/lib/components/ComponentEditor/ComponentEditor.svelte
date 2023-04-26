@@ -308,9 +308,10 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 2rem;
-		width: 100%;
+		width: 790px;
 		background-color: var(--white1);
 		padding: 1rem;
+		margin: 0 auto;
 	}
 
 	.theme-editor-wrapper.color {
