@@ -472,11 +472,6 @@ body {
 	--button-bg-color: var(--black-tint3);
 	--button-hover-bg-color: var(--black-tint1);
 
-	--scroll-bar-start-color: hsl(215.63 100% 48%);
-	--scroll-bar-start-color: oklch(54.7% 0.267 260.55);
-	--scroll-bar-stop-color: hsl(261, 100%, 55%);
-	--scroll-bar-stop-color: oklch(51.8% 0.304 286.07);
-
 	/* --typescript-color-h: 298;
 	--javascript-color-h: 60;
 	--shell-color-h: 256;
@@ -500,6 +495,60 @@ body {
 	background-color: var(--page-bg-color);
 	font-family: 'Roboto', Inter, Arial, Helvetica, sans-serif;
 	letter-spacing: 0.4px;
+}
+
+/* 
+  CUSTOM SCROLLBARS! 
+  - https://css-tricks.com/strut-your-stuff-with-a-custom-scrollbar/
+  */
+
+body {
+	--scroll-bar-start-color: hsl(215.63 100% 48%);
+	--scroll-bar-start-color: oklch(54.7% 0.267 260.55);
+	--scroll-bar-stop-color: hsl(261, 100%, 55%);
+	--scroll-bar-stop-color: oklch(51.8% 0.304 286.07);
+	--scrollbarBG: var(--page-bg-color);
+	--thumbBG: var(--teal);
+	overflow: scroll;
+	/* https://maxschmitt.me/posts/react-prevent-layout-shift-body-scrollable/ */
+	scrollbar-width: thin;
+	scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+body::-webkit-scrollbar {
+	width: 0.5rem;
+	height: 0.5rem;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: linear-gradient(var(--scroll-bar-start-color), var(--scroll-bar-stop-color));
+	border-radius: 0;
+	border: 2px solid var(--scrollbarBG);
+}
+
+body::-webkit-scrollbar-track {
+	background: var(--scrollbarBG);
+}
+
+body::-webkit-scrollbar-corner {
+	background: var(--scrollbarBG);
+}
+
+body:has(.nav-sidebar.open) {
+	--scroll-bar-start-color: var(--black-tint2);
+	--scroll-bar-stop-color: var(--black-tint2);
+}
+
+body:has(.nav-sidebar.open)::-webkit-scrollbar-track {
+	background: var(--black-tint2);
+}
+
+body:has(.nav-sidebar.open)::-webkit-scrollbar-corner {
+	background: var(--black-tint2);
+}
+
+body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
+	border: 2px solid var(--black-tint2);
 }
 
 .normal-text svg {
@@ -2395,14 +2444,6 @@ table.aws-hosting-costs {
 	border-radius: 0.5rem;
 }
 
-body::-webkit-scrollbar {
-	width: 0.5rem;
-}
-
-body::-webkit-scrollbar-thumb {
-	background: linear-gradient(var(--scroll-bar-start-color), var(--scroll-bar-stop-color));
-}
-
 #svelte {
 	background-color: var(--page-bg-color);
 	color: var(--body-text);
@@ -2487,48 +2528,6 @@ a.feature-card:hover>div {
 	background-color: var(--black-tint1);
 }
 
-/* 
-  CUSTOM SCROLLBARS! 
-  - https://css-tricks.com/strut-your-stuff-with-a-custom-scrollbar/
-  */
-body::-webkit-scrollbar {
-	width: 0.75rem;
-}
-
-body {
-	--scrollbarBG: var(--page-bg-color);
-	--thumbBG: var(--teal);
-	overflow: scroll;
-	/* https://maxschmitt.me/posts/react-prevent-layout-shift-body-scrollable/ */
-	scrollbar-width: thin;
-	scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-
-body:has(.mobile-nav-open) {
-	overflow: hidden;
-	padding: 0 0.75rem 0.75rem 0;
-
-}
-
-body::-webkit-scrollbar-track {
-	background: var(--scrollbarBG);
-}
-
-body::-webkit-scrollbar-thumb {
-	background-color: var(--thumbBG);
-	border-radius: 0;
-	border: 2px solid var(--scrollbarBG);
-}
-
-body::-webkit-scrollbar-thumb {
-	scrollbar-color: var(--thumbBG);
-	background-color: var(--thumbBG);
-	border-radius: 0;
-}
-
-body::-webkit-scrollbar-corner {
-	background: var(--scrollbarBG);
-}
 
 /* 
   DEVICE MOCKUPS
