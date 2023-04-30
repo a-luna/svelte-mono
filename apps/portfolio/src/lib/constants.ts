@@ -84,6 +84,15 @@ export const REPO_NAMES = [
 	'vigorish',
 ] as const;
 
+export const FEATURED_PROJECTS = [
+	'fastapi-redis-cache',
+	'svelte-base64-ts',
+	'svelte-color-tools',
+	'svelte-simple-tables',
+	'unicode-api',
+	'vigorish',
+];
+
 export const PROJECT_TYPES = ['allProjects', 'backend', 'frontend'] as const;
 
 export const FRONTEND_CATEGORIES = ['blog_portfolio_sites', 'docs_guides', 'web_app', 'component_library'] as const;

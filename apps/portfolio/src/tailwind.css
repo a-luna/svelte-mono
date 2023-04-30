@@ -1365,6 +1365,30 @@ summary .heading-text {
 	line-height: 1.2;
 }
 
+.featured-projects div.category-list {
+	font-size: 0.75rem;
+}
+
+.featured-projects div.category-list .project-category {
+	padding: 6px;
+}
+
+.featured-projects div.all-language-list {
+	column-gap: 1rem;
+	row-gap: 0.5rem;
+	line-height: 1;
+}
+
+.featured-projects div.all-language-list button.filter-setting {
+	margin: 0;
+}
+
+.featured-projects div.project-name-wrapper .filter-value,
+.featured-projects div.all-language-list .filter-value {
+	font-size: 0.75rem;
+	color: var(--gray-shade1);
+}
+
 .code-details {
 	margin: 0 0 20px;
 }
