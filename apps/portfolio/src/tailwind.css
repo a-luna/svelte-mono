@@ -1240,6 +1240,7 @@ article .heading-text a {
 	color: var(--gray-shade6);
 	background-color: var(--page-bg-color);
 	transition: color 0.75s ease-out;
+	margin-left: 2px;
 }
 
 article .heading-text a:hover {
@@ -1290,11 +1291,9 @@ figcaption p {
 	flex: 0 0 50%;
 }
 
-/* UPDATE STARTING HERE  */
-
 .level-2 a.hanchor svg {
-	width: 19px;
-	margin-top: 5px;
+	width: 16px;
+	margin-top: 2px;
 }
 
 article .level-2 h2 {
@@ -1307,96 +1306,44 @@ article .level-2 h2 {
 }
 
 .level-3 a.hanchor svg {
-	width: 16px;
-	margin-top: 4px;
+	width: 14px;
+	margin-top: 1px;
 }
 
 article .level-3 h3 {
-	font-size: 1.2rem;
+	font-size: 1.3rem;
 }
 
 .level-3 code {
 	color: var(--tw-prose-headings);
-	font-size: 1.1rem;
+	font-size: 1.2rem;
 }
 
 .level-4 a.hanchor svg,
 .level-5 a.hanchor svg,
 .level-6 a.hanchor svg {
-	width: 14px;
-	margin-top: 2px;
+	width: 13px;
+	margin-top: 1px;
 }
 
 article .level-4 h4,
 article .level-5 h5,
 article .level-6 h6 {
-	font-size: 1.05rem;
+	font-size: 1.15rem;
 }
 
 .level-4 code,
 .level-5 code,
 .level-6 code {
 	color: var(--tw-prose-headings);
-	font-size: 1rem;
-}
-
-/* UPDATES END HERE  */
-
-@media (min-width: 640px) {
-	.level-2 a.hanchor svg {
-		width: 23px;
-		margin-top: 2px;
-	}
-
-	article .level-2 h2 {
-		font-size: 1.5rem;
-	}
-
-	.level-2 code {
-		color: var(--tw-prose-headings);
-		font-size: 1.4rem;
-	}
-
-	.level-3 a.hanchor svg {
-		width: 18px;
-		margin-top: 3px;
-	}
-
-	article .level-3 h3 {
-		font-size: 1.3rem;
-	}
-
-	.level-3 code {
-		color: var(--tw-prose-headings);
-		font-size: 1.2rem;
-	}
-
-	.level-4 a.hanchor svg,
-	.level-5 a.hanchor svg,
-	.level-6 a.hanchor svg {
-		width: 17px;
-		margin-top: 4px;
-	}
-
-	article .level-4 h4,
-	article .level-5 h5,
-	article .level-6 h6 {
-		font-size: 1.25rem;
-	}
-
-	.level-4 code,
-	.level-5 code,
-	.level-6 code {
-		color: var(--tw-prose-headings);
-		font-size: 1rem;
-	}
+	font-size: 1.05rem;
 }
 
 .heading-text {
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: flex-start;
-	gap: 0.5rem;
+	gap: 5px;
 	margin: 2.5em 0 0.75em;
 }
 
@@ -1408,10 +1355,18 @@ summary .heading-text {
 	background-image: linear-gradient(to right, hsl(254.04 100% 55%), hsl(180 100% 49%));
 	background-image: linear-gradient(to right, oklch(49.6% 0.307 278.18), oklch(88.4% 0.199 194.78));
 	background-repeat: no-repeat;
-	background-size: 100% 0.15em;
-	background-position: 0 88%;
+	background-size: 100% 1px;
+	background-position: 0 100%;
 	transition: background-size 0.25s ease-in;
 	line-height: 1.2;
+}
+
+details .underline--magical {
+	background-image: none;
+}
+
+details .underline--magical h4 {
+	font-size: 1rem;
 }
 
 .featured-projects div.category-list {

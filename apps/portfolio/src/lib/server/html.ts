@@ -25,7 +25,7 @@ export function transformHeadings(html: string): string {
 	const svgIcon = getSvgIcon('hash');
 	return html.replace(
 		HTML_HEADING_REGEX,
-		`<span class="heading-text level-$<level>"><a href="#$<slug>" class="hanchor hanchor-self" title="Link to this section">${svgIcon}</a><h$<level> id="$<slug>"><span class="underline--magical">$<text></span></h$<level>></span>`,
+		`<span class="heading-text level-$<level> underline--magical"><a href="#$<slug>" class="hanchor hanchor-self" title="Link to this section">${svgIcon}</a><h$<level> id="$<slug>">$<text></h$<level>></span>`,
 	);
 }
 
