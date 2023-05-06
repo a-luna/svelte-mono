@@ -15,9 +15,6 @@
 
 <div class="section {section}">
 	<div class="section-outer">
-		{#if $$slots.insert}
-			<slot name="insert" />
-		{/if}
 		<h1 class="section-header">{title}</h1>
 		<slot />
 	</div>
@@ -47,6 +44,10 @@
 		font-weight: 500;
 		width: 100%;
 		margin: 1.5rem 0 2rem 0;
+	}
+
+	.home .section-header {
+		margin: 1.5rem 0 0.5rem 0;
 	}
 
 	@media (min-width: 640px) {

@@ -1868,6 +1868,15 @@ article a.eyeballs {
 	color: var(--accent-color);
 }
 
+article a.eyeballs:hover,
+article a.eyeballs:active,
+article a.eyeballs:focus,
+article a.eyeballs:active:hover {
+	color: var(--page-bg-color);
+	background-color: hsl(76 100% 50%);
+	background-color: oklch(92.22% 0.244 126.84);
+}
+
 article figure {
 	text-align: center;
 	display: block;

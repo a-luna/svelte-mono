@@ -23,7 +23,7 @@
 		gap: 6px;
 		align-items: center;
 		line-height: 0;
-		font-family: 'Noto Sans';
+		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
 		font-weight: 500;
 	}
 	.avatar-wrapper {

@@ -5,12 +5,12 @@
 	import type { IconColor } from '$lib/types';
 	import { getRandomArrayItem } from '$lib/util';
 	import {
-		BasicIconRenderer,
 		BASIC_ICON_NAMES,
+		BasicIconRenderer,
 		LANGTECH_ICON_NAMES,
 		LanguageTechIconRenderer,
-		SocialIconRenderer,
 		SOCIAL_ICON_NAMES,
+		SocialIconRenderer,
 	} from '@a-luna/shared-ui';
 	import { NAV_ICONS, PROJECT_CATEGORY_ICONS } from '../../lib/components/Icons';
 
@@ -102,7 +102,7 @@
 	<div class="icon-showcase">
 		{#each BASIC_ICON_NAMES as name}
 			<div class="icon-item {getRandomIconColor()}">
-				<BasicIconRenderer icon={name} height={'97px'} />
+				<BasicIconRenderer icon={name} height={'97px'} width={'106px'} margin={'0 auto'} />
 				<span class="icon-name">{name}</span>
 			</div>
 		{/each}
@@ -126,7 +126,8 @@
 		grid-template-columns: 1fr;
 		grid-template-rows: auto 1fr;
 		border: 1px solid var(--dark-gray-shade1);
-		padding: 0.5rem;
+		padding: 1rem;
+		gap: 1rem;
 	}
 
 	.icon-display {

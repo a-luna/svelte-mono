@@ -248,7 +248,7 @@ const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } 
 		hasIcon: false,
 	},
 	dev_tools: {
-		displayName: 'Dev Tools',
+		displayName: 'Dev Tool',
 		color: 'pink',
 		hasIcon: false,
 	},

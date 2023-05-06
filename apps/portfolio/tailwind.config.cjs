@@ -12,7 +12,7 @@ module.exports = {
 						'line-height': '1.6',
 						'h2, h3, h4, h5, h6': {
 							'font-family': '"Noto Sans", sans-serif',
-							fontWeight: '300',
+							fontWeight: '400',
 							letterSpacing: '0.75px',
 						},
 						blockquote: {
@@ -51,7 +51,6 @@ module.exports = {
 							fontFamily: "Hack, 'Roboto Mono', menlo, monospace",
 						},
 						code: {
-							fontSize: '.85em',
 							fontWeight: 400,
 							color: '#0FF',
 							background: 'var(--black-tint3)',

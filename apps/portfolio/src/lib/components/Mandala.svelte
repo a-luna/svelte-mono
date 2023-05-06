@@ -156,6 +156,7 @@
 		display: flex;
 		justify-content: center;
 		transform: translate(6rem, -5rem);
+		background-color: var(--page-bg-color);
 	}
 	.mandala-container .mandala-accent-1 {
 		font-size: 1.5rem;

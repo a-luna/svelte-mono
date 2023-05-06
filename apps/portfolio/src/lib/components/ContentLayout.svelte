@@ -61,7 +61,7 @@
 		margin: 1rem 0;
 	}
 	h1 {
-		font-family: 'Noto Sans', sans-serif;
+		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
 		font-size: 1.65rem;
 		font-weight: 500;
 		color: var(--post-title-text-color);
