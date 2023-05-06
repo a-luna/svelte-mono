@@ -7,7 +7,7 @@
 		"url": "https://github.com/a-luna/svelte-mono.git"
 	},
 	"engines": {
-		"node": "^19.0.0"
+		"node": "^20.0.0"
 	},
 	"scripts": {
 		"lint": "pnpm -r lint",
@@ -27,6 +27,7 @@
 		"update:color": "pnpm --filter=@a-luna/svelte-color-tools update",
 		"update:site": "pnpm run build:ui && pnpm --filter=@a-luna/portfolio update",
 		"update:base64": "pnpm run build:ui && pnpm --filter=@a-luna/svelte-base64 update",
+		"dev:color": "pnpm run update:color && pnpm --filter=@a-luna/svelte-color-tools run dev",
 		"dev:site": "pnpm run update:site && pnpm --filter=@a-luna/portfolio run dev",
 		"dev:base64": "pnpm run update:base64 && pnpm --filter=@a-luna/svelte-base64 run dev",
 		"preview:site": "pnpm run update:site && pnpm run build:site && pnpm --filter=@a-luna/portfolio run preview",
