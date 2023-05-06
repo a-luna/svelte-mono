@@ -1,11 +1,16 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import AboutMe from '$lib/components/HomePage/AboutMe.svelte';
+	import ApiTutorial from '$lib/components/HomePage/ApiTutorial.svelte';
+	import FeaturedProjects from '$lib/components/HomePage/FeaturedProjects.svelte';
+	import RecentBlogPosts from '$lib/components/HomePage/RecentBlogPosts.svelte';
 	import Mandala from '$lib/components/Mandala.svelte';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { DEFAULT_OG_IMAGE, MY_TWITTER_HANDLE, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
-	import { initialFadePerformed } from '$lib/stores';
-	import { ColorParser, SocialIconRenderer } from '@a-luna/shared-ui';
+	import { initialFadePerformed, mobileNavOpen } from '$lib/stores';
+	import { ColorParser } from '@a-luna/shared-ui';
 	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
 
 	const test = [
 		// Hex
@@ -107,6 +112,8 @@
 		'oklab(74.76% -0.138 0.154)', // 87
 	];
 
+	export let data: PageData;
+
 	let mounted = false;
 	$: if (browser) {
 		console.log({ results: test.map((t) => ColorParser.parse(t)) });
@@ -114,6 +121,7 @@
 
 	onMount(() => {
 		mounted = true;
+		$mobileNavOpen = false;
 		setTimeout(() => ($initialFadePerformed = true), 1000);
 	});
 </script>
@@ -136,42 +144,13 @@
 <div class="intro">
 	<div class="intro-content prose prose-invert">
 		{#if mounted}
-			<SectionLayout section={'home'} title={'Home'}>
-				<p class="normal-text">
-					<span>My name is Aaron Luna and I am a full-stack developer from Reno, NV, USA.</span>
-				</p>
-				<p class="normal-text">
-					<span
-						>This site contains information about me and blog posts that document problems I encountered working on
-						various projects and the solutions that I implemented.</span
-					>
-				</p>
-				<p class="normal-text">
-					<span
-						>Many of these projects are hosted on my Github account, and you can find more info about each on this site
-						as well.</span
-					>
-				</p>
-				<p class="normal-text">
-					<span
-						>You can contact me through <a href="http://github.com/a-luna" class="icon" target="_blank" rel="noreferrer"
-							><SocialIconRenderer icon={'github'} title={'Link to my Github profile'} /></a
-						>,
-						<a href="https://www.linkedin.com/in/aaron-luna-reno-nv/" class="icon" target="_blank" rel="noreferrer"
-							><SocialIconRenderer icon={'linkedinsquare'} title={'Link to my LinkedIn profile'} /></a
-						>
-						or
-						<a href="https://twitter.com/aaronlunadev/" class="icon" target="_blank" rel="noreferrer"
-							><SocialIconRenderer icon={'twitter'} title={'Link to my Twitter profile'} /></a
-						>, or email me at
-						<a href="mailto:contact@aaronluna.dev">contact@aaronluna.dev</a></span
-					>
-				</p>
-				<p class="normal-text">
-					<span
-						><a href="series/flask-api-tutorial/overview" target="_blank" rel="noreferrer">Flask API Tutorial</a></span
-					>
-				</p>
+			<SectionLayout section={'home'} title={'Welcome!'}>
+				<div class="section-content">
+					<AboutMe />
+					<RecentBlogPosts allBlogPosts={data.allBlogPosts} />
+					<FeaturedProjects />
+					<ApiTutorial />
+				</div>
 			</SectionLayout>
 		{/if}
 	</div>
@@ -187,11 +166,10 @@
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr;
 		width: 100%;
-		max-height: 365px;
 		margin: 0 auto;
 	}
 	.intro-content {
-		font-family: 'Noto Sans', 'Roboto Mono', menlo, consolas, monospace;
+		font-family: 'Noto Sans';
 		margin: 0 auto;
 		z-index: 2;
 		position: relative;
@@ -200,50 +178,15 @@
 		grid-row: 1;
 		padding: 0;
 	}
-	.normal-text a.icon,
-	.normal-text a.icon:hover {
-		display: inline-block;
-		color: hsl(76 100% 50%);
-		color: oklch(92.22% 0.244 126.84);
-		background-color: var(--page-bg-color);
-		height: 16px;
-	}
-	.normal-text span {
-		color: var(--white-shade2);
-		background-color: hsl(0 0% 0% / 0.2);
-		font-weight: 400;
-	}
-	.normal-text :global(.icon-wrapper) {
-		display: inline;
-	}
-	.intro-content .normal-text {
-		font-size: 0.9rem;
-		margin: 1.5rem 0 0 0;
+	.section-content {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 1rem;
 	}
 
 	@media (min-width: 640px) {
 		.intro {
 			padding: 0;
-		}
-		.intro-content .normal-text {
-			font-size: 1rem;
-		}
-		.normal-text a.icon,
-		.normal-text a.icon:hover {
-			height: 16px;
-		}
-	}
-
-	@media (min-width: 768px) {
-		.intro {
-			padding: 0;
-		}
-		.intro-content .normal-text {
-			font-size: 1.1rem;
-		}
-		.normal-text a.icon,
-		.normal-text a.icon:hover {
-			height: 19.5px;
 		}
 	}
 
