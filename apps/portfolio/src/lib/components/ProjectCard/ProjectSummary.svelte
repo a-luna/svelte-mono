@@ -19,7 +19,9 @@
 		<div class="top">
 			<div class="name-and-stats">
 				<h3 class="project-name">{project.name}</h3>
-				<GithubStats {project} iconSize={'13px'} />
+				<div class="github-stats-wrapper">
+					<GithubStats {project} iconSize={'13px'} />
+				</div>
 			</div>
 			<ProjectCategories {project} />
 		</div>
@@ -73,28 +75,29 @@
 		justify-content: space-between;
 	}
 	.project-name {
+		color: var(--white-shade2);
 		line-height: 1;
 		margin: 0 0 0.25rem 0;
 	}
 	h3 {
+		font-family: 'Roboto', Arial, Helvetica, sans-serif;
 		font-size: 1.15rem;
 		letter-spacing: 0.8px;
 		line-height: 1.4;
 		font-weight: 400;
 		margin: 0.5rem 0;
 	}
+	.github-stats-wrapper {
+		display: none;
+	}
 	.project-description {
 		flex: 1;
+		color: var(--white-shade5);
 		font-size: 0.85rem;
 		letter-spacing: 0.75px;
 		line-height: 1.5;
 		max-width: 40rem;
-		color: var(--white-shade5);
 		margin: 0.25rem 0 0 0;
-	}
-	.project-name,
-	.project-description {
-		color: var(--white-shade2);
 	}
 
 	@media (min-width: 640px) {
@@ -110,6 +113,10 @@
 		.project-summary,
 		.project-summary:hover {
 			border: none;
+		}
+
+		.github-stats-wrapper {
+			display: block;
 		}
 	}
 </style>
