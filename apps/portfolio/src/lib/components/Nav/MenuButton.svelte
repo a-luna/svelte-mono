@@ -1,18 +1,17 @@
 <script lang="ts">
+	import { mobileNavOpen } from '$lib/stores';
 	import { BasicIconRenderer } from '@a-luna/shared-ui';
-
-	export let open = false;
 </script>
 
 <button
-	class="menu-button block md:hidden"
-	class:open
+	class="menu-button"
+	class:open={$mobileNavOpen}
 	aria-label="menu"
 	tabindex="0"
 	aria-controls="nav-sidebar"
 	aria-haspopup="menu"
-	aria-expanded={open}
-	on:click={() => (open = !open)}
+	aria-expanded={$mobileNavOpen}
+	on:click={() => ($mobileNavOpen = !$mobileNavOpen)}
 >
 	<div class="icon-wrapper">
 		<BasicIconRenderer icon={'menu'} />
@@ -21,6 +20,7 @@
 
 <style lang="postcss">
 	.menu-button {
+		display: block;
 		padding: 0.75rem;
 		border-width: 3px;
 		border-style: solid;
@@ -29,23 +29,22 @@
 		color: var(--white);
 		font-size: 2rem;
 		z-index: 5;
-		transition: color 350ms ease-out, background-color 350ms ease-out;
 	}
 	.menu-button:hover {
 		border-color: var(--accent-color);
 		color: var(--accent-color);
 	}
 	.menu-button.open {
-		position: absolute;
-		top: 15.5px;
-		right: 44px;
-
-		border-color: var(--accent-color);
-		background-color: var(--accent-color);
-		color: var(--black-tint2);
+		display: none;
 	}
 	.icon-wrapper {
 		width: 26px;
 		height: 26px;
+	}
+
+	@media (min-width: 768px) {
+		.menu-button {
+			display: none;
+		}
 	}
 </style>

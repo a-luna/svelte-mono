@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { capitalize } from '$lib/util';
 
 	export let href: string;
 
@@ -8,9 +7,7 @@
 	$: section = href === '/' ? 'home' : href.slice(1);
 </script>
 
-<a class:active={isActive} class={section} {href} on:click>
-	{capitalize(section)}
-</a>
+<a class:active={isActive} class={section} {href} on:click>{section}</a>
 
 <style lang="postcss">
 	a {
@@ -37,20 +34,15 @@
 
 	@media (min-width: 768px) {
 		a {
-			font-size: 1rem;
-			font-weight: 400;
+			font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
+			font-size: 1.1rem;
+			font-weight: 500;
 			padding: 0;
-			width: 72px;
 			text-align: center;
 			padding: 12px 0;
 			background-color: var(--page-bg-color);
 			border-bottom: 1px solid var(--page-bg-color);
 			transition: border-color 0.5s, color 0.5s;
-		}
-
-		a:hover {
-			color: var(--white-shade2);
-			background-color: var(--black-tint2);
 		}
 
 		a.home.active {

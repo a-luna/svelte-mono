@@ -2,16 +2,15 @@
 	import MenuButton from '$lib/components/Nav/MenuButton.svelte';
 	import NavBrand from '$lib/components/Nav/NavBrand.svelte';
 	import NavItems from '$lib/components/Nav/NavItems.svelte';
-	import NavSideBar from '$lib/components/Nav/NavSideBar.svelte';
 	import SocialLinks from '$lib/components/Nav/SocialLinks.svelte';
-	import { mobileNavOpen } from '$lib/stores';
+	import { initialFadePerformed } from '$lib/stores';
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	let mounted = false;
 
-	onMount(() => (mounted = true));
+	$: fadeInDelay = $initialFadePerformed ? 750 : 0;
 
-	let open = false;
-	$: $mobileNavOpen = open;
+	onMount(() => (mounted = true));
 </script>
 
 {#if mounted}
@@ -19,9 +18,10 @@
 		<div class="nav-container">
 			<NavBrand />
 			<NavItems />
-			<SocialLinks mobile={false} {open} />
-			<MenuButton bind:open />
-			<NavSideBar bind:open />
+			<SocialLinks />
+			<div in:fade={{ delay: fadeInDelay }}>
+				<MenuButton />
+			</div>
 		</div>
 	</div>
 {/if}

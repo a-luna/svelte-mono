@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
 	import Nav from '$lib/components/Nav/Nav.svelte';
+	import NavSideBar from '$lib/components/Nav/NavSideBar.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
 	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
-	import { getPageHeight, mobileNavOpen } from '$lib/stores';
+	import { getPageHeight, initialFadePerformed, mobileNavOpen } from '$lib/stores';
 	import type { Writable } from 'svelte/store';
 	import '../tailwind.css';
 
@@ -11,9 +12,11 @@
 	let windowHeight: number;
 	let scrollY: number;
 	let showScrollToTopButton: boolean;
+	let pageHeightInitialized = false;
 
-	$: if (typeof window !== 'undefined') {
+	$: if ($initialFadePerformed && !pageHeightInitialized) {
 		const result = getPageHeight();
+		pageHeightInitialized = result.success;
 		if (result.success) {
 			pageHeight = result.value;
 		}
@@ -42,16 +45,20 @@
 	{/if}
 </svelte:head>
 
-<div id="svelte" class:mobile-nav-open={$mobileNavOpen}>
-	<div id="top" class="header-wrapper">
-		<Nav />
-	</div>
-	<main>
-		<slot />
-		{#if showScrollToTopButton}
-			<ScrollToTopButton />
-		{/if}
-	</main>
+<div id="svelte">
+	{#if !$mobileNavOpen}
+		<div id="top" class="header-wrapper">
+			<Nav />
+		</div>
+		<main>
+			<slot />
+			{#if showScrollToTopButton}
+				<ScrollToTopButton />
+			{/if}
+		</main>
+	{:else}
+		<NavSideBar />
+	{/if}
 </div>
 
 <style lang="postcss">

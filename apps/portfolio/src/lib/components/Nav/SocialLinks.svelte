@@ -1,11 +1,9 @@
 <script lang="ts">
+	import { mobileNavOpen } from '$lib/stores';
 	import { BasicIconRenderer, SocialIconRenderer } from '@a-luna/shared-ui';
-
-	export let mobile = false;
-	export let open = false;
 </script>
 
-<div class:mobile={mobile && open} class:desktop={!mobile} class="social">
+<div class:mobile={$mobileNavOpen} class:desktop={!$mobileNavOpen} class="social">
 	<a href="http://github.com/a-luna" target="_blank" rel="noreferrer">
 		<SocialIconRenderer icon={'github'} title={'Link to my Github profile'} />
 	</a>
