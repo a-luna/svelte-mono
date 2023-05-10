@@ -11,17 +11,8 @@ import type {
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 
-// export let userRepos: Writable<CachedProjectData>;
-
-// export const initializeUserRepos = (): boolean => {
-// 	const result = createLocalStorageValue<CachedProjectData>('repos', initializeProjectData());
-// 	if (result.success) {
-// 		userRepos = result.value;
-// 	}
-// 	return result.success;
-// };
-
 export const initialFadePerformed = writable<boolean>(false);
+export const mobileDisplay = writable<boolean>(false);
 export const mobileNavOpen = writable<boolean>(false);
 export const userRepos = writable<CachedProjectData>(initializeProjectData());
 export const blogPosts = writable<BlogPost[]>([]);
@@ -79,6 +70,17 @@ function syncHeight(el: HTMLElement): Writable<number> {
 	});
 }
 
+function syncWidth(el: HTMLElement): Writable<number> {
+	return writable<number>(0, (set) => {
+		if (!el) {
+			return;
+		}
+		const ro = new ResizeObserver(() => el && set(el.offsetWidth));
+		ro.observe(el);
+		return () => ro.disconnect();
+	});
+}
+
 export const getPageHeight = (): Result<Writable<number>> => {
 	if (typeof window === 'undefined') {
 		return { success: false, error: 'This function (getPageHeight) must be run in browser (client-side)' };
@@ -86,6 +88,16 @@ export const getPageHeight = (): Result<Writable<number>> => {
 	const svelteDiv = document.getElementById('svelte');
 	return svelteDiv
 		? { success: true, value: syncHeight(svelteDiv) }
+		: { success: false, error: 'The DOM element with id="svelte" does not exist' };
+};
+
+export const getPageWidth = (): Result<Writable<number>> => {
+	if (typeof window === 'undefined') {
+		return { success: false, error: 'This function (getPageWidth) must be run in browser (client-side)' };
+	}
+	const svelteDiv = document.getElementById('svelte');
+	return svelteDiv
+		? { success: true, value: syncWidth(svelteDiv) }
 		: { success: false, error: 'The DOM element with id="svelte" does not exist' };
 };
 /* c8 ignore stop */
