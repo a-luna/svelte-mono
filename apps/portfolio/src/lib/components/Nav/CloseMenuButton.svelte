@@ -5,7 +5,6 @@
 
 <button
 	class="menu-button"
-	class:open
 	aria-label="menu"
 	tabindex="0"
 	aria-controls="nav-sidebar"
@@ -18,7 +17,7 @@
 
 <style lang="postcss">
 	.menu-button {
-		display: none;
+		display: block;
 		padding: 0.75rem;
 		border-width: 3px;
 		border-style: solid;
@@ -31,9 +30,6 @@
 	.menu-button:hover {
 		border-color: var(--accent-color);
 		color: var(--accent-color);
-	}
-	.menu-button.open {
-		display: block;
 	}
 
 	@media (min-width: 768px) {

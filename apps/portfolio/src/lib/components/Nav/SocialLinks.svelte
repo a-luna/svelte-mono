@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { mobileNavOpen } from '$lib/stores';
 	import { BasicIconRenderer, SocialIconRenderer } from '@a-luna/shared-ui';
 </script>
 
-<div class:mobile={$mobileNavOpen} class:desktop={!$mobileNavOpen} class="social">
+<div class="social">
 	<a href="http://github.com/a-luna" target="_blank" rel="noreferrer">
 		<SocialIconRenderer icon={'github'} title={'Link to my Github profile'} />
 	</a>
@@ -23,21 +22,16 @@
 
 <style lang="postcss">
 	.social {
+		display: flex;
 		flex-flow: row nowrap;
 		align-items: center;
+		justify-content: flex-start;
+		width: min-content;
 		gap: 1rem;
 		padding: 0.5rem 1rem;
 		height: 50px;
 		background-color: hsl(261, 100%, 55%);
 		background-color: oklch(51.8% 0.304 286.07);
-	}
-	.desktop {
-		display: none;
-	}
-	.mobile {
-		display: flex;
-		justify-content: flex-start;
-		width: min-content;
 	}
 	a {
 		color: var(--page-bg-color);
@@ -54,14 +48,9 @@
 
 	@media (min-width: 768px) {
 		.social {
-			height: 40px;
-		}
-		.desktop {
 			display: flex;
 			justify-content: center;
-		}
-		.mobile {
-			display: none;
+			height: 40px;
 		}
 		a {
 			width: 20px;

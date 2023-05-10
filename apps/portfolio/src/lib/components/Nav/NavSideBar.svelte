@@ -2,16 +2,21 @@
 	import NavLink from '$lib/components/Nav/NavLink.svelte';
 	import SocialLinks from '$lib/components/Nav/SocialLinks.svelte';
 	import { mobileNavOpen } from '$lib/stores';
-	import { fade, fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import CloseMenuButton from './CloseMenuButton.svelte';
+
+	export let pageWidth = 0;
+
+	$: flyInDuration = Math.min(2 * pageWidth, 700);
+	$: flyOutDuration = Math.max(pageWidth, 450);
 
 	const closeSideBar = () => ($mobileNavOpen = false);
 </script>
 
 <aside
-	in:fly|local={{ delay: 150, duration: 700, x: -300 }}
-	out:fade={{ delay: 100, duration: 750 }}
-	class="nav-sidebar absolute md:hidden"
+	in:fly={{ delay: 250, duration: flyInDuration, x: -pageWidth }}
+	out:fly={{ delay: 150, duration: flyOutDuration, x: -pageWidth }}
+	class="nav-sidebar"
 	id="nav-sidebar"
 	class:open
 >
@@ -23,7 +28,7 @@
 			<NavLink href="/about" on:click={() => closeSideBar()} />
 			<SocialLinks />
 		</div>
-		<div out:fade={{ duration: 0 }} class="nav-close-button">
+		<div class="nav-close-button">
 			<CloseMenuButton />
 		</div>
 	</nav>
@@ -31,6 +36,7 @@
 
 <style lang="postcss">
 	.nav-sidebar {
+		position: absolute;
 		z-index: 4;
 		background-color: var(--black-tint2);
 		width: 100vw;

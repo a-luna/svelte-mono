@@ -5,7 +5,6 @@
 
 <button
 	class="menu-button"
-	class:open={$mobileNavOpen}
 	aria-label="menu"
 	tabindex="0"
 	aria-controls="nav-sidebar"
@@ -33,9 +32,6 @@
 	.menu-button:hover {
 		border-color: var(--accent-color);
 		color: var(--accent-color);
-	}
-	.menu-button.open {
-		display: none;
 	}
 	.icon-wrapper {
 		width: 26px;
