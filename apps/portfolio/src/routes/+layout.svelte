@@ -48,9 +48,8 @@
 	{#if !dev}
 		<script
 			async
-			defer
-			data-website-id="a0c0f9c7-cb88-4e9b-ad30-be3c8b0c9571"
-			src="https://aluna-umami.netlify.app/umami.js"
+			src="https://aluna-umami.netlify.app/script.js"
+			data-website-id="e1f22fd4-5482-4696-8f11-85c2b5cb8241"
 		></script>
 	{/if}
 </svelte:head>
