@@ -51,6 +51,6 @@
 		"packages/lock-file-converter",
 		"packages/eslint-config-custom",
 		"apps/portfolio",
-		"apps/svelte-base64-ts"
+		"apps/svelte-base64"
 	]
 }
