@@ -7,9 +7,8 @@
 	{#if !dev}
 		<script
 			async
-			defer
-			data-website-id="cb918dba-fc25-40be-ac0e-b54818fce446"
-			src="https://aluna-umami.netlify.app/umami.js"
+			src="https://aluna-umami.netlify.app/script.js"
+			data-website-id="da7e9314-27c6-4536-b1d8-6c0de8bedecc"
 		></script>
 	{/if}
 </svelte:head>
