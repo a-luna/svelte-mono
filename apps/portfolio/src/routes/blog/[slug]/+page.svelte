@@ -16,5 +16,7 @@
 		<TableOfContents toc={blogPost.toc} />
 	{/if}
 	{@html blogPost?.content}
-	<PostNav slug={blogPost.slug} />
+	<svelte:fragment slot="nav">
+		<PostNav slug={blogPost.slug} />
+	</svelte:fragment>
 </ContentLayout>

@@ -42,10 +42,15 @@
 		</div>
 	</header>
 	<div
-		class="wrapper prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
+		class="wrapper content-wrapper prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
 	>
 		<slot />
 	</div>
+	{#if $$slots.nav}
+		<div class="wrapper nav-wrapper">
+			<slot name="nav" />
+		</div>
+	{/if}
 </article>
 
 <style lang="postcss">
@@ -82,15 +87,21 @@
 		padding-bottom: 0;
 		padding-left: var(--mobile-page-padding);
 		padding-right: var(--mobile-page-padding);
-		margin: 1.5rem auto 1rem auto;
 		width: 100%;
+		margin: 1rem auto;
+	}
+	.content-wrapper {
+		background-color: var(--page-bg-color);
 		max-width: var(--max-width);
+	}
+	.nav-wrapper {
+		background-color: var(--black-tint2);
 	}
 	header .wrapper {
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1rem;
-		margin: 1rem auto;
+		max-width: var(--max-width);
 	}
 	@media (min-width: 640px) {
 		h1 {
