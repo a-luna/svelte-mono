@@ -4,33 +4,20 @@
 	import NavSideBar from '$lib/components/Nav/NavSideBar.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
 	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
-	import { getPageHeight, getPageWidth, initialFadePerformed, mobileDisplay, mobileNavOpen } from '$lib/stores';
-	import type { Writable } from 'svelte/store';
+	import { initialFadePerformed, mobileDisplay, mobileNavOpen } from '$lib/stores';
 	import { fade } from 'svelte/transition';
 	import '../tailwind.css';
 
-	let pageHeight: Writable<number>;
-	let pageWidth: Writable<number>;
+	let pageHeight: number;
+	let pageWidth: number;
 	let windowHeight: number;
 	let scrollY: number;
 	let showScrollToTopButton: boolean;
-	let pageHeightInitialized = false;
 
-	$: if ($initialFadePerformed && !pageHeightInitialized) {
-		let result = getPageWidth();
-		if (result.success) {
-			pageWidth = result.value;
-		}
-		result = getPageHeight();
-		pageHeightInitialized = result.success;
-		if (result.success) {
-			pageHeight = result.value;
-		}
-	}
 	$: fadeInDelay = $initialFadePerformed ? 450 : 0;
 	$: if (typeof window !== 'undefined') {
-		showScrollToTopButton = $pageHeight > windowHeight && scrollY > 0;
-		$mobileDisplay = $pageWidth < 760;
+		showScrollToTopButton = pageHeight > windowHeight && scrollY > 0;
+		$mobileDisplay = pageWidth < 760;
 	}
 </script>
 
@@ -54,7 +41,7 @@
 	{/if}
 </svelte:head>
 
-<div id="svelte">
+<div id="svelte" bind:clientHeight={pageHeight} bind:clientWidth={pageWidth}>
 	{#if !$mobileNavOpen}
 		<div in:fade={{ delay: fadeInDelay, duration: 400 }} out:fade={{ duration: 300 }} id="top" class="header-wrapper">
 			<Nav />
@@ -66,7 +53,7 @@
 			{/if}
 		</main>
 	{:else}
-		<NavSideBar pageWidth={$pageWidth} />
+		<NavSideBar {pageWidth} />
 	{/if}
 </div>
 
