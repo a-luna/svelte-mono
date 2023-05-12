@@ -11,9 +11,9 @@ module.exports = {
 						'--tw-prose-invert-code': 'var(--code-text-color1)',
 						'line-height': '1.6',
 						'h2, h3, h4, h5, h6': {
-							'font-family': '"Noto Sans", sans-serif',
+							'font-family': 'Roboto, sans-serif',
 							fontWeight: '400',
-							letterSpacing: '0.75px',
+							letterSpacing: '1px',
 						},
 						blockquote: {
 							fontSize: '.95rem',

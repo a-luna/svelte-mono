@@ -1293,11 +1293,22 @@ figcaption p {
 
 .level-2 a.hanchor svg {
 	width: 16px;
-	margin-top: 2px;
+	margin-top: 4px;
 }
+
+article .level-2 h2,
+article .level-3 h3,
+article .level-4 h4,
+article .level-5 h5,
+article .level-6 h6 {
+	flex: 1;
+	line-height: 1.2;
+}
+
 
 article .level-2 h2 {
 	font-size: 1.5rem;
+
 }
 
 .level-2 code {
@@ -1307,7 +1318,7 @@ article .level-2 h2 {
 
 .level-3 a.hanchor svg {
 	width: 14px;
-	margin-top: 1px;
+	margin-top: 3px;
 }
 
 article .level-3 h3 {
@@ -1323,7 +1334,7 @@ article .level-3 h3 {
 .level-5 a.hanchor svg,
 .level-6 a.hanchor svg {
 	width: 13px;
-	margin-top: 1px;
+	margin-top: 3px;
 }
 
 article .level-4 h4,
@@ -1356,7 +1367,7 @@ summary .heading-text {
 	background-image: linear-gradient(to right, oklch(49.6% 0.307 278.18), oklch(88.4% 0.199 194.78));
 	background-repeat: no-repeat;
 	background-size: 100% 1px;
-	background-position: 0 100%;
+	background-position: 0 90%;
 	transition: background-size 0.25s ease-in;
 	line-height: 1.2;
 }
