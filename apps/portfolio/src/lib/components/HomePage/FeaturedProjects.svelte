@@ -21,9 +21,6 @@
 </div>
 
 <style lang="postcss">
-	h2 {
-		margin: 2rem 0;
-	}
 	.featured-projects {
 		display: flex;
 		flex-flow: column nowrap;

@@ -24,15 +24,12 @@
 </div>
 
 <style lang="postcss">
-	h2 {
-		margin: 2rem 0 1.75rem 0;
-	}
 	ul {
 		display: flex;
 		flex-flow: column nowrap;
 		margin: 0;
 		padding: 0;
-		gap: 1.5rem;
+		gap: 1rem;
 	}
 	li {
 		display: flex;

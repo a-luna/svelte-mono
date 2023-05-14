@@ -1380,6 +1380,47 @@ details .underline--magical h4 {
 	font-size: 1rem;
 }
 
+.home .section-content h2 {
+	margin: 1rem 0;
+}
+
+.home .section-content .normal-text {
+	font-size: 0.9rem;
+	margin: 1rem 0 0 0;
+}
+
+.home .section-content .normal-text a.icon,
+.home .section-content .normal-text a.icon:hover {
+	display: inline-block;
+	color: hsl(76 100% 50%);
+	color: oklch(92.22% 0.244 126.84);
+	background-color: hsl(0 0% 0% / 0.4);
+	height: 16px;
+	width: 18px;
+}
+.home .section-content .normal-text span {
+	color: var(--white-shade2);
+	background-color: hsl(0 0% 0% / 0.4);
+	font-weight: 400;
+}
+.home .section-content .normal-text .icon-wrapper {
+	display: inline;
+}
+
+@media (min-width: 640px) {
+	.home .section-content .normal-text {
+		font-size: 1rem;
+	}
+}
+
+@media (min-width: 768px) {
+	.home .section-content .normal-text a.icon,
+	.home .section-content .normal-text a.icon:hover {
+			height: 19.5px;
+			width: 25.5px;
+	}
+}
+
 .featured-projects div.category-list {
 	font-size: 0.75rem;
 }
