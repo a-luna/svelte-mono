@@ -9,28 +9,23 @@
 	$: publishDate = contentType === 'tutorial' ? '&nbsp;' : `on ${formatDateString(published)}`;
 </script>
 
-<div class="author">
-	<div class="avatar-wrapper">
-		<div class="avatar"><img src={authorImage} alt="" /></div>
-		<span class="author-name">{AUTHOR_NAME}</span>
+<div class="avatar-wrapper">
+	<a href="/about" class="avatar"><img src={authorImage} alt="" /></a>
+	<div class="by-line">
+		<a href="/about" class="author-name">{AUTHOR_NAME}</a>
+		<span class="publish-date">{@html publishDate}</span>
 	</div>
-	<span class="publish-date">{@html publishDate}</span>
 </div>
 
 <style lang="postcss">
-	.author {
+	.avatar-wrapper {
 		display: flex;
-		gap: 6px;
+		gap: 0.3rem;
+		align-items: center;
 		align-items: center;
 		line-height: 0;
 		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
 		font-weight: 500;
-	}
-	.avatar-wrapper {
-		cursor: pointer;
-		display: flex;
-		gap: 0.3rem;
-		align-items: center;
 	}
 	.avatar {
 		display: inline-block;
@@ -43,6 +38,7 @@
 		height: 50px;
 		width: 50px;
 		transition: border-color 0.3s ease-in;
+		flex: 0 0 50px;
 	}
 	.avatar:has(img:hover),
 	.avatar-wrapper:hover .avatar {
@@ -62,10 +58,19 @@
 		color: hsl(76 100% 50%);
 		color: oklch(92.22% 0.244 126.84);
 	}
+	.by-line {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+		gap: 4px;
+		height: 40px;
+		flex: 1;
+	}
 	.author-name,
 	.publish-date {
 		font-size: 1rem;
 		font-weight: 400;
+		white-space: nowrap;
 	}
 	.author-name {
 		color: oklch(77.2% 0.229 126.4);
