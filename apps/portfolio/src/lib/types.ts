@@ -127,7 +127,7 @@ export interface ProjectReadme {
 	description: string;
 	hasToc: boolean;
 	toc?: TocSection[];
-	category: ProjectCategory | '';
+	category: ProjectType | '';
 	language: LanguageOrTech | '';
 	categories: ProjectCategory[];
 	techList: LanguageOrTech[];
@@ -346,7 +346,7 @@ export interface ProjectTypeDetails extends ProjectCategoryDetails {
 	size: number;
 }
 
-export type FilterSettingDetails = ProjectTypeDetails | ProjectCategoryDetails;
+export type FilterSettingDetails = Partial<ProjectTypeDetails>;
 
 export interface FilterSettingDetailsDatabase {
 	[k: string]: FilterSettingDetails;

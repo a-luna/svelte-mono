@@ -23,7 +23,7 @@
 		const verbotenColors = [...categoryColors, 'red', 'dark-blue'];
 		do {
 			titleColor = getRandomIconColor();
-		} while (verbotenColors.some((color) => color.includes(titleColor)));
+		} while (verbotenColors.some((color) => color?.includes(titleColor)));
 		return titleColor;
 	}
 </script>

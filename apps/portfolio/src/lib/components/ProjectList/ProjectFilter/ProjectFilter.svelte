@@ -28,24 +28,12 @@
 
 	function settingHasIcon(setting: FilterSettingType): boolean {
 		const details = getFilterSettingDetails(setting);
-		return details.hasIcon;
+		return details.hasIcon || false;
 	}
 
 	function getFilterSettingColor(setting: FilterSettingType): string {
 		const details = getFilterSettingDetails(setting);
-		return details.color;
-	}
-
-	function getLabelStyles(current: FilterSettingType, hoveredValue: FilterSettingType, value: FilterSettingType) {
-		let [bgColor, borderStyle] = ['', ''];
-		if (settingHasIcon(value)) {
-			bgColor = current !== value ? 'var(--black-tint2)' : 'var(--dark-gray-shade1)';
-		} else {
-			const color = getFilterSettingColor(value);
-			bgColor = current === value || hoveredValue === value ? `var(--${color}-icon)` : 'var(--page-bg-color)';
-			borderStyle = ` border: 2px solid var(--${color}-icon)`;
-		}
-		return `background-color: ${bgColor};${borderStyle}`;
+		return details.color || 'orange';
 	}
 
 	export function changeFilterSetting(value: FilterSettingType, broadcastChange = true) {

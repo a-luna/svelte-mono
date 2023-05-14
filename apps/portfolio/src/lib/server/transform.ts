@@ -6,11 +6,10 @@ import {
 	convertWarningBoxes,
 	FA_BULLET_LIST_REGEX,
 	generateTableOfContents,
-	HTML_HEADING_REGEX,
 	identifyCodeBlocks,
 	transformCodeBlocks,
 	transformFaBulletLists,
-	transformHeadings
+	transformHeadings,
 } from '$lib/server';
 import { highlighter, parseMeta } from '$lib/shiki';
 import { SITE_URL } from '$lib/siteConfig';
@@ -21,7 +20,7 @@ import type {
 	RepoWithMetaData,
 	ResourceMap,
 	TocSection,
-	TutorialSection
+	TutorialSection,
 } from '$lib/types';
 import remarkShiki from '@stefanprobst/remark-shiki';
 import rehypeFormat from 'rehype-format';
@@ -77,7 +76,7 @@ export async function convertReadmeToHtml(markdown: string, repo: RepoWithMetaDa
 	const htmlFile = await markdownToHtmlProcessor.process(markdown.trim());
 	const html = String(htmlFile).trim();
 	const title = extractPageTitle(html) || repo.name;
-	
+
 	let toc: TocSection[] = [];
 	if (readmeHasToc(html)) {
 		toc = generateTableOfContents(html);
@@ -96,8 +95,8 @@ function initializeReadme(repo: RepoWithMetaData): ProjectReadme {
 		hasToc: true,
 		category: repo.primaryCategory,
 		language: repo.primaryLanguage,
-		categories: repo.categories,
-		techList: repo.languages,
+		categories: repo.categories || ['allCategories'],
+		techList: repo.languages || ['allLanguages'],
 		canonical: `${SITE_URL}/${href}`,
 		slug: repo.name,
 		href,
@@ -106,8 +105,8 @@ function initializeReadme(repo: RepoWithMetaData): ProjectReadme {
 		coverImage: {
 			name: '',
 			src: '',
-			caption: ''
-		}
+			caption: '',
+		},
 	};
 }
 
@@ -115,13 +114,13 @@ const readmeHasToc = (html: string): boolean => /<ul class="toc">/m.test(html);
 
 function extractPageTitle(html: string): string | null {
 	const matches = [
-		...html.matchAll(/<h(?<level>1|2|3|4|5|6) id="(?<slug>[0-9a-z-_]+)">(?<text>.+)<\/(?:h1|h2|h3|h4|h5|h6)>/g)
+		...html.matchAll(/<h(?<level>1|2|3|4|5|6) id="(?<slug>[0-9a-z-_]+)">(?<text>.+)<\/(?:h1|h2|h3|h4|h5|h6)>/g),
 	];
 	let title = null;
 	if (matches) {
 		title = matches[0]?.groups?.text || null;
 		if (title?.includes('<!--')) {
-			title = title.slice(0, title.indexOf('<!--'))
+			title = title.slice(0, title.indexOf('<!--'));
 		}
 	}
 	title?.trim();

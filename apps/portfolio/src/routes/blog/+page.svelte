@@ -65,7 +65,7 @@
 							title={item.title}
 							publishDate={new Date(item.date)}
 							categories={item.categories}
-							language={item.language}
+							language={item.language || 'allLanguages'}
 						>
 							{item.description}
 						</BlogSummary>
