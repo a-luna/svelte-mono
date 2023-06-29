@@ -6,7 +6,7 @@
 		"conventionalCommits.scopes": [
 			"monorepo",
 			"portfolio",
-			"svelte-base-64",
+			"svelte-base64",
 			"shared-ui",
 			"svelte-color-tools",
 			"lockfile-converter",
@@ -20,9 +20,9 @@
 		},
 		"editor.fontFamily": "Hack Nerd Font Mono",
 		"editor.fontLigatures": true,
+		"editor.fontSize": 13,
 		"editor.formatOnSave": true,
 		"editor.guides.bracketPairs": true,
-		"eslint.packageManager": "pnpm",
 		"eslint.probe": ["javascript", "typescript", "html", "markdown", "svelte"],
 		"eslint.validate": ["typescript", "svelte"],
 		"terminal.integrated.fontFamily": "Hack Nerd Font Mono",
@@ -31,7 +31,7 @@
 		"todo-tree.general.showActivityBarBadge": true,
 		"todo-tree.general.showIconsInsteadOfTagsInStatusBar": false,
 		"todo-tree.general.statusBar": "tags",
-		"todo-tree.filtering.scopes": ["monorepo", "portfolio", "svelte-base-64", "shared-ui", "svelte-color-tools"],
+		"todo-tree.filtering.scopes": ["monorepo", "portfolio", "svelte-base64", "shared-ui", "svelte-color-tools"],
 		"[html]": {
 			"editor.defaultFormatter": "esbenp.prettier-vscode"
 		}
@@ -47,7 +47,7 @@
 		},
 		{
 			"name": "svelte-base64",
-			"path": "apps/svelte-base64-ts"
+			"path": "apps/svelte-base64"
 		},
 		{
 			"name": "shared-ui",

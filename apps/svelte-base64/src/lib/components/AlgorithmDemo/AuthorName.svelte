@@ -4,7 +4,7 @@
 
 <div class="author-name-wrapper">
 	<span class="author-text">Created by <a href="https://github.com/a-luna" class="author-name">@a-luna</a></span>
-	<a href="https://github.com/a-luna/svelte-base64-ts" class="author-github"><Github /></a>
+	<a href="https://github.com/a-luna/svelte-mono/tree/main/apps/svelte-base64" class="author-github"><Github /></a>
 </div>
 
 <style lang="postcss">

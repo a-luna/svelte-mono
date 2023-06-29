@@ -43,7 +43,7 @@ interface PackageLock {
 const LATEST_SUPPORTED_PNPM_LOCK_VERSION = 5.4;
 const MONOREPO_ROOT = '/Users/aaronluna/Projects/svelte-mono';
 const PORTFOLIO_SITE_DIR = '/Users/aaronluna/Projects/svelte-mono/apps/portfolio';
-const BASE64_SITE_DIR = '/Users/aaronluna/Projects/svelte-mono/apps/svelte-base64-ts';
+const BASE64_SITE_DIR = '/Users/aaronluna/Projects/svelte-mono/apps/svelte-base64';
 
 export async function createMonorepoLockFile(): Promise<void> {
 	const lock = await parseLockfile(MONOREPO_ROOT);
