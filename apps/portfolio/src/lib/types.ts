@@ -27,6 +27,7 @@ import type {
 	PROJECT_CATEGORIES,
 	PROJECT_TYPES,
 	REPO_NAMES,
+	SITE_SECTIONS,
 	TECH_LIST,
 } from '$lib/constants';
 import type {
@@ -54,6 +55,7 @@ import type {
 	Xml,
 } from '@a-luna/shared-ui';
 
+export type SiteSection = (typeof SITE_SECTIONS)[number];
 export type HttpMethod = (typeof HTTP_METHODS)[number];
 export type HttpAuthType = (typeof HTTP_AUTH_TYPES)[number];
 export type IconName = (typeof ICON_NAMES)[number];

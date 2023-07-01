@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { SITE_TITLE, SITE_URL } from '$lib/siteConfig';
+	import type { SiteSection } from '$lib/types';
 	import { capitalize } from '$lib/util';
 
-	export let section = '';
+	export let section: SiteSection;
 	export let title = capitalize(section);
 	export let pageTitle = `${title} | ${SITE_TITLE}`;
 </script>

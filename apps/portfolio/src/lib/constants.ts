@@ -1,5 +1,7 @@
 import type { BlogPost, RepoWithMetaData } from '$lib/types';
 
+export const SITE_SECTIONS = ['home', 'projects', 'blog', 'about', 'tutorial'] as const;
+
 export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'CONNECT'] as const;
 
 export const HTTP_AUTH_TYPES = ['Basic', 'Token'] as const;
