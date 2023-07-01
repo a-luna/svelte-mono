@@ -55,81 +55,18 @@
 
 <style lang="postcss">
 	#tutorial-sections {
-		flex: 1;
-		width: 100%;
-		padding: 0;
-		margin: 1rem 0 0 0;
-	}
-
-	#tutorial-sections ::marker {
-		color: var(--accent-color);
-	}
-
-	#tutorial-sections a,
-	#tutorial-sections a:hover {
-		color: var(--accent-color);
-		background-color: var(--toggle-group-bg-color);
-		transition: all 350ms ease-out;
-	}
-
-	.tutorial-sections-wrapper ul {
-		list-style: square;
-		margin: 1rem 0 1rem 2.5rem;
-	}
-
-	.tutorial-sections-wrapper ul > li::marker {
-		color: var(--accent-color);
-	}
-
-	.tutorial-sections-wrapper > ul > li {
-		font-size: 1rem;
-		margin: 0.5rem 0 0.5rem 0;
-	}
-
-	.tutorial-sections-wrapper > ul > li:first-child {
-		margin: 0;
-	}
-
-	#tutorial-sections summary::-webkit-details-marker {
-		/* Hides marker on Safari */
-		display: none;
+		margin: 1.5rem 0 0 0;
 	}
 
 	#tutorial-sections > summary {
-		display: list-item;
-		border-top: 1px solid var(--accent-color);
-		border-left: 1px solid var(--accent-color);
-		border-right: 1px solid var(--accent-color);
+		border-top: 1.5px solid var(--accent-color);
+		border-left: 1.5px solid var(--accent-color);
+		border-right: 1.5px solid var(--accent-color);
 		border-bottom: none;
 	}
 
-	#tutorial-sections[open] > summary {
-		color: var(--page-bg-color);
-		font-weight: 500;
-		background-color: var(--accent-color);
-	}
-
-	#tutorial-sections > summary > .summary-wrapper {
-		flex: 0;
-		display: flex;
-		gap: 1rem;
-		align-items: center;
-		width: 100%;
-		margin: 0 0 0 0.5rem;
-	}
-
-	.details-icon {
-		width: 12px;
-		transition: transform 0.3s ease-in;
-	}
-
-	#tutorial-sections[open] .details-icon {
-		transform: rotate(90deg);
-	}
-
 	.tutorial-sections-wrapper {
-		background-color: var(--toggle-group-bg-color);
-		border: 1px solid var(--accent-color);
+		border: 1.5px solid var(--accent-color);
 	}
 
 	@media (min-width: 640px) {

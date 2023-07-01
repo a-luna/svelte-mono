@@ -2649,3 +2649,142 @@ a.feature-card:hover>div {
 		--max-width: 725px;
 	}
 }
+
+/* TOC/Toggle Groups */
+
+.toggle-groups details,
+#table-of-contents {
+	flex: 1;
+	width: 100%;
+	padding: 0;
+}
+
+.toggle-groups summary,
+#table-of-contents summary {
+	display: list-item;
+	list-style: none;
+	color: var(--accent-color);
+	background-color: var(--toggle-group-bg-color);
+	font-size: 1rem;
+	line-height: 1;
+	padding: 0.75rem 0.5rem;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: background-color 0.3s ease-in;
+}
+
+.toggle-groups details[open]>summary,
+#table-of-contents[open]>summary {
+	color: var(--widget-bg-color);
+	font-weight: 500;
+	background-color: var(--accent-color);
+}
+
+.toggle-groups details[open] .details-icon,
+#table-of-contents[open] .details-icon {
+	transform: rotate(90deg);
+}
+
+.toggle-groups ::marker {
+	color: var(--accent-color);
+}
+
+.toggle-groups summary>.summary-wrapper,
+#table-of-contents>summary>.summary-wrapper {
+	flex: 0;
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	width: 100%;
+	margin: 0 0 0 0.5rem;
+}
+
+.toggle-groups ul,
+.toc-wrapper ul {
+	list-style: square;
+	margin: 0 0 0 2.5rem;
+	padding: 0.5rem 0;
+}
+
+.toggle-groups ul>li::marker,
+.toc-wrapper ul>li::marker {
+	color: var(--accent-color);
+}
+
+.toggle-groups ul>li,
+.toc-wrapper ul>li,
+.readme .prose .toc-wrapper ul>li {
+	font-size: 0.9rem;
+	margin: 0.5rem 0;
+}
+
+.toggle-groups ul>li:first-child,
+.toc-wrapper ul>li:first-child {
+	margin: 0;
+}
+
+.toggle-groups ul ul,
+.toc-wrapper ul ul {
+	list-style: square;
+	margin: 0.5rem 0 0 1.5rem;
+	padding: 0;
+}
+
+.toggle-groups a,
+.toggle-groups a:hover {
+	color: var(--accent-color);
+	background-color: var(--toggle-group-bg-color);
+	transition: all 350ms ease-out;
+}
+
+.toggle-groups code,
+.toggle-groups a code {
+	color: var(--body-text);
+	background-color: var(--page-bg-color);
+	font-size: 0.8rem;
+	padding: 2px 3px;
+	border-radius: 4px;
+	box-shadow: none;
+	text-decoration: none;
+}
+
+.toggle-groups summary::-webkit-details-marker,
+#table-of-contents summary::-webkit-details-marker {
+	/* Hides marker on Safari */
+	display: none;
+}
+
+#table-of-contents p {
+	margin: 0;
+}
+
+.details-icon {
+	width: 10px;
+	transition: transform 0.3s ease-in;
+}
+
+@media (min-width: 640px) {
+
+	.toggle-groups summary,
+	#table-of-contents summary {
+		font-size: 1.1rem;
+		padding: 0.75rem;
+	}
+
+	.toggle-groups ul>li,
+	.toc-wrapper ul>li,
+	.readme .prose .toc-wrapper ul>li {
+		font-size: 1rem;
+	}
+
+	.toggle-groups code,
+	.toggle-groups a code,
+	.toc-wrapper code,
+	.toc-wrapper a code {
+		font-size: 0.9rem;
+	}
+
+	.details-icon {
+		width: 12px;
+	}
+}

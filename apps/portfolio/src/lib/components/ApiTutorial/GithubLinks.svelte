@@ -64,26 +64,7 @@
 
 <style lang="postcss">
 	#github-links {
-		flex: 1;
-		width: 100%;
-		padding: 0;
 		margin: 0 0 1rem 0;
-	}
-
-	#github-links ::marker {
-		color: var(--accent-color);
-	}
-
-	#github-links a,
-	#github-links a:hover {
-		color: var(--accent-color);
-		background-color: var(--toggle-group-bg-color);
-		transition: all 350ms ease-out;
-	}
-
-	.github-links-wrapper ul {
-		list-style: square;
-		margin: 1rem 0 1rem 2.5rem;
 	}
 
 	.github-links-wrapper ul p {
@@ -94,58 +75,14 @@
 		color: var(--white);
 	}
 
-	.github-links-wrapper ul > li::marker {
-		color: var(--accent-color);
-	}
-
-	.github-links-wrapper > ul > li {
-		font-size: 1rem;
-		margin: 0.5rem 0 0.5rem 0;
-	}
-
-	.github-links-wrapper > ul > li:first-child {
-		margin: 0;
-	}
-
-	#github-links summary::-webkit-details-marker {
-		/* Hides marker on Safari */
-		display: none;
-	}
-
 	#github-links > summary {
-		display: list-item;
 		border-top: none;
-		border-left: 1px solid var(--accent-color);
-		border-right: 1px solid var(--accent-color);
-		border-bottom: 1px solid var(--accent-color);
-	}
-
-	#github-links[open] > summary {
-		color: var(--widget-bg-color);
-		font-weight: 500;
-		background-color: var(--accent-color);
-	}
-
-	#github-links > summary > .summary-wrapper {
-		flex: 0;
-		display: flex;
-		gap: 1rem;
-		align-items: center;
-		width: 100%;
-		margin: 0 0 0 0.5rem;
-	}
-
-	.details-icon {
-		width: 12px;
-		transition: transform 0.3s ease-in;
-	}
-
-	#github-links[open] .details-icon {
-		transform: rotate(90deg);
+		border-left: 1.5px solid var(--accent-color);
+		border-right: 1.5px solid var(--accent-color);
+		border-bottom: 1.5px solid var(--accent-color);
 	}
 
 	.github-links-wrapper {
-		background-color: var(--toggle-group-bg-color);
 		border: 1px solid var(--accent-color);
 	}
 
