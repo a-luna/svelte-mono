@@ -1,5 +1,3 @@
-import { REPO_NAMES, TECH_LIST } from '$lib/constants';
-import type { LanguageOrTech, RepoName } from '$lib/types';
 import { format } from 'date-fns';
 
 export const formatDateString = (date: Date) => format(date, 'PPP');
@@ -14,11 +12,6 @@ export const getRandomArrayItem = <T>(array: readonly T[], defaultValue: T): T =
 
 export const getCSSPropValue = (element: HTMLElement, propName: string): string =>
 	getComputedStyle(element).getPropertyValue(propName);
-
-export const isUserRepo = (repoName: string): repoName is RepoName => REPO_NAMES.includes(repoName as RepoName);
-
-export const isValidLanguage = (language: string): language is LanguageOrTech =>
-	TECH_LIST.includes(language as LanguageOrTech);
 
 export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
 

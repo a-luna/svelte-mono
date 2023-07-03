@@ -30,10 +30,7 @@
 	}
 
 	.section {
-		padding-top: 0;
-		padding-bottom: 1.5rem;
-		padding-left: var(--mobile-page-padding);
-		padding-right: var(--mobile-page-padding);
+		padding: var(--mobile-page-padding);
 	}
 
 	.section-header {
@@ -41,14 +38,11 @@
 		font-size: 1.7rem;
 		line-height: 1.5;
 		color: var(--page-bg-color);
+		background-color: var(--accent-color);
 		padding: 0.25rem 0.5rem;
 		font-weight: 500;
 		width: 100%;
-		margin: 1.5rem 0 2rem 0;
-	}
-
-	.home .section-header {
-		margin: 1.5rem 0 0.5rem 0;
+		margin: 0 0 2rem 0;
 	}
 
 	@media (min-width: 640px) {
@@ -60,6 +54,10 @@
 	@media (min-width: 768px) {
 		.section {
 			padding: 0 0 3rem 0;
+		}
+		.section-header,
+		.home .section-header {
+			margin: 1rem 0 2.5rem 0;
 		}
 	}
 </style>

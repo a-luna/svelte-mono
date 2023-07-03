@@ -39,7 +39,7 @@
 		padding: 0;
 	}
 	.posted-on {
-		color: var(--white-shade4);
+		color: var(--tw-prose-invert-body);
 	}
 	a:hover {
 		color: var(--page-bg-color);

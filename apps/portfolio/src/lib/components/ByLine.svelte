@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { AUTHOR_NAME, SITE_URL } from '$lib/siteConfig';
+	import type { ContentType } from '$lib/types';
 	import { formatDateString } from '$lib/util';
 
 	export let published = new Date(0);
-	export let contentType: string;
+	export let contentType: ContentType;
 
 	$: authorImage = `${SITE_URL}/avatar.png`;
 	$: publishDate = contentType === 'tutorial' ? '&nbsp;' : `on ${formatDateString(published)}`;
@@ -29,7 +30,7 @@
 	}
 	.avatar {
 		display: inline-block;
-		margin: 0 5px;
+		margin: 0 0.5rem 0 0;
 		border-width: 2px;
 		border-style: solid;
 		border-color: oklch(77.2% 0.229 126.4);
@@ -68,7 +69,7 @@
 	}
 	.author-name,
 	.publish-date {
-		font-size: 1rem;
+		font-size: 0.875rem;
 		font-weight: 400;
 		white-space: nowrap;
 	}
@@ -82,9 +83,14 @@
 		color: var(--gray-shade2);
 	}
 	@media (min-width: 640px) {
+		.avatar {
+			height: 65px;
+			width: 65px;
+			flex: 0 0 65px;
+		}
 		.author-name,
 		.publish-date {
-			font-size: 0.95rem;
+			font-size: 1rem;
 		}
 	}
 </style>

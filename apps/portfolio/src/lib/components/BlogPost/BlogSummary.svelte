@@ -92,7 +92,7 @@
 	}
 
 	.blog-summary :global(.filter-value) {
-		color: var(--white-shade5);
+		color: var(--tw-prose-headings);
 	}
 
 	.blog-summary:hover {
@@ -132,12 +132,12 @@
 
 	.published {
 		font-size: 1rem;
-		color: var(--white-shade5);
+		color: var(--tw-prose-headings);
 	}
 
 	.description {
 		font-size: 0.9rem;
-		color: var(--white-shade5);
+		color: var(--gray);
 		line-height: 1.5;
 	}
 

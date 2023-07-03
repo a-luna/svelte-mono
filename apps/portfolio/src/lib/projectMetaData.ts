@@ -1,6 +1,6 @@
 import { nullRepoWithMetadata } from '$lib/constants';
+import { isUserRepo } from '$lib/typeguards';
 import type { CachedProjectData, GHRepo, LanguageOrTech, ProjectCategory, RepoWithMetaData } from '$lib/types';
-import { isUserRepo } from '$lib/util';
 import { addHours, isWithinInterval, parseISO } from 'date-fns';
 
 export const repoDataDepot: {
@@ -123,7 +123,7 @@ export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
 				primaryCategory: repoDataDepot?.[project.name]?.primaryCategory ?? 'allProjects',
 				languages: repoDataDepot?.[project.name]?.languages ?? ['allLanguages'],
 				categories: repoDataDepot?.[project.name]?.categories ?? ['allCategories'],
-				updatedAt: project.updated_at || new Date().toISOString(),
+				updatedAt: project.pushed_at || new Date().toISOString(),
 		  }
 		: nullRepoWithMetadata;
 

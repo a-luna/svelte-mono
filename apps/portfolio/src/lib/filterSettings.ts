@@ -33,21 +33,21 @@ import {
 const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	allprojects: {
 		displayName: 'All Projects',
-		color: 'green',
+		color: 'orange',
 		hasIcon: true,
 		icon: AllProjects,
 		size: 16,
 	},
 	frontend: {
 		displayName: 'Frontend',
-		color: 'pink',
+		color: 'sea-green',
 		hasIcon: true,
 		icon: Frontend,
 		size: 16,
 	},
 	backend: {
 		displayName: 'Backend',
-		color: 'blue',
+		color: 'pink',
 		hasIcon: true,
 		icon: Backend,
 		size: 16,
@@ -85,7 +85,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	fastapi: {
 		displayName: 'FastAPI',
-		color: 'green',
+		color: 'sea-green',
 		hasIcon: true,
 		icon: FastApi,
 		size: 16,
@@ -169,7 +169,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	sqlite: {
 		displayName: 'SQLite',
-		color: 'yellow-green',
+		color: 'sea-green',
 		hasIcon: true,
 		icon: Sqlite,
 		size: 16,
@@ -224,7 +224,7 @@ const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } 
 	},
 	blog_portfolio_sites: {
 		displayName: 'Blog/Portfolio Site',
-		color: 'yellow-green',
+		color: 'sea-green',
 		hasIcon: false,
 	},
 	cli_apps: {
@@ -279,7 +279,7 @@ const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } 
 	},
 	web_scraping: {
 		displayName: 'Web Scraping',
-		color: 'yellow-green',
+		color: 'sea-green',
 		hasIcon: false,
 	},
 };

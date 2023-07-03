@@ -12,15 +12,16 @@ export const ICON_NAMES = ['fork', 'github', 'star'] as const;
 
 export const ICON_COLORS = [
 	'red',
+	'orange',
 	'yellow',
 	'yellow-green',
 	'green',
+	'sea-green',
+	'teal',
 	'blue',
 	'dark-blue',
 	'purple',
 	'pink',
-	'teal',
-	'orange',
 	'default',
 ] as const;
 
