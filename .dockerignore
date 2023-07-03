@@ -1,0 +1,26 @@
+# Files
+.env
+.env.*
+README.md
+.git
+.gitignore
+npm-debug.log
+.dockerignore
+.dokku-monorepo
+.eslintrc.cjs
+.prettierrc
+svelte-mono.code-workspace
+Dockerfile
+docker-compose
+LICENSE.md
+
+# Directories
+node_modules
+test
+dist
+.github
+.vscode
+packages/svelte-color-tools
+packages/lock-file-converter
+packages/eslint-config-custom
+apps/svelte-base64
