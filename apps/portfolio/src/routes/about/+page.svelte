@@ -22,7 +22,7 @@
 </script>
 
 <SectionLayout section={'about'} title={'About Me'}>
-	<div class="my-photo"><img src="{SITE_URL}/AaronLuna.jpg" alt="" /></div>
+	<div class="my-photo"><img src="{SITE_URL}/avatar.png" alt="" /></div>
 	<div class="about-me-bullets prose prose-invert">
 		<div class="bullet bullet-1"><BasicIconRenderer icon={'keyboard'} /></div>
 		<span class="about-me-1"
@@ -158,8 +158,15 @@
 	}
 	.my-photo {
 		margin: 1rem auto 2rem auto;
+		border: 2px solid var(--dark-gray-shade1);
 		border-radius: 50%;
+		height: 150px;
 		width: 150px;
+	}
+	.my-photo img {
+		border-color: var(--gray);
+		border-radius: 50%;
+		background-color: transparent;
 	}
 	.bullet {
 		width: 25px;

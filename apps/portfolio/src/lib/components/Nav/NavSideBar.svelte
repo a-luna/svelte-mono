@@ -14,8 +14,8 @@
 </script>
 
 <aside
-	in:fly={{ delay: 250, duration: flyInDuration, x: -pageWidth }}
-	out:fly={{ delay: 150, duration: flyOutDuration, x: -pageWidth }}
+	in:fly={{ duration: flyInDuration, x: -pageWidth }}
+	out:fly={{ duration: flyOutDuration, x: -pageWidth }}
 	class="nav-sidebar"
 	id="nav-sidebar"
 	class:open
@@ -54,7 +54,7 @@
 		background-color: inherit;
 		justify-content: flex-start;
 		align-items: flex-start;
-		margin: 0 0 0 3rem;
+		margin: 0 0 0 2rem;
 	}
 	.nav-links {
 		display: flex;
@@ -67,6 +67,9 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		padding: 1rem 2rem 0 0;
+		padding-top: var(--mobile-page-padding);
+		padding-bottom: 0;
+		padding-left: var(--mobile-page-padding);
+		padding-right: var(--mobile-page-padding);
 	}
 </style>

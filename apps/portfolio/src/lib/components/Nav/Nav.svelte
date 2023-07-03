@@ -30,8 +30,8 @@
 		width: 100%;
 		background-color: inherit;
 		margin: 0 auto;
-		padding-top: 1rem;
-		padding-bottom: 1rem;
+		padding-top: var(--mobile-page-padding);
+		padding-bottom: 0;
 		padding-left: var(--mobile-page-padding);
 		padding-right: var(--mobile-page-padding);
 	}

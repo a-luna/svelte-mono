@@ -24,7 +24,13 @@
 	.featured-projects {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 3rem;
+		gap: 0rem;
 		margin: 0;
+	}
+	
+	@media (min-width: 640px) {
+		.featured-projects {
+			gap: 2rem;
+		}
 	}
 </style>
