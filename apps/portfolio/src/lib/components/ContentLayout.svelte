@@ -1,12 +1,13 @@
 <script lang="ts">
 	import ByLine from '$lib/components/ByLine.svelte';
+	import PostNav from '$lib/components/PostNav.svelte';
 	import { enableCopyCodeButtons } from '$lib/content/browser';
 	import { MY_TWITTER_HANDLE, SITE_TITLE } from '$lib/siteConfig';
-	import type { BlogPost, ProjectReadme, TutorialSection } from '$lib/types';
+	import type { BlogPost, ContentType, ProjectReadme, TutorialSection } from '$lib/types';
 	import { onMount } from 'svelte';
 
 	export let content: ProjectReadme | BlogPost | TutorialSection;
-	export let contentType: string;
+	export let contentType: ContentType;
 	let pageLoaded = false;
 	let buttonsEnabled = false;
 
@@ -46,9 +47,9 @@
 	>
 		<slot />
 	</div>
-	{#if $$slots.nav}
+	{#if ['blog', 'tutorial'].includes(contentType)}
 		<div class="wrapper nav-wrapper">
-			<slot name="nav" />
+			<PostNav slug={content.slug} {contentType} />
 		</div>
 	{/if}
 </article>
@@ -63,7 +64,7 @@
 	header {
 		background-color: var(--black-tint2);
 		width: 100%;
-		margin: 1rem 0;
+		margin: 1.5rem 0 2rem 0;
 	}
 	h1 {
 		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
@@ -74,13 +75,10 @@
 		-webkit-text-stroke-width: 1px;
 		-webkit-text-stroke-color: var(--post-title-text-stroke);
 		line-height: 1.3;
-		/* text-shadow: 2px 2px var(--post-title-text-shadow-color),
-			1.75px 1.75px var(--post-title-text-shadow-color),
-			1.5px 1.5px var(--post-title-text-shadow-color),
-			1.25px 1.25px var(--post-title-text-shadow-color), 1px 1px var(--post-title-text-shadow-color),
-			0.75px 0.75px var(--post-title-text-shadow-color),
-			0.5px 0.5px var(--post-title-text-shadow-color),
-			0.25px 0.25px var(--post-title-text-shadow-color); */
+		text-shadow: 2px 2px var(--post-title-text-stroke), 1.75px 1.75px var(--post-title-text-stroke),
+			1.5px 1.5px var(--post-title-text-stroke), 1.25px 1.25px var(--post-title-text-stroke),
+			1px 1px var(--post-title-text-stroke), 0.75px 0.75px var(--post-title-text-stroke),
+			0.5px 0.5px var(--post-title-text-stroke), 0.25px 0.25px var(--post-title-text-stroke);
 	}
 	.wrapper {
 		padding-top: 0;
@@ -92,10 +90,19 @@
 	}
 	.content-wrapper {
 		background-color: var(--page-bg-color);
-		max-width: var(--max-width);
+		margin: 0 auto 2rem auto;
 	}
 	.nav-wrapper {
 		background-color: var(--black-tint2);
+		margin: 0 auto;
+	}
+	.content-wrapper,
+	.nav-wrapper {
+		max-width: var(--max-width);
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-left: var(--mobile-page-padding);
+		padding-right: var(--mobile-page-padding);
 	}
 	header .wrapper {
 		display: flex;

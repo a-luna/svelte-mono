@@ -1,5 +1,4 @@
 <script lang="ts">
-	import PostNav from '$lib/components/BlogPost/PostNav.svelte';
 	import ContentLayout from '$lib/components/ContentLayout.svelte';
 	import TableOfContents from '$lib/components/TableOfContents/TableOfContents.svelte';
 	import type { BlogPost } from '$lib/types';
@@ -16,7 +15,4 @@
 		<TableOfContents toc={blogPost.toc} />
 	{/if}
 	{@html blogPost?.content}
-	<svelte:fragment slot="nav">
-		<PostNav slug={blogPost.slug} />
-	</svelte:fragment>
 </ContentLayout>

@@ -2,11 +2,12 @@ import { browser } from '$app/environment';
 import { initializeProjectData } from '$lib/projectMetaData';
 import type {
 	BlogPost,
-	BlogPostDateMap,
 	CachedProjectData,
+	ISortByDateFunction,
+	OrderedNavItem,
 	Result,
 	TutorialSection,
-	TutorialSectionNumberMap,
+	hasDate,
 } from '$lib/types';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
@@ -39,24 +40,48 @@ export function createLocalStorageValue<T>(key: string, defaultValue: T): Result
 	return { success: false, error: 'This function (createLocalStorageValue) must be run in browser (client-side)' };
 }
 
-export const blogPostDateMap: Readable<BlogPostDateMap[]> = derived(blogPosts, ($blogPosts) =>
-	$blogPosts
-		.map(({ slug, date, title }) => ({ slug, date, title }))
-		.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf()),
+export const blogPostDateMap: Readable<OrderedNavItem[]> = derived(blogPosts, ($blogPosts) =>
+	$blogPosts.sort(sortByDate(true)).map(({ slug, title }, i) => ({
+		slug,
+		title,
+		titleCompact: title,
+		weight: i,
+	})),
 );
 
-export const tutorialSectionNumberMap: Readable<TutorialSectionNumberMap[]> = derived(
-	tutorialSections,
-	($tutorialSections) =>
-		$tutorialSections
-			.map(({ slug, series_weight, series_part, lead }) => ({
-				slug,
-				series_weight,
-				series_part,
-				lead,
-			}))
-			.sort((a, b) => (a?.series_weight ?? 0) - (b?.series_weight ?? 0)),
+export const tutorialSectionNumberMap: Readable<OrderedNavItem[]> = derived(tutorialSections, ($tutorialSections) =>
+	$tutorialSections
+		.sort((a, b) => (a?.series_weight ?? 0) - (b?.series_weight ?? 0))
+		.map(({ slug, series_weight, series_part, lead }) => ({
+			slug,
+			title: lead || series_part || '',
+			titleCompact: series_part || '',
+			weight: series_weight || 0,
+		})),
 );
+
+export const sortByDate = <T extends hasDate>(asc = true): ISortByDateFunction<T> => {
+	if (asc) {
+		return (a: T, b: T) => {
+			if (typeof a.date == 'string' && typeof b.date == 'string') {
+				return new Date(a.date).valueOf() - new Date(b.date).valueOf();
+			}
+			if (typeof a.date != 'string' && typeof b.date != 'string') {
+				return a.date.valueOf() - b.date.valueOf();
+			}
+			return 0;
+		};
+	}
+	return (a: T, b: T) => {
+		if (typeof a.date == 'string' && typeof b.date == 'string') {
+			return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+		}
+		if (typeof a.date != 'string' && typeof b.date != 'string') {
+			return b.date.valueOf() - a.date.valueOf();
+		}
+		return 0;
+	};
+};
 
 /* c8 ignore start */
 function syncHeight(el: HTMLElement): Writable<number> {

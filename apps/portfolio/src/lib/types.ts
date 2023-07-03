@@ -18,6 +18,7 @@ import type {
 } from '$lib/components/Icons';
 import type {
 	BACKEND_CATEGORIES,
+	CONTENT_TYPES,
 	FRONTEND_CATEGORIES,
 	HTTP_AUTH_TYPES,
 	HTTP_METHODS,
@@ -56,6 +57,7 @@ import type {
 } from '@a-luna/shared-ui';
 
 export type SiteSection = (typeof SITE_SECTIONS)[number];
+export type ContentType = (typeof CONTENT_TYPES)[number];
 export type HttpMethod = (typeof HTTP_METHODS)[number];
 export type HttpAuthType = (typeof HTTP_AUTH_TYPES)[number];
 export type IconName = (typeof ICON_NAMES)[number];
@@ -167,6 +169,13 @@ export interface TutorialSection extends BlogPost {
 }
 
 export type TutorialSectionNumberMap = Pick<TutorialSection, 'slug' | 'lead' | 'series_part' | 'series_weight'>;
+
+export interface OrderedNavItem {
+	slug: string;
+	title: string;
+	titleCompact: string;
+	weight: number;
+}
 
 export interface GHUser {
 	login: string;
@@ -360,4 +369,12 @@ export interface CodeBlockUpdateDetails {
 	originalLength: number;
 	offset: number;
 	shiki: boolean;
+}
+
+export interface hasDate {
+	date: Date | string;
+}
+
+export interface ISortByDateFunction<T extends hasDate> {
+	(a: T, b: T): number;
 }
