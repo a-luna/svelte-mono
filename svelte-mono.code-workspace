@@ -27,7 +27,7 @@
 		"eslint.validate": ["typescript", "svelte"],
 		"terminal.integrated.fontFamily": "Hack Nerd Font Mono",
 		"testing.automaticallyOpenPeekView": "never",
-		"workbench.colorTheme": "YADT (Yet Another Dark Theme)",
+		"workbench.colorTheme": "GitHub Dark High Contrast",
 		"todo-tree.general.showActivityBarBadge": true,
 		"todo-tree.general.showIconsInsteadOfTagsInStatusBar": false,
 		"todo-tree.general.statusBar": "tags",
