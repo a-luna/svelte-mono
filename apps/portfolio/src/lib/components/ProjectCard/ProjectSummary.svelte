@@ -31,9 +31,14 @@
 </div>
 
 <style lang="postcss">
+	:global(.featured-projects) + .project-summary-wrapper {
+		margin: 0 0 0.75rem 0;
+	}
+
 	.project-summary-wrapper {
 		display: flex;
 		gap: 2rem;
+		margin: 0.75rem 0;
 	}
 	.project-image {
 		display: none;
@@ -55,8 +60,7 @@
 		border-color: var(--dark-gray);
 	}
 	.project-summary:hover {
-		border-color: hsl(76 100% 50%);
-		border-color: oklch(92.22% 0.244 126.84);
+		border-color: var(--accent-color);
 	}
 	.project-image,
 	.project-image:hover,
@@ -75,13 +79,13 @@
 		justify-content: space-between;
 	}
 	.project-name {
-		color: var(--white-shade2);
+		color: var(--tw-prose-headings);
 		line-height: 1;
 		margin: 0 0 0.25rem 0;
 	}
 	h3 {
 		font-family: 'Roboto', Arial, Helvetica, sans-serif;
-		font-size: 1.15rem;
+		font-size: 1.25rem;
 		letter-spacing: 0.8px;
 		line-height: 1.4;
 		font-weight: 400;
@@ -92,8 +96,8 @@
 	}
 	.project-description {
 		flex: 1;
-		color: var(--white-shade5);
-		font-size: 0.85rem;
+		color: var(--tw-prose-invert-body);
+		font-size: 0.8rem;
 		letter-spacing: 0.75px;
 		line-height: 1.5;
 		max-width: 40rem;
@@ -101,6 +105,17 @@
 	}
 
 	@media (min-width: 640px) {
+		.project-summary-wrapper {
+			margin: 0;
+			padding: 1rem;
+			border-width: 2px;
+			border-style: solid;
+			border-color: var(--dark-gray);
+			background-color: var(--black);
+		}
+		.project-summary-wrapper:hover {
+			border-color: var(--accent-color);
+		}
 		.project-image {
 			display: block;
 			height: 175px;

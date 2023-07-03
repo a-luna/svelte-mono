@@ -20,7 +20,7 @@
 	.all-language-list {
 		display: flex;
 		flex-flow: row wrap;
-		font-size: 0.85rem;
+		font-size: 0.8rem;
 		gap: 0.25rem;
 	}
 

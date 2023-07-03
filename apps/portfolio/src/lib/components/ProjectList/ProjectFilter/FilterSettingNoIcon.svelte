@@ -8,9 +8,13 @@
 
 	$: details = getFilterSettingDetails(value);
 	$: displayName = details.displayName;
+	$: style =
+		hovered || selected
+			? `background-color: var(--${details.color}); color: var(--black);`
+			: `background-color: var(--black); color: var(--${details.color});`;
 </script>
 
-<button class="filter-setting {details.color}" class:hovered class:selected on:click>
+<button class="filter-setting" class:hovered class:selected {style} on:click>
 	<span class="filter-value">{displayName}</span>
 </button>
 

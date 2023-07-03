@@ -1,6 +1,7 @@
 <script lang="ts">
 	import FilterSettingNoIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingNoIcon.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
+	import { PROJECT_CATEGORIES, PROJECT_TYPES, TECH_LIST } from '$lib/constants';
 	import { getFilterSettingDetails } from '$lib/filterSettings';
 	import type { FilterSetting as FilterSettingType } from '$lib/types';
 	import { getRandomHexString } from '$lib/util';
@@ -17,10 +18,60 @@
 	export let hoveredValue: FilterSettingType = '';
 	export let selectedValue: FilterSettingType = '';
 	export let expanded = false;
+	let bgColors: { [k: string]: string } = {};
 	const dispatch = createEventDispatcher();
 
 	$: if (!title) expanded = true;
 	$: settingsListStyle = title ? 'margin: 0 0 0 2rem;' : 'margin: 0;';
+	$: bgColors = updateBgColors(hoveredValue, selectedValue);
+
+	function getInactiveCategoryColors(): { [k: string]: string } {
+		const colors: { [k: string]: string } = {};
+		colors[noFilterSetting.toString()] = 'black';
+		PROJECT_TYPES.forEach((type) => (colors[type.toString()] = 'var(--black-tint2)'));
+		TECH_LIST.forEach((type) => (colors[type.toString()] = 'var(--black-tint2)'));
+		PROJECT_CATEGORIES.forEach((setting) => (colors[setting.toString()] = 'black'));
+		return colors;
+	}
+
+	function getActiveCategoryColors(): { [k: string]: string } {
+		const colors: { [k: string]: string } = {};
+		colors[noFilterSetting.toString()] = 'default';
+		PROJECT_TYPES.forEach((type) => (colors[type.toString()] = 'var(--dark-gray-shade1)'));
+		TECH_LIST.forEach((type) => (colors[type.toString()] = 'var(--dark-gray-shade1)'));
+		PROJECT_CATEGORIES.forEach(
+			(setting) => (colors[setting.toString()] = getFilterSettingDetails(setting).color?.toString() || ''),
+		);
+		return colors;
+	}
+
+	function updateBgColors(hovered: string, selected: string): { [k: string]: string } {
+		const colors: { [k: string]: string } = {};
+		const inactiveColors: { [k: string]: string } = getInactiveCategoryColors();
+		const activeColors: { [k: string]: string } = getActiveCategoryColors();
+		const activeFilterSettings = [hovered, selected];
+		colors[noFilterSetting.toString()] =
+			selected == noFilterSetting
+				? activeColors[noFilterSetting.toString()] || ''
+				: inactiveColors[noFilterSetting.toString()] || '';
+		PROJECT_TYPES.forEach(
+			(type) =>
+				(colors[type.toString()] =
+					selected == type ? activeColors[type.toString()] || '' : inactiveColors[type.toString()] || ''),
+		);
+		TECH_LIST.forEach(
+			(type) =>
+				(colors[type.toString()] =
+					selected == type ? activeColors[type.toString()] || '' : inactiveColors[type.toString()] || ''),
+		);
+		PROJECT_CATEGORIES.forEach(
+			(setting) =>
+				(colors[setting.toString()] = activeFilterSettings.includes(setting)
+					? activeColors[setting.toString()] || ''
+					: inactiveColors[setting.toString()] || ''),
+		);
+		return colors;
+	}
 
 	export function clearFilter() {
 		selectedValue = noFilterSetting;
@@ -31,9 +82,11 @@
 		return details.hasIcon || false;
 	}
 
-	function getFilterSettingColor(setting: FilterSettingType): string {
+	function getFilterLabelStyles(setting: FilterSettingType): string {
 		const details = getFilterSettingDetails(setting);
-		return details.color || 'orange';
+		return settingHasIcon(setting)
+			? 'border-width: 0;'
+			: `border-color: var(--${details.color}); border-width: 1px; border-style: solid;`;
 	}
 
 	export function changeFilterSetting(value: FilterSettingType, broadcastChange = true) {
@@ -59,6 +112,9 @@
 				<input type="radio" bind:group={selectedValue} name={id} id="{id}-option-0" value={noFilterSetting} />
 				<label
 					for="{id}-option-0"
+					style="background-color: var(--{bgColors[noFilterSetting.toString()]}); {getFilterLabelStyles(
+						noFilterSetting,
+					)}"
 					class:hovered={hoveredValue === noFilterSetting}
 					class:selected={selectedValue === noFilterSetting}
 					class:expanded
@@ -92,7 +148,7 @@
 				/>
 				<label
 					for="{id}-option-{i + startOptionNumber}"
-					class={getFilterSettingColor(setting)}
+					style="background-color: var(--{bgColors[setting.toString()]}); {getFilterLabelStyles(setting)}"
 					class:hovered={hoveredValue === setting}
 					class:selected={selectedValue === setting}
 					on:mouseenter={() => (hoveredValue = setting)}
@@ -157,9 +213,11 @@
 		z-index: -1;
 	}
 	.filter-settings label {
+		--default: var(--white-shade2);
+
 		cursor: pointer;
 		padding: 0.75rem 1rem;
-		color: var(--white-shade2);
+		color: var(--default);
 	}
 	.filter-settings label:hover {
 		color: var(--accent-color);

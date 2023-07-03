@@ -6,17 +6,16 @@ module.exports = {
 			typography: {
 				DEFAULT: {
 					css: {
-						'--tw-prose-invert-body': 'var(--white-shade5)',
-						'--tw-prose-invert-headings': 'var(--white-shade2)',
-						'--tw-prose-invert-code': 'var(--code-text-color1)',
+						'--tw-prose-invert-body': 'var(--gray)',
+						'--tw-prose-invert-headings': 'var(--white)',
+						'--tw-prose-invert-code': 'var(--heading-code-color)',
 						'line-height': '1.6',
 						'h2, h3, h4, h5, h6': {
 							'font-family': 'Roboto, sans-serif',
-							fontWeight: '400',
+							fontWeight: '300',
 							letterSpacing: '1px',
 						},
 						blockquote: {
-							fontSize: '.95rem',
 							fontWeight: '400',
 							fontStyle: 'italic',
 							color: 'hsl(76 100% 50%)',
@@ -95,13 +94,17 @@ module.exports = {
 							marginRight: 'auto',
 							marginBottom: '0',
 							marginLeft: 'auto',
-							color: 'var(--white-shade2)',
+							color: 'var(--white)',
+							fontWeight: '400',
 						},
 						'article .custom-block strong, article .requirements strong, article blockquote p strong': {
 							color: 'currentColor',
 						},
 						'article figure p': {
 							margin: '0',
+						},
+						'article figure': {
+							margin: '0 0 2rem 0',
 						},
 						'article figure img': {
 							marginTop: '0',

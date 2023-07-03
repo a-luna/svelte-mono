@@ -12,17 +12,14 @@
 	$: categories = project?.categories || [];
 	$: categoryColors = categories.map((c) => getFilterSettingDetails(c).color);
 
-	const getRandomIconColor = () =>
-		getRandomArrayItem<IconColor>(
-			ICON_COLORS.filter((icon) => icon !== 'default'),
-			'blue',
-		);
-
 	function getAllLanguageListTitleColor() {
 		let titleColor: IconColor;
 		const verbotenColors = [...categoryColors, 'red', 'dark-blue'];
 		do {
-			titleColor = getRandomIconColor();
+			titleColor = getRandomArrayItem<IconColor>(
+				ICON_COLORS.filter((icon) => icon !== 'default'),
+				'blue',
+			);
 		} while (verbotenColors.some((color) => color?.includes(titleColor)));
 		return titleColor;
 	}
@@ -84,7 +81,7 @@
 		letter-spacing: 0.75px;
 		line-height: 1.5;
 		max-width: 40rem;
-		color: var(--white-shade5);
+		color: var(--gray);
 		margin: 0;
 	}
 	.language-list-wrapper {
