@@ -64,7 +64,6 @@
 		justify-content: center;
 		background-color: var(--page-bg-color);
 		width: 100%;
-		height: 87px;
 	}
 	main {
 		display: flex;

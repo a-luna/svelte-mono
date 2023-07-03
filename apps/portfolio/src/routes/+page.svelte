@@ -10,6 +10,7 @@
 	import { initialFadePerformed, mobileNavOpen } from '$lib/stores';
 	import { ColorParser } from '@a-luna/shared-ui';
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import type { PageData } from './$types';
 
 	const test = [
@@ -155,7 +156,9 @@
 		{/if}
 	</div>
 	{#if $initialFadePerformed}
-		<Mandala />
+		<div in:fade={{ duration: 2500 }} class="mandala-wrapper">
+			<Mandala />
+		</div>
 	{/if}
 </div>
 
@@ -181,7 +184,16 @@
 	.section-content {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 1rem;
+		gap: 1.5rem;
+	}
+	.mandala-wrapper {
+		height: 550px;
+		overflow: hidden;
+		transition: all 1s ease-in-out;
+		width: 100%;
+		z-index: 1;
+		grid-column: 1;
+		grid-row: 1;
 	}
 
 	@media (min-width: 640px) {
