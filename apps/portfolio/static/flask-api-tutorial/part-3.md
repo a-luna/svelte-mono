@@ -154,32 +154,34 @@ There are several approaches to API versioning, but the one I prefer is the most
 
 <a href="https://dev.to/sparkpost/restful-api-versioning-best-practices-why-v1-is-1" target="_blank">This post on the SparkNotes blog</a> provides a nice summary of the types of changes that are breaking changes and the types that are not:
 
-<div class="steps" style="margin:0">
-    <ul style="list-style: none; margin: 0 0 0 0.5em">
-      <li class="pink">
-          <p class="emphasis" style="font-size:1.1em; margin: 5px 0">Breaking Changes (Very Bad)</p>
-          <ul style="font-size:0.95em; margin: 0 0 1em 2em">
-            <li>A new required parameter</li>
-            <li>A new required key in POST bodies</li>
-            <li>Removal of an existing endpoint</li>
-            <li>Removal of an existing endpoint request method</li>
-            <li>A materially different internal behavior of an API call – such as a change to the default behavior.</li>
-          </ul>
-      </li>
-      <li class="green" style="margin:20px 0 0 0">
-          <p class="emphasis" style="font-size:1.1em; margin: 5px 0">NOT Breaking Changes (Good)</p>
-          <ul style="font-size:0.95em; margin: 0 0 0 2em">
-            <li>A new resource or API endpoint</li>
-            <li>A new optional parameter</li>
-            <li>A change to a non-public API endpoint</li>
-            <li>A new optional key in the JSON POST body</li>
-            <li>A new key returned in the JSON response body</li>
-          </ul>
-      </li>
-    </ul>
+<div class="steps-wrapper">
+    <div class="steps" style="margin:0">
+        <ul style="list-style: none; margin: 0 0 0 0.5em">
+          <li class="red">
+              <p style="font-weight: 700; text-decoration: underline; margin: 0">Breaking Changes (Very Bad)</p>
+              <ul style="margin: 0 0 1em 2em">
+                <li>A new required parameter</li>
+                <li>A new required key in POST bodies</li>
+                <li>Removal of an existing endpoint</li>
+                <li>Removal of an existing endpoint request method</li>
+                <li>A materially different internal behavior of an API call – such as a change to the default behavior.</li>
+              </ul>
+          </li>
+          <li class="green" style="margin:20px 0 0 0">
+              <p style="font-weight: 700; text-decoration: underline; margin: 0">NOT Breaking Changes (Good)</p>
+              <ul style="margin: 0 0 0 2em">
+                <li>A new resource or API endpoint</li>
+                <li>A new optional parameter</li>
+                <li>A change to a non-public API endpoint</li>
+                <li>A new optional key in the JSON POST body</li>
+                <li>A new key returned in the JSON response body</li>
+              </ul>
+          </li>
+        </ul>
+    </div>
 </div>
 
-## API Configuration with Flask-RESTx
+## Flask-RESTx API Configuration
 
 Just like every other extension, Flask-RESTx can be initialized with a Flask application object (i.e., `api.init_app(app)` -- doing so would place the API at the website root). However, in most applications we would rather have the API routes configured with a prefix such as <code>/api/v1</code> to enforce our versioning system.
 
@@ -369,10 +371,16 @@ We will see this shortly in the `auth/user` API route which inspects the access 
 
 Within the <code>auth_ns</code> namespace, we will create the four API endpoints listed in the table below:
 
-<div class="table-wrapper">
+<div id="tutorial-part-3-table-1" class="table-wrapper">
     <div class="responsive">
         <table>
             <thead>
+                <tr>
+                    <td colspan="5" class="table-number">Table 1</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="table-title">Auth API endpoint specifications</td>
+                </tr>
             <tr>
                 <th scope="col" class="first-column column-header">Endpoint Name</th>
                 <th scope="col" class="column-header">URL Path</th>
@@ -473,19 +481,19 @@ For any response containing sensitive information (e.g., access tokens, credenti
   <p style="margin: 1em 0 0 1em">The authorization server issues an access token and optional refresh token, and constructs the response by adding the following parameters to the entity-body of the HTTP response:
   </p>
   <p class="defined-term">access_token</p>
-  <p style="margin: 0 0 0 2em"><span class="bold-text">REQUIRED</span>.  The access token issued by the authorization server.</p>
+  <p><span class="bold-text">REQUIRED</span>.  The access token issued by the authorization server.</p>
   <p class="defined-term">token_type</p>
-  <p style="margin: 0 0 0 2em"><span class="bold-text">REQUIRED</span>.  The type of the token issued as described in Section 7.1.  Value is case insensitive.</p>
+  <p><span class="bold-text">REQUIRED</span>.  The type of the token issued as described in Section 7.1.  Value is case insensitive.</p>
   <p class="defined-term">expires_in</p>
-  <p style="margin: 0 0 0 2em"><span class="bold-text">RECOMMENDED</span>.  The lifetime in seconds of the access token.  For example, the value "3600" denotes that the access token will expire in one hour from the time the response was generated.  If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.</p>
+  <p><span class="bold-text">RECOMMENDED</span>.  The lifetime in seconds of the access token.  For example, the value "3600" denotes that the access token will expire in one hour from the time the response was generated.  If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.</p>
   <p class="defined-term">refresh_token</p>
-  <p style="margin: 0 0 0 2em"><span class="bold-text">OPTIONAL</span>.  The refresh token, which can be used to obtain new access tokens using the same authorization grant as described in Section 6.</p>
+  <p><span class="bold-text">OPTIONAL</span>.  The refresh token, which can be used to obtain new access tokens using the same authorization grant as described in Section 6.</p>
   <p class="defined-term">scope</p>
-  <p style="margin: 0 0 0 2em"><span class="bold-text">OPTIONAL</span>, if identical to the scope requested by the client; otherwise, REQUIRED.  The scope of the access token as described by Section 3.3.</p>
-  <p style="margin: 1em 0 0.5em 1em">The parameters are included in the entity-body of the HTTP response using the "application/json" media type as defined by [RFC4627].  The parameters are serialized into a JavaScript Object Notation (JSON) structure by adding each parameter at the highest structure level.  Parameter names and string values are included as JSON strings.  Numerical values are included as JSON numbers.  The order of parameters does not matter and can vary.</p>
-  <p style="margin: 1em 0 0.5em 1em">The authorization server MUST include the HTTP "Cache-Control" response header field [RFC2616] with a value of "no-store" in any response containing tokens, credentials, or other sensitive information, as well as the "Pragma" response header field [RFC2616] with a value of "no-cache".</p>
-  <p style="margin: 1em 0 0.5em 1em">For example:</p>
-  <p style="margin: 0 0 0 2em; line-height: 1.4;"><code>HTTP/1.1 200 OK<br>Content-Type: application/json;charset=UTF-8<br>Cache-Control: no-store<br>Pragma: no-cache<br>{<br>&nbsp;&nbsp;"access_token": "2YotnFZFEjr1zCsicMWpAA",<br>&nbsp;&nbsp;"token_type": "example",<br>&nbsp;&nbsp;"expires_in": 3600,<br>&nbsp;&nbsp;"refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",<br>&nbsp;&nbsp;"example_parameter": "example_value"<br>}</code></p>
+  <p><span class="bold-text">OPTIONAL</span>, if identical to the scope requested by the client; otherwise, REQUIRED.  The scope of the access token as described by Section 3.3.</p>
+  <p>The parameters are included in the entity-body of the HTTP response using the "application/json" media type as defined by <a href="https://datatracker.ietf.org/doc/html/rfc4627" target="_blank">RFC4627</a>.  The parameters are serialized into a JavaScript Object Notation (JSON) structure by adding each parameter at the highest structure level.  Parameter names and string values are included as JSON strings.  Numerical values are included as JSON numbers.  The order of parameters does not matter and can vary.</p>
+  <p>Additionally, per <a href="https://datatracker.ietf.org/doc/html/rfc2616" target="_blank">RFC2616</a>, the authorization server MUST include the HTTP "Cache-Control" response header field with a value of "no-store" in any response containing tokens, credentials, or other sensitive information, as well as the "Pragma" response header field with a value of "no-cache".</p>
+  <p>For example:</p>
+  <p class="http-response"><code>HTTP/1.1 200 OK<br>Content-Type: application/json;charset=UTF-8<br>Cache-Control: no-store<br>Pragma: no-cache<br>{<br>&nbsp;&nbsp;"access_token": "2YotnFZFEjr1zCsicMWpAA",<br>&nbsp;&nbsp;"token_type": "example",<br>&nbsp;&nbsp;"expires_in": 3600,<br>&nbsp;&nbsp;"refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",<br>&nbsp;&nbsp;"example_parameter": "example_value"<br>}</code></p>
 </blockquote>
 
 Open `src/flask_api_tutorial/api/auth/business.py`, add the content below and save the file:
@@ -721,26 +729,26 @@ If you attempt to register with an email address that already exists in the data
 <pre><code><span class="cmd-prompt">flask-api-tutorial $</span> <span class="cmd-input">http -f :5000/api/v1/auth/register email=user@test.com password=123456</span>
 
 <span class="cmd-results"><span class="bold-text goldenrod">POST /api/v1/auth/login HTTP/1.1</span>
-<span class="purple">Accept</span>: <span class="light-blue">*/*</span>
-<span class="purple">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
-<span class="purple">Connection</span>: <span class="light-blue">keep-alive</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">37</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/x-www-form-urlencoded; charset=utf-8</span>
-<span class="purple">Host</span>: <span class="light-blue">localhost:5000</span>
-<span class="purple">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
+<span class="blue">Accept</span>: <span class="light-blue">*/*</span>
+<span class="blue">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
+<span class="blue">Connection</span>: <span class="light-blue">keep-alive</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">37</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/x-www-form-urlencoded; charset=utf-8</span>
+<span class="blue">Host</span>: <span class="light-blue">localhost:5000</span>
+<span class="blue">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
 
 <span class="bold-text">email=user%40test.com&password=123456</span>
 
 <span class="bold-text goldenrod">HTTP/1.0 409 CONFLICT</span>
-<span class="purple">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">79</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/json</span>
-<span class="purple">Date</span>: <span class="light-blue">Sat, 03 Aug 2019 23:20:29 GMT</span>
-<span class="purple">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
+<span class="blue">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">79</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/json</span>
+<span class="blue">Date</span>: <span class="light-blue">Sat, 03 Aug 2019 23:20:29 GMT</span>
+<span class="blue">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
 
 <span class="bold-text">{
-  <span class="purple">"message"</span>: <span class="light-blue">"user@test.com is already registered"</span>,
-  <span class="purple">"status"</span>: <span class="light-blue">"fail"</span>,
+  <span class="blue">"message"</span>: <span class="light-blue">"user@test.com is already registered"</span>,
+  <span class="blue">"status"</span>: <span class="light-blue">"fail"</span>,
 }</span></span></code></pre>
 
 {{< info_box >}}
@@ -752,29 +760,29 @@ Here's an example of a successful request using httpie. Note that on the command
 <pre><code><span class="cmd-prompt">flask-api-tutorial $</span> <span class="cmd-input">http -f :5000/api/v1/auth/register email=user2@test.com password=123456</span>
 
 <span class="cmd-results"><span class="bold-text goldenrod">POST /api/v1/auth/login HTTP/1.1</span>
-<span class="purple">Accept</span>: <span class="light-blue">*/*</span>
-<span class="purple">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
-<span class="purple">Connection</span>: <span class="light-blue">keep-alive</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">37</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/x-www-form-urlencoded; charset=utf-8</span>
-<span class="purple">Host</span>: <span class="light-blue">localhost:5000</span>
-<span class="purple">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
+<span class="blue">Accept</span>: <span class="light-blue">*/*</span>
+<span class="blue">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
+<span class="blue">Connection</span>: <span class="light-blue">keep-alive</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">37</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/x-www-form-urlencoded; charset=utf-8</span>
+<span class="blue">Host</span>: <span class="light-blue">localhost:5000</span>
+<span class="blue">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
 
 <span class="bold-text">email=user2%40test.com&password=123456</span>
 
 <span class="bold-text goldenrod">HTTP/1.0 201 CREATED</span>
-<span class="purple">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">79</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/json</span>
-<span class="purple">Date</span>: <span class="light-blue">Sat, 03 Aug 2019 23:20:29 GMT</span>
-<span class="purple">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
+<span class="blue">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">79</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/json</span>
+<span class="blue">Date</span>: <span class="light-blue">Sat, 03 Aug 2019 23:20:29 GMT</span>
+<span class="blue">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
 
 <span class="bold-text">{
-  <span class="purple">"access_token"</span>: <span class="light-blue">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODI5MzQwMzMsImlhdCI6MTU4MjkzMzEzMywic3ViIjoiNjcwOTVlZDUtZjdhYS00MGE3LTgzZGUtNzQ1YmMzYjA5NDFmIiwiYWRtaW4iOmZhbHNlfQ.ylvNfoWwhI-NRU2WS65t4ti6sTbOEDQcJYIQC6ua0Do"</span>,
-  <span class="purple">"expires_in"</span>: <span class="pink">900</span>,
-  <span class="purple">"message"</span>: <span class="light-blue">"successfully registered"</span>,
-  <span class="purple">"status"</span>: <span class="light-blue">"success"</span>,
-  <span class="purple">"token_type"</span>: <span class="light-blue">"bearer"</span>
+  <span class="blue">"access_token"</span>: <span class="light-blue">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODI5MzQwMzMsImlhdCI6MTU4MjkzMzEzMywic3ViIjoiNjcwOTVlZDUtZjdhYS00MGE3LTgzZGUtNzQ1YmMzYjA5NDFmIiwiYWRtaW4iOmZhbHNlfQ.ylvNfoWwhI-NRU2WS65t4ti6sTbOEDQcJYIQC6ua0Do"</span>,
+  <span class="blue">"expires_in"</span>: <span class="pink">900</span>,
+  <span class="blue">"message"</span>: <span class="light-blue">"successfully registered"</span>,
+  <span class="blue">"status"</span>: <span class="light-blue">"success"</span>,
+  <span class="blue">"token_type"</span>: <span class="light-blue">"bearer"</span>
 }</span></span></code></pre>
 
 Everything appears to be working correctly for the `/register` endpoint. Next, we will figure out how to create unit tests that interact with the API.
@@ -946,28 +954,28 @@ The last test case we will cover at this point is where the client submits an em
 <pre><code><span class="cmd-prompt">flask-api-tutorial $</span> <span class="cmd-input">http -f :5000/api/v1/auth/register email="first last" password=123456</span>
 
 <span class="cmd-results"><span class="bold-text goldenrod">POST /api/v1/auth/register HTTP/1.1</span>
-<span class="purple">Accept</span>: <span class="light-blue">*/*</span>
-<span class="purple">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
-<span class="purple">Connection</span>: <span class="light-blue">keep-alive</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">32</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/x-www-form-urlencoded; charset=utf-8</span>
-<span class="purple">Host</span>: <span class="light-blue">localhost:5000</span>
-<span class="purple">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
+<span class="blue">Accept</span>: <span class="light-blue">*/*</span>
+<span class="blue">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
+<span class="blue">Connection</span>: <span class="light-blue">keep-alive</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">32</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/x-www-form-urlencoded; charset=utf-8</span>
+<span class="blue">Host</span>: <span class="light-blue">localhost:5000</span>
+<span class="blue">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
 
 <span class="bold-text">email=first+last&password=123456</span>
 
 <span class="bold-text goldenrod">HTTP/1.0 400 BAD REQUEST</span>
-<span class="purple">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">127</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/json</span>
-<span class="purple">Date</span>: <span class="light-blue">Fri, 02 Aug 2019 17:45:40 GMT</span>
-<span class="purple">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
+<span class="blue">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">127</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/json</span>
+<span class="blue">Date</span>: <span class="light-blue">Fri, 02 Aug 2019 17:45:40 GMT</span>
+<span class="blue">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
 
 <span class="bold-text">{
-  <span class="purple">"errors"</span>: {
-    <span class="purple">"email"</span>: <span class="light-blue">"first last is not a valid email"</span>
+  <span class="blue">"errors"</span>: {
+    <span class="blue">"email"</span>: <span class="light-blue">"first last is not a valid email"</span>
   },
-  <span class="purple">"message"</span>: <span class="light-blue">"Input payload validation failed"</span>
+  <span class="blue">"message"</span>: <span class="light-blue">"Input payload validation failed"</span>
 }</span></span></code></pre>
 
 You might notice that none of the code we wrote for the `api.auth_register` endpoint generated the response above. That is because this response was automatically generated by Flask-RESTx based on the `auth_reqparser` we configured in `src/flask_api_tutorial/api/auth/dto.py`.

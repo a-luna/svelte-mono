@@ -1046,23 +1046,23 @@ If you enter a URL without a domain, for example `:5000/api/v1/auth/user`, the <
 <pre><code><span class="cmd-prompt">flask-api-tutorial $</span> <span class="cmd-input">http :5000/api/v1/auth/user</span>
 
 <span class="cmd-results"><span class="bold-text goldenrod">GET /api/v1/auth/user HTTP/1.1</span>
-<span class="purple">Accept</span>: <span class="light-blue">*/*</span>
-<span class="purple">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
-<span class="purple">Connection</span>: <span class="light-blue">keep-alive</span>
-<span class="purple">Host</span>: <span class="light-blue">localhost:5000</span>
-<span class="purple">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
+<span class="blue">Accept</span>: <span class="light-blue">*/*</span>
+<span class="blue">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
+<span class="blue">Connection</span>: <span class="light-blue">keep-alive</span>
+<span class="blue">Host</span>: <span class="light-blue">localhost:5000</span>
+<span class="blue">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
 
 
 <span class="bold-text goldenrod">HTTP/1.0 401 UNAUTHORIZED</span>
-<span class="purple">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">53</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/json</span>
-<span class="purple">Date</span>: <span class="light-blue">Sat, 29 Feb 2020 08:02:40 GMT</span>
-<span class="purple">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
-<span class="purple">WWW-Authenticate</span>: <span class="light-blue">Bearer realm="registered_users@mydomain.com"</span>
+<span class="blue">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">53</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/json</span>
+<span class="blue">Date</span>: <span class="light-blue">Sat, 29 Feb 2020 08:02:40 GMT</span>
+<span class="blue">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
+<span class="blue">WWW-Authenticate</span>: <span class="light-blue">Bearer realm="registered_users@mydomain.com"</span>
 
 <span class="bold-text">{
-  <span class="purple">"message"</span>: <span class="light-blue">"Unauthorized"</span>
+  <span class="blue">"message"</span>: <span class="light-blue">"Unauthorized"</span>
 }</span></span></code></pre>
 
 <div class="note note-flex">
@@ -1079,31 +1079,31 @@ We need to obtain an access token, so let's login and retrieve the token generat
 <pre><code><span class="cmd-prompt">flask-api-tutorial $</span> <span class="cmd-input">http -f :5000/api/v1/auth/login email=user@test.com password=123456</span>
 
 <span class="cmd-results"><span class="bold-text goldenrod">POST /api/v1/auth/login HTTP/1.1</span>
-<span class="purple">Accept</span>: <span class="light-blue">*/*</span>
-<span class="purple">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
-<span class="purple">Connection</span>: <span class="light-blue">keep-alive</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">37</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/x-www-form-urlencoded; charset=utf-8</span>
-<span class="purple">Host</span>: <span class="light-blue">localhost:5000</span>
-<span class="purple">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
+<span class="blue">Accept</span>: <span class="light-blue">*/*</span>
+<span class="blue">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
+<span class="blue">Connection</span>: <span class="light-blue">keep-alive</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">37</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/x-www-form-urlencoded; charset=utf-8</span>
+<span class="blue">Host</span>: <span class="light-blue">localhost:5000</span>
+<span class="blue">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
 
 <span class="bold-text">email=user%40test.com&password=123456</span>
 
 <span class="bold-text goldenrod">HTTP/1.0 200 OK</span>
-<span class="purple">Cache-Control</span>: <span class="light-blue">no-store</span>
-<span class="purple">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">345</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/json</span>
-<span class="purple">Date</span>: <span class="light-blue">Sat, 29 Feb 2020 08:06:39 GMT</span>
-<span class="purple">Pragma</span>: <span class="light-blue">no-cache</span>
-<span class="purple">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
+<span class="blue">Cache-Control</span>: <span class="light-blue">no-store</span>
+<span class="blue">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">345</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/json</span>
+<span class="blue">Date</span>: <span class="light-blue">Sat, 29 Feb 2020 08:06:39 GMT</span>
+<span class="blue">Pragma</span>: <span class="light-blue">no-cache</span>
+<span class="blue">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
 
 <span class="bold-text">{
-  <span class="purple">"access_token"</span>: <span class="light-blue">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjQ4NzUzMjksImlhdCI6MTU2NDg3NDQyOSwic3ViIjoiNzdiNGYzYjctNzg2NC00ZmM0LWE4MzQtZjJhNjQ5OWYxNzJhIiwiYWRtaW4iOmZhbHNlfQ.LBYrCr5-8FqCKIF_1WEpk8ake235cB9hZNL01oQjPvw"</span>,
-  <span class="purple">"expires_in"</span>: <span class="pink">900</span>,
-  <span class="purple">"message"</span>: <span class="light-blue">"successfully logged in"</span>,
-  <span class="purple">"status"</span>: <span class="light-blue">"success"</span>,
-  <span class="purple">"token_type"</span>: <span class="light-blue">"bearer"</span>
+  <span class="blue">"access_token"</span>: <span class="light-blue">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjQ4NzUzMjksImlhdCI6MTU2NDg3NDQyOSwic3ViIjoiNzdiNGYzYjctNzg2NC00ZmM0LWE4MzQtZjJhNjQ5OWYxNzJhIiwiYWRtaW4iOmZhbHNlfQ.LBYrCr5-8FqCKIF_1WEpk8ake235cB9hZNL01oQjPvw"</span>,
+  <span class="blue">"expires_in"</span>: <span class="pink">900</span>,
+  <span class="blue">"message"</span>: <span class="light-blue">"successfully logged in"</span>,
+  <span class="blue">"status"</span>: <span class="light-blue">"success"</span>,
+  <span class="blue">"token_type"</span>: <span class="light-blue">"bearer"</span>
 }</span></span></code></pre>
 
 <div class="note note-flex">
@@ -1120,27 +1120,27 @@ Now that we have an access token, the only thing we need to do is send it in the
 <pre><code><span class="cmd-prompt">flask-api-tutorial $</span> <span class="cmd-input">http :5000/api/v1/auth/user Authorization:"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjQ4NzUzMjksImlhdCI6MTU2NDg3NDQyOSwic3ViIjoiNzdiNGYzYjctNzg2NC00ZmM0LWE4MzQtZjJhNjQ5OWYxNzJhIiwiYWRtaW4iOmZhbHNlfQ.LBYrCr5-8FqCKIF_1WEpk8ake235cB9hZNL01oQjPvw"</span>
 
 <span class="cmd-results"><span class="bold-text goldenrod">GET /api/v1/auth/user HTTP/1.1</span>
-<span class="purple">Accept</span>: <span class="light-blue">*/*</span>
-<span class="purple">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
-<span class="purple">Authorization</span>: <span class="light-blue">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjQ4NzUzMjksImlhdCI6MTU2NDg3NDQyOSwic3ViIjoiNzdiNGYzYjctNzg2NC00ZmM0LWE4MzQtZjJhNjQ5OWYxNzJhIiwiYWRtaW4iOmZhbHNlfQ.LBYrCr5-8FqCKIF_1WEpk8ake235cB9hZNL01oQjPvw</span>
-<span class="purple">Connection</span>: <span class="light-blue">keep-alive</span>
-<span class="purple">Host</span>: <span class="light-blue">localhost:5000</span>
-<span class="purple">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
+<span class="blue">Accept</span>: <span class="light-blue">*/*</span>
+<span class="blue">Accept-Encoding</span>: <span class="light-blue">gzip, deflate</span>
+<span class="blue">Authorization</span>: <span class="light-blue">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjQ4NzUzMjksImlhdCI6MTU2NDg3NDQyOSwic3ViIjoiNzdiNGYzYjctNzg2NC00ZmM0LWE4MzQtZjJhNjQ5OWYxNzJhIiwiYWRtaW4iOmZhbHNlfQ.LBYrCr5-8FqCKIF_1WEpk8ake235cB9hZNL01oQjPvw</span>
+<span class="blue">Connection</span>: <span class="light-blue">keep-alive</span>
+<span class="blue">Host</span>: <span class="light-blue">localhost:5000</span>
+<span class="blue">User-Agent</span>: <span class="light-blue">HTTPie/2.0.0</span>
 
 
 <span class="bold-text goldenrod">HTTP/1.0 200 OK</span>
-<span class="purple">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
-<span class="purple">Content-Length</span>: <span class="light-blue">159</span>
-<span class="purple">Content-Type</span>: <span class="light-blue">application/json</span>
-<span class="purple">Date</span>: <span class="light-blue">Sat, 29 Feb 2020 08:23:46 GMT</span>
-<span class="purple">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
+<span class="blue">Access-Control-Allow-Origin</span>: <span class="light-blue">*</span>
+<span class="blue">Content-Length</span>: <span class="light-blue">159</span>
+<span class="blue">Content-Type</span>: <span class="light-blue">application/json</span>
+<span class="blue">Date</span>: <span class="light-blue">Sat, 29 Feb 2020 08:23:46 GMT</span>
+<span class="blue">Server</span>: <span class="light-blue">Werkzeug/0.16.1 Python/3.7.6</span>
 
 <span class="bold-text">{
-  <span class="purple">"admin"</span>: <span class="orange">false</span>,
-  <span class="purple">"email"</span>: <span class="light-blue">"user@test.com"</span>,
-  <span class="purple">"public_id"</span>: <span class="light-blue">"77b4f3b7-7864-4fc4-a834-f2a6499f172a"</span>,
-  <span class="purple">"registered_on"</span>: <span class="light-blue">"02/28/20 03:38:53 PM UTC-08:00"</span>,
-  <span class="purple">"token_expires_in"</span>: <span class="light-blue">"00:14:42"</span>
+  <span class="blue">"admin"</span>: <span class="orange">false</span>,
+  <span class="blue">"email"</span>: <span class="light-blue">"user@test.com"</span>,
+  <span class="blue">"public_id"</span>: <span class="light-blue">"77b4f3b7-7864-4fc4-a834-f2a6499f172a"</span>,
+  <span class="blue">"registered_on"</span>: <span class="light-blue">"02/28/20 03:38:53 PM UTC-08:00"</span>,
+  <span class="blue">"token_expires_in"</span>: <span class="light-blue">"00:14:42"</span>
 }</span></span></code></pre>
 
 ## `api.auth_logout` Endpoint

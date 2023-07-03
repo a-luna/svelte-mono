@@ -102,7 +102,7 @@ The chart below shows the folder structure for this section of the tutorial. In 
 
 In the previous section, we began implementing the `Widget` API. I've reproduced the table from the previous section which gives the specifications for all endpoints in the `widget_ns` namespace:
 
-<div id="table-1" class="table-wrapper" style="margin: 0 auto 2em">
+<div id="tutorial-part-6-table-1" class="table-wrapper" style="margin: 0 auto 2em">
     <div class="responsive">
         <table class="tutorial">
             <thead>
@@ -241,7 +241,7 @@ While Fielding defined HATEOAS and stipulated that it is a requirement for a RES
 
 ## Retrieve Widget List
 
-With the background info regarding pagination and HATEOAS in mind, we are ready to begin implementing the API endpoint that responds to `GET` requests sent to `/api/v1/widgets`. Per **[Table 1](#table-1)**, this endpoint and request type allows clients to retrieve a list of `widget` objects. As before, we start by creating request parsers/API models to validate request data and serialize response data.
+With the background info regarding pagination and HATEOAS in mind, we are ready to begin implementing the API endpoint that responds to `GET` requests sent to `/api/v1/widgets`. Per **[Table 1](#tutorial-part-6-table-1)**, this endpoint and request type allows clients to retrieve a list of `widget` objects. As before, we start by creating request parsers/API models to validate request data and serialize response data.
 
 ### `pagination_reqparser` Request Parser
 
@@ -721,7 +721,7 @@ This code implements the process of responding to a valid request for a list of 
 <div class="code-details">
     <ul>
       <li>
-        <p><strong>Line 31: </strong>Per <span class="bold-text"><a href="#table-1">Table 1</a></span>, the process of retrieving a list of <code>widgets</code> can only be performed by registered users (both regular and admin users). This is enforced by decorating the <code>retrieve_widget_list</code> function with <code>@token_required</code>.</p>
+        <p><strong>Line 31: </strong>Per <span class="bold-text"><a href="#tutorial-part-6-table-1">Table 1</a></span>, the process of retrieving a list of <code>widgets</code> can only be performed by registered users (both regular and admin users). This is enforced by decorating the <code>retrieve_widget_list</code> function with <code>@token_required</code>.</p>
       </li>
       <li>
         <p><strong>Line 32: </strong>The <code>page</code> and <code>per_page</code> parameters are passed to <code>retrieve_widget_list</code> after the <code>pagination_model</code> has parsed the values provided by the client from the request data.</p>
@@ -764,7 +764,7 @@ Now that the business logic has been implemented, we can add a method to the `ap
 
 ### `api.widget_list` Endpoint (GET Request)
 
-We created the `api.widget_list` endpoint <a href="/series/flask-api-tutorial/part-5/#widgetlist-resource-post-request">in Part 5</a> and implemented the function that handles `POST` requests. According to **[Table 1](#table-1)**, this endpoint also supports `GET` requests which allows clients to retrieve lists of `widgets`.
+We created the `api.widget_list` endpoint <a href="/series/flask-api-tutorial/part-5/#widgetlist-resource-post-request">in Part 5</a> and implemented the function that handles `POST` requests. According to **[Table 1](#tutorial-part-6-table-1)**, this endpoint also supports `GET` requests which allows clients to retrieve lists of `widgets`.
 
 Open `src/flask_api_tutorial/api/widgets/endpoints.py` and make the following updates to the import statements:
 
@@ -873,12 +873,12 @@ restplus_doc.static  GET        /swaggerui/&lt;path:filename&gt;
 static               GET        /static/&lt;path:filename&gt;</span></code></pre>
 
 {{< alert_box >}}
-Please remember, currently an unhandled exception occurs if you attempt to execute either of the methods we have created for the `api.widget_list` endpoint since the business logic for both operations depends on the `api.widget` endpoint existing. We will create unit tests for all endpoints/CRUD operations in **[Table 1](#table-1)** when they have been fully implemented.
+Please remember, currently an unhandled exception occurs if you attempt to execute either of the methods we have created for the `api.widget_list` endpoint since the business logic for both operations depends on the `api.widget` endpoint existing. We will create unit tests for all endpoints/CRUD operations in **[Table 1](#tutorial-part-6-table-1)** when they have been fully implemented.
 {{< /alert_box >}}
 
 ## Retrieve Widget
 
-At this point, we have completed two of the five CRUD processes specified in **[Table 1](#table-1)**. Thankfully, the remaining three should be much simpler and faster to implement since many of the elements can be reused (e.g. request parsers, API models).
+At this point, we have completed two of the five CRUD processes specified in **[Table 1](#tutorial-part-6-table-1)**. Thankfully, the remaining three should be much simpler and faster to implement since many of the elements can be reused (e.g. request parsers, API models).
 
 The two processes we completed (create a `widget`, retrieve a list of `widgets`) are accessed via the `/api/v1/widgets` endpoint, which is also called the **resource collection** endpoint. However, the remaining three processes are accessed via the **resource item** endpoint, <code>api/v1/widgets/&lt;name&gt;</code>. The `name` parameter is provided by the client and is used to perform the requested action (retrieve, update, delete) on a specific `widget` instance.
 
@@ -1003,7 +1003,7 @@ static               GET        /static/&lt;path:filename&gt;</span></code></pre
 
 ## Update Widget
 
-Working our way through **[Table 1](#table-1)**, the next process to implement is updating a single `widget`. Clients with administrator access can perform this operation by sending a `PUT` request to the `api.widget` endpoint.
+Working our way through **[Table 1](#tutorial-part-6-table-1)**, the next process to implement is updating a single `widget`. Clients with administrator access can perform this operation by sending a `PUT` request to the `api.widget` endpoint.
 
 I'd like you to try and imagine the business logic that the server should perform in this situation. Did you imagine something similar to: <span class="bold-italics">retrieve the</span> <code>widget</code> <span class="bold-italics">whose name matches the URI requested by the client, parse the request data containing the updated data/values, and modify the attributes of the</span> <code>widget</code> <span class="bold-italics">using the parsed values</span>?
 
@@ -1295,7 +1295,7 @@ api.widget_list      GET, POST         /api/v1/widgets
 restplus_doc.static  GET               /swaggerui/&lt;path:filename&gt;
 static               GET               /static/&lt;path:filename&gt;</span></code></pre>
 
-We have finally implemented all of the API routes/CRUD processes specified in **[Table 1](#table-1)**, but we actually have no idea if they are working correctly. At the absolute minimum, we need to create unit tests that verify the "happy path" behavior for each CRUD process. We also need unit tests that verify our request parsers are configured correctly, and requests containing invalid data are rejected.
+We have finally implemented all of the API routes/CRUD processes specified in **[Table 1](#tutorial-part-6-table-1)**, but we actually have no idea if they are working correctly. At the absolute minimum, we need to create unit tests that verify the "happy path" behavior for each CRUD process. We also need unit tests that verify our request parsers are configured correctly, and requests containing invalid data are rejected.
 
 ## Unit Tests
 
@@ -2148,7 +2148,7 @@ Please keep in mind the level of detail and attention that was paid to [the form
 
 ### Delete Widget
 
-There is only a single, remaining CRUD operation in **[Table 1](#table-1)** that we need to create test coverage for: delete widget. Without further ado, open `tests/utils.py`, add the `delete_widget` function and save the file:
+There is only a single, remaining CRUD operation in **[Table 1](#tutorial-part-6-table-1)** that we need to create test coverage for: delete widget. Without further ado, open `tests/utils.py`, add the `delete_widget` function and save the file:
 
 ```python {linenos=table,linenostart=85}
 def delete_widget(test_client, access_token, widget_name):
