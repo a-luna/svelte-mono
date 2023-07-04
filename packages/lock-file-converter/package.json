@@ -20,7 +20,7 @@
 		"directory": "packages/lock-file-converter"
 	},
 	"engines": {
-		"node": "^20.0.0"
+		"node": "^18.0.0"
 	},
 	"peerDependencies": {
 		"svelte": "^3.54.0"
