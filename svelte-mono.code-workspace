@@ -60,10 +60,6 @@
 		{
 			"name": "lock-file-converter",
 			"path": "packages/lock-file-converter"
-		},
-		{
-			"name": "eslint-config-custom",
-			"path": "packages/eslint-config-custom"
 		}
 	]
 }
