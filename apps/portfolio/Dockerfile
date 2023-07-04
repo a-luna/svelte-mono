@@ -1,4 +1,4 @@
-FROM node:16 AS base
+FROM node:18-alpine AS base
 RUN npm i -g pnpm
 
 FROM base AS dependencies
@@ -22,5 +22,4 @@ WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=pruned /app/pruned/build .
 COPY --from=pruned /app/pruned/node_modules node_modules
-EXPOSE 3001
 ENTRYPOINT ["node", "index.js"]
