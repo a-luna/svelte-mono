@@ -6,6 +6,7 @@ RUN npm install --global pnpm
 COPY --from=base . .
 
 RUN pnpm install --no-frozen-lockfile
+RUN pnpm --filter=@a-luna/shared-ui build 
 RUN pnpm --filter=@a-luna/portfolio build 
 
 # Deploy the production dependencies
