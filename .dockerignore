@@ -9,17 +9,12 @@ npm-debug.log
 .dokku-monorepo
 .eslintrc.cjs
 .prettierrc
-svelte-mono.code-workspace
 Dockerfile
 docker-compose
 LICENSE.md
 
 # Directories
-node_modules
 test
 .github
 .vscode
-packages/svelte-color-tools
-packages/lock-file-converter
-packages/eslint-config-custom
 apps/svelte-base64
