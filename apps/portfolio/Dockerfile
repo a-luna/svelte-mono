@@ -1,25 +1,25 @@
-FROM node:18-alpine AS base
-RUN npm i -g pnpm
+FROM node:18-alpine AS build
 
-FROM base AS dependencies
 WORKDIR /app
-COPY . .
-RUN pnpm install
 
-FROM dependencies as build
+RUN npm i -g pnpm
+COPY --from=base . .
+
+RUN pnpm install
 RUN pnpm -r build
 
-FROM build as pruned
-WORKDIR /app
-RUN pnpm --filter backend deploy pruned
+FROM node:18-alpine AS pruned
 
-FROM base as development
 WORKDIR /app
-COPY --from=pruned /app/pruned .
+RUN npm i -g pnpm
+COPY --from=build . .
+RUN mkdir pruned && pnpm --filter=@a-luna/portfolio deploy --prod pruned
 
-FROM base as deploy
+FROM node:18-alpine
+
 WORKDIR /app
-ENV NODE_ENV=production
+
 COPY --from=pruned /app/pruned/build .
 COPY --from=pruned /app/pruned/node_modules node_modules
+
 ENTRYPOINT ["node", "index.js"]
