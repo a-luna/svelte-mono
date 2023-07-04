@@ -17,7 +17,6 @@ LICENSE.md
 # Directories
 node_modules
 test
-dist
 .github
 .vscode
 packages/svelte-color-tools

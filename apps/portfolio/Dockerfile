@@ -22,7 +22,7 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY --from=pruned /app/pruned/dist dist
+COPY --from=pruned /app/pruned/build build
 COPY --from=pruned /app/pruned/node_modules node_modules
 
-ENTRYPOINT ["node", "dist/index.js"]
+ENTRYPOINT ["node", "build/index.js"]
