@@ -4,7 +4,6 @@ RUN npm i -g pnpm
 FROM base AS dependencies
 WORKDIR /app
 COPY . .
-RUN echo > .npmrc auto-install-peers=true
 RUN pnpm install
 
 FROM dependencies as build
