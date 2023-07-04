@@ -1,28 +1,27 @@
-FROM node:18-alpine AS build
+FROM node:16 AS base
+RUN npm i -g pnpm
 
+FROM base AS dependencies
 WORKDIR /app
+COPY . .
+RUN echo > .npmrc auto-install-peers=true
+RUN pnpm install
 
-RUN npm install --global pnpm
-COPY --from=base . .
+FROM dependencies as build
+RUN pnpm -r build
 
-RUN pnpm install --no-frozen-lockfile
-RUN pnpm --filter=@a-luna/shared-ui build 
-RUN pnpm --filter=@a-luna/portfolio build 
-
-# Deploy the production dependencies
-FROM node:18-alpine AS pruned
-
+FROM build as pruned
 WORKDIR /app
-RUN npm install --global pnpm
-COPY --from=build . .
-RUN mkdir pruned && pnpm --filter=@a-luna/portfolio deploy --prod pruned
+RUN pnpm --filter backend deploy pruned
 
-# Final production image
-FROM node:18-alpine
-
+FROM base as development
 WORKDIR /app
+COPY --from=pruned /app/pruned .
 
-COPY --from=pruned /app/pruned/build build
+FROM base as deploy
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=pruned /app/pruned/build .
 COPY --from=pruned /app/pruned/node_modules node_modules
-
-ENTRYPOINT ["node", "build/index.js"]
+EXPOSE 3001
+ENTRYPOINT ["node", "index.js"]
