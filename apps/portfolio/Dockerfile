@@ -7,6 +7,11 @@ ARG PACKAGE_PATH=apps/portfolio
 ARG PROJECT=@a-luna/portfolio
 ARG DEP_PROJ=@a-luna/shared-ui
 ENV CI=true
+ARG API_KEY
+ARG WAKATIME_API_KEY
+ENV API_KEY=$API_KEY
+ENV WAKATIME_API_KEY=$WAKATIME_API_KEY
+ENV NODE_ENV=production
 ENV NODE_ENV=production
 COPY --from=root . .
 RUN pnpm install --prod
