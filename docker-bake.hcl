@@ -1,3 +1,11 @@
+variable "API_KEY" {
+  default = "default"
+}
+
+variable "WAKATIME_API_KEY" {
+  default = "default"
+}
+
 target "portfolio" {
     dockerfile = "./apps/portfolio/Dockerfile"
     contexts = {
@@ -6,7 +14,7 @@ target "portfolio" {
     }
     tags = ["ghcr.io/a-luna/portfolio:latest"]
     args: {
-        API_KEY=${API_KEY}
-        WAKATIME_API_KEY=${WAKATIME_API_KEY}
+        API_KEY = "${API_KEY}"
+        WAKATIME_API_KEY = "${WAKATIME_API_KEY}"
     }
 }
