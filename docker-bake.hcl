@@ -1,8 +1,8 @@
 target "portfolio" {
     dockerfile = "./apps/portfolio/Dockerfile"
     contexts = {
-        app = "./apps/portfolio"
-        base = "."
+        project = "./apps/portfolio"
+        root = "."
     }
-    tags = ["portfolio:latest"]
+    tags = ["ghcr.io/a-luna/portfolio:latest"]
 }

@@ -1,27 +1,30 @@
-FROM node:18-alpine AS build
+FROM node:18-alpine AS base
+RUN npm --no-update-notifier --no-fund --global install pnpm
+WORKDIR /root/monorepo
 
-WORKDIR /mono
-RUN npm i -g pnpm
+FROM base AS dev
+ARG PACKAGE_PATH=apps/portfolio
+ARG PROJECT=@a-luna/portfolio
+ARG DEP_PROJ=@a-luna/shared-ui
+ENV CI=true
+ENV NODE_ENV=production
+COPY --from=root . .
+RUN pnpm install --prod
+RUN pnpm run build
 
-COPY --from=base . .
-RUN pnpm --filter=@a-luna/shared-ui install
-RUN pnpm --filter=@a-luna/shared-ui run build
-RUN pnpm --filter=@a-luna/portfolio install
-RUN pnpm --filter=@a-luna/portfolio run build
-
-FROM node:18-alpine AS pruned
-
-WORKDIR /mono
-RUN npm i -g pnpm
-
-COPY --from=build . .
-RUN mkdir pruned && pnpm --filter=@a-luna/portfolio deploy --prod pruned
-
-FROM node:18-alpine
-
-WORKDIR /mono
-
-COPY --from=pruned /mono/pruned/build .
-COPY --from=pruned /mono/pruned/node_modules node_modules
-
-ENTRYPOINT ["node", "index.js"]
+FROM base as prod
+ARG PACKAGE_PATH=apps/portfolio
+ARG DEPS_PATH=packages/shared-ui
+COPY --from=dev /root/monorepo/node_modules node_modules
+COPY --from=dev /root/monorepo/package.json .
+COPY --from=dev /root/monorepo/pnpm-lock.yaml .
+COPY --from=dev /root/monorepo/pnpm-workspace.yaml .
+COPY --from=dev /root/monorepo/${DEPS_PATH}/dist ${DEPS_PATH}/dist
+COPY --from=dev /root/monorepo/${DEPS_PATH}/node_modules ${DEPS_PATH}/node_modules
+COPY --from=dev /root/monorepo/${DEPS_PATH}/package.json ${DEPS_PATH}
+COPY --from=dev /root/monorepo/${PACKAGE_PATH}/build ${PACKAGE_PATH}/build
+COPY --from=dev /root/monorepo/${PACKAGE_PATH}/node_modules ${PACKAGE_PATH}/node_modules
+COPY --from=dev /root/monorepo/${PACKAGE_PATH}/package.json ${PACKAGE_PATH}
+EXPOSE 3000
+ENV NODE_ENV=production
+ENTRYPOINT ["node", "apps/portfolio/build/index.js"]
