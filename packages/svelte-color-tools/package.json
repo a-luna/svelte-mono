@@ -7,9 +7,6 @@
 		"url": "https://github.com/a-luna/svelte-mono.git",
 		"directory": "packages/svelte-color-tools"
 	},
-	"engines": {
-		"node": "^18.0.0"
-	},
 	"scripts": {
 		"dev": "vite --host --port 3501",
 		"build": "svelte-kit sync && svelte-package",

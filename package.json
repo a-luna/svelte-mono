@@ -6,9 +6,6 @@
 		"type": "git",
 		"url": "https://github.com/a-luna/svelte-mono.git"
 	},
-	"engines": {
-		"node": "^18.0.0"
-	},
 	"scripts": {
 		"lint": "pnpm -r lint",
 		"format": "pnpm -r format",

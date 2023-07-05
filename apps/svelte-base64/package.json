@@ -7,9 +7,6 @@
 		"url": "https://github.com/a-luna/svelte-mono.git",
 		"directory": "apps/svelte-base64"
 	},
-	"engines": {
-		"node": "^18.0.0"
-	},
 	"scripts": {
 		"dev": "vite --host --port 3500",
 		"build": "svelte-kit sync && vite build",

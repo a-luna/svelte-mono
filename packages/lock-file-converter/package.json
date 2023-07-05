@@ -19,9 +19,6 @@
 		"url": "https://github.com/a-luna/svelte-mono.git",
 		"directory": "packages/lock-file-converter"
 	},
-	"engines": {
-		"node": "^18.0.0"
-	},
 	"peerDependencies": {
 		"svelte": "^3.54.0"
 	},
