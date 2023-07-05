@@ -26,5 +26,9 @@ COPY --from=dev /root/monorepo/${PACKAGE_PATH}/build ${PACKAGE_PATH}/build
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/node_modules ${PACKAGE_PATH}/node_modules
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/package.json ${PACKAGE_PATH}
 EXPOSE 3000
+ARG API_KEY
+ARG WAKATIME_API_KEY
+ENV API_KEY=$API_KEY
+ENV WAKATIME_API_KEY=$WAKATIME_API_KEY
 ENV NODE_ENV=production
 ENTRYPOINT ["node", "apps/portfolio/build/index.js"]
