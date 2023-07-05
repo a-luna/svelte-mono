@@ -5,4 +5,8 @@ target "portfolio" {
         root = "."
     }
     tags = ["ghcr.io/a-luna/portfolio:latest"]
+    args: {
+        API_KEY=${API_KEY}
+        WAKATIME_API_KEY=${WAKATIME_API_KEY}
+    }
 }

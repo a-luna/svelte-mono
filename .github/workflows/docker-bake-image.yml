@@ -22,13 +22,13 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
       - name: Build and push
         uses: docker/bake-action@v3.1.0
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
         with:
           files: ./docker-bake.hcl
           targets: portfolio
           push: true
-          set: |
-            *.args.API_KEY=${{ secrets.API_KEY }}
-            *.args.WAKATIME_API_KEY=${{ secrets.WAKATIME_API_KEY }}
 
   deploy:
     name: Deploy portfolio-site to dokku
