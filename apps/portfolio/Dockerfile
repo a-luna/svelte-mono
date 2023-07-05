@@ -30,7 +30,7 @@ COPY --from=dev /root/monorepo/${DEPS_PATH}/package.json ${DEPS_PATH}
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/build ${PACKAGE_PATH}/build
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/node_modules ${PACKAGE_PATH}/node_modules
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/package.json ${PACKAGE_PATH}
-EXPOSE 3000
+EXPOSE 4173
 ARG API_KEY
 ARG WAKATIME_API_KEY
 ENV API_KEY=$API_KEY
