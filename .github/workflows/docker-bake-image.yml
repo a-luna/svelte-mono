@@ -27,8 +27,8 @@ jobs:
           targets: portfolio
           push: true
           set: |
-            portfolio.args.API_KEY=${{ secrets.API_KEY }}
-            portfolio.args.WAKATIME_API_KEY=${{ secrets.WAKATIME_API_KEY }}
+            *.args.API_KEY=${{ secrets.API_KEY }}
+            *.args.WAKATIME_API_KEY=${{ secrets.WAKATIME_API_KEY }}
 
   deploy:
     name: Deploy portfolio-site to dokku
