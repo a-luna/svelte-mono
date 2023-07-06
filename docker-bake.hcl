@@ -1,9 +1,13 @@
+variable "GITHUB_SHA" {
+  default = ""
+}
+
 variable "API_KEY" {
-  default = "default"
+  default = ""
 }
 
 variable "WAKATIME_API_KEY" {
-  default = "default"
+  default = ""
 }
 
 target "portfolio" {
@@ -12,7 +16,7 @@ target "portfolio" {
         project = "./apps/portfolio"
         root = "."
     }
-    tags = ["ghcr.io/a-luna/portfolio:latest"]
+    tags = ["ghcr.io/a-luna/portfolio:${GITHUB_SHA}"]
     args = {
         API_KEY = "${API_KEY}"
         WAKATIME_API_KEY = "${WAKATIME_API_KEY}"
