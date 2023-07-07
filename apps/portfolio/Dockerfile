@@ -12,8 +12,8 @@ WORKDIR /root/monorepo
 FROM base AS dev
 ENV CI=true
 COPY --from=root . .
-RUN pnpm install --prod
-RUN pnpm run build
+RUN pnpm run docker-image
+RUN node prune_deps.cjs
 
 FROM base as prod
 COPY --from=dev /root/monorepo/node_modules node_modules

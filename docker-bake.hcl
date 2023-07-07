@@ -1,5 +1,5 @@
 variable "GITHUB_SHA" {
-  default = ""
+  default = "latest"
 }
 
 variable "API_KEY" {

@@ -12,6 +12,7 @@
 		"dev": "vite --host --port 3504 --force",
 		"start": "vite preview --host",
 		"build": "svelte-kit sync && vite build",
+		"build:prod": "svelte-kit sync && vite build --mode prod",
 		"preview": "vite preview --host --port 4504",
 		"sync": "svelte-kit sync",
 		"sync:up": "pnpm --filter @a-luna/portfolio update && svelte-kit sync && pnpm-lock-export && npm i --package-lock-only && find . -name '.DS_Store' -type f -delete",
