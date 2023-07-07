@@ -24,3 +24,11 @@
 		{@html tutorialSection?.content}
 	</ContentLayout>
 {/if}
+
+<style lang="postcss">
+	.post-nav-wrapper {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 1rem;
+	}
+</style>

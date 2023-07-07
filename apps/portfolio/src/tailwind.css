@@ -1055,7 +1055,7 @@ details .underline--magical h4 {
 }
 
 .home .section-content h2 {
-	margin: 0 0 1.5rem 0;
+	margin: 0 0 1rem 0;
 }
 
 .home .section-content .normal-text {
@@ -2407,9 +2407,14 @@ a.feature-card:hover>div {
 	display: flex;
 	gap: 1rem;
 	align-items: center;
-	font-size: 1rem;
+	font-size: 0.9rem;
 	width: 100%;
 	margin: 0 0 0 0.5rem;
+}
+
+.toggle-groups .summary-text,
+#table-of-contents .summary-text {
+	flex: 1;
 }
 
 .toggle-groups ul,
@@ -2472,7 +2477,8 @@ a.feature-card:hover>div {
 }
 
 .details-icon {
-	width: 10px;
+	height: 0.9rem;
+	flex: 0 1 9px;
 	transition: transform 0.3s ease-in;
 }
 
@@ -2485,7 +2491,7 @@ a.feature-card:hover>div {
 
 	.toggle-groups summary>.summary-wrapper,
 	#table-of-contents>summary>.summary-wrapper {
-		font-size: 1.1rem;
+		font-size: 1rem;
 	}
 
 	.toggle-groups ul>li,
@@ -2502,6 +2508,7 @@ a.feature-card:hover>div {
 	}
 
 	.details-icon {
-		width: 12px;
+		height: 1rem;
+		flex: 0 1 10px;
 	}
 }

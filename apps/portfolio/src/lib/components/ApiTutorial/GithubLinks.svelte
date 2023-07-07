@@ -31,7 +31,7 @@
 	<summary>
 		<div class="summary-wrapper">
 			<div class="details-icon"><BasicIconRenderer icon={'chevron'} /></div>
-			Github Links for {section.series_part}
+			<span class="summary-text">Github Links for {section.series_part}</span>
 		</div>
 	</summary>
 	{#if open}

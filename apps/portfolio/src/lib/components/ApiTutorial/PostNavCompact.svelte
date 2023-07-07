@@ -41,10 +41,10 @@
 		display: flex;
 		flex-flow: row nowrap;
 		width: 100%;
-		font-size: 1.1rem;
+		font-size: 0.9rem;
 		border: none;
 		padding: 0;
-		line-height: 1;
+		line-height: 0.9rem;
 	}
 	.post-nav-prev,
 	.post-nav-next {
@@ -73,14 +73,20 @@
 		text-align: right;
 	}
 	.icon {
-		height: 16px;
-		flex: 0 0 14px;
+		height: 0.9rem;
+		flex: 0 0 12px;
 		margin: 0;
 	}
 
 	@media (min-width: 640px) {
 		.post-nav {
-			font-size: 1.25rem;
+			font-size: 1rem;
+			line-height: 1rem;
+		}
+		.icon {
+			height: 1rem;
+			flex: 0 0 14px;
+			margin: 0;
 		}
 	}
 </style>

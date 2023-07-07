@@ -34,7 +34,7 @@
 		<summary>
 			<div class="summary-wrapper">
 				<div class="details-icon"><BasicIconRenderer icon={'chevron'} /></div>
-				Table of Contents
+				<span class="summary-text">Table of Contents</span>
 			</div>
 		</summary>
 		{#if open}

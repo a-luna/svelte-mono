@@ -30,7 +30,7 @@
 	<summary>
 		<div class="summary-wrapper">
 			<div class="details-icon"><BasicIconRenderer icon={'chevron'} /></div>
-			Tutorial Sections
+			<span class="summary-text">Tutorial Sections</span>
 		</div>
 	</summary>
 	{#if open}
@@ -54,10 +54,6 @@
 </details>
 
 <style lang="postcss">
-	#tutorial-sections {
-		margin: 1.5rem 0 0 0;
-	}
-
 	#tutorial-sections > summary {
 		border-top: 1.5px solid var(--accent-color);
 		border-left: 1.5px solid var(--accent-color);
