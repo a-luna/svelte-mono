@@ -93,7 +93,7 @@
 		margin: 0 auto 2rem auto;
 	}
 	.nav-wrapper {
-		background-color: var(--black-tint2);
+		background-color: var(--page-bg-color);
 		margin: 0 auto;
 	}
 	.content-wrapper,
