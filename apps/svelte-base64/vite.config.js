@@ -17,11 +17,6 @@ export default defineConfig({
 			'^\\$lib(.*)$': '<rootDir>/src/lib$1',
 			'^\\$app(.*)$': ['<rootDir>/.svelte-kit/dev/runtime/app$1', '<rootDir>/.svelte-kit/build/runtime/app$1'],
 		},
-		resolve: {
-			alias: {
-				'@a-luna/shared-ui': resolve(__dirname, 'node_modules/@a-luna/shared-ui'),
-			},
-		},
 		deps: {
 			inline: ['xstate'],
 		},
@@ -31,5 +26,10 @@ export default defineConfig({
 		},
 		testTimeout: 30_000,
 		hookTimeout: 30_000,
+	},
+	resolve: {
+		alias: {
+			'@a-luna/shared-ui': resolve(__dirname, 'node_modules/@a-luna/shared-ui'),
+		},
 	},
 });
