@@ -137,7 +137,7 @@ Now, you might be wondering how this can be accomplished if we only expose two e
                     <td colspan="5" class="table-number">Table 1</td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="table-title">Widget API endpoint specifications</td>
+                    <td colspan="5" class="table-title">Widget API Endpoint Specifications</td>
                 </tr>
                 <tr>
                     <th scope="col" class="first-column column-header">Endpoint Name</th>
@@ -799,31 +799,31 @@ There really isn't anything else to say about how the `info_url` attribute is pa
                 <tr>
                     <td class="first-column"><code>date</code></td>
                     <td><code class="teal">YYYY<span class="orange">-</span>MM<span class="orange">-</span>DD</code></td>
-                    <td>"2019-10-02"</td>
+                    <td>2019-10-02</td>
                     <td class="last-column">N/A</td>
                 </tr>
                 <tr>
                     <td class="first-column"><code>date_from_iso8601</code></td>
                     <td><code class="teal">YYYY<span class="orange">-</span>MM<span class="orange">-</span>DD</code></td>
-                    <td>"2019-10-02"</td>
+                    <td>2019-10-02</td>
                     <td class="last-column"><a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a></td>
                 </tr>
                 <tr>
                     <td class="first-column"><code>datetime_from_iso8601</code></td>
                     <td><code class="teal">YYYY<span class="orange">-</span>MM<span class="orange">-</span>DD<span class="orange">T</span>hh<span class="orange">:</span>mm<span class="orange">:</span>ss<span class="orange">(+/-)</span>zh<span class="orange">:</span>zm</code></td>
-                    <td>"2019-10-02T15:05:06-07:00"</td>
+                    <td>2019-10-02T15:05:06-07:00</td>
                     <td class="last-column"><a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a></td>
                 </tr>
                 <tr>
                     <td class="first-column"><code>datetime_from_rfc822</code></td>
                     <td><code class="teal">DN<span class="orange">, </span>DD MN YYYY hh<span class="orange">:</span>mm<span class="orange">:</span>ss <span class="orange">(+/-)</span>zhzm</code></td>
-                    <td>"Wed, 02 Oct 2019 15:05:06 -0700"</td>
+                    <td>Wed, 02 Oct 2019 15:05:06 -0700</td>
                     <td class="last-column"><a href="https://tools.ietf.org/html/rfc5322#section-3.3" target="_blank">RFC 5322</a> <sup>3</sup></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4" class="table-footer"><sup>1</sup> Pre-defined types are located in the <a href="https://flask-restplus.readthedocs.io/en/stable/api.html#module-flask_restx.inputs" target="_blank"><code class="light-blue">flask_restx.inputs</code></a> module.</td>
+                    <td colspan="4" class="table-footer"><sup>1</sup> Pre-defined types are located in <a href="https://flask-restplus.readthedocs.io/en/stable/api.html#module-flask_restx.inputs" target="_blank">the <code class="light-blue">flask_restx.inputs</code> module.</a></td>
                 </tr>
                 <tr>
                     <td colspan="4" class="table-footer">

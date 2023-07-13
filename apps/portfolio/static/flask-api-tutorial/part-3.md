@@ -379,7 +379,7 @@ Within the <code>auth_ns</code> namespace, we will create the four API endpoints
                     <td colspan="5" class="table-number">Table 1</td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="table-title">Auth API endpoint specifications</td>
+                    <td colspan="5" class="table-title">Auth API Endpoint Specifications</td>
                 </tr>
             <tr>
                 <th scope="col" class="first-column column-header">Endpoint Name</th>

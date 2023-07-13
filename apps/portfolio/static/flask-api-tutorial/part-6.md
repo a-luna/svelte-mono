@@ -110,7 +110,7 @@ In the previous section, we began implementing the `Widget` API. I've reproduced
                     <td colspan="5" class="table-number">Table 1</td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="table-title">Widget API endpoint specifications</td>
+                    <td colspan="5" class="table-title">Widget API Endpoint Specifications</td>
                 </tr>
                 <tr>
                     <th scope="col" class="first-column column-header">Endpoint Name</th>
