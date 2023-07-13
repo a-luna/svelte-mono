@@ -65,6 +65,7 @@
 <style lang="postcss">
 	#github-links {
 		margin: 0 0 1rem 0;
+		background-color: var(--toggle-section-bg-color);
 	}
 
 	.github-links-wrapper ul p {
@@ -76,25 +77,47 @@
 	}
 
 	#github-links > summary {
-		border-top: none;
-		border-left: 1.5px solid var(--accent-color);
-		border-right: 1.5px solid var(--accent-color);
-		border-bottom: 1.5px solid var(--accent-color);
+		border-top: 1.5px solid transparent;
+		border-left: 1.5px solid var(--dark-gray);
+		border-right: 1.5px solid var(--dark-gray);
+		border-bottom: 1.5px solid var(--dark-gray);
+	}
+
+	#github-links[open] .github-links-wrapper,
+	#github-links > summary:hover {
+		color: var(--accent-color);
+		border-color: var(--accent-color);
+	}
+
+	#github-links[open] > summary {
+		color: var(--toggle-section-bg-color);
+		border-color: var(--accent-color);
+	}
+
+	#github-links[open] > summary,
+	#github-links > summary:hover {
+		border-top: 1.5px solid var(--accent-color);
 	}
 
 	.github-links-wrapper {
-		border: 1px solid var(--accent-color);
+		border: 1px solid var(--dark-gray);
 	}
 
 	@media (min-width: 640px) {
 		#github-links > summary {
-			border-left: 2px solid var(--accent-color);
-			border-right: 2px solid var(--accent-color);
-			border-bottom: 2px solid var(--accent-color);
+			border-top: 2px solid transparent;
+			border-left: 2px solid var(--dark-gray);
+			border-right: 2px solid var(--dark-gray);
+			border-bottom: 2px solid var(--dark-gray);
+		}
+
+		#github-links[open] > summary,
+		#github-links > summary:hover {
+			border-top: 2px solid var(--accent-color);
 		}
 
 		.github-links-wrapper {
-			border: 2px solid var(--accent-color);
+			border: 2px solid var(--dark-gray);
 		}
 	}
 </style>

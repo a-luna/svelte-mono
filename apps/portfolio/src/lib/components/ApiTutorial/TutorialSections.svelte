@@ -54,26 +54,52 @@
 </details>
 
 <style lang="postcss">
+	#tutorial-sections {
+		background-color: var(--toggle-section-bg-color);
+	}
+
 	#tutorial-sections > summary {
-		border-top: 1.5px solid var(--accent-color);
-		border-left: 1.5px solid var(--accent-color);
-		border-right: 1.5px solid var(--accent-color);
-		border-bottom: none;
+		border-top: 1.5px solid var(--dark-gray);
+		border-left: 1.5px solid var(--dark-gray);
+		border-right: 1.5px solid var(--dark-gray);
+		border-bottom: 1.5px solid transparent;
+	}
+
+	#tutorial-sections[open] .tutorial-sections-wrapper,
+	#tutorial-sections > summary:hover {
+		color: var(--accent-color);
+		border-color: var(--accent-color);
+	}
+
+	#tutorial-sections[open] > summary {
+		color: var(--toggle-section-bg-color);
+		border-color: var(--accent-color);
+	}
+
+	#tutorial-sections[open] > summary,
+	#tutorial-sections > summary:hover {
+		border-bottom: 1.5px solid var(--accent-color);
 	}
 
 	.tutorial-sections-wrapper {
-		border: 1.5px solid var(--accent-color);
+		border: 1.5px solid var(--dark-gray);
 	}
 
 	@media (min-width: 640px) {
 		#tutorial-sections > summary {
-			border-top: 2px solid var(--accent-color);
-			border-left: 2px solid var(--accent-color);
-			border-right: 2px solid var(--accent-color);
+			border-top: 2px solid var(--dark-gray);
+			border-left: 2px solid var(--dark-gray);
+			border-right: 2px solid var(--dark-gray);
+			border-bottom: 2px solid transparent;
+		}
+
+		#tutorial-sections[open] > summary,
+		#tutorial-sections > summary:hover {
+			border-bottom: 2px solid var(--accent-color);
 		}
 
 		.tutorial-sections-wrapper {
-			border: 2px solid var(--accent-color);
+			border: 2px solid var(--dark-gray);
 		}
 	}
 </style>

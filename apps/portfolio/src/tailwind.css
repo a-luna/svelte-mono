@@ -452,6 +452,8 @@ body {
 
 	--code-element-color: hsl(173.22 100% 65%);
 	--code-element-color: oklch(90.73% 0.159 184.005);
+
+	--toggle-section-bg-color: var(--black);
 }
 
 /* 
@@ -633,26 +635,6 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	display: none;
 }
 
-.readme details summary {
-	display: flex !important;
-	cursor: pointer;
-	color: var(--details-header-text-color);
-	background-color: var(--details-header-bg-color);
-	border: 1px solid var(--dl-border-color);
-	padding: 0.5rem;
-	line-height: 1;
-	list-style: none;
-	transition: all 0.3s;
-}
-
-.readme [open]>summary {
-	background-color: var(--details-header-hover-bg-color);
-	border-top: 1px solid var(--dl-border-color);
-	border-left: 1px solid var(--dl-border-color);
-	border-right: 1px solid var(--dl-border-color);
-	border-bottom: none !important;
-}
-
 .readme summary>div {
 	display: flex;
 	gap: 0.75rem;
@@ -688,10 +670,6 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 
 .readme details:not(#table-of-contents) summary>div>div>svg {
 	height: 100%;
-}
-
-.readme summary:hover {
-	background-color: var(--details-header-hover-bg-color);
 }
 
 .readme div.prop-group-ref {
@@ -2377,7 +2355,6 @@ a.feature-card:hover>div {
 	display: list-item;
 	list-style: none;
 	color: var(--accent-color);
-	background-color: var(--toggle-group-bg-color);
 	line-height: 1;
 	padding: 0.75rem 0.5rem;
 	cursor: pointer;
@@ -2387,7 +2364,7 @@ a.feature-card:hover>div {
 
 .toggle-groups details[open]>summary,
 #table-of-contents[open]>summary {
-	color: var(--widget-bg-color);
+	color: var(--toggle-section-bg-color);
 	font-weight: 500;
 	background-color: var(--accent-color);
 }
@@ -2403,7 +2380,6 @@ a.feature-card:hover>div {
 
 .toggle-groups summary>.summary-wrapper,
 #table-of-contents>summary>.summary-wrapper {
-	flex: 0;
 	display: flex;
 	gap: 1rem;
 	align-items: center;

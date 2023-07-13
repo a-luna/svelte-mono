@@ -50,49 +50,69 @@
 {/if}
 
 <style lang="postcss">
+	#table-of-contents {
+		background-color: var(--toggle-section-bg-color);
+	}
+
 	:global(.tutorial #table-of-contents) {
 		margin: 0;
 	}
 
-	:global(.blog #table-of-contents) {
+	:global(.blog #table-of-contents),
+	:global(.readme #table-of-contents) {
 		margin: 0.5rem 0 0 0;
 	}
 
 	:global(.blog #table-of-contents > summary),
 	:global(.readme #table-of-contents > summary) {
-		border: 1px solid var(--accent-color);
+		border-width: 1.5px;
+		border-style: solid;
+		border-color: var(--dark-gray);
+	}
+
+	#table-of-contents > summary:hover {
+		color: var(--accent-color);
+		border-color: var(--accent-color);
+	}
+
+	#table-of-contents[open] > summary {
+		color: var(--toggle-section-bg-color);
+		border-color: var(--accent-color);
 	}
 
 	:global(.tutorial #table-of-contents > summary) {
-		border-top: none;
-		border-left: 1.5px solid var(--accent-color);
-		border-right: 1.5px solid var(--accent-color);
-		border-bottom: none;
+		border-width: 1.5px;
+		border-style: solid;
+		border-color: var(--dark-gray);
 	}
 
 	.toc-wrapper {
-		background-color: var(--toggle-group-bg-color);
+		background-color: var(--toggle-section-bg-color);
 		border-top: none;
-		border-right: 1.5px solid var(--accent-color);
-		border-bottom: 1.5px solid var(--accent-color);
-		border-left: 1.5px solid var(--accent-color);
+		border-left-width: 1.5px;
+		border-left-style: solid;
+		border-left-color: var(--dark-gray);
+		border-right-width: 1.5px;
+		border-right-style: solid;
+		border-right-color: var(--dark-gray);
+		border-bottom-width: 1.5px;
+		border-bottom-style: solid;
+		border-bottom-color: var(--dark-gray);
+	}
+
+	#table-of-contents[open] .toc-wrapper,
+	.toc-wrapper:hover {
+		border-color: var(--accent-color);
 	}
 
 	@media (min-width: 640px) {
-		:global(.blog #table-of-contents > summary),
-		:global(.readme #table-of-contents > summary) {
-			border: 2px solid var(--accent-color);
-		}
-		:global(.tutorial #table-of-contents > summary) {
-			border-top: none;
-			border-left: 2px solid var(--accent-color);
-			border-right: 2px solid var(--accent-color);
-			border-bottom: none;
+		#table-of-contents > summary {
+			border-width: 2px;
 		}
 		.toc-wrapper {
-			border-right: 2px solid var(--accent-color);
-			border-bottom: 2px solid var(--accent-color);
-			border-left: 2px solid var(--accent-color);
+			border-left-width: 2px;
+			border-right-width: 2px;
+			border-bottom-width: 2px;
 		}
 	}
 </style>
