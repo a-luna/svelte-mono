@@ -1,14 +1,7 @@
 import { browser } from '$app/environment';
 import { initializeProjectData } from '$lib/projectMetaData';
-import type {
-	BlogPost,
-	CachedProjectData,
-	ISortByDateFunction,
-	OrderedNavItem,
-	Result,
-	TutorialSection,
-	hasDate,
-} from '$lib/types';
+import type { BlogPost, CachedProjectData, OrderedNavItem, Result, TutorialSection } from '$lib/types';
+import { sortByDate } from '$lib/util';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 
@@ -59,29 +52,6 @@ export const tutorialSectionNumberMap: Readable<OrderedNavItem[]> = derived(tuto
 			weight: series_weight || 0,
 		})),
 );
-
-export const sortByDate = <T extends hasDate>(asc = true): ISortByDateFunction<T> => {
-	if (asc) {
-		return (a: T, b: T) => {
-			if (typeof a.date == 'string' && typeof b.date == 'string') {
-				return new Date(a.date).valueOf() - new Date(b.date).valueOf();
-			}
-			if (typeof a.date != 'string' && typeof b.date != 'string') {
-				return a.date.valueOf() - b.date.valueOf();
-			}
-			return 0;
-		};
-	}
-	return (a: T, b: T) => {
-		if (typeof a.date == 'string' && typeof b.date == 'string') {
-			return new Date(b.date).valueOf() - new Date(a.date).valueOf();
-		}
-		if (typeof a.date != 'string' && typeof b.date != 'string') {
-			return b.date.valueOf() - a.date.valueOf();
-		}
-		return 0;
-	};
-};
 
 /* c8 ignore start */
 function syncHeight(el: HTMLElement): Writable<number> {

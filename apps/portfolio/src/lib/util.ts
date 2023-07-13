@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import type { hasDate, ISortByDateFunction } from './types';
 
 export const formatDateString = (date: Date) => format(date, 'PPP');
 
@@ -37,3 +38,26 @@ export function getScrollbarWidth() {
 	outer?.parentNode?.removeChild(outer);
 	return scrollbarWidth;
 }
+
+export const sortByDate = <T extends hasDate>(asc = true): ISortByDateFunction<T> => {
+	if (asc) {
+		return (a: T, b: T) => {
+			if (typeof a.date == 'string' && typeof b.date == 'string') {
+				return new Date(a.date).valueOf() - new Date(b.date).valueOf();
+			}
+			if (typeof a.date != 'string' && typeof b.date != 'string') {
+				return a.date.valueOf() - b.date.valueOf();
+			}
+			return 0;
+		};
+	}
+	return (a: T, b: T) => {
+		if (typeof a.date == 'string' && typeof b.date == 'string') {
+			return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+		}
+		if (typeof a.date != 'string' && typeof b.date != 'string') {
+			return b.date.valueOf() - a.date.valueOf();
+		}
+		return 0;
+	};
+};

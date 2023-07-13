@@ -3,6 +3,7 @@
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import type { BlogPost } from '$lib/types';
+	import { sortByDate } from '$lib/util';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -13,6 +14,7 @@
 	// let filteredCategory: string;
 
 	$: list = data.allBlogPosts
+		.sort(sortByDate(false))
 		.filter((item) => {
 			if (search) {
 				return item.title.toLowerCase().includes(search.toLowerCase());
