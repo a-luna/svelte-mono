@@ -416,6 +416,9 @@
 	--shadow-elevation-medium: -1px 1px 1.6px hsl(var(--shadow-color) / 0.36),
 		-3.3px 3.3px 5.3px -0.8px hsl(var(--shadow-color) / 0.36), -8.2px 8.2px 13px -1.7px hsl(var(--shadow-color) / 0.36),
 		-20px 20px 31.8px -2.5px hsl(var(--shadow-color) / 0.36);
+
+
+	--heading-gradient: linear-gradient(to bottom right, var(--teal), var(--sea-green));
 }
 
 body {

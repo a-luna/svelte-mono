@@ -38,7 +38,7 @@
 <article class={contentType}>
 	<header>
 		<div class="wrapper">
-			<h1>{content?.title}</h1>
+			<h1><span class="gradient-heading">{content?.title}</span></h1>
 			<ByLine {published} {contentType} />
 		</div>
 	</header>
@@ -66,19 +66,26 @@
 		width: 100%;
 		margin: 1.5rem 0 2rem 0;
 	}
+	header .wrapper {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 2rem;
+		max-width: var(--max-width);
+	}
 	h1 {
 		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
 		font-size: 1.65rem;
-		font-weight: 500;
-		color: var(--post-title-text-color);
-		-webkit-text-fill-color: var(--post-title-text-color);
-		-webkit-text-stroke-width: 1px;
-		-webkit-text-stroke-color: var(--post-title-text-stroke);
+		font-weight: 400;
 		line-height: 1.3;
-		text-shadow: 2px 2px var(--post-title-text-stroke), 1.75px 1.75px var(--post-title-text-stroke),
-			1.5px 1.5px var(--post-title-text-stroke), 1.25px 1.25px var(--post-title-text-stroke),
-			1px 1px var(--post-title-text-stroke), 0.75px 0.75px var(--post-title-text-stroke),
-			0.5px 0.5px var(--post-title-text-stroke), 0.25px 0.25px var(--post-title-text-stroke);
+	}
+	.gradient-heading {
+		color: transparent;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-box-decoration-break: text;
+		box-decoration-break: clone;
+		background-image: var(--heading-gradient);
+		background-color: var(--black-tint2);
 	}
 	.wrapper {
 		padding-top: 0;
@@ -103,12 +110,6 @@
 		padding-bottom: 0;
 		padding-left: var(--mobile-page-padding);
 		padding-right: var(--mobile-page-padding);
-	}
-	header .wrapper {
-		display: flex;
-		flex-flow: column nowrap;
-		gap: 1rem;
-		max-width: var(--max-width);
 	}
 	@media (min-width: 640px) {
 		h1 {
