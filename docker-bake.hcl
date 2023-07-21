@@ -22,3 +22,12 @@ target "portfolio" {
         WAKATIME_API_KEY = "${WAKATIME_API_KEY}"
     }
 }
+
+target "base64" {
+  dockerfile = "./apps/svelte-base64/Dockerfile"
+  contexts = {
+        project = "./apps/svelte-base64"
+        root = "."
+    }
+    tags = ["ghcr.io/a-luna/svelte-base64:${GITHUB_SHA}"]
+}

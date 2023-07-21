@@ -27,7 +27,7 @@
 		"eslint.validate": ["typescript", "svelte"],
 		"terminal.integrated.fontFamily": "Hack Nerd Font Mono",
 		"testing.automaticallyOpenPeekView": "never",
-		"workbench.colorTheme": "GitHub Dark High Contrast",
+		"workbench.colorTheme": "Monokai Vibrant",
 		"todo-tree.general.showActivityBarBadge": true,
 		"todo-tree.general.showIconsInsteadOfTagsInStatusBar": false,
 		"todo-tree.general.statusBar": "tags",
@@ -56,10 +56,6 @@
 		{
 			"name": "svelte-color-tools",
 			"path": "packages/svelte-color-tools"
-		},
-		{
-			"name": "lock-file-converter",
-			"path": "packages/lock-file-converter"
 		}
 	]
 }

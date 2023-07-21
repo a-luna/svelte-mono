@@ -19,6 +19,3 @@ test
 dist
 .github
 .vscode
-packages/svelte-color-tools
-packages/lock-file-converter
-apps/svelte-base64

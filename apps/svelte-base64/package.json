@@ -11,10 +11,11 @@
 		"dev": "vite --host --port 3500",
 		"build": "svelte-kit sync && vite build",
 		"build:ci": "npx playwright install && vite build && vitest run",
+		"build:prod": "svelte-kit sync && vite build --mode prod",
 		"start": "vite preview",
 		"preview": "svelte-kit preview --host",
 		"sync": "svelte-kit sync",
-		"sync:up": "pnpm --filter svelte-base64 update && svelte-kit sync && pnpm-lock-export && npm i --package-lock-only && find . -name '.DS_Store' -type f -delete",
+		"sync:up": "pnpm --filter @a-luna/svelte-base64 update && svelte-kit sync && pnpm-lock-export && npm i --package-lock-only && find . -name '.DS_Store' -type f -delete",
 		"test": "vitest run --coverage",
 		"test:ui": "vitest watch --ui --threads false --coverage",
 		"test:watch": "vitest watch --coverage",
@@ -28,7 +29,6 @@
 	"devDependencies": {
 		"@commitlint/config-conventional": "^17.6.7",
 		"@playwright/test": "^1.36.1",
-		"@sveltejs/adapter-netlify": "^1.0.5",
 		"@testing-library/dom": "^8.20.1",
 		"@testing-library/jest-dom": "^5.17.0",
 		"@testing-library/svelte": "^3.2.2",
@@ -45,7 +45,6 @@
 		"@xstate/test": "^0.5.1",
 		"autoprefixer": "^10.4.14",
 		"c8": "^7.14.0",
-		"cssnano": "^5.1.15",
 		"eslint": "^8.45.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-import": "^2.27.5",
@@ -65,16 +64,18 @@
 		"svelte-icons": "^2.1.0",
 		"tslib": "^2.6.0",
 		"typescript": "^5.1.6",
-		"vite": "^4.4.6",
-		"vitest": "^0.29.8",
 		"ws": "^8.13.0"
 	},
 	"type": "module",
 	"dependencies": {
 		"@a-luna/shared-ui": "workspace:*",
+		"@sveltejs/adapter-node": "^1.3.1",
 		"@sveltejs/kit": "^1.22.3",
 		"@xstate/inspect": "^0.7.1",
 		"@xstate/svelte": "^2.1.0",
+		"cssnano": "^5.1.15",
+		"vite": "^4.4.6",
+		"vitest": "^0.29.8",
 		"xstate": "^4.38.1"
 	}
 }

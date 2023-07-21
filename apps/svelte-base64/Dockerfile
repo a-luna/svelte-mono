@@ -8,7 +8,7 @@ WORKDIR /root/monorepo
 FROM base AS dev
 ENV CI=true
 COPY --from=root . .
-RUN pnpm run docker-image
+RUN pnpm run deploy:base64
 RUN node prune_deps.cjs
 
 FROM base as prod
@@ -22,4 +22,4 @@ COPY --from=dev /root/monorepo/${DEPS_PATH}/package.json ${DEPS_PATH}
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/build ${PACKAGE_PATH}/build
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/node_modules ${PACKAGE_PATH}/node_modules
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/package.json ${PACKAGE_PATH}
-ENTRYPOINT ["node", "${PACKAGE_PATH}/build/index.js"]
+ENTRYPOINT ["node", "apps/svelte-base64/build/index.js"]

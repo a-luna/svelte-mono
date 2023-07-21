@@ -16,10 +16,10 @@
 		"inst:base64": "pnpm --filter=@a-luna/svelte-base64 install",
 		"build": "pnpm run build:all",
 		"build:all": "pnpm run build:ui && pnpm build:color && pnpm run build:site && pnpm run build:base64",
-		"build:ui": "pnpm run inst:ui && pnpm --filter=@a-luna/shared-ui run build",
-		"build:color": "pnpm run inst:color && pnpm --filter=@a-luna/svelte-color-tools run build",
-		"build:site": "pnpm run inst:site && pnpm --filter=@a-luna/portfolio run build",
-		"build:base64": "pnpm run inst:base64 && pnpm --filter=@a-luna/svelte-base64 run build",
+		"build:ui": "pnpm --filter=@a-luna/shared-ui run build",
+		"build:color": "pnpm --filter=@a-luna/svelte-color-tools run build",
+		"build:site": "pnpm --filter=@a-luna/portfolio run build",
+		"build:base64": "pnpm --filter=@a-luna/svelte-base64 run build",
 		"update": "pnpm run update:all",
 		"update:all": "pnpm run update:ui && pnpm update:color && pnpm --filter=@a-luna/portfolio update && pnpm --filter=@a-luna/svelte-base64 update",
 		"update:ui": "pnpm --filter=@a-luna/shared-ui update",
@@ -31,7 +31,10 @@
 		"dev:base64": "pnpm run update:base64 && pnpm --filter=@a-luna/svelte-base64 run dev",
 		"preview:site": "pnpm run update:site && pnpm run build:site && pnpm --filter=@a-luna/portfolio run preview",
 		"preview:base64": "pnpm run update:base64 && pnpm run build:base64 && pnpm --filter=@a-luna/svelte-base64 run preview",
-		"docker-image": "NODE_ENV=production pnpm run build:ui && pnpm --filter=@a-luna/portfolio install && pnpm --filter=@a-luna/portfolio run build:prod"
+		"bprod:site": "pnpm --filter=@a-luna/portfolio run build:prod",
+		"bprod:base64": "pnpm --filter=@a-luna/svelte-base64 run build:prod",
+		"deploy:site": "NODE_ENV=production pnpm run inst:ui && pnpm run build:ui && pnpm run inst:site && pnpm run bprod:site",
+		"deploy:base64": "NODE_ENV=production pnpm run inst:ui && pnpm run build:ui && pnpm run inst:base64 && pnpm run bprod:base64"
 	},
 	"dependencies": {
 		"svelte": "^3.59.2"

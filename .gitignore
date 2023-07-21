@@ -14,6 +14,7 @@ coverage
 .vscode
 .turbo
 /upload
+svelte-mono.code-workspace
 
 # Local Netlify folder
 .netlify
