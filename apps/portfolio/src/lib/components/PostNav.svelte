@@ -21,19 +21,23 @@
 </script>
 
 <div class="post-nav">
-	<div class="post-nav-prev">
-		{#if previous}
-			<a href={previous.slug} class="top-gradient">
-				<div class="icon icon-prev"><BasicIconRenderer icon={'arrowleft'} /></div>
-				<span class="prev-post-title post-title">{previous?.title}</span>
+	<div class="post-nav-next">
+		{#if next}
+			<a href={next.slug} class="top-gradient">
+				<span class="prev-post-title post-title">{next?.title}</span>
+				<div class="icon icon-next"><BasicIconRenderer icon={'arrowright'} /></div>
 			</a>
 		{/if}
 	</div>
-	<div class="post-nav-next">
-		{#if next}
-			<a href={next.slug} class="bottom-gradient">
-				<span class="prev-post-title post-title">{next?.title}</span>
-				<div class="icon icon-next"><BasicIconRenderer icon={'arrowright'} /></div>
+	<div class="post-nav-titles">
+		<span class="prev-title">Previous</span>
+		<span class="next-title">Next</span>
+	</div>
+	<div class="post-nav-prev">
+		{#if previous}
+			<a href={previous.slug} class="bottom-gradient">
+				<div class="icon icon-prev"><BasicIconRenderer icon={'arrowleft'} /></div>
+				<span class="prev-post-title post-title">{previous?.title}</span>
 			</a>
 		{/if}
 	</div>
@@ -69,12 +73,12 @@
 	}
 	.post-nav-prev a {
 		justify-content: flex-start;
-		padding: 1.5rem 0.75rem 0.5rem 0;
+		padding: 0.75rem 0 1.5rem 0.5rem;
 	}
 	.post-nav-next a {
 		justify-content: flex-end;
 		text-align: right;
-		padding: 0.75rem 0 1.5rem 0.5rem;
+		padding: 1.5rem 0.75rem 0.5rem 0;
 	}
 	.icon {
 		height: 16px;
@@ -94,5 +98,17 @@
 		background-size: 100% 1px;
 		background-position: 0 100%;
 		transition: background-size 0.25s ease-in;
+	}
+	.post-nav-titles {
+		display: flex;
+		gap: 1rem;
+	}
+	.next-title,
+	.prev-title {
+		flex: 1;
+		color: var(--dark-gray);
+	}
+	.next-title {
+		text-align: right;
 	}
 </style>
