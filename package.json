@@ -15,7 +15,7 @@
 		"inst:site": "pnpm --filter=@a-luna/portfolio install",
 		"inst:base64": "pnpm --filter=@a-luna/svelte-base64 install",
 		"build": "pnpm run build:all",
-		"build:all": "pnpm run build:ui && pnpm build:color && pnpm run build:site && pnpm run build:base64",
+		"build:all": "pnpm run inst:ui && pnpm run build:ui && pnpm inst:color && pnpm build:color && pnpm run inst:site && pnpm run build:site && pnpm run inst:base64 && pnpm run build:base64",
 		"build:ui": "pnpm --filter=@a-luna/shared-ui run build",
 		"build:color": "pnpm --filter=@a-luna/svelte-color-tools run build",
 		"build:site": "pnpm --filter=@a-luna/portfolio run build",

@@ -38,7 +38,7 @@
 		"js-base64": "^3.7.5",
 		"mdsvex": "^0.10.6",
 		"node-fetch": "2.6.7",
-		"postcss": "^8.4.26",
+		"postcss": "^8.4.27",
 		"postcss-load-config": "^4.0.1",
 		"rehype-autolink-headings": "^6.1.1",
 		"rehype-document": "^6.1.0",
