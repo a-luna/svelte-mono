@@ -31,10 +31,13 @@
 		"dev:base64": "pnpm run update:base64 && pnpm --filter=@a-luna/svelte-base64 run dev",
 		"preview:site": "pnpm run update:site && pnpm run build:site && pnpm --filter=@a-luna/portfolio run preview",
 		"preview:base64": "pnpm run update:base64 && pnpm run build:base64 && pnpm --filter=@a-luna/svelte-base64 run preview",
+		"iprod:ui": "pnpm --filter=@a-luna/shared-ui install --no-frozen-lockfile",
+		"iprod:site": "pnpm --filter=@a-luna/shared-ui install --no-frozen-lockfile",
+		"iprod:base64": "pnpm --filter=@a-luna/shared-ui install --no-frozen-lockfile",
 		"bprod:site": "pnpm --filter=@a-luna/portfolio run build:prod",
 		"bprod:base64": "pnpm --filter=@a-luna/svelte-base64 run build:prod",
-		"deploy:site": "NODE_ENV=production pnpm run inst:ui && pnpm run build:ui && pnpm run inst:site && pnpm run bprod:site",
-		"deploy:base64": "NODE_ENV=production pnpm run inst:ui && pnpm run build:ui && pnpm run inst:base64 && pnpm run bprod:base64"
+		"deploy:site": "NODE_ENV=production && pnpm run iprod:ui && pnpm run build:ui && pnpm run iprod:site && pnpm run bprod:site",
+		"deploy:base64": "NODE_ENV=production && pnpm run iprod:ui && pnpm run build:ui && pnpm run iprod:base64 && pnpm run bprod:base64"
 	},
 	"dependencies": {
 		"svelte": "^3.59.2"
