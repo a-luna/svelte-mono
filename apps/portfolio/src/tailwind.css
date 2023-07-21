@@ -810,7 +810,7 @@ article.readme .wrapper>ul {
 
 .readme dt,
 .readme dd {
-	height: 40px;
+	min-height: 40px;
 }
 
 .readme dt {
