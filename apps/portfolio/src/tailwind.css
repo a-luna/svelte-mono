@@ -634,6 +634,30 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	}
 }
 
+.readme details:not(#table-of-contents) summary {
+	display: flex !important;
+	cursor: pointer;
+	color: var(--details-header-text-color);
+	background-color: var(--details-header-bg-color);
+	border: 1px solid var(--dl-border-color);
+	padding: 0.5rem;
+	line-height: 1;
+	list-style: none;
+	transition: all 0.3s;
+}
+
+.readme details:not(#table-of-contents)[open]>summary {
+	background-color: var(--details-header-hover-bg-color);
+	border-top: 1px solid var(--dl-border-color);
+	border-left: 1px solid var(--dl-border-color);
+	border-right: 1px solid var(--dl-border-color);
+	border-bottom: none !important;
+}
+
+.readme details:not(#table-of-contents) summary:hover {
+	background-color: var(--details-header-hover-bg-color);
+}
+
 .readme details:not(#table-of-contents) summary::-webkit-details-marker {
 	display: none;
 }
@@ -776,11 +800,17 @@ article.readme .wrapper>ul {
 .readme dl {
 	display: grid;
 	grid-template-columns: auto 1fr;
+	align-items: center;
 	background-color: var(--dl-bg-color);
 	border-left: 1px solid var(--dl-border-color);
 	border-right: 1px solid var(--dl-border-color);
 	margin: 0;
 	line-height: 1.5;
+}
+
+.readme dt,
+.readme dd {
+	height: 40px;
 }
 
 .readme dt {
@@ -1170,26 +1200,34 @@ ul.custom-block li {
 	padding: 5px 0 5px 10px;
 }
 
+@media (min-width: 640px) {
+	.custom-block-top {
+		padding: 7px 0 7px 10px;
+	}
+}
+
 .custom-block-icon svg {
-	height: 12.8px;
+	height: 14px;
 }
 
 @media (min-width: 640px) {
 	.custom-block-icon svg {
-		height: 14.4px;
+		height: 16px;
 	}
 }
 
 .custom-block-title {
+	font-size: 14px;
 	font-weight: 700;
 	letter-spacing: 0.5px;
-	height: 12.8px;
+	height: 14px;
 	line-height: 1;
 }
 
 @media (min-width: 640px) {
 	.custom-block-title {
-		height: 14.4px;
+		font-size: 1rem;
+		height: 16px;
 	}
 }
 
