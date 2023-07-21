@@ -26,4 +26,4 @@ COPY --from=dev /root/monorepo/${DEPS_PATH}/package.json ${DEPS_PATH}
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/build ${PACKAGE_PATH}/build
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/node_modules ${PACKAGE_PATH}/node_modules
 COPY --from=dev /root/monorepo/${PACKAGE_PATH}/package.json ${PACKAGE_PATH}
-ENTRYPOINT ["node", "${PACKAGE_PATH}/build/index.js"]
+ENTRYPOINT ["node", "apps/portfolio/build/index.js"]
