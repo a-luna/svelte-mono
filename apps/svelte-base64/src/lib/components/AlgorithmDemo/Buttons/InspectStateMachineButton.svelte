@@ -1,9 +1,9 @@
 <script lang="ts">
-	import BezierCurve from '$lib/components/Icons/BezierCurve.svelte';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 </script>
 
 <button id="inspect-state-machine-button" on:click title="Click to view the state machine in the XState visualizer">
-	<BezierCurve />
+	<BasicIconRenderer icon="beziercurve" />
 </button>
 
 <style lang="postcss">

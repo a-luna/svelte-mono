@@ -1,9 +1,9 @@
 <script lang="ts">
+	import OpenHelpDocsButton from '$lib/components/AlgorithmDemo/Buttons/OpenHelpDocsButton.svelte';
 	import DetailsSummary from '$lib/components/AlgorithmDemo/DemoIntro/DetailsSummary.svelte';
 	import ArrowKey from '$lib/components/Icons/KeyboardIcons/ArrowKey.svelte';
 	import { getAppContext } from '$lib/stores/context';
 	import { slide } from 'svelte/transition';
-	import OpenHelpDocsButton from '../Buttons/OpenHelpDocsButton.svelte';
 
 	let arrowSize: 'sm' | 'md' | 'lg';
 	let welcomeDetailsElement: HTMLDetailsElement;

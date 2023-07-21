@@ -12,7 +12,7 @@
 	const { state, demoState, demoUIState } = getAppContext();
 
 	function highlightHexByteValue(highlight: boolean, hexMap: HexByteMap) {
-		$demoUIState.highlightHexByte = highlight ? hexMap.byte : null;
+		$demoUIState.highlightHexByte = highlight ? hexMap.byte : 0;
 		$demoUIState.highlightHexBitGroup = highlight ? hexMap.groupId : '';
 	}
 

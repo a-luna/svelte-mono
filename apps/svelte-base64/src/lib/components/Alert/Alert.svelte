@@ -1,9 +1,9 @@
 <script lang="ts">
+	import CloseAlertButton from '$lib/components/Alert/CloseAlertButton.svelte';
 	import { alert } from '$lib/stores/alert';
 	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { onDestroy } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
-	import CloseAlertButton from './CloseAlertButton.svelte';
 
 	export let duration = 3000;
 	let timeout: NodeJS.Timeout;
