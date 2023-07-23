@@ -4,10 +4,14 @@
 
 	$: if (typeof window !== 'undefined') {
 		svgSize =
-			pageWidth >= 1024
-				? { width: 675, height: 675 }
+			// pageWidth >= 1024
+			// 	? { width: 675, height: 675 }
+			pageWidth >= 768
+				? { width: 575, height: 575 }
 				: pageWidth >= 640
-				? { width: 600, height: 600 }
+				? { width: 550, height: 550 }
+				: pageWidth >= 495
+				? { width: 500, height: 500 }
 				: { width: 475, height: 475 };
 	}
 	$: ({ width, height } = svgSize);
@@ -138,13 +142,17 @@
 <style lang="postcss">
 	.mandala-container {
 		--mandala-primary: var(--black-tint3);
-		--mandala-accent-1: hsl(173.22 100% 65%);
-		--mandala-accent-2: hsl(322.21 100% 64%);
+		/* --mandala-accent-1: hsl(173.22 100% 65%); */
+		/* --mandala-accent-2: hsl(322.21 100% 64%); */
+		/* --mandala-accent-3: hsl(93.52 100% 50%); */
+		/* --mandala-accent-4: hsl(261, 100%, 55%); */
+		--mandala-accent-1: hsl(180, 100%, 50%);
+		--mandala-accent-2: hsl(300 100% 50%);
 		--mandala-accent-3: hsl(93.52 100% 50%);
 		--mandala-accent-4: hsl(261, 100%, 55%);
 		display: flex;
 		justify-content: center;
-		transform: translate(6rem, -5rem);
+		transform: translate(5rem, 0rem);
 		background-color: var(--page-bg-color);
 	}
 	.mandala-container .mandala-accent-1 {
@@ -310,17 +318,22 @@
 	} */
 	@media (min-width: 495px) {
 		.mandala-container {
-			transform: translate(9rem, -4rem);
+			transform: translate(6rem, 0rem);
+		}
+	}
+	@media (min-width: 640px) {
+		.mandala-container {
+			transform: translate(8rem, 0rem);
 		}
 	}
 	@media (min-width: 768px) {
 		.mandala-container {
-			transform: translate(10rem, -6rem);
+			transform: translate(10rem, -1rem);
 		}
 	}
-	@media (min-width: 1024px) {
+	/* @media (min-width: 1024px) {
 		.mandala-container {
 			transform: translate(13rem, -6rem);
 		}
-	}
+	} */
 </style>

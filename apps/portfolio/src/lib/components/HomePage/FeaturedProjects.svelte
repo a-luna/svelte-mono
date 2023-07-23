@@ -27,10 +27,11 @@
 		gap: 0rem;
 		margin: 0;
 	}
-	
+
 	@media (min-width: 640px) {
 		.featured-projects {
 			gap: 2rem;
+			margin: 1.5rem 0 0 0;
 		}
 	}
 </style>
