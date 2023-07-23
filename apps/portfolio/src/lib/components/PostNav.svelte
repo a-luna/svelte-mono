@@ -21,21 +21,19 @@
 </script>
 
 <div class="post-nav">
-	<div class="post-nav-next">
+	<div class="post-nav-next top-gradient">
 		{#if next}
-			<a href={next.slug} class="top-gradient">
-				<span class="prev-post-title post-title">{next?.title}</span>
+			<a href={next.slug}>
+				<span class="next-post-title post-title">{next?.title}</span>
 				<div class="icon icon-next"><BasicIconRenderer icon={'arrowright'} /></div>
 			</a>
+			<span class="next-title">Next</span>
 		{/if}
 	</div>
-	<div class="post-nav-titles">
-		<span class="prev-title">Previous</span>
-		<span class="next-title">Next</span>
-	</div>
-	<div class="post-nav-prev">
+	<div class="post-nav-prev bottom-gradient">
 		{#if previous}
-			<a href={previous.slug} class="bottom-gradient">
+			<span class="prev-title">Previous</span>
+			<a href={previous.slug}>
 				<div class="icon icon-prev"><BasicIconRenderer icon={'arrowleft'} /></div>
 				<span class="prev-post-title post-title">{previous?.title}</span>
 			</a>
@@ -47,6 +45,7 @@
 	.post-nav {
 		display: flex;
 		flex-flow: column nowrap;
+		background-color: var(--page-bg-color);
 		font-size: inherit;
 		line-height: 1.3;
 		width: 100%;
@@ -55,7 +54,21 @@
 	}
 	.post-nav-prev,
 	.post-nav-next {
+		display: flex;
 		flex: 1;
+		flex-flow: column nowrap;
+		gap: 0.5rem;
+	}
+	.post-nav-prev {
+		justify-content: flex-start;
+		padding: 0.5rem 0.5rem 0.75rem 0.5rem;
+	}
+	.post-nav-next {
+		justify-content: flex-end;
+		padding: 0.75rem 0.5rem 0.5rem 0.5rem;
+	}
+	.post-nav-next a {
+		justify-content: flex-end;
 	}
 	.post-nav-prev a,
 	.post-nav-next a,
@@ -63,22 +76,11 @@
 	.post-nav-next a:hover {
 		display: flex;
 		flex-flow: row nowrap;
-		align-items: flex-start;
 		gap: 0.5rem;
 		font-weight: 400;
 		color: var(--accent-color);
-		background-color: var(--page-bg-color);
 		text-decoration: none;
 		transition: background-color 350ms ease-out, color 350ms ease-out;
-	}
-	.post-nav-prev a {
-		justify-content: flex-start;
-		padding: 0.75rem 0 1.5rem 0.5rem;
-	}
-	.post-nav-next a {
-		justify-content: flex-end;
-		text-align: right;
-		padding: 1.5rem 0.75rem 0.5rem 0;
 	}
 	.icon {
 		height: 16px;
@@ -99,16 +101,26 @@
 		background-position: 0 100%;
 		transition: background-size 0.25s ease-in;
 	}
-	.post-nav-titles {
-		display: flex;
-		gap: 1rem;
-	}
 	.next-title,
 	.prev-title {
-		flex: 1;
-		color: var(--dark-gray);
+		display: none;
 	}
-	.next-title {
+	.next-title,
+	.next-post-title {
 		text-align: right;
+	}
+	@media (min-width: 640px) {
+		.next-title,
+		.prev-title {
+			display: block;
+			flex: 1;
+			color: var(--dark-gray);
+		}
+		.post-nav-prev {
+			padding-top: 0;
+		}
+		.post-nav-next {
+			padding-bottom: 0;
+		}
 	}
 </style>
