@@ -73,7 +73,6 @@
 	.publish-date {
 		flex: 1;
 		color: var(--gray-shade2);
-		text-align: right;
 	}
 	@media (min-width: 640px) {
 		.avatar {
