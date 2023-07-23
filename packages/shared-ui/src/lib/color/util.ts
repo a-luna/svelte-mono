@@ -11,7 +11,8 @@ import type {
 } from '$lib/types';
 import { getRandomArrayItem, getRandomHexString } from '$lib/util';
 
-export const getRandomHueValue = (): number => getRandomArrayItem<number>(Array.from({ length: 360 }, (_, i) => i));
+export const getRandomHueValue = (): number =>
+	getRandomArrayItem<number>(Array.from({ length: 360 }, (_, i) => i)) || 0;
 export const toFixedFloat = (f: number, precision = 2): string => f.toFixed(precision);
 export const toFixedPercent = (f: number, precision = 2): string => `${(f * 100.0).toFixed(precision)}%`;
 export const decimalToOpacityValue = (decimal: number): number => parseFloat(toFixedFloat(decimal / 255.0));
