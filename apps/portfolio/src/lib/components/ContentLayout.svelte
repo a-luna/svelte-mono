@@ -64,12 +64,12 @@
 	header {
 		background-color: var(--black-tint2);
 		width: 100%;
-		margin: 1.5rem 0 2rem 0;
+		margin: 1.5rem 0 0.5rem 0;
 	}
 	header .wrapper {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 2rem;
+		gap: 0.5rem;
 		max-width: var(--max-width);
 	}
 	h1 {
@@ -93,25 +93,25 @@
 		padding-left: var(--mobile-page-padding);
 		padding-right: var(--mobile-page-padding);
 		width: 100%;
-		margin: 1rem auto;
-	}
-	.content-wrapper {
-		background-color: var(--page-bg-color);
-		margin: 0 auto 2rem auto;
-	}
-	.nav-wrapper {
-		background-color: var(--page-bg-color);
-		margin: 0 auto;
+		margin: 0.5rem auto;
 	}
 	.content-wrapper,
 	.nav-wrapper {
+		background-color: var(--page-bg-color);
 		max-width: var(--max-width);
+		margin: 0 auto 2rem auto;
 		padding-top: 0;
 		padding-bottom: 0;
 		padding-left: var(--mobile-page-padding);
 		padding-right: var(--mobile-page-padding);
 	}
 	@media (min-width: 640px) {
+		header .wrapper {
+			gap: 1rem;
+		}
+		.wrapper {
+			margin: 1rem auto;
+		}
 		h1 {
 			font-size: 1.8rem;
 		}
