@@ -15,6 +15,9 @@ coverage
 .turbo
 /upload
 svelte-mono.code-workspace
+.prettierrc
+.eslintrc.cjs
+.eslintignore
 
 # Local Netlify folder
 .netlify
