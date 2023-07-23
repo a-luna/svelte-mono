@@ -59,6 +59,23 @@ export const oklchToString = ({ l, c, h, a }: OklchColor, hasAlpha: boolean): st
 		? `oklch(${toFixedFloat(l)}% ${toFixedFloat(c, 3)} ${toFixedFloat(h)} / ${opacityAsPercent(a)}%)`
 		: `oklch(${toFixedFloat(l)}% ${toFixedFloat(c, 3)} ${toFixedFloat(h)})`;
 
+export const sortColors = (a: CssColor, b: CssColor): number =>
+	a.hsl.h - b.hsl.h || a.hsl.s - b.hsl.s || a.hsl.l - b.hsl.l;
+
+export const colorNameisCustomized = ({ name, hex, hslString, rgbString }: CssColor): boolean =>
+	name ? ![hex, hslString, rgbString].includes(name) : false;
+
+export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
+	const id = getRandomHexString(4);
+	return {
+		id,
+		propName: `palette-${id}`,
+		displayName: name,
+		colors: [],
+		componentColor: 'black',
+	};
+}
+
 export const copyCssColor = (color: CssColor): CssColor => ({
 	hex: color.hex,
 	rgb: { ...color.rgb },
@@ -79,19 +96,67 @@ export const copyCssColor = (color: CssColor): CssColor => ({
 	name: color.name,
 });
 
-export const sortColors = (a: CssColor, b: CssColor): number =>
-	a.hsl.h - b.hsl.h || a.hsl.s - b.hsl.s || a.hsl.l - b.hsl.l;
+const integer = RegExp(/-?\d*\.0?$/);
 
-export const colorNameisCustomized = ({ name, hex, hslString, rgbString }: CssColor): boolean =>
-	name ? ![hex, hslString, rgbString].includes(name) : false;
+const clamp = (n: number): number => {
+	return Math.abs(n) < 1
+		? parseFloat(n.toFixed(4))
+		: integer.test(n.toFixed(2))
+		? parseInt(n.toFixed(2))
+		: parseFloat(n.toFixed(2));
+};
 
-export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
-	const id = getRandomHexString(4);
-	return {
-		id,
-		propName: `palette-${id}`,
-		displayName: name,
-		colors: [],
-		componentColor: 'black',
-	};
-}
+export const clampColorComponents = (color: CssColor): CssColor => ({
+	hex: color.hex,
+	rgb: {
+		r: Math.round(color.rgb.r),
+		g: Math.round(color.rgb.g),
+		b: Math.round(color.rgb.b),
+		a: Math.round(color.rgb.a),
+	},
+	hsl: {
+		h: clamp(color.hsl.h),
+		s: clamp(color.hsl.s),
+		l: clamp(color.hsl.l),
+		a: clamp(color.hsl.a),
+	},
+	lab: {
+		l: clamp(color.lab.l),
+		a: clamp(color.lab.a),
+		b: clamp(color.lab.b),
+		A: clamp(color.lab.A),
+	},
+	lch: {
+		l: clamp(color.lch.l),
+		c: clamp(color.lch.c),
+		h: clamp(color.lch.h),
+		a: clamp(color.lch.a),
+	},
+	okhsl: {
+		h: clamp(color.okhsl.h),
+		s: clamp(color.okhsl.s),
+		l: clamp(color.okhsl.l),
+		a: clamp(color.okhsl.a),
+	},
+	oklab: {
+		l: clamp(color.oklab.l),
+		a: clamp(color.oklab.a),
+		b: clamp(color.oklab.b),
+		A: clamp(color.oklab.A),
+	},
+	oklch: {
+		l: clamp(color.oklch.l),
+		c: clamp(color.oklch.c),
+		h: clamp(color.oklch.h),
+		a: clamp(color.oklch.a),
+	},
+	rgbString: color.rgbString,
+	hslString: color.hslString,
+	labString: color.labString,
+	okhslString: color.okhslString,
+	oklchString: color.oklchString,
+	oklabString: color.oklabString,
+	lchString: color.lchString,
+	hasAlpha: color.hasAlpha,
+	name: color.name,
+});
