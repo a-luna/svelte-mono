@@ -25,7 +25,7 @@ function extractRgbComponents(regExpGroups: object): ParsedRgbComponent[] {
 			const match = RGB_VAL_NAME_REGEX.exec(groupName);
 			if (match) {
 				const component = match.groups?.value as RgbHexComponent;
-				const numType = match.groups?.numFormat.toLowerCase() as RgbNumberType;
+				const numType = match.groups?.numFormat?.toLowerCase() as RgbNumberType;
 				const parsed = parseRgbComponentValue(component, numType, value);
 				components.push({ component, numType: 'decimal', value: parsed });
 			}

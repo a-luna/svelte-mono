@@ -81,13 +81,13 @@ function convertFullHexComponents(earlyHex: EarlyParsedHexComponent[], hasAlpha:
 	const g = earlyHex.filter((c) => c.component === 'green');
 	const b = earlyHex.filter((c) => c.component === 'blue');
 	const components: ParsedHexComponent[] = [
-		{ component: 'red', numType: 'decimal', value: parseInt(`${r[0].value}${r[1].value}`, 16) },
-		{ component: 'green', numType: 'decimal', value: parseInt(`${g[0].value}${g[1].value}`, 16) },
-		{ component: 'blue', numType: 'decimal', value: parseInt(`${b[0].value}${b[1].value}`, 16) },
+		{ component: 'red', numType: 'decimal', value: parseInt(`${r[0]?.value}${r[1]?.value}`, 16) },
+		{ component: 'green', numType: 'decimal', value: parseInt(`${g[0]?.value}${g[1]?.value}`, 16) },
+		{ component: 'blue', numType: 'decimal', value: parseInt(`${b[0]?.value}${b[1]?.value}`, 16) },
 	];
 	if (hasAlpha) {
 		const a = earlyHex.filter((c) => c.component === 'alpha');
-		components.push({ component: 'alpha', numType: 'decimal', value: parseInt(`${a[0].value}${a[1].value}`, 16) });
+		components.push({ component: 'alpha', numType: 'decimal', value: parseInt(`${a[0]?.value}${a[1]?.value}`, 16) });
 	}
 	return components;
 }
