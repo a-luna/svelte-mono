@@ -1088,7 +1088,7 @@ details .underline--magical h4 {
 
 .home .section-content .normal-text span {
 	color: var(--tw-prose-invert-body);
-	background-color: hsl(0 0% 0% / 0.7);
+	background-color: hsl(0 0% 0% / 0.2);
 	font-weight: 400;
 }
 

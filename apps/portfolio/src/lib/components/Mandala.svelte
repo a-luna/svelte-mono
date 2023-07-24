@@ -12,7 +12,9 @@
 				? { width: 550, height: 550 }
 				: pageWidth >= 495
 				? { width: 500, height: 500 }
-				: { width: 475, height: 475 };
+				: pageWidth >= 440
+				? { width: 450, height: 450 }
+				: { width: 425, height: 425 };
 	}
 	$: ({ width, height } = svgSize);
 </script>
@@ -28,6 +30,18 @@
 				<path d="M337.5,337.5 m-240,0 a240,240 0 1,1 480,0 a240,240 0 1,1 -480,0" id="circle3" />
 				<path d="M337.5,337.5 m-200,0 a200,200 0 1,1 400,0 a200,200 0 1,1 -400,0" id="circle4" />
 				<path d="M337.5,337.5 m-160,0 a160,160 0 1,1 320,0 a160,160 0 1,1 -320,0" id="circle5" />
+				<linearGradient id="text-bg-1" x1="0" x2="0" y1="0" y2="100%" gradientUnits="userSpaceOnUse">
+					<stop stop-color="#bbff00" offset="0%" />
+					<stop stop-color="#00ff80" offset="100%" />
+				</linearGradient>
+				<linearGradient id="text-bg-2" x1="0" x2="0" y1="0" y2="100%" gradientUnits="userSpaceOnUse">
+					<stop stop-color="#00ffb3" offset="0%" />
+					<stop stop-color="#471aff" offset="100%" />
+				</linearGradient>
+				<linearGradient id="text-bg-3" x1="0" x2="0" y1="0" y2="100%" gradientUnits="userSpaceOnUse">
+					<stop stop-color="#471aff" offset="0%" />
+					<stop stop-color="#ff00a6" offset="100%" />
+				</linearGradient>
 			</defs>
 			<text class="mandala-accent-1" dy="70" textLength="2010">
 				<animateTransform
@@ -142,17 +156,9 @@
 <style lang="postcss">
 	.mandala-container {
 		--mandala-primary: var(--black-tint3);
-		/* --mandala-accent-1: hsl(173.22 100% 65%); */
-		/* --mandala-accent-2: hsl(322.21 100% 64%); */
-		/* --mandala-accent-3: hsl(93.52 100% 50%); */
-		/* --mandala-accent-4: hsl(261, 100%, 55%); */
-		--mandala-accent-1: hsl(180, 100%, 50%);
-		--mandala-accent-2: hsl(300 100% 50%);
-		--mandala-accent-3: hsl(93.52 100% 50%);
-		--mandala-accent-4: hsl(261, 100%, 55%);
 		display: flex;
 		justify-content: center;
-		transform: translate(5rem, 0rem);
+		transform: translate(2rem, 1rem);
 		background-color: var(--page-bg-color);
 	}
 	.mandala-container .mandala-accent-1 {
@@ -181,25 +187,28 @@
 	}
 	svg > text > textPath > tspan {
 		fill: var(--mandala-primary);
-		animation: mandala-color-change 50s infinite;
-		animation-timing-function: ease;
+		animation: mandala-color-change 50s infinite, opacity-change 50s infinite;
 		animation-delay: 0s;
 		animation-timing-function: ease-in-out;
 	}
 	.mandala-accent-1 > textPath > tspan {
-		fill: var(--mandala-accent-1);
+		fill: url(#text-bg-1);
 		animation-delay: -5s;
 	}
 	.mandala-accent-2 > textPath > tspan {
-		fill: var(--mandala-accent-2);
+		fill: url(#text-bg-2);
 		animation-delay: -25s;
 	}
 	.mandala-accent-3 > textPath > tspan {
-		fill: var(--mandala-accent-3);
+		fill: url(#text-bg-3);
 		animation-delay: -30s;
 	}
+	.mandala-accent-4 > textPath > tspan {
+		fill: url(#text-bg-2);
+		animation-delay: -35s;
+	}
 	.mandala-accent-5 > textPath > tspan {
-		fill: var(--mandala-accent-4);
+		fill: url(#text-bg-1);
 		animation-delay: -55s;
 	}
 	@keyframes rotation {
@@ -210,24 +219,83 @@
 			transform: rotate(1turn);
 		}
 	}
+	@keyframes opacity-change {
+		0% {
+			fill-opacity: 0;
+		}
+		5% {
+			fill-opacity: 0;
+		}
+		10% {
+			fill-opacity: 1;
+		}
+		15% {
+			fill-opacity: 0;
+		}
+		20% {
+			fill-opacity: 0;
+		}
+		25% {
+			fill-opacity: 0;
+		}
+		30% {
+			fill-opacity: 0;
+		}
+		35% {
+			fill-opacity: 0;
+		}
+		40% {
+			fill-opacity: 0;
+		}
+		45% {
+			fill-opacity: 0;
+		}
+		50% {
+			fill-opacity: 1;
+		}
+		55% {
+			fill-opacity: 0;
+		}
+		60% {
+			fill-opacity: 0;
+		}
+		65% {
+			fill-opacity: 0;
+		}
+		70% {
+			fill-opacity: 0;
+		}
+		75% {
+			fill-opacity: 1;
+		}
+		80% {
+			fill-opacity: 0;
+		}
+		85% {
+			fill-opacity: 0;
+		}
+		to {
+			fill-opacity: 0;
+		}
+	}
 	@keyframes mandala-color-change {
 		0% {
 			fill: var(--mandala-primary);
 		}
 		5% {
-			fill: var(--mandala-primary);
+			fill: url(#text-bg-1);
 		}
 		10% {
-			fill: var(--mandala-accent-1);
+			fill: url(#text-bg-1);
 		}
 		15% {
-			fill: var(--mandala-primary);
+			fill: url(#text-bg-1);
 		}
 		20% {
 			fill: var(--mandala-primary);
 		}
 		25% {
-			fill: var(--mandala-accent-2);
+			fill: var(--mandala-primary);
 		}
 		30% {
 			fill: var(--mandala-primary);
@@ -239,83 +307,41 @@
 			fill: var(--mandala-primary);
 		}
 		45% {
-			fill: var(--mandala-primary);
+			fill: url(#text-bg-2);
 		}
 		50% {
-			fill: var(--mandala-accent-4);
+			fill: url(#text-bg-2);
 		}
 		55% {
-			fill: var(--mandala-primary);
+			fill: url(#text-bg-2);
 		}
 		60% {
-			fill: var(--mandala-accent-3);
+			fill: var(--mandala-primary);
 		}
 		65% {
 			fill: var(--mandala-primary);
 		}
 		70% {
-			fill: var(--mandala-primary);
+			fill: url(#text-bg-3);
 		}
 		75% {
-			fill: var(--mandala-primary);
+			fill: url(#text-bg-3);
 		}
 		80% {
-			fill: var(--mandala-primary);
+			fill: url(#text-bg-3);
 		}
 		85% {
-			fill: var(--mandala-primary);
-		}
-		90% {
-			fill: var(--mandala-accent-1);
-		}
-		95% {
 			fill: var(--mandala-primary);
 		}
 		to {
 			fill: var(--mandala-primary);
 		}
 	}
-	/* @keyframes mandala-color-change {
-		0% {
-			fill: var(--mandala-primary);
+	@media (min-width: 440px) {
+		.mandala-container {
+			transform: translate(4rem, 1rem);
 		}
-		8% {
-			fill: var(--mandala-accent-1);
-		}
-		16% {
-			fill: var(--mandala-primary);
-		}
-		25% {
-			fill: var(--mandala-primary);
-		}
-		33% {
-			fill: var(--mandala-accent-2);
-		}
-		41% {
-			fill: var(--mandala-primary);
-		}
-		50% {
-			fill: var(--mandala-primary);
-		}
-		58% {
-			fill: var(--mandala-accent-3);
-		}
-		66% {
-			fill: var(--mandala-primary);
-		}
-		75% {
-			fill: var(--mandala-primary);
-		}
-		83% {
-			fill: var(--mandala-accent-4);
-		}
-		91% {
-			fill: var(--mandala-primary);
-		}
-		to {
-			fill: var(--mandala-primary);
-		}
-	} */
+	}
 	@media (min-width: 495px) {
 		.mandala-container {
 			transform: translate(6rem, 0rem);
@@ -328,12 +354,7 @@
 	}
 	@media (min-width: 768px) {
 		.mandala-container {
-			transform: translate(10rem, -1rem);
+			transform: translate(9rem, -1rem);
 		}
 	}
-	/* @media (min-width: 1024px) {
-		.mandala-container {
-			transform: translate(13rem, -6rem);
-		}
-	} */
 </style>
