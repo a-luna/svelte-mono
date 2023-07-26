@@ -129,23 +129,23 @@ const LCH2_REGEX = `^lch\\(${LIGHT2_REGEX}${CHROMA2_REGEX}${HUE2_REGEX}${ALPHA_R
 const OKLCH1_REGEX = `^oklch\\(${LIGHT1_REGEX}${CHROMA1_REGEX}${HUE1_REGEX}\\)$`;
 const OKLCH2_REGEX = `^oklch\\(${LIGHT2_REGEX}${CHROMA2_REGEX}${HUE2_REGEX}${ALPHA_REGEX}\\)$`;
 
-const A1_AXIS_PERC_REGEX = `(?:(?<aaxisPercent1>${POS_NEG_INT_OR_FLOAT})%\\s)`;
-const A2_AXIS_PERC_REGEX = `(?:(?<aaxisPercent2>${POS_NEG_INT_OR_FLOAT})%\\s)`;
+const A1_AXIS_PERC_REGEX = `(?:(?<aaxisPercent1>${POS_NEG_INT_OR_FLOAT})%)`;
+const A2_AXIS_PERC_REGEX = `(?:(?<aaxisPercent2>${POS_NEG_INT_OR_FLOAT})%)`;
 const B1_AXIS_PERC_REGEX = `(?:(?<baxisPercent1>${POS_NEG_INT_OR_FLOAT})%)`;
 const B2_AXIS_PERC_REGEX = `(?:(?<baxisPercent2>${POS_NEG_INT_OR_FLOAT})%)`;
-const A1_AXIS_DEC_REGEX = `(?:(?<aaxisFloat1>${POS_NEG_INT_OR_FLOAT})\\s)`;
-const A2_AXIS_DEC_REGEX = `(?:(?<aaxisFloat2>${POS_NEG_INT_OR_FLOAT})\\s)`;
+const A1_AXIS_DEC_REGEX = `(?:(?<aaxisFloat1>${POS_NEG_INT_OR_FLOAT}))`;
+const A2_AXIS_DEC_REGEX = `(?:(?<aaxisFloat2>${POS_NEG_INT_OR_FLOAT}))`;
 const B1_AXIS_DEC_REGEX = `(?:(?<baxisFloat1>${POS_NEG_INT_OR_FLOAT}))`;
 const B2_AXIS_DEC_REGEX = `(?:(?<baxisFloat2>${POS_NEG_INT_OR_FLOAT}))`;
 
 const A_AXIS1_REGEX = `(?:${A1_AXIS_PERC_REGEX}|${A1_AXIS_DEC_REGEX})`;
 const A_AXIS2_REGEX = `(?:${A2_AXIS_PERC_REGEX}|${A2_AXIS_DEC_REGEX})`;
 const B_AXIS1_REGEX = `(?:${B1_AXIS_PERC_REGEX}|${B1_AXIS_DEC_REGEX})`;
-const B_AXIS2_REGEX = `(?:${B2_AXIS_PERC_REGEX}|${B2_AXIS_DEC_REGEX}\\s\\/\\s)`;
-const LAB1_REGEX = `^lab\\(${LIGHT1_REGEX}${A_AXIS1_REGEX}${B_AXIS1_REGEX}\\)$`;
-const LAB2_REGEX = `^lab\\(${LIGHT2_REGEX}${A_AXIS2_REGEX}${B_AXIS2_REGEX}${ALPHA_REGEX}\\)$`;
-const OKLAB1_REGEX = `^oklab\\(${LIGHT1_REGEX}${A_AXIS1_REGEX}${B_AXIS1_REGEX}\\)$`;
-const OKLAB2_REGEX = `^oklab\\(${LIGHT2_REGEX}${A_AXIS2_REGEX}${B_AXIS2_REGEX}${ALPHA_REGEX}\\)$`;
+const B_AXIS2_REGEX = `(?:${B2_AXIS_PERC_REGEX}|${B2_AXIS_DEC_REGEX})`;
+const LAB1_REGEX = `^lab\\(${LIGHT1_REGEX}${A_AXIS1_REGEX}\\s${B_AXIS1_REGEX}\\)$`;
+const LAB2_REGEX = `^lab\\(${LIGHT2_REGEX}${A_AXIS2_REGEX}\\s${B_AXIS2_REGEX}\\s\\/\\s${ALPHA_REGEX}\\)$`;
+const OKLAB1_REGEX = `^oklab\\(${LIGHT1_REGEX}${A_AXIS1_REGEX}\\s${B_AXIS1_REGEX}\\)$`;
+const OKLAB2_REGEX = `^oklab\\(${LIGHT2_REGEX}${A_AXIS2_REGEX}\\s${B_AXIS2_REGEX}\\s\\/\\s${ALPHA_REGEX}\\)$`;
 
 export const HEX_REGEX = RegExp(`${RGB_HEX_RAW}|${RGBA_HEX_RAW}`, 'i');
 export const RGB_REGEX = RegExp(`${RGB_RAW_REGEX}|${RGBA_RAW_REGEX}`, 'i');
