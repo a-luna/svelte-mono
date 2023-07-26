@@ -41,6 +41,9 @@ async function fetchAndCache(request: Request) {
 }
 // listen for the fetch events
 worker.addEventListener('fetch', (event) => {
+	if (event.request.url.indexOf('/characters/') !== -1) {
+		return false;
+	}
 	if (event.request.method !== 'GET' || event.request.headers.has('range')) return;
 	const url = new URL(event.request.url);
 	// only cache files that are local to your application

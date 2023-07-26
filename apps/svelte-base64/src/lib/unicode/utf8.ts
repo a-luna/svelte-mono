@@ -18,7 +18,7 @@ import { validateAsciiBytes } from '$lib/validation';
 
 export async function getUtf8StringDecomposition(s: string): Promise<Utf8StringComposition> {
 	const result = await getFullUtf8StringDecomposition(s);
-	return result.success ? result.value : getSimpleUtf8StringDecomposition(s);
+	return result.success && result.value ? result.value : getSimpleUtf8StringDecomposition(s);
 }
 
 async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8StringComposition>> {

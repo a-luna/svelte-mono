@@ -3,6 +3,10 @@ RUN npm --no-update-notifier --no-fund --global install pnpm
 ARG PACKAGE_PATH=apps/svelte-base64
 ARG DEPS_PATH=packages/shared-ui
 ENV NODE_ENV=production
+ARG ENV
+ENV ENV=${ENV}
+ARG PUBLIC_API_BASE_URL
+ENV PUBLIC_API_BASE_URL=${PUBLIC_API_BASE_URL}
 WORKDIR /root/monorepo
 
 FROM base AS dev

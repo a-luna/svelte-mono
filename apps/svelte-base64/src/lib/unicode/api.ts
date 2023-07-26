@@ -1,14 +1,19 @@
+import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import type { HttpResponse, Result, UnicodeCharInfo } from '$lib/types';
+import { UnicodeCharInfoSchema } from '$lib/types/api';
 import { COMPLEX_SYMBOL_REGEX } from '$lib/unicode/regex';
 import { strictUriEncode } from '$lib/util';
+import { z } from 'zod';
 import { apiMocks } from './mocks';
 
 export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse>> {
-	const charData: HttpResponse = [];
+	const charData: HttpResponse[] = [];
 	for (const utf8 of s.match(COMPLEX_SYMBOL_REGEX)) {
 		const fetchMethod = import.meta.env.MODE !== 'test' ? fetchUnicodeCharInfo : mockFetchUnicodeCharInfo;
 		try {
-			const results = await fetchMethod(utf8);
+			const resultsJson = await fetchMethod(utf8);
+			const results = z.array(UnicodeCharInfoSchema).parse(resultsJson);
+			console.log({ char: utf8, results });
 			charData.push({ char: utf8, results });
 		} catch (error) {
 			return {
@@ -21,33 +26,17 @@ export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse
 }
 
 async function fetchUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
-	const response = await fetch(getUrlForApiRequest(utf8), {
+	const endpoint = `${PUBLIC_API_BASE_URL}/characters/${strictUriEncode(utf8)}?show_props=UTF8&show_props=Basic`;
+	const response = await fetch(endpoint, {
 		method: 'GET',
 		headers: { Accept: 'application/json' },
 	});
-	if (response.ok) {
-		const results = await response.text().then<UnicodeCharInfo[]>((t: string) => JSON.parse(t) as UnicodeCharInfo[]);
-		if (results) {
-			return results;
-		} else {
-			return Promise.reject(new Error(response.statusText));
-		}
-	} else {
-		return Promise.reject('Unknown error occurred!');
+	if (!response.ok) {
+		return Promise.reject(Error(`Error! ${response.statusText} (${response.status})`));
 	}
-}
-
-const getApiBaseUrl = (): string =>
-	import.meta.env.MODE === 'production' ? 'https://unicode-api.aaronluna.dev/v1' : 'http://localhost:3507/v1';
-
-function getUrlForApiRequest(utf8: string): string {
-	const endpoint = `characters/${strictUriEncode(utf8)}`;
-	return `${getApiBaseUrl()}/${endpoint}?show_props=UTF8`;
+	return await response.json().catch(() => ({}));
 }
 
 function mockFetchUnicodeCharInfo(utf8: string): UnicodeCharInfo[] {
-	const encodedChar = strictUriEncode(utf8);
-	if (Object.keys(apiMocks).includes(encodedChar)) {
-		return apiMocks[encodedChar];
-	}
+	return apiMocks?.[strictUriEncode(utf8)] || [];
 }
