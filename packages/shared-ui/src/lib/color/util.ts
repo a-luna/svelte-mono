@@ -97,12 +97,14 @@ export const copyCssColor = (color: CssColor): CssColor => ({
 	name: color.name,
 });
 
-const integer = RegExp(/-?\d*\.0?$/);
+const signedInteger = /-?\d*\.0?$/;
 
 const clamp = (n: number): number => {
 	return Math.abs(n) < 1
-		? parseFloat(n.toFixed(4))
-		: integer.test(n.toFixed(2))
+		? Object.is(parseFloat(n.toFixed(4)), -0)
+			? 0
+			: parseFloat(n.toFixed(4))
+		: signedInteger.test(n.toFixed(2))
 		? parseInt(n.toFixed(2))
 		: parseFloat(n.toFixed(2));
 };
