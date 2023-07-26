@@ -1,15 +1,14 @@
 import { ColorParser } from '$lib/color';
-import { clampColorComponents } from '$lib/color/util';
 import type { HslColor, LabColor, LchColor, OklabColor, OklchColor, RgbColor } from '$lib/types';
 import { describe, expect, test } from 'vitest';
 
-describe('ColorParser can parse oklch strings in CSS Colors 4 notation', () => {
+describe('ColorParser can parse OKLCH strings in CSS Colors 4 notation', () => {
 	test('can parse a string with luminosity as a percent value, chroma as a float value, hue as a unitless number, and alpha value as a unitless number: oklch(L% C H / a)', () => {
 		const oklchString = 'oklch(63.8% 0.280 337.72 / 0.73)';
 		const result = ColorParser.parse(oklchString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C5BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 197, a: 186 });
@@ -26,7 +25,7 @@ describe('ColorParser can parse oklch strings in CSS Colors 4 notation', () => {
 		const result = ColorParser.parse(oklchString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EAD9AB80');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 234, g: 217, b: 171, a: 128 });
@@ -43,7 +42,7 @@ describe('ColorParser can parse oklch strings in CSS Colors 4 notation', () => {
 		const result = ColorParser.parse(oklchString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#667CC3');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 102, g: 124, b: 195, a: 255 });

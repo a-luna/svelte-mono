@@ -1,52 +1,14 @@
 import { ColorParser } from '$lib/color';
-import { clampColorComponents } from '$lib/color/util';
 import type { HslColor, LabColor, LchColor, OklabColor, OklchColor, RgbColor } from '$lib/types';
 import { describe, expect, test } from 'vitest';
 
-// TODO: Create test cases that cover all existing AND new color space conversion/parsing processes
-//	 const test = [
-
-//	 	// Named Colors
-//	 	'PeachPuff', // 50
-//	 	'peach puff', // 51
-//	 	'Midnight_blue', // 52
-//	 	'chartreuse', // 53
-
-//	 	// LCH
-//	 	'lch(46% 33 317)', // 67
-//	 	'lch(46% 22% 317)', // 68
-//	 	'lch(46% 33 0.88turn / 1)', // 69
-//	 	'lch(46 22% 5.53269rad / 1)', // 70
-//	 	'lch(52.92% 24.25 52.86 / .5)', // 71
-//	 	'lch(52.92 16.67% 52.86deg / 50%)', // 72
-//	 	'lch(52.61 40.94 4.88186rad)', // 73
-//	 	'lch(52.61 27.29% 279.71deg)', // 74
-//	 	'lch(52.61% 27.29% 0.776972turn)', // 75
-//	 	'lch(88.7% 0.062 .25turn / 50%)', // 76
-//	 	'lch(18% 0 224 / 85%)', // 77
-//	 	'lch(0 1 1 / 0.4621)', // 78
-//	 	'lch(1 1 20deg / 0)', // 79
-
-//	 	// LAB
-//	 	'lab(29.2345% 39.3825 20.0664)', // 80
-//	 	'lab(52.2345% 40.1645 59.9971)', // 81
-//	 	'lab(52.2345% 40.1645 59.9971 / .5)', // 82
-//	 	'lab(72.58% -48.24 72.19)', // 83
-
-//	 	// OKLAB
-//	 	'oklab(40.1% 0.1143 0.045)', // 84
-//	 	'oklab(59.69% 0.1007 0.1191)', // 85
-//	 	'oklab(59.69% 0.1007 0.1191 / 0.5)', // 86
-//	 	'oklab(74.76% -0.138 0.154)', // 87
-//	 ];
-
-describe('ColorParser can parse strings in rbg functional notation', () => {
+describe('ColorParser can parse strings in RGB functional notation', () => {
 	test('can parse a string with comma-separated, integer values: rgb(R, B, G)', () => {
 		const rbgString = 'rgb(1, 225, 236)';
 		const result = ColorParser.parse(rbgString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#01E1EC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 1, g: 225, b: 236, a: 255 });
@@ -63,7 +25,7 @@ describe('ColorParser can parse strings in rbg functional notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#78EB00');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 255 });
@@ -76,13 +38,13 @@ describe('ColorParser can parse strings in rbg functional notation', () => {
 	});
 });
 
-describe('ColorParser can parse strings in rbga functional notation', () => {
+describe('ColorParser can parse strings in RGBA functional notation', () => {
 	test('can parse a string with color channels as comma-separated, integer values and alpha as a float value: rgba(R,B,G,A)', () => {
 		const rbgString = 'rgba(1,225,236,0.51)';
 		const result = ColorParser.parse(rbgString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#01E1EC82');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 1, g: 225, b: 236, a: 130 });
@@ -99,7 +61,7 @@ describe('ColorParser can parse strings in rbga functional notation', () => {
 		const result = ColorParser.parse(rbgString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#78EB00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 204 });
@@ -116,7 +78,7 @@ describe('ColorParser can parse strings in rbga functional notation', () => {
 		const result = ColorParser.parse(rbgString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#78EB00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 204 });
@@ -129,13 +91,13 @@ describe('ColorParser can parse strings in rbga functional notation', () => {
 	});
 });
 
-describe('ColorParser can parse rgb strings in CSS Colors 4 notation', () => {
+describe('ColorParser can parse RGB strings in CSS Colors 4 notation', () => {
 	test('can parse a string with space-separated, percent values: rgb(R% B% G%)', () => {
 		const hexString = 'rgb(0% 0% 27%)';
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#000045');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 0, g: 0, b: 69, a: 255 });
@@ -152,7 +114,7 @@ describe('ColorParser can parse rgb strings in CSS Colors 4 notation', () => {
 		const result = ColorParser.parse(rbgString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EE00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 238, g: 0, b: 204, a: 255 });
@@ -163,15 +125,13 @@ describe('ColorParser can parse rgb strings in CSS Colors 4 notation', () => {
 			expect(color.oklch).toStrictEqual<OklchColor>({ l: 64.71, c: 0.2855, h: 336.65, a: 1 });
 		}
 	});
-});
 
-describe('ColorParser can parse rgba strings in CSS Colors 4 notation', () => {
-	test('can parse a string with color channels as space-separated, integer values and alpha as a float value: rgba(R B G / A)', () => {
-		const rbgString = 'rgba(1 225 236 / 0.51)';
+	test('can parse a string with color channels as space-separated, integer values and alpha as a float value: rgb(R B G / A)', () => {
+		const rbgString = 'rgb(1 225 236 / 0.51)';
 		const result = ColorParser.parse(rbgString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#01E1EC82');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 1, g: 225, b: 236, a: 130 });
@@ -183,12 +143,12 @@ describe('ColorParser can parse rgba strings in CSS Colors 4 notation', () => {
 		}
 	});
 
-	test('can parse a string with color channels as space-separated, percent values and alpha as a percent value: rgba(R% B% G% / A%)', () => {
-		const rbgString = 'rgba(47% 92% 0% / 80%)';
+	test('can parse a string with color channels as space-separated, percent values and alpha as a percent value: rgb(R% B% G% / A%)', () => {
+		const rbgString = 'rgb(47% 92% 0% / 80%)';
 		const result = ColorParser.parse(rbgString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#78EB00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 204 });
@@ -200,12 +160,12 @@ describe('ColorParser can parse rgba strings in CSS Colors 4 notation', () => {
 		}
 	});
 
-	test('can parse a string with color channels as space-separated, percent values and alpha as a float value: rgba(R% B% G% / A)', () => {
-		const rbgString = 'rgba(47% 92% 0% / 0.8)';
+	test('can parse a string with color channels as space-separated, percent values and alpha as a float value: rgb(R% B% G% / A)', () => {
+		const rbgString = 'rgb(47% 92% 0% / 0.8)';
 		const result = ColorParser.parse(rbgString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#78EB00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 204 });

@@ -1,5 +1,4 @@
 import { ColorParser } from '$lib/color';
-import { clampColorComponents } from '$lib/color/util';
 import type { HslColor, LabColor, LchColor, OklabColor, OklchColor, RgbColor } from '$lib/types';
 import { describe, expect, test } from 'vitest';
 
@@ -9,7 +8,7 @@ describe('ColorParser can parse strings in hexadecimal notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#000044');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 0, g: 0, b: 68, a: 255 });
@@ -26,7 +25,7 @@ describe('ColorParser can parse strings in hexadecimal notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EE00CCCC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 238, g: 0, b: 204, a: 204 });
@@ -43,7 +42,7 @@ describe('ColorParser can parse strings in hexadecimal notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#01E1EC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 1, g: 225, b: 236, a: 255 });
@@ -60,7 +59,7 @@ describe('ColorParser can parse strings in hexadecimal notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#79EB0082');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 121, g: 235, b: 0, a: 130 });

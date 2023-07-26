@@ -1,15 +1,14 @@
 import { ColorParser } from '$lib/color';
-import { clampColorComponents } from '$lib/color/util';
 import type { HslColor, LabColor, LchColor, OklabColor, OklchColor, RgbColor } from '$lib/types';
 import { describe, expect, test } from 'vitest';
 
-describe('ColorParser can parse strings in hsl functional notation', () => {
+describe('ColorParser can parse strings in HSL functional notation', () => {
 	test('can parse a string with unitless hue, and comma-separated, percent values: hsl(H, S%, L%)', () => {
 		const hexString = 'hsl(309, 100%, 46%)';
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EB00C7');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 199, a: 255 });
@@ -26,7 +25,7 @@ describe('ColorParser can parse strings in hsl functional notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EB00C7');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 199, a: 255 });
@@ -43,7 +42,7 @@ describe('ColorParser can parse strings in hsl functional notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EB00C8');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 200, a: 255 });
@@ -60,7 +59,7 @@ describe('ColorParser can parse strings in hsl functional notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EB00C5');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 197, a: 255 });
@@ -73,13 +72,13 @@ describe('ColorParser can parse strings in hsl functional notation', () => {
 	});
 });
 
-describe('ColorParser can parse strings in hsla functional notation', () => {
+describe('ColorParser can parse strings in HSLA functional notation', () => {
 	test('can parse a string with unitless hue, and comma-separated, percent values, and alpha as a percent value: hsla(H, S%, L%, A%)', () => {
 		const hexString = 'hsla(309,100%,46%,73%)';
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C7BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 199, a: 186 });
@@ -96,7 +95,7 @@ describe('ColorParser can parse strings in hsla functional notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C7BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 199, a: 186 });
@@ -113,7 +112,7 @@ describe('ColorParser can parse strings in hsla functional notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C8BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 200, a: 186 });
@@ -130,7 +129,7 @@ describe('ColorParser can parse strings in hsla functional notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C5BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 197, a: 186 });
@@ -143,13 +142,13 @@ describe('ColorParser can parse strings in hsla functional notation', () => {
 	});
 });
 
-describe('ColorParser can parse hsl strings in CSS Colors 4 notation', () => {
+describe('ColorParser can parse HSL strings in CSS Colors 4 notation', () => {
 	test('can parse a string with unitless hue, and space-separated, percent values: hsl(H S% L%)', () => {
 		const hexString = 'hsl(309 100% 46%)';
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EB00C7');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 199, a: 255 });
@@ -166,7 +165,7 @@ describe('ColorParser can parse hsl strings in CSS Colors 4 notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EB00C7');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 199, a: 255 });
@@ -183,7 +182,7 @@ describe('ColorParser can parse hsl strings in CSS Colors 4 notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EB00C8');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 200, a: 255 });
@@ -200,7 +199,7 @@ describe('ColorParser can parse hsl strings in CSS Colors 4 notation', () => {
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EB00C5');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 197, a: 255 });
@@ -211,15 +210,13 @@ describe('ColorParser can parse hsl strings in CSS Colors 4 notation', () => {
 			expect(color.oklch).toStrictEqual<OklchColor>({ l: 63.8, c: 0.2801, h: 337.72, a: 1 });
 		}
 	});
-});
 
-describe('ColorParser can parse hsla strings in CSS Colors 4 notation', () => {
-	test('can parse a string with unitless hue, and space-separated, percent values, and alpha as a percent value: hsla(H S% L% / A%)', () => {
-		const hexString = 'hsla(309 100% 46% / 73%)';
+	test('can parse a string with unitless hue, and space-separated, percent values, and alpha as a percent value: hsl(H S% L% / A%)', () => {
+		const hexString = 'hsl(309 100% 46% / 73%)';
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C7BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 199, a: 186 });
@@ -231,12 +228,12 @@ describe('ColorParser can parse hsla strings in CSS Colors 4 notation', () => {
 		}
 	});
 
-	test('can parse a string with hue in degrees and space-separated, percent values, and alpha as a float value: hsla(Hdeg S% L% / A)', () => {
-		const hexString = 'hsla(309deg 100% 46% / 0.73)';
+	test('can parse a string with hue in degrees and space-separated, percent values, and alpha as a float value: hsl(Hdeg S% L% / A)', () => {
+		const hexString = 'hsl(309deg 100% 46% / 0.73)';
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C7BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 199, a: 186 });
@@ -248,12 +245,12 @@ describe('ColorParser can parse hsla strings in CSS Colors 4 notation', () => {
 		}
 	});
 
-	test('can parse a string with hue in radians and space-separated, integer values, and alpha as a percent value: hsla(Hrad S% L% / A%)', () => {
-		const hexString = 'hsla(5.39rad 100% 46% / 73%)';
+	test('can parse a string with hue in radians and space-separated, integer values, and alpha as a percent value: hsl(Hrad S% L% / A%)', () => {
+		const hexString = 'hsl(5.39rad 100% 46% / 73%)';
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C8BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 200, a: 186 });
@@ -265,12 +262,12 @@ describe('ColorParser can parse hsla strings in CSS Colors 4 notation', () => {
 		}
 	});
 
-	test('can parse a string with hue in turns and space-separated, integer values, and alpha as a float value: hsla(Hturn S% L% / A)', () => {
-		const hexString = 'hsla(0.86turn 100% 46% / 0.73)';
+	test('can parse a string with hue in turns and space-separated, integer values, and alpha as a float value: hsl(Hturn S% L% / A)', () => {
+		const hexString = 'hsl(0.86turn 100% 46% / 0.73)';
 		const result = ColorParser.parse(hexString);
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
-			const color = clampColorComponents(result.value);
+			const color = result.value;
 			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C5BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 197, a: 186 });
