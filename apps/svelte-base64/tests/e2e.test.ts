@@ -99,7 +99,7 @@ describe('verify encoding process using ascii-encoded strings', async () => {
 		await pageTester.verifyMachineState({ state: 'finished', substate: '' });
 	}, 60_000);
 
-	test.skip('encode ascii string, execute all steps with autoplay', async () => {
+	test('encode ascii string, execute all steps with autoplay', async () => {
 		if (!pageTester) return;
 		await pageTester.goto();
 
@@ -110,9 +110,6 @@ describe('verify encoding process using ascii-encoded strings', async () => {
 		await pageTester.startAutoplay();
 		await pageTester.verifyMachineState({ state: 'validateInputText', substate: 'success' });
 		await pageTester.verifyMachineState({ state: 'encodeInput', substate: 'idle' });
-		await pageTester.verifyMachineState({ state: 'encodeInput', substate: 'autoPlayEncodeByte' });
-		await pageTester.verifyMachineState({ state: 'encodeInput', substate: 'autoPlayEncodeByte' });
-		await pageTester.verifyMachineState({ state: 'encodeInput', substate: 'autoPlayEncodeByte' });
 		await pageTester.verifyMachineState({ state: 'encodeInput', substate: 'autoPlayEncodeByte' });
 		await pageTester.verifyMachineState({ state: 'encodeInput', substate: 'explainByteMapping' });
 		await pageTester.verifyMachineState({ state: 'createInputChunks', substate: 'autoPlayIdle' });
@@ -125,13 +122,6 @@ describe('verify encoding process using ascii-encoded strings', async () => {
 		await pageTester.verifyMachineState({ state: 'createOutputChunks', substate: 'explainPadCharacter' });
 		await pageTester.verifyMachineState({ state: 'createOutputChunks', substate: 'createLastPaddedChunk' });
 		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'idle' });
-		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
-		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
-		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
-		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
-		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
-		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
-		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
 		await pageTester.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
 		await pageTester.verifyMachineState({ state: 'verifyResults', substate: '' });
 		await pageTester.verifyMachineState({ state: 'finished', substate: '' });

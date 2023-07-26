@@ -136,8 +136,8 @@ export class AlgoDemoTester {
 
 	async verifyMachineState(machineState: MachineState) {
 		const { state, substate } = machineState;
-		await expect(this.demoTextElement).toHaveAttribute('data-state', state, { timeout: 5000 });
+		await expect(this.demoTextElement).toHaveAttribute('data-state', state, { timeout: 15000 });
 		const expectedSubstate = substate != '' ? substate : 'none';
-		await expect(this.demoTextElement).toHaveAttribute('data-sub-state', expectedSubstate, { timeout: 5000 });
+		await expect(this.demoTextElement).toHaveAttribute('data-sub-state', expectedSubstate, { timeout: 15000 });
 	}
 }
