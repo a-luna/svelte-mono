@@ -1,12 +1,22 @@
+import { parseHex, parseHsl, parseLab, parseLch, parseOklab, parseOklch, parseRgb } from '$lib/color/parsers';
 import { HEX_REGEX, HSL_REGEX, LAB_REGEX, LCH_REGEX, OKLAB_REGEX, OKLCH_REGEX, RGB_REGEX } from '$lib/color/regex';
+import { clampColorComponents } from '$lib/color/util';
 import { X11_NAMED_COLORS } from '$lib/constants';
 import type { CssColor, Result } from '$lib/types';
 import { normalize } from '$lib/util';
-import { parseHex, parseHsl, parseLab, parseLch, parseOklab, parseOklch, parseRgb } from '.';
 
-export function parseColorFromString(s: string): Result<CssColor> {
-	const color = parseColorFromCssString(s);
-	return color ? { success: true, value: color } : parseNamedColor(s);
+export function parseColorFromString(s: string, clamped = true): Result<CssColor> {
+	let color = parseColorFromCssString(s);
+	if (color) {
+		color = clamped ? clampColorComponents(color) : color;
+		return { success: true, value: color };
+	}
+	const result = parseNamedColor(s);
+	if (result.success) {
+		color = clamped ? clampColorComponents(result.value) : result.value;
+		return { success: true, value: color };
+	}
+	return result;
 }
 
 function parseColorFromCssString(s: string): CssColor | undefined {
