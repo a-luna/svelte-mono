@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import ByLine from '$lib/components/ByLine.svelte';
 	import PostNav from '$lib/components/PostNav.svelte';
 	import { enableCopyCodeButtons } from '$lib/content/browser';
 	import { MY_TWITTER_HANDLE, SITE_TITLE } from '$lib/siteConfig';
 	import type { BlogPost, ContentType, ProjectReadme, TutorialSection } from '$lib/types';
+	import Giscus from '@giscus/svelte';
 	import { onMount } from 'svelte';
 
 	export let content: ProjectReadme | BlogPost | TutorialSection;
@@ -51,6 +53,22 @@
 		<div class="wrapper nav-wrapper">
 			<PostNav slug={content.slug} {contentType} />
 		</div>
+		{#if !dev}
+			<Giscus
+				repo="a-luna/svelte-mono"
+				repoId="R_kgDOJRXMQw"
+				category="Giscus"
+				categoryId="DIC_kwDOJRXMQ84CYIYD"
+				mapping="og:title"
+				strict="1"
+				reactionsEnabled="1"
+				emitMetadata="0"
+				inputPosition="top"
+				theme="transparent_dark"
+				lang="en"
+				loading="lazy"
+			/>
+		{/if}
 	{/if}
 </article>
 
