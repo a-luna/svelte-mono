@@ -31,13 +31,13 @@ function getMatrixOfMinors3x3(matrix: Matrix3x3): Matrix3x3 {
 
 function calculateMinorDeterminantForMatrix3x3Item(m: Matrix3x3, row: number, col: number): number {
 	const minorDetValues = Array.from({ length: 3 }, (_, i) => i)
-		.map((i) => {
-			return Array.from({ length: 3 }, (_, j) => j).map((j) => {
+		.map((i) =>
+			Array.from({ length: 3 }, (_, j) => j).map((j) => {
 				if (row !== i && col !== j) {
 					return m[i][j];
 				}
-			});
-		})
+			}),
+		)
 		.flat()
 		.filter((x): x is number => !!x);
 
