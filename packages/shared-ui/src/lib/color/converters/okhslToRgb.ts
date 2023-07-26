@@ -4,9 +4,9 @@ import type { OkhslColor, RgbColor } from '$lib/types';
 export function okhslToRgb(okhsl: OkhslColor): RgbColor {
 	const { h, s, l, a } = okhsl;
 	if (l == 1) {
-		return { r: 255, g: 255, b: 255, a: 1 };
+		return { r: 255, g: 255, b: 255, a };
 	} else if (l == 0) {
-		return { r: 0, g: 0, b: 0, a: 1 };
+		return { r: 0, g: 0, b: 0, a };
 	}
 
 	const a_ = Math.cos(2 * Math.PI * h);
