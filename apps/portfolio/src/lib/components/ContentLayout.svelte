@@ -90,7 +90,6 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 0.5rem;
-		max-width: var(--max-width);
 	}
 	h1 {
 		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
@@ -113,12 +112,12 @@
 		padding-left: var(--mobile-page-padding);
 		padding-right: var(--mobile-page-padding);
 		width: 100%;
+		max-width: var(--max-width);
 		margin: 0.5rem auto;
 	}
 	.content-wrapper,
 	.nav-wrapper {
 		background-color: var(--page-bg-color);
-		max-width: var(--max-width);
 		margin: 0 auto 2rem auto;
 		padding-top: 0;
 		padding-bottom: 0;
