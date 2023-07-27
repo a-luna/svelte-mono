@@ -27,7 +27,7 @@ async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8Str
 		return { success: false, error: result.error };
 	}
 	const unicodeInfo = result.value;
-	const complexCharMap: Utf8ComplexCharacterMap[] = unicodeInfo.map(({ char, results }) => {
+	const complexCharMap: Utf8ComplexCharacterMap[] = unicodeInfo?.map(({ char, results }) => {
 		const charMap = results.map((charData) => {
 			return {
 				char: charData.character,

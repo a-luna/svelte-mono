@@ -7,13 +7,11 @@ import { z } from 'zod';
 import { apiMocks } from './mocks';
 
 export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse>> {
+	const fetchMethod = import.meta.env.MODE !== 'test' ? fetchUnicodeCharInfo : mockFetchUnicodeCharInfo;
 	const charData: HttpResponse[] = [];
 	for (const utf8 of s.match(COMPLEX_SYMBOL_REGEX)) {
-		const fetchMethod = import.meta.env.MODE !== 'test' ? fetchUnicodeCharInfo : mockFetchUnicodeCharInfo;
 		try {
-			const resultsJson = await fetchMethod(utf8);
-			const results = z.array(UnicodeCharInfoSchema).parse(resultsJson);
-			console.log({ char: utf8, results });
+			const results = await fetchMethod(utf8);
 			charData.push({ char: utf8, results });
 		} catch (error) {
 			return {
@@ -34,7 +32,8 @@ async function fetchUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
 	if (!response.ok) {
 		return Promise.reject(Error(`Error! ${response.statusText} (${response.status})`));
 	}
-	return await response.json().catch(() => ({}));
+	const resultsJson = await response.json().catch(() => ({}));
+	return z.array(UnicodeCharInfoSchema).parse(resultsJson);
 }
 
 function mockFetchUnicodeCharInfo(utf8: string): UnicodeCharInfo[] {
