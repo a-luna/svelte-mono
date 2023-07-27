@@ -54,20 +54,22 @@
 			<PostNav slug={content.slug} {contentType} />
 		</div>
 		{#if !dev}
-			<Giscus
-				repo="a-luna/svelte-mono"
-				repoId="R_kgDOJRXMQw"
-				category="Giscus"
-				categoryId="DIC_kwDOJRXMQ84CYIYD"
-				mapping="og:title"
-				strict="1"
-				reactionsEnabled="1"
-				emitMetadata="0"
-				inputPosition="top"
-				theme="transparent_dark"
-				lang="en"
-				loading="lazy"
-			/>
+			<div class="wrapper">
+				<Giscus
+					repo="a-luna/svelte-mono"
+					repoId="R_kgDOJRXMQw"
+					category="Giscus"
+					categoryId="DIC_kwDOJRXMQ84CYIYD"
+					mapping="og:title"
+					strict="1"
+					reactionsEnabled="1"
+					emitMetadata="0"
+					inputPosition="top"
+					theme="transparent_dark"
+					lang="en"
+					loading="lazy"
+				/>
+			</div>
 		{/if}
 	{/if}
 </article>
