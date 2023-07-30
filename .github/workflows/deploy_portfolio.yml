@@ -7,7 +7,7 @@ on:
 
 jobs:
   bake:
-    name: Build docker image for portfolio-site
+    name: Build docker image for portfolio site and deploy to dokku
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,21 +29,9 @@ jobs:
           files: ./docker-bake.hcl
           targets: portfolio
           push: true
-      - name: Bake svelte-base64 image and push to github container registry
-        uses: docker/bake-action@v3.1.0
-        with:
-          files: ./docker-bake.hcl
-          targets: base64
-          push: true
       - name: Deploy portfolio docker image to dokku
         uses: dokku/github-action@master
         with:
           git_remote_url: 'ssh://dokku@${{ secrets.DOKKU_HOST }}:22/portfolio'
           ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
           deploy_docker_image: ghcr.io/${{ github.repository_owner }}/portfolio:${{ github.sha }}
-      - name: Deploy svelte-base64 docker image to dokku
-        uses: dokku/github-action@master
-        with:
-          git_remote_url: 'ssh://dokku@${{ secrets.DOKKU_HOST }}:22/base64'
-          ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
-          deploy_docker_image: ghcr.io/${{ github.repository_owner }}/svelte-base64:${{ github.sha }}
