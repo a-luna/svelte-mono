@@ -7,6 +7,8 @@ export const B64_BIT_GROUP_REGEX = /base64-chunk-(?<chunk>\d+)-digit-(?<b64Char>
 
 export const divmod = (x: number, y: number): [number, number] => [(x / y) | 0, x % y];
 
+export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 export const stringToByteArray = (s: string, encoding: StringEncoding): number[] =>
 	encoding === 'hex'
 		? hexStringToByteArray(s)

@@ -2,7 +2,7 @@ import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import type { HttpResponse, Result, UnicodeCharInfo } from '$lib/types';
 import { UnicodeCharInfoSchema } from '$lib/types/api';
 import { COMPLEX_SYMBOL_REGEX } from '$lib/unicode/regex';
-import { strictUriEncode } from '$lib/util';
+import { sleep, strictUriEncode } from '$lib/util';
 import { z } from 'zod';
 import { apiMocks } from './mocks';
 
@@ -27,7 +27,7 @@ async function fetchUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
 	const endpoint = `${PUBLIC_API_BASE_URL}/characters/${strictUriEncode(utf8)}?show_props=UTF8&show_props=Basic`;
 	const response = await fetch(endpoint, {
 		method: 'GET',
-		headers: { Accept: 'application/json' },
+		headers: { Accept: 'application/json', 'x-unicodeapi-test': 'true' },
 	});
 	if (!response.ok) {
 		return Promise.reject(Error(`Error! ${response.statusText} (${response.status})`));
@@ -36,6 +36,7 @@ async function fetchUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
 	return z.array(UnicodeCharInfoSchema).parse(resultsJson);
 }
 
-function mockFetchUnicodeCharInfo(utf8: string): UnicodeCharInfo[] {
+async function mockFetchUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
+	await sleep(1);
 	return apiMocks?.[strictUriEncode(utf8)] || [];
 }
