@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getRandomHexString } from '$lib/util';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	export let style = '';
 	export let inputText: string;
@@ -30,6 +30,8 @@
 			dispatch('submit');
 		}
 	}
+
+	onMount(() => inputTextElement.focus());
 </script>
 
 <input
