@@ -16,6 +16,7 @@
 		getBase64AlphabetVerbose,
 		getEncodeInputText_IdleDemoText,
 	} from '$lib/components/AlgorithmDemo/DemoText/_demoText';
+	import { defaultEncoderInputChunk } from '$lib/constants';
 	import { getAppContext } from '$lib/stores/context';
 	import type { StringEncoding } from '$lib/types';
 
@@ -31,11 +32,11 @@
 			? $state.context.base64Maps.length - 2
 			: $state.context.base64Maps.length - 1
 		: $state.context.base64Maps.length;
-	$: finalInputChunk = $state.context.input.chunks.slice(-1)[0];
-	$: finalInputChunkSize = finalInputChunk.bytes.length;
+	$: finalInputChunk = $state.context.input.chunks?.slice(-1)[0] || defaultEncoderInputChunk;
+	$: finalInputChunkSize = finalInputChunk?.bytes.length;
 	$: finalInputChunkSizeVerbose =
 		finalInputChunkSize === 2 ? '18 bits (two 8-bit bytes + 2 pad bits)' : '12 bits (one 8-bit byte + 4 pad bits)';
-	$: finalChunkBase64 = $state.context.output.chunks.slice(-1)[0].base64;
+	$: finalChunkBase64 = $state.context.output.chunks?.slice(-1)[0]?.base64 || '';
 </script>
 
 {#if $state.matches({ validateInputText: 'success' })}
@@ -47,7 +48,7 @@
 		<p>{@html text}</p>
 	{/each}
 	{#if $state.context.input.inputEncoding === 'utf8'}
-		{#if $state.context.output.utf8.hasCombinedChars}
+		{#if $state.context.output.utf8?.hasCombinedChars}
 			<p>{@html explainCombinedUtf8Chars($state.context.output.utf8)}</p>
 		{/if}
 		<Utf8EncodedBytes />
@@ -96,11 +97,11 @@
 		{@html describeInputChunk(
 			$state.context.currentInputChunk,
 			$state.context.inputChunkIndex,
-			$state.context.input.totalChunks,
+			$state.context.input?.totalChunks || 0,
 		)}
 	</p>
 {:else if $state.matches({ createInputChunks: 'explainLastPaddedChunk' })}
-	{#each explainLastPaddedInputChunk($state.context.currentInputChunk, $state.context.input.totalChunks) as text}
+	{#each explainLastPaddedInputChunk($state.context.currentInputChunk, $state.context.input?.totalChunks || 0) as text}
 		<p>{@html text}</p>
 	{/each}
 	<InputChunk chunk={$state.context.currentInputChunk} chunkIndex={$state.context.inputChunkIndex} />
@@ -116,7 +117,7 @@
 		</p>
 	{/if}
 {:else if $state.matches( { createOutputChunks: 'autoPlayCreateOutputChunk' }, ) || $state.matches( { createOutputChunks: 'createOutputChunk' }, ) || $state.matches( { createOutputChunks: 'createLastPaddedChunk' }, )}
-	{#each describeOutputChunk($state.context.currentOutputChunk, $state.context.outputChunkIndex, $state.context.input.totalChunks) as text}
+	{#each describeOutputChunk($state.context.currentOutputChunk, $state.context.outputChunkIndex, $state.context.input?.totalChunks || 0) as text}
 		<p>
 			{@html text}
 		</p>

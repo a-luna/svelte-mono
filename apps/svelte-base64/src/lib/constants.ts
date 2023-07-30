@@ -8,6 +8,9 @@ import type {
 	EncoderOutput,
 	HexByteMap,
 	OutputChunk,
+	Utf8ComplexCharacterMap,
+	Utf8StandardCharacterMap,
+	Utf8StringComposition,
 } from '$lib/types';
 
 export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'CONNECT'] as const;
@@ -174,4 +177,46 @@ export const defaultEncoderOutput: EncoderOutput = {
 	bytes: [],
 	outputEncoding: 'base64',
 	chunks: [defaultOutputChunk],
+};
+
+export const defaultUtf8StandardCharacterMap: Utf8StandardCharacterMap = {
+	char: '',
+	isCombined: false,
+	isASCII: false,
+	hexBytes: [],
+	bytes: [],
+	codepoint: '',
+	unicodeName: '',
+	unicodeBlock: '',
+	totalBytes: 0,
+	encoded: '',
+	hexMap: [defaultHexByteMap],
+};
+
+export const defaultUtf8ComplexCharacterMap: Utf8ComplexCharacterMap = {
+	char: '',
+	isCombined: false,
+	isASCII: false,
+	hexBytes: [],
+	bytes: [],
+	codepoints: [],
+	unicodeNames: [],
+	unicodeBlocks: [],
+	totalBytes: 0,
+	encoded: '',
+	charMap: [defaultUtf8StandardCharacterMap],
+	hexMap: [defaultHexByteMap],
+};
+
+export const defaultUtf8StringComposition: Utf8StringComposition = {
+	utf8: '',
+	hasCharacterNames: false,
+	hasCombinedChars: false,
+	stringLength: 0,
+	encoded: '',
+	totalBytes: 0,
+	hexBytes: [],
+	hexMap: [defaultHexByteMap],
+	bytes: [],
+	charMap: [defaultUtf8ComplexCharacterMap],
 };
