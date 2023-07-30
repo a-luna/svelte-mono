@@ -1,4 +1,4 @@
-name: ci
+name: deploy base64
 
 on:
   push:
