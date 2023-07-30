@@ -50,6 +50,9 @@
 
 <style lang="postcss">
 	.input-form {
+		--select-list-open-button-icon-height: 14px;
+		--select-list-open-button-icon-width: 10px;
+
 		display: grid;
 		grid-template-columns: 114px auto 114px;
 		grid-template-rows: auto auto auto 55px auto;
@@ -114,7 +117,7 @@
 	@media screen and (min-width: 764px) {
 		.input-form {
 			display: grid;
-			grid-template-columns: 86px 114px auto;
+			grid-template-columns: 100px 100px auto;
 			grid-template-rows: auto auto 20px 33px auto;
 			margin: 0 0 1rem 0;
 			width: 701px;

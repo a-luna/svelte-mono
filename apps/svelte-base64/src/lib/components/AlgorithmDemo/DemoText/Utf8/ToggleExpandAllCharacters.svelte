@@ -29,17 +29,19 @@
 	}
 	.show-combined-emoji-button {
 		display: flex;
-		gap: 0.25rem;
+		gap: 6px;
 		align-items: center;
 		align-self: center;
-		font-size: 0.7rem;
+		font-family: 'Roboto Mono', menlo, monospace;
+		font-size: 0.8rem;
 		font-weight: 700;
 		height: auto;
 		color: var(--black2);
 		background-color: var(--nav-button-bg-color);
 		border: none;
 		border-radius: 6px;
-		padding: 3px 4px;
+		padding: 6px;
+		line-height: 1;
 	}
 	.show-combined-emoji-button:hover,
 	.show-combined-emoji-button:focus,
@@ -49,8 +51,8 @@
 		background-color: var(--nav-button-active-bg-color);
 	}
 	.icon {
-		width: 0.8rem;
-		height: 0.8rem;
+		width: 0.625rem;
+		height: 0.625rem;
 		color: var(--black2);
 		background-color: transparent;
 		border: none;

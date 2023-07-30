@@ -1,70 +1,65 @@
 <script lang="ts">
 	import EncodedBytesForChar from '$lib/components/AlgorithmDemo/DemoText/Utf8/EncodedBytesForChar.svelte';
 	import ToggleExpandAllCharacters from '$lib/components/AlgorithmDemo/DemoText/Utf8/ToggleExpandAllCharacters.svelte';
+	import { defaultUtf8StringComposition } from '$lib/constants';
 	import { getAppContext } from '$lib/stores/context';
 	import type { Utf8StringComposition } from '$lib/types';
 	import { getUtf8StringDecomposition } from '$lib/unicode/utf8';
-	import { fade } from 'svelte/transition';
+	import NonPrintingCharLegend from './NonPrintingCharLegend.svelte';
 
 	let utf8ByteMap: Utf8StringComposition;
 	let charByteMapComponents: Record<number, EncodedBytesForChar> = {};
 	let anyCharsAreExpanded = false;
 	let allCharsAreExpanded = false;
-	let hasVarSelector = false;
+	let hasVarSelector15 = false;
+	let hasVarSelector16 = false;
 	let hasZeroWidthJoiner = false;
 	let hasWhiteSpace = false;
 	const { state, demoState } = getAppContext();
-	utf8ByteMap = $state.context.input.utf8;
+	utf8ByteMap = $state.context.input.utf8 || defaultUtf8StringComposition;
 
-	$: if ($demoState.getUtf8StringDecomposition) {
+	$: if ($demoState.getUtf8StringDecomposition && !utf8ByteMap.hasCharacterNames) {
 		getUtf8ByteMap();
 	}
 	$: expandableCharMaps = Object.values(charByteMapComponents).filter((charMap) => charMap.isCombined);
 	$: anyCharsAreCombined = utf8ByteMap?.hasCombinedChars;
-	$: hasMultipleCombinedChars = expandableCharMaps.length > 1;
 	$: inputEncoded = utf8ByteMap?.encoded;
 	$: inputHasWhiteSpace = inputEncoded?.includes('%20');
 	$: showLegend =
-		(anyCharsAreExpanded && (hasVarSelector || hasZeroWidthJoiner || hasWhiteSpace)) || inputHasWhiteSpace;
-
-	const zwjUrl = 'https://en.wikipedia.org/wiki/Zero-width_joiner';
-	const varUrl = 'https://en.wikipedia.org/wiki/Variation_Selectors_(Unicode_block)';
-
-	const zwj1 = " (pronounced 'zwidge') Stands for ";
-	const zwj2 = 'Zero-Width Joiner';
-	const zwj3 = ' which itself is a non-printing character that joins a set of characters into a single emoji.';
-
-	const vs1 = ' Stands for ';
-	const vs2 = 'Variation Selector-16';
-	const vs3 = ' which is a non-printing character that requests that a character should be displayed as an emoji.';
+		(anyCharsAreExpanded && (hasVarSelector15 || hasVarSelector16 || hasZeroWidthJoiner || hasWhiteSpace)) ||
+		inputHasWhiteSpace;
 
 	async function getUtf8ByteMap() {
 		utf8ByteMap = await getUtf8StringDecomposition($state.context.input.inputText);
 	}
 
-	function handleCharacterToggled() {
-		const expandedCharMaps = expandableCharMaps.filter((charMap) => charMap.expanded);
-		anyCharsAreExpanded = expandableCharMaps.some((charMap) => charMap.expanded);
-		hasVarSelector = expandedCharMaps.some((charMap) => charMap.encoded.includes('%EF%B8%8F'));
-		hasZeroWidthJoiner = expandedCharMaps.some((charMap) => charMap.encoded.includes('%E2%80%8D'));
-		hasWhiteSpace = expandedCharMaps.some((charMap) => charMap.encoded.includes('%20'));
-		if (expandableCharMaps.every((charMap) => charMap.expanded)) {
-			allCharsAreExpanded = true;
+	function handleCharacterToggled(charIndex: number) {
+		const expandChar = charByteMapComponents[charIndex];
+		if (expandChar) {
+			expandChar.expanded = !expandChar.expanded;
 		}
-		if (expandableCharMaps.every((charMap) => !charMap.expanded)) {
-			allCharsAreExpanded = false;
-		}
+		updateCharComponents();
 	}
 
 	function toggleAllChars() {
 		const expandableCharMaps = Object.values(charByteMapComponents).filter((charMap) => charMap.isCombined);
 		expandableCharMaps.forEach((charMap) => (charMap.expanded = allCharsAreExpanded));
-		handleCharacterToggled();
+		updateCharComponents();
+	}
+
+	function updateCharComponents() {
+		const expandedCharMaps = expandableCharMaps.filter((charMap) => charMap.expanded);
+		hasVarSelector15 = expandedCharMaps.some((charMap) => charMap.encoded.includes('%EF%B8%8E'));
+		hasVarSelector16 = expandedCharMaps.some((charMap) => charMap.encoded.includes('%EF%B8%8F'));
+		hasZeroWidthJoiner = expandedCharMaps.some((charMap) => charMap.encoded.includes('%E2%80%8D'));
+		hasWhiteSpace = expandedCharMaps.some((charMap) => charMap.encoded.includes('%20'));
+		anyCharsAreExpanded = anyCharsAreCombined && expandableCharMaps.some((charMap) => charMap.expanded);
+		allCharsAreExpanded = expandableCharMaps.every((charMap) => charMap.expanded);
 	}
 </script>
 
 <div class="utf8-byte-map-wrapper">
-	{#if hasMultipleCombinedChars}
+	{#if anyCharsAreCombined}
 		<ToggleExpandAllCharacters bind:toggled={allCharsAreExpanded} on:click={() => toggleAllChars()} />
 	{/if}
 	<div class="utf8-byte-map">
@@ -82,86 +77,60 @@
 				{unicodeNames}
 				{isCombined}
 				{charMap}
-				on:toggled={() => handleCharacterToggled()}
+				on:toggled={() => handleCharacterToggled(i)}
 			/>
 		{/each}
 	</div>
 	{#if showLegend}
-		<div transition:fade class="legend">
-			<ul>
-				{#if hasZeroWidthJoiner}
-					<li class="zwj">
-						<strong>ZWJ:</strong>{zwj1}<strong><a href={zwjUrl} target="_blank" rel="noreferrer">{zwj2}</a></strong
-						>{zwj3}
-					</li>
-				{/if}
-				{#if hasVarSelector}
-					<li class="variation">
-						<strong>VS16:</strong>{vs1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs2}</a></strong>{vs3}
-					</li>
-				{/if}
-				{#if hasWhiteSpace || inputHasWhiteSpace}
-					<li class="whitespace"><strong>SP:</strong> 0x20 is the hex value of the space character</li>
-				{/if}
-			</ul>
-		</div>
+		<NonPrintingCharLegend
+			{hasZeroWidthJoiner}
+			{hasVarSelector15}
+			{hasVarSelector16}
+			{hasWhiteSpace}
+			{inputHasWhiteSpace}
+		/>
 	{/if}
 </div>
 
 <style lang="postcss">
 	.utf8-byte-map-wrapper {
+		--scrollbar-track-color: var(--black3);
+		--scrollbar-thumb-color: var(--light-gray2);
+
 		line-height: 1;
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 1rem;
+		gap: 1.5rem;
 		margin: 1rem 0 0.25rem 0;
-		padding: 0.75rem 0.5rem;
-		width: 95%;
+		padding: 0.75rem;
 		overflow-y: hidden;
 		overflow-x: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--light-gray2) var(--black3);
 		scrollbar-gutter: stable;
 		background-color: var(--black3);
 		border-radius: 6px;
+
+		scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+		scrollbar-width: thin;
+	}
+	.utf8-byte-map-wrapper::-webkit-scrollbar {
+		width: 0.5rem;
+		height: 0.5rem;
+	}
+	.utf8-byte-map-wrapper::-webkit-scrollbar-thumb {
+		background-color: var(--light-gray2);
+		border-radius: 0;
+		border: 2px solid var(--black3);
+	}
+	.utf8-byte-map-wrapper::-webkit-scrollbar-track {
+		background: var(--black3);
+	}
+	.utf8-byte-map-wrapper::-webkit-scrollbar-corner {
+		background: var(--black3);
 	}
 	.utf8-byte-map {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 1px;
-	}
-	.legend {
-		font-size: 0.7rem;
-		padding: 0.25rem;
-		margin: 0 0.5rem;
-		background-color: var(--black1);
-		border: 0.5px solid var(--nav-button-autoplay-disabled-border-color);
-		border-radius: 4px;
-		color: var(--sec-color);
-	}
-	.legend ul {
-		list-style: none;
-		margin: 0.25rem;
-		padding: 0;
-	}
-	.legend li {
-		margin: 0 0 0.5rem 0;
-		line-height: 1.4;
-	}
-	.legend li:last-child {
-		margin: 0;
-	}
-	:global(#demo-text .legend code) {
-		background-color: var(--black4);
-		color: var(--sec-color);
-		padding: 0;
-		white-space: normal;
-	}
-	:global(#demo-text) .legend strong {
-		color: var(--sec-color);
-	}
-	:global(#demo-text .legend .whitespace code),
-	:global(#demo-text .legend .zwj code),
-	:global(#demo-text .legend .variation code) {
-		background-color: inherit;
-		padding: 0;
 	}
 </style>

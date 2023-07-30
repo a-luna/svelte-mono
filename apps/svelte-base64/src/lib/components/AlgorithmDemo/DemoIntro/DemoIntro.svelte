@@ -12,7 +12,7 @@
 	let openSection: 'none' | 'welcome' | 'settings' | 'navigation' = 'welcome';
 	const { demoState } = getAppContext();
 
-	$: arrowSize = $demoState.isMobileDisplay ? 'sm' : 'md';
+	$: arrowSize = $demoState.isMobileDisplay ? 'sm' : 'sm';
 
 	const getInactive_WelcomeDemoText = (): string[] => [
 		'If necessary, update the <strong>Text Encoding</strong> setting (ASCII, hex or binary) based on the type of data your string contains.',

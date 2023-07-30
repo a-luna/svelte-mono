@@ -13,7 +13,7 @@
 	$: gridStyles =
 		$demoState.isMobileDisplay || ['finished', 'inactive', { validateInputText: 'error' }].some($state.matches)
 			? 'auto auto auto 1fr'
-			: 'auto auto minmax(250px, 1fr) 276px';
+			: 'auto auto minmax(250px, 1fr) 0px';
 </script>
 
 <div class="base64-algo-demo" data-testid="demo-form" style="grid-template-rows: {gridStyles};">
