@@ -211,7 +211,7 @@ main.encode {
 	--button-disabled-text-color: var(--dark-gray4);
 	--button-disabled-bg-color: hsla(171 100% 88% / 0.25);
 	--button-disabled-border-color: var(--nav-button-border-color);
-	
+
 	/* Input Text Box */
 	--text-box-text-color: var(--pri-color);
 	--text-box-background-color: var(--black2);
@@ -349,7 +349,7 @@ textarea {
 	box-sizing: border-box;
 }
 
-.details-content > *,
+.details-content>*,
 #demo-text p {
 	line-height: 1.6;
 	font-size: 0.825rem;
@@ -357,14 +357,14 @@ textarea {
 	color: var(--light-gray2);
 }
 
-#demo-text .details-content > p,
-#demo-text .details-content > p:first-child,
-#demo-text .details-content > p:last-child,
-#demo-text .details-content > p:last-of-type:not(:only-of-type) {
+#demo-text .details-content>p,
+#demo-text .details-content>p:first-child,
+#demo-text .details-content>p:last-child,
+#demo-text .details-content>p:last-of-type:not(:only-of-type) {
 	margin: 0 0 0 1rem;
 }
 
-#demo-text details:last-child .details-content > p:last-child {
+#demo-text details:last-child .details-content>p:last-child {
 	margin: 0 0 0.5rem 1rem;
 }
 
@@ -397,9 +397,11 @@ button {
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 150ms;
 }
+
 #demo-text strong {
 	color: var(--white2);
 }
+
 #demo-text code {
 	color: var(--pri-color);
 	background-color: var(--dark-gray3);
@@ -408,6 +410,7 @@ button {
 	line-height: 1.3;
 	padding: 0 3px;
 }
+
 #demo-text .input-chunk code {
 	padding: 1px 0;
 	line-height: 1;
@@ -415,40 +418,48 @@ button {
 	color: var(--light-gray3);
 	font-size: 10px;
 }
+
 #demo-text .help-docs-link {
 	cursor: pointer;
 	color: var(--sec-color);
 	text-decoration: underline;
 	font-weight: 700;
 }
+
 #demo-text .emphasis {
 	color: var(--white2);
 	font-weight: 700;
 	text-decoration: underline;
 	font-style: italic;
 }
+
 #demo-text p .byte-id,
 #demo-text p .chunk-id,
 #demo-text p .b64Char-id {
 	display: inline-flex;
 	margin: 0;
 }
+
 #demo-text p .byte-id,
 #demo-text p .chunk-label,
 #demo-text p .b64Char-id {
 	font-size: 0.7rem;
 }
+
 #demo-text p .byte-number,
 #demo-text p .chunk-number,
 #demo-text p .b64Char-number {
 	font-size: 8px;
 }
+
 #demo-text .input-chunk {
 	margin: 1rem 0 0 1.5rem;
 }
+
 #demo-text p code {
 	display: inline-block;
 }
+
 #demo-text .explain {
 	margin: 0 0 0 2px;
 }
@@ -460,29 +471,36 @@ button {
 #demo-text #byte-map-demo .chunk-id {
 	flex: 0 0 17px;
 }
+
 #demo-text #byte-map-demo .chunk-label {
 	font-size: 9px;
 }
+
 #demo-text #byte-map-demo .input-chunk {
 	margin: 0 0 6px 0;
 	gap: 3px;
 }
+
 #demo-text #byte-map-demo .output-chunk {
 	margin: 0;
 	gap: 2.25px;
 }
+
 #demo-text #byte-map-demo .input-chunk .bit,
 #demo-text #byte-map-demo .output-chunk .bit {
 	width: 11px;
 }
+
 #demo-text #byte-map-demo code {
 	font-size: 7.5px;
 	padding: 2px 0;
 	color: var(--light-gray3);
 }
+
 #demo-text #byte-map-demo code span {
 	width: 10px;
 }
+
 /* Algorithm Demonstration Steps */
 
 .encoded-byte,
@@ -703,13 +721,13 @@ button {
 	align-items: baseline;
 	background-color: var(--help-docs-border-color);
 	color: var(--black2);
-	font-size: 0.85rem;
+	font-size: 1rem;
 	font-weight: 700;
 	letter-spacing: 0.6px;
 	line-height: 1;
 	text-align: center;
 	margin: 0;
-	padding: 0.25rem;
+	padding: 0.25rem 0.5rem;
 	flex: 1;
 	border-bottom: 0.5px solid var(--help-docs-border-color);
 	border-top-left-radius: 5px;
@@ -885,17 +903,20 @@ div[id*="modal"] .help-docs button:active:focus {
 	border: 1px solid var(--modal-dialog-bg-color);
 	border-radius: 6px;
 }
+
 .b64-reference h4,
 .b64-ref-label {
 	margin: 0;
 	font-size: 0.8rem;
 	font-weight: 500;
 }
+
 .b64-reference a {
 	font-style: italic;
 	text-decoration: underline;
 	color: var(--pri-color);
 }
+
 .b64-ref-heading {
 	display: flex;
 	flex: 0 1 auto;
@@ -907,11 +928,13 @@ div[id*="modal"] .help-docs button:active:focus {
 	border-top-right-radius: 6px;
 	border-bottom: 1px solid var(--modal-dialog-bg-color);
 }
+
 .b64-ref-url,
 .b64-ref-content {
 	color: var(--black1);
 	background-color: var(--gray2);
 }
+
 .b64-ref-url {
 	display: flex;
 	flex-flow: row nowrap;
@@ -921,6 +944,7 @@ div[id*="modal"] .help-docs button:active:focus {
 	padding: 0.5rem;
 	border-bottom: 1px solid var(--modal-dialog-bg-color);
 }
+
 .b64-ref-content {
 	display: flex;
 	flex: 0 1 auto;
@@ -930,6 +954,7 @@ div[id*="modal"] .help-docs button:active:focus {
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
 }
+
 .base64-help {
 	display: flex;
 	flex-flow: column nowrap;
@@ -1159,51 +1184,64 @@ div[id*="modal"] .help-docs button:active:focus {
 }
 
 @media screen and (min-width: 764px) {
+
 	html,
 	body {
 		background-color: var(--dark-gray1);
 	}
+
 	kbd {
 		font-size: 0.65rem;
 		padding: 1px 2px;
 	}
-	details > summary {
+
+	details>summary {
 		font-size: 1.1rem;
 	}
+
 	.form-label,
 	.nav-buttons .form-label {
 		margin: 0;
 	}
-	.details-content > *,
+
+	.details-content>*,
 	#demo-text p {
 		line-height: 1.5;
 		font-size: 0.9rem;
 	}
+
 	#demo-text code {
 		font-size: 0.7rem;
 	}
+
 	#demo-text #byte-map-demo {
 		margin: 0.5rem 0 1.5rem 1.5rem;
 	}
+
 	#demo-text #byte-map-demo code {
 		font-size: 9px;
 	}
+
 	#demo-text #byte-map-demo .chunk-label {
 		font-size: 12px;
 	}
+
 	#demo-text #byte-map-demo .chunk-id {
 		flex: 0 0 20px;
 		margin: 0 5px 0 0;
 	}
+
 	#demo-text #byte-map-demo .input-chunk .bit,
 	#demo-text #byte-map-demo .output-chunk .bit {
 		width: 14px;
 	}
+
 	.byte-number,
 	.chunk-number,
 	.b64Char-number {
 		font-size: 8px;
 	}
+
 	.demo-steps .char,
 	.demo-steps .ascii,
 	.demo-steps .hex,
@@ -1214,10 +1252,12 @@ div[id*="modal"] .help-docs button:active:focus {
 	.demo-steps .whitespace {
 		font-size: 11px;
 	}
+
 	.encoded-byte,
 	.encoded-base64 {
 		height: 15px;
 	}
+
 	.input-byte,
 	.base64-bit-group,
 	.chunk-byte,
@@ -1225,30 +1265,37 @@ div[id*="modal"] .help-docs button:active:focus {
 	.hex-bit-group {
 		font-size: 11px;
 	}
+
 	.input-chunk .chunk-byte {
 		margin: 0 2.4px 0 0;
 	}
+
 	.output-chunk .chunk-byte {
 		margin: 0 1.6px 0 0;
 	}
+
 	.chunk-id {
 		flex: 0 1 33px;
 	}
+
 	#input-hex .bit,
 	#output-b64 .bit,
 	.input-chunk .bit,
 	.output-chunk .bit {
 		width: 12px;
 	}
+
 	.help-docs {
 		font-size: 13px;
 	}
+
 	.help-docs-wrapper {
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
 		border-top-right-radius: 6px;
 		border-bottom-right-radius: 6px;
 	}
+
 	.help-docs-section-title h2 {
 		display: flex;
 		justify-content: space-between;
@@ -1267,15 +1314,18 @@ div[id*="modal"] .help-docs button:active:focus {
 		border-top-left-radius: 0;
 		border-top-right-radius: 5px;
 	}
+
 	.help-docs-section-title .btn-close {
-		width: 1.1rem;
-		height: 1.1rem;
+		width: 0.9rem;
+		height: 0.9rem;
 	}
+
 	.help-docs-section-title h2 span {
 		flex: 1;
 		background-color: inherit;
 		color: inherit;
 	}
+
 	.help-docs .nav-buttons {
 		padding: 0.75rem 1rem;
 		border-top-left-radius: 0;
@@ -1283,23 +1333,29 @@ div[id*="modal"] .help-docs button:active:focus {
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 6px;
 	}
+
 	.help-docs .nav-buttons .nav-link {
 		font-size: 0.9rem;
 	}
+
 	.help-docs .nav-buttons .nav-icon {
 		height: 15px;
 		width: 10px;
 	}
+
 	.help-docs h3 {
 		line-height: 1;
 	}
+
 	.b64-reference h4,
 	.b64-ref-label {
 		font-size: 0.9rem;
 	}
+
 	.b64-ref-url {
 		font-size: 0.8rem;
 	}
+
 	.b64-ref-content {
 		font-size: 0.8rem;
 	}
