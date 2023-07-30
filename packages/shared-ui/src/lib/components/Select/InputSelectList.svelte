@@ -123,6 +123,8 @@
 		--select-list-default-open-button-font-weight: 500;
 		--select-list-default-open-button-padding: 9px 11px 9px 14px;
 		--select-list-default-open-button-height: 33px;
+		--select-list-default-open-button-icon-height: 14px;
+		--select-list-default-open-button-icon-width: 10px;
 
 		--select-list-default-no-selection-text-color: var(--dark-gray4);
 		--select-list-default-disabled-text-color: hsl(0, 0%, 30%);
@@ -180,8 +182,8 @@
 	}
 
 	.menu-icon {
-		width: var(--select-list-font-size, var(--select-list-default-font-size));
-		height: var(--select-list-font-size, var(--select-list-default-font-size));
+		width: var(--select-list-open-button-icon-width, var(--select-list-default-open-button-icon-width));
+		height: var(--select-list-open-button-icon-height, var(--select-list-default-open-button-icon-height));
 	}
 
 	.dropdown {
