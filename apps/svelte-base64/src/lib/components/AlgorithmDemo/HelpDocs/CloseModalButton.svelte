@@ -24,8 +24,8 @@
 	}
 	button {
 		color: var(--black2);
-		width: 1rem;
-		height: 1rem;
+		width: 0.8rem;
+		height: 0.8rem;
 		border: none;
 		padding: 0;
 		align-self: flex-start;

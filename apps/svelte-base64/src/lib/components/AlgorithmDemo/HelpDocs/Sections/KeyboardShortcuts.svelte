@@ -5,8 +5,8 @@
 <div class="keyboard-help help-module">
 	<div class="keyboard-shortcuts">
 		<kbd title="Space Bar">Space</kbd><span>Start/Stop auto-play</span>
-		<ArrowKey arrow="right" /><span>Go to previous step</span>
-		<ArrowKey arrow="left" /><span>Go to next step</span>
+		<ArrowKey arrow="right" size="md" /><span>Go to previous step</span>
+		<ArrowKey arrow="left" size="md" /><span>Go to next step</span>
 	</div>
 </div>
 
@@ -25,11 +25,13 @@
 		border-radius: 3px;
 		border: 1px solid var(--white1);
 		color: var(--black1);
-		display: inline-block;
-		font-size: 0.85em;
+		display: flex;
+		justify-content: center;
+		align-items: baseline;
+		font-size: 0.85rem;
 		font-weight: 700;
 		line-height: 1;
-		padding: 2px 4px;
+		padding: 3px;
 		white-space: nowrap;
 		text-align: center;
 	}
