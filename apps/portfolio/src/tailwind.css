@@ -465,14 +465,13 @@ body {
   */
 
 body {
-	--scroll-bar-start-color: var(--thumbBG);
-	--scroll-bar-stop-color: var(--thumbBG);
-	--scrollbarBG: var(--page-bg-color);
-	--thumbBG: var(--teal);
-	overflow: scroll;
-	/* https://maxschmitt.me/posts/react-prevent-layout-shift-body-scrollable/ */
+	--scrollbarBg: hsl(0, 0%, 5%);
+	--thumbBg: hsl(161.97 100% 49%);
+	--thumbBg: oklch(86.47% 0.257 162.56);
+	overflow-y: scroll;
+	overflow-x: auto;
 	scrollbar-width: thin;
-	scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+	scrollbar-color: var(--thumbBg) var(--scrollbarBg);
 }
 
 body::-webkit-scrollbar {
@@ -481,7 +480,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-	background: linear-gradient(var(--scroll-bar-start-color), var(--scroll-bar-stop-color));
+	background-color: var(--thumbBg);
 	border-radius: 0;
 	border: 2px solid var(--scrollbarBG);
 }
@@ -494,7 +493,7 @@ body::-webkit-scrollbar-corner {
 	background: var(--scrollbarBG);
 }
 
-body:has(.nav-sidebar.open) {
+/* body:has(.nav-sidebar.open) {
 	--scroll-bar-start-color: var(--black-tint2);
 	--scroll-bar-stop-color: var(--black-tint2);
 }
@@ -509,7 +508,7 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-corner {
 
 body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	border: 2px solid var(--black-tint2);
-}
+} */
 
 .normal-text svg {
 	display: inline;
@@ -844,9 +843,9 @@ article.readme .wrapper>ul {
 
 .readme .wrapper div dl dt {
 	display: flex;
-	flex-flow: row nowrap;
-	justify-content: flex-start;
-	align-items: center;
+	flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
 	gap: 0.5rem;
 }
 
@@ -861,6 +860,11 @@ article.readme .wrapper>ul {
 
 .readme .wrapper div dl dt code {
 	background-color: var(--black-tint2);
+}
+
+.readme .cjk-only {
+	color: var(--red);
+	font-weight: 500;
 }
 
 kbd {
