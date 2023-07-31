@@ -5,6 +5,7 @@
 	import { getAppContext } from '$lib/stores/context';
 	import type { Utf8StringComposition } from '$lib/types';
 	import { getUtf8StringDecomposition } from '$lib/unicode/utf8';
+	import { sleep } from '$lib/util';
 	import NonPrintingCharLegend from './NonPrintingCharLegend.svelte';
 
 	let utf8ByteMap: Utf8StringComposition;
@@ -15,10 +16,14 @@
 	let hasVarSelector16 = false;
 	let hasZeroWidthJoiner = false;
 	let hasWhiteSpace = false;
+	let apiAttempts = 0;
+	const MAX_ATTEMPTS = 3;
+	const DELAY_BETWEEN_ATTEMPTS = 1000;
 	const { state, demoState } = getAppContext();
 	utf8ByteMap = $state.context.input.utf8 || defaultUtf8StringComposition;
 
-	$: if ($demoState.getUtf8StringDecomposition && !utf8ByteMap.hasCharacterNames) {
+	$: unicodeApiRequestFailed = apiAttempts >= MAX_ATTEMPTS && !utf8ByteMap.hasCharacterNames;
+	$: if ($demoState.getUtf8StringDecomposition && !unicodeApiRequestFailed) {
 		getUtf8ByteMap();
 	}
 	$: expandableCharMaps = Object.values(charByteMapComponents).filter((charMap) => charMap.isCombined);
@@ -31,6 +36,10 @@
 
 	async function getUtf8ByteMap() {
 		utf8ByteMap = await getUtf8StringDecomposition($state.context.input.inputText);
+		if (!utf8ByteMap.hasCharacterNames) {
+			++apiAttempts;
+			await sleep(DELAY_BETWEEN_ATTEMPTS);
+		}
 	}
 
 	function handleCharacterToggled(charIndex: number) {

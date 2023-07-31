@@ -7,18 +7,18 @@ import { sleep, strictUriEncode } from '$lib/util';
 import { z } from 'zod';
 import { apiMocks } from './mocks';
 
-export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse>> {
+export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse[]>> {
 	const fetchMethod = import.meta.env.MODE !== 'test' ? fetchUnicodeCharInfo : mockFetchUnicodeCharInfo;
 	const charData: HttpResponse[] = [];
-	for (const utf8 of s.match(COMPLEX_SYMBOL_REGEX)) {
+	const charsInString = s.match(COMPLEX_SYMBOL_REGEX) || [];
+	for (const utf8 of charsInString) {
 		try {
 			const results = await fetchMethod(utf8);
 			charData.push({ char: utf8, results });
-		} catch (error) {
-			return {
-				success: false,
-				error: Error('Request for unicode character details failed, please check internet connection.'),
-			};
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				return { success: false, error };
+			}
 		}
 	}
 	return { success: true, value: charData.flat() };
