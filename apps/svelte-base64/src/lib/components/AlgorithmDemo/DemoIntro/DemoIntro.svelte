@@ -34,7 +34,7 @@
 
 	const allSectionsCollapsed = (): boolean => Object.values(getSections()).every((section) => !section?.open);
 
-	function toggle(section: 'none' | 'welcome' | 'settings' | 'navigation') {
+	function toggle(section: 'welcome' | 'settings' | 'navigation') {
 		const sections = getSections();
 		if (sections[section].open) {
 			Object.entries(sections).forEach(([sectionName, sectionElement]) => {
