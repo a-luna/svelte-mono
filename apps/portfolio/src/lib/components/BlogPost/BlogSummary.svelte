@@ -125,6 +125,7 @@
 		font-size: 1.3rem;
 		font-weight: 400;
 		color: var(--accent-color);
+		background-color: var(--black);
 		text-decoration: none;
 		line-height: 1.3;
 		transition: background-color 350ms ease-out, color 350ms ease-out;

@@ -17,7 +17,7 @@
 		{#each recentBlogPosts as blogPost}
 			<li>
 				<span class="posted-on">{format(new Date(blogPost.date), 'MMM dd, yyyy')}</span>
-				<a href={blogPost.href}>{blogPost.title}</a>
+				<a class="post-title" href={blogPost.href}>{blogPost.title}</a>
 			</li>
 		{/each}
 	</ul>
@@ -40,6 +40,10 @@
 	}
 	.posted-on {
 		color: var(--tw-prose-invert-body);
+	}
+	.post-title {
+		color: var(--accent-color);
+		background-color: var(--page-bg-color);
 	}
 	a:hover {
 		color: var(--page-bg-color);

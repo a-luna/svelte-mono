@@ -31,7 +31,8 @@
 	}
 	.author {
 		display: flex;
-		gap: 1rem;
+		gap: 0.5rem;
+		background-color: var(--black-tint2);
 	}
 	.avatar {
 		display: inline-block;

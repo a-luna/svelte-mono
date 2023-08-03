@@ -33,11 +33,12 @@
 		display: flex;
 		gap: 5px;
 		color: var(--tw-prose-headings);
+		background-color: var(--black);
 		text-decoration: none;
 	}
 	.gh-url:hover {
 		color: var(--white);
-		background-color: var(--page-bg-color);
+		background-color: var(--black);
 	}
 
 	@media screen and (min-width: 640px) {

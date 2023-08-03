@@ -35,6 +35,8 @@
 	}
 	a {
 		color: var(--page-bg-color);
+		background-color: hsl(261, 100%, 55%);
+		background-color: oklch(51.8% 0.304 286.07);
 		text-decoration: none;
 		width: 1.7rem;
 	}
@@ -43,6 +45,8 @@
 	a:active,
 	a:active:focus {
 		color: var(--page-bg-color);
+		background-color: hsl(261, 100%, 55%);
+		background-color: oklch(51.8% 0.304 286.07);
 		text-decoration: none;
 	}
 
