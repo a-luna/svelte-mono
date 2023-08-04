@@ -9,6 +9,8 @@ export const repoDataDepot: {
 		primaryCategory: 'frontend' | 'backend';
 		languages: LanguageOrTech[];
 		categories: ProjectCategory[];
+		deployedUrl: string;
+		projectSiteTitle: string;
 	};
 } = {
 	'aaronluna.dev': {
@@ -16,96 +18,128 @@ export const repoDataDepot: {
 		primaryCategory: 'frontend',
 		languages: [],
 		categories: ['blog_portfolio_sites'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'async-file-server': {
 		primaryLanguage: 'CSharp',
 		primaryCategory: 'backend',
 		languages: [],
 		categories: ['cli_apps'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'console-progress-bar': {
 		primaryLanguage: 'CSharp',
 		primaryCategory: 'backend',
 		languages: [],
 		categories: ['cli_apps'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'dotnetcore-crypto': {
 		primaryLanguage: 'CSharp',
 		primaryCategory: 'backend',
 		languages: [],
 		categories: ['cryptography'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'fastapi-redis-cache': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['Redis', 'FastAPI'],
 		categories: ['dev_tools', 'fastapi_plugins'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'flask-api-tutorial': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['Flask', 'Hugo', 'SQLAlchemy', 'SQLite'],
 		categories: ['docs_guides', 'rest_api'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'packer-examples': {
 		primaryLanguage: 'Shell',
 		primaryCategory: 'backend',
 		languages: ['AWS'],
 		categories: ['dev_tools', 'devops'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'svelte-base64-ts': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['Playwright', 'TypeScript', 'XState'],
 		categories: ['web_app'],
+		deployedUrl: 'https://base64.aaronluna.dev/',
+		projectSiteTitle: 'Base64 Algorithm Demonstration',
 	},
 	'svelte-base64': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['Cypress'],
 		categories: ['web_app'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'svelte-color-tools': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['RegExp', 'TailwindCSS', 'TypeScript'],
 		categories: ['component_library'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'svelte-simple-tables-docs': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TailwindCSS', 'TypeScript'],
 		categories: ['docs_guides', 'web_app', 'component_library'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'svelte-simple-tables': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TypeScript'],
 		categories: ['component_library'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'unicode-api': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['FastAPI', 'Pydantic'],
 		categories: ['rest_api'],
+		deployedUrl: 'https://unicode-api.aaronluna.dev/v1/docs',
+		projectSiteTitle: 'Unicode API Docs (Swagger UI)',
 	},
 	'vig-api': {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['FastAPI', 'Pydantic'],
 		categories: ['rest_api'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	'vig-data': {
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['TypeScript'],
 		categories: ['web_app'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 	vigorish: {
 		primaryLanguage: 'Python',
 		primaryCategory: 'backend',
 		languages: ['AWS', 'lxml', 'Puppeteer', 'RegExp', 'SQLAlchemy', 'SQLite', 'XPath'],
 		categories: ['cli_apps', 'web_scraping'],
+		deployedUrl: '',
+		projectSiteTitle: '',
 	},
 };
 
@@ -124,6 +158,8 @@ export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
 				languages: repoDataDepot?.[project.name]?.languages ?? ['allLanguages'],
 				categories: repoDataDepot?.[project.name]?.categories ?? ['allCategories'],
 				updatedAt: project.pushed_at || new Date().toISOString(),
+				deployedUrl: repoDataDepot?.[project.name]?.deployedUrl || '',
+				projectSiteTitle: repoDataDepot?.[project.name]?.projectSiteTitle ?? '',
 		  }
 		: nullRepoWithMetadata;
 

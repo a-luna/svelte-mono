@@ -107,6 +107,8 @@ function initializeReadme(repo: RepoWithMetaData): ProjectReadme {
 			src: '',
 			caption: '',
 		},
+		deployedUrl: repo.deployedUrl,
+		projectSiteTitle: repo.projectSiteTitle,
 	};
 }
 

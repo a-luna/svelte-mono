@@ -142,6 +142,8 @@ export interface ProjectReadme {
 	date: string;
 	coverImage?: BlogResource;
 	codeBlocks?: CodeBlock[];
+	deployedUrl: string;
+	projectSiteTitle: string;
 }
 
 export interface BlogPost extends ProjectReadme {
@@ -295,6 +297,8 @@ export interface RepoWithMetaData {
 	languages?: LanguageOrTech[];
 	categories?: ProjectCategory[];
 	updatedAt: string;
+	deployedUrl: string;
+	projectSiteTitle: string;
 }
 
 export interface CachedProjectData {

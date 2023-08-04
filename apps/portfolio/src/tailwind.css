@@ -595,72 +595,7 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	background-color: var(--dark-gray-shade1);
 }
 
-/* Project README details */
-
-.readme details:not(#table-of-contents) {
-	display: block;
-	margin: 1rem 0;
-}
-
-.readme details:not(#table-of-contents) ul {
-	margin: 0;
-	padding: 0 0 0 2rem;
-	border: 1px solid var(--page-bg-color);
-	background-color: var(--dl-bg-color);
-}
-
-@media (max-width: 768px) {
-	.readme details:not(#table-of-contents) ul {
-		padding: 0 0 0 1.5rem;
-	}
-}
-
-.readme details:not(#table-of-contents) ul ul {
-	border: none;
-	margin: 0;
-	padding: 0 0 0 1.5rem;
-}
-
-.readme details:not(#table-of-contents)>div {
-	border: 1px solid var(--dl-border-color);
-	background-color: var(--dl-bg-color);
-	padding: 0.5rem 1rem;
-}
-
-@media (max-width: 768px) {
-	.readme details:not(#table-of-contents)>div {
-		padding: 0.5rem 1rem;
-	}
-}
-
-.readme details:not(#table-of-contents) summary {
-	display: flex !important;
-	cursor: pointer;
-	color: var(--details-header-text-color);
-	background-color: var(--details-header-bg-color);
-	border: 1px solid var(--dl-border-color);
-	padding: 0.5rem;
-	line-height: 1;
-	list-style: none;
-	transition: all 0.3s;
-}
-
-.readme details:not(#table-of-contents)[open]>summary {
-	background-color: var(--details-header-hover-bg-color);
-	border-top: 1px solid var(--dl-border-color);
-	border-left: 1px solid var(--dl-border-color);
-	border-right: 1px solid var(--dl-border-color);
-	border-bottom: none !important;
-}
-
-.readme details:not(#table-of-contents) summary:hover {
-	background-color: var(--details-header-hover-bg-color);
-}
-
-.readme details:not(#table-of-contents) summary::-webkit-details-marker {
-	display: none;
-}
-
+/* Project README dkn˜ˆbfgvy        yyyyyybymydntbsffewnhs                                                                                                                                                                                                              
 .readme summary>div {
 	display: flex;
 	gap: 0.75rem;
@@ -697,7 +632,7 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	transform: rotate(90deg);
 }
 
-.readme details:not(#table-of-contents) summary>div>div>svg {
+.readme details:not(#table-of-contents):not(.project-site) summary>div>div>svg {
 	height: 100%;
 }
 
@@ -787,7 +722,7 @@ article.readme .wrapper>ul {
 
 
 .readme .prose dl,
-.readme .prose details:not(#table-of-contents)>div,
+.readme .prose details:not(#table-of-contents):not(.project-site)>div,
 .readme .prose details p,
 .readme .prose details p a,
 .readme .prose details ul,
@@ -843,10 +778,13 @@ article.readme .wrapper>ul {
 
 .readme .wrapper div dl dt {
 	display: flex;
-	flex-flow: column nowrap;
+	flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: flex-start;
-	gap: 0.5rem;
+}
+
+.readme .wrapper div dl dt:has(.cjk-only) {
+	flex-flow: column nowrap;
 }
 
 .readme .wrapper div dl dt strong {
@@ -860,10 +798,11 @@ article.readme .wrapper>ul {
 
 .readme .wrapper div dl dt code {
 	background-color: var(--black-tint2);
+	margin: auto 0;
 }
 
 .readme .cjk-only {
-	color: var(--red);
+	color: var(--pink);
 	font-weight: 500;
 }
 
@@ -1048,7 +987,15 @@ article .level-6 h6 {
 	flex-flow: row nowrap;
 	align-items: flex-start;
 	gap: 5px;
-	margin: 2rem 0 1rem 0;
+	margin: 1.5rem 0 1rem 0;
+}
+
+.heading-text:first-of-type {
+	margin: 0 0 1rem 0;
+}
+
+details .heading-text:first-of-type {
+	margin: 0;
 }
 
 summary .heading-text {
@@ -2193,10 +2140,10 @@ table.aws-hosting-costs {
 	margin-bottom: 1rem;
 }
 
-.readme *[id]~*[id],
+.readme *:not(.project-site):not(#deployed-project)[id]~*:not(.project-site):not(#deployed-project)[id],
 .readme h1[id]:only-of-type,
 .readme .level-1:only-of-type,
-.readme .level-2:only-of-type,
+.readme :not(.deployed-project).level-2:only-of-type,
 .readme ul.toc {
 	display: none;
 }
