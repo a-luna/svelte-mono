@@ -79,6 +79,14 @@
 		background-color: var(--accent-color);
 		border-color: var(--accent-color);
 	}
+	summary > .summary-wrapper {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		font-size: 0.9rem;
+		width: 100%;
+		margin: 0 0 0 0.5rem;
+	}
 	details[open] .details-icon {
 		transform: rotate(90deg);
 	}
@@ -139,18 +147,18 @@
 		summary > .summary-wrapper {
 			font-size: 1rem;
 		}
-	}
-	:global(code),
-	:global(a code) {
-		font-size: 0.8rem;
-	}
-	.details-icon {
-		height: 1rem;
-		flex: 0 1 10px;
-	}
-	.toc-wrapper {
-		border-left-width: 2px;
-		border-right-width: 2px;
-		border-bottom-width: 2px;
+		:global(code),
+		:global(a code) {
+			font-size: 0.8rem;
+		}
+		.details-icon {
+			height: 1rem;
+			flex: 0 1 10px;
+		}
+		.toc-wrapper {
+			border-left-width: 2px;
+			border-right-width: 2px;
+			border-bottom-width: 2px;
+		}
 	}
 </style>
