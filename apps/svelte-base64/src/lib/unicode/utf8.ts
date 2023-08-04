@@ -26,7 +26,7 @@ async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8Str
 	if (!result.success) {
 		return { success: false, error: result.error };
 	}
-	const unicodeInfo = result.value || [];
+	const unicodeInfo = result.value;
 	const complexCharMap: Utf8ComplexCharacterMap[] = unicodeInfo?.map(({ char, results }) => {
 		const charMap = results.map((charData) => {
 			return {
@@ -77,8 +77,7 @@ async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8Str
 }
 
 export function getSimpleUtf8StringDecomposition(s: string): Utf8StringComposition {
-	const charsInString = s.match(COMPLEX_SYMBOL_REGEX) || [];
-	const complexCharMap: Utf8ComplexCharacterMap[] = charsInString.map((utf8) => {
+	const complexCharMap: Utf8ComplexCharacterMap[] = s.match(COMPLEX_SYMBOL_REGEX).map((utf8) => {
 		const charMap: Utf8StandardCharacterMap[] = [...utf8].map((char) => {
 			const charData = getUtf8EncodedByteMaps(char).map((byteMap) => ({ hex: byteMap.hex, byte: byteMap.byte }));
 			const bytes = charData.map((data) => data.byte);
@@ -91,7 +90,7 @@ export function getSimpleUtf8StringDecomposition(s: string): Utf8StringCompositi
 				isASCII: validateAsciiBytes(bytes),
 				hexBytes: charData.map((data) => data.hex),
 				bytes,
-				codepoint: codepoints?.hex || '',
+				codepoint: codepoints?.hex,
 				decimalCodepoint,
 				totalBytes,
 				encoded: strictUriEncode(char),
@@ -140,15 +139,15 @@ export function getUtf8EncodedByteMaps(s: string): ByteEncodingMap[] {
 function getUtf8ByteMaps(utf8Encoded: string): ByteEncodingMap[] {
 	const encodedUtf8Bytes = [...utf8Encoded.matchAll(/%(?<encodedByte>[0-9A-F]{2,2})/g)];
 	return encodedUtf8Bytes.map((match) => ({
-		byte: match.groups?.encodedByte ? hexStringToByte(match.groups?.encodedByte) : 0,
-		hex: match.groups?.encodedByte || '',
-		start: match?.index || 0,
-		end: (match?.index || 0) + match[0].length,
+		byte: hexStringToByte(match.groups.encodedByte),
+		hex: match.groups.encodedByte,
+		start: match.index,
+		end: match.index + match[0].length,
 	}));
 }
 
-function findMissingAsciiBytes(utf8ByteMaps: ByteEncodingMap[], utf8Encoded: string): ByteEncodingMap[] {
-	let index = utf8ByteMaps.at(0)?.start || 0;
+function findMissingAsciiBytes(utf8ByteMaps: ByteEncodingMap[], utf8Encoded: string) {
+	let index = utf8ByteMaps.at(0).start;
 	const missingAsciiBytes = utf8ByteMaps
 		.map((byte) => {
 			const missingByteMaps = getAsciiByteMaps(utf8Encoded, index, byte.start);
@@ -157,9 +156,9 @@ function findMissingAsciiBytes(utf8ByteMaps: ByteEncodingMap[], utf8Encoded: str
 		})
 		.flat();
 	return [
-		...getAsciiByteMaps(utf8Encoded, 0, index),
+		...getAsciiByteMaps(utf8Encoded, 0, utf8ByteMaps.at(0).start),
 		...missingAsciiBytes,
-		...getAsciiByteMaps(utf8Encoded, utf8ByteMaps.at(-1)?.end || 0, utf8Encoded.length),
+		...getAsciiByteMaps(utf8Encoded, utf8ByteMaps.at(-1).end, utf8Encoded.length),
 	];
 }
 
