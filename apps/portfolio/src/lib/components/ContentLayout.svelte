@@ -84,7 +84,7 @@
 	header {
 		background-color: var(--black-tint2);
 		width: 100%;
-		margin: 1.5rem 0 0.5rem 0;
+		margin: 1.5rem 0;
 	}
 	header .wrapper {
 		display: flex;

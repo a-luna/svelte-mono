@@ -418,7 +418,7 @@
 		-20px 20px 31.8px -2.5px hsl(var(--shadow-color) / 0.36);
 
 
-	--heading-gradient: linear-gradient(to bottom right, var(--teal), var(--sea-green));
+	--heading-gradient: linear-gradient(to bottom right, var(--green), var(--yellow-green));
 }
 
 body {
@@ -779,8 +779,8 @@ article.readme .wrapper>ul {
 .readme .wrapper div dl dt {
 	display: flex;
 	flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
+	justify-content: flex-start;
+	align-items: flex-start;
 }
 
 .readme .wrapper div dl dt:has(.cjk-only) {
