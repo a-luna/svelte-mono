@@ -10,6 +10,7 @@ export type HttpResult =
 export const UnicodeCharInfoSchema = z.object({
 	character: z.string(),
 	name: z.string(),
+	description: z.string().optional(),
 	codepoint: z.string(),
 	block: z.string(),
 	plane: z.string(),

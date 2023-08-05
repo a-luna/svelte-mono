@@ -1,6 +1,7 @@
 import type {
 	ByteEncodingMap,
 	Result,
+	UnicodeCharInfo,
 	Utf8ComplexCharacterMap,
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
@@ -15,6 +16,10 @@ import {
 	unicodeCodepointFromUtf8ByteArray,
 } from '$lib/util';
 import { validateAsciiBytes } from '$lib/validation';
+
+const isUnihanChar = (charData: UnicodeCharInfo): boolean =>
+	charData.block.toLowerCase().includes('cjk unified ideographs') ||
+	charData.block.toLowerCase().includes('cjk compatibility ideographs');
 
 export async function getUtf8StringDecomposition(s: string): Promise<Utf8StringComposition> {
 	const result = await getFullUtf8StringDecomposition(s);
@@ -36,7 +41,7 @@ async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8Str
 				hexBytes: charData.utf8HexBytes,
 				bytes: charData.utf8DecBytes,
 				codepoint: charData.codepoint,
-				unicodeName: charData.name,
+				unicodeName: isUnihanChar(charData) ? charData.description?.toUpperCase() || '' : charData.name,
 				unicodeBlock: charData.block,
 				totalBytes: charData.utf8DecBytes.length,
 				encoded: charData.uriEncoded,
