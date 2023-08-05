@@ -173,43 +173,168 @@ body {
 }
 
 main.encode {
-	--pri-color: var(--teal4);
-	--sec-color: var(--pink4);
+	--pri-h: 180;
+	--pri-s: 93%;
+	--pri-l: 53%;
+	--pri-a: 1;
+
+	--sec-h: 275;
+	--sec-s: 93%;
+	--sec-l: 71%;
+	--sec-a: 1;
+}
+
+main.decode {
+	--pri-h: 113;
+	--pri-s: 100%;
+	--pri-l: 52%;
+	--pri-a: 1;
+
+	--sec-h: 261;
+	--sec-s: 100%;
+	--sec-l: 65%;
+	--sec-a: 1;
+}
+
+main {
+	--pri-color: hsl(
+		var(--pri-h) 
+		var(--pri-s) 
+		var(--pri-l) / 
+		var(--pri-a)
+	);
+	--sec-color: hsl(
+		var(--sec-h) 
+		var(--sec-s) 
+		var(--sec-l) / 
+		var(--sec-a)
+	);
 
 	/* Form Title */
-	--form-title-text-color: hsl(171 100% 63% / 0.7);
-	--form-title-text-shadow-color: hsla(301 93% 71% / 0.25);
+	/* --form-title-text-color: hsl(171 100% 63% / 0.7); */
+	--form-title-text-color: hsl(
+		var(--pri-h) 
+		min(calc(var(--pri-s) + 7%), 100%) 
+		min(calc(var(--pri-l) + 10%), 100%) / 
+		max((calc(var(--pri-a) - 0.3)), 0)
+	);
+
+	/* --form-title-text-shadow-color: hsl(301 93% 71% / 0.25); */
+	--form-title-text-shadow-color: hsl(
+		var(--sec-h) 
+		var(--sec-s) 
+		var(--sec-l) / 
+		max(calc(var(--pri-a) - 0.75), 0)
+	);
 
 	/* Drop Down Lists */
-	--dropdown-bg-color: hsl(171 45% 53%);
+	/* --dropdown-bg-color: hsl(171 45% 53%); */
+	--dropdown-bg-color: hsl(
+		var(--pri-h) 
+		max(calc(var(--pri-s) - 48%), 0%) 
+		var(--pri-l) / 
+		var(--pri-a)
+	);
 	--dropdown-text-color: var(--black2);
-	--dropdown-border-color: hsl(171 60% 58%);
-	--selected-item-bg-color: hsl(171 90% 63%);
+	/* --dropdown-border-color: hsl(171 60% 58%); */
+	--dropdown-border-color: hsl(
+		var(--pri-h) 
+		max(calc(var(--pri-s) - 33%), 0%) 
+		min(calc(var(--pri-l) + 5%), 100%) / 
+		var(--pri-a)
+	);
+	/* --selected-item-bg-color: hsl(171 90% 63%); */
+	--selected-item-bg-color: hsl(
+		var(--pri-h) 
+		max(calc(var(--pri-s) - 3%), 0%) 
+		min(calc(var(--pri-l) + 10%), 100%) / 
+		var(--pri-a)
+	);
 
 	/* Algorithm Demo Nav Buttons (Manual Mode) */
 	--nav-button-text-color: var(--black2);
-	--nav-button-bg-color: hsla(171 100% 63% / 0.45);
-	--nav-button-border-color: hsla(171 100% 63% / 0.7);
+	/* --nav-button-bg-color: hsl(171 100% 63% / 0.45); */
+	--nav-button-bg-color: hsl(
+		var(--pri-h) 
+		min(calc(var(--pri-s) + 7%), 100%) 
+		min(calc(var(--pri-l) + 10%), 100%) / 
+		max((calc(var(--pri-a) - 0.55)), 0)
+	);
+	/* --nav-button-border-color: hsl(171 100% 63% / 0.7); */
+	--nav-button-border-color: hsl(
+		var(--pri-h) 
+		min(calc(var(--pri-s) + 7%), 100%) 
+		min(calc(var(--pri-l) + 10%), 100%) / 
+		max((calc(var(--pri-a) - 0.3)), 0)
+	);
 	--nav-button-hover-text-color: var(--black4);
-	--nav-button-hover-bg-color: hsla(171 100% 63% / 0.7);
+	/* --nav-button-hover-bg-color: hsl(171 100% 63% / 0.7); */
+	--nav-button-hover-bg-color: hsl(
+		var(--pri-h) 
+		min(calc(var(--pri-s) + 7%), 100%) 
+		min(calc(var(--pri-l) + 10%), 100%) / 
+		max((calc(var(--pri-a) - 0.3)), 0)
+	);
 	--nav-button-active-text-color: var(--black4);
-	--nav-button-active-bg-color: hsla(171 100% 63% / 0.85);
-	--nav-button-active-border-color: hsla(171 100% 63% / 0.85);
+	/* --nav-button-active-bg-color: hsl(171 100% 63% / 0.85); */
+	--nav-button-active-bg-color: hsl(
+		var(--pri-h) 
+		min(calc(var(--pri-s) + 7%), 100%) 
+		min(calc(var(--pri-l) + 10%), 100%) / 
+		max((calc(var(--pri-a) - 0.15)), 0)
+	);
+	/* --nav-button-active-border-color: hsl(171 100% 63% / 0.85); */
+	--nav-button-active-border-color: hsl(
+		var(--pri-h) 
+		min(calc(var(--pri-s) + 7%), 100%) 
+		min(calc(var(--pri-l) + 10%), 100%) / 
+		max((calc(var(--pri-a) - 0.15)), 0)
+	);
 
 	/* Algorithm Demo Nav Buttons (Auto Play Mode) */
 	--nav-button-autoplay-text-color: var(--black4);
-	--nav-button-autoplay-bg-color: hsla(301 93% 71% / 0.85);
-	--nav-button-autoplay-border-color: hsla(301 93% 71% / 0.85);
+	/* --nav-button-autoplay-bg-color: hsl(301 93% 71% / 0.85); */
+	--nav-button-autoplay-bg-color: hsl(
+		var(--sec-h) 
+		var(--sec-s) 
+		var(--sec-l) / 
+		max((calc(var(--sec-a) - 0.15)), 0)
+	);
+	/* --nav-button-autoplay-border-color: hsl(301 93% 71% / 0.85); */
+	--nav-button-autoplay-border-color: hsl(
+		var(--sec-h) 
+		var(--sec-s) 
+		var(--sec-l) / 
+		max((calc(var(--sec-a) - 0.15)), 0)
+	);
 	--nav-button-autoplay-disabled-text-color: var(--dark-gray4);
-	--nav-button-autoplay-disabled-bg-color: hsla(301 93% 88% / 0.25);
+	/* --nav-button-autoplay-disabled-bg-color: hsl(301 93% 88% / 0.25); */
+	--nav-button-autoplay-disabled-bg-color: hsl(
+		var(--sec-h) 
+		var(--sec-s) 
+		min(calc(var(--sec-l) + 17%), 100%) / 
+		max((calc(var(--sec-a) - 0.75)), 0)
+	);
 	--nav-button-autoplay-disabled-border-color: var(--nav-button-autoplay-border-color);
 	--nav-button-stop-autoplay-text-color: var(--black2);
-	--nav-button-stop-autoplay-bg-color: hsla(301 93% 71% / 0.45);
+	/* --nav-button-stop-autoplay-bg-color: hsl(301 93% 71% / 0.45); */
+	--nav-button-stop-autoplay-bg-color: hsl(
+		var(--sec-h) 
+		var(--sec-s) 
+		var(--sec-l) / 
+		max((calc(var(--sec-a) - 0.55)), 0)		
+	);
 	--nav-button-stop-autoplay-border-color: var(--nav-button-autoplay-border-color);
 
 	/* Disabled Button */
 	--button-disabled-text-color: var(--dark-gray4);
-	--button-disabled-bg-color: hsla(171 100% 88% / 0.25);
+	/* --button-disabled-bg-color: hsl(171 100% 88% / 0.25); */
+	--button-disabled-bg-color: hsl(
+		var(--pri-h) 
+		min(calc(var(--pri-s) + 7%), 100%) 
+		min(calc(var(--pri-l) + 35%), 100%) / 
+		max((calc(var(--pri-a) - 0.75)), 0)
+	);
 	--button-disabled-border-color: var(--nav-button-border-color);
 
 	/* Input Text Box */
@@ -247,44 +372,7 @@ main.encode {
 	--select-list-disabled-text-color: var(--list-button-disabled-text-color, var(--dark-gray2));
 	--select-list-disabled-background-color: var(--list-button-disabled-bg-color, var(--light-gray1));
 	--select-list-no-selection-text-color: var(--list-button-text-color-no-selection, var(--gray4));
-}
 
-main.decode {
-	--pri-color: var(--green4);
-	--sec-color: var(--indigo4);
-
-	/* Form Title */
-	--form-title-text-color: hsl(113 100% 72% / 0.7);
-	--form-title-text-shadow-color: hsla(261 100% 77% / 0.25);
-
-	/* Algorithm Demo Nav Buttons (Manual Mode) */
-	--nav-button-text-color: var(--black2);
-	--nav-button-bg-color: hsla(113 100% 72% / 0.45);
-	--nav-button-border-color: hsla(113 100% 72% / 0.7);
-	--nav-button-hover-text-color: var(--black4);
-	--nav-button-hover-bg-color: hsla(113 100% 72% / 0.7);
-	--nav-button-active-text-color: var(--black4);
-	--nav-button-active-bg-color: hsla(113 100% 72% / 0.85);
-	--nav-button-active-border-color: hsla(113 100% 72% / 0.85);
-
-	/* Algorithm Demo Nav Buttons (Auto Play Mode) */
-	--nav-button-autoplay-text-color: var(--black4);
-	--nav-button-autoplay-bg-color: hsla(261 100% 60% / 0.85);
-	--nav-button-autoplay-border-color: hsla(261 100% 60% / 0.85);
-	--nav-button-autoplay-disabled-text-color: var(--dark-gray4);
-	--nav-button-autoplay-disabled-bg-color: hsla(261 100% 77% / 0.25);
-	--nav-button-autoplay-disabled-border-color: var(--nav-button-autoplay-border-color);
-	--nav-button-stop-autoplay-text-color: var(--black2);
-	--nav-button-stop-autoplay-bg-color: hsla(261 100% 60% / 0.45);
-	--nav-button-stop-autoplay-border-color: var(--nav-button-autoplay-border-color);
-
-	/* Disabled Button */
-	--button-disabled-text-color: var(--dark-gray4);
-	--button-disabled-bg-color: hsla(113 100% 87% / 0.2);
-	--button-disabled-border-color: var(--nav-button-border-color);
-}
-
-main {
 	/* Select Menu - Open List Button */
 	--list-button-bg-color: var(--nav-button-bg-color);
 	--list-button-text-color: var(--nav-button-text-color);
