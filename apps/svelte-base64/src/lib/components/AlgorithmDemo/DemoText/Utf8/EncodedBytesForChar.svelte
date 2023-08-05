@@ -267,6 +267,7 @@
 
 			background-color: var(--black2);
 			overflow-x: auto;
+			overflow-y: hidden;
 			scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 			scrollbar-width: thin;
 		}

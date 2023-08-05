@@ -29,23 +29,23 @@
 	<ul>
 		{#if hasZeroWidthJoiner}
 			<li class="zwj">
-				<strong>ZWJ:</strong>{zwj1}<strong><a href={zwjUrl} target="_blank" rel="noreferrer">{zwj2}</a></strong>{zwj3}
+				<strong>ZWJ: </strong>{zwj1}<strong><a href={zwjUrl} target="_blank" rel="noreferrer">{zwj2}</a></strong>{zwj3}
 			</li>
 		{/if}
 		{#if hasVarSelector15}
 			<li class="variation">
-				<strong>VS15:</strong>{vs15_1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs15_2}</a></strong
+				<strong>VS15: </strong>{vs15_1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs15_2}</a></strong
 				>{vs15_3}
 			</li>
 		{/if}
 		{#if hasVarSelector16}
 			<li class="variation">
-				<strong>VS16:</strong>{vs16_1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs16_2}</a></strong
+				<strong>VS16: </strong>{vs16_1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs16_2}</a></strong
 				>{vs16_3}
 			</li>
 		{/if}
 		{#if hasWhiteSpace || inputHasWhiteSpace}
-			<li class="whitespace"><strong>SP:</strong>0x20 is the hex value of the space character</li>
+			<li class="whitespace"><strong>SP: </strong>0x20 is the hex value of the space character</li>
 		{/if}
 	</ul>
 </div>
