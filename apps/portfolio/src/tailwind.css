@@ -595,7 +595,72 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	background-color: var(--dark-gray-shade1);
 }
 
-/* Project README dkn˜ˆbfgvy        yyyyyybymydntbsffewnhs                                                                                                                                                                                                              
+/* Project README details */
+
+.readme details:not(#table-of-contents):not(.project-site) {
+	display: block;
+	margin: 1rem 0;
+}
+
+.readme details:not(#table-of-contents):not(.project-site) ul {
+	margin: 0;
+	padding: 0 0 0 2rem;
+	border: 1px solid var(--page-bg-color);
+	background-color: var(--dl-bg-color);
+}
+
+@media (max-width: 768px) {
+	.readme details:not(#table-of-contents):not(.project-site) ul {
+		padding: 0 0 0 1.5rem;
+	}
+}
+
+.readme details:not(#table-of-contents):not(.project-site) ul ul {
+	border: none;
+	margin: 0;
+	padding: 0 0 0 1.5rem;
+}
+
+.readme details:not(#table-of-contents):not(.project-site)>div {
+	border: 1px solid var(--dl-border-color);
+	background-color: var(--dl-bg-color);
+	padding: 0.5rem 1rem;
+}
+
+@media (max-width: 768px) {
+	.readme details:not(#table-of-contents):not(.project-site)>div {
+		padding: 0.5rem 1rem;
+	}
+}
+
+.readme details:not(#table-of-contents):not(.project-site) summary {
+	display: flex !important;
+	cursor: pointer;
+	color: var(--details-header-text-color);
+	background-color: var(--details-header-bg-color);
+	border: 1px solid var(--dl-border-color);
+	padding: 0.5rem;
+	line-height: 1;
+	list-style: none;
+	transition: all 0.3s;
+}
+
+.readme details:not(#table-of-contents):not(.project-site)[open]>summary {
+	background-color: var(--details-header-hover-bg-color);
+	border-top: 1px solid var(--dl-border-color);
+	border-left: 1px solid var(--dl-border-color);
+	border-right: 1px solid var(--dl-border-color);
+	border-bottom: none !important;
+}
+
+.readme details:not(#table-of-contents):not(.project-site) summary:hover {
+	background-color: var(--details-header-hover-bg-color);
+}
+
+.readme details:not(#table-of-contents):not(.project-site) summary::-webkit-details-marker {
+	display: none;
+}
+
 .readme summary>div {
 	display: flex;
 	gap: 0.75rem;
