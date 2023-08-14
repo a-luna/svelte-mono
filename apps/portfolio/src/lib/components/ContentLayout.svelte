@@ -89,7 +89,8 @@
 	header .wrapper {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 0.5rem;
+		gap: 1.5rem;
+		margin: 1.5rem auto;
 	}
 	h1 {
 		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
@@ -113,7 +114,6 @@
 		padding-right: var(--mobile-page-padding);
 		width: 100%;
 		max-width: var(--max-width);
-		margin: 0.5rem auto;
 	}
 	.content-wrapper,
 	.nav-wrapper {
@@ -125,12 +125,6 @@
 		padding-right: var(--mobile-page-padding);
 	}
 	@media (min-width: 640px) {
-		header .wrapper {
-			gap: 1rem;
-		}
-		.wrapper {
-			margin: 1rem auto;
-		}
 		h1 {
 			font-size: 1.8rem;
 		}
@@ -141,6 +135,11 @@
 		}
 		h1 {
 			font-size: 2rem;
+		}
+	}
+	@media (min-width: 848px) {
+		article.readme {
+			--max-width: 800px;
 		}
 	}
 </style>

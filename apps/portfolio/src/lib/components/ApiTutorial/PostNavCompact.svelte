@@ -41,10 +41,10 @@
 		display: flex;
 		flex-flow: row nowrap;
 		width: 100%;
-		font-size: 0.9rem;
+		font-size: 1rem;
 		border: none;
 		padding: 0;
-		line-height: 0.9rem;
+		line-height: 1;
 	}
 	.post-nav-prev,
 	.post-nav-next {

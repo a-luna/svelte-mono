@@ -1,7 +1,7 @@
 <script lang="ts">
+	import GithubStats from '$lib/components/ProjectCard/GithubStats.svelte';
 	import ProjectCardLink from '$lib/components/ProjectCard/ProjectCardLink.svelte';
 	import ProjectDetails from '$lib/components/ProjectCard/ProjectDetails.svelte';
-	import GithubStats from '$lib/components/ProjectCard/GithubStats.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 	import type { RepoWithMetaData } from '$lib/types';
 
@@ -29,8 +29,7 @@
 	}
 	.project-card:hover {
 		color: var(--body-text);
-		border-color: hsl( 76  100%  50% );
-		border-color: oklch(92.22% 0.244 126.84);
+		border-color: var(--yellow-green);
 	}
 	.project-card {
 		display: grid;

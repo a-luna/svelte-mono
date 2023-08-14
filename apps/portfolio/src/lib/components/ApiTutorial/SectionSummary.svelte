@@ -75,8 +75,7 @@
 	}
 
 	.api-tutorial-section:hover {
-		border-color: hsl(76 100% 50%);
-		border-color: oklch(92.22% 0.244 126.84);
+		border-color: var(--yellow-green);
 	}
 
 	h4 {
@@ -172,15 +171,13 @@
 	}
 
 	.links-left a {
-		color: hsl(76 100% 50%);
-		color: oklch(92.22% 0.244 126.84);
+		color: var(--yellow-green);
 		background-color: var(--black);
 		border: 1px solid currentColor;
 	}
 
 	.links-left a:hover {
-		background-color: hsl(76 100% 50%);
-		background-color: oklch(92.22% 0.244 126.84);
+		background-color: var(--yellow-green);
 		color: var(--black);
 	}
 

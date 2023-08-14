@@ -24,16 +24,17 @@
 </div>
 
 <style lang="postcss">
-	ul {
+	ul.recent-posts {
 		display: flex;
 		flex-flow: column nowrap;
 		margin: 0;
 		padding: 0;
 		gap: 1rem;
 	}
-	li {
+	.recent-posts li {
 		display: flex;
 		flex-flow: column nowrap;
+		font-size: 0.9rem;
 		line-height: 1.5;
 		margin: 0;
 		padding: 0;
@@ -47,7 +48,6 @@
 	}
 	a:hover {
 		color: var(--page-bg-color);
-		background-color: hsl(76 100% 50%);
-		background-color: oklch(92.22% 0.244 126.84);
+		background-color: var(--yellow-green);
 	}
 </style>

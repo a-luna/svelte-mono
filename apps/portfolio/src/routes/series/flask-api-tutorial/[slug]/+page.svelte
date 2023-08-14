@@ -29,6 +29,7 @@
 	.post-nav-wrapper {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 2rem;
+		gap: 1.5rem;
+		margin: 0 0 2rem 0;
 	}
 </style>

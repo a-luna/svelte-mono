@@ -1226,7 +1226,7 @@ ul.custom-block li {
 	color: var(--text-color);
 	background-color: var(--header-color);
 	line-height: 1;
-	padding: 5px 0 5px 10px;
+	padding: 6px 10px;
 }
 
 @media (min-width: 640px) {
@@ -2465,7 +2465,7 @@ a.feature-card:hover>div {
 	display: flex;
 	gap: 1rem;
 	align-items: center;
-	font-size: 0.9rem;
+	font-size: 1rem;
 	width: 100%;
 	margin: 0 0 0 0.5rem;
 }
@@ -2490,7 +2490,7 @@ a.feature-card:hover>div {
 .toggle-groups ul>li,
 .toc-wrapper ul>li,
 .readme .prose .toc-wrapper ul>li {
-	font-size: 0.8rem;
+	font-size: 0.9rem;
 	margin: 0.5rem 0;
 }
 

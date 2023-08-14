@@ -64,7 +64,6 @@
 
 <style lang="postcss">
 	#github-links {
-		margin: 0 0 1rem 0;
 		background-color: var(--toggle-section-bg-color);
 	}
 
