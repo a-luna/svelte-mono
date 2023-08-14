@@ -135,15 +135,14 @@ export interface ProjectReadme {
 	language: LanguageOrTech | '';
 	categories: ProjectCategory[];
 	techList: LanguageOrTech[];
-	canonical: string;
 	slug: string;
 	href?: string;
-	url?: string;
+	url: string;
 	date: string;
 	coverImage?: BlogResource;
 	codeBlocks?: CodeBlock[];
-	deployedUrl: string;
-	projectSiteTitle: string;
+	deployedUrl?: string;
+	projectSiteTitle?: string;
 }
 
 export interface BlogPost extends ProjectReadme {

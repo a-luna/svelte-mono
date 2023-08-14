@@ -97,7 +97,6 @@ function initializeReadme(repo: RepoWithMetaData): ProjectReadme {
 		language: repo.primaryLanguage,
 		categories: repo.categories || ['allCategories'],
 		techList: repo.languages || ['allLanguages'],
-		canonical: `${SITE_URL}/${href}`,
 		slug: repo.name,
 		href,
 		url: `${SITE_URL}/${href}`,

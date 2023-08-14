@@ -128,6 +128,8 @@ export const nullRepoWithMetadata: RepoWithMetaData = {
 	languages: ['allLanguages'],
 	categories: ['allCategories'],
 	updatedAt: '',
+	deployedUrl: '',
+	projectSiteTitle: '',
 };
 
 export const nullBlogPost: BlogPost = {
@@ -141,7 +143,6 @@ export const nullBlogPost: BlogPost = {
 	language: 'allLanguages',
 	categories: [],
 	techList: [],
-	canonical: '',
 	slug: '',
 	url: '',
 	date: '',
