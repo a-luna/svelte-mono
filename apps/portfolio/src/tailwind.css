@@ -2499,7 +2499,7 @@ a.feature-card:hover>div {
 .toggle-groups a,
 .toggle-groups a:hover {
 	color: var(--accent-color);
-	background-color: var(--toggle-group-bg-color);
+	background-color: inherit;
 	transition: all 350ms ease-out;
 }
 

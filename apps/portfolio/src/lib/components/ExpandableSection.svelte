@@ -100,14 +100,8 @@
 	.summary-text {
 		flex: 1;
 	}
-	:global(a),
-	:global(a:hover) {
-		color: var(--accent-color);
-		background-color: var(--toggle-group-bg-color);
-		transition: all 350ms ease-out;
-	}
-	:global(code),
-	:global(a code) {
+	.expandable :global(.code),
+	.expandable :global(a code) {
 		color: var(--body-text);
 		background-color: var(--page-bg-color);
 		font-size: 0.75rem;
@@ -147,8 +141,8 @@
 		summary > .summary-wrapper {
 			font-size: 1rem;
 		}
-		:global(code),
-		:global(a code) {
+		.expandable :global(code),
+		.expandable :global(a code) {
 			font-size: 0.8rem;
 		}
 		.details-icon {

@@ -18,6 +18,12 @@
 		z-index: 3;
 		padding: 0.5rem 0.25rem;
 	}
+	a:hover,
+	a:focus,
+	a:active {
+		color: var(--black);
+		background: var(--accent-color);
+	}
 	a:hover {
 		opacity: 0.8;
 	}

@@ -79,6 +79,7 @@
 		gap: 0.5rem;
 		font-weight: 400;
 		color: var(--accent-color);
+		background-color: inherit;
 		text-decoration: none;
 		transition: background-color 350ms ease-out, color 350ms ease-out;
 	}

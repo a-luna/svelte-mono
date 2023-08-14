@@ -58,18 +58,17 @@ module.exports = {
 							fontStyle: 'normal',
 							padding: '0 2px',
 						},
-						'.section a, article a': {
+						'main a': {
 							fontWeight: '400',
-							color: 'hsl(76 100% 50%)',
-							color: 'oklch(92.22% 0.244 126.84)',
+							color: 'var(--yellow-green)',
+							'background-color': 'inherit',
 							textDecoration: 'none',
 							transition: 'all 350ms ease-out',
 						},
-						'.section a:hover, article a:hover': {
+						'main a:hover': {
 							fontWeight: '400',
 							color: 'var(--black-tint3)',
-							'background-color': 'hsl(76 100% 50%)',
-							'background-color': 'oklch(92.22% 0.244 126.84)',
+							'background-color': 'var(--yellow-green)',
 							textDecoration: 'none',
 							'border-bottom': 'none',
 							'box-shadow': 'none',
@@ -82,8 +81,7 @@ module.exports = {
 						},
 						'article a:hover code': {
 							color: 'var(--black-tint3)',
-							'background-color': 'hsl(76 100% 50%)',
-							'background-color': 'oklch(92.22% 0.244 126.84)',
+							'background-color': 'var(--yellow-green)',
 							transition: 'all 350ms ease-out',
 						},
 						'a code': {
