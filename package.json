@@ -23,7 +23,7 @@
 		"update": "pnpm run update:all",
 		"update:all": "pnpm run update:ui && pnpm update:color && pnpm --filter=@a-luna/portfolio update && pnpm --filter=@a-luna/svelte-base64 update",
 		"update:ui": "pnpm --filter=@a-luna/shared-ui update",
-		"update:color": "pnpm --filter=@a-luna/svelte-color-tools update",
+		"update:color": "pnpm run build:ui && pnpm --filter=@a-luna/svelte-color-tools update",
 		"update:site": "pnpm run build:ui && pnpm --filter=@a-luna/portfolio update",
 		"update:base64": "pnpm run build:ui && pnpm --filter=@a-luna/svelte-base64 update",
 		"dev:color": "pnpm run update:color && pnpm --filter=@a-luna/svelte-color-tools run dev",

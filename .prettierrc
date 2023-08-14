@@ -10,5 +10,7 @@
 	"svelteStrictMode": false,
 	"svelteBracketNewLine": true,
 	"svelteIndentScriptAndStyle": true,
-	"trailingComma": "all"
+	"trailingComma": "all",
+	"singleAttributePerLine": false,
+	"proseWrap": "preserve"
 }
