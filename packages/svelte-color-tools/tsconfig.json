@@ -17,5 +17,6 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
+		"types": ["vite/client"]
 	}
 }
