@@ -38,7 +38,7 @@
 		</p>
 		<p><a href={project.deployedUrl}>{project.deployedUrl}</a></p>
 		<ExpandableSection classList={['project-site']} title={project.projectSiteTitle}>
-			<iframe id="projectSite" title="Deployed Project" src={project.deployedUrl} />
+			<iframe id="projectSite" title="Deployed Project" data-repo-name={project.slug} src={project.deployedUrl} />
 		</ExpandableSection>
 	{/if}
 	{@html project?.content}
@@ -48,5 +48,9 @@
 	iframe {
 		aspect-ratio: 16/9;
 		width: 100%;
+	}
+
+	[data-repo-name='unicode-api'] {
+		height: 600px;
 	}
 </style>

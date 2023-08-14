@@ -701,9 +701,18 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	height: 100%;
 }
 
-.readme div.prop-group-ref {
+.readme .alert {
+	color: var(--yellow);
+}
+
+#svelte .readme details div.prop-group-ref {
 	font-style: italic;
-	padding: 0.5rem;
+	background-color: var(--details-header-hover-bg-color);
+	padding: 0.5rem 13px;
+	border-right: 1px solid var(--dl-border-color);
+	border-left: 1px solid var(--dl-border-color);
+	border-top: none;
+	border-bottom: none;
 }
 
 .readme br {
@@ -813,6 +822,7 @@ article.readme .wrapper>ul {
 .readme dt,
 .readme dd {
 	min-height: 40px;
+	word-break: break-word;
 }
 
 .readme dt {

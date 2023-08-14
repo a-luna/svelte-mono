@@ -51,4 +51,9 @@
 			padding: 1.5rem 0;
 		}
 	}
+	@media (min-width: 848px) {
+		:global(#svelte:has(article.readme)) .nav-container {
+			--max-width: 800px;
+		}
+	}
 </style>
