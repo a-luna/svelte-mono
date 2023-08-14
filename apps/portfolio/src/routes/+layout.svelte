@@ -3,11 +3,13 @@
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import NavSideBar from '$lib/components/Nav/NavSideBar.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
+	import PageTransition from '$lib/components/PageTransition.svelte';
 	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
 	import { initialFadePerformed, mobileDisplay, mobileNavOpen } from '$lib/stores';
 	import { fade } from 'svelte/transition';
 	import '../tailwind.css';
 
+	export let data;
 	let pageHeight: number;
 	let pageWidth: number;
 	let windowHeight: number;
@@ -46,11 +48,13 @@
 		<div in:fade={{ delay: fadeInDelay, duration: 400 }} out:fade={{ duration: 300 }} id="top" class="header-wrapper">
 			<Nav />
 		</div>
-		<main in:fade={{ delay: fadeInDelay, duration: 400 }} out:fade={{ duration: 300 }}>
-			<slot />
-			{#if showScrollToTopButton}
-				<ScrollToTopButton />
-			{/if}
+		<main>
+			<PageTransition url={data.url} {fadeInDelay}>
+				<slot />
+				{#if showScrollToTopButton}
+					<ScrollToTopButton />
+				{/if}
+			</PageTransition>
 		</main>
 	{:else}
 		<NavSideBar {pageWidth} />
