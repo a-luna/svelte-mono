@@ -7,7 +7,7 @@ date: "2018-02-04"
 menu_section: "blog"
 toc: true
 categories: ["CSharp", "dev_tools"]
-summary: 'The Task-based Asynchronous Pattern (TAP) is the recommended way to write asynchronous code for .NET applications. As I explained in my last post, TAP is intended to replace the Asynchronous Programming Model (APM) and the Event-based Asynchronous Pattern (EAP), however many classes in the .NET framework still use these older patterns. Fortunately, these can be turned into TAP-style "awaitable" methods with relative ease. By doing so, you reap the benefits that come from working with Task (and Task<T>) objects. In this post, I will convert a set of APM-style methods from the System.Net.Sockets namespace to TAP methods and provide an end-to-end example of how to use them in a generic TCP socket server.'
+summary: 'The Task-based Asynchronous Pattern (TAP) is the recommended way to write asynchronous code for .NET applications. As I explained in my last post, TAP is intended to replace the Asynchronous Programming Model (APM) and the Event-based Asynchronous Pattern (EAP), however many classes in the .NET framework still use these older patterns. Fortunately, these can be turned into TAP-style "awaitable" methods with relative ease. By doing so, you reap the benefits that come from working with Task (and Task&lt;T&gt;) objects. In this post, I will convert a set of APM-style methods from the System.Net.Sockets namespace to TAP methods and provide an end-to-end example of how to use them in a generic TCP socket server.'
 resources:
   - name: cover
     src: cover.jpg
