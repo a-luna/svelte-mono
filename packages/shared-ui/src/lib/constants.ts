@@ -1,7 +1,7 @@
 import type { CssColor } from '$lib/types';
 
 export const COMPONENT_COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo'] as const;
-export const COLOR_FORMATS = ['hex', 'rbg', 'hsl', 'lch', 'oklch', 'lab', 'oklab'] as const;
+export const COLOR_FORMATS = ['hex', 'rgb', 'hsl', 'lch', 'oklch', 'lab', 'oklab'] as const;
 export const HEX_STRING_FORMATS = ['condensed', 'full'] as const;
 export const NUMBER_TYPES = ['hex', 'decimal', 'percent', 'float', 'degree', 'rad', 'turn'] as const;
 
@@ -295,6 +295,5 @@ export const defaultCssColor: CssColor = {
 	lchString: '',
 	oklchString: '',
 	okhslString: '',
-	hasAlpha: false,
 	name: '',
 };
