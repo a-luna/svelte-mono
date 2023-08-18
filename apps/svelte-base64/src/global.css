@@ -211,7 +211,6 @@ main {
 	);
 
 	/* Form Title */
-	/* --form-title-text-color: hsl(171 100% 63% / 0.7); */
 	--form-title-text-color: hsl(
 		var(--pri-h) 
 		min(calc(var(--pri-s) + 7%), 100%) 
@@ -219,7 +218,6 @@ main {
 		max((calc(var(--pri-a) - 0.3)), 0)
 	);
 
-	/* --form-title-text-shadow-color: hsl(301 93% 71% / 0.25); */
 	--form-title-text-shadow-color: hsl(
 		var(--sec-h) 
 		var(--sec-s) 
@@ -228,7 +226,6 @@ main {
 	);
 
 	/* Drop Down Lists */
-	/* --dropdown-bg-color: hsl(171 45% 53%); */
 	--dropdown-bg-color: hsl(
 		var(--pri-h) 
 		max(calc(var(--pri-s) - 48%), 0%) 
@@ -236,14 +233,12 @@ main {
 		var(--pri-a)
 	);
 	--dropdown-text-color: var(--black2);
-	/* --dropdown-border-color: hsl(171 60% 58%); */
 	--dropdown-border-color: hsl(
 		var(--pri-h) 
 		max(calc(var(--pri-s) - 33%), 0%) 
 		min(calc(var(--pri-l) + 5%), 100%) / 
 		var(--pri-a)
 	);
-	/* --selected-item-bg-color: hsl(171 90% 63%); */
 	--selected-item-bg-color: hsl(
 		var(--pri-h) 
 		max(calc(var(--pri-s) - 3%), 0%) 
@@ -253,14 +248,12 @@ main {
 
 	/* Algorithm Demo Nav Buttons (Manual Mode) */
 	--nav-button-text-color: var(--black2);
-	/* --nav-button-bg-color: hsl(171 100% 63% / 0.45); */
 	--nav-button-bg-color: hsl(
 		var(--pri-h) 
 		min(calc(var(--pri-s) + 7%), 100%) 
 		min(calc(var(--pri-l) + 10%), 100%) / 
 		max((calc(var(--pri-a) - 0.55)), 0)
 	);
-	/* --nav-button-border-color: hsl(171 100% 63% / 0.7); */
 	--nav-button-border-color: hsl(
 		var(--pri-h) 
 		min(calc(var(--pri-s) + 7%), 100%) 
@@ -268,7 +261,6 @@ main {
 		max((calc(var(--pri-a) - 0.3)), 0)
 	);
 	--nav-button-hover-text-color: var(--black4);
-	/* --nav-button-hover-bg-color: hsl(171 100% 63% / 0.7); */
 	--nav-button-hover-bg-color: hsl(
 		var(--pri-h) 
 		min(calc(var(--pri-s) + 7%), 100%) 
@@ -276,14 +268,12 @@ main {
 		max((calc(var(--pri-a) - 0.3)), 0)
 	);
 	--nav-button-active-text-color: var(--black4);
-	/* --nav-button-active-bg-color: hsl(171 100% 63% / 0.85); */
 	--nav-button-active-bg-color: hsl(
 		var(--pri-h) 
 		min(calc(var(--pri-s) + 7%), 100%) 
 		min(calc(var(--pri-l) + 10%), 100%) / 
 		max((calc(var(--pri-a) - 0.15)), 0)
 	);
-	/* --nav-button-active-border-color: hsl(171 100% 63% / 0.85); */
 	--nav-button-active-border-color: hsl(
 		var(--pri-h) 
 		min(calc(var(--pri-s) + 7%), 100%) 
@@ -293,14 +283,12 @@ main {
 
 	/* Algorithm Demo Nav Buttons (Auto Play Mode) */
 	--nav-button-autoplay-text-color: var(--black4);
-	/* --nav-button-autoplay-bg-color: hsl(301 93% 71% / 0.85); */
 	--nav-button-autoplay-bg-color: hsl(
 		var(--sec-h) 
 		var(--sec-s) 
 		var(--sec-l) / 
 		max((calc(var(--sec-a) - 0.15)), 0)
 	);
-	/* --nav-button-autoplay-border-color: hsl(301 93% 71% / 0.85); */
 	--nav-button-autoplay-border-color: hsl(
 		var(--sec-h) 
 		var(--sec-s) 
@@ -308,7 +296,6 @@ main {
 		max((calc(var(--sec-a) - 0.15)), 0)
 	);
 	--nav-button-autoplay-disabled-text-color: var(--dark-gray4);
-	/* --nav-button-autoplay-disabled-bg-color: hsl(301 93% 88% / 0.25); */
 	--nav-button-autoplay-disabled-bg-color: hsl(
 		var(--sec-h) 
 		var(--sec-s) 
@@ -317,7 +304,6 @@ main {
 	);
 	--nav-button-autoplay-disabled-border-color: var(--nav-button-autoplay-border-color);
 	--nav-button-stop-autoplay-text-color: var(--black2);
-	/* --nav-button-stop-autoplay-bg-color: hsl(301 93% 71% / 0.45); */
 	--nav-button-stop-autoplay-bg-color: hsl(
 		var(--sec-h) 
 		var(--sec-s) 
@@ -328,7 +314,6 @@ main {
 
 	/* Disabled Button */
 	--button-disabled-text-color: var(--dark-gray4);
-	/* --button-disabled-bg-color: hsl(171 100% 88% / 0.25); */
 	--button-disabled-bg-color: hsl(
 		var(--pri-h) 
 		min(calc(var(--pri-s) + 7%), 100%) 
@@ -386,9 +371,8 @@ main {
 
 	/* Help Docs */
 	--help-docs-bg-color: hsl(0, 0%, 16%);
-	--help-docs-border-color: hsl(0, 0%, 60%);
 	--help-docs-ref-bg-color: hsl(0, 0%, 15%);
-	--help-docs-border-color: var(--nav-button-bg-color);
+	--help-docs-border-color: var(--nav-button-bg-color, hsl(0, 0%, 60%));
 }
 
 a {
