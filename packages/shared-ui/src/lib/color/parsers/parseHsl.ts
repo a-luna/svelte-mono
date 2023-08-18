@@ -1,22 +1,10 @@
 import { parseHueValue } from '$lib/color/parsers/util';
 import { HSL_VAL_NAME_REGEX } from '$lib/color/regex';
-import {
-	hslToString,
-	labToString,
-	lchToString,
-	okhslToString,
-	oklabToString,
-	oklchToString,
-	rgbToString,
-} from '$lib/color/util';
-import type { CssColor, HslColor, HslComponent, HslLabNumberType, ParsedHslComponent } from '$lib/types';
+import type { CssColorPreview, HslColor, HslComponent, HslLabNumberType, ParsedHslComponent } from '$lib/types';
 import { hslToRgb, labToLch, oklabToOklch, rgbToHex, rgbToLab, rgbToOkhsl, rgbToOklab } from '../converters';
 
-export function parseHsl(regExpGroups: object): CssColor {
-	const components = extractHslComponents(regExpGroups);
-	const hasAlpha = components.map(({ component }) => component).includes('alpha');
-	return cssColorFromHsl(getHslColorFromComponents(components), hasAlpha);
-}
+export const parseHsl = (regExpGroups: object): CssColorPreview =>
+	cssColorFromHsl(getHslColorFromComponents(extractHslComponents(regExpGroups)));
 
 function extractHslComponents(regExpGroups: object): ParsedHslComponent[] {
 	const components: ParsedHslComponent[] = [];
@@ -55,15 +43,16 @@ const getHslColorFromComponents = (components: ParsedHslComponent[]): HslColor =
 	a: components.find((c) => c.component === 'alpha')?.value ?? 1.0,
 });
 
-export function cssColorFromHsl(hsl: HslColor, hasAlpha: boolean): CssColor {
+export function cssColorFromHsl(hsl: HslColor): CssColorPreview {
 	const rgb = hslToRgb(hsl);
+	const hex = rgbToHex(rgb);
 	const lab = rgbToLab(rgb);
 	const lch = labToLch(lab);
 	const oklab = rgbToOklab(rgb);
 	const oklch = oklabToOklch(oklab);
 	const okhsl = rgbToOkhsl(rgb);
 	return {
-		hex: rgbToHex(rgb, hasAlpha),
+		hex,
 		rgb,
 		hsl,
 		lab,
@@ -71,13 +60,6 @@ export function cssColorFromHsl(hsl: HslColor, hasAlpha: boolean): CssColor {
 		oklab,
 		oklch,
 		okhsl,
-		rgbString: rgbToString(rgb, hasAlpha),
-		hslString: hslToString(hsl, hasAlpha),
-		labString: labToString(lab, hasAlpha),
-		lchString: lchToString(lch, hasAlpha),
-		okhslString: okhslToString(okhsl, hasAlpha),
-		oklabString: oklabToString(oklab, hasAlpha),
-		oklchString: oklchToString(oklch, hasAlpha),
-		hasAlpha,
+		name: hex,
 	};
 }

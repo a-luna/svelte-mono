@@ -1,6 +1,6 @@
 import { parseNamedColor } from '$lib/color/parsers';
-import { sortColors } from '$lib/color/util';
-import { defaultCssColor, X11_NAMED_COLORS } from '$lib/constants';
+import { addStringValuesToCssColor, changeColorName, sortColors } from '$lib/color/util';
+import { X11_NAMED_COLORS, defaultCssColor } from '$lib/constants';
 import type { ColorPalette, ComponentColor, CssColor, HueRange } from '$lib/types';
 import { getRandomHexString, groupByProperty } from '$lib/util';
 
@@ -32,11 +32,11 @@ export function getX11ColorPalettes(): ColorPalette[] {
 	return [...colorPalettes, grayPalette];
 }
 
-function getX11ColorsOrderedByHue(): CssColor[][] {
+function getX11ColorsOrderedByHue(): [CssColor[], CssColor[]] {
 	const allColorsWithDupes = X11_NAMED_COLORS.filter((name) => name !== 'currentcolor' && name !== 'inherit')
 		.map((name) => {
 			const result = parseNamedColor(name);
-			return result.success ? { ...result.value, name } : defaultCssColor;
+			return result.success ? addStringValuesToCssColor({ ...result.value, name }) : defaultCssColor;
 		})
 		.filter((color) => color !== defaultCssColor);
 
@@ -54,10 +54,18 @@ function getColorsInHueRange(hueStart: number, hueEnd: number, colors: CssColor[
 	return colors.filter((c) => hueStart < c.hsl.h && c.hsl.h <= hueEnd);
 }
 
-const removeDuplicateColors = (colors: CssColor[]): CssColor[] =>
-	Object.values(groupByProperty<CssColor>(colors, 'hex')).map((g) =>
-		g.length === 1 ? g[0] : { ...g[0], name: combineColorNames(g) },
-	);
-
 const combineColorNames = (colors: CssColor[]): string =>
-	[...new Set(colors.map((c) => (c?.name ? c.name : '')))].filter((n) => n).join('/');
+	[...new Set(colors.filter((c) => Boolean(c?.name)).map((c) => c.name))].join('/');
+
+export function removeDuplicateColors(colors: CssColor[]): CssColor[] {
+	const dupesRemoved: CssColor[] = [];
+	Object.values(groupByProperty<CssColor>(colors, 'hex')).forEach((group) => {
+		if (group.length === 1) {
+			dupesRemoved.push(group.at(0) || defaultCssColor);
+		}
+		if (group.length > 1) {
+			dupesRemoved.push(changeColorName(group.at(0) || defaultCssColor, combineColorNames(group)));
+		}
+	});
+	return dupesRemoved;
+}

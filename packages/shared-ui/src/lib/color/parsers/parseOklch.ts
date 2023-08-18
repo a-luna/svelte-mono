@@ -1,22 +1,10 @@
 import { labToLch, oklabToRgb, oklchToOklab, rgbToHex, rgbToHsl, rgbToLab, rgbToOkhsl } from '$lib/color/converters';
 import { parseHueValue } from '$lib/color/parsers/util';
 import { LCH_VAL_NAME_REGEX } from '$lib/color/regex';
-import {
-	hslToString,
-	labToString,
-	lchToString,
-	okhslToString,
-	oklabToString,
-	oklchToString,
-	rgbToString,
-} from '$lib/color/util';
-import type { CssColor, HslLabNumberType, LchComponent, OklchColor, ParsedLchComponent } from '$lib/types';
+import type { CssColorPreview, HslLabNumberType, LchComponent, OklchColor, ParsedLchComponent } from '$lib/types';
 
-export function parseOklch(regExpGroups: object): CssColor {
-	const components = extractOklchComponents(regExpGroups);
-	const hasAlpha = components.map(({ component }) => component).includes('alpha');
-	return cssColorFromOklch(getOklchColorFromComponents(components), hasAlpha);
-}
+export const parseOklch = (regExpGroups: object): CssColorPreview =>
+	cssColorFromOklch(getOklchColorFromComponents(extractOklchComponents(regExpGroups)));
 
 function extractOklchComponents(regExpGroups: object): ParsedLchComponent[] {
 	const components: ParsedLchComponent[] = [];
@@ -60,10 +48,10 @@ const getOklchColorFromComponents = (components: ParsedLchComponent[]): OklchCol
 	a: components.find((c) => c.component === 'alpha')?.value ?? 1.0,
 });
 
-export function cssColorFromOklch(oklch: OklchColor, hasAlpha: boolean): CssColor {
+export function cssColorFromOklch(oklch: OklchColor): CssColorPreview {
 	const oklab = oklchToOklab(oklch);
 	const rgb = oklabToRgb(oklab);
-	const hex = rgbToHex(rgb, hasAlpha);
+	const hex = rgbToHex(rgb);
 	const hsl = rgbToHsl(rgb);
 	const lab = rgbToLab(rgb);
 	const lch = labToLch(lab);
@@ -77,13 +65,6 @@ export function cssColorFromOklch(oklch: OklchColor, hasAlpha: boolean): CssColo
 		oklab,
 		oklch,
 		okhsl,
-		rgbString: rgbToString(rgb, hasAlpha),
-		hslString: hslToString(hsl, hasAlpha),
-		labString: labToString(lab, hasAlpha),
-		lchString: lchToString(lch, hasAlpha),
-		okhslString: okhslToString(okhsl, hasAlpha),
-		oklabString: oklabToString(oklab, hasAlpha),
-		oklchString: oklchToString(oklch, hasAlpha),
-		hasAlpha,
+		name: hex,
 	};
 }

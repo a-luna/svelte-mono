@@ -1,81 +1,89 @@
 import { parseHex, parseHsl, parseLab, parseLch, parseOklab, parseOklch, parseRgb } from '$lib/color/parsers';
 import { HEX_REGEX, HSL_REGEX, LAB_REGEX, LCH_REGEX, OKLAB_REGEX, OKLCH_REGEX, RGB_REGEX } from '$lib/color/regex';
-import { clampColorComponents } from '$lib/color/util';
-import { X11_NAMED_COLORS } from '$lib/constants';
-import type { CssColor, Result } from '$lib/types';
+import { addStringValuesToCssColor, clampColorComponents, getX11ColorNamesNormalized } from '$lib/color/util';
+import type { CssColor, CssColorPreview, Result } from '$lib/types';
 import { normalize } from '$lib/util';
 
 export function parseColorFromString(s: string, clamped = true): Result<CssColor> {
-	let color = parseColorFromCssString(s);
-	if (color) {
-		color = clamped ? clampColorComponents(color) : color;
-		return { success: true, value: color };
-	}
-	const result = parseNamedColor(s);
+	let color;
+	let result = parseCssColor(s);
 	if (result.success) {
-		color = clamped ? clampColorComponents(result.value) : result.value;
-		return { success: true, value: color };
+		color = result.value;
+	} else {
+		result = parseNamedColor(s);
+		if (result.success) {
+			color = result.value;
+		} else {
+			return result;
+		}
 	}
-	return result;
+	color = clamped ? clampColorComponents(addStringValuesToCssColor(color)) : addStringValuesToCssColor(color);
+	return { success: true, value: color };
 }
 
-function parseColorFromCssString(s: string): CssColor | undefined {
+function parseCssColor(s: string): Result<CssColorPreview> {
 	s = s.trim();
+	let color = undefined;
 	let match = HEX_REGEX.exec(s);
 	if (match && match.groups) {
-		return parseHex(match.groups);
+		color = parseHex(match.groups);
 	}
 	match = RGB_REGEX.exec(s);
 	if (match && match.groups) {
-		return parseRgb(match.groups);
+		color = parseRgb(match.groups);
 	}
 	match = HSL_REGEX.exec(s);
 	if (match && match.groups) {
-		return parseHsl(match.groups);
+		color = parseHsl(match.groups);
 	}
 	match = LAB_REGEX.exec(s);
 	if (match && match.groups) {
-		return parseLab(match.groups);
+		color = parseLab(match.groups);
 	}
 	match = OKLAB_REGEX.exec(s);
 	if (match && match.groups) {
-		return parseOklab(match.groups);
+		color = parseOklab(match.groups);
 	}
 	match = LCH_REGEX.exec(s);
 	if (match && match.groups) {
-		return parseLch(match.groups);
+		color = parseLch(match.groups);
 	}
 	match = OKLCH_REGEX.exec(s);
 	if (match && match.groups) {
-		return parseOklch(match.groups);
+		color = parseOklch(match.groups);
 	}
-	return;
+	return color ? { success: true, value: color } : { success: false };
 }
 
-export function parseNamedColor(name: string): Result<CssColor> {
-	const namedColor = X11_NAMED_COLORS.find((color) => color.toLowerCase() === normalize(name));
+export function parseNamedColor(name: string): Result<CssColorPreview> {
+	const namedColor = getX11ColorNamesNormalized().get(normalize(name));
 	if (!namedColor) {
 		const error = `Unable to parse "${name}" as a valid color value`;
 		return { success: false, error: Error(error) };
 	}
+	const getRgbStringResult = namedColorToRgb(namedColor);
+	if (!getRgbStringResult.success) {
+		return { success: false, error: getRgbStringResult.error };
+	}
+	const parseCssColorResult = parseCssColor(getRgbStringResult.value);
+	if (!parseCssColorResult.success) {
+		return parseCssColorResult;
+	}
+	const color = parseCssColorResult.value;
+	color.name = name;
+	return { success: true, value: color };
+}
+
+function namedColorToRgb(name: string): Result<string> {
 	if (typeof window === 'undefined') {
 		const error = `Code for parsing named color values can only run in browser`;
 		return { success: false, error: Error(error) };
 	}
-	const rgb = namedColorToRgb(namedColor) ?? '';
-	const color = parseColorFromCssString(rgb);
-	return color ? { success: true, value: color } : { success: false };
-}
-
-function namedColorToRgb(name: string): string | undefined {
-	if (typeof window !== 'undefined') {
-		const testDiv = document.createElement('div');
-		testDiv.style.color = name;
-		document.body.appendChild(testDiv);
-		const compStyles = window.getComputedStyle(testDiv);
-		const rgb = compStyles.getPropertyValue('color');
-		document.body.removeChild(testDiv);
-		return rgb;
-	}
-	return;
+	const testDiv = document.createElement('div');
+	testDiv.style.color = name;
+	document.body.appendChild(testDiv);
+	const compStyles = window.getComputedStyle(testDiv);
+	const rgb = compStyles.getPropertyValue('color');
+	document.body.removeChild(testDiv);
+	return { success: true, value: rgb };
 }

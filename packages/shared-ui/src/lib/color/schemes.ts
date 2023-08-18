@@ -1,5 +1,5 @@
 import { cssColorFromOklch } from '$lib/color/parsers';
-import { sortColors } from '$lib/color/util';
+import { addStringValuesToCssColor, sortColors } from '$lib/color/util';
 import type { CssColor, Result } from '$lib/types';
 
 export const getColorSchemes = (color: CssColor): { [key: string]: CssColor[] } => ({
@@ -67,16 +67,16 @@ function getTintsForColor(color: CssColor, stepSize: number): CssColor[] {
 	return tints.sort(sortColors);
 }
 
-function adjustHue({ oklch, hasAlpha }: CssColor, hueChange: number): CssColor {
+function adjustHue({ oklch }: CssColor, hueChange: number): CssColor {
 	let h = oklch.h + hueChange;
 	if (h > 360) h -= 360;
 	if (h < 0) h += 360;
-	return cssColorFromOklch({ ...oklch, h }, hasAlpha);
+	return addStringValuesToCssColor(cssColorFromOklch({ ...oklch, h }));
 }
 
-function adjustLightness({ oklch, hasAlpha }: CssColor, lightChange: number): Result<CssColor> {
+function adjustLightness({ oklch }: CssColor, lightChange: number): Result<CssColor> {
 	const l = oklch.l + lightChange;
 	return l >= 0 && l <= 100
-		? { success: true, value: cssColorFromOklch({ ...oklch, l }, hasAlpha) }
+		? { success: true, value: addStringValuesToCssColor(cssColorFromOklch({ ...oklch, l })) }
 		: { success: false, error: Error(`Lightness must be within range 0-100`) };
 }

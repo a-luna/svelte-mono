@@ -1,6 +1,8 @@
+import { X11_NAMED_COLORS } from '$lib/constants';
 import type {
 	ColorPalette,
 	CssColor,
+	CssColorPreview,
 	HslColor,
 	LabColor,
 	LchColor,
@@ -66,19 +68,11 @@ export const sortColors = (a: CssColor, b: CssColor): number =>
 export const colorNameisCustomized = ({ name, hex, hslString, rgbString }: CssColor): boolean =>
 	name ? ![hex, hslString, rgbString].includes(name) : false;
 
-export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
-	const id = getRandomHexString(4);
-	return {
-		id,
-		propName: `palette-${id}`,
-		displayName: name,
-		colors: [],
-		componentColor: 'black',
-	};
-}
+export const normalize = (s: string): string =>
+	s.toLowerCase().trim().replace(/\s+/g, '').replaceAll('-', '').replaceAll('_', '');
 
 export const copyCssColor = (color: CssColor): CssColor => ({
-	hex: color.hex,
+	...color,
 	rgb: { ...color.rgb },
 	hsl: { ...color.hsl },
 	lab: { ...color.lab },
@@ -86,31 +80,21 @@ export const copyCssColor = (color: CssColor): CssColor => ({
 	okhsl: { ...color.okhsl },
 	oklab: { ...color.oklab },
 	oklch: { ...color.oklch },
-	rgbString: color.rgbString,
-	hslString: color.hslString,
-	labString: color.labString,
-	okhslString: color.okhslString,
-	oklchString: color.oklchString,
-	oklabString: color.oklabString,
-	lchString: color.lchString,
-	hasAlpha: color.hasAlpha,
-	name: color.name,
 });
 
 const signedInteger = /-?\d*\.0?$/;
 
-const clamp = (n: number): number => {
-	return Math.abs(n) < 1
+const clamp = (n: number): number =>
+	Math.abs(n) < 1
 		? Object.is(parseFloat(n.toFixed(4)), -0)
 			? 0
 			: parseFloat(n.toFixed(4))
 		: signedInteger.test(n.toFixed(2))
 		? parseInt(n.toFixed(2))
 		: parseFloat(n.toFixed(2));
-};
 
 export const clampColorComponents = (color: CssColor): CssColor => ({
-	hex: color.hex,
+	...color,
 	rgb: {
 		r: Math.round(color.rgb.r),
 		g: Math.round(color.rgb.g),
@@ -153,13 +137,38 @@ export const clampColorComponents = (color: CssColor): CssColor => ({
 		h: clamp(color.oklch.h),
 		a: clamp(color.oklch.a),
 	},
-	rgbString: color.rgbString,
-	hslString: color.hslString,
-	labString: color.labString,
-	okhslString: color.okhslString,
-	oklchString: color.oklchString,
-	oklabString: color.oklabString,
-	lchString: color.lchString,
-	hasAlpha: color.hasAlpha,
-	name: color.name,
 });
+
+export const addStringValuesToCssColor = (color: CssColorPreview): CssColor => ({
+	...color,
+	rgbString: rgbToString(color.rgb),
+	hslString: hslToString(color.hsl),
+	labString: labToString(color.lab),
+	lchString: lchToString(color.lch),
+	okhslString: okhslToString(color.okhsl),
+	oklabString: oklabToString(color.oklab),
+	oklchString: oklchToString(color.oklch),
+});
+
+export function changeColorName(color: CssColor, newName: string): CssColor {
+	const updatedColor = copyCssColor(color);
+	updatedColor.name = newName;
+	return updatedColor;
+}
+
+export function getX11ColorNamesNormalized(): Map<string, string> {
+	const x11ColorNames = new Map<string, string>();
+	X11_NAMED_COLORS.forEach((color) => x11ColorNames.set(normalize(color), color));
+	return x11ColorNames;
+}
+
+export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
+	const id = getRandomHexString(4);
+	return {
+		id,
+		propName: `palette-${id}`,
+		displayName: name,
+		colors: [],
+		componentColor: 'black',
+	};
+}

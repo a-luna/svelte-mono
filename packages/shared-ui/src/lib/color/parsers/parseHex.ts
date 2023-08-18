@@ -1,17 +1,8 @@
 import { labToLch, oklabToOklch, rgbToHex, rgbToHsl, rgbToLab, rgbToOkhsl, rgbToOklab } from '$lib/color/converters';
 import { getRgbColorFromComponents } from '$lib/color/parsers/util';
 import { HEX_VAL_NAME_REGEX } from '$lib/color/regex';
-import {
-	hslToString,
-	labToString,
-	lchToString,
-	okhslToString,
-	oklabToString,
-	oklchToString,
-	rgbToString,
-} from '$lib/color/util';
 import type {
-	CssColor,
+	CssColorPreview,
 	EarlyParsedHexComponent,
 	HexStringFormat,
 	IsEnumerable,
@@ -19,35 +10,10 @@ import type {
 	RgbHexComponent,
 } from '$lib/types';
 
-export function parseHex(regExpGroups: object): CssColor {
-	const hex = parseHexString(regExpGroups);
-	const hasAlpha = hex.map(({ component }) => component).includes('alpha');
-	const components = extractHexComponents(hex, hasAlpha);
-	const rgb = getRgbColorFromComponents(components);
-	const hsl = rgbToHsl(rgb);
-	const lab = rgbToLab(rgb);
-	const lch = labToLch(lab);
-	const oklab = rgbToOklab(rgb);
-	const oklch = oklabToOklch(oklab);
-	const okhsl = rgbToOkhsl(rgb);
-	return {
-		hex: rgbToHex(rgb, hasAlpha),
-		rgb,
-		hsl,
-		lab,
-		lch,
-		oklab,
-		oklch,
-		okhsl,
-		rgbString: rgbToString(rgb, hasAlpha),
-		hslString: hslToString(hsl, hasAlpha),
-		labString: labToString(lab, hasAlpha),
-		lchString: lchToString(lch, hasAlpha),
-		okhslString: okhslToString(okhsl, hasAlpha),
-		oklabString: oklabToString(oklab, hasAlpha),
-		oklchString: oklchToString(oklch, hasAlpha),
-		hasAlpha,
-	};
+export function parseHex(regExpGroups: object): CssColorPreview {
+	const hexComponents = parseHexString(regExpGroups);
+	const hasAlpha = hexComponents.map(({ component }) => component).includes('alpha');
+	return cssColorFromHexComponents(extractHexComponents(hexComponents, hasAlpha));
 }
 
 function parseHexString(regExpGroups: object): EarlyParsedHexComponent[] {
@@ -90,4 +56,26 @@ function convertFullHexComponents(earlyHex: EarlyParsedHexComponent[], hasAlpha:
 		components.push({ component: 'alpha', numType: 'decimal', value: parseInt(`${a[0]?.value}${a[1]?.value}`, 16) });
 	}
 	return components;
+}
+
+export function cssColorFromHexComponents(components: ParsedHexComponent[]): CssColorPreview {
+	const rgb = getRgbColorFromComponents(components);
+	const hex = rgbToHex(rgb);
+	const hsl = rgbToHsl(rgb);
+	const lab = rgbToLab(rgb);
+	const lch = labToLch(lab);
+	const oklab = rgbToOklab(rgb);
+	const oklch = oklabToOklch(oklab);
+	const okhsl = rgbToOkhsl(rgb);
+	return {
+		hex,
+		rgb,
+		hsl,
+		lab,
+		lch,
+		oklab,
+		oklch,
+		okhsl,
+		name: hex,
+	};
 }
