@@ -40,7 +40,7 @@ const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	frontend: {
 		displayName: 'Frontend',
-		color: 'sea-green',
+		color: 'teal',
 		hasIcon: true,
 		icon: Frontend,
 		size: 16,
@@ -85,7 +85,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	fastapi: {
 		displayName: 'FastAPI',
-		color: 'sea-green',
+		color: 'pink',
 		hasIcon: true,
 		icon: FastApi,
 		size: 16,
@@ -169,7 +169,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	sqlite: {
 		displayName: 'SQLite',
-		color: 'sea-green',
+		color: 'pink',
 		hasIcon: true,
 		icon: Sqlite,
 		size: 16,
@@ -219,12 +219,12 @@ const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } 
 	},
 	rest_api: {
 		displayName: 'REST API',
-		color: 'green',
+		color: 'orange',
 		hasIcon: false,
 	},
 	blog_portfolio_sites: {
 		displayName: 'Blog/Portfolio Site',
-		color: 'sea-green',
+		color: 'teal',
 		hasIcon: false,
 	},
 	cli_apps: {
@@ -259,17 +259,17 @@ const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } 
 	},
 	docs_guides: {
 		displayName: 'Documentation',
-		color: 'dark-blue',
+		color: 'teal',
 		hasIcon: false,
 	},
 	fastapi_plugins: {
 		displayName: 'FastAPI Plugin',
-		color: 'blue',
+		color: 'yellow',
 		hasIcon: false,
 	},
 	web_app: {
 		displayName: 'Web App',
-		color: 'green',
+		color: 'red',
 		hasIcon: false,
 	},
 	virtualization: {
@@ -279,7 +279,7 @@ const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } 
 	},
 	web_scraping: {
 		displayName: 'Web Scraping',
-		color: 'sea-green',
+		color: 'pink',
 		hasIcon: false,
 	},
 };

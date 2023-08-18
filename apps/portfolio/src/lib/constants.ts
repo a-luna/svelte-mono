@@ -16,7 +16,6 @@ export const ICON_COLORS = [
 	'yellow',
 	'yellow-green',
 	'green',
-	'sea-green',
 	'teal',
 	'blue',
 	'dark-blue',
