@@ -22,6 +22,8 @@
 	const selectedOptionChangedDispatcher = createEventDispatcher<{
 		selectedOptionChanged: { selected: string | number };
 	}>();
+	const iconWidth = 'var(--select-list-open-button-icon-width, var(--select-list-default-open-button-icon-width))';
+	const iconHeight = 'var(--select-list-open-button-icon-height, var(--select-list-default-open-button-icon-height))';
 
 	$: label = displaySelectedOptionText ? selectedOption?.label ?? menuLabel : menuLabel;
 	$: noSelection = selectedValue === '';
@@ -78,7 +80,7 @@
 				</slot>
 			</span>
 			<div class="menu-icon">
-				<BasicIconRenderer icon={'caretdown'} />
+				<BasicIconRenderer icon={'caretdown'} height={iconHeight} width={iconWidth} />
 			</div>
 		</button>
 	</div>
@@ -112,10 +114,6 @@
 		--select-list-default-align-items: center;
 		--select-list-default-gap: 0.625rem;
 
-		--select-list-default-dropdown-text-color: hsl(0, 0%, 10%);
-		--select-list-default-dropdown-background-color: hsl(0, 0%, 100%);
-		--select-list-default-dropdown-border-color: hsl(0, 0%, 75%);
-
 		--select-list-default-open-button-text-color: hsl(0, 0%, 10%);
 		--select-list-default-open-button-background-color: hsl(0, 0%, 100%);
 		--select-list-default-open-button-hover-background-color: hsl(0, 0%, 95%);
@@ -135,6 +133,9 @@
 		--select-list-default-border-radius: 6px;
 		--select-list-default-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
+		--select-list-default-dropdown-text-color: hsl(0, 0%, 10%);
+		--select-list-default-dropdown-background-color: hsl(0, 0%, 100%);
+		--select-list-default-dropdown-border-color: hsl(0, 0%, 75%);
 		--select-list-default-dropdown-height: auto;
 		--select-list-default-dropdown-margin: 0.5rem 0 0 0;
 		--select-list-default-dropdown-box-shadow: 0 0 0 0px #fff, 0 0 0 1px rbg(0 0 0 / 0.05), 0 0 #0000;
