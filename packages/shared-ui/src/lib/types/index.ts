@@ -1,4 +1,4 @@
-import type { ColorPalette } from '$lib/types/ColorPalette';
+import type { ColorPalette, ColorPalleteFromFile } from '$lib/types/ColorPalette';
 import type {
 	HslColor,
 	LabColor,
@@ -9,7 +9,7 @@ import type {
 	RgbColor,
 	XyzColor,
 } from '$lib/types/ColorSpaces';
-import type { CssColor } from '$lib/types/CssColor';
+import type { CssColor, CssColorPreview } from '$lib/types/CssColor';
 import type { HueRange } from '$lib/types/HueRange';
 import type {
 	ColorFormat,
@@ -38,43 +38,46 @@ import type {
 import type { RadioButtonDetails } from '$lib/types/RadioButtonDetails';
 import type { Result } from '$lib/types/Result';
 import type { SelectListOption } from '$lib/types/SelectListOption';
-import type { ThemeColor } from '$lib/types/ThemeColor';
+import type { ThemeColor, ThemeColorShallowCopy } from '$lib/types/ThemeColor';
 
 export * from '$lib/types/Icons';
 export type {
+	ColorFormat,
+	ColorPalette,
+	ColorPalleteFromFile,
+	ComponentColor,
 	CssColor,
+	CssColorPreview,
+	EarlyParsedHexComponent,
+	HexNumberType,
+	HexStringFormat,
 	HslColor,
+	HslComponent,
+	HslLabNumberType,
+	HueRange,
+	IsEnumerable,
 	LabColor,
+	LabComponent,
 	LchColor,
+	LchComponent,
+	NumberType,
 	OkhslColor,
 	OklabColor,
 	OklchColor,
-	RgbColor,
-	XyzColor,
-	ColorPalette,
-	HueRange,
-	EarlyParsedHexComponent,
 	ParsedHexComponent,
 	ParsedHslComponent,
 	ParsedLabComponent,
 	ParsedLchComponent,
 	ParsedRgbComponent,
-	Subset,
-	ComponentColor,
-	ColorFormat,
-	RgbNumberType,
-	HexNumberType,
-	HexStringFormat,
-	RgbStringFormat,
-	HslLabNumberType,
 	RadioButtonDetails,
-	RgbHexComponent,
-	HslComponent,
-	LabComponent,
-	LchComponent,
-	SelectListOption,
-	ThemeColor,
-	NumberType,
-	IsEnumerable,
 	Result,
+	RgbColor,
+	RgbHexComponent,
+	RgbNumberType,
+	RgbStringFormat,
+	SelectListOption,
+	Subset,
+	ThemeColor,
+	ThemeColorShallowCopy,
+	XyzColor,
 };

@@ -16,6 +16,10 @@ export interface CssColor {
 	okhslString: string;
 	oklabString: string;
 	oklchString: string;
-	hasAlpha: boolean;
-	name?: string;
+	name: string;
 }
+
+export type CssColorPreview = Pick<
+	CssColor,
+	'hex' | 'hsl' | 'lab' | 'lch' | 'okhsl' | 'oklab' | 'oklch' | 'rgb' | 'name'
+>;

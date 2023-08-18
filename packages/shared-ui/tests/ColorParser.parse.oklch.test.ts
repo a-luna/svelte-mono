@@ -9,7 +9,6 @@ describe('ColorParser can parse OKLCH strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EB00C5BA');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 235, g: 0, b: 197, a: 186 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 309.6, s: 99.7, l: 46.1, a: 0.73 });
@@ -26,7 +25,6 @@ describe('ColorParser can parse OKLCH strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#EAD9AB80');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 234, g: 217, b: 171, a: 128 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 43.7, s: 59.3, l: 79.4, a: 0.5 });
@@ -43,7 +41,6 @@ describe('ColorParser can parse OKLCH strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#667CC3');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 102, g: 124, b: 195, a: 255 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 226, s: 43.7, l: 58.3, a: 1 });

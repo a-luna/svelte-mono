@@ -25,38 +25,38 @@ export const byteIntToHexString = (byteInt: number): string =>
 		? '00'
 		: 'FF';
 
-export const rgbToString = ({ r, g, b, a }: RgbColor, hasAlpha: boolean): string =>
-	hasAlpha
+export const rgbToString = ({ r, g, b, a }: RgbColor): string =>
+	a < 1.0
 		? `rgb(${Math.round(r)} ${Math.round(g)} ${Math.round(b)} / ${Math.round(a)})`
 		: `rgb(${Math.round(r)} ${Math.round(g)} ${Math.round(b)})`;
 
-export const hslToString = ({ h, s, l, a }: HslColor, hasAlpha: boolean): string =>
-	hasAlpha
+export const hslToString = ({ h, s, l, a }: HslColor): string =>
+	a < 1.0
 		? `hsl(${toFixedFloat(h)} ${toFixedFloat(s)}% ${toFixedFloat(l)}% / ${a})`
 		: `hsl(${toFixedFloat(h)} ${toFixedFloat(s)}% ${toFixedFloat(l)}%)`;
 
-export const labToString = ({ l, a, b, A }: LabColor, hasAlpha: boolean): string =>
-	hasAlpha
+export const labToString = ({ l, a, b, A }: LabColor): string =>
+	a < 1.0
 		? `lab(${toFixedFloat(l)} ${toFixedFloat(a)} ${toFixedFloat(b)} / ${opacityAsPercent(A)}%)`
 		: `lab(${toFixedFloat(l)} ${toFixedFloat(a)} ${toFixedFloat(b)})`;
 
-export const lchToString = ({ l, c, h, a }: LchColor, hasAlpha: boolean): string =>
-	hasAlpha
+export const lchToString = ({ l, c, h, a }: LchColor): string =>
+	a < 1.0
 		? `lch(${toFixedFloat(l)} ${toFixedFloat(c)} ${toFixedFloat(h)} / ${opacityAsPercent(a)}%)`
 		: `lch(${toFixedFloat(l)} ${toFixedFloat(c)} ${toFixedFloat(h)})`;
 
-export const okhslToString = ({ h, s, l, a }: OkhslColor, hasAlpha: boolean): string =>
-	hasAlpha
+export const okhslToString = ({ h, s, l, a }: OkhslColor): string =>
+	a < 1.0
 		? `okhsl(${toFixedFloat(h)} ${toFixedPercent(s)} ${toFixedPercent(l)} / ${a})`
 		: `okhsl(${toFixedFloat(h)} ${toFixedPercent(s)} ${toFixedPercent(l)})`;
 
-export const oklabToString = ({ l, a, b, A }: OklabColor, hasAlpha: boolean): string =>
-	hasAlpha
+export const oklabToString = ({ l, a, b, A }: OklabColor): string =>
+	a < 1.0
 		? `oklab(${toFixedFloat(l)}% ${toFixedFloat(a, 3)} ${toFixedFloat(b, 3)} / ${opacityAsPercent(A)}%)`
 		: `oklab(${toFixedFloat(l)}% ${toFixedFloat(a, 3)} ${toFixedFloat(b, 3)})`;
 
-export const oklchToString = ({ l, c, h, a }: OklchColor, hasAlpha: boolean): string =>
-	hasAlpha
+export const oklchToString = ({ l, c, h, a }: OklchColor): string =>
+	a < 1.0
 		? `oklch(${toFixedFloat(l)}% ${toFixedFloat(c, 3)} ${toFixedFloat(h)} / ${opacityAsPercent(a)}%)`
 		: `oklch(${toFixedFloat(l)}% ${toFixedFloat(c, 3)} ${toFixedFloat(h)})`;
 

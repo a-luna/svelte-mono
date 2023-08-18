@@ -9,7 +9,6 @@ describe('ColorParser can parse strings in RGB functional notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#01E1EC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 1, g: 225, b: 236, a: 255 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 182.8, s: 99.2, l: 46.5, a: 1 });
@@ -26,7 +25,6 @@ describe('ColorParser can parse strings in RGB functional notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#78EB00');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 255 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 89.3, s: 100, l: 46, a: 1 });
@@ -45,7 +43,6 @@ describe('ColorParser can parse strings in RGBA functional notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#01E1EC82');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 1, g: 225, b: 236, a: 130 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 182.8, s: 99.2, l: 46.5, a: 0.51 });
@@ -62,7 +59,6 @@ describe('ColorParser can parse strings in RGBA functional notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#78EB00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 204 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 89.3, s: 100, l: 46, a: 0.8 });
@@ -79,7 +75,6 @@ describe('ColorParser can parse strings in RGBA functional notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#78EB00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 204 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 89.3, s: 100, l: 46, a: 0.8 });
@@ -98,7 +93,6 @@ describe('ColorParser can parse RGB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#000045');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 0, g: 0, b: 69, a: 255 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 240, s: 100, l: 13.5, a: 1 });
@@ -115,7 +109,6 @@ describe('ColorParser can parse RGB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#EE00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 238, g: 0, b: 204, a: 255 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 308.6, s: 100, l: 46.7, a: 1 });
@@ -132,7 +125,6 @@ describe('ColorParser can parse RGB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#01E1EC82');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 1, g: 225, b: 236, a: 130 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 182.8, s: 99.2, l: 46.5, a: 0.51 });
@@ -149,7 +141,6 @@ describe('ColorParser can parse RGB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#78EB00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 204 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 89.3, s: 100, l: 46, a: 0.8 });
@@ -166,7 +157,6 @@ describe('ColorParser can parse RGB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#78EB00CC');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 120, g: 235, b: 0, a: 204 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 89.3, s: 100, l: 46, a: 0.8 });

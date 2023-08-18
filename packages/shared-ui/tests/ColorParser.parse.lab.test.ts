@@ -9,7 +9,6 @@ describe('ColorParser can parse LAB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#7AC600');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 122, g: 198, b: 0, a: 255 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 83, s: 99.9, l: 38.8, a: 1 });
@@ -26,7 +25,6 @@ describe('ColorParser can parse LAB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#7AC600A8');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 122, g: 198, b: 0, a: 168 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 83, s: 99.9, l: 38.8, a: 0.66 });

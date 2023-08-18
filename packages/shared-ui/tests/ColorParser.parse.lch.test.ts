@@ -9,7 +9,6 @@ describe('ColorParser can parse LCH strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#2C2C2CD9');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 44, g: 44, b: 44, a: 217 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 0, s: 0, l: 17.3, a: 0.85 });
@@ -26,7 +25,6 @@ describe('ColorParser can parse LCH strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#6C7EA880');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 108, g: 126, b: 168, a: 128 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 222.4, s: 25.7, l: 54.3, a: 0.5 });

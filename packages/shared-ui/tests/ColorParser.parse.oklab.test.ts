@@ -9,7 +9,6 @@ describe('ColorParser can parse OKLAB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(true);
 			expect(color.hex).toStrictEqual<string>('#C65D0780');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 198, g: 93, b: 7, a: 128 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 27, s: 93.3, l: 40.1, a: 0.5 });
@@ -26,7 +25,6 @@ describe('ColorParser can parse OKLAB strings in CSS Colors 4 notation', () => {
 		expect(result.success).toStrictEqual<boolean>(true);
 		if (result.success) {
 			const color = result.value;
-			expect(color.hasAlpha).toStrictEqual<boolean>(false);
 			expect(color.hex).toStrictEqual<string>('#7AC601');
 			expect(color.rgb).toStrictEqual<RgbColor>({ r: 122, g: 198, b: 1, a: 255 });
 			expect(color.hsl).toStrictEqual<HslColor>({ h: 83.3, s: 99, l: 39, a: 1 });
