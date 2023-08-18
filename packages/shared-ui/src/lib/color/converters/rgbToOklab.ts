@@ -1,5 +1,5 @@
 import { OKLAB_M1, OKLAB_M2, RGB_TO_XYZ_MATRIX } from '$lib/color/converters/util/constants';
-import { multiplyMatrix3x3ByVector, type ColorValues } from '$lib/color/converters/util/matrix';
+import { multiplyMatrix3x3ByVector, type Matrix1x3 } from '$lib/color/converters/util/matrix';
 import { decimalToOpacityValue } from '$lib/color/util';
 import type { OklabColor, RgbColor, XyzColor } from '$lib/types';
 
@@ -7,7 +7,7 @@ export const rgbToOklab = (rgb: RgbColor): OklabColor => xyzToOklab(rgbToXyz(rgb
 
 function rgbToXyz(rgb: RgbColor): XyzColor {
 	const { r, g, b } = rgb;
-	const linearRgb: ColorValues = [expandGamma(r / 255), expandGamma(g / 255), expandGamma(b / 255)];
+	const linearRgb: Matrix1x3 = [expandGamma(r / 255), expandGamma(g / 255), expandGamma(b / 255)];
 	const [x, y, z] = multiplyMatrix3x3ByVector(RGB_TO_XYZ_MATRIX, linearRgb);
 	return { x, y, z, a: decimalToOpacityValue(rgb.a) };
 }

@@ -1,5 +1,5 @@
 import { EPSILON, KAPPA, RGB_TO_XYZ_MATRIX } from '$lib/color/converters/util/constants';
-import { multiplyMatrix3x3ByVector, type ColorValues } from '$lib/color/converters/util/matrix';
+import { multiplyMatrix3x3ByVector, type Matrix1x3 } from '$lib/color/converters/util/matrix';
 import { decimalToOpacityValue } from '$lib/color/util';
 import type { LabColor, RgbColor, XyzColor } from '$lib/types';
 
@@ -9,7 +9,7 @@ export const rgbToLab = (rgb: RgbColor): LabColor => xyzToLab(rgbToXyz(rgb));
 // into XYZ colour space (with white’s Y value equal 1).
 function rgbToXyz(rgb: RgbColor): XyzColor {
 	const { r, g, b } = rgb;
-	const linearRgb: ColorValues = [expandGamma(r), expandGamma(g), expandGamma(b)];
+	const linearRgb: Matrix1x3 = [expandGamma(r), expandGamma(g), expandGamma(b)];
 	const [x, y, z] = multiplyMatrix3x3ByVector(RGB_TO_XYZ_MATRIX, linearRgb);
 	return { x, y, z, a: decimalToOpacityValue(rgb.a) };
 }
