@@ -1,5 +1,6 @@
+import type { CssColor, ThemeColor } from '@a-luna/shared-ui';
 import type { Writable } from 'svelte/store';
-import type { CssColor, ThemeColor, ThemeEditorState } from './';
+import type { ThemeEditorState } from './';
 
 export interface ThemeEditorStore {
 	set: Writable<ThemeEditorState>['set'];

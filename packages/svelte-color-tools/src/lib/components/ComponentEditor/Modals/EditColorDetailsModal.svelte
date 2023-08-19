@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Modal from '$lib/components/Shared/Modal.svelte';
 	import { getThemeEditorStore } from '$lib/context';
 	import { copyThemeColor } from '$lib/theme';
-	import type { ThemeColor, ThemeColorShallowCopy } from '$lib/types';
+	import type { ThemeColorShallowCopy } from '$lib/types';
+	import { Modal, type ThemeColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import ColorSettings from './ColorSettings.svelte';
 
@@ -19,15 +19,19 @@
 	let state = getThemeEditorStore(editorId);
 	const dispatch = createEventDispatcher();
 
-	export function toggleModal(editColor: ThemeColor = null) {
+	export function openModal(editColor: ThemeColor) {
 		if (closed) {
-			propName = editColor?.propName;
-			value = editColor?.value;
-			cssVarName = editColor?.cssVarName;
-			displayName = editColor?.displayName;
+			propName = editColor?.propName ?? '';
+			value = editColor?.value ?? '';
+			cssVarName = editColor?.cssVarName ?? '';
+			displayName = editColor?.displayName ?? '';
 			color = editColor;
 			originalColor = copyThemeColor(editColor);
+			toggleModal();
 		}
+	}
+
+	export function toggleModal() {
 		modal.toggleModal();
 		$state.modalOpen = !$state.modalOpen;
 	}
@@ -47,7 +51,7 @@
 		color.propName = originalColor.propName;
 		color.cssVarName = originalColor.cssVarName;
 		color.displayName = originalColor.displayName;
-		color.color.name = originalColor.displayName;
+		color.color.name = originalColor.displayName ?? '';
 		color.value = originalColor.value;
 		propName = '';
 		cssVarName = '';

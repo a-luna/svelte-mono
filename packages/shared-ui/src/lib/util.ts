@@ -1,5 +1,9 @@
+import { BROWSER } from 'esm-env';
+import { writable, type Writable } from 'svelte/store';
+
 export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 export const getVariableName = (x: object) => Object.keys(x)[0];
+export const objectIsEmpty = (obj: object) => JSON.stringify(obj) === '{}';
 
 export const getRandomHexString = (length: number): string =>
 	Array.from({ length }, () => Math.floor(Math.random() * 16))
@@ -43,4 +47,27 @@ export function clickOutside(node: HTMLElement, { enabled: initialEnabled, cb }:
 			window.removeEventListener('click', handleOutsideClick);
 		},
 	};
+}
+
+export function createLocalStorageValue<T extends object>(key: string, defaultValue: T): Writable<T> {
+	let clientValue = defaultValue;
+	if (BROWSER) {
+		clientValue = JSON.parse(window.localStorage.getItem(key) ?? '{}');
+		if (objectIsEmpty(clientValue)) {
+			window.localStorage.setItem(key, JSON.stringify(defaultValue));
+			clientValue = defaultValue;
+		}
+	}
+	const store = writable(clientValue);
+	store.subscribe((value) => {
+		if (BROWSER) {
+			window.localStorage.setItem(key, JSON.stringify(value));
+		}
+	});
+	return store;
+}
+
+export function getErrorMessage(error: unknown) {
+	if (error instanceof Error) return error.message;
+	return String(error);
 }

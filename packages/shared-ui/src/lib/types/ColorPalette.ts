@@ -1,4 +1,4 @@
-import type { ComponentColor, ThemeColor, ThemeColorShallowCopy } from '$lib/types';
+import type { ComponentColor, ThemeColor } from '.';
 
 export interface ColorPalette {
 	id: string;
@@ -7,12 +7,4 @@ export interface ColorPalette {
 	colors: ThemeColor[];
 	componentColor: ComponentColor;
 	updated?: boolean;
-}
-
-export interface ColorPalleteFromFile {
-	id: string;
-	propName: string;
-	displayName: string;
-	colors: ThemeColorShallowCopy[];
-	componentColor: ComponentColor;
 }

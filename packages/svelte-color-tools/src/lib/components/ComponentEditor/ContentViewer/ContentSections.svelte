@@ -3,7 +3,7 @@
 	import CssSection from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssSection.svelte';
 	import JsonSection from '$lib/components/ComponentEditor/ContentViewer/JsonSection/JsonSection.svelte';
 	import { getThemeEditorStore } from '$lib/context';
-	import type { ComponentColor } from '$lib/types';
+	import type { ComponentColor } from '@a-luna/shared-ui';
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;

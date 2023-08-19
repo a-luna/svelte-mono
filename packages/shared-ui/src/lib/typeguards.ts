@@ -1,5 +1,7 @@
-import { COLOR_FORMATS } from '$lib/constants';
-import type { ColorFormat } from '$lib/types';
+import { COLOR_FORMATS, COMPONENT_COLORS } from '$lib/constants';
+import type { ColorFormat, ComponentColor } from '$lib/types';
 
-export const isColorFormat = (colorFormat: string): colorFormat is ColorFormat =>
-	COLOR_FORMATS.includes(colorFormat as ColorFormat);
+export const isComponentColor = (arg: string): arg is ComponentColor =>
+	COMPONENT_COLORS.includes(arg as ComponentColor);
+
+export const isColorFormat = (arg: string): arg is ColorFormat => COLOR_FORMATS.includes(arg as ColorFormat);

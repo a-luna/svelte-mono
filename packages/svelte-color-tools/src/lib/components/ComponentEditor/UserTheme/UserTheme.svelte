@@ -5,7 +5,7 @@
 	import UserThemeControls from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/UserThemeControls.svelte';
 	import ColorPalettes from '$lib/components/Shared/Palettes/ColorPalettes.svelte';
 	import { getAppStore, getThemeEditorStore } from '$lib/context';
-	import type { ColorFormat, ColorPalette, ComponentColor } from '$lib/types';
+	import type { ColorFormat, ColorPalette, ComponentColor } from '@a-luna/shared-ui';
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;

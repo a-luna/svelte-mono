@@ -1,7 +1,6 @@
 <script lang="ts">
-	import Minus from '$lib/components/Icons/Minus.svelte';
-	import ThemeButton from '$lib/components/Shared/ThemeButton.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import { BasicIconRenderer, ThemeButton } from '@a-luna/shared-ui/components';
+	import type { ComponentColor } from '@a-luna/shared-ui/types';
 
 	export let color: ComponentColor;
 	export let disabled = false;
@@ -10,6 +9,6 @@
 
 <ThemeButton {color} {tooltip} {disabled} on:click>
 	<svelte:fragment slot="icon">
-		<Minus />
+		<BasicIconRenderer icon={'minus'} />
 	</svelte:fragment>
 </ThemeButton>

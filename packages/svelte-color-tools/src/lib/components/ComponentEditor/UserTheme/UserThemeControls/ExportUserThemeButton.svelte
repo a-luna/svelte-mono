@@ -1,7 +1,6 @@
 <script lang="ts">
-	import Export from '$lib/components/Icons/Export.svelte';
-	import ThemeButton from '$lib/components/Shared/ThemeButton.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import { BasicIconRenderer, ThemeButton } from '@a-luna/shared-ui/components';
+	import type { ComponentColor } from '@a-luna/shared-ui/types';
 
 	export let color: ComponentColor;
 	export let disabled = false;
@@ -9,6 +8,6 @@
 
 <ThemeButton {color} tooltip={'Export User Theme'} {disabled} iconWidth={'25px'} on:click>
 	<svelte:fragment slot="icon">
-		<Export />
+		<BasicIconRenderer icon={'export'} width={'25px'} />
 	</svelte:fragment>
 </ThemeButton>

@@ -1,11 +1,8 @@
 <script lang="ts">
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
-	import Modal from '$lib/components/Shared/Modal.svelte';
 	import { getAppStore, getThemeEditorStore } from '$lib/context';
-	import { ColorParser } from '$lib/parser';
 	import { getCssValueForColor } from '$lib/theme';
-	import type { ThemeColor } from '$lib/types';
+	import { ColorParser, InputTextBox, Modal, defaultCssColor, type ThemeColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import ColorSettings from './ColorSettings.svelte';
 
@@ -24,9 +21,8 @@
 
 	$: selectedPalette = $app?.selectedThemePalette?.displayName;
 
-	export function toggleModal(color: string = null) {
+	export function toggleModal(color: string = '') {
 		if (closed) {
-			const parsed = ColorParser.parse(color).value;
 			setDefaultValues(color);
 		}
 		modal.toggleModal();
@@ -34,7 +30,8 @@
 	}
 
 	function setDefaultValues(color: string) {
-		const parsed = ColorParser.parse(color).value;
+		const result = ColorParser.parse(color);
+		const parsed = result.success ? result.value : defaultCssColor;
 		themeColor = { color: parsed };
 		propName = '';
 		propValue = getCssValueForColor(themeColor, $state.userTheme.colorFormat);
@@ -72,7 +69,7 @@
 		<div class="color-swatch-wrapper">
 			<label for="color-swatch">Add color</label>
 			<div class="swatch-border">
-				<ColorSwatch color={themeColor?.color} swatchWidth={'39px'} swatchHeight={'20px'} />
+				<ColorSwatch color={themeColor?.color ?? defaultCssColor} />
 			</div>
 		</div>
 		<div class="pallete-name-wrapper">
@@ -129,6 +126,10 @@
 		text-align: right;
 	}
 	.swatch-border {
+		--swatch-width: 39px;
+		--swatch-height: 20px;
+		--swatch-border-radius: 0;
+
 		border: 2px inset var(--color-swatch-button-border-color);
 		grid-column: 2 / span 1;
 	}

@@ -18,12 +18,14 @@ export const getWordsFromCamelCase = (input: string): string[] => {
 		words.push(input.slice(start, input.length));
 		return words.filter((word) => word !== '');
 	}
+	return [];
 };
 
 export function getWordsFromCssVariableName(input: string): string[] {
 	if (CSS_VAR_NAME_REGEX.test(input)) {
 		return input.slice(2).split('-');
 	}
+	return [];
 }
 
 export function convertPropNameToDisplayName(propName: string): string {
@@ -34,6 +36,7 @@ export function convertPropNameToDisplayName(propName: string): string {
 	if (words) {
 		return words.map((w) => capitalize(w)).join(' ');
 	}
+	return '';
 }
 
 export function convertPropNameToCssVarName(userTheme: UserThemeImported, propName: string): string {
@@ -48,6 +51,7 @@ export function convertPropNameToCssVarName(userTheme: UserThemeImported, propNa
 		}
 		return cssVarName;
 	}
+	return '';
 }
 
 export function convertCssVarNameToPropName(userTheme: UserThemeImported, cssVarName: string): string {
@@ -64,6 +68,7 @@ export function convertCssVarNameToPropName(userTheme: UserThemeImported, cssVar
 			.map((w) => capitalize(w))
 			.join('')}`;
 	}
+	return '';
 }
 
 export function convertCssVarNameToDisplayName(userTheme: UserThemeImported, cssVarName: string): string {
@@ -75,11 +80,12 @@ export function convertCssVarNameToDisplayName(userTheme: UserThemeImported, css
 	}
 	const words = getWordsFromCssVariableName(cssVarName);
 	if (words) {
-		return `${capitalize(words[0])} ${words
+		return `${capitalize(words?.[0] ?? '')} ${words
 			.slice(1)
 			.map((w) => capitalize(w))
 			.join(' ')}`;
 	}
+	return '';
 }
 
 export function convertDisplayNameToCssVarName(userTheme: UserThemeImported, displayName: string): string {
@@ -94,6 +100,7 @@ export function convertDisplayNameToCssVarName(userTheme: UserThemeImported, dis
 		}
 		return cssVarName;
 	}
+	return '';
 }
 
 export function convertDisplayNameToPropName(displayName: string): string {
@@ -102,9 +109,10 @@ export function convertDisplayNameToPropName(displayName: string): string {
 	}
 	const words = displayName.split(' ');
 	if (words) {
-		return `${words[0].toLowerCase()}${words
+		return `${(words?.[0] ?? '').toLowerCase()}${words
 			.slice(1)
 			.map((w) => capitalize(w))
 			.join('')}`;
 	}
+	return '';
 }

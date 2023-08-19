@@ -1,6 +1,6 @@
 <script lang="ts">
 	import X11ColorSwatch from '$lib/components/ColorPicker/X11Palettes/X11ColorSwatch.svelte';
-	import type { ColorPalette } from '$lib/types';
+	import type { ColorPalette } from '@a-luna/shared-ui';
 
 	export let x11ColorPalettes: ColorPalette[];
 	export let activePaletteId: string = '';

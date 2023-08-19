@@ -1,10 +1,10 @@
-import type { ComponentColor, ThemeColor } from '.';
+import type { ThemeColorShallowCopy } from '$lib/types';
+import type { ComponentColor } from '@a-luna/shared-ui';
 
-export interface ColorPalette {
+export interface ColorPalleteFromFile {
 	id: string;
-	colors: ThemeColor[];
 	propName: string;
 	displayName: string;
+	colors: ThemeColorShallowCopy[];
 	componentColor: ComponentColor;
-	updated?: boolean;
 }

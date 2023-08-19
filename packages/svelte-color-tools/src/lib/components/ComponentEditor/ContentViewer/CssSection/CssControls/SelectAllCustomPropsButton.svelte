@@ -1,11 +1,10 @@
 <script lang="ts">
-	import SelectAll from '$lib/components/Icons/SelectAll.svelte';
-	import ThemeButton from '$lib/components/Shared/ThemeButton.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import { BasicIconRenderer, ThemeButton } from '@a-luna/shared-ui/components';
+	import type { ComponentColor } from '@a-luna/shared-ui/types';
 
 	export let componentColor: ComponentColor;
 	export let disabled = false;
-	export let wrapperWidth: string = null;
+	export let wrapperWidth: string = '';
 	export let style: string = '';
 </script>
 
@@ -19,7 +18,7 @@
 	on:click
 >
 	<svelte:fragment slot="icon">
-		<SelectAll />
+		<BasicIconRenderer icon={'selectall'} width={'18px'} />
 	</svelte:fragment>
 	<svelte:fragment slot="label">Select All</svelte:fragment>
 </ThemeButton>

@@ -1,34 +1,31 @@
 <script lang="ts">
-	import Option from '$lib/components/Shared/Select/Option.svelte';
-	import type { SelectMenuOption } from '$lib/types';
+	import { ListOption } from '@a-luna/shared-ui/components';
+	import { isComponentColor } from '@a-luna/shared-ui/typeguards';
+	import type { ComponentColor, SelectListOption } from '@a-luna/shared-ui/types';
 	import { createEventDispatcher } from 'svelte';
 
-	export let options: SelectMenuOption[] = [];
+	export let options: SelectListOption[] = [];
 	export let menuId: string = '';
-	let selectedOption: SelectMenuOption;
-	const dispatch = createEventDispatcher();
+	let selectedOption: SelectListOption;
+	const dispatch = createEventDispatcher<{ changed: { selectedValue: ComponentColor } }>();
 
-	export function handleOptionClicked(selectedOptionNumber: number) {
+	export function handleSelectedOptionChanged(e: CustomEvent<{ optionNumber: number }>) {
+		const { optionNumber } = e.detail;
 		if (options.length > 0) {
 			options.forEach((menuOption) => (menuOption.active = false));
-			selectedOption = options.find((menuOption) => menuOption.optionNumber == selectedOptionNumber);
-			if (selectedOption) {
-				selectedOption.active = true;
-				dispatch('changed', selectedOption.value);
+			selectedOption = options.find((menuOption) => menuOption.optionNumber == optionNumber) ?? selectedOption;
+			selectedOption.active = true;
+			if (typeof selectedOption.value === 'string' && isComponentColor(selectedOption.value)) {
+				dispatch('changed', { selectedValue: selectedOption.value });
 			}
 		}
 	}
 </script>
 
 {#each options as option}
-	<Option
-		{...option}
-		{menuId}
-		on:click={() => dispatch('click', option.optionNumber)}
-		on:click={(e) => handleOptionClicked(e.detail)}
-	>
+	<ListOption {...option} {menuId} on:selectedOption={handleSelectedOptionChanged}>
 		<div class="color-swatch" style="background-color: var(--{option.value}-fg-color)" />
-	</Option>
+	</ListOption>
 {/each}
 
 <style lang="postcss">

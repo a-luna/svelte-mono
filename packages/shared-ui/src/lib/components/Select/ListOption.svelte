@@ -6,7 +6,7 @@
 	export let optionNumber: number;
 	export let active = false;
 	export let menuId: string;
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{ selectedOption: { optionNumber: number } }>();
 </script>
 
 <button
@@ -17,7 +17,7 @@
 	tabindex="-1"
 	id={menuId ? `${menuId}-option-${optionNumber}` : `option-${optionNumber}`}
 	data-testid={menuId ? `${menuId}-option-${optionNumber}` : `option-${optionNumber}`}
-	on:click={() => dispatch('click', optionNumber)}
+	on:click={() => dispatch('selectedOption', { optionNumber })}
 >
 	<slot>
 		{label}

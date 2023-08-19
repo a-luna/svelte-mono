@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { colorNameisCustomized } from '$lib/color';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import { getCssValueForColor } from '$lib/theme';
-	import type { ColorFormat, ComponentColor, ThemeColor } from '$lib/types';
+	import type { ThemeColor } from '$lib/types';
+	import type { ColorFormat, ComponentColor } from '@a-luna/shared-ui';
+	import { colorNameisCustomized } from '@a-luna/shared-ui/color/util';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
 	export let color: ThemeColor;
@@ -14,7 +15,9 @@
 
 	$: currentColor = getCssValueForColor(color, colorFormat);
 	$: hasCustomName = colorNameisCustomized(color.color);
-	$: wrapperStyles = displayColorName ? `border: 1px solid var(--${componentColor}-fg-color);` : '';
+	$: wrapperStyles = displayColorName
+		? `--swatch-width: 25px; --swatch-height: 15px; border: 1px solid var(--${componentColor}-fg-color);`
+		: '--swatch-width: 28px; --swatch-height: 15px;';
 	$: buttonToolTip = !displayColorName ? `${color.color.name} (${color.color.hex}, hue: ${color.color.hsl.h})` : '';
 
 	onDestroy(() => clearTimeout(timeout));
@@ -31,11 +34,7 @@
 >
 	<div class="color-wrapper-top">
 		<button type="button" title={buttonToolTip} on:click={() => dispatch('colorSelected', color)}>
-			<ColorSwatch
-				color={color.color}
-				swatchWidth={displayColorName ? '25px' : '28px'}
-				swatchHeight={displayColorName ? '15px' : '15px'}
-			/>
+			<ColorSwatch color={color.color} />
 		</button>
 		{#if hasCustomName && displayColorName}
 			<div class="color-name-wrapper">

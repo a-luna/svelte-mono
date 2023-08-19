@@ -4,8 +4,9 @@
 	import SelectedColor from '$lib/components/ComponentEditor/PaletteControls/SelectedColor.svelte';
 	import SelectedPalette from '$lib/components/ComponentEditor/PaletteControls/SelectedPalette.svelte';
 	import UpdateColorButton from '$lib/components/ComponentEditor/PaletteControls/UpdateColorButton.svelte';
+	import { defaultColorPalette } from '$lib/constants';
 	import { getAppStore, getColorPickerStore, getThemeEditorStore } from '$lib/context';
-	import type { ComponentColor } from '$lib/types';
+	import type { ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import SetColorPickerButton from './SetColorPickerButton.svelte';
 
@@ -23,7 +24,8 @@
 		!$app?.selectedThemePalette ||
 		$state?.editMode ||
 		$app?.x11PalettesShown;
-	$: selectedPalette = $state?.userTheme?.palettes.find((p) => p.id === $state?.selectedPaletteId) || null;
+	$: selectedPalette =
+		$state?.userTheme?.palettes.find((p) => p.id === $state?.selectedPaletteId) ?? defaultColorPalette;
 </script>
 
 <div class="palette-controls" style={gridStyle}>
@@ -32,7 +34,7 @@
 	<AddColorButton
 		color={componentColor}
 		style={'grid-column: 2 /  span 1; grid-row: 2 /  span 1;'}
-		on:click={() => dispatch('addColorToPalette', $colorPickerState.color.hslaString)}
+		on:click={() => dispatch('addColorToPalette', $colorPickerState.color.hslString)}
 		disabled={disableControls}
 	/>
 

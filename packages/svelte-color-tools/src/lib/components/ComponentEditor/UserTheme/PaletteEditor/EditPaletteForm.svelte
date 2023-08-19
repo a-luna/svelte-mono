@@ -1,7 +1,7 @@
 <script lang="ts">
 	import DeletePaletteButton from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/DeletePaletteButton.svelte';
 	import ComponentColorSelector from '$lib/components/Shared/ComponentColorSelector/ComponentColorSelector.svelte';
-	import type { ColorPalette } from '$lib/types';
+	import type { ColorPalette } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
@@ -48,10 +48,10 @@
 
 <style lang="postcss">
 	.edit-palette {
-		--select-menu-width: 58px;
-		--select-menu-height: 30px;
-		--select-menu-margin: 0 6px 0 0;
-		--select-menu-padding: 4px 10px;
+		--select-list-width: 58px;
+		--select-list-height: 30px;
+		--select-list-margin: 0 6px 0 0;
+		--select-list-padding: 4px 10px;
 
 		display: flex;
 		flex-flow: row nowrap;

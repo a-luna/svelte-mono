@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Checkbox from '$lib/components/Shared/Checkbox.svelte';
-	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import { getThemeEditorStore } from '$lib/context';
 	import {
 		convertPropNameToCssVarName,
@@ -8,6 +6,7 @@
 		CSS_VAR_NAME_REGEX,
 		PROP_NAME_REGEX,
 	} from '$lib/theme';
+	import { Checkbox, InputTextBox } from '@a-luna/shared-ui';
 
 	export let editorId: string;
 	export let propName = '';

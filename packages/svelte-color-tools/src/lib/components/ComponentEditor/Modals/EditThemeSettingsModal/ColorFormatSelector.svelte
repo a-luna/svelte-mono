@@ -1,28 +1,29 @@
 <script lang="ts">
-	import Select from '$lib/components/Shared/Select/Select.svelte';
-	import type { ColorFormat, SelectMenuOption } from '$lib/types';
+	import { InputSelectList } from '@a-luna/shared-ui/components';
+	import type { ColorFormat, SelectListOption } from '@a-luna/shared-ui/types';
 
-	export let value: string = 'hsl';
+	export let value: ColorFormat = 'hsl';
 	export let disabled = false;
+	const menuId = 'css-color-format';
+	const menuLabel = '';
 
-	const options: SelectMenuOption[] = [
+	const options: SelectListOption[] = [
 		{ label: 'HSL', value: 'hsl', optionNumber: 1, active: false },
 		{ label: 'RGB', value: 'rgb', optionNumber: 2, active: false },
 		{ label: 'Hex', value: 'hex', optionNumber: 3, active: false },
 	];
-	const menuId = 'css-color-format';
-	const menuLabel = '';
 
-	function handleColorFormatChanged(colorFormat: ColorFormat) {
-		value = colorFormat;
+	function handleColorFormatChanged(e: CustomEvent<{ selectedValue: ColorFormat }>) {
+		const { selectedValue } = e.detail;
+		value = selectedValue;
 	}
 </script>
 
-<Select
+<InputSelectList
 	{menuLabel}
 	{options}
 	selectedValue={value}
 	{menuId}
 	{disabled}
-	on:changed={(e) => handleColorFormatChanged(e.detail)}
+	on:changed={handleColorFormatChanged}
 />

@@ -2,7 +2,7 @@
 	import AddPaletteButton from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/AddPaletteButton.svelte';
 	import EditPaletteForm from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/EditPaletteForm.svelte';
 	import { getThemeEditorStore } from '$lib/context';
-	import type { ComponentColor } from '$lib/types';
+	import type { ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
 	export let editorId: string;
@@ -34,7 +34,7 @@
 	}
 
 	.palette-list {
-		--select-menu-default-border-color: var(--black1);
+		--select-list-default-border-color: var(--black1);
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: flex-start;

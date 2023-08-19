@@ -1,6 +1,6 @@
 import type { ColumnSettings } from '@a-luna/svelte-simple-tables/types';
-import { BROOKS_BBREF_TEAM_ID_MAP, PITCH_TYPE_ABBREV_TO_NAME_MAP } from './constants';
 import type { PitchFx } from './PitchFx';
+import { BROOKS_BBREF_TEAM_ID_MAP, PITCH_TYPE_ABBREV_TO_NAME_MAP } from './constants';
 import { capitalize, formatNumber, getHomeTeamIdFromBrooksGameId } from './util';
 
 const batterNameLink = (pfx: PitchFx): string =>
@@ -15,17 +15,18 @@ const pitcherNameLink = (pfx: PitchFx): string =>
 const formatLaunchSpeed = (pfx: PitchFx): string => formatNumber(pfx.launch_speed, 1);
 const formatLaunchAngle = (pfx: PitchFx): string => `${formatNumber(pfx.launch_angle, 0)}&deg;`;
 const formatLaunchDistance = (pfx: PitchFx): string => formatNumber(pfx.total_distance, 0);
-const formatPitchType = (pfx: PitchFx): string => capitalize(PITCH_TYPE_ABBREV_TO_NAME_MAP[pfx.mlbam_pitch_name]);
-const formatPitchSpeed = (pfx: PitchFx): string => formatNumber(pfx.start_speed, 1);
+const formatPitchType = (pfx: PitchFx): string =>
+	capitalize(PITCH_TYPE_ABBREV_TO_NAME_MAP?.[pfx.mlbam_pitch_name] ?? '');
+const formatPitchSpeed = (pfx: PitchFx): string => formatNumber(pfx?.start_speed ?? '0', 1);
 const formatInOutZone = (pfx: PitchFx): string => (pfx.inside_strike_zone === 1 ? 'Inside' : 'Outside');
 
 function getBatterTeamId(pfx: PitchFx): string {
-	const brooksTeamId = pfx.opponent_team_id_bb.toUpperCase();
+	const brooksTeamId = pfx.opponent_team_id_bb.toUpperCase() as keyof typeof BROOKS_BBREF_TEAM_ID_MAP;
 	return BROOKS_BBREF_TEAM_ID_MAP[brooksTeamId] ?? brooksTeamId;
 }
 
 function getPitcherTeamId(pfx: PitchFx): string {
-	const brooksTeamId = pfx.pitcher_team_id_bb.toUpperCase();
+	const brooksTeamId = pfx.pitcher_team_id_bb.toUpperCase() as keyof typeof BROOKS_BBREF_TEAM_ID_MAP;
 	const pitcherTeamId = BROOKS_BBREF_TEAM_ID_MAP?.[brooksTeamId] ?? brooksTeamId;
 	return isHomeTeam(pfx) ? `vs${pitcherTeamId}` : `@${pitcherTeamId}`;
 }

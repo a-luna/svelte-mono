@@ -56,7 +56,7 @@
 </script>
 
 <div
-	class="select-menu-wrapper"
+	class="select-list-wrapper"
 	data-testid={menuId}
 	title={tooltip}
 	{style}
@@ -104,7 +104,7 @@
 </div>
 
 <style lang="postcss">
-	.select-menu-wrapper {
+	.select-list-wrapper {
 		--select-list-default-width: 100%;
 		--select-list-default-margin: 0;
 		--select-list-default-flex: 0 1 auto;

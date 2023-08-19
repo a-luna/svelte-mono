@@ -1,15 +1,15 @@
 <script lang="ts">
 	import ComponentColorOptions from '$lib/components/Shared/ComponentColorSelector/ComponentColorOptions.svelte';
-	import Select from '$lib/components/Shared/Select/Select.svelte';
-	import type { ComponentColor, SelectMenuOption } from '$lib/types';
+	import { InputSelectList } from '@a-luna/shared-ui/components';
+	import type { ComponentColor, SelectListOption } from '@a-luna/shared-ui/types';
 
 	export let value: ComponentColor = 'black';
 	export let disabled = false;
 	export const menuId: string = 'select-component-color';
-	let selectComponent: Select;
+	let selectComponent: InputSelectList;
 	const fontSize = '0.875rem';
 
-	const options: SelectMenuOption[] = [
+	const options: SelectListOption[] = [
 		{ label: '', value: 'black', optionNumber: 1, active: false },
 		{ label: '', value: 'red', optionNumber: 2, active: false },
 		{ label: '', value: 'orange', optionNumber: 3, active: false },
@@ -21,29 +21,30 @@
 	];
 	const menuLabel = '';
 
-	function handleComponentColorChanged(color: ComponentColor) {
-		value = color;
+	function handleComponentColorChanged(e: CustomEvent<{ selectedValue: ComponentColor }>) {
+		const { selectedValue } = e.detail;
+		value = selectedValue;
 		selectComponent.dropdownShown = false;
 	}
 </script>
 
-<Select
+<InputSelectList
 	bind:this={selectComponent}
 	{menuLabel}
 	{options}
 	selectedValue={value}
 	{menuId}
 	{disabled}
-	on:changed={(e) => handleComponentColorChanged(e.detail)}
+	on:changed={handleComponentColorChanged}
 >
 	<svelte:fragment slot="options">
-		<ComponentColorOptions {options} {menuId} on:changed={(e) => handleComponentColorChanged(e.detail)} />
+		<ComponentColorOptions {options} {menuId} on:changed={handleComponentColorChanged} />
 	</svelte:fragment>
 
 	<svelte:fragment slot="selectedValue">
 		<div class="color-swatch" style="background-color: var(--{value}-fg-color)" />
 	</svelte:fragment>
-</Select>
+</InputSelectList>
 
 <style lang="postcss">
 	.color-swatch {

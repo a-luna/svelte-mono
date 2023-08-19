@@ -1,50 +1,49 @@
 <script lang="ts">
 	import X11Swatches from '$lib/components/ColorPicker/X11Palettes/X11Swatches.svelte';
-	import ChevronLeft from '$lib/components/Icons/ChevronLeft.svelte';
-	import ChevronRight from '$lib/components/Icons/ChevronRight.svelte';
-	import Close from '$lib/components/Icons/Close.svelte';
 	import Palette from '$lib/components/Shared/Palettes/Palette.svelte';
-	import type { ColorPalette, ComponentColor } from '$lib/types';
+	import { BasicIconRenderer, type ColorPalette, type ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
 	export let x11ColorPalettes: ColorPalette[];
-	let x11PaletteMap: Record<string, number> = {} as Record<string, number>;
+	let x11PaletteMap: Map<string, number> = new Map<string, number>();
 	let paletteColor: ComponentColor = 'red';
 	let activePaletteId: string;
+	let paletteMapInitialized = false;
 
 	let carouselElement: HTMLDivElement;
 	let carouselItemSize: number;
 	const hideX11PalettesEventDispatcher = createEventDispatcher<{ hideX11Palettes: {} }>();
+	const handleX11PaletteSelected = (e: CustomEvent<{ paletteId: string }>) =>
+		scrollToSelectedPalette(e.detail.paletteId);
 
-	if (x11ColorPalettes) {
-		x11ColorPalettes.forEach((p, i) => (x11PaletteMap[p.id] = i));
+	$: if (x11ColorPalettes && !paletteMapInitialized) {
+		x11ColorPalettes.forEach((p, i) => x11PaletteMap.set(p.id, i));
 		activePaletteId = x11ColorPalettes[0]?.id ?? '';
+		paletteMapInitialized = true;
 	}
-
-	$: if (carouselElement) carouselItemSize = carouselElement.querySelector('.carousel-item')?.clientWidth ?? 0;
-	$: activePaletteIndex = x11PaletteMap?.[activePaletteId] ?? 0;
+	$: if (carouselElement) {
+		carouselItemSize = carouselElement.querySelector('.carousel-item')?.clientWidth ?? 0;
+	}
+	$: activePaletteIndex = x11PaletteMap.get(activePaletteId) ?? 0;
 	$: paletteColor = x11ColorPalettes?.[activePaletteIndex]?.componentColor || 'red';
 
 	function scrollToPreviousPalette() {
 		const goToPaletteIndex = activePaletteIndex !== 0 ? activePaletteIndex - 1 : x11ColorPalettes.length - 1;
-		const goToPaletteId = x11ColorPalettes.at(goToPaletteIndex)?.id;
+		const goToPaletteId = x11ColorPalettes?.[goToPaletteIndex]?.id;
 		if (goToPaletteId) scrollToSelectedPalette(goToPaletteId);
 	}
 
 	function scrollToNextPalette() {
 		const goToPaletteIndex = activePaletteIndex !== x11ColorPalettes.length - 1 ? activePaletteIndex + 1 : 0;
-		const goToPaletteId = x11ColorPalettes.at(goToPaletteIndex)?.id;
+		const goToPaletteId = x11ColorPalettes?.[goToPaletteIndex]?.id;
 		if (goToPaletteId) scrollToSelectedPalette(goToPaletteId);
 	}
 
-	const handleX11PaletteSelected = (e: CustomEvent<{ paletteId: string }>) =>
-		scrollToSelectedPalette(e.detail.paletteId);
-
 	function scrollToSelectedPalette(goToPaletteId: string) {
-		const goToPaletteIndex = x11PaletteMap?.[goToPaletteId];
-		if (goToPaletteIndex) {
+		const goToPaletteIndex = x11PaletteMap.get(goToPaletteId);
+		if (goToPaletteIndex !== undefined) {
 			const scrollDistance = (goToPaletteIndex - activePaletteIndex) * carouselItemSize;
-			activePaletteId = x11ColorPalettes.at(goToPaletteIndex)?.id ?? '';
+			activePaletteId = x11ColorPalettes?.[goToPaletteIndex]?.id ?? '';
 			if (activePaletteId) carouselElement.scrollTo(carouselElement.scrollLeft + scrollDistance, 0);
 		}
 	}
@@ -80,7 +79,7 @@
 			style="color: var(--{paletteColor}-fg-color)"
 			on:click={() => hideX11PalettesEventDispatcher('hideX11Palettes')}
 		>
-			<Close />
+			<BasicIconRenderer icon={'close'} />
 		</button>
 	</div>
 	<div class="carousel-wrapper">
@@ -92,7 +91,7 @@
 			style="color: var(--{paletteColor}-fg-color)"
 			on:click={() => scrollToPreviousPalette()}
 		>
-			<ChevronLeft />
+			<BasicIconRenderer icon={'chevronleft'} />
 		</button>
 		<div class="carousel" bind:this={carouselElement}>
 			{#each x11ColorPalettes as palette}
@@ -117,7 +116,7 @@
 			style="color: var(--{paletteColor}-fg-color)"
 			on:click={() => scrollToNextPalette()}
 		>
-			<ChevronRight />
+			<BasicIconRenderer icon={'chevronright'} />
 		</button>
 	</div>
 </div>
@@ -176,9 +175,9 @@
 		display: flex;
 		align-items: flex-start;
 		grid-area: carousel;
-		place-self: end stretch;
+		place-self: start stretch;
 		scroll-snap-type: x mandatory;
-		overflow-x: scroll;
+		overflow-x: hidden;
 		overflow-y: hidden;
 		/* Enable Safari touch scrolling physics */
 		-webkit-overflow-scrolling: touch;

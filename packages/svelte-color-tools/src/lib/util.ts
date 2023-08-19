@@ -1,37 +1,9 @@
-import { COMPONENT_COLORS, CSS_COLOR_FORMATS, SCOPED_CSS_REGEX } from '$lib/constants';
-import type { ColorFormat, ComponentColor, CssVariable } from '$lib/types';
-import { BROWSER } from 'esm-env';
-import type { Writable } from 'svelte/store';
-import { writable } from 'svelte/store';
+import { SCOPED_CSS_REGEX } from '$lib/constants';
+import type { CssVariable } from '$lib/types';
 
 export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
-export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 export const slugify = (s: string): string => s.replaceAll(/[\s_]/g, '-').toLowerCase();
 export const removeScopedCssClassNames = (s: string): string => s.replaceAll(SCOPED_CSS_REGEX, '');
-
-export function clickOutside(node: HTMLElement, { enabled: initialEnabled, cb }) {
-	const handleOutsideClick = ({ target }) => {
-		if (!node.contains(target)) {
-			cb();
-		}
-	};
-
-	function update({ enabled }) {
-		if (enabled) {
-			window.addEventListener('click', handleOutsideClick);
-		} else {
-			window.removeEventListener('click', handleOutsideClick);
-		}
-	}
-
-	update(initialEnabled);
-	return {
-		update,
-		destroy() {
-			window.removeEventListener('click', handleOutsideClick);
-		},
-	};
-}
 
 export async function copyToClipboard(text: string): Promise<void> {
 	if (typeof window !== 'undefined') {
@@ -41,44 +13,6 @@ export async function copyToClipboard(text: string): Promise<void> {
 			console.log('Error! Failed to copy text to clipboard.');
 		}
 	}
-}
-
-export const getRandomHexString = (length: number): string =>
-	Array.from({ length }, () => Math.floor(Math.random() * 16))
-		.map((n) => Number(n).toString(16))
-		.join('');
-
-export function groupByProperty<T>(array: T[], property: keyof T): Record<string, T[]> {
-	return array.reduce((grouped, item) => {
-		const groupVal = item[property].toString();
-		grouped[groupVal] = grouped[groupVal] || [];
-		grouped[groupVal].push(item);
-		return grouped;
-	}, {});
-}
-
-export function getRandomArrayItem<T>(array: readonly T[]): T {
-	return array[Math.floor(Math.random() * array.length)];
-}
-
-export const isComponentColor = (arg: string): arg is ComponentColor =>
-	COMPONENT_COLORS.includes(arg as ComponentColor);
-
-export const isColorFormat = (arg: string): arg is ColorFormat => CSS_COLOR_FORMATS.includes(arg as ColorFormat);
-
-export function createLocalStorageValue<T>(key: string, defaultValue: T): Writable<T> {
-	let clientValue: T;
-	if (BROWSER) {
-		clientValue = JSON.parse(window.localStorage.getItem(key));
-		if (!clientValue) window.localStorage.setItem(key, JSON.stringify(defaultValue));
-	}
-	const store = writable(clientValue || defaultValue);
-	store.subscribe((value) => {
-		if (BROWSER) {
-			window.localStorage.setItem(key, JSON.stringify(value));
-		}
-	});
-	return store;
 }
 
 const styleSheetIsInThisDomain = (styleSheet: CSSStyleSheet): boolean =>
@@ -168,10 +102,10 @@ export function getAllCssVariables(args: {
 }
 
 export const getThemeEditorSlotExampleCode = (): string => `<script lang="ts">
-\timport { ComponentCssEditor } from '@a-luna/svelte-color-tools';
+\timport { ComponentEditor } from '@a-luna/svelte-color-tools';
 \timport YourComponent from 'YourComponent.svelte';
 </script>
 
-<ComponentCssEditor>
+<ComponentEditor>
 \t<YourComponent />
-</ComponentCssEditor>`;
+</ComponentEditor>`;

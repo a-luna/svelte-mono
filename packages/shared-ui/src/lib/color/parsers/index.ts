@@ -1,4 +1,4 @@
-import { parseColorFromString, parseNamedColor } from '$lib/color/parsers/parseCssColor';
+import { parseColorFromString, parseCssColor, parseNamedColor } from '$lib/color/parsers/parseCssColor';
 import { parseHex } from '$lib/color/parsers/parseHex';
 import { cssColorFromHsl, parseHsl } from '$lib/color/parsers/parseHsl';
 import { cssColorFromLab, parseLab } from '$lib/color/parsers/parseLab';
@@ -15,12 +15,13 @@ export {
 	cssColorFromOklch,
 	cssColorFromRgb,
 	parseColorFromString,
-	parseNamedColor,
+	parseCssColor,
 	parseHex,
 	parseHsl,
 	parseLab,
-	parseOklab,
-	parseRgb,
 	parseLch,
+	parseNamedColor,
+	parseOklab,
 	parseOklch,
+	parseRgb,
 };

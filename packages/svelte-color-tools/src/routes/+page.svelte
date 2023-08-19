@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
-	import ComponentCssEditor from '$lib/components/ComponentEditor/ComponentEditor.svelte';
+	import ComponentEditor from '$lib/components/ComponentEditor/ComponentEditor.svelte';
 	import type { PitchFx } from '$lib/table/PitchFx';
 	import type { TableSettings } from '@a-luna/svelte-simple-tables/types';
 
@@ -31,14 +31,33 @@
 	<title>Component Theme Editor by Aaron Luna</title>
 </svelte:head>
 
-<!-- <ComponentCssEditor {editorId}>
+<!-- <ComponentEditor {editorId}>
 	<SimpleTable {data} {columnSettings} {tableSettings} />
-</ComponentCssEditor> -->
+</ComponentEditor> -->
 
-<ComponentCssEditor {editorId}>
-	<ColorSpaceSelector />
-</ComponentCssEditor>
+<ComponentEditor {editorId}>
+	<div class="layout">
+		<div class="component-wrapper">
+			<ColorSpaceSelector />
+		</div>
+		<div class="placeholder" />
+	</div>
+</ComponentEditor>
 
-<!-- <ComponentCssEditor {editorId}>
+<!-- <ComponentEditor {editorId}>
 	<InputTextBox inputText={'Hello, world!'} />
-</ComponentCssEditor> -->
+</ComponentEditor> -->
+
+<style lang="postcss">
+	.layout {
+		display: flex;
+	}
+
+	.component-wrapper {
+		flex: 0 0 113px;
+	}
+
+	.placeholder {
+		flex: 1;
+	}
+</style>

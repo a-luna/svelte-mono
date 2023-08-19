@@ -16,9 +16,50 @@ import { getRandomArrayItem, getRandomHexString } from '$lib/util';
 export const getRandomHueValue = (): number =>
 	getRandomArrayItem<number>(Array.from({ length: 360 }, (_, i) => i)) || 0;
 export const toFixedFloat = (f: number, precision = 2): string => f.toFixed(precision);
-export const toFixedPercent = (f: number, precision = 2): string => `${(f * 100.0).toFixed(precision)}%`;
+export const toFixedPercent = (f: number, precision = 2): string => `${clampString(clean(100 * f), precision)}%`;
 export const decimalToOpacityValue = (decimal: number): number => parseFloat(toFixedFloat(decimal / 255.0));
-export const opacityAsPercent = (opacity: number): number => parseFloat(toFixedFloat(opacity * 100.0));
+
+const signedInteger = /-?\d*\.0+$/;
+
+const clamp = (n: number): number =>
+	Math.abs(n) < 1
+		? Object.is(parseFloat(n.toFixed(4)), -0)
+			? 0
+			: parseFloat(n.toFixed(4))
+		: signedInteger.test(n.toFixed(2))
+		? parseInt(n.toFixed(0))
+		: parseFloat(n.toFixed(2));
+
+function clampString(n: number, p = 2): string {
+	let clamped =
+		Math.abs(n) < 1
+			? Object.is(parseFloat(n.toFixed(3)), -0)
+				? '0'
+				: n.toFixed(3)
+			: isIntValue(n)
+			? n.toFixed(0)
+			: n.toFixed(p);
+
+	if (clamped.includes(".")) {
+		while (clamped.endsWith('0')) {
+			clamped = clamped.slice(0, -1);
+		}
+		if (clamped.endsWith(".")) {
+			clamped = clamped.slice(0, -1);
+		}
+	}
+	return clamped;
+}
+
+function isIntValue(n: number): boolean {
+	const decimal = parseInt(n.toFixed(5).split('.', 2).at(-1) ?? '0');
+	return !decimal;
+}
+
+// Hack to avoid ,999999 because of float bug implementation
+function clean(value: number, precision = 2): number {
+	return Math.round(parseFloat((value * 10 ** precision).toFixed(precision))) / 10 ** precision;
+}
 
 export const byteIntToHexString = (byteInt: number): string =>
 	0 <= byteInt && byteInt <= 255
@@ -28,39 +69,39 @@ export const byteIntToHexString = (byteInt: number): string =>
 		: 'FF';
 
 export const rgbToString = ({ r, g, b, a }: RgbColor): string =>
-	a < 1.0
+	a < 255
 		? `rgb(${Math.round(r)} ${Math.round(g)} ${Math.round(b)} / ${Math.round(a)})`
 		: `rgb(${Math.round(r)} ${Math.round(g)} ${Math.round(b)})`;
 
 export const hslToString = ({ h, s, l, a }: HslColor): string =>
 	a < 1.0
-		? `hsl(${toFixedFloat(h)} ${toFixedFloat(s)}% ${toFixedFloat(l)}% / ${a})`
-		: `hsl(${toFixedFloat(h)} ${toFixedFloat(s)}% ${toFixedFloat(l)}%)`;
+		? `hsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)} / ${a})`
+		: `hsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)})`;
 
 export const labToString = ({ l, a, b, A }: LabColor): string =>
-	a < 1.0
-		? `lab(${toFixedFloat(l)} ${toFixedFloat(a)} ${toFixedFloat(b)} / ${opacityAsPercent(A)}%)`
-		: `lab(${toFixedFloat(l)} ${toFixedFloat(a)} ${toFixedFloat(b)})`;
+	A < 1.0
+		? `lab(${clampString(l)} ${clampString(a)} ${clampString(b)} / ${toFixedPercent(A)})`
+		: `lab(${clampString(l)} ${clampString(a)} ${clampString(b)})`;
 
 export const lchToString = ({ l, c, h, a }: LchColor): string =>
 	a < 1.0
-		? `lch(${toFixedFloat(l)} ${toFixedFloat(c)} ${toFixedFloat(h)} / ${opacityAsPercent(a)}%)`
-		: `lch(${toFixedFloat(l)} ${toFixedFloat(c)} ${toFixedFloat(h)})`;
+		? `lch(${clampString(l)} ${clampString(c)} ${clampString(h)} / ${toFixedPercent(a)})`
+		: `lch(${clampString(l)} ${clampString(c)} ${clampString(h)})`;
 
 export const okhslToString = ({ h, s, l, a }: OkhslColor): string =>
 	a < 1.0
-		? `okhsl(${toFixedFloat(h)} ${toFixedPercent(s)} ${toFixedPercent(l)} / ${a})`
-		: `okhsl(${toFixedFloat(h)} ${toFixedPercent(s)} ${toFixedPercent(l)})`;
+		? `okhsl(${clampString(h)} ${toFixedPercent(s)} ${toFixedPercent(l)} / ${a})`
+		: `okhsl(${clampString(h)} ${toFixedPercent(s)} ${toFixedPercent(l)})`;
 
 export const oklabToString = ({ l, a, b, A }: OklabColor): string =>
-	a < 1.0
-		? `oklab(${toFixedFloat(l)}% ${toFixedFloat(a, 3)} ${toFixedFloat(b, 3)} / ${opacityAsPercent(A)}%)`
-		: `oklab(${toFixedFloat(l)}% ${toFixedFloat(a, 3)} ${toFixedFloat(b, 3)})`;
+	A < 1.0
+		? `oklab(${clampString(l)}% ${clampString(a, 3)} ${clampString(b, 3)} / ${toFixedPercent(A)})`
+		: `oklab(${clampString(l)}% ${clampString(a, 3)} ${clampString(b, 3)})`;
 
 export const oklchToString = ({ l, c, h, a }: OklchColor): string =>
 	a < 1.0
-		? `oklch(${toFixedFloat(l)}% ${toFixedFloat(c, 3)} ${toFixedFloat(h)} / ${opacityAsPercent(a)}%)`
-		: `oklch(${toFixedFloat(l)}% ${toFixedFloat(c, 3)} ${toFixedFloat(h)})`;
+		? `oklch(${toFixedPercent(l / 100.0)} ${clampString(c, 3)} ${clampString(h)} / ${toFixedPercent(a)})`
+		: `oklch(${toFixedPercent(l / 100.0)} ${clampString(c, 3)} ${clampString(h)})`;
 
 export const sortColors = (a: CssColor, b: CssColor): number =>
 	a.hsl.h - b.hsl.h || a.hsl.s - b.hsl.s || a.hsl.l - b.hsl.l;
@@ -81,17 +122,6 @@ export const copyCssColor = (color: CssColor): CssColor => ({
 	oklab: { ...color.oklab },
 	oklch: { ...color.oklch },
 });
-
-const signedInteger = /-?\d*\.0?$/;
-
-const clamp = (n: number): number =>
-	Math.abs(n) < 1
-		? Object.is(parseFloat(n.toFixed(4)), -0)
-			? 0
-			: parseFloat(n.toFixed(4))
-		: signedInteger.test(n.toFixed(2))
-		? parseInt(n.toFixed(2))
-		: parseFloat(n.toFixed(2));
 
 export const clampColorComponents = (color: CssColor): CssColor => ({
 	...color,

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { parseColorFromString } from '$lib/color';
-
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import { getThemeEditorStore } from '$lib/context';
+	import { defaultCssColor } from '@a-luna/shared-ui';
+	import { parseCssColor } from '@a-luna/shared-ui/color/parsers';
+	import { addStringValuesToCssColor, clampColorComponents } from '@a-luna/shared-ui/color/util';
 
 	export let editorId: string;
 	let state = getThemeEditorStore(editorId);
@@ -11,8 +12,10 @@
 	let tooltip: string;
 
 	$: bgColor = $state.colorSelected ? 'var(--white4)' : 'var(--white1)';
-	$: swatchColor = $state.colorSelected ? $state.selectedColor.color : parseColorFromString('hsl(0, 0%, 85%)').value;
-	$: displayName = $state.colorSelected ? $state.selectedColor.displayName : '';
+	$: swatchColor = $state.colorSelected
+		? $state.selectedColor.color
+		: clampColorComponents(addStringValuesToCssColor(parseCssColor('hsl(0, 0%, 85%)') ?? defaultCssColor));
+	$: displayName = $state.colorSelected ? $state.selectedColor.displayName ?? '' : '';
 	$: tooltip = $state.colorSelected
 		? `${$state.selectedColor.displayName} is the selected palette`
 		: 'No Theme Color Selected';
@@ -21,7 +24,7 @@
 <div class="option-wrapper" title={tooltip} style="background-color: {bgColor}">
 	{#if $state.colorSelected}
 		<div class="swatch-border">
-			<ColorSwatch color={swatchColor} swatchWidth={'15px'} swatchHeight={'15px'} />
+			<ColorSwatch color={swatchColor} />
 		</div>
 	{/if}
 	<span>{displayName}</span>
@@ -43,6 +46,10 @@
 	}
 
 	.swatch-border {
+		--swatch-width: 15px;
+		--swatch-height: 15px;
+		--swatch-border-radius: 0;
+
 		border: 2px inset var(--color-swatch-button-border-color);
 		grid-column: 2 / span 1;
 	}

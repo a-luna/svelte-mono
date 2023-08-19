@@ -1,4 +1,4 @@
-import type { ColorPalette, ColorPalleteFromFile } from '$lib/types/ColorPalette';
+import type { ColorPalette } from '$lib/types/ColorPalette';
 import type {
 	HslColor,
 	LabColor,
@@ -38,13 +38,12 @@ import type {
 import type { RadioButtonDetails } from '$lib/types/RadioButtonDetails';
 import type { Result } from '$lib/types/Result';
 import type { SelectListOption } from '$lib/types/SelectListOption';
-import type { ThemeColor, ThemeColorShallowCopy } from '$lib/types/ThemeColor';
+import type { ThemeColor } from '$lib/types/ThemeColor';
 
 export * from '$lib/types/Icons';
 export type {
 	ColorFormat,
 	ColorPalette,
-	ColorPalleteFromFile,
 	ComponentColor,
 	CssColor,
 	CssColorPreview,
@@ -78,6 +77,5 @@ export type {
 	SelectListOption,
 	Subset,
 	ThemeColor,
-	ThemeColorShallowCopy,
 	XyzColor,
 };

@@ -1,4 +1,4 @@
-import type { CssColor } from '$lib/types';
+import type { CssColor } from '.';
 
 export interface ThemeColor {
 	color: CssColor;
@@ -8,5 +8,3 @@ export interface ThemeColor {
 	value?: string;
 	isSelected?: boolean;
 }
-
-export type ThemeColorShallowCopy = Omit<ThemeColor, 'color' | 'isSelected'>;

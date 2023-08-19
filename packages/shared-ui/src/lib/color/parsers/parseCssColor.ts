@@ -5,23 +5,17 @@ import type { CssColor, CssColorPreview, Result } from '$lib/types';
 import { normalize } from '$lib/util';
 
 export function parseColorFromString(s: string, clamped = true): Result<CssColor> {
-	let color;
-	let result = parseCssColor(s);
-	if (result.success) {
-		color = result.value;
-	} else {
-		result = parseNamedColor(s);
-		if (result.success) {
-			color = result.value;
-		} else {
-			return result;
-		}
+	const color = parseCssColor(s);
+	if (color) {
+		const cssColor = clamped
+			? clampColorComponents(addStringValuesToCssColor(color))
+			: addStringValuesToCssColor(color);
+		return { success: true, value: cssColor };
 	}
-	color = clamped ? clampColorComponents(addStringValuesToCssColor(color)) : addStringValuesToCssColor(color);
-	return { success: true, value: color };
+	return { success: false };
 }
 
-function parseCssColor(s: string): Result<CssColorPreview> {
+export function parseCssColor(s: string): CssColorPreview | undefined {
 	s = s.trim();
 	let color = undefined;
 	let match = HEX_REGEX.exec(s);
@@ -52,7 +46,14 @@ function parseCssColor(s: string): Result<CssColorPreview> {
 	if (match && match.groups) {
 		color = parseOklch(match.groups);
 	}
-	return color ? { success: true, value: color } : { success: false };
+	if (color) {
+		return color;
+	}
+	const result = parseNamedColor(s);
+	if (result.success) {
+		color = result.value;
+	}
+	return color;
 }
 
 export function parseNamedColor(name: string): Result<CssColorPreview> {
@@ -65,11 +66,10 @@ export function parseNamedColor(name: string): Result<CssColorPreview> {
 	if (!getRgbStringResult.success) {
 		return { success: false, error: getRgbStringResult.error };
 	}
-	const parseCssColorResult = parseCssColor(getRgbStringResult.value);
-	if (!parseCssColorResult.success) {
-		return parseCssColorResult;
+	const color = parseCssColor(getRgbStringResult.value);
+	if (!color) {
+		return { success: false };
 	}
-	const color = parseCssColorResult.value;
 	color.name = name;
 	return { success: true, value: color };
 }

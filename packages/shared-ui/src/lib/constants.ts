@@ -280,7 +280,7 @@ export const X11_NAMED_COLORS = [
 ];
 
 export const defaultCssColor: CssColor = {
-	hex: '',
+	hex: '#000000',
 	rgb: { r: 0, g: 0, b: 0, a: 255 },
 	hsl: { h: 0, s: 0, l: 0, a: 255 },
 	lab: { l: 0, a: 0, b: 0, A: 255 },
@@ -288,12 +288,12 @@ export const defaultCssColor: CssColor = {
 	lch: { l: 0, c: 0, h: 0, a: 255 },
 	oklch: { l: 0, c: 0, h: 0, a: 255 },
 	okhsl: { h: 0, s: 0, l: 0, a: 255 },
-	rgbString: '',
-	hslString: '',
-	labString: '',
-	oklabString: '',
-	lchString: '',
-	oklchString: '',
-	okhslString: '',
-	name: '',
+	name: '#000000',
+	rgbString: 'rgb(0 0 0)',
+	hslString: 'hsl(0.00 0.00% 0.00%)',
+	labString: 'lab(0.00 0.00 0.00 / 100%)',
+	lchString: 'lch(0.00 0.00 0.00)',
+	okhslString: 'okhsl(0.00 0.00% 0.00%)',
+	oklabString: 'oklab(0.00% 0.000 0.000 / 100%)',
+	oklchString: 'oklch(0.00% 0.000 0.00)',
 };

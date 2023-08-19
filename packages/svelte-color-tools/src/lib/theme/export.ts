@@ -1,5 +1,6 @@
-import type { ThemeColor, UserThemeFromFile, UserThemeImported } from '$lib/types';
+import type { UserThemeFromFile, UserThemeImported } from '$lib/types';
 import { slugify } from '$lib/util';
+import type { ThemeColor } from '@a-luna/shared-ui';
 import { getCssValueForColor } from '.';
 
 const getThemeColorCss = (userTheme: UserThemeImported, color: ThemeColor): string =>

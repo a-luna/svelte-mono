@@ -1,29 +1,33 @@
 <script lang="ts">
-	import Copy from '$lib/components/Icons/Copy.svelte';
-	import Edit from '$lib/components/Icons/Edit.svelte';
-	import type { CssColor } from '$lib/types';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
+	import type { CssColor } from '@a-luna/shared-ui/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let color: CssColor;
-	export let alphaEnabled: boolean;
 	export let editable: boolean;
 	export let currentColor = '';
 	let currentLabelIndex = 0;
-	const dispatch = createEventDispatcher();
+	const editColorStringEventDispatcher = createEventDispatcher<{ editColorString: {} }>();
+	const copyColorStringEventDispatcher = createEventDispatcher<{ copyColorString: { currentColor: string } }>();
 
-	$: colorLabels = alphaEnabled
-		? [color?.hexAlpha, color?.rgbaString, color?.hslaString]
-		: [color?.hex, color?.rgbString, color?.hslString];
+	$: colorLabels = [
+		color.hex,
+		color.rgbString,
+		color.hslString,
+		color.labString,
+		color.lchString,
+		color.oklabString,
+		color.oklchString,
+	];
 	$: currentColor = colorLabels.at(currentLabelIndex) || color.hex;
-	$: currentColorSpace = alphaEnabled
-		? ['Hex', 'RGBA', 'HSLA'][currentLabelIndex]
-		: ['Hex', 'RGB', 'HSL'][currentLabelIndex];
-	$: tooltip = alphaEnabled
-		? 'Click to toggle Hex, RGBA, and HSLA string values'
-		: 'Click to toggle Hex, RGB, and HSL string values';
-	$: fontSizeAlpha = currentColorSpace === 'HSLA' ? '0.7rem' : '0.8rem';
-	$: fontSizeOpaque = currentColorSpace === 'HSL' ? '0.825rem' : '0.85rem';
-	$: fontSize = alphaEnabled ? fontSizeAlpha : fontSizeOpaque;
+	$: currentColorSpace = ['Hex', 'RGB', 'HSL', 'LAB', 'LCH', 'OKLAB', 'OKLCH'][currentLabelIndex];
+	$: tooltip = 'Click to toggle CSS Color Space string values';
+	$: fontSize =
+		currentColorSpace === 'RGB' || currentColorSpace === 'Hex'
+			? '0.8rem'
+			: currentColorSpace === 'OKLAB' || currentColorSpace === 'OKLCH'
+			? '0.6rem'
+			: '0.65rem';
 
 	function toggleColorLabel() {
 		currentLabelIndex += 1;
@@ -34,7 +38,7 @@
 
 	function handleEditColorStringButton() {
 		if (editable) {
-			dispatch('editColorString');
+			editColorStringEventDispatcher('editColorString');
 		}
 	}
 </script>
@@ -45,9 +49,9 @@
 	data-testid="copy-color-string-button"
 	class="flex-initial h-4 w-4 my-auto cursor-pointer"
 	title="Copy {currentColorSpace} value"
-	on:click={() => dispatch('copyColorString', currentColor)}
+	on:click={() => copyColorStringEventDispatcher('copyColorString', { currentColor })}
 >
-	<Copy />
+	<BasicIconRenderer icon={'copy'} width={'16px'} height={'16px'} />
 </button>
 <span
 	class="cursor-pointer flex-grow text-center self-center font-medium leading-none whitespace-nowrap"
@@ -66,7 +70,7 @@
 	title="Edit string value"
 	on:click={() => handleEditColorStringButton()}
 >
-	<Edit />
+	<BasicIconRenderer icon={'edit'} width={'16px'} height={'16px'} />
 </button>
 
 <style lang="postcss">

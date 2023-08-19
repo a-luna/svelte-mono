@@ -1,12 +1,12 @@
-import type { ColorFormat, ColorPalette, ComponentColor } from '.';
+import type { ColorFormat, ColorPalette, ComponentColor } from '@a-luna/shared-ui';
 
 export interface UserThemeImported {
 	themeName: string;
-	createdAt: string;
-	modifiedAt: string;
 	usesPrefix: boolean;
 	themePrefix: string;
-	uiColor: ComponentColor;
+	createdAt: string;
+	modifiedAt: string;
 	colorFormat: ColorFormat;
+	uiColor: ComponentColor;
 	palettes: ColorPalette[];
 }

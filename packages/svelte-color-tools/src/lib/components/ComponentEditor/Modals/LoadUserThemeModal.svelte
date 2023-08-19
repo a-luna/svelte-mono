@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Modal from '$lib/components/Shared/Modal.svelte';
 	import { importUserThemeFromFile } from '$lib/theme';
 	import type { UserThemeImported } from '$lib/types';
+	import { Modal } from '@a-luna/shared-ui';
+	import { getErrorMessage } from '@a-luna/shared-ui/util';
 	import { createEventDispatcher } from 'svelte';
 	import Highlight from 'svelte-highlight';
 	import json from 'svelte-highlight/languages/json';
@@ -13,7 +14,7 @@
 	let error = '';
 	let code = '';
 	let userTheme: UserThemeImported;
-	const dispatch = createEventDispatcher();
+	const loadUserThemeDispatcher = createEventDispatcher<{ loadUserTheme: { userTheme: UserThemeImported } }>();
 
 	export function toggleModal() {
 		error = '';
@@ -23,7 +24,7 @@
 
 	function saveChanges() {
 		if (userTheme) {
-			dispatch('loadUserTheme', userTheme);
+			loadUserThemeDispatcher('loadUserTheme', { userTheme });
 			modal.toggleModal();
 		}
 	}
@@ -31,27 +32,27 @@
 	async function openFile(validFileExts: string[]) {
 		error = ``;
 		code = '';
-		const files = fileInput.files;
+		const files = fileInput.files ?? [];
 		if (files.length > 0) {
 			const file = files[0];
-			if (validFile(file.name, validFileExts)) {
+			if (file?.name && validFile(file.name, validFileExts)) {
 				try {
 					var reader = new FileReader();
 					reader.onload = function (e) {
-						const userThemeFromFile = JSON.parse(String(e.target.result));
+						const userThemeFromFile = JSON.parse(String(e.target?.result));
 						const result = importUserThemeFromFile(userThemeFromFile);
 						if (result.success) {
 							userTheme = result.value;
 							code = JSON.stringify(userThemeFromFile, null, 2);
 						} else {
-							error = result.error.message;
+							error = result.error?.message ?? '';
 						}
 					};
 					reader.readAsText(file);
 				} catch (ex) {
-					error = ex.message;
+					error = getErrorMessage(error);
 				}
-			} else {
+			} else if (file?.name) {
 				error = `${file.name} is not a valid JSON file`;
 			}
 		} else {
@@ -61,7 +62,7 @@
 
 	function validFile(filename: string, validFileExts: string[]): boolean {
 		var match = filename.match(/\.([^\.]+)$/);
-		return match && validFileExts.some((ext) => ext === match[0]);
+		return match ? validFileExts.some((ext) => ext === match?.[0]) : false;
 	}
 
 	const formatDate = (date: string): string => (date ? new Date(date).toLocaleString().replace(',', '') : '');

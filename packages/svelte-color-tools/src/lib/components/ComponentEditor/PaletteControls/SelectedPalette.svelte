@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ColorPalette } from '$lib/types';
+	import type { ColorPalette } from '@a-luna/shared-ui';
 
 	export let selectedPalette: ColorPalette;
 	let displayName: string;

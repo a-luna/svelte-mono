@@ -2,8 +2,9 @@
 	import CssControls from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssControls/CssControls.svelte';
 	import CssCustomPropTable from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssCustomPropTable.svelte';
 	import CssFilters from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/CssFilters.svelte';
-	import type { ComponentColor, CssVariable } from '$lib/types';
+	import type { CssVariable } from '$lib/types';
 	import { getAllCssVariables } from '$lib/util';
+	import type { ComponentColor } from '@a-luna/shared-ui';
 	import type { TableState } from '@a-luna/svelte-simple-tables/types';
 	import { onMount, tick } from 'svelte';
 
@@ -44,7 +45,7 @@
 
 	export function handleUserThemeChanged(usePrefix: boolean, newPrefix: string) {
 		cssFilters.handleUserThemeUpdated(usePrefix);
-		handleComponentPrefixChanged(newPrefix);
+		handleComponentPrefixChanged(new CustomEvent('useThemePrefixChanged', { detail: { newPrefix } }));
 	}
 
 	function refreshCssCustomProps(
@@ -63,12 +64,12 @@
 				selectorBlackList: selectorBlackList ? [selectorBlackList] : [],
 			});
 		} catch {
-			// Do nothing since errors are expected in this case
+			return [];
 		}
 	}
 
-	function handleTableClicked(target: EventTarget) {
-		if (target instanceof HTMLElement && target.nodeName === 'INPUT') {
+	function handleTableClicked(target: EventTarget | null) {
+		if (target && target instanceof HTMLElement && target.nodeName === 'INPUT') {
 			const customProp = data.find((prop) => prop.id === target.dataset.propId);
 			if (customProp) {
 				customProp.addToTheme = !customProp.addToTheme;
@@ -77,16 +78,14 @@
 		}
 	}
 
-	function selectAllCustomProperties() {
+	function selectAllCustomProperties(e: CustomEvent<{}>) {
 		data.forEach((prop) => (prop.addToTheme = true));
-		data = [...data];
-		tableState.reset(data.length, $tableState.pageSize);
+		refreshTable(false);
 	}
 
-	function deselectAllCustomProperties() {
+	function deselectAllCustomProperties(e: CustomEvent<{}>) {
 		data.forEach((prop) => (prop.addToTheme = false));
-		data = [...data];
-		tableState.reset(data.length, $tableState.pageSize);
+		refreshTable(false);
 	}
 
 	function getUniqueSelectors(): string[] {
@@ -94,34 +93,43 @@
 		return [...new Set(allSelectors)].sort();
 	}
 
-	function handleComponentPrefixChanged(newPrefix: string) {
+	function handleComponentPrefixChanged(e: CustomEvent<{ newPrefix: string }>) {
+		const { newPrefix } = e.detail;
 		prefix = newPrefix;
-		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selectorWhiteList, selectorBlackList);
-		tableState.reset(data.length, $tableState.pageSize);
+		refreshTable();
 	}
 
-	function handleCssRuleSelectorChanged(newSelector: string) {
-		selectorWhiteList = newSelector;
-		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selectorWhiteList, selectorBlackList);
-		tableState.reset(data.length, $tableState.pageSize);
+	function handleCssRuleSelectorChanged(e: CustomEvent<{ selector: string }>) {
+		const { selector } = e.detail;
+		selectorWhiteList = selector;
+		refreshTable();
 	}
 
-	function handleIgnoreTailwindsChanged(ignore: boolean) {
+	function handleIgnoreTailwindsChanged(e: CustomEvent<{ ignore: boolean }>) {
+		const { ignore } = e.detail;
 		ignoreTailwinds = ignore;
-		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selectorWhiteList, selectorBlackList);
-		tableState.reset(data.length, $tableState.pageSize);
+		refreshTable();
 	}
 
-	function handleUseThemePrefixChanged(usePrefix: boolean) {
+	function handleUseThemePrefixChanged(e: CustomEvent<{ usePrefix: boolean }>) {
+		const { usePrefix } = e.detail;
 		useThemePrefix = usePrefix;
-		data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selectorWhiteList, selectorBlackList);
-		tableState.reset(data.length, $tableState.pageSize);
+		refreshTable();
+	}
+
+	function refreshTable(refreshData = true) {
+		if (refreshData) {
+			data = refreshCssCustomProps(ignoreTailwinds, [], prefix, selectorWhiteList, selectorBlackList);
+		} else {
+			data = [...data];
+		}
+		tableState.reset(data.length, $tableState?.pageSize ?? 5);
 	}
 
 	onMount(async () => {
 		if ($tableState) {
 			await tick();
-			tableState.reset(data.length, $tableState.pageSize);
+			tableState.reset(data.length, $tableState?.pageSize ?? 5);
 		}
 	});
 </script>
@@ -133,10 +141,10 @@
 	{componentColor}
 	{themeInitialized}
 	bind:prefix
-	on:componentPrefixChanged={(e) => handleComponentPrefixChanged(e.detail)}
-	on:cssRuleSelectorChanged={(e) => handleCssRuleSelectorChanged(e.detail)}
-	on:useThemePrefixChanged={(e) => handleUseThemePrefixChanged(e.detail)}
-	on:ignoreTailwindsChanged={(e) => handleIgnoreTailwindsChanged(e.detail)}
+	on:componentPrefixChanged={handleComponentPrefixChanged}
+	on:cssRuleSelectorChanged={handleCssRuleSelectorChanged}
+	on:useThemePrefixChanged={handleUseThemePrefixChanged}
+	on:ignoreTailwindsChanged={handleIgnoreTailwindsChanged}
 />
 <span class="css-filter-results"
 	><strong>{totalFiltered}</strong> custom properties match these filter settings (<strong>{totalCustomProps}</strong> total
@@ -150,8 +158,8 @@
 	{totalSelected}
 	{allCustomPropsSelected}
 	{anyCustomPropsSelected}
-	on:selectAllCustomProperties={() => selectAllCustomProperties()}
-	on:deselectAllCustomProperties={() => deselectAllCustomProperties()}
+	on:selectAllCustomProperties={selectAllCustomProperties}
+	on:deselectAllCustomProperties={deselectAllCustomProperties}
 />
 
 <style lang="postcss">

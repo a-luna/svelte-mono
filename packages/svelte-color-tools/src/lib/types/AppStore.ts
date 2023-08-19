@@ -5,7 +5,6 @@ export interface AppStore {
 	themeColorPalettes: ColorPalette[];
 	selectedThemePalette: ColorPalette;
 	themeCurrentColor: ThemeColor;
-	themeColorHasAlpha: boolean;
 	pickerColorHasAlpha: boolean;
 	componentStyles: string;
 }

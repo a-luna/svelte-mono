@@ -2,7 +2,8 @@
 
 <script lang="ts">
 	import Color from '$lib/components/Shared/Palettes/Color.svelte';
-	import type { ColorFormat, ColorPalette } from '$lib/types';
+	import type { ColorPalette } from '$lib/types';
+	import type { ColorFormat } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
@@ -14,7 +15,7 @@
 	export let alwaysExpanded = false;
 	export let columns = 4;
 	export let x11Palette = false;
-	export let contentHeight = null;
+	export let contentHeight = '';
 	let colorRefs: Record<string, Color> = {};
 	const dispatch = createEventDispatcher();
 

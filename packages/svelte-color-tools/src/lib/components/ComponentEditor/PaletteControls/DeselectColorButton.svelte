@@ -1,7 +1,6 @@
 <script lang="ts">
-	import Deselect from '$lib/components/Icons/Deselect.svelte';
-	import ThemeButton from '$lib/components/Shared/ThemeButton.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import { BasicIconRenderer, ThemeButton } from '@a-luna/shared-ui/components';
+	import type { ComponentColor } from '@a-luna/shared-ui/types';
 
 	export let color: ComponentColor;
 	export let disabled = false;
@@ -18,6 +17,6 @@
 	on:click
 >
 	<svelte:fragment slot="icon">
-		<Deselect />
+		<BasicIconRenderer icon={'deselect'} width={'22px'} />
 	</svelte:fragment>
 </ThemeButton>

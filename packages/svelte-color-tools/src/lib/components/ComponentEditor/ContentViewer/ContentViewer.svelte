@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ContentSections from '$lib/components/ComponentEditor/ContentViewer/ContentSections.svelte';
 	import ContentSelector from '$lib/components/ComponentEditor/ContentViewer/ContentSelector.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import type { ComponentColor } from '@a-luna/shared-ui';
 	import irBlack from 'svelte-highlight/styles/ir-black';
 
 	export let editorId: string;
@@ -30,7 +30,7 @@
 
 <style lang="postcss">
 	.content-viewer {
-		--select-menu-width: 110px;
+		--select-list-width: 110px;
 
 		display: grid;
 		grid-template-columns: auto 1fr;

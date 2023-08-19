@@ -1,14 +1,15 @@
 <script lang="ts">
 	import SelectAllCustomPropsButton from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssControls/SelectAllCustomPropsButton.svelte';
 	import SelectNoneCustomPropsButton from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssControls/SelectNoneCustomPropsButton.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import type { ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
 	export let componentColor: ComponentColor;
 	export let totalSelected: number;
 	export let allCustomPropsSelected: boolean;
 	export let anyCustomPropsSelected: boolean;
-	const dispatch = createEventDispatcher();
+	const selectAllCustomPropertiesDispatcher = createEventDispatcher<{ selectAllCustomProperties: {} }>();
+	const deselectAllCustomPropertiesDispatcher = createEventDispatcher<{ deselectAllCustomProperties: {} }>();
 </script>
 
 <div class="css-controls">
@@ -16,14 +17,14 @@
 		<SelectAllCustomPropsButton
 			{componentColor}
 			disabled={allCustomPropsSelected}
-			wrapperWidth={'112px'}
-			on:click={() => dispatch('selectAllCustomProperties')}
+			wrapperWidth={'100px'}
+			on:click={() => selectAllCustomPropertiesDispatcher('selectAllCustomProperties')}
 		/>
 		<SelectNoneCustomPropsButton
 			{componentColor}
 			disabled={!anyCustomPropsSelected}
 			wrapperWidth={'112px'}
-			on:click={() => dispatch('deselectAllCustomProperties')}
+			on:click={() => deselectAllCustomPropertiesDispatcher('deselectAllCustomProperties')}
 		/>
 	</div>
 	<span class="total-selected"><strong>{totalSelected}</strong> custom properties selected</span>

@@ -1,28 +1,30 @@
 <script lang="ts">
-	import { parseColorFromString } from '$lib/color';
 	import BgColorSelector from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/BgColorSelector.svelte';
-	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import { alphaBgPattern } from '$lib/constants';
 	import { getAppStore } from '$lib/context';
-	import type { ComponentColor } from '$lib/types';
+	import { ColorParser, InputTextBox, type ComponentColor, type CssColor, type Result } from '@a-luna/shared-ui';
 	import UseCustomColorCheckbox from './UseCustomColorCheckbox.svelte';
 
 	export let editorId: string;
 	export let componentColor: ComponentColor;
 	let useCustomColor = false;
 	let bgColorHex: string;
+	let parseCustomColorResult: Result<CssColor>;
 	let customColor = '#000000';
 	let customColorTextBox: InputTextBox;
+	let bgColor = '';
 	let app = getAppStore(editorId);
 
 	$: if (useCustomColor && customColorTextBox) customColorTextBox.focus();
-	$: parseCustomColorResult = useCustomColor ? parseColorFromString(customColor) : { success: false };
-	$: customCssColor = parseCustomColorResult.success ? parseCustomColorResult.value : null;
-	$: bgColor = parseCustomColorResult.success
-		? `background-color: ${customCssColor.hexAlpha};`
-		: bgColorHex === '#00000000'
-		? alphaBgPattern
-		: `background-color: ${bgColorHex};`;
+	$: if (useCustomColor) {
+		parseCustomColorResult = ColorParser.parse(customColor);
+		if (parseCustomColorResult.success) {
+			const customCssColor = parseCustomColorResult.value;
+			bgColor = `background-color: ${customCssColor.hex};`;
+		}
+	} else {
+		bgColor = bgColorHex === '#00000000' ? alphaBgPattern : `background-color: ${bgColorHex};`;
+	}
 	$: paddingBorder = `border: 1px solid var(--${componentColor}-fg-color);`;
 </script>
 
@@ -51,11 +53,13 @@
 		width: auto;
 	}
 	.bg-color-selector {
-		--select-menu-width: 58px;
-		--select-menu-height: 30px;
-		--select-menu-margin: 0 6px 0 0;
-		--select-menu-padding: 4px 10px;
-		--swatch-size: 15px;
+		--select-list-width: 58px;
+		--select-list-height: 30px;
+		--select-list-margin: 0 6px 0 0;
+		--select-list-padding: 4px 10px;
+		--swatch-width: 15px;
+		--swatch-height: 15px;
+		--swatch-border-radius: 0;
 
 		display: flex;
 		align-items: center;

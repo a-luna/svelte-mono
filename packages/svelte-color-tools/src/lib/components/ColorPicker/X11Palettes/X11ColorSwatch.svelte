@@ -1,6 +1,6 @@
 <script lang="ts">
-	import ThemeButton from '$lib/components/Shared/ThemeButton.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import type { ComponentColor } from '@a-luna/shared-ui';
+	import { ThemeButton } from '@a-luna/shared-ui/components';
 	import { createEventDispatcher } from 'svelte';
 
 	export let paletteId: string;

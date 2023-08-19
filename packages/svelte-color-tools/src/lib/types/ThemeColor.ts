@@ -1,12 +1,3 @@
-import type { CssColor } from '.';
-
-export interface ThemeColor {
-	color: CssColor;
-	propName?: string;
-	cssVarName?: string;
-	displayName?: string;
-	value?: string;
-	isSelected?: boolean;
-}
+import type { ThemeColor } from '@a-luna/shared-ui';
 
 export type ThemeColorShallowCopy = Omit<ThemeColor, 'color' | 'isSelected'>;

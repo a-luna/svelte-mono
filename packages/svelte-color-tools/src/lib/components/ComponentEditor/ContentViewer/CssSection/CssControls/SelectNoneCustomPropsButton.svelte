@@ -1,11 +1,10 @@
 <script lang="ts">
-	import SelectNone from '$lib/components/Icons/SelectNone.svelte';
-	import ThemeButton from '$lib/components/Shared/ThemeButton.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import { BasicIconRenderer, ThemeButton } from '@a-luna/shared-ui/components';
+	import type { ComponentColor } from '@a-luna/shared-ui/types';
 
 	export let componentColor: ComponentColor;
 	export let disabled = false;
-	export let wrapperWidth: string = null;
+	export let wrapperWidth: string = '';
 	export let style: string = '';
 </script>
 
@@ -19,7 +18,7 @@
 	on:click
 >
 	<svelte:fragment slot="icon">
-		<SelectNone />
+		<BasicIconRenderer icon={'selectnone'} width={'18px'} />
 	</svelte:fragment>
 	<svelte:fragment slot="label">Deselect All</svelte:fragment>
 </ThemeButton>

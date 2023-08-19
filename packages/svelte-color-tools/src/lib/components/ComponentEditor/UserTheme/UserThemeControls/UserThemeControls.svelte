@@ -6,7 +6,7 @@
 	import FinishEditingButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/FinishEditingButton.svelte';
 	import SaveUserThemeButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/SaveUserThemeButton.svelte';
 	import { getAppStore, getThemeEditorStore } from '$lib/context';
-	import type { ColorPalette, ComponentColor } from '$lib/types';
+	import type { ColorPalette, ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
 	export let editorId: string;

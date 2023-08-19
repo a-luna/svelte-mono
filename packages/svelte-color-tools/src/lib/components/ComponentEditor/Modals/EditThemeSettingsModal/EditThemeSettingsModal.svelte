@@ -1,19 +1,18 @@
 <script lang="ts">
 	import ColorFormatSelector from '$lib/components/ComponentEditor/Modals/EditThemeSettingsModal/ColorFormatSelector.svelte';
 	import ComponentColorSelector from '$lib/components/Shared/ComponentColorSelector/ComponentColorSelector.svelte';
-	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
-	import Modal from '$lib/components/Shared/Modal.svelte';
 	import { getThemeEditorStore } from '$lib/context';
-	import type { ColorFormat, ComponentColor, UserThemeFromFile } from '$lib/types';
+	import type { UserThemeFromFile, UserThemeSettings } from '$lib/types';
+	import { InputTextBox, Modal, type ColorFormat, type ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher, tick } from 'svelte';
 
 	export let editorId: string;
 	let userTheme: UserThemeFromFile;
-	let previousSettings: {};
+	let previousSettings: UserThemeSettings;
 	let modal: Modal;
 	let closed: boolean;
 	let themeName = '';
-	let colorFormat: ColorFormat = null;
+	let colorFormat: ColorFormat = 'rgb';
 	let usesPrefix = false;
 	let themePrefix = '';
 	let uiColor: ComponentColor = 'black';
@@ -55,7 +54,6 @@
 		userTheme.usesPrefix = usesPrefix;
 		userTheme.themePrefix = themePrefix;
 		themeName = '';
-		colorFormat = null;
 		usesPrefix = false;
 		themePrefix = '';
 		modal.toggleModal();
@@ -71,7 +69,7 @@
 		userTheme.themePrefix = previousSettings['themePrefix'];
 		themeName = '';
 		uiColor = 'black';
-		colorFormat = null;
+		colorFormat = previousSettings['colorFormat'];
 		usesPrefix = false;
 		themePrefix = '';
 		modal.toggleModal();
@@ -126,10 +124,10 @@
 
 <style lang="postcss">
 	.edit-theme-settings {
-		--select-menu-width: 80px;
-		--select-menu-height: 30px;
-		--select-menu-margin: 0 6px 0 0;
-		--select-menu-padding: 4px 10px;
+		--select-list-width: 80px;
+		--select-list-height: 30px;
+		--select-list-margin: 0 6px 0 0;
+		--select-list-padding: 4px 10px;
 
 		display: grid;
 		grid-template-columns: auto 1fr;

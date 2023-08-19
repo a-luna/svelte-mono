@@ -1,7 +1,7 @@
-import { createEmptyColorPalette } from '$lib/color';
 import { defaultThemeEditorState } from '$lib/constants';
 import { getCssValueForColor } from '$lib/theme';
-import type { CssColor, ThemeColor, ThemeEditorState, ThemeEditorStore } from '$lib/types';
+import type { ThemeColor, ThemeEditorState, ThemeEditorStore } from '$lib/types';
+import { createEmptyColorPalette, type ColorPalette, type CssColor } from '@a-luna/shared-ui';
 import { writable } from 'svelte/store';
 
 const getDefaultEditorState = (editorId: string): ThemeEditorState => ({ ...defaultThemeEditorState, editorId });
@@ -44,7 +44,7 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 	}
 
 	function _resetAllColorsInPalette(state: ThemeEditorState): ThemeEditorState {
-		const selectedPalette = state.userTheme.palettes.find((p) => p.id === state.selectedPaletteId);
+		const selectedPalette: ColorPalette = state.userTheme.palettes.find((p) => p.id === state.selectedPaletteId);
 		if (selectedPalette) {
 			selectedPalette.colors.forEach((c) => (c.isSelected = false));
 			selectedPalette.colors = [...selectedPalette.colors];

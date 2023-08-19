@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Checkbox from '$lib/components/Shared/Checkbox.svelte';
-	import type { ComponentColor } from '$lib/types';
+	import { Checkbox, type ComponentColor } from '@a-luna/shared-ui';
 
 	export let checked: boolean;
 	export let componentColor: ComponentColor;

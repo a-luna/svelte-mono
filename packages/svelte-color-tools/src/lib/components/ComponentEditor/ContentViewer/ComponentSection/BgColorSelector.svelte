@@ -1,16 +1,22 @@
 <script lang="ts">
-	import { parseColorFromString } from '$lib/color';
 	import BgColorOptions from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/BgColorOptions.svelte';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import Select from '$lib/components/Shared/Select/Select.svelte';
-	import type { SelectMenuOption } from '$lib/types';
+	import { ColorParser, defaultCssColor } from '@a-luna/shared-ui';
+	import { InputSelectList } from '@a-luna/shared-ui/components';
+	import type { CssColor, SelectListOption } from '@a-luna/shared-ui/types';
 
 	export let value: string = '#00000000';
 	export let disabled = false;
 	export const menuId: string = 'select-component-background-color';
-	let selectComponent: Select;
+	let selectComponent: InputSelectList;
+	let selectedColor: CssColor = defaultCssColor;
 
-	const options: SelectMenuOption[] = [
+	$: {
+		const result = ColorParser.parse(value);
+		selectedColor = result.success ? result.value : defaultCssColor;
+	}
+
+	const options: SelectListOption[] = [
 		{ label: '', value: '#00000000', optionNumber: 1, active: false },
 		{ label: '', value: '#000000', optionNumber: 2, active: false },
 		{ label: '', value: '#FFFFFF', optionNumber: 3, active: false },
@@ -18,38 +24,45 @@
 	];
 	const menuLabel = '';
 
-	function handleComponentBgColorChanged(color: string) {
-		value = color;
+	function handleComponentBgColorChanged(e: CustomEvent<{ selected: string | number }>) {
+		const { selected } = e.detail;
+		if (typeof selected === 'string') {
+			value = selected;
+		}
 		selectComponent.dropdownShown = false;
 	}
 </script>
 
-<Select
+<InputSelectList
 	bind:this={selectComponent}
 	{menuLabel}
 	{options}
 	selectedValue={value}
 	{menuId}
 	{disabled}
-	on:changed={(e) => handleComponentBgColorChanged(e.detail)}
+	on:selectedOptionChanged={handleComponentBgColorChanged}
 >
 	<svelte:fragment slot="options">
-		<BgColorOptions {options} {menuId} on:changed={(e) => handleComponentBgColorChanged(e.detail)} />
+		<BgColorOptions {options} {menuId} on:selectedOptionChanged={handleComponentBgColorChanged} />
 	</svelte:fragment>
 
 	<svelte:fragment slot="selectedValue">
 		{#if !disabled}
 			<div class="swatch-border">
-				<ColorSwatch color={parseColorFromString(value).value} swatchWidth={'15px'} swatchHeight={'15px'} />
+				<ColorSwatch color={selectedColor} />
 			</div>
 		{:else}
 			<div class="swatch-border" style="width: 15px; height: 15px" />
 		{/if}
 	</svelte:fragment>
-</Select>
+</InputSelectList>
 
 <style lang="postcss">
 	.swatch-border {
+		--swatch-width: 15px;
+		--swatch-height: 15px;
+		--swatch-border-radius: 0;
+
 		border: 1px solid var(--black4);
 	}
 </style>

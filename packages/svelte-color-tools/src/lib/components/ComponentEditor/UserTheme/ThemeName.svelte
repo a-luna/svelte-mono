@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentColor } from '$lib/types';
+	import type { ComponentColor } from '@a-luna/shared-ui';
 
 	export let themeName = '';
 	export let editMode = false;

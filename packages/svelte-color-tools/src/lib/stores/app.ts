@@ -20,7 +20,6 @@ export function createAppStore(
 			themeColorPalettes: $themeEditorState?.userTheme?.palettes,
 			selectedThemePalette: getThemePalette(),
 			themeCurrentColor: $themeEditorState?.selectedColor,
-			themeColorHasAlpha: $themeEditorState?.selectedColor?.color?.hasAlpha,
 			pickerColorHasAlpha: $colorPickerState?.alphaEnabled,
 			componentStyles: convertThemePalettesToCss($themeEditorState?.userTheme),
 		};

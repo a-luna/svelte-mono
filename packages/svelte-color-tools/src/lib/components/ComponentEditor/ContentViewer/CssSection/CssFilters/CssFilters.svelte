@@ -1,9 +1,8 @@
 <script lang="ts">
 	import IgnoreTailwindsCheckbox from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/IgnoreTailwindsCheckbox.svelte';
 	import RuleSelectorList from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/RuleSelectorList.svelte';
-	import InputTextBox from '$lib/components/Shared/InputTextBox.svelte';
 	import { getThemeEditorStore } from '$lib/context';
-	import type { ComponentColor } from '$lib/types';
+	import { InputTextBox, type ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import UseThemePrefixCheckbox from './UseThemePrefixCheckbox.svelte';
 
@@ -15,25 +14,31 @@
 	export let componentColor: ComponentColor;
 	export let prefix: string;
 	export let themeInitialized: boolean;
-	const dispatch = createEventDispatcher();
+	const ignoreTailwindsChangedDispatcher = createEventDispatcher<{
+		ignoreTailwindsChanged: { ignore: boolean };
+	}>();
+	const useThemePrefixChangedDispatcher = createEventDispatcher<{
+		useThemePrefixChanged: { usePrefix: boolean };
+	}>();
+	const componentPrefixChangedDispatcher = createEventDispatcher<{ componentPrefixChanged: { newPrefix: string } }>();
 	let state = getThemeEditorStore(editorId);
 
 	$: themePrefixExists = Boolean($state?.userTheme?.usesPrefix && $state?.userTheme?.themePrefix);
 	$: themePrefixInputTextBoxDisabled = !themeInitialized || (themeInitialized && useThemePrefix && themePrefixExists);
 	$: if (ignoreTailwinds || !ignoreTailwinds) {
-		dispatch('ignoreTailwindsChanged', ignoreTailwinds);
+		ignoreTailwindsChangedDispatcher('ignoreTailwindsChanged', { ignore: ignoreTailwinds });
 	}
 	$: if (!themeInitialized) {
 		prefix = '';
 	}
 	$: if (useThemePrefix || !useThemePrefix) {
-		dispatch('useThemePrefixChanged', useThemePrefix);
+		useThemePrefixChangedDispatcher('useThemePrefixChanged', { usePrefix: useThemePrefix });
 	}
 	$: if (useThemePrefix && themePrefixExists) {
 		prefix = $state?.userTheme?.themePrefix;
 	}
 	$: if (prefix) {
-		dispatch('componentPrefixChanged', prefix);
+		componentPrefixChangedDispatcher('componentPrefixChanged', { newPrefix: prefix });
 	}
 
 	export function handleUserThemeUpdated(usesPrefix: boolean) {

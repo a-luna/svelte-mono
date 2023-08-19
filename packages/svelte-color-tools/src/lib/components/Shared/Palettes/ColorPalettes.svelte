@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Palette from '$lib/components/Shared/Palettes/Palette.svelte';
-	import type { ColorFormat, ColorPalette } from '$lib/types';
+	import type { ColorPalette } from '$lib/types';
+	import type { ColorFormat } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
 	export let colorFormat: ColorFormat;
@@ -14,13 +15,18 @@
 	$: if (palettes && palettes.length === 0) paletteRefs = {};
 
 	function handlePaletteToggled(id: string) {
-		const isExpanded = paletteRefs[id].expanded;
+		const isExpanded = paletteRefs?.[id]?.expanded;
 		if (!allowMultiplePalettesOpen) {
 			Object.values(paletteRefs)
 				.filter((palette) => palette.expanded)
 				.forEach((palette) => (palette.expanded = false));
 		}
-		paletteRefs[id].expanded = !isExpanded;
+		
+		const togglePalette = paletteRefs[id];
+		if (togglePalette) {
+			togglePalette.expanded = !isExpanded;
+		}
+
 		if (Object.values(paletteRefs).every((palette) => !palette.expanded)) {
 			dispatch('paletteSelected', null);
 		} else {

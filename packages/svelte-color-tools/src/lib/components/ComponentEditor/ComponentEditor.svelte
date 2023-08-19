@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { createEmptyColorPalette } from '$lib/color';
 	import ColorPicker from '$lib/components/ColorPicker/ColorPicker.svelte';
 	import ContentViewer from '$lib/components/ComponentEditor/ContentViewer/ContentViewer.svelte';
 	import AddColorToPaletteModal from '$lib/components/ComponentEditor/Modals/AddColorToPaletteModal.svelte';
@@ -8,11 +7,13 @@
 	import LoadUserThemeModal from '$lib/components/ComponentEditor/Modals/LoadUserThemeModal.svelte';
 	import PaletteControls from '$lib/components/ComponentEditor/PaletteControls/PaletteControls.svelte';
 	import UserTheme from '$lib/components/ComponentEditor/UserTheme/UserTheme.svelte';
+	import { defaultUserThemeImported } from '$lib/constants';
 	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
 	import { createThemeEditorStore } from '$lib/stores/themeEditor';
 	import { downloadUserThemeJson } from '$lib/theme';
-	import type { AppStore, ColorPickerState, ComponentColor, ThemeEditorStore, UserThemeImported } from '$lib/types';
+	import type { AppStore, ColorPickerState, ThemeEditorStore, UserThemeImported } from '$lib/types';
 	import { getThemeEditorSlotExampleCode } from '$lib/util';
+	import { createEmptyColorPalette, type ComponentColor } from '@a-luna/shared-ui';
 	import { HighlightSvelte } from 'svelte-highlight';
 	import type { Readable, Writable } from 'svelte/store';
 
@@ -54,7 +55,7 @@
 	// TODO: On the ContentViewer -> JSON tab, user can view the ThemeSet as JSON (any changes to the ThemeSet/PropertySets are immediately reflected in this view), and choose to download the ThemeSet as a JSON file
 	// TODO: On the ContentViewer -> CSS tab, user can assign CSS Custom Properties/Values from the list to a PropertySet, individually or in bulk
 	// TODO: Alternatively, user can create a new PropertySet from a selection of CSS Custom Properties/Values
-	// TODO: On the ContentViewer -> CSS tab, userer can view the CSS Custom Properties from the PropertySets as valid CSS
+	// TODO: On the ContentViewer -> CSS tab, user can view the CSS Custom Properties from the PropertySets as valid CSS
 	// TODO: On the ContentViewer -> CSS tab, each ComponentTheme is rendered as a CSS Style Rule: all CSS Custom Properties and their values in the ComponentTheme are listed on separate lines, and the list is surounded by curly braces preceded by the ComponentTheme.selector value
 	//
 	//  Assuming the following ThemeSet object has been created:
@@ -157,10 +158,11 @@
 	$: componentColor = $state?.userTheme?.uiColor ?? 'black';
 	$: style = `--button-hue: var(--${componentColor}-hue); --bg-color: var(--${componentColor}-bg-color); --fg-color: var(--${componentColor}-fg-color); --active-fg-color: var(--${componentColor}-active-fg-color); --disabled-bg-color: var(--${componentColor}-hover-bg-color);  --hover-bg-color: var(--${componentColor}-hover-bg-color); --border-color: var(--fg-color);`;
 
-	function handleUserThemeImported(theme: UserThemeImported) {
-		$state.userTheme = theme;
+	function handleUserThemeImported(e: CustomEvent<{ userTheme: UserThemeImported }>) {
+		const { userTheme } = e.detail;
+		$state.userTheme = userTheme;
 		themeInitialized = true;
-		contentViewer.changeComponentPrefix(theme.usesPrefix, theme.themePrefix);
+		contentViewer.changeComponentPrefix(userTheme.usesPrefix, userTheme.themePrefix);
 	}
 
 	function handleUserThemeSettingsChanged(updatedUserTheme: UserThemeImported) {
@@ -173,7 +175,7 @@
 			themeName: 'custom theme',
 			uiColor: 'black',
 			usesPrefix: false,
-			themePrefix: null,
+			themePrefix: '',
 			createdAt,
 			modifiedAt: createdAt,
 			colorFormat: 'hsl',
@@ -183,14 +185,14 @@
 	}
 
 	function closeUserTheme() {
-		$state.selectedPaletteId = null;
-		$state.userTheme = null;
+		$state.selectedPaletteId = '';
+		$state.userTheme = defaultUserThemeImported;
 		themeInitialized = false;
 	}
 </script>
 
 {#if !themeInitialized}
-	<LoadUserThemeModal bind:this={loadUserThemeModal} on:loadUserTheme={(e) => handleUserThemeImported(e.detail)} />
+	<LoadUserThemeModal bind:this={loadUserThemeModal} on:loadUserTheme={handleUserThemeImported} />
 {:else}
 	<AddColorToPaletteModal
 		{editorId}
@@ -248,7 +250,7 @@
 						on:paletteSelected={(e) => state.changeSelectedPalette(e.detail)}
 						on:colorSelected={(e) => state.changeSelectedColor(e.detail)}
 						on:deleteColor={(e) => state.deleteColorFromPalette(e.detail)}
-						on:editColorDetails={(e) => editDetailsModal.toggleModal(e.detail)}
+						on:editColorDetails={(e) => editDetailsModal.openModal(e.detail)}
 					/>
 				{/if}
 			</div>
@@ -257,11 +259,11 @@
 			<ContentViewer bind:this={contentViewer} {editorId} {componentColor} {themeInitialized}>
 				<slot>
 					<div class="help-text">
-						<p><strong><code>ComponentCssEditor</code> has not been be initialized!</strong></p>
+						<p><strong><code>ComponentEditor</code> has not been be initialized!</strong></p>
 						<p>
 							In order to customize CSS properties for your component and see live updates, import your svelte component
-							in the <code>+page.svelte</code> file containing this <code>ComponentCssEditor</code> instance and add
-							your component as a child of the <code>ComponentCssEditor</code> as shown below:
+							in the <code>+page.svelte</code> file containing this <code>ComponentEditor</code> instance and add your
+							component as a child of the <code>ComponentEditor</code> as shown below:
 						</p>
 						<div class="code-viewer">
 							<HighlightSvelte code={getThemeEditorSlotExampleCode()} />
@@ -275,15 +277,32 @@
 
 <style lang="postcss">
 	.theme-editor-wrapper {
-		--select-menu-width: 100%;
-		--select-menu-background-color: var(--white3);
-		--select-menu-hover-background-color: var(--hover-bg-color);
-		--select-menu-text-color: var(--fg-color);
-		--select-menu-border-color: var(--fg-color);
-		--select-menu-padding: 0 4px;
-		--select-menu-height: 30px;
-		--select-menu-dropdown-height: 300px;
-		--select-menu-no-selection-text-color: var(--fg-color);
+		--select-list-open-button-height: 30px;
+		--select-list-open-button-icon-height: 14px;
+		--select-list-open-button-icon-width: 14px;
+		--select-list-open-button-padding: 0 4px;
+		--select-list-open-button-text-color: var(--fg-color);
+		--select-list-open-button-background-color: var(--bg-color);
+		--select-list-open-button-hover-background-color: var(--hover-bg-color);
+		--select-list-open-button-border-color: var(--fg-color);
+		--select-list-no-selection-text-color: var(--fg-color);
+
+		--select-list-dropdown-text-color: var(--fg-color);
+		--select-list-dropdown-background-color: var(--bg-color);
+		--select-list-dropdown-border-color: var(--fg-color);
+		--select-list-dropdown-border-radius: 6px;
+
+		--select-list-selected-item-background-color: var(--hover-bg-color);
+
+		--select-list-width: 100%;
+		--select-list-background-color: var(--white3);
+		--select-list-hover-background-color: var(--hover-bg-color);
+		--select-list-text-color: var(--fg-color);
+		--select-list-border-color: var(--fg-color);
+		--select-list-padding: 0 4px;
+		--select-list-height: 30px;
+		--select-list-dropdown-height: 300px;
+		--select-list-no-selection-text-color: var(--fg-color);
 
 		--color-picker-background-color: var(--hover-bg-color);
 
@@ -291,9 +310,9 @@
 		--input-text-border-color: var(--fg-color);
 		--input-text-color: var(--fg-color);
 		--input-text-background-color: var(--bg-color);
-		--input-text-disabled-text-color: var(--button-fg-color);
-		--input-text-disabled-background-color: var(--button-bg-color);
-		--input-text-disabled-border-color: var(--button-fg-color);
+		--input-text-disabled-text-color: var(--gray4);
+		--input-text-disabled-background-color: var(--white1);
+		--input-text-disabled-border-color: var(--gray4);
 
 		--sst-button-bg-color: var(--button-bg-color);
 		--sst-button-text-color: var(--button-fg-color);

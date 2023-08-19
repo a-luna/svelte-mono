@@ -26,14 +26,15 @@
 			? errorStyle
 			: inactiveStyle;
 
-	async function handleCopyButtonClicked(colorString: string) {
-		await copyToClipboard(colorString);
+	async function handleCopyButtonClicked(e: CustomEvent<{ currentColor: string }>) {
+		const { currentColor } = e.detail;
+		await copyToClipboard(currentColor);
 		clearTimeout(timeout);
 		$state.labelState = 'copied';
 		timeout = setTimeout(() => ($state.labelState = 'inactive'), 500);
 	}
 
-	function handleEditButtonClicked() {
+	function handleEditButtonClicked(e: CustomEvent<{}>) {
 		if ($state.editable) {
 			$state.labelState = 'edit';
 		}
@@ -48,11 +49,10 @@
 	{:else}
 		<CopyColorString
 			color={$state?.color}
-			alphaEnabled={$state.alphaEnabled}
 			editable={$state?.editable}
 			bind:currentColor
-			on:copyColorString={(e) => handleCopyButtonClicked(e.detail)}
-			on:editColorString={() => handleEditButtonClicked()}
+			on:copyColorString={handleCopyButtonClicked}
+			on:editColorString={handleEditButtonClicked}
 		/>
 	{/if}
 </div>
@@ -61,7 +61,7 @@
 	.color-label {
 		display: flex;
 		flex-flow: row nowrap;
-		gap: 0.75rem;
+		gap: 0.25rem;
 		border: 1px solid var(--fg-color, --light-gray2);
 		border-radius: 6px;
 		transition: background-color, color 350ms ease-out;
