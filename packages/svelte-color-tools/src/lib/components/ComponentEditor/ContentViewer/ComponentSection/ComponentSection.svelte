@@ -55,7 +55,8 @@
 	.bg-color-selector {
 		--select-list-width: 58px;
 		--select-list-height: 30px;
-		--select-list-margin: 0 6px 0 0;
+		--select-list-flex: 0 0 var(--select-list-width);
+		--select-list-margin: 0;
 		--select-list-padding: 4px 10px;
 		--swatch-width: 15px;
 		--swatch-height: 15px;
