@@ -54,7 +54,7 @@
 	<BasicIconRenderer icon={'copy'} width={'16px'} height={'16px'} />
 </button>
 <span
-	class="cursor-pointer flex-grow text-center self-center font-medium leading-none whitespace-nowrap"
+	class="color-string"
 	style="font-size: {fontSize}"
 	title={tooltip}
 	data-testid="color-string"
@@ -77,5 +77,15 @@
 	button {
 		background-color: transparent;
 		border: none;
+	}
+	.color-string {
+		flex-grow: 1;
+		align-self: center;
+		font-weight: 500;
+		line-height: 1;
+		text-align: center;
+		white-space: nowrap;
+		overflow: hidden;
+		cursor: pointer;
 	}
 </style>
