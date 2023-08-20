@@ -156,7 +156,7 @@
 	}
 	$: colorFormat = $state?.userTheme?.colorFormat ?? 'hsl';
 	$: componentColor = $state?.userTheme?.uiColor ?? 'black';
-	$: style = `--button-hue: var(--${componentColor}-hue); --bg-color: var(--${componentColor}-bg-color); --fg-color: var(--${componentColor}-fg-color); --active-fg-color: var(--${componentColor}-active-fg-color); --disabled-bg-color: var(--${componentColor}-hover-bg-color);  --hover-bg-color: var(--${componentColor}-hover-bg-color); --border-color: var(--fg-color);`;
+	$: style = `--button-hue: var(--${componentColor}-hue); --bg-color: var(--${componentColor}-bg-color); --panel-bg-color: var(--${componentColor}-panel-bg-color); --fg-color: var(--${componentColor}-fg-color); --active-fg-color: var(--${componentColor}-active-fg-color); --disabled-bg-color: var(--${componentColor}-hover-bg-color);  --hover-bg-color: var(--${componentColor}-hover-bg-color); --border-color: var(--fg-color);`;
 
 	function handleUserThemeImported(e: CustomEvent<{ userTheme: UserThemeImported }>) {
 		const { userTheme } = e.detail;
@@ -304,7 +304,7 @@
 		--select-list-dropdown-height: 300px;
 		--select-list-no-selection-text-color: var(--fg-color);
 
-		--color-picker-background-color: var(--hover-bg-color);
+		--color-picker-background-color: var(--panel-bg-color);
 
 		--input-text-font-size: 0.875rem;
 		--input-text-border-color: var(--fg-color);
@@ -334,10 +334,10 @@
 	}
 
 	.theme-editor-wrapper.color {
-		--button-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 90%);
-		--button-hover-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 99%);
-		--button-active-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 90%);
-		--button-fg-color: hsl(var(--button-hue, 0), var(--fg-sat, 0%), var(--fg-light, 10%));
+		--button-bg-color: var(--bg-color);
+		--button-hover-bg-color: var(--hover-bg-color);
+		--button-active-bg-color: var(--panel-bg-color);
+		--button-fg-color: var(--fg-color);
 		--section-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 95%);
 		--button-border-color: hsl(var(--button-hue, 0), 63%, 26%);
 	}

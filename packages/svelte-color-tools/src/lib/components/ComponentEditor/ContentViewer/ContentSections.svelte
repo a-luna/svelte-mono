@@ -46,7 +46,7 @@
 		gap: 1rem;
 
 		padding: 1rem;
-		background-color: var(--hover-bg-color);
+		background-color: var(--panel-bg-color);
 	}
 	.css-section-wrapper {
 		--sst-font-size: 13px;

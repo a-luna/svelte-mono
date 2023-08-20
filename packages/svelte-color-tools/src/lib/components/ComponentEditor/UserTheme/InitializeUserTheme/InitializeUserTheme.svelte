@@ -8,7 +8,7 @@
 	const dispatch = createEventDispatcher();
 
 	$: componentColor = getRandomArrayItem<ComponentColor>(COMPONENT_COLORS);
-	$: style = `color: var(--${componentColor}-fg-color); border: 1px solid var(--${componentColor}-fg-color); background-color: var(--${componentColor}-hover-bg-color);`;
+	$: style = `color: var(--${componentColor}-fg-color); border: 1px solid var(--${componentColor}-fg-color); background-color: var(--${componentColor}-panel-bg-color);`;
 </script>
 
 <div class="init-theme" {style}>

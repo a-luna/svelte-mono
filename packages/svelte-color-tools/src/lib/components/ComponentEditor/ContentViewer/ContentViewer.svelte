@@ -41,7 +41,7 @@
 
 	.bg-left,
 	.bg-right {
-		background-color: var(--button-hover-bg-color);
+		background-color: var(--panel-bg-color);
 		z-index: 1;
 
 		grid-row: 2 / span 1;

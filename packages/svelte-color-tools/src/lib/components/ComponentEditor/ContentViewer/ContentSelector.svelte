@@ -71,7 +71,7 @@
 		background-color: var(--button-active-bg-color);
 	}
 	button.active {
-		background-color: var(--button-hover-bg-color);
+		background-color: var(--panel-bg-color);
 		border-bottom: 1px solid transparent;
 	}
 	button.first {
