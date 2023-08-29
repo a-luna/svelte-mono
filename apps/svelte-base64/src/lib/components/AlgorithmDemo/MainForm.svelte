@@ -11,7 +11,10 @@
 	({ demoState } = initAppContext(state, send));
 
 	$: gridStyles =
-		$demoState.isMobileDisplay || ['finished', 'inactive', { validateInputText: 'error' }].some($state.matches)
+		$demoState.isMobileDisplay ||
+		['finished', 'inactive', { validateInputText: 'error' }].some($state.matches) ||
+		$demoState.showAsciiTable ||
+		$demoState.showBase64Table
 			? 'auto auto auto 1fr'
 			: 'auto auto minmax(250px, 1fr) 0px';
 </script>
