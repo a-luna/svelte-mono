@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser, dev } from '$app/environment';
 	import AboutMe from '$lib/components/HomePage/AboutMe.svelte';
 	import ApiTutorial from '$lib/components/HomePage/ApiTutorial.svelte';
 	import FeaturedProjects from '$lib/components/HomePage/FeaturedProjects.svelte';
@@ -7,12 +8,26 @@
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { DEFAULT_OG_IMAGE, MY_TWITTER_HANDLE, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
 	import { initialFadePerformed, mobileNavOpen } from '$lib/stores';
+	import { parseColorFromString } from '@a-luna/shared-ui/color/parsers';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	let mounted = false;
+
+	$: if (dev && browser) {
+		let result = parseColorFromString('sandy-brown');
+		console.log(result);
+		result = parseColorFromString('oklab(80.88% -0.18 -0.03 / 0.76)');
+		console.log(result);
+		result = parseColorFromString('oklch(80.88% 0.184 188.23 / 76.08%)');
+		console.log(result);
+		result = parseColorFromString('#000000');
+		console.log(result);
+		result = parseColorFromString('hsl(353 100% 38%)');
+		console.log(result);
+	}
 
 	onMount(() => {
 		mounted = true;

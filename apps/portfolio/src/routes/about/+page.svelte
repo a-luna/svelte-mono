@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { ICON_COLORS } from '$lib/constants';
 	import { SITE_URL } from '$lib/siteConfig';
@@ -63,50 +64,52 @@
 		>
 	</div>
 
-	<div class="icon-showcase">
-		{#each Object.entries(PROJECT_CATEGORY_ICONS) as [name, icon]}
-			<div class="icon-item">
-				<div class="icon-display {getRandomIconColor()}">
-					<svelte:component this={icon} />
+	{#if dev}
+		<div class="icon-showcase">
+			{#each Object.entries(PROJECT_CATEGORY_ICONS) as [name, icon]}
+				<div class="icon-item">
+					<div class="icon-display {getRandomIconColor()}">
+						<svelte:component this={icon} />
+					</div>
+					<span class="icon-name">{name}</span>
 				</div>
-				<span class="icon-name">{name}</span>
-			</div>
-		{/each}
-	</div>
-	<div class="icon-showcase">
-		{#each LANGTECH_ICON_NAMES as name}
-			<div class="icon-item {getRandomIconColor()}">
-				<LanguageTechIconRenderer icon={name} height={'97px'} />
-				<span class="icon-name">{name}</span>
-			</div>
-		{/each}
-	</div>
-	<div class="icon-showcase">
-		{#each Object.entries(NAV_ICONS) as [name, icon]}
-			<div class="icon-item">
-				<div class="icon-display {getRandomIconColor()}">
-					<svelte:component this={icon} />
+			{/each}
+		</div>
+		<div class="icon-showcase">
+			{#each LANGTECH_ICON_NAMES as name}
+				<div class="icon-item {getRandomIconColor()}">
+					<LanguageTechIconRenderer icon={name} height={'97px'} />
+					<span class="icon-name">{name}</span>
 				</div>
-				<span class="icon-name">{name}</span>
-			</div>
-		{/each}
-	</div>
-	<div class="icon-showcase">
-		{#each SOCIAL_ICON_NAMES as name}
-			<div class="icon-item {getRandomIconColor()}">
-				<SocialIconRenderer icon={name} height={'97px'} />
-				<span class="icon-name">{name}</span>
-			</div>
-		{/each}
-	</div>
-	<div class="icon-showcase">
-		{#each BASIC_ICON_NAMES as name}
-			<div class="icon-item {getRandomIconColor()}">
-				<BasicIconRenderer icon={name} height={'97px'} width={'106px'} margin={'0 auto'} />
-				<span class="icon-name">{name}</span>
-			</div>
-		{/each}
-	</div>
+			{/each}
+		</div>
+		<div class="icon-showcase">
+			{#each Object.entries(NAV_ICONS) as [name, icon]}
+				<div class="icon-item">
+					<div class="icon-display {getRandomIconColor()}">
+						<svelte:component this={icon} />
+					</div>
+					<span class="icon-name">{name}</span>
+				</div>
+			{/each}
+		</div>
+		<div class="icon-showcase">
+			{#each SOCIAL_ICON_NAMES as name}
+				<div class="icon-item {getRandomIconColor()}">
+					<SocialIconRenderer icon={name} height={'97px'} />
+					<span class="icon-name">{name}</span>
+				</div>
+			{/each}
+		</div>
+		<div class="icon-showcase">
+			{#each BASIC_ICON_NAMES as name}
+				<div class="icon-item {getRandomIconColor()}">
+					<BasicIconRenderer icon={name} height={'97px'} width={'106px'} margin={'0 auto'} />
+					<span class="icon-name">{name}</span>
+				</div>
+			{/each}
+		</div>
+	{/if}
 </SectionLayout>
 
 <style lang="postcss">
