@@ -34,6 +34,7 @@
 		height: auto;
 		z-index: 10;
 		width: 100%;
+		text-align: var(--select-list-menu-item-text-align, var(--select-list-default-menu-item-text-align));
 		font-size: var(--select-list-font-size, var(--select-list-default-font-size));
 		background-color: transparent;
 		color: var(--select-list-dropdown-text-color, var(--select-list-default-dropdown-text-color));
@@ -56,8 +57,8 @@
 	button:active:focus,
 	.active {
 		background-color: var(
-			--select-list-selected-item-background-color,
-			var(--select-list-default-selected-item-background-color)
+			--select-list-menu-item-background-color-hover,
+			var(--select-list-default-menu-item-background-color-hover)
 		);
 	}
 </style>

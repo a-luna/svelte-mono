@@ -1,11 +1,21 @@
-import type { CssColor } from '$lib/types';
-
 export const COMPONENT_COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo'] as const;
-export const COLOR_FORMATS = ['hex', 'rgb', 'hsl', 'lch', 'oklch', 'lab', 'oklab'] as const;
+export const COLOR_SPACES = ['srgb', 'p3', 'rec2020', 'out'] as const;
+export const COLOR_FORMATS = ['hex', 'rgb', 'hsl', 'okhsl', 'lch', 'oklch', 'lab', 'oklab'] as const;
 export const HEX_STRING_FORMATS = ['condensed', 'full'] as const;
 export const NUMBER_TYPES = ['hex', 'decimal', 'percent', 'float', 'degree', 'rad', 'turn'] as const;
 
-export const COLOR_SPACE_COMPONENTS = [
+export const COLOR_SCHEMES = [
+	'base',
+	'complementary',
+	'split',
+	'analogous',
+	'triadic',
+	'tetradic',
+	'square',
+	'monochrome',
+] as const;
+
+export const COLOR_FORMAT_COMPONENTS = [
 	'red',
 	'green',
 	'blue',
@@ -54,6 +64,7 @@ export const BASIC_ICON_NAMES = [
 	'export',
 	'fastbackward',
 	'fastforward',
+	'filledsquare',
 	'filter',
 	'folderopen',
 	'fork',
@@ -278,22 +289,3 @@ export const X11_NAMED_COLORS = [
 	'Yellow',
 	'YellowGreen',
 ];
-
-export const defaultCssColor: CssColor = {
-	hex: '#000000',
-	rgb: { r: 0, g: 0, b: 0, a: 255 },
-	hsl: { h: 0, s: 0, l: 0, a: 255 },
-	lab: { l: 0, a: 0, b: 0, A: 255 },
-	oklab: { l: 0, a: 0, b: 0, A: 255 },
-	lch: { l: 0, c: 0, h: 0, a: 255 },
-	oklch: { l: 0, c: 0, h: 0, a: 255 },
-	okhsl: { h: 0, s: 0, l: 0, a: 255 },
-	name: '#000000',
-	rgbString: 'rgb(0 0 0)',
-	hslString: 'hsl(0.00 0.00% 0.00%)',
-	labString: 'lab(0.00 0.00 0.00 / 100%)',
-	lchString: 'lch(0.00 0.00 0.00)',
-	okhslString: 'okhsl(0.00 0.00% 0.00%)',
-	oklabString: 'oklab(0.00% 0.000 0.000 / 100%)',
-	oklchString: 'oklch(0.00% 0.000 0.00)',
-};

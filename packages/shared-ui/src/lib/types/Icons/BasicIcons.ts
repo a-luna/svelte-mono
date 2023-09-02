@@ -34,6 +34,7 @@ import type {
 	Export,
 	FastBackward,
 	FastForward,
+	FilledSquare,
 	Filter,
 	FolderOpen,
 	Fork,
@@ -76,7 +77,7 @@ import type {
 	Unchecked,
 } from '$lib/components/Icons/Basic';
 
-import type { BASIC_ICON_NAMES } from '../../constants';
+import type { BASIC_ICON_NAMES } from '$lib/constants';
 
 export type BasicIcon =
 	| typeof AngleDoubleLeft
@@ -113,6 +114,7 @@ export type BasicIcon =
 	| typeof ExclamationTriangle
 	| typeof Export
 	| typeof FastBackward
+	| typeof FilledSquare
 	| typeof Filter
 	| typeof FolderOpen
 	| typeof Fork

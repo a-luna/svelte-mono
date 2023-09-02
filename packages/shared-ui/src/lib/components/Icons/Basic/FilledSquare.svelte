@@ -7,7 +7,5 @@
 </script>
 
 <IconBase viewBox="0 0 448 512" {strokeWidth} {padding} {title}>
-	<path
-		d="M0 32h214.6v214.6H0V32zm233.4 0H448v214.6H233.4V32zM0 265.4h214.6V480H0V265.4zm233.4 0H448V480H233.4V265.4z"
-	/>
+	<path d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z" />
 </IconBase>

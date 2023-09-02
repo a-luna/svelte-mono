@@ -1,4 +1,4 @@
-import { TAU } from '$lib/color/converters/util/constants';
+import { TAU } from '$lib/color/converters/util';
 import type { LabColor, LchColor, OklabColor, OklchColor } from '$lib/types';
 
 /// Converts colour given in CIELAB (a.k.a. L*a*b) space to

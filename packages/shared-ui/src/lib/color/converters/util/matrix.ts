@@ -1,12 +1,4 @@
-export type Matrix1x3 = [number, number, number];
-export type Matrix3x3 = [[number, number, number], [number, number, number], [number, number, number]];
-export type Matrix2x2 = [[number, number], [number, number]];
-
-type Matrix3x3Coordinates = [
-	[[number, number], [number, number], [number, number]],
-	[[number, number], [number, number], [number, number]],
-	[[number, number], [number, number], [number, number]],
-];
+import type { Matrix1x3, Matrix2x2, Matrix3x3, Matrix3x3Coordinates } from '$lib/types';
 
 export const multiplyMatrix3x3ByVector = (matrix: Matrix3x3, vector: Matrix1x3): Matrix1x3 =>
 	matrix.map((row: Matrix1x3) => row[0] * vector[0] + row[1] * vector[1] + row[2] * vector[2]) as Matrix1x3;
@@ -16,6 +8,12 @@ export function invertMatrix3x3(matrix: Matrix3x3): Matrix3x3 {
 	const cofactorMatrix = getCofactorOfMatrix3x3(matrix);
 	return multiplyMatrix3x3ByScalar(transposeMatrix3x3(cofactorMatrix), 1 / det);
 }
+
+const multiplyMatrix3x3ByScalar = (m: Matrix3x3, scalar: number): Matrix3x3 =>
+	m.map((row: Matrix1x3) => row.map((val: number) => val * scalar)) as Matrix3x3;
+
+const transposeMatrix3x3 = (m: Matrix3x3): Matrix3x3 =>
+	m.map((row: Matrix1x3, i: number) => row.map((_, j: number) => m?.[j]?.[i])) as Matrix3x3;
 
 function getCofactorOfMatrix3x3(m: Matrix3x3): Matrix3x3 {
 	const m_ = getMatrixOfMinors3x3(m);
@@ -48,21 +46,9 @@ const isTupleContainingFourNumbers = (list: number[]): list is [number, number, 
 
 function calculateMinorDeterminantForMatrix3x3Item(m: Matrix3x3, row: 0 | 1 | 2, col: 0 | 1 | 2): number {
 	const matrixCoordinates: Matrix3x3Coordinates = [
-		[
-			[0, 0],
-			[0, 1],
-			[0, 2],
-		],
-		[
-			[1, 0],
-			[1, 1],
-			[1, 2],
-		],
-		[
-			[2, 0],
-			[2, 1],
-			[2, 2],
-		],
+		[[0, 0], [0, 1], [0, 2]],
+		[[1, 0], [1, 1], [1, 2]],
+		[[2, 0], [2, 1], [2, 2]],
 	];
 	const minorDetValues = matrixCoordinates
 		.map((coordinates) =>
@@ -86,9 +72,3 @@ const calculateDeterminant3x3 = (m: Matrix3x3): number =>
 	m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
 
 const calculateDeterminant2x2 = (m: Matrix2x2): number => m[0][0] * m[1][1] - m[0][1] * m[1][0];
-
-const transposeMatrix3x3 = (m: Matrix3x3): Matrix3x3 =>
-	m.map((row: Matrix1x3, i: number) => row.map((_, j: number) => m?.[j]?.[i])) as Matrix3x3;
-
-const multiplyMatrix3x3ByScalar = (m: Matrix3x3, scalar: number): Matrix3x3 =>
-	m.map((row: Matrix1x3) => row.map((val: number) => val * scalar)) as Matrix3x3;

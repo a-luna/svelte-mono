@@ -1,4 +1,3 @@
-import type { ColorPalette } from '$lib/types/ColorPalette';
 import type {
 	HslColor,
 	LabColor,
@@ -8,11 +7,28 @@ import type {
 	OklchColor,
 	RgbColor,
 	XyzColor,
-} from '$lib/types/ColorSpaces';
-import type { CssColor, CssColorPreview } from '$lib/types/CssColor';
+} from '$lib/types/ColorFormats';
+import type { ColorPalette, X11ColorPalette } from '$lib/types/ColorPalette';
+import type {
+	ColorSchemeComparison,
+	ColorSchemeComparisonForAllColorFormats,
+	ColorSchemeSet,
+	ColorSchemeSetForColorFormat,
+} from '$lib/types/ColorScheme';
+import type {
+	CssColor,
+	CssColorBase,
+	CssColorForColorSpace,
+	OutsideGamutColor,
+	P3Color,
+	SrgbColor,
+} from '$lib/types/CssColor';
 import type { HueRange } from '$lib/types/HueRange';
 import type {
+	AdjustableColorFormat,
 	ColorFormat,
+	ColorScheme,
+	ColorSpace,
 	ComponentColor,
 	HexNumberType,
 	HexStringFormat,
@@ -27,6 +43,7 @@ import type {
 	RgbStringFormat,
 	Subset,
 } from '$lib/types/Literals';
+import type { Matrix1x3, Matrix2x2, Matrix3x3, Matrix3x3Coordinates } from '$lib/types/Matrix';
 import type {
 	EarlyParsedHexComponent,
 	ParsedHexComponent,
@@ -42,11 +59,19 @@ import type { ThemeColor } from '$lib/types/ThemeColor';
 
 export * from '$lib/types/Icons';
 export type {
+	AdjustableColorFormat,
 	ColorFormat,
 	ColorPalette,
+	ColorScheme,
+	ColorSchemeComparison,
+	ColorSchemeComparisonForAllColorFormats,
+	ColorSchemeSet,
+	ColorSchemeSetForColorFormat,
+	ColorSpace,
 	ComponentColor,
 	CssColor,
-	CssColorPreview,
+	CssColorBase,
+	CssColorForColorSpace,
 	EarlyParsedHexComponent,
 	HexNumberType,
 	HexStringFormat,
@@ -59,10 +84,16 @@ export type {
 	LabComponent,
 	LchColor,
 	LchComponent,
+	Matrix1x3,
+	Matrix2x2,
+	Matrix3x3,
+	Matrix3x3Coordinates,
 	NumberType,
 	OkhslColor,
 	OklabColor,
 	OklchColor,
+	OutsideGamutColor,
+	P3Color,
 	ParsedHexComponent,
 	ParsedHslComponent,
 	ParsedLabComponent,
@@ -75,7 +106,9 @@ export type {
 	RgbNumberType,
 	RgbStringFormat,
 	SelectListOption,
+	SrgbColor,
 	Subset,
 	ThemeColor,
+	X11ColorPalette,
 	XyzColor,
 };

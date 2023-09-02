@@ -1,10 +1,17 @@
-import type { ComponentColor, ThemeColor } from '.';
+import type { ComponentColor, CssColorForColorSpace, ThemeColor } from '$lib/types';
 
-export interface ColorPalette {
+export interface ColorPaletteBase {
 	id: string;
-	propName: string;
 	displayName: string;
-	colors: ThemeColor[];
 	componentColor: ComponentColor;
+}
+
+export interface ColorPalette extends ColorPaletteBase {
+	propName: string;
+	colors: ThemeColor[];
 	updated?: boolean;
+}
+
+export interface X11ColorPalette extends ColorPaletteBase {
+	colors: CssColorForColorSpace[];
 }

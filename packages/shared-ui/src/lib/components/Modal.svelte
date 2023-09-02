@@ -11,11 +11,16 @@
 	export let noFooter = false;
 	export let outsideClickClosesModal = true;
 	export let saveButtonText = 'Save';
+	let saveButton: HTMLButtonElement;
 	const dispatch = createEventDispatcher();
 
 	$: modelLabel = `${modalId}-label`;
 
 	export const toggleModal = () => (closed = !closed);
+
+	export function focusSaveButton() {
+		saveButton.focus();
+	}
 
 	function handleKeyPress(key: string) {
 		if (!closed && key === 'Escape') {
@@ -60,6 +65,7 @@
 			{#if !noFooter}
 				<div class="modal-footer">
 					<button
+						bind:this={saveButton}
 						type="button"
 						disabled={disableSaveButton}
 						class="modal-button"

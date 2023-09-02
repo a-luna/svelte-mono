@@ -53,3 +53,5 @@ export interface XyzColor {
 	z: number;
 	a: number;
 }
+
+export type HasHueAndLightness = HslColor | LchColor | OkhslColor | OklchColor;

@@ -1,15 +1,9 @@
 import { labToLch, oklabToOklch, oklabToRgb, rgbToHex, rgbToHsl, rgbToLab, rgbToOkhsl } from '$lib/color/converters';
+import { finalizeLabColor } from '$lib/color/parsers/util';
 import { LAB_VAL_NAME_REGEX } from '$lib/color/regex';
-import type {
-	CssColorPreview,
-	HslLabNumberType,
-	LabColor,
-	LabComponent,
-	OklabColor,
-	ParsedLabComponent,
-} from '$lib/types';
+import type { CssColor, HslLabNumberType, LabColor, LabComponent, OklabColor, ParsedLabComponent } from '$lib/types';
 
-export const parseOklab = (regExpGroups: object): CssColorPreview =>
+export const parseOklab = (regExpGroups: object): CssColor =>
 	cssColorFromOklab(getOklabColorFromComponents(extractOklabComponents(regExpGroups)));
 
 function extractOklabComponents(regExpGroups: object): ParsedLabComponent[] {
@@ -49,7 +43,7 @@ const getOklabColorFromComponents = (components: ParsedLabComponent[]): LabColor
 	A: components.find((c) => c.component === 'alpha')?.value ?? 1.0,
 });
 
-export function cssColorFromOklab(oklab: OklabColor): CssColorPreview {
+export function cssColorFromOklab(oklab: OklabColor): CssColor {
 	const oklch = oklabToOklch(oklab);
 	const rgb = oklabToRgb(oklab);
 	const hex = rgbToHex(rgb);
@@ -57,7 +51,7 @@ export function cssColorFromOklab(oklab: OklabColor): CssColorPreview {
 	const lab = rgbToLab(rgb);
 	const lch = labToLch(lab);
 	const okhsl = rgbToOkhsl(rgb);
-	return {
+	const color = {
 		hex,
 		rgb,
 		hsl,
@@ -68,4 +62,5 @@ export function cssColorFromOklab(oklab: OklabColor): CssColorPreview {
 		okhsl,
 		name: hex,
 	};
+	return finalizeLabColor(color);
 }

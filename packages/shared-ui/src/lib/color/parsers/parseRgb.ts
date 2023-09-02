@@ -1,9 +1,9 @@
 import { labToLch, oklabToOklch, rgbToHex, rgbToHsl, rgbToLab, rgbToOkhsl, rgbToOklab } from '$lib/color/converters';
-import { getRgbColorFromComponents } from '$lib/color/parsers/util';
+import { finalizeRgbColor, getRgbColorFromComponents } from '$lib/color/parsers/util';
 import { RGB_VAL_NAME_REGEX } from '$lib/color/regex';
-import type { CssColorPreview, ParsedRgbComponent, RgbColor, RgbHexComponent, RgbNumberType } from '$lib/types';
+import type { CssColor, ParsedRgbComponent, RgbColor, RgbHexComponent, RgbNumberType } from '$lib/types';
 
-export const parseRgb = (regExpGroups: object): CssColorPreview =>
+export const parseRgb = (regExpGroups: object): CssColor =>
 	cssColorFromRgb(getRgbColorFromComponents(extractRgbComponents(regExpGroups)));
 
 function extractRgbComponents(regExpGroups: object): ParsedRgbComponent[] {
@@ -31,7 +31,7 @@ const parseRgbAlphaValue = (numType: RgbNumberType, value: string): number =>
 const parseRgbChannelValue = (numType: RgbNumberType, value: string): number =>
 	numType === 'decimal' ? parseFloat(value) : (parseFloat(value) / 100) * 255.0;
 
-export function cssColorFromRgb(rgb: RgbColor): CssColorPreview {
+export function cssColorFromRgb(rgb: RgbColor): CssColor {
 	const hex = rgbToHex(rgb);
 	const hsl = rgbToHsl(rgb);
 	const lab = rgbToLab(rgb);
@@ -39,7 +39,7 @@ export function cssColorFromRgb(rgb: RgbColor): CssColorPreview {
 	const okhsl = rgbToOkhsl(rgb);
 	const lch = labToLch(lab);
 	const oklch = oklabToOklch(oklab);
-	return {
+	const color = {
 		hex,
 		rgb,
 		hsl,
@@ -50,4 +50,5 @@ export function cssColorFromRgb(rgb: RgbColor): CssColorPreview {
 		okhsl,
 		name: hex,
 	};
+	return finalizeRgbColor(color);
 }

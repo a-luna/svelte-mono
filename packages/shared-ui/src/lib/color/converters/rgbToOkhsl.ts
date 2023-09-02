@@ -40,8 +40,9 @@ export function rgbToOkhsl(rgb: RgbColor): OkhslColor {
 		s = 0.8 + 0.2 * t;
 	}
 
+	s = Number.isNaN(s) ? 0 : s;
 	const l = toe(L);
-	return { h: h * 360.0, s, l, a: decimalToOpacityValue(a) };
+	return { h: h * 360.0, s: s * 100.0, l: l * 100.0, a: decimalToOpacityValue(a) };
 }
 
 function toe(x: number): number {

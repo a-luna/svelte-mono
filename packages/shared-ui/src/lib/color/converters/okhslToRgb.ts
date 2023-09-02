@@ -2,7 +2,13 @@ import { get_Cs, oklab_to_linear_srgb } from '$lib/color/converters/util/okhsl';
 import type { OkhslColor, RgbColor } from '$lib/types';
 
 export function okhslToRgb(okhsl: OkhslColor): RgbColor {
-	const { h, s, l, a } = okhsl;
+	const okhsl_ = {
+		h: okhsl.h / 360.0,
+		s: okhsl.s / 100.0,
+		l: okhsl.l / 100.0,
+		a: okhsl.a,
+	};
+	const { h, s, l, a } = okhsl_;
 	if (l == 1) {
 		return { r: 255, g: 255, b: 255, a };
 	} else if (l == 0) {

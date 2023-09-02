@@ -1,6 +1,8 @@
 import type {
 	COLOR_FORMATS,
-	COLOR_SPACE_COMPONENTS,
+	COLOR_FORMAT_COMPONENTS,
+	COLOR_SCHEMES,
+	COLOR_SPACES,
 	COMPONENT_COLORS,
 	HEX_STRING_FORMATS,
 	NUMBER_TYPES,
@@ -12,15 +14,18 @@ export interface IsEnumerable {
 
 export type Subset<K, T extends K> = T;
 export type ComponentColor = (typeof COMPONENT_COLORS)[number];
+export type ColorSpace = (typeof COLOR_SPACES)[number];
 export type ColorFormat = (typeof COLOR_FORMATS)[number];
+export type ColorScheme = (typeof COLOR_SCHEMES)[number];
+export type AdjustableColorFormat = Subset<ColorFormat, 'hsl' | 'lch' | 'okhsl' | 'oklch'>;
 export type NumberType = (typeof NUMBER_TYPES)[number];
 export type HexNumberType = Subset<NumberType, 'hex' | 'decimal'>;
 export type HexStringFormat = (typeof HEX_STRING_FORMATS)[number];
 export type RgbNumberType = Subset<NumberType, 'decimal' | 'float' | 'percent'>;
 export type RgbStringFormat = Subset<NumberType, 'decimal' | 'percent'>;
 export type HslLabNumberType = Subset<NumberType, 'degree' | 'rad' | 'turn' | 'percent' | 'float'>;
-type ColorSpaceComponents = (typeof COLOR_SPACE_COMPONENTS)[number];
-export type RgbHexComponent = Subset<ColorSpaceComponents, 'red' | 'green' | 'blue' | 'alpha'>;
-export type HslComponent = Subset<ColorSpaceComponents, 'hue' | 'sat' | 'light' | 'alpha'>;
-export type LchComponent = Subset<ColorSpaceComponents, 'light' | 'chroma' | 'hue' | 'alpha'>;
-export type LabComponent = Subset<ColorSpaceComponents, 'light' | 'aaxis' | 'baxis' | 'alpha'>;
+type ColorFormatComponents = (typeof COLOR_FORMAT_COMPONENTS)[number];
+export type RgbHexComponent = Subset<ColorFormatComponents, 'red' | 'green' | 'blue' | 'alpha'>;
+export type HslComponent = Subset<ColorFormatComponents, 'hue' | 'sat' | 'light' | 'alpha'>;
+export type LchComponent = Subset<ColorFormatComponents, 'light' | 'chroma' | 'hue' | 'alpha'>;
+export type LabComponent = Subset<ColorFormatComponents, 'light' | 'aaxis' | 'baxis' | 'alpha'>;

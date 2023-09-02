@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconBase from '../IconBase.svelte';
+	import IconBase from '$lib/components/Icons/IconBase.svelte';
 
 	export let title = '';
 	export let strokeWidth = '0';

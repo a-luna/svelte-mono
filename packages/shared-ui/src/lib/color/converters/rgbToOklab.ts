@@ -1,4 +1,4 @@
-import { OKLAB_M1, OKLAB_M2, RGB_TO_XYZ_MATRIX } from '$lib/color/converters/util/constants';
+import { OKLAB_M1, OKLAB_M2, RGB_TO_XYZ_MATRIX } from '$lib/color/converters/util';
 import { multiplyMatrix3x3ByVector, type Matrix1x3 } from '$lib/color/converters/util/matrix';
 import { decimalToOpacityValue } from '$lib/color/util';
 import type { OklabColor, RgbColor, XyzColor } from '$lib/types';

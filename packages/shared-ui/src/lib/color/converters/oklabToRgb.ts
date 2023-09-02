@@ -1,4 +1,4 @@
-import { OKLAB_M1, OKLAB_M2, XYZ_TO_RGB_MATRIX } from '$lib/color/converters/util/constants';
+import { OKLAB_M1, OKLAB_M2, XYZ_TO_RGB_MATRIX } from '$lib/color/converters/util';
 import { invertMatrix3x3, multiplyMatrix3x3ByVector } from '$lib/color/converters/util/matrix';
 import type { OklabColor, RgbColor, XyzColor } from '$lib/types';
 
@@ -17,17 +17,11 @@ function OklabToXyz(oklab: OklabColor): XyzColor {
 function xyzToRgb(xyz: XyzColor): RgbColor {
 	const { x, y, z, a } = xyz;
 	const nonLinearRgb = multiplyMatrix3x3ByVector(XYZ_TO_RGB_MATRIX, [x, y, z]);
-	const _rgb = {
+	return {
 		r: compressGamma(nonLinearRgb[0]) * 255,
 		g: compressGamma(nonLinearRgb[1]) * 255,
 		b: compressGamma(nonLinearRgb[2]) * 255,
 		a: a * 255.0,
-	};
-	return {
-		r: Math.max(0.0, Math.min(255.0, _rgb.r)),
-		g: Math.max(0.0, Math.min(255.0, _rgb.g)),
-		b: Math.max(0.0, Math.min(255.0, _rgb.b)),
-		a: _rgb.a,
 	};
 }
 

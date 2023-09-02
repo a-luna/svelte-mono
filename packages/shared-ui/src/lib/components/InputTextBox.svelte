@@ -54,21 +54,27 @@
 
 <style lang="postcss">
 	input {
-		--text-box-default-text-color: var(--black1);
-		--text-box-default-background-color: var(--white4);
-		--text-box-default-border-color: var(--black1);
-		--text-box-default-border-radius: 4px;
-		--text-box-default-font-size: 1rem;
-		--text-box-default-line-height: 19px;
+		--text-box-default-text-color: var(--theme-text-color, var(--theme-default-text-color));
+		--text-box-default-background-color: var(--theme-background-color, var(--theme-default-background-color));
+		--text-box-default-border-color: var(--theme-text-color, var(--theme-default-text-color));
+		--text-box-default-border-radius: var(--theme-border-radius, var(--theme-default-border-radius));
+		--text-box-default-font-size: var(--theme-font-size, var(--theme-default-font-size));
+		--text-box-default-line-height: 1.2;
 		--text-box-default-padding: 0.25rem 0.5rem;
-		--text-box-default-focus-ring-color: var(--blue4);
+		--text-box-default-focus-ring-color: var(--theme-focus-ring-color, var(--theme-default-focus-ring-color));
 		--text-box-default-focus-ring-offset: 1px;
-		--text-box-default-invalid-text-color: var(--red3);
-		--text-box-default-invalid-focus-ring-color: var(--red3);
-		--text-box-default-invalid-background-color: var(--white4);
-		--text-box-default-disabled-text-color: var(--dark-gray2);
-		--text-box-default-disabled-background-color: var(--light-gray1);
-		--text-box-default-disabled-border-color: var(--dark-gray2);
+		--text-box-default-invalid-text-color: var(--theme-invalid-color, var(--theme-default-invalid-color));
+		--text-box-default-invalid-focus-ring-color: var(--theme-invalid-color, var(--theme-default-invalid-color));
+		--text-box-default-invalid-background-color: var(
+			--theme-invalid-background-color,
+			var(--theme-default-invalid-background-color)
+		);
+		--text-box-default-disabled-text-color: var(--theme-color-disabled, var(--theme-default-color-disabled));
+		--text-box-default-disabled-background-color: var(
+			--theme-background-color-disabled,
+			var(--theme-default-background-color-disabled)
+		);
+		--text-box-default-disabled-border-color: var(--theme-color-disabled, var(--theme-default-color-disabled));
 
 		justify-self: flex-start;
 		color: var(--text-box-text-color, var(--text-box-default-text-color));

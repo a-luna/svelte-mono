@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import { BasicIconRenderer } from '$lib/components/Icons';
-	import Option from '$lib/components/Select/ListOption.svelte';
+	import ListOption from '$lib/components/Select/ListOption.svelte';
 	import type { SelectListOption } from '$lib/types';
 	import { clickOutside, getRandomHexString } from '$lib/util';
 	import { createEventDispatcher } from 'svelte';
@@ -36,10 +36,11 @@
 		}
 	}
 
-	export function handleOptionClicked(selectedOptionNumber: number) {
+	export function handleSelectedOptionChanged(e: CustomEvent<{ optionNumber: number }>) {
+		const { optionNumber } = e.detail;
 		if (options.length > 0) {
 			options.forEach((menuOption) => (menuOption.active = false));
-			selectedOption = options.find((menuOption) => menuOption.optionNumber == selectedOptionNumber);
+			selectedOption = options.find((menuOption) => menuOption.optionNumber == optionNumber);
 			if (selectedOption) {
 				selectedOption.active = true;
 				selectedOptionChangedDispatcher('selectedOptionChanged', { selected: selectedOption.value });
@@ -96,7 +97,7 @@
 		>
 			<slot name="options">
 				{#each options as option}
-					<Option {...option} {menuId} on:click={(e) => handleOptionClicked(e.detail)} />
+					<ListOption {...option} {menuId} on:selectedOption={handleSelectedOptionChanged} />
 				{/each}
 			</slot>
 		</div>
@@ -108,40 +109,63 @@
 		--select-list-default-width: 100%;
 		--select-list-default-margin: 0;
 		--select-list-default-flex: 0 1 auto;
-		--select-list-default-font-size: 0.875rem;
+		--select-list-default-font-size: var(--theme-font-size, var(--theme-default-font-size));
 		--select-list-default-display: inline-flex;
 		--select-list-default-justify-content: space-between;
 		--select-list-default-align-items: center;
 		--select-list-default-gap: 0.625rem;
-
-		--select-list-default-open-button-text-color: hsl(0, 0%, 10%);
-		--select-list-default-open-button-background-color: hsl(0, 0%, 100%);
-		--select-list-default-open-button-hover-background-color: hsl(0, 0%, 95%);
-		--select-list-default-open-button-border-color: hsl(0, 0%, 75%);
+		--select-list-default-open-button-text-color: var(--theme-text-color, var(--theme-default-text-color));
+		--select-list-default-open-button-background-color: var(
+			--theme-background-color,
+			var(--theme-default-background-color)
+		);
+		--select-list-default-open-button-text-color-hover: var(
+			--theme-text-color-hover,
+			var(--theme-default-text-color-hover)
+		);
+		--select-list-default-open-button-background-color-hover: var(
+			--theme-background-color-hover,
+			var(--theme-default-background-color-hover)
+		);
+		--select-list-default-open-button-border-color: var(--theme-text-color, var(--theme-default-text-color));
 		--select-list-default-open-button-font-weight: 500;
 		--select-list-default-open-button-padding: 9px 11px 9px 14px;
 		--select-list-default-open-button-height: 33px;
 		--select-list-default-open-button-icon-height: 14px;
 		--select-list-default-open-button-icon-width: 10px;
-
-		--select-list-default-no-selection-text-color: var(--dark-gray4);
-		--select-list-default-disabled-text-color: hsl(0, 0%, 30%);
-		--select-list-default-disabled-background-color: hsl(0, 0%, 80%);
-		--select-list-default-border-width: 0;
+		--select-list-default-no-selection-text-color: var(--theme-color-disabled, var(--theme-default-color-disabled));
+		--select-list-default-disabled-text-color: var(--theme-color-disabled, var(--theme-default-color-disabled));
+		--select-list-default-disabled-background-color: var(
+			--theme-background-color-disabled,
+			var(--theme-default-background-color-disabled)
+		);
+		--select-list-default-border-width: 1px;
 		--select-list-default-border-style: solid;
-		--select-list-default-border-color: hsl(0, 0%, 75%);
-		--select-list-default-border-radius: 6px;
+		--select-list-default-border-color: var(--theme-text-color, var(--theme-default-text-color));
+		--select-list-default-border-radius: var(--theme-border-radius, var(--theme-default-border-radius));
 		--select-list-default-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-
-		--select-list-default-dropdown-text-color: hsl(0, 0%, 10%);
-		--select-list-default-dropdown-background-color: hsl(0, 0%, 100%);
-		--select-list-default-dropdown-border-color: hsl(0, 0%, 75%);
+		--select-list-default-border-color-hover: var(--theme-text-color-hover, var(--theme-default-text-color-hover));
+		--select-list-default-dropdown-text-color: var(--theme-text-color, var(--theme-default-text-color));
+		--select-list-default-dropdown-background-color: var(
+			--theme-background-color,
+			var(--theme-default-background-color)
+		);
+		--select-list-default-dropdown-border-color: var(--theme-text-color, var(--theme-default-text-color));
+		--select-list-default-dropdown-border-radius: var(--theme-border-radius, var(--theme-default-border-radius));
 		--select-list-default-dropdown-height: auto;
+		--select-list-default-dropdown-max-height: 300px;
 		--select-list-default-dropdown-margin: 0.5rem 0 0 0;
 		--select-list-default-dropdown-box-shadow: 0 0 0 0px #fff, 0 0 0 1px rbg(0 0 0 / 0.05), 0 0 #0000;
-
-		--select-list-default-selected-item-background-color: hsl(0, 0%, 90%);
+		--select-list-default-selected-item-background-color: var(
+			--theme-background-color-active,
+			var(--theme-default-background-color-active)
+		);
+		--select-list-default-menu-item-background-color-hover: var(
+			--theme-background-color-hover,
+			var(--theme-default-background-color-hover)
+		);
 		--select-list-default-menu-item-padding: 0.5rem 1rem;
+		--select-list-default-menu-item-text-align: left;
 
 		position: relative;
 		display: inline-block;
@@ -151,35 +175,57 @@
 		flex: var(--select-list-flex, var(--select-list-default-flex));
 	}
 
-	button {
+	.open-list-button {
 		cursor: pointer;
-		width: 100%;
 		display: var(--select-list-display, var(--select-list-default-display));
 		justify-content: var(--select-list-justify-content, -var(--select-menu-default-justify-content));
 		align-items: var(--select-list-align-items, var(--select-list-default-align-items));
 		gap: var(--select-list-gap, var(--select-list-default-gap));
-		border-width: var(--select-list-border-width, var(--select-list-default-border-width));
-		border-style: var(--select-list-border-style, var(--select-list-default-border-style));
-		border-color: var(--select-list-border-color, var(--select-list-default-border-color));
-		border-radius: var(--select-list-border-radius, var(--select-list-default-border-radius));
-		box-shadow: var(--select-list-box-shadow, var(--select-list-default-box-shadow));
-	}
 
-	button:focus {
-		box-shadow: var(--select-list-box-shadow, var(--select-list-default-box-shadow));
-	}
-
-	.open-list-button {
 		font-size: var(--select-list-font-size, var(--select-list-default-font-size));
 		font-weight: var(--select-list-open-button-font-weight, var(--select-list-default-open-button-font-weight));
-		height: var(--select-list-open-button-height, var(--select-list-default-open-button-height));
-		padding: var(--select-list-open-button-padding, var(--select-list-default-open-button-padding));
 		background-color: var(
 			--select-list-open-button-background-color,
 			var(--select-list-default-open-button-background-color)
 		);
 		color: var(--select-list-open-button-text-color, var(--select-list-default-open-button-text-color));
-		border: 1px solid var(--select-list-open-button-border-color, var(--select-list-default-open-button-border-color));
+
+		border-width: var(--select-list-border-width, var(--select-list-default-border-width));
+		border-style: var(--select-list-border-style, var(--select-list-default-border-style));
+		border-color: var(--select-list-border-color, var(--select-list-default-border-color));
+		border-radius: var(--select-list-border-radius, var(--select-list-default-border-radius));
+		box-shadow: var(--select-list-box-shadow, var(--select-list-default-box-shadow));
+
+		width: 100%;
+		height: var(--select-list-open-button-height, var(--select-list-default-open-button-height));
+		padding: var(--select-list-open-button-padding, var(--select-list-default-open-button-padding));
+	}
+
+	.open-list-button:focus {
+		box-shadow: var(--select-list-box-shadow, var(--select-list-default-box-shadow));
+	}
+
+	.open-list-button:hover,
+	.open-list-button:focus {
+		background-color: var(
+			--select-list-open-button-background-color-hover,
+			var(--select-list-default-open-button-background-color-hover)
+		);
+		color: var(--select-list-open-button-text-color-hover, var(--select-list-default-open-button-text-color-hover));
+		border-color: var(--select-list-border-color-hover, var(--select-list-default-border-color-hover));
+	}
+
+	.open-list-button.disabled {
+		cursor: default;
+		color: var(--select-list-disabled-text-color, var(--select-list-default-disabled-text-color));
+		background-color: var(
+			--select-list-disabled-background-color,
+			var(--select-list-default-disabled-background-color)
+		);
+	}
+
+	.open-list-button.no-selection {
+		color: var(--select-list-no-selection-text-color, var(--select-list-default-no-selection-text-color));
 	}
 
 	.menu-icon {
@@ -201,6 +247,7 @@
 		color: var(--select-list-dropdown-text-color, var(--select-list-default-dropdown-text-color));
 		border: 1px solid var(--select-list-dropdown-border-color, var(--select-list-default-dropdown-border-color));
 		height: var(--select-list-dropdown-height, var(--select-list-default-dropdown-height));
+		max-height: var(--select-list-dropdown-max-height, var(--select-list-default-dropdown-max-height));
 		margin: var(--select-list-dropdown-margin, var(--select-list-default-dropdown-margin));
 		border-radius: var(--select-list-dropdown-border-radius, var(--select-list-default-dropdown-border-radius));
 		box-shadow: var(--select-list-dropdown-box-shadow, var(--select-list-default-dropdown-box-shadow));
@@ -208,29 +255,6 @@
 
 	.dropdown:focus {
 		outline: 0;
-	}
-
-	.open-list-button:hover,
-	.open-list-button:focus {
-		background-color: var(
-			--select-list-open-button-hover-background-color,
-			var(--select-list-default-open-button-hover-background-color)
-		);
-		color: var(--select-list-open-button-text-color, var(--select-list-default-open-button-text-color));
-		border: 1px solid var(--select-list-open-button-border-color, var(--select-list-default-open-button-border-color));
-	}
-
-	.open-list-button.disabled {
-		cursor: default;
-		color: var(--select-list-disabled-text-color, var(--select-list-default-disabled-text-color));
-		background-color: var(
-			--select-list-disabled-background-color,
-			var(--select-list-default-disabled-background-color)
-		);
-	}
-
-	.open-list-button.no-selection {
-		color: var(--select-list-no-selection-text-color, var(--select-list-default-no-selection-text-color));
 	}
 
 	.selected-value {

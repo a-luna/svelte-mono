@@ -1,91 +1,73 @@
 <script lang="ts">
 	import { BasicIconRenderer } from '$lib/components/Icons';
-	import type { ComponentColor } from '$lib/types';
 
 	export let id: string;
 	export let checked: boolean;
 	export let disabled = false;
-	export let color: ComponentColor = 'black';
 	export let style = '';
 </script>
 
-{#if !disabled}
-	<label
-		for={id}
-		class={color !== 'black' ? 'color' : 'black'}
-		style="--button-hue: var(--{color}-hue); cursor: pointer; {style}"
-	>
-		{#if $$slots.leftLabel}
-			<span on:click|stopPropagation><slot name="leftLabel" /></span>
-		{/if}
-		{#if checked}
-			<div class="icon" style="cursor: pointer" on:click|stopPropagation>
-				<BasicIconRenderer icon={'checked'} />
-			</div>
-		{:else}
-			<div class="icon" style="cursor: pointer" on:click|stopPropagation>
-				<BasicIconRenderer icon={'unchecked'} />
-			</div>
-		{/if}
-		{#if $$slots.rightLabel}
-			<span on:click|stopPropagation><slot name="rightLabel" /></span>
-		{/if}
-	</label>
-	<input type="checkbox" {id} name={id} bind:checked on:change />
-{:else}
-	<label
-		class="{color !== 'black' ? 'color' : 'black'} disabled"
-		style="--button-hue: var(--{color}-hue); cursor: not-allowed; {style}"
-	>
-		{#if $$slots.leftLabel}
-			<span><slot name="leftLabel" /></span>
-		{/if}
-		<div class="icon">
-			<BasicIconRenderer icon={'unchecked'} />
+<label for={id} class:disabled {style}>
+	{#if $$slots.leftLabel}
+		<span class="label-text" on:click|stopPropagation><slot name="leftLabel" /></span>
+	{/if}
+	{#if checked}
+		<div class="icon" on:click|stopPropagation>
+			<BasicIconRenderer icon={'checked'} width={'20px'} height={'20px'} />
 		</div>
-		{#if $$slots.rightLabel}
-			<span><slot name="rightLabel" /></span>
-		{/if}
-	</label>
-{/if}
+	{:else}
+		<div class="icon" on:click|stopPropagation>
+			<BasicIconRenderer icon={'filledsquare'} width={'16px'} height={'16px'} margin={'auto'} />
+		</div>
+	{/if}
+	{#if $$slots.rightLabel}
+		<span class="label-text" on:click|stopPropagation><slot name="rightLabel" /></span>
+	{/if}
+</label>
+<input type="checkbox" {id} name={id} bind:checked on:change />
 
 <style lang="postcss">
-	label.color {
-		--button-background-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), var(--background-light, 95%));
-		--button-hover-background-color: hsl(
-			var(--button-hue, 0),
-			var(--background-sat, 0%),
-			var(--background-light-hover, 100%)
-		);
-		--button-fg-color: hsl(var(--button-hue, 0), var(--fg-sat, 0%), var(--fg-light, 10%));
-		--button-active-fg-color: hsl(var(--button-hue, 0), var(--fg-sat-active, 0%), var(--fg-light-active, 0%));
-		--button-disabled-fg-color: hsl(var(--button-hue, 0), var(--fg-sat-active, 0%), var(--fg-light-disabled, 0%));
-		--button-hover-fg-color: var(--button-fg-color);
-	}
-
-	label.black {
-		--button-background-color: var(--white2);
-		--button-hover-background-color: var(--white4);
-		--button-fg-color: var(--black2);
-		--button-active-fg-color: var(--black4);
-		--button-disabled-fg-color: var(--gray1);
-		--button-hover-fg-color: var(--black4);
-	}
 	label {
+		cursor: pointer;
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
 		font-size: 0.75rem;
 		font-weight: 500;
 		line-height: 1;
+		white-space: nowrap;
+
+		transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 150ms;
+	}
+	.label-text {
+		color: var(--check-box-label-color, var(--check-box-default-label-color));
+	}
+	.icon {
+		cursor: pointer;
+		color: var(--check-box-color, var(--check-box-default-color));
+		display: flex;
+		width: 20px;
+		height: 20px;
+	}
+	label:hover .icon {
+		color: var(--check-box-color-hover, var(--check-box-default-color-hover));
+	}
+
+	label:active .icon,
+	label:focus .icon,
+	label:active:focus .icon {
+		color: var(--check-box-color-active, var(--check-box-default-color-active));
+	}
+	.disabled {
+		cursor: not-allowed;
+	}
+	.disabled .icon {
+		cursor: not-allowed;
+		color: var(--check-box-color-disabled, var(--check-box-default-color-disabled));
 	}
 	input {
 		display: none;
-	}
-	.icon {
-		width: 20px;
-	}
-	.disabled {
-		color: var(--button-disabled-fg-color);
 	}
 </style>

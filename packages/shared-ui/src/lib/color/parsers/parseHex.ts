@@ -1,8 +1,8 @@
 import { labToLch, oklabToOklch, rgbToHex, rgbToHsl, rgbToLab, rgbToOkhsl, rgbToOklab } from '$lib/color/converters';
-import { getRgbColorFromComponents } from '$lib/color/parsers/util';
+import { finalizeRgbColor, getRgbColorFromComponents } from '$lib/color/parsers/util';
 import { HEX_VAL_NAME_REGEX } from '$lib/color/regex';
 import type {
-	CssColorPreview,
+	CssColor,
 	EarlyParsedHexComponent,
 	HexStringFormat,
 	IsEnumerable,
@@ -10,7 +10,7 @@ import type {
 	RgbHexComponent,
 } from '$lib/types';
 
-export function parseHex(regExpGroups: object): CssColorPreview {
+export function parseHex(regExpGroups: object): CssColor {
 	const hexComponents = parseHexString(regExpGroups);
 	const hasAlpha = hexComponents.map(({ component }) => component).includes('alpha');
 	return cssColorFromHexComponents(extractHexComponents(hexComponents, hasAlpha));
@@ -58,7 +58,7 @@ function convertFullHexComponents(earlyHex: EarlyParsedHexComponent[], hasAlpha:
 	return components;
 }
 
-export function cssColorFromHexComponents(components: ParsedHexComponent[]): CssColorPreview {
+export function cssColorFromHexComponents(components: ParsedHexComponent[]): CssColor {
 	const rgb = getRgbColorFromComponents(components);
 	const hex = rgbToHex(rgb);
 	const hsl = rgbToHsl(rgb);
@@ -67,7 +67,7 @@ export function cssColorFromHexComponents(components: ParsedHexComponent[]): Css
 	const oklab = rgbToOklab(rgb);
 	const oklch = oklabToOklch(oklab);
 	const okhsl = rgbToOkhsl(rgb);
-	return {
+	const color = {
 		hex,
 		rgb,
 		hsl,
@@ -78,4 +78,5 @@ export function cssColorFromHexComponents(components: ParsedHexComponent[]): Css
 		okhsl,
 		name: hex,
 	};
+	return finalizeRgbColor(color);
 }

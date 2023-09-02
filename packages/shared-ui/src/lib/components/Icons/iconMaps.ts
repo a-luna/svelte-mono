@@ -34,6 +34,7 @@ import {
 	Export,
 	FastBackward,
 	FastForward,
+	FilledSquare,
 	Filter,
 	FolderOpen,
 	Fork,
@@ -147,6 +148,7 @@ function createBasicIconMap(): Map<BasicIconName, BasicIcon> {
 	iconMap.set('export', Export);
 	iconMap.set('fastbackward', FastBackward);
 	iconMap.set('fastforward', FastForward);
+	iconMap.set('filledsquare', FilledSquare);
 	iconMap.set('filter', Filter);
 	iconMap.set('folderopen', FolderOpen);
 	iconMap.set('fork', Fork);

@@ -1,19 +1,30 @@
-import { parseColorFromString, parseCssColor, parseNamedColor } from '$lib/color/parsers/parseCssColor';
+import {
+	getColorFormatFromCssString,
+	parseColorFromString,
+	parseCssColor,
+	parseNamedColor,
+} from '$lib/color/parsers/parseCssColor';
 import { parseHex } from '$lib/color/parsers/parseHex';
 import { cssColorFromHsl, parseHsl } from '$lib/color/parsers/parseHsl';
 import { cssColorFromLab, parseLab } from '$lib/color/parsers/parseLab';
 import { cssColorFromLch, parseLch } from '$lib/color/parsers/parseLch';
+import { cssColorFromOkhsl, parseOkhsl } from '$lib/color/parsers/parseOkhsl';
 import { cssColorFromOklab, parseOklab } from '$lib/color/parsers/parseOklab';
 import { cssColorFromOklch, parseOklch } from '$lib/color/parsers/parseOklch';
 import { cssColorFromRgb, parseRgb } from '$lib/color/parsers/parseRgb';
+import { finalizeLabColor, finalizeRgbColor } from '$lib/color/parsers/util';
 
 export {
 	cssColorFromHsl,
 	cssColorFromLab,
 	cssColorFromLch,
+	cssColorFromOkhsl,
 	cssColorFromOklab,
 	cssColorFromOklch,
 	cssColorFromRgb,
+	finalizeLabColor,
+	finalizeRgbColor,
+	getColorFormatFromCssString,
 	parseColorFromString,
 	parseCssColor,
 	parseHex,
@@ -21,6 +32,7 @@ export {
 	parseLab,
 	parseLch,
 	parseNamedColor,
+	parseOkhsl,
 	parseOklab,
 	parseOklch,
 	parseRgb,

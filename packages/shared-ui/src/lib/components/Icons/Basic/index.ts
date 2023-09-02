@@ -33,6 +33,7 @@ import ExclamationTriangle from '$lib/components/Icons/Basic/ExclamationTriangle
 import Export from '$lib/components/Icons/Basic/Export.svelte';
 import FastBackward from '$lib/components/Icons/Basic/FastBackward.svelte';
 import FastForward from '$lib/components/Icons/Basic/FastForward.svelte';
+import FilledSquare from '$lib/components/Icons/Basic/FilledSquare.svelte';
 import Filter from '$lib/components/Icons/Basic/Filter.svelte';
 import FolderOpen from '$lib/components/Icons/Basic/FolderOpen.svelte';
 import Fork from '$lib/components/Icons/Basic/Fork.svelte';
@@ -109,6 +110,8 @@ export {
 	ExclamationTriangle,
 	Export,
 	FastBackward,
+	FastForward,
+	FilledSquare,
 	Filter,
 	FolderOpen,
 	Fork,
@@ -121,7 +124,6 @@ export {
 	Hashtag,
 	Help,
 	Keyboard,
-	FastForward,
 	Link,
 	Menu,
 	Minus,

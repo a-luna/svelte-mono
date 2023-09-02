@@ -1,8 +1,11 @@
 import { X11_NAMED_COLORS } from '$lib/constants';
 import type {
+	ColorFormat,
 	ColorPalette,
+	ColorSpace,
 	CssColor,
-	CssColorPreview,
+	CssColorBase,
+	CssColorForColorSpace,
 	HslColor,
 	LabColor,
 	LchColor,
@@ -10,6 +13,7 @@ import type {
 	OklabColor,
 	OklchColor,
 	RgbColor,
+	ThemeColor,
 } from '$lib/types';
 import { getRandomArrayItem, getRandomHexString } from '$lib/util';
 
@@ -26,6 +30,8 @@ const clamp = (n: number): number =>
 		? Object.is(parseFloat(n.toFixed(4)), -0)
 			? 0
 			: parseFloat(n.toFixed(4))
+		: Object.is(n, -0)
+		? 0
 		: signedInteger.test(n.toFixed(2))
 		? parseInt(n.toFixed(0))
 		: parseFloat(n.toFixed(2));
@@ -40,11 +46,11 @@ function clampString(n: number, p = 2): string {
 			? n.toFixed(0)
 			: n.toFixed(p);
 
-	if (clamped.includes(".")) {
+	if (clamped.includes('.')) {
 		while (clamped.endsWith('0')) {
 			clamped = clamped.slice(0, -1);
 		}
-		if (clamped.endsWith(".")) {
+		if (clamped.endsWith('.')) {
 			clamped = clamped.slice(0, -1);
 		}
 	}
@@ -90,8 +96,8 @@ export const lchToString = ({ l, c, h, a }: LchColor): string =>
 
 export const okhslToString = ({ h, s, l, a }: OkhslColor): string =>
 	a < 1.0
-		? `okhsl(${clampString(h)} ${toFixedPercent(s)} ${toFixedPercent(l)} / ${a})`
-		: `okhsl(${clampString(h)} ${toFixedPercent(s)} ${toFixedPercent(l)})`;
+		? `okhsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)} / ${a})`
+		: `okhsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)})`;
 
 export const oklabToString = ({ l, a, b, A }: OklabColor): string =>
 	A < 1.0
@@ -103,33 +109,41 @@ export const oklchToString = ({ l, c, h, a }: OklchColor): string =>
 		? `oklch(${toFixedPercent(l / 100.0)} ${clampString(c, 3)} ${clampString(h)} / ${toFixedPercent(a)})`
 		: `oklch(${toFixedPercent(l / 100.0)} ${clampString(c, 3)} ${clampString(h)})`;
 
-export const sortColors = (a: CssColor, b: CssColor): number =>
+export const sortColors = (a: CssColor | CssColorForColorSpace, b: CssColor | CssColorForColorSpace): number =>
 	a.hsl.h - b.hsl.h || a.hsl.s - b.hsl.s || a.hsl.l - b.hsl.l;
 
-export const colorNameisCustomized = ({ name, hex, hslString, rgbString }: CssColor): boolean =>
-	name ? ![hex, hslString, rgbString].includes(name) : false;
+export const sortByLightnessAscending = (
+	a: CssColor | CssColorForColorSpace,
+	b: CssColor | CssColorForColorSpace,
+): number => a.hsl.l - b.hsl.l;
+
+export function colorNameisCustomized(color: ThemeColor): boolean {
+	const cssColorStrings = [
+		color?.colorInGamut?.hex ?? '',
+		color?.colorInGamut?.hslString ?? '',
+		color?.colorInGamut?.rgbString ?? '',
+		color?.colorInGamut?.okhslString ?? '',
+		color?.colorInGamut?.labString ?? '',
+		color?.colorInGamut?.oklabString ?? '',
+		color?.colorInGamut?.lchString ?? '',
+		color?.colorInGamut?.oklchString ?? '',
+	];
+
+	return color?.color?.name ? !cssColorStrings.includes(color.color.name) : false;
+}
 
 export const normalize = (s: string): string =>
 	s.toLowerCase().trim().replace(/\s+/g, '').replaceAll('-', '').replaceAll('_', '');
 
-export const copyCssColor = (color: CssColor): CssColor => ({
-	...color,
-	rgb: { ...color.rgb },
-	hsl: { ...color.hsl },
-	lab: { ...color.lab },
-	lch: { ...color.lch },
-	okhsl: { ...color.okhsl },
-	oklab: { ...color.oklab },
-	oklch: { ...color.oklch },
-});
+export const copyCssColor = (color: CssColorBase): CssColorBase => JSON.parse(JSON.stringify(color));
 
-export const clampColorComponents = (color: CssColor): CssColor => ({
+export const clampColorComponents = (color: CssColor | CssColorForColorSpace): CssColor | CssColorForColorSpace => ({
 	...color,
 	rgb: {
-		r: Math.round(color.rgb.r),
-		g: Math.round(color.rgb.g),
-		b: Math.round(color.rgb.b),
-		a: Math.round(color.rgb.a),
+		r: Math.floor(color.rgb.r),
+		g: Math.floor(color.rgb.g),
+		b: Math.floor(color.rgb.b),
+		a: Math.floor(color.rgb.a),
 	},
 	hsl: {
 		h: clamp(color.hsl.h),
@@ -169,7 +183,7 @@ export const clampColorComponents = (color: CssColor): CssColor => ({
 	},
 });
 
-export const addStringValuesToCssColor = (color: CssColorPreview): CssColor => ({
+export const addStringValuesToCssColor = (color: CssColorBase): CssColorForColorSpace => ({
 	...color,
 	rgbString: rgbToString(color.rgb),
 	hslString: hslToString(color.hsl),
@@ -180,11 +194,17 @@ export const addStringValuesToCssColor = (color: CssColorPreview): CssColor => (
 	oklchString: oklchToString(color.oklch),
 });
 
-export function changeColorName(color: CssColor, newName: string): CssColor {
-	const updatedColor = copyCssColor(color);
-	updatedColor.name = newName;
-	return updatedColor;
-}
+export const changeColorName = (color: CssColorForColorSpace, newName: string): CssColorForColorSpace => ({
+	...color,
+	name: newName,
+	rgb: { ...color.rgb },
+	hsl: { ...color.hsl },
+	lab: { ...color.lab },
+	lch: { ...color.lch },
+	okhsl: { ...color.okhsl },
+	oklab: { ...color.oklab },
+	oklch: { ...color.oklch },
+});
 
 export function getX11ColorNamesNormalized(): Map<string, string> {
 	const x11ColorNames = new Map<string, string>();
@@ -201,4 +221,19 @@ export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
 		colors: [],
 		componentColor: 'black',
 	};
+}
+
+export function getCssColorString(color: CssColor, space: ColorSpace, format: ColorFormat): string {
+	const colorInGamut = space === 'srgb' ? color.srbgColor : color.space === 'srgb' ? color.srbgColor : color.p3Color;
+	const colorStrings = {
+		hex: colorInGamut.hex,
+		rgb: colorInGamut.rgbString,
+		hsl: colorInGamut.hslString,
+		lab: colorInGamut.labString,
+		lch: colorInGamut.lchString,
+		okhsl: colorInGamut.okhslString,
+		oklab: colorInGamut.oklabString,
+		oklch: colorInGamut.oklchString,
+	};
+	return colorStrings[format];
 }
