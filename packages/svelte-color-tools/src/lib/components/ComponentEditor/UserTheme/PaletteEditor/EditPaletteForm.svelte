@@ -38,12 +38,7 @@
 		style={borderStyle}
 	/>
 	<ComponentColorSelector bind:value={palette.componentColor} />
-	<DeletePaletteButton
-		color={palette.componentColor}
-		tooltip={getToolTip()}
-		on:click={() => dispatch('deletePalette', palette.id)}
-		{disabled}
-	/>
+	<DeletePaletteButton tooltip={getToolTip()} on:click={() => dispatch('deletePalette', palette.id)} {disabled} />
 </div>
 
 <style lang="postcss">

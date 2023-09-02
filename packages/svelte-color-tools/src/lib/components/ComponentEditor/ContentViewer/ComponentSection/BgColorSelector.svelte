@@ -1,19 +1,21 @@
 <script lang="ts">
 	import BgColorOptions from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/BgColorOptions.svelte';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { ColorParser, defaultCssColor } from '@a-luna/shared-ui';
+	import { ColorParser, defaultCssColor, defaultCssColorForColorSpace } from '@a-luna/shared-ui';
 	import { InputSelectList } from '@a-luna/shared-ui/components';
-	import type { CssColor, SelectListOption } from '@a-luna/shared-ui/types';
+	import type { CssColor, CssColorForColorSpace, SelectListOption } from '@a-luna/shared-ui/types';
 
 	export let value: string = '#00000000';
 	export let disabled = false;
 	export const menuId: string = 'select-component-background-color';
 	let selectComponent: InputSelectList;
 	let selectedColor: CssColor = defaultCssColor;
+	let selectedColorInGamut: CssColorForColorSpace = defaultCssColorForColorSpace;
 
 	$: {
 		const result = ColorParser.parse(value);
 		selectedColor = result.success ? result.value : defaultCssColor;
+		selectedColorInGamut = selectedColor.space === 'srgb' ? selectedColor.srbgColor : selectedColor.p3Color;
 	}
 
 	const options: SelectListOption[] = [
@@ -49,7 +51,7 @@
 	<svelte:fragment slot="selectedValue">
 		{#if !disabled}
 			<div class="swatch-border">
-				<ColorSwatch color={selectedColor} />
+				<ColorSwatch variant={'small'} color={selectedColorInGamut} />
 			</div>
 		{:else}
 			<div class="swatch-border" style="width: 15px; height: 15px" />

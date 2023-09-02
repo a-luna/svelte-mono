@@ -4,7 +4,6 @@
 	import type { ComponentColor } from '@a-luna/shared-ui';
 	import irBlack from 'svelte-highlight/styles/ir-black';
 
-	export let editorId: string;
 	export let componentColor: ComponentColor;
 	export let themeInitialized: boolean;
 	let contentSections: ContentSections;
@@ -18,11 +17,11 @@
 </svelte:head>
 
 <div class="content-viewer">
-	<ContentSelector {editorId} />
+	<ContentSelector />
 	<div class="bg-left" />
 	<div class="bg-right" />
 	<div class="content-wrapper">
-		<ContentSections bind:this={contentSections} {editorId} {componentColor} {themeInitialized}>
+		<ContentSections bind:this={contentSections} {componentColor} {themeInitialized}>
 			<slot />
 		</ContentSections>
 	</div>

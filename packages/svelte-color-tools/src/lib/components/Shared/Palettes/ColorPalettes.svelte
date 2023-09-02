@@ -1,36 +1,34 @@
 <script lang="ts">
 	import Palette from '$lib/components/Shared/Palettes/Palette.svelte';
-	import type { ColorPalette } from '$lib/types';
-	import type { ColorFormat } from '@a-luna/shared-ui';
+	import type { ColorPalette } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
-	export let colorFormat: ColorFormat;
 	export let palettes: ColorPalette[];
 	export let columns: number = 2;
 	export let allowMultiplePalettesOpen = false;
-	export let displayColorName = false;
 	let paletteRefs: Record<string, Palette> = {};
-	const dispatch = createEventDispatcher();
+	const dispatchPaletteSelected = createEventDispatcher<{ paletteSelected: { paletteId: string | null } }>();
 
 	$: if (palettes && palettes.length === 0) paletteRefs = {};
 
-	function handlePaletteToggled(id: string) {
-		const isExpanded = paletteRefs?.[id]?.expanded;
+	function handlePaletteToggled(e: CustomEvent<{ paletteId: string }>) {
+		const { paletteId } = e.detail;
+		const isExpanded = paletteRefs?.[paletteId]?.expanded;
 		if (!allowMultiplePalettesOpen) {
 			Object.values(paletteRefs)
 				.filter((palette) => palette.expanded)
 				.forEach((palette) => (palette.expanded = false));
 		}
-		
-		const togglePalette = paletteRefs[id];
+
+		const togglePalette = paletteRefs[paletteId];
 		if (togglePalette) {
 			togglePalette.expanded = !isExpanded;
 		}
 
 		if (Object.values(paletteRefs).every((palette) => !palette.expanded)) {
-			dispatch('paletteSelected', null);
+			dispatchPaletteSelected('paletteSelected', { paletteId: null });
 		} else {
-			dispatch('paletteSelected', id);
+			dispatchPaletteSelected('paletteSelected', { paletteId });
 		}
 	}
 </script>
@@ -39,13 +37,11 @@
 	{#if palettes && palettes.length}
 		{#each palettes as palette}
 			<Palette
-				{colorFormat}
 				{palette}
-				{displayColorName}
 				on:colorSelected
 				on:editColorDetails
 				on:deleteColor
-				on:togglePalette={() => handlePaletteToggled(palette.id)}
+				on:paletteToggled={handlePaletteToggled}
 				bind:this={paletteRefs[palette.id]}
 			/>
 		{/each}

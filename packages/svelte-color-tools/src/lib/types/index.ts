@@ -1,11 +1,17 @@
-export type { AppStore } from './AppStore';
-export type { ColorPalleteFromFile } from './ColorPalette';
-export type { ColorPickerState } from './ColorPickerState';
-export type { CssVariable } from './CssVariable';
-export type { HueRange } from './HueRange';
-export type { CssColorPropType, CssProptype, CssStringPropType, LabelState, ViewOption } from './Literals';
-export type { ThemeColorShallowCopy } from './ThemeColor';
-export type { ThemeEditorState } from './ThemeEditorState';
-export type { ThemeEditorStore } from './ThemeEditorStore';
-export type { UserThemeFromFile, UserThemeSettings } from './UserThemeFromFile';
-export type { UserThemeImported } from './UserThemeImported';
+export type { AppStore } from '$lib/types/AppStore';
+export type { ColorPalleteFromFile } from '$lib/types/ColorPalette';
+export type { ColorPickerState } from '$lib/types/ColorPickerState';
+export type { ColorPickerStore } from '$lib/types/ColorPickerStore';
+export type { CssVariable } from '$lib/types/CssVariable';
+export type { HueRange } from '$lib/types/HueRange';
+export type {
+	CssColorProperty as CssColorPropType,
+	CssPropertyName as CssProptype,
+	CssStringProperty as CssStringPropType,
+	LabelState,
+	ViewOption,
+} from '$lib/types/Literals';
+export type { ThemeColorShallowCopy } from '$lib/types/ThemeColor';
+export type { ThemeEditorState } from '$lib/types/ThemeEditorState';
+export type { ThemeEditorStore } from '$lib/types/ThemeEditorStore';
+export type { UserThemeFromFile, UserThemeImported, UserThemeSettings } from '$lib/types/UserTheme';

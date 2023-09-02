@@ -1,35 +1,43 @@
 <script lang="ts">
-	import { alphaBgPattern } from '$lib/constants';
-	import type { CssColor } from '@a-luna/shared-ui';
+	import { alphaBgPattern, alphaBgPatternSmall } from '$lib/constants';
+	import type { CssColorForColorSpace } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
-	export let color: CssColor;
+	export let color: CssColorForColorSpace;
+	export let variant: 'small' | 'regular' = 'regular';
 	export let iconSize = '';
 	export let iconTooltip = '';
 	export let style = '';
-	const dispatch = createEventDispatcher();
+	const dispatchSwatchClicked = createEventDispatcher<{ swatchClicked: {} }>();
+	const dispatchIconClicked = createEventDispatcher<{ iconClicked: {} }>();
 
 	$: wrapperGrid = $$slots.icon ? `grid-template-rows: 1fr ${iconSize};` : 'grid-template-rows: 1fr;';
 	$: hasAlpha = color.rgb.a !== 255;
-	$: swatchColor = hasAlpha ? alphaBgPattern : 'background-color: inherit;';
+	$: swatchColor =
+		hasAlpha && variant === 'regular'
+			? alphaBgPattern
+			: hasAlpha && variant === 'small'
+			? alphaBgPatternSmall
+			: 'background-color: inherit;';
 	$: swatchGrid = $$slots.icon ? 'grid-row: 1 / span 2;' : 'grid-row: 1 / span 1;';
-	$: overlayColor = `background-color: ${color.hslString};`;
+	$: overlayColor = `background-color: ${color.oklchString};`;
 	$: overlayPointer = hasAlpha ? `pointer-events: none;` : '';
+	$: borderRadius = variant === 'regular' ? 'border-radius: 4px;' : '';
 </script>
 
 <div class="swatch-wrapper" style="{wrapperGrid} {style}">
 	<div class="swatch" style="{swatchColor} {swatchGrid}" />
 	<div
 		class="swatch-overlay"
-		style="{overlayColor} {swatchGrid} {overlayPointer}"
-		on:click={() => dispatch('swatchClicked')}
+		style="{overlayColor} {swatchGrid} {overlayPointer} {borderRadius}"
+		on:click={() => dispatchSwatchClicked('swatchClicked')}
 	/>
 	{#if $$slots.icon}
 		<div
 			class="icon"
 			title={iconTooltip}
 			style="width: {iconSize}; height: {iconSize};"
-			on:click|stopPropagation={() => dispatch('iconClicked')}
+			on:click|stopPropagation={() => dispatchIconClicked('iconClicked')}
 		>
 			<slot name="icon" />
 		</div>
@@ -56,7 +64,6 @@
 	.swatch-overlay {
 		z-index: 2;
 		grid-column: 1 / span 1;
-		border-radius: var(--swatch-border-radius);
 	}
 
 	:global(#x11-palettes) .swatch-overlay,

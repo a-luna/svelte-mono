@@ -3,7 +3,7 @@
 	import type { UserThemeImported } from '$lib/types';
 	import { Modal } from '@a-luna/shared-ui';
 	import { getErrorMessage } from '@a-luna/shared-ui/util';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 	import Highlight from 'svelte-highlight';
 	import json from 'svelte-highlight/languages/json';
 	import irBlack from 'svelte-highlight/styles/ir-black';
@@ -38,12 +38,14 @@
 			if (file?.name && validFile(file.name, validFileExts)) {
 				try {
 					var reader = new FileReader();
-					reader.onload = function (e) {
+					reader.onload = async function (e) {
 						const userThemeFromFile = JSON.parse(String(e.target?.result));
 						const result = importUserThemeFromFile(userThemeFromFile);
 						if (result.success) {
 							userTheme = result.value;
 							code = JSON.stringify(userThemeFromFile, null, 2);
+							await tick();
+							modal.focusSaveButton();
 						} else {
 							error = result.error?.message ?? '';
 						}

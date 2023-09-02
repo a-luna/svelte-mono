@@ -2,15 +2,16 @@
 	import CssControls from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssControls/CssControls.svelte';
 	import CssCustomPropTable from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssCustomPropTable.svelte';
 	import CssFilters from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/CssFilters.svelte';
+	import { getAppContext } from '$lib/context';
 	import type { CssVariable } from '$lib/types';
 	import { getAllCssVariables } from '$lib/util';
 	import type { ComponentColor } from '@a-luna/shared-ui';
 	import type { TableState } from '@a-luna/svelte-simple-tables/types';
 	import { onMount, tick } from 'svelte';
 
-	export let editorId: string;
 	export let componentColor: ComponentColor;
 	export let themeInitialized: boolean;
+	let { themeEditor } = getAppContext();
 	let data: CssVariable[];
 	let allCustomProps: CssVariable[];
 	let selectedCustomProps: CssVariable[];
@@ -136,7 +137,6 @@
 
 <CssFilters
 	bind:this={cssFilters}
-	{editorId}
 	{allSelectors}
 	{componentColor}
 	{themeInitialized}
@@ -154,7 +154,6 @@
 	<CssCustomPropTable {data} bind:tableState />
 </div>
 <CssControls
-	{componentColor}
 	{totalSelected}
 	{allCustomPropsSelected}
 	{anyCustomPropsSelected}

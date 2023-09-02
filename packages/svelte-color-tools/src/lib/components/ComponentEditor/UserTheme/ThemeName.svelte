@@ -1,14 +1,10 @@
 <script lang="ts">
-	import type { ComponentColor } from '@a-luna/shared-ui';
-
 	export let themeName = '';
 	export let editMode = false;
-	export let componentColor: ComponentColor;
 	let newName = themeName;
 	let error = false;
 
 	$: error = editMode && !newName;
-	$: themeNameStyles = `color: var(--${componentColor}-fg-color);`;
 
 	function possiblyExitEditMode(key: string) {
 		if (editMode && key === 'Escape') {
@@ -31,7 +27,7 @@
 <svelte:window on:keydown={(e) => possiblyExitEditMode(e.key)} />
 
 <div class="theme-name-wrapper" class:edit-mode={editMode} class:error>
-	<span class="theme-name-label">Theme Name:</span>
+	<span class="theme-name-label">theme name</span>
 	{#if editMode}
 		<input
 			id="theme-name-input"
@@ -39,52 +35,72 @@
 			type="text"
 			bind:value={newName}
 			on:keypress={(e) => handleKeyPress(e.key)}
-			style={themeNameStyles}
 			use:focusInput
 		/>
 	{:else}
-		<span id="theme-name" title="Click to change theme name" style={themeNameStyles}>{themeName}</span>
+		<div class="theme-name">
+			<span title="Click to change theme name">{themeName}</span>
+		</div>
 	{/if}
 </div>
 
 <style lang="postcss">
+	.theme-name-wrapper {
+		display: grid;
+		align-items: center;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 32px;
+		row-gap: 0.25rem;
+		border-radius: 6px;
+	}
+
 	.theme-name-label {
-		font-size: 0.85rem;
-		line-height: 1;
+		font-size: 0.75rem;
+		font-weight: 500;
+		letter-spacing: 0.1px;
 		flex: 0 1 auto;
 		white-space: nowrap;
+
+		grid-column: 1 / span 1;
+		grid-row: 1 / span 1;
 	}
 
-	.theme-name-wrapper {
-		display: flex;
-		flex-flow: row nowrap;
-		align-items: center;
-		border-radius: 6px;
-		gap: 0.5rem;
-	}
-
-	#theme-name {
+	.theme-name {
 		flex: 1;
+		display: flex;
+		align-items: center;
+		color: var(--fg-color);
+		background-color: var(--active-bg-color);
+		border: 1px solid var(--fg-color);
+		border-radius: 6px;
+		padding: 0 0 0 8px;
+		height: 32px;
+
+		grid-column: 1 / span 1;
+		grid-row: 2 / span 1;
+	}
+
+	.theme-name span {
 		font-size: 0.85rem;
 		font-weight: 500;
-		font-style: italic;
-		line-height: 1;
-		text-align: left;
-		max-width: 150px;
-		background-color: var(--white1);
+		width: 100%;
+		overflow-x: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	#theme-name-input {
 		flex: 1;
-		line-height: 1;
-		border: none;
+		color: var(--fg-color);
+		background-color: var(--active-bg-color);
+		border: 1px solid var(--fg-color);
 		outline: none;
 		border-radius: 6px;
-		font-size: 0.875rem;
+		font-size: 0.85rem;
 		text-align: left;
-		padding: 2px 0 2px 4px;
-		max-width: 150px;
-		background-color: var(--white4);
+
+		grid-column: 1 / span 1;
+		grid-row: 2 / span 1;
 	}
 
 	.error #theme-name-input,

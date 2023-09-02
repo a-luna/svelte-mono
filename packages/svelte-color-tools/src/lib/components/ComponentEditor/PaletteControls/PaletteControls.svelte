@@ -3,59 +3,52 @@
 	import DeselectColorButton from '$lib/components/ComponentEditor/PaletteControls/DeselectColorButton.svelte';
 	import SelectedColor from '$lib/components/ComponentEditor/PaletteControls/SelectedColor.svelte';
 	import SelectedPalette from '$lib/components/ComponentEditor/PaletteControls/SelectedPalette.svelte';
+	import SetColorPickerButton from '$lib/components/ComponentEditor/PaletteControls/SetColorPickerButton.svelte';
 	import UpdateColorButton from '$lib/components/ComponentEditor/PaletteControls/UpdateColorButton.svelte';
-	import { defaultColorPalette } from '$lib/constants';
-	import { getAppStore, getColorPickerStore, getThemeEditorStore } from '$lib/context';
-	import type { ComponentColor } from '@a-luna/shared-ui';
+	import { getAppContext } from '$lib/context';
+	import { defaultColorPalette, type CssColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
-	import SetColorPickerButton from './SetColorPickerButton.svelte';
 
-	export let editorId: string;
-	export let pickerId: string;
-	export let componentColor: ComponentColor;
 	export let gridStyle: string = '';
-	let state = getThemeEditorStore(editorId);
-	let app = getAppStore(editorId);
-	let colorPickerState = getColorPickerStore(pickerId);
-	const dispatch = createEventDispatcher();
+	let { picker, themeEditor, app } = getAppContext();
+	const dispatchAddColorToPalette = createEventDispatcher<{ addColorToPalette: { color: CssColor } }>();
+	const dispatchSetColorPickerValue = createEventDispatcher<{ setColorPickerValue: { color: CssColor } }>();
+	const dispatchUpdateThemeColor = createEventDispatcher<{ updateThemeColor: { color: CssColor } }>();
+	const dispatchDeselectThemeColor = createEventDispatcher<{ deselectThemeColor: {} }>();
 
 	$: disableControls =
-		$state?.userTheme?.palettes.length === 0 ||
+		$themeEditor?.userTheme?.palettes.length === 0 ||
 		!$app?.selectedThemePalette ||
-		$state?.editMode ||
+		$themeEditor?.editMode ||
 		$app?.x11PalettesShown;
 	$: selectedPalette =
-		$state?.userTheme?.palettes.find((p) => p.id === $state?.selectedPaletteId) ?? defaultColorPalette;
+		$themeEditor?.userTheme?.palettes.find((p) => p.id === $themeEditor?.selectedPaletteId) ?? defaultColorPalette;
 </script>
 
 <div class="palette-controls" style={gridStyle}>
 	<span class="palette-name-label">selected palette</span>
 	<SelectedPalette {selectedPalette} />
 	<AddColorButton
-		color={componentColor}
-		style={'grid-column: 2 /  span 1; grid-row: 2 /  span 1;'}
-		on:click={() => dispatch('addColorToPalette', $colorPickerState.color.hslString)}
+		style={'grid-column: 2 / span 1; grid-row: 2 / span 1;'}
+		on:click={() => dispatchAddColorToPalette('addColorToPalette', { color: $picker.color })}
 		disabled={disableControls}
 	/>
 
 	<span class="theme-color-label">selected color</span>
-	<SelectedColor {editorId} />
+	<SelectedColor />
 	<div class="button-list">
 		<SetColorPickerButton
-			color={componentColor}
-			style={'grid-column: 2 /  span 1; grid-row: 4 /  span 1;'}
-			on:click={() => dispatch('setColorPickerValue', $state.selectedColor.color)}
-			disabled={disableControls || !$state.colorSelected}
+			style={'grid-column: 2 / span 1; grid-row: 4 / span 1;'}
+			on:click={() => dispatchSetColorPickerValue('setColorPickerValue', { color: $themeEditor.selectedColor.color })}
+			disabled={disableControls || !$themeEditor.colorSelected}
 		/>
 		<UpdateColorButton
-			color={componentColor}
-			on:click={() => dispatch('updateThemeColor', $colorPickerState.color)}
-			disabled={disableControls || !$state.colorSelected}
+			on:click={() => dispatchUpdateThemeColor('updateThemeColor', { color: $picker.color })}
+			disabled={disableControls || !$themeEditor.colorSelected}
 		/>
 		<DeselectColorButton
-			color={componentColor}
-			on:click={() => dispatch('deselectThemeColor')}
-			disabled={disableControls || !$state.colorSelected}
+			on:click={() => dispatchDeselectThemeColor('deselectThemeColor')}
+			disabled={disableControls || !$themeEditor.colorSelected}
 		/>
 	</div>
 </div>

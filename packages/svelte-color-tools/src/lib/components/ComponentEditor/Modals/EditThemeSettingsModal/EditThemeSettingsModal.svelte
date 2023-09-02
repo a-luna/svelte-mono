@@ -1,46 +1,46 @@
 <script lang="ts">
-	import ColorFormatSelector from '$lib/components/ComponentEditor/Modals/EditThemeSettingsModal/ColorFormatSelector.svelte';
+	import ColorFormatSelector from '$lib/components/Shared/ColorFormatSelector.svelte';
 	import ComponentColorSelector from '$lib/components/Shared/ComponentColorSelector/ComponentColorSelector.svelte';
-	import { getThemeEditorStore } from '$lib/context';
-	import type { UserThemeFromFile, UserThemeSettings } from '$lib/types';
+	import P3ColorFormatSelector from '$lib/components/Shared/P3ColorFormatSelector.svelte';
+	import { getAppContext } from '$lib/context';
+	import type { UserThemeSettings } from '$lib/types';
 	import { InputTextBox, Modal, type ColorFormat, type ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher, tick } from 'svelte';
 
-	export let editorId: string;
-	let userTheme: UserThemeFromFile;
 	let previousSettings: UserThemeSettings;
 	let modal: Modal;
 	let closed: boolean;
 	let themeName = '';
-	let colorFormat: ColorFormat = 'rgb';
+	let colorFormatSrgb: ColorFormat = 'oklch';
+	let colorFormatP3: ColorFormat = 'oklch';
 	let usesPrefix = false;
 	let themePrefix = '';
 	let uiColor: ComponentColor = 'black';
 	let uiColorMenuId: string;
 	let nameTextBox: InputTextBox;
 	let prefixTextBox: InputTextBox;
-	let state = getThemeEditorStore(editorId);
+	let { themeEditor } = getAppContext();
 	let themeNameError = false;
 	let themePrefixError = false;
-	const dispatch = createEventDispatcher();
+	const dispatchUiColorChanged = createEventDispatcher<{ uiColorChanged: {} }>();
 
 	$: if (usesPrefix && prefixTextBox) focusPrefixTextBox();
 	$: if (usesPrefix && themePrefix)
 		themePrefixError = !themePrefix || !themePrefix.length || themePrefix.indexOf('--') !== 0;
 	$: themeNameError = !themeName || !themeName.length;
 
-	export async function toggleModal(theme: UserThemeFromFile) {
+	export async function toggleModal() {
 		modal.toggleModal();
-		$state.modalOpen = !$state.modalOpen;
+		$themeEditor.modalOpen = !$themeEditor.modalOpen;
 
 		if (!closed) {
-			userTheme = theme;
-			themeName = theme.themeName;
-			uiColor = theme.uiColor;
-			colorFormat = theme.colorFormat;
-			usesPrefix = theme.usesPrefix;
-			themePrefix = theme.themePrefix;
-			previousSettings = { themeName, uiColor, colorFormat, usesPrefix, themePrefix };
+			themeName = $themeEditor.userTheme.themeName;
+			uiColor = $themeEditor.userTheme.uiColor;
+			colorFormatSrgb = $themeEditor.userTheme.colorFormatSrgb;
+			colorFormatP3 = $themeEditor.userTheme.colorFormatP3;
+			usesPrefix = $themeEditor.userTheme.usesPrefix;
+			themePrefix = $themeEditor.userTheme.themePrefix;
+			previousSettings = { themeName, uiColor, colorFormatSrgb, colorFormatP3, usesPrefix, themePrefix };
 			await focusNameTextBox();
 		} else {
 			nameTextBox.blur();
@@ -48,28 +48,26 @@
 		}
 	}
 	function saveChanges() {
-		userTheme.themeName = themeName;
-		userTheme.uiColor = uiColor;
-		userTheme.colorFormat = colorFormat;
-		userTheme.usesPrefix = usesPrefix;
-		userTheme.themePrefix = themePrefix;
+		$themeEditor.userTheme.themeName = themeName;
+		$themeEditor.userTheme.uiColor = uiColor;
+		$themeEditor.userTheme.colorFormatP3 = colorFormatP3;
+		$themeEditor.userTheme.colorFormatSrgb = colorFormatSrgb;
+		$themeEditor.userTheme.usesPrefix = usesPrefix;
+		$themeEditor.userTheme.themePrefix = themePrefix;
 		themeName = '';
 		usesPrefix = false;
 		themePrefix = '';
 		modal.toggleModal();
-		dispatch('updateUiColor', userTheme.uiColor);
-		dispatch('updateColorFormat', userTheme.colorFormat);
-		dispatch('updateComponentPrefix', userTheme);
+		dispatchUiColorChanged('uiColorChanged', {});
 	}
 	function discardChanges() {
-		userTheme.themeName = previousSettings['themeName'];
-		userTheme.uiColor = previousSettings['uiColor'];
-		userTheme.colorFormat = previousSettings['colorFormat'];
-		userTheme.usesPrefix = previousSettings['usesPrefix'];
-		userTheme.themePrefix = previousSettings['themePrefix'];
+		$themeEditor.userTheme.themeName = previousSettings['themeName'];
+		$themeEditor.userTheme.uiColor = previousSettings['uiColor'];
+		$themeEditor.userTheme.colorFormatSrgb = previousSettings['colorFormatSrgb'];
+		$themeEditor.userTheme.colorFormatP3 = previousSettings['colorFormatP3'];
+		$themeEditor.userTheme.usesPrefix = previousSettings['usesPrefix'];
+		$themeEditor.userTheme.themePrefix = previousSettings['themePrefix'];
 		themeName = '';
-		uiColor = 'black';
-		colorFormat = previousSettings['colorFormat'];
 		usesPrefix = false;
 		themePrefix = '';
 		modal.toggleModal();
@@ -101,9 +99,14 @@
 		<label for={uiColorMenuId}>UI Color</label>
 		<ComponentColorSelector bind:menuId={uiColorMenuId} bind:value={uiColor} />
 
-		<label for="css-color-format">CSS Color Format</label>
+		<label for="css-color-format">CSS Color Format (sRGB Colors)</label>
 		<div class="select-wrapper">
-			<ColorFormatSelector bind:value={colorFormat} />
+			<ColorFormatSelector bind:value={colorFormatSrgb} />
+		</div>
+
+		<label for="css-color-format">CSS Color Format (P3 Colors)</label>
+		<div class="select-wrapper">
+			<P3ColorFormatSelector bind:value={colorFormatP3} />
 		</div>
 
 		<label for="uses-prefix">Use Theme Prefix?</label>
@@ -124,7 +127,7 @@
 
 <style lang="postcss">
 	.edit-theme-settings {
-		--select-list-width: 80px;
+		--select-list-width: 95px;
 		--select-list-height: 30px;
 		--select-list-margin: 0 6px 0 0;
 		--select-list-padding: 4px 10px;

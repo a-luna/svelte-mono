@@ -19,7 +19,14 @@ function importColorPalette(palette: ColorPalleteFromFile): Result<ColorPalette>
 	for (const color of palette.colors) {
 		const result = ColorParser.parse(color?.value ?? '');
 		if (result.success) {
-			colors.push({ ...color, color: { ...result.value, name: color?.displayName || '' }, isSelected: false });
+			const parsed = result.value;
+			colors.push({
+				...color,
+				color: { ...parsed, name: color?.displayName || '' },
+				colorSpace: parsed.space,
+				colorInGamut: parsed.space === 'srgb' ? parsed.srbgColor : parsed.p3Color,
+				isSelected: false,
+			});
 		} else {
 			return { success: false, error: Error(`Unable to parse "${color.value}" as a valid CSS color value`) };
 		}

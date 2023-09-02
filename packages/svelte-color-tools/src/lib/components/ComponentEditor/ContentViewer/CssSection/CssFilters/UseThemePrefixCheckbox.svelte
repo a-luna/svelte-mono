@@ -7,6 +7,6 @@
 	const style = `grid-column: 2 / span 1; grid-row: 2 / span 1;`;
 </script>
 
-<Checkbox id={'use-theme-prefix-checkbox'} color={componentColor} {style} bind:checked {disabled} on:change>
+<Checkbox id={'use-theme-prefix-checkbox'} {style} bind:checked {disabled} on:change>
 	<svelte:fragment slot="leftLabel">Use Theme Prefix?</svelte:fragment>
 </Checkbox>

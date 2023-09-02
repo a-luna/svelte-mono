@@ -1,12 +1,11 @@
 <script lang="ts">
 	import IgnoreTailwindsCheckbox from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/IgnoreTailwindsCheckbox.svelte';
 	import RuleSelectorList from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/RuleSelectorList.svelte';
-	import { getThemeEditorStore } from '$lib/context';
+	import UseThemePrefixCheckbox from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/UseThemePrefixCheckbox.svelte';
+	import { getAppContext } from '$lib/context';
 	import { InputTextBox, type ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
-	import UseThemePrefixCheckbox from './UseThemePrefixCheckbox.svelte';
 
-	export let editorId: string;
 	export let allSelectors: string[];
 	export let useThemePrefix = false;
 	export let ignoreTailwinds = false;
@@ -14,31 +13,31 @@
 	export let componentColor: ComponentColor;
 	export let prefix: string;
 	export let themeInitialized: boolean;
-	const ignoreTailwindsChangedDispatcher = createEventDispatcher<{
+	const dispatchIgnoreTailwindsChanged = createEventDispatcher<{
 		ignoreTailwindsChanged: { ignore: boolean };
 	}>();
-	const useThemePrefixChangedDispatcher = createEventDispatcher<{
+	const dispatchUseThemePrefixChanged = createEventDispatcher<{
 		useThemePrefixChanged: { usePrefix: boolean };
 	}>();
-	const componentPrefixChangedDispatcher = createEventDispatcher<{ componentPrefixChanged: { newPrefix: string } }>();
-	let state = getThemeEditorStore(editorId);
+	const dispatchComponentPrefixChanged = createEventDispatcher<{ componentPrefixChanged: { newPrefix: string } }>();
+	let { themeEditor } = getAppContext();
 
-	$: themePrefixExists = Boolean($state?.userTheme?.usesPrefix && $state?.userTheme?.themePrefix);
+	$: themePrefixExists = Boolean($themeEditor?.userTheme?.usesPrefix && $themeEditor?.userTheme?.themePrefix);
 	$: themePrefixInputTextBoxDisabled = !themeInitialized || (themeInitialized && useThemePrefix && themePrefixExists);
 	$: if (ignoreTailwinds || !ignoreTailwinds) {
-		ignoreTailwindsChangedDispatcher('ignoreTailwindsChanged', { ignore: ignoreTailwinds });
+		dispatchIgnoreTailwindsChanged('ignoreTailwindsChanged', { ignore: ignoreTailwinds });
 	}
 	$: if (!themeInitialized) {
 		prefix = '';
 	}
 	$: if (useThemePrefix || !useThemePrefix) {
-		useThemePrefixChangedDispatcher('useThemePrefixChanged', { usePrefix: useThemePrefix });
+		dispatchUseThemePrefixChanged('useThemePrefixChanged', { usePrefix: useThemePrefix });
 	}
 	$: if (useThemePrefix && themePrefixExists) {
-		prefix = $state?.userTheme?.themePrefix;
+		prefix = $themeEditor?.userTheme?.themePrefix;
 	}
 	$: if (prefix) {
-		componentPrefixChangedDispatcher('componentPrefixChanged', { newPrefix: prefix });
+		dispatchComponentPrefixChanged('componentPrefixChanged', { newPrefix: prefix });
 	}
 
 	export function handleUserThemeUpdated(usesPrefix: boolean) {

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import ColorPicker from '$lib/components/ColorPicker/ColorPicker.svelte';
 	import ContentViewer from '$lib/components/ComponentEditor/ContentViewer/ContentViewer.svelte';
 	import AddColorToPaletteModal from '$lib/components/ComponentEditor/Modals/AddColorToPaletteModal.svelte';
@@ -8,22 +9,28 @@
 	import PaletteControls from '$lib/components/ComponentEditor/PaletteControls/PaletteControls.svelte';
 	import UserTheme from '$lib/components/ComponentEditor/UserTheme/UserTheme.svelte';
 	import { defaultUserThemeImported } from '$lib/constants';
-	import { initAppStore, initColorPickerStore, initThemeEditorStore } from '$lib/context';
+	import { initAppContext } from '$lib/context';
 	import { createThemeEditorStore } from '$lib/stores/themeEditor';
 	import { downloadUserThemeJson } from '$lib/theme';
-	import type { AppStore, ColorPickerState, ThemeEditorStore, UserThemeImported } from '$lib/types';
+	import type { AppStore, ColorPickerStore, ThemeEditorStore, UserThemeImported } from '$lib/types';
 	import { getThemeEditorSlotExampleCode } from '$lib/util';
-	import { createEmptyColorPalette, type ComponentColor } from '@a-luna/shared-ui';
+	import {
+		ColorParser,
+		createEmptyColorPalette,
+		type ComponentColor,
+		type CssColor,
+		type ThemeColor,
+	} from '@a-luna/shared-ui';
+	import { getColorSchemesForAllColorFormats } from '@a-luna/shared-ui/color/schemes';
+	import { createEventDispatcher } from 'svelte';
 	import { HighlightSvelte } from 'svelte-highlight';
-	import type { Readable, Writable } from 'svelte/store';
+	import type { Readable } from 'svelte/store';
 
-	export let editorId = 'component-css-editor';
-	let pickerId = 'color-picker';
-	let state: ThemeEditorStore;
-	let colorPickerState: Writable<ColorPickerState>;
 	let editorStateInitialized = false;
 	let storesInitialized = false;
 	let themeInitialized = false;
+	let themeEditor: ThemeEditorStore;
+	let picker: ColorPickerStore;
 	let app: Readable<AppStore>;
 	let loadUserThemeModal: LoadUserThemeModal;
 	let editDetailsModal: EditColorDetailsModal;
@@ -32,6 +39,7 @@
 	let componentColor: ComponentColor = 'black';
 	let colorPicker: ColorPicker;
 	let contentViewer: ContentViewer;
+	const dispatchUiColorChanged = createEventDispatcher<{ uiColorChanged: { uiColor: ComponentColor } }>();
 
 	// # NEW IDEAS
 	// New high-level data structure: ThemeSet
@@ -138,125 +146,130 @@
 	//    - Split complementary (2: hue +150, hue +210)
 	//    - Monochrome (10: lightness -25, -20, -15, -10 -5, +5, +10, +15, +20, +25)
 
-	$: console.log({
-		picker: $colorPickerState,
-		state: $state,
-		app: $app,
-	});
+	$: if (dev) {
+		console.log({
+			picker: $picker,
+			state: $themeEditor,
+			app: $app,
+		});
+	}
+	$: {
+		const result = ColorParser.parse('oklch(87.78% 0.205 147.55 / 75%)');
+		if (result.success) {
+			const schemeSet = getColorSchemesForAllColorFormats(result.value);
+			console.log({ schemeSet });
+		}
+	}
 
 	$: if (typeof window !== 'undefined' && !editorStateInitialized) {
-		state = createThemeEditorStore(editorId);
-		state = initThemeEditorStore(state);
+		themeEditor = createThemeEditorStore();
 		editorStateInitialized = true;
 	}
-	$: if (!storesInitialized && editorStateInitialized && $colorPickerState) {
-		colorPickerState = initColorPickerStore(colorPickerState);
-		app = initAppStore(state, colorPickerState);
+	$: if (!storesInitialized && editorStateInitialized && $picker) {
+		({ picker, themeEditor, app } = initAppContext(picker, themeEditor));
 		storesInitialized = true;
 	}
-	$: colorFormat = $state?.userTheme?.colorFormat ?? 'hsl';
-	$: componentColor = $state?.userTheme?.uiColor ?? 'black';
-	$: style = `--button-hue: var(--${componentColor}-hue); --bg-color: var(--${componentColor}-bg-color); --panel-bg-color: var(--${componentColor}-panel-bg-color); --fg-color: var(--${componentColor}-fg-color); --active-fg-color: var(--${componentColor}-active-fg-color); --disabled-bg-color: var(--${componentColor}-hover-bg-color);  --hover-bg-color: var(--${componentColor}-hover-bg-color); --border-color: var(--fg-color);`;
+	$: componentColor = $themeEditor?.userTheme?.uiColor ?? 'black';
+	$: themeStyles = `--button-color-active: var(--${componentColor}-active-fg-color);`;
 
 	function handleUserThemeImported(e: CustomEvent<{ userTheme: UserThemeImported }>) {
 		const { userTheme } = e.detail;
-		$state.userTheme = userTheme;
+		$themeEditor.userTheme = userTheme;
 		themeInitialized = true;
 		contentViewer.changeComponentPrefix(userTheme.usesPrefix, userTheme.themePrefix);
+		dispatchUiColorChanged('uiColorChanged', { uiColor: userTheme.uiColor });
 	}
 
-	function handleUserThemeSettingsChanged(updatedUserTheme: UserThemeImported) {
-		contentViewer.changeComponentPrefix(updatedUserTheme.usesPrefix, updatedUserTheme.themePrefix);
+	function handleUiColorChanged(e: CustomEvent<{}>) {
+		dispatchUiColorChanged('uiColorChanged', { uiColor: $themeEditor.userTheme.uiColor });
 	}
 
 	function newUserTheme() {
 		const createdAt = new Date().toISOString();
-		$state.userTheme = {
+		$themeEditor.userTheme = {
 			themeName: 'custom theme',
 			uiColor: 'black',
 			usesPrefix: false,
 			themePrefix: '',
 			createdAt,
 			modifiedAt: createdAt,
-			colorFormat: 'hsl',
+			colorFormatSrgb: 'oklch',
+			colorFormatP3: 'oklch',
 			palettes: [createEmptyColorPalette()],
 		};
 		themeInitialized = true;
 	}
 
 	function closeUserTheme() {
-		$state.selectedPaletteId = '';
-		$state.userTheme = defaultUserThemeImported;
+		$themeEditor.selectedPaletteId = '';
+		$themeEditor.userTheme = defaultUserThemeImported;
 		themeInitialized = false;
+		dispatchUiColorChanged('uiColorChanged', { uiColor: $themeEditor.userTheme.uiColor });
+	}
+
+	function handleSetColorPicker(e: CustomEvent<{ color: CssColor }>) {
+		const { color } = e.detail;
+		const colorFormat =
+			color.space === 'srgb' ? $themeEditor.userTheme.colorFormatSrgb : $themeEditor.userTheme.colorFormatP3;
+		picker.setColor(color, colorFormat);
+	}
+
+	function handleAddNewColorToPalette(e: CustomEvent<{ color: ThemeColor }>) {
+		const { color } = e.detail;
+		themeEditor.addColorToPalette(color);
+	}
+
+	function handlePaletteSelected(e: CustomEvent<{ paletteId: string | null }>) {
+		const { paletteId } = e.detail;
+		if (paletteId) themeEditor.changeSelectedPalette(paletteId);
 	}
 </script>
 
 {#if !themeInitialized}
 	<LoadUserThemeModal bind:this={loadUserThemeModal} on:loadUserTheme={handleUserThemeImported} />
 {:else}
-	<AddColorToPaletteModal
-		{editorId}
-		bind:this={addColorModal}
-		on:addNewColor={(e) => state.addColorToPalette(e.detail)}
-	/>
-	<EditColorDetailsModal {editorId} bind:this={editDetailsModal} />
-	<EditThemeSettingsModal
-		{editorId}
-		bind:this={editThemeSettingsModal}
-		on:updateUiColor={(e) => (componentColor = e.detail)}
-		on:updateColorFormat={(e) => (colorFormat = e.detail)}
-		on:updateComponentPrefix={(e) => handleUserThemeSettingsChanged(e.detail)}
-	/>
+	<AddColorToPaletteModal bind:this={addColorModal} on:addNewColor={handleAddNewColorToPalette} />
+	<EditColorDetailsModal bind:this={editDetailsModal} />
+	<EditThemeSettingsModal bind:this={editThemeSettingsModal} on:uiColorChanged={handleUiColorChanged} />
 {/if}
 
 {#if editorStateInitialized}
-	<div
-		class="theme-editor-wrapper"
-		class:black={componentColor === 'black'}
-		class:color={componentColor !== 'black'}
-		{style}
-	>
-		<div id="theme-editor" data-testid={$state.editorId}>
+	<div class="theme-editor-wrapper" style={themeStyles}>
+		<div id="theme-editor" data-testid={$themeEditor.editorId}>
 			<div class="editor-left-col">
-				<ColorPicker editMode={$state.editMode} bind:this={colorPicker} bind:pickerId bind:state={colorPickerState} />
+				<ColorPicker editMode={$themeEditor.editMode} bind:this={colorPicker} bind:picker />
 				{#if themeInitialized}
 					<PaletteControls
-						{editorId}
-						{pickerId}
-						{componentColor}
-						on:addColorToPalette={(e) => addColorModal.toggleModal(e.detail)}
-						on:setColorPickerValue={(e) => colorPicker.setColor(e.detail)}
-						on:updateThemeColor={(e) => state.updateThemeColor(e.detail)}
-						on:deselectThemeColor={() => state.deselectColor()}
+						on:addColorToPalette={addColorModal.addColorToPalette}
+						on:setColorPickerValue={handleSetColorPicker}
+						on:updateThemeColor={themeEditor.updateThemeColor}
+						on:deselectThemeColor={themeEditor.deselectColor}
 					/>
 				{/if}
 			</div>
 			<div class="editor-right-col">
 				{#if storesInitialized}
 					<UserTheme
-						{editorId}
-						{componentColor}
-						{colorFormat}
 						initialized={themeInitialized}
 						themeColorPalettes={$app.themeColorPalettes}
 						x11PalettesShown={$app.x11PalettesShown}
 						on:newUserTheme={() => newUserTheme()}
 						on:importUserTheme={() => loadUserThemeModal.toggleModal()}
-						on:editThemeSettings={() => editThemeSettingsModal.toggleModal($state.userTheme)}
-						on:saveUserTheme={() => downloadUserThemeJson($state.userTheme)}
+						on:editThemeSettings={() => editThemeSettingsModal.toggleModal()}
+						on:saveUserTheme={() => downloadUserThemeJson($themeEditor.userTheme)}
 						on:closeUserTheme={() => closeUserTheme()}
-						on:createPalette={() => state.createNewPalette()}
-						on:deletePalette={(e) => state.deletePalette(e.detail)}
-						on:paletteSelected={(e) => state.changeSelectedPalette(e.detail)}
-						on:colorSelected={(e) => state.changeSelectedColor(e.detail)}
-						on:deleteColor={(e) => state.deleteColorFromPalette(e.detail)}
+						on:createPalette={() => themeEditor.createNewPalette()}
+						on:deletePalette={(e) => themeEditor.deletePalette(e.detail)}
+						on:paletteSelected={handlePaletteSelected}
+						on:colorSelected={(e) => themeEditor.changeSelectedColor(e.detail)}
+						on:deleteColor={(e) => themeEditor.deleteColorFromPalette(e.detail)}
 						on:editColorDetails={(e) => editDetailsModal.openModal(e.detail)}
 					/>
 				{/if}
 			</div>
 		</div>
 		{#if storesInitialized}
-			<ContentViewer bind:this={contentViewer} {editorId} {componentColor} {themeInitialized}>
+			<ContentViewer bind:this={contentViewer} {componentColor} {themeInitialized}>
 				<slot>
 					<div class="help-text">
 						<p><strong><code>ComponentEditor</code> has not been be initialized!</strong></p>
@@ -277,7 +290,7 @@
 
 <style lang="postcss">
 	.theme-editor-wrapper {
-		--select-list-open-button-height: 30px;
+		/* --select-list-open-button-height: 30px;
 		--select-list-open-button-icon-height: 14px;
 		--select-list-open-button-icon-width: 14px;
 		--select-list-open-button-padding: 0 4px;
@@ -301,18 +314,18 @@
 		--select-list-border-color: var(--fg-color);
 		--select-list-padding: 0 4px;
 		--select-list-height: 30px;
-		--select-list-dropdown-height: 300px;
+		--select-list-dropdown-max-height: 300px;
 		--select-list-no-selection-text-color: var(--fg-color);
 
 		--color-picker-background-color: var(--panel-bg-color);
 
-		--input-text-font-size: 0.875rem;
-		--input-text-border-color: var(--fg-color);
-		--input-text-color: var(--fg-color);
-		--input-text-background-color: var(--bg-color);
-		--input-text-disabled-text-color: var(--gray4);
-		--input-text-disabled-background-color: var(--white1);
-		--input-text-disabled-border-color: var(--gray4);
+		--text-box-font-size: 0.875rem;
+		--text-box-border-color: var(--theme-default-text-color);
+		--text-box-text-color: var(--theme-default-text-color);
+		--text-box-background-color: var(--theme-default-background-color);
+		--text-box-disabled-text-color: var(--gray4);
+		--text-box-disabled-background-color: var(--white1);
+		--text-box-disabled-border-color: var(--gray4);
 
 		--sst-button-bg-color: var(--button-bg-color);
 		--sst-button-text-color: var(--button-fg-color);
@@ -322,33 +335,34 @@
 		--sst-button-hover-border-color: var(--button-fg-color);
 		--sst-button-disabled-bg-color: var(--white1);
 		--sst-button-disabled-text-color: var(--gray4);
-		--sst-button-disabled-border-color: var(--gray4);
+		--sst-button-disabled-border-color: var(--gray4); */
+
+		--fg-color: var(--theme-text-color, var(--theme-default-text-color));
+		--active-fg-color: var(--theme-text-color-active, var(--theme-default-text-color-active));
+		--bg-color: var(--theme-background-color, var(--theme-default-background-color));
+		--hover-bg-color: var(--theme-background-color-hover, var(--theme-default-background-color-hover));
+		--active-bg-color: var(--theme-background-color-active, var(--theme-default-background-color-active));
+		--disabled-bg-color: var(--theme-background-color-disabled, var(--theme-default-background-color-disabled));
+		--border-color: var(--theme-text-color, var(--theme-default-text-color));
+		--panel-bg-color: var(--theme-panel-background-color, var(--theme-default-panel-background-color));
+
+		--button-color: var(--fg-color);
+		--button-color-hover: var(--fg-color);
+		--button-color-active: var(--active-fg-color);
+		--button-color-disabled: var(--gray4);
+		--button-background-color: var(--bg-color);
+		--button-background-color-hover: var(--hover-bg-color);
+		--button-background-color-active: var(--active-bg-color);
+		--button-background-color-disabled: var(--disabled-bg-color);
+		--button-border: 1px solid var(--border-color);
 
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 2rem;
 		width: 790px;
-		background-color: var(--white1);
+		background-color: var(--theme-app-background-color, var(--theme-default-app-background-color));
 		padding: 1rem;
 		margin: 0 auto;
-	}
-
-	.theme-editor-wrapper.color {
-		--button-bg-color: var(--bg-color);
-		--button-hover-bg-color: var(--hover-bg-color);
-		--button-active-bg-color: var(--panel-bg-color);
-		--button-fg-color: var(--fg-color);
-		--section-bg-color: hsl(var(--button-hue, 0), var(--background-sat, 0%), 95%);
-		--button-border-color: hsl(var(--button-hue, 0), 63%, 26%);
-	}
-
-	.theme-editor-wrapper.black {
-		--button-bg-color: var(--white2);
-		--button-hover-bg-color: var(--white4);
-		--button-active-bg-color: var(--white4);
-		--button-fg-color: var(--black2);
-		--section-bg-color: var(--white4);
-		--button-border-color: var(--black2);
 	}
 
 	#theme-editor {

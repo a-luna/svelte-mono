@@ -1,13 +1,11 @@
 import { defaultThemeEditorState } from '$lib/constants';
-import { getCssValueForColor } from '$lib/theme';
-import type { ThemeColor, ThemeEditorState, ThemeEditorStore } from '$lib/types';
-import { createEmptyColorPalette, type ColorPalette, type CssColor } from '@a-luna/shared-ui';
+import { getColorFormatForColor, getCssValueForThemeColor } from '$lib/theme';
+import type { ThemeEditorState, ThemeEditorStore } from '$lib/types';
+import { createEmptyColorPalette, type CssColor, type ThemeColor } from '@a-luna/shared-ui';
 import { writable } from 'svelte/store';
 
-const getDefaultEditorState = (editorId: string): ThemeEditorState => ({ ...defaultThemeEditorState, editorId });
-
-export function createThemeEditorStore(editorId: string): ThemeEditorStore {
-	const { set, subscribe, update } = writable<ThemeEditorState>(getDefaultEditorState(editorId));
+export function createThemeEditorStore(): ThemeEditorStore {
+	const { set, subscribe, update } = writable<ThemeEditorState>(defaultThemeEditorState);
 
 	function createNewPalette(state: ThemeEditorState): ThemeEditorState {
 		state.userTheme.palettes = [
@@ -44,7 +42,7 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 	}
 
 	function _resetAllColorsInPalette(state: ThemeEditorState): ThemeEditorState {
-		const selectedPalette: ColorPalette = state.userTheme.palettes.find((p) => p.id === state.selectedPaletteId);
+		const selectedPalette = state.userTheme.palettes.find((p) => p.id === state.selectedPaletteId);
 		if (selectedPalette) {
 			selectedPalette.colors.forEach((c) => (c.isSelected = false));
 			selectedPalette.colors = [...selectedPalette.colors];
@@ -54,10 +52,17 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 		return state;
 	}
 
-	function updateThemeColor(color: CssColor, state: ThemeEditorState): ThemeEditorState {
-		color.name = state.selectedColor.displayName;
+	function updateThemeColor(e: CustomEvent<{ color: CssColor }>, state: ThemeEditorState): ThemeEditorState {
+		const { color } = e.detail;
+		const cssValue = getCssValueForThemeColor(
+			state.selectedColor,
+			getColorFormatForColor(state.selectedColor.color, state.userTheme),
+		);
+		color.name = state.selectedColor.displayName ?? cssValue;
 		state.selectedColor.color = color;
-		state.selectedColor.value = getCssValueForColor(state.selectedColor, state.userTheme.colorFormat);
+		state.selectedColor.colorSpace = color.space;
+		state.selectedColor.colorInGamut = color.space === 'srgb' ? color.srbgColor : color.p3Color;
+		state.selectedColor.value = cssValue;
 		state.selectedColor.isSelected = true;
 		return updatePaletteColors(state);
 	}
@@ -107,8 +112,8 @@ export function createThemeEditorStore(editorId: string): ThemeEditorStore {
 		deletePalette: (id: string) => update((state) => deletePalette(id, state)),
 		changeSelectedPalette: (id: string) => update((state) => changeSelectedPalette(id, state)),
 		changeSelectedColor: (color: ThemeColor) => update((state) => changeSelectedColor(color, state)),
-		updateThemeColor: (color: CssColor) => update((state) => updateThemeColor(color, state)),
-		deselectColor: () => update((state) => deselectColor(state)),
+		updateThemeColor: (e: CustomEvent<{ color: CssColor }>) => update((state) => updateThemeColor(e, state)),
+		deselectColor: (_: CustomEvent<{}>) => update((state) => deselectColor(state)),
 		addColorToPalette: (color: ThemeColor) => update((state) => addColorToPalette(color, state)),
 		deleteColorFromPalette: (color: ThemeColor) => update((state) => deleteColorFromPalette(color, state)),
 	};

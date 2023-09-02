@@ -1,10 +1,10 @@
 <script lang="ts">
+	import X11Palette from '$lib/components/ColorPicker/X11Palettes/X11Palette.svelte';
 	import X11Swatches from '$lib/components/ColorPicker/X11Palettes/X11Swatches.svelte';
-	import Palette from '$lib/components/Shared/Palettes/Palette.svelte';
-	import { BasicIconRenderer, type ColorPalette, type ComponentColor } from '@a-luna/shared-ui';
+	import { BasicIconRenderer, type ComponentColor, type X11ColorPalette } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
-	export let x11ColorPalettes: ColorPalette[];
+	export let x11ColorPalettes: X11ColorPalette[];
 	let x11PaletteMap: Map<string, number> = new Map<string, number>();
 	let paletteColor: ComponentColor = 'red';
 	let activePaletteId: string;
@@ -65,7 +65,7 @@
 
 <div
 	id="x11-palettes"
-	style="background-color: var(--{paletteColor}-hover-bg-color); border: 1px solid var(--{paletteColor}-fg-color)"
+	style="background-color: var(--{paletteColor}-bg-color); border: 1px solid var(--{paletteColor}-fg-color)"
 >
 	<div class="x11-controls">
 		<div class="x11-swatches">
@@ -96,15 +96,7 @@
 		<div class="carousel" bind:this={carouselElement}>
 			{#each x11ColorPalettes as palette}
 				<div id="x11-palette-{palette.id}" class="carousel-item">
-					<Palette
-						{palette}
-						expanded={true}
-						alwaysExpanded={true}
-						displayPaletteName={true}
-						x11Palette={true}
-						columns={7}
-						on:colorSelected
-					/>
+					<X11Palette {palette} on:colorSelected />
 				</div>
 			{/each}
 		</div>
@@ -126,8 +118,8 @@
 		display: grid;
 		position: relative;
 		grid:
-			[controls-start] 'controls' 36px [controls-end]
-			[carousel-start] 'carousel-wrapper' 118px [carousel-end]
+			[controls-start] 'controls' 32px [controls-end]
+			[carousel-start] 'carousel-wrapper' 122px [carousel-end]
 			/ 100%;
 		width: 371px;
 		height: 169px;
@@ -139,7 +131,7 @@
 	.x11-controls {
 		display: grid;
 		grid-area: controls;
-		grid: '. swatches btn-close' 36px / 1fr 320px 1fr;
+		grid: '. swatches btn-close' 30px / 1fr 320px 1fr;
 	}
 
 	.x11-swatches {

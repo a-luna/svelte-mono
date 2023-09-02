@@ -1,6 +1,6 @@
+import type { ThemeEditorState } from '$lib/types/';
 import type { CssColor, ThemeColor } from '@a-luna/shared-ui';
 import type { Writable } from 'svelte/store';
-import type { ThemeEditorState } from './';
 
 export interface ThemeEditorStore {
 	set: Writable<ThemeEditorState>['set'];
@@ -9,8 +9,8 @@ export interface ThemeEditorStore {
 	deletePalette: (id: string) => void;
 	changeSelectedPalette: (id: string) => void;
 	changeSelectedColor: (color: ThemeColor) => void;
-	updateThemeColor: (color: CssColor) => void;
-	deselectColor: () => void;
+	updateThemeColor: (e: CustomEvent<{ color: CssColor }>) => void;
+	deselectColor: (e: CustomEvent<{}>) => void;
 	addColorToPalette: (color: ThemeColor) => void;
 	deleteColorFromPalette: (color: ThemeColor) => void;
 }

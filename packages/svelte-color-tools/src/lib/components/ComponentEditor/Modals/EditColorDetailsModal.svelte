@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { getThemeEditorStore } from '$lib/context';
+	import ColorSettings from '$lib/components/ComponentEditor/Modals/ColorSettings.svelte';
+	import { getAppContext } from '$lib/context';
 	import { copyThemeColor } from '$lib/theme';
 	import type { ThemeColorShallowCopy } from '$lib/types';
 	import { Modal, type ThemeColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
-	import ColorSettings from './ColorSettings.svelte';
 
-	export let editorId: string;
 	let color: ThemeColor;
 	let originalColor: ThemeColorShallowCopy;
 	let modal: Modal;
@@ -16,8 +15,8 @@
 	let cssVarName: string;
 	let displayName: string;
 	let disableSaveButton = false;
-	let state = getThemeEditorStore(editorId);
-	const dispatch = createEventDispatcher();
+	let { themeEditor } = getAppContext();
+	const dispatchColorDetailsChanged = createEventDispatcher<{ colorDetailsChanged: {} }>();
 
 	export function openModal(editColor: ThemeColor) {
 		if (closed) {
@@ -33,7 +32,7 @@
 
 	export function toggleModal() {
 		modal.toggleModal();
-		$state.modalOpen = !$state.modalOpen;
+		$themeEditor.modalOpen = !$themeEditor.modalOpen;
 	}
 	function saveChanges() {
 		color.propName = propName;
@@ -44,7 +43,7 @@
 		propName = '';
 		cssVarName = '';
 		displayName = '';
-		dispatch('colorDetailsChanged');
+		dispatchColorDetailsChanged('colorDetailsChanged');
 		toggleModal();
 	}
 	function discardChanges() {
@@ -76,7 +75,6 @@
 >
 	<div class="color-details">
 		<ColorSettings
-			{editorId}
 			bind:propName
 			bind:propValue={value}
 			bind:displayName

@@ -1,5 +1,5 @@
-import type { ThemeColor, UserThemeImported } from '.';
-import type { ViewOption } from './Literals';
+import type { UserThemeImported, ViewOption } from '$lib/types';
+import type { ThemeColor } from '@a-luna/shared-ui';
 
 export interface ThemeEditorState {
 	editorId: string;

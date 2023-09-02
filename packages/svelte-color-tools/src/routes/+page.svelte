@@ -1,10 +1,14 @@
 <script lang="ts">
-	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
 	import ComponentEditor from '$lib/components/ComponentEditor/ComponentEditor.svelte';
+	import ColorFormatSelector from '$lib/components/Shared/ColorFormatSelector.svelte';
 	import type { PitchFx } from '$lib/table/PitchFx';
+	import type { ThemeEditorStore } from '$lib/types';
+	import { ThemeWrapper, type ComponentColor } from '@a-luna/shared-ui';
 	import type { TableSettings } from '@a-luna/svelte-simple-tables/types';
 
-	let editorId: string;
+	let editorId = 'component-css-editor';
+	let color: ComponentColor;
+	let state: ThemeEditorStore;
 
 	const tableSettings: TableSettings<PitchFx> = {
 		tableId: 'pfx',
@@ -25,24 +29,33 @@
 		pageNavFormat: 'auto',
 		rowType: 'barrels',
 	};
+
+	function handleUiColorChanged(e: CustomEvent<{ uiColor: ComponentColor }>) {
+		const { uiColor } = e.detail;
+		color = uiColor;
+	}
 </script>
 
 <svelte:head>
 	<title>Component Theme Editor by Aaron Luna</title>
 </svelte:head>
 
-<!-- <ComponentEditor {editorId}>
-	<SimpleTable {data} {columnSettings} {tableSettings} />
-</ComponentEditor> -->
+<!-- <ThemeWrapper {color}>
+	<ComponentEditor {editorId} on:uiColorChanged={handleUiColorChanged}>
+		<SimpleTable {data} {columnSettings} {tableSettings} />
+	</ComponentEditor>
+</ThemeWrapper> -->
 
-<ComponentEditor {editorId}>
-	<div class="layout">
-		<div class="component-wrapper">
-			<ColorSpaceSelector />
+<ThemeWrapper {color}>
+	<ComponentEditor on:uiColorChanged={handleUiColorChanged}>
+		<div class="layout">
+			<div class="component-wrapper">
+				<ColorFormatSelector />
+			</div>
+			<div class="placeholder" />
 		</div>
-		<div class="placeholder" />
-	</div>
-</ComponentEditor>
+	</ComponentEditor>
+</ThemeWrapper>
 
 <!-- <ComponentEditor {editorId}>
 	<InputTextBox inputText={'Hello, world!'} />

@@ -1,19 +1,10 @@
 <script lang="ts">
 	import { BasicIconRenderer, ThemeButton } from '@a-luna/shared-ui/components';
-	import type { ComponentColor } from '@a-luna/shared-ui/types';
 
-	export let color: ComponentColor;
 	export let disabled = false;
 </script>
 
-<ThemeButton
-	{color}
-	tooltip={'Download User Theme as JSON'}
-	{disabled}
-	iconWidth={'16px'}
-	wrapperWidth={'32px'}
-	on:click
->
+<ThemeButton tooltip={'Download User Theme as JSON'} {disabled} iconWidth={'16px'} wrapperWidth={'32px'} on:click>
 	<svelte:fragment slot="icon">
 		<BasicIconRenderer icon={'save'} width={'16px'} />
 	</svelte:fragment>

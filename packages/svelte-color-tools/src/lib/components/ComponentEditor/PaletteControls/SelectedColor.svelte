@@ -1,30 +1,23 @@
 <script lang="ts">
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { getThemeEditorStore } from '$lib/context';
-	import { defaultCssColor } from '@a-luna/shared-ui';
-	import { parseCssColor } from '@a-luna/shared-ui/color/parsers';
-	import { addStringValuesToCssColor, clampColorComponents } from '@a-luna/shared-ui/color/util';
+	import { getAppContext } from '$lib/context';
+	import { defaultCssColorForColorSpace } from '@a-luna/shared-ui';
 
-	export let editorId: string;
-	let state = getThemeEditorStore(editorId);
-	let bgColor: string;
+	let { themeEditor } = getAppContext();
 	let displayName: string;
 	let tooltip: string;
 
-	$: bgColor = $state.colorSelected ? 'var(--white4)' : 'var(--white1)';
-	$: swatchColor = $state.colorSelected
-		? $state.selectedColor.color
-		: clampColorComponents(addStringValuesToCssColor(parseCssColor('hsl(0, 0%, 85%)') ?? defaultCssColor));
-	$: displayName = $state.colorSelected ? $state.selectedColor.displayName ?? '' : '';
-	$: tooltip = $state.colorSelected
-		? `${$state.selectedColor.displayName} is the selected palette`
+	$: swatchColor = $themeEditor.colorSelected ? $themeEditor.selectedColor.colorInGamut : defaultCssColorForColorSpace;
+	$: displayName = $themeEditor.colorSelected ? $themeEditor.selectedColor.displayName ?? '' : '';
+	$: tooltip = $themeEditor.colorSelected
+		? `${$themeEditor.selectedColor.displayName} is the selected palette`
 		: 'No Theme Color Selected';
 </script>
 
-<div class="option-wrapper" title={tooltip} style="background-color: {bgColor}">
-	{#if $state.colorSelected}
+<div class="option-wrapper" title={tooltip}>
+	{#if $themeEditor.colorSelected}
 		<div class="swatch-border">
-			<ColorSwatch color={swatchColor} />
+			<ColorSwatch variant={'small'} color={swatchColor} />
 		</div>
 	{/if}
 	<span>{displayName}</span>
@@ -34,11 +27,12 @@
 	.option-wrapper {
 		flex: 0 1 auto;
 		display: grid;
+		background-color: var(--active-bg-color);
 		grid-template-columns: 1fr auto 8px 200px 1fr;
 		align-items: center;
 		justify-content: center;
 		font-size: 0.9rem;
-		border: 1px solid var(--black1);
+		border: 1px solid var(--fg-color);
 		border-radius: 6px;
 
 		grid-column: 1 / span 1;

@@ -3,26 +3,33 @@
 	import EditColorString from '$lib/components/ColorPicker/ColorLabel/EditColorString.svelte';
 	import { getColorPickerStore } from '$lib/context';
 	import { copyToClipboard } from '$lib/util';
+	import type { ColorFormat } from '@a-luna/shared-ui';
 	import { onDestroy } from 'svelte';
 
 	export let pickerId: string;
 	let currentColor: string;
-	let state = getColorPickerStore(pickerId);
+	let picker = getColorPickerStore(pickerId);
 	let timeout: NodeJS.Timeout;
+	let copyColorString: CopyColorString;
 
-	$: inactiveStyle = 'background-color: var(--white3); color: var(--input-text-color);';
-	$: copiedStyle = 'background-color: var(--light-gray2)';
-	$: editStyle = 'background-color: var(--button-bg-color); color: var(--button-fg-color)';
-	$: successStyle = 'background-color: var(--white3); color: var(--green2)';
-	$: errorStyle = 'background-color: var(--white3); color: var(--red2)';
+	export function setColorFormat(colorFormat: ColorFormat) {
+		copyColorString.setColorFormat(colorFormat);
+	}
+
+	$: inactiveStyle = 'background-color: var(--theme-default-background-color); color: var(--theme-default-text-color);';
+	$: copiedStyle = 'background-color: var(--theme-default-background-color-active)';
+	$: editStyle =
+		'background-color: var(--theme-default-background-color-hover); color: var(--theme-default-text-color)';
+	$: successStyle = 'background-color: var(--theme-default-background-color-active); color: var(--green2)';
+	$: errorStyle = 'background-color: var(--theme-default-background-color-active); color: var(--red2)';
 	$: style =
-		$state?.labelState === 'copied'
+		$picker?.labelState === 'copied'
 			? copiedStyle
-			: $state?.labelState === 'edit'
+			: $picker?.labelState === 'edit'
 			? editStyle
-			: $state?.labelState === 'success'
+			: $picker?.labelState === 'success'
 			? successStyle
-			: $state?.labelState === 'error'
+			: $picker?.labelState === 'error'
 			? errorStyle
 			: inactiveStyle;
 
@@ -30,26 +37,32 @@
 		const { currentColor } = e.detail;
 		await copyToClipboard(currentColor);
 		clearTimeout(timeout);
-		$state.labelState = 'copied';
-		timeout = setTimeout(() => ($state.labelState = 'inactive'), 500);
+		$picker.labelState = 'copied';
+		timeout = setTimeout(() => ($picker.labelState = 'inactive'), 500);
 	}
 
 	function handleEditButtonClicked(e: CustomEvent<{}>) {
-		if ($state.editable) {
-			$state.labelState = 'edit';
+		if ($picker.editable) {
+			$picker.labelState = 'edit';
 		}
 	}
 
 	onDestroy(() => clearTimeout(timeout));
 </script>
 
-<div class:edit-mode={$state?.labelState === 'edit'} class="color-label" {style}>
-	{#if $state?.labelState === 'edit'}
-		<EditColorString value={currentColor} on:updateColor on:keepCurrentColor={() => ($state.labelState = 'inactive')} />
+<div class:edit-mode={$picker?.labelState === 'edit'} class="color-label" {style}>
+	{#if $picker?.labelState === 'edit'}
+		<EditColorString
+			value={currentColor}
+			on:stringValueChanged
+			on:keepCurrentColor={() => ($picker.labelState = 'inactive')}
+		/>
 	{:else}
 		<CopyColorString
-			color={$state?.color}
-			editable={$state?.editable}
+			{pickerId}
+			bind:this={copyColorString}
+			color={$picker?.colorInGamut}
+			editable={$picker?.editable}
 			bind:currentColor
 			on:copyColorString={handleCopyButtonClicked}
 			on:editColorString={handleEditButtonClicked}

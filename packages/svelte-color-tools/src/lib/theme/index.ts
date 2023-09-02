@@ -1,4 +1,4 @@
-export { convertThemePalettesToCss, downloadUserThemeJson, exportUserThemeToFile } from './export';
-export { importUserThemeFromFile } from './import';
-export * from './propNames';
-export * from './util';
+export { convertThemePalettesToCss, downloadUserThemeJson, exportUserThemeToFile } from '$lib/theme/export';
+export { importUserThemeFromFile } from '$lib/theme/import';
+export * from '$lib/theme/propNames';
+export * from '$lib/theme/util';

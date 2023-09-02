@@ -5,6 +5,6 @@
 	export let componentColor: ComponentColor;
 </script>
 
-<Checkbox id={'use-custom-color-checkbox'} color={componentColor} bind:checked>
+<Checkbox id={'use-custom-color-checkbox'} bind:checked>
 	<svelte:fragment slot="rightLabel">Use Custom Color</svelte:fragment>
 </Checkbox>

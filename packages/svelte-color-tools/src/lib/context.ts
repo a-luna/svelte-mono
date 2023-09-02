@@ -1,8 +1,14 @@
 import { createAppStore } from '$lib/stores/app';
-import type { AppStore, ColorPickerState, ThemeEditorStore } from '$lib/types';
+import type { AppStore, ColorPickerStore, ThemeEditorStore } from '$lib/types';
 import { getContext, setContext } from 'svelte';
-import type { Readable, Writable } from 'svelte/store';
+import type { Readable } from 'svelte/store';
 import { get } from 'svelte/store';
+
+export interface AppContext {
+	picker: ColorPickerStore;
+	themeEditor: ThemeEditorStore;
+	app: Readable<AppStore>;
+}
 
 function setService<T>(key: string, service: T): T {
 	setContext(key, service);
@@ -17,23 +23,19 @@ export function initThemeEditorStore(themeEditor: ThemeEditorStore): ThemeEditor
 	return setService<ThemeEditorStore>(get(themeEditor).editorId, themeEditor);
 }
 
-export const getThemeEditorStore = (editorId: string): ThemeEditorStore => getService<ThemeEditorStore>(editorId)();
+export const getThemeEditorStore = (): ThemeEditorStore => getService<ThemeEditorStore>('theme-editor')();
 
-export function initColorPickerStore(colorPicker: Writable<ColorPickerState>): Writable<ColorPickerState> {
-	return setService<Writable<ColorPickerState>>(get(colorPicker).pickerId, colorPicker);
+export function initColorPickerStore(colorPicker: ColorPickerStore): ColorPickerStore {
+	return setService<ColorPickerStore>(get(colorPicker).pickerId, colorPicker);
 }
 
-export const getColorPickerStore = (pickerId: string): Writable<ColorPickerState> =>
-	getService<Writable<ColorPickerState>>(pickerId)();
+export const getColorPickerStore = (pickerId: string): ColorPickerStore => getService<ColorPickerStore>(pickerId)();
 
-export function initAppStore(
-	themeEditorState: ThemeEditorStore,
-	colorPickerState: Writable<ColorPickerState>,
-): Readable<AppStore> {
-	const key = `${get(themeEditorState).editorId}-app`;
-	const app = createAppStore(themeEditorState, colorPickerState);
-	return setService<Readable<AppStore>>(key, app);
+export function initAppContext(picker: ColorPickerStore, themeEditor: ThemeEditorStore): AppContext {
+	themeEditor = initThemeEditorStore(themeEditor);
+	const app = createAppStore(themeEditor, picker);
+	return setService<AppContext>('theme-editor', { picker, themeEditor, app });
 }
+export const getAppContext = (): AppContext => getService<AppContext>('theme-editor')();
 
-export const getAppStore = (editorId: string): Readable<AppStore> =>
-	getService<Readable<AppStore>>(`${editorId}-app`)();
+export const getAppStore = (): Readable<AppStore> => getService<Readable<AppStore>>('theme-editor')();

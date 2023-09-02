@@ -2,13 +2,12 @@
 	import ComponentSection from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/ComponentSection.svelte';
 	import CssSection from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssSection.svelte';
 	import JsonSection from '$lib/components/ComponentEditor/ContentViewer/JsonSection/JsonSection.svelte';
-	import { getThemeEditorStore } from '$lib/context';
+	import { getAppContext } from '$lib/context';
 	import type { ComponentColor } from '@a-luna/shared-ui';
 
-	export let editorId: string;
 	export let componentColor: ComponentColor;
 	export let themeInitialized: boolean;
-	let state = getThemeEditorStore(editorId);
+	let { themeEditor } = getAppContext();
 	let cssSection: CssSection;
 
 	export const changeComponentPrefix = (usePrefix: boolean, newPrefix: string) =>
@@ -17,24 +16,24 @@
 
 <div
 	class="component-wrapper"
-	class:visible={$state.currentlyViewing === 'component'}
-	class:invisible={$state.currentlyViewing !== 'component'}
+	class:visible={$themeEditor.currentlyViewing === 'component'}
+	class:invisible={$themeEditor.currentlyViewing !== 'component'}
 >
-	<ComponentSection {editorId} {componentColor}>
+	<ComponentSection {componentColor}>
 		<slot />
 	</ComponentSection>
 </div>
 <div
 	class="css-section-wrapper"
-	class:visible={$state.currentlyViewing === 'css'}
-	class:invisible={$state.currentlyViewing !== 'css'}
+	class:visible={$themeEditor.currentlyViewing === 'css'}
+	class:invisible={$themeEditor.currentlyViewing !== 'css'}
 >
-	<CssSection bind:this={cssSection} {editorId} {componentColor} {themeInitialized} />
+	<CssSection bind:this={cssSection} {componentColor} {themeInitialized} />
 </div>
 <div
 	class="json-section-wrapper"
-	class:visible={$state.currentlyViewing === 'json'}
-	class:invisible={$state.currentlyViewing !== 'json'}
+	class:visible={$themeEditor.currentlyViewing === 'json'}
+	class:invisible={$themeEditor.currentlyViewing !== 'json'}
 >
 	<JsonSection />
 </div>

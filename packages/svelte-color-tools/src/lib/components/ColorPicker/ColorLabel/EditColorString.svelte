@@ -4,11 +4,12 @@
 
 	export let value: string = '';
 	let textInput: HTMLInputElement;
-	const dispatch = createEventDispatcher();
+	const dispatchStringValueChanged = createEventDispatcher<{ stringValueChanged: { css: string } }>();
+	const dispatchKeepCurrentColor = createEventDispatcher<{ keepCurrentColor: {} }>();
 
 	function handleKeyPress(key: string) {
 		if (key === 'Enter') {
-			dispatch('updateColor', textInput.value);
+			dispatchStringValueChanged('stringValueChanged', { css: textInput.value });
 		}
 	}
 
@@ -22,7 +23,7 @@
 	id="keep-color-button"
 	data-testid="keep-color-button"
 	title="Cancel"
-	on:click={() => dispatch('keepCurrentColor')}
+	on:click={() => dispatchKeepCurrentColor('keepCurrentColor')}
 >
 	<BasicIconRenderer icon={'cancel'} />
 </div>
@@ -37,7 +38,7 @@
 	id="change-color-button"
 	data-testid="change-color-button"
 	title="Change color"
-	on:click={() => dispatch('updateColor', textInput.value)}
+	on:click={() => dispatchStringValueChanged('stringValueChanged', { css: textInput.value })}
 >
 	<BasicIconRenderer icon={'ok'} />
 </div>

@@ -1,21 +1,18 @@
 <script lang="ts">
-	import type { ColorPalette } from '@a-luna/shared-ui';
+	import { defaultColorPalette, type ColorPalette } from '@a-luna/shared-ui';
 
 	export let selectedPalette: ColorPalette;
 	let displayName: string;
 	let tooltip: string;
 
-	$: bgColor = selectedPalette ? `var(--${selectedPalette.componentColor}-hover-bg-color)` : 'var(--white1)';
-	$: fgColor = selectedPalette ? `var(--${selectedPalette.componentColor}-fg-color)` : 'var(--black-fg-color)';
-	$: displayName = selectedPalette ? selectedPalette.displayName : '';
-	$: tooltip = selectedPalette ? `${selectedPalette.displayName} is the selected palette` : 'No Palette Selected';
+	$: displayName = selectedPalette !== defaultColorPalette ? selectedPalette.displayName : '';
+	$: tooltip =
+		selectedPalette !== defaultColorPalette
+			? `${selectedPalette.displayName} is the selected palette`
+			: 'No Palette Selected';
 </script>
 
-<div
-	class="option-wrapper"
-	title={tooltip}
-	style="color: {fgColor}; background-color: {bgColor}; border: 1px solid {fgColor};"
->
+<div class="option-wrapper" title={tooltip}>
 	<span>{displayName}</span>
 </div>
 
@@ -23,6 +20,9 @@
 	.option-wrapper {
 		display: flex;
 		align-items: center;
+		color: var(--fg-color);
+		background-color: var(--active-bg-color);
+		border: 1px solid var(--fg-color);
 		border-radius: 6px;
 		padding: 0 0 0 8px;
 		grid-column: 1 / span 1;

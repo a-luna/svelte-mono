@@ -1,35 +1,38 @@
 <script lang="ts">
-	import { getThemeEditorStore } from '$lib/context';
+	import { getAppContext } from '$lib/context';
 	import {
-		convertPropNameToCssVarName,
-		convertPropNameToDisplayName,
 		CSS_VAR_NAME_REGEX,
 		PROP_NAME_REGEX,
+		convertPropNameToCssVarName,
+		convertPropNameToDisplayName,
 	} from '$lib/theme';
 	import { Checkbox, InputTextBox } from '@a-luna/shared-ui';
 
-	export let editorId: string;
 	export let propName = '';
 	export let propValue = '';
 	export let cssVarNameFinal = '';
 	export let displayName = '';
 	export let validationError = false;
+	export let invalidPropName = false;
+	export let invalidCssVarName = false;
 	let cssVarName = '';
 	let autoGenDisplayName = true;
 	let displayNameIsEmpty: boolean;
 	let propNameFormatError = false;
-	let state = getThemeEditorStore(editorId);
+	let { themeEditor } = getAppContext();
 
 	const camelCaseTooltip =
 		'Since this value is used as the property name of a JSON object, it must be formatted using lowerCamelCase: i.e., words must be written without spaces or punctuation, the separation of words is indicated by a single capitalized letter, except for the the first letter which must be lowercase. Example: "Border Color" -> "borderColor"';
 
 	$: if (autoGenDisplayName || displayName || propName) updateNames();
-	$: cssVarNamePrefix = $state?.userTheme?.usesPrefix ? `${$state?.userTheme?.themePrefix}-` : '--';
+	$: cssVarNamePrefix = $themeEditor?.userTheme?.usesPrefix ? `${$themeEditor?.userTheme?.themePrefix}-` : '--';
 	$: cssVarNameFinal = cssVarName ? `${cssVarNamePrefix}${cssVarName}` : '';
 	$: validationError = propNameFormatError || displayNameIsEmpty;
+	$: invalidPropName = !PROP_NAME_REGEX.test(propName);
+	$: invalidCssVarName = !CSS_VAR_NAME_REGEX.test(cssVarName);
 
 	function updateNames() {
-		cssVarName = propName ? convertPropNameToCssVarName($state.userTheme, propName) : '';
+		cssVarName = propName ? convertPropNameToCssVarName($themeEditor.userTheme, propName) : '';
 		if (autoGenDisplayName) {
 			displayName = propName ? convertPropNameToDisplayName(propName) : '';
 		}

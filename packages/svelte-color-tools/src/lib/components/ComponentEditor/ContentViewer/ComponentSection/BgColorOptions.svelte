@@ -1,10 +1,9 @@
 <script lang="ts">
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { defaultCssColor } from '@a-luna/shared-ui';
+	import { defaultCssColorForColorSpace } from '@a-luna/shared-ui';
 	import { parseCssColor } from '@a-luna/shared-ui/color/parsers';
-	import { addStringValuesToCssColor, clampColorComponents } from '@a-luna/shared-ui/color/util';
 	import { ListOption } from '@a-luna/shared-ui/components';
-	import type { SelectListOption } from '@a-luna/shared-ui/types';
+	import type { CssColorForColorSpace, SelectListOption } from '@a-luna/shared-ui/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let options: SelectListOption[] = [];
@@ -25,12 +24,21 @@
 			}
 		}
 	}
+
+	function getCssColorForListOption(value: string): CssColorForColorSpace {
+		const color = parseCssColor(value);
+		if (color) {
+			return color.space === 'srgb' ? color.srbgColor : color.p3Color;
+		}
+		return defaultCssColorForColorSpace;
+	}
 </script>
 
 {#each options as option}
 	<ListOption {...option} {menuId} on:selectedOption={handleSelectedOptionChanged}>
 		<ColorSwatch
-			color={clampColorComponents(addStringValuesToCssColor(parseCssColor(String(option.value)) ?? defaultCssColor))}
+			variant="small"
+			color={getCssColorForListOption(String(option.value))}
 			style={'border: 1px solid var(--black4);'}
 		/>
 	</ListOption>

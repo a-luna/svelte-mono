@@ -1,50 +1,50 @@
 <script lang="ts">
 	import ColorSlider from '$lib/components/ColorPicker/ColorChannels/ColorSlider.svelte';
 	import type { CssColor } from '@a-luna/shared-ui';
-	import { cssColorFromHsl } from '@a-luna/shared-ui/color/parsers';
+	import { cssColorFromLch } from '@a-luna/shared-ui/color/parsers';
 	import { clampColorComponents } from '@a-luna/shared-ui/color/util';
 	import { createEventDispatcher } from 'svelte';
 
 	export let editable: boolean;
-	export let h: number;
-	export let s: number;
 	export let l: number;
+	export let c: number;
+	export let h: number;
 	export let a: number = 0;
 	const dispatch = createEventDispatcher<{ colorChanged: { color: CssColor } }>();
 
 	$: disabled = !editable;
-	$: color = cssColorFromHsl({ h, s, l, a });
+	$: color = cssColorFromLch({ l, c, h, a });
 	$: clamped = clampColorComponents(color);
 </script>
 
 <ColorSlider
-	name="H"
-	bind:value={h}
-	display={clamped.hsl.h}
-	max={359}
-	{disabled}
-	on:change={() => dispatch('colorChanged', { color })}
-/>
-<ColorSlider
-	name="S"
-	bind:value={s}
-	display={clamped.hsl.s}
-	max={100}
-	{disabled}
-	on:change={() => dispatch('colorChanged', { color })}
-/>
-<ColorSlider
 	name="L"
 	bind:value={l}
-	display={clamped.hsl.l}
+	display={clamped.lch.l}
 	max={100}
+	{disabled}
+	on:change={() => dispatch('colorChanged', { color })}
+/>
+<ColorSlider
+	name="C"
+	bind:value={c}
+	display={clamped.lch.c}
+	max={150}
+	{disabled}
+	on:change={() => dispatch('colorChanged', { color })}
+/>
+<ColorSlider
+	name="H"
+	bind:value={h}
+	display={clamped.lch.h}
+	max={359}
 	{disabled}
 	on:change={() => dispatch('colorChanged', { color })}
 />
 <ColorSlider
 	name="A"
 	bind:value={a}
-	display={clamped.hsl.a}
+	display={clamped.lch.a}
 	max={1}
 	step={0.01}
 	{disabled}

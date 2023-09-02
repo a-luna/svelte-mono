@@ -61,9 +61,9 @@ describe('ColorPicker component can parse strings containing valid color keyword
 		// expect(greenSliderValue.innerHTML).toContain('0');
 		// expect(blueSliderValue.innerHTML).toContain('255');
 
-		const colorSpaceSelectorButton = await screen.findByTestId('select-color-space-open-list-button');
-		await user.click(colorSpaceSelectorButton);
-		const hslaMenuOption = await screen.findByTestId('select-color-space-option-4');
+		const colorFormatSelectorButton = await screen.findByTestId('select-color-format-open-list-button');
+		await user.click(colorFormatSelectorButton);
+		const hslaMenuOption = await screen.findByTestId('select-color-format-option-4');
 		await user.click(hslaMenuOption);
 
 		const hueSlider = await screen.findByTestId('H-slider');

@@ -5,34 +5,31 @@
 	import ExportUserThemeButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/ExportUserThemeButton.svelte';
 	import FinishEditingButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/FinishEditingButton.svelte';
 	import SaveUserThemeButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/SaveUserThemeButton.svelte';
-	import { getAppStore, getThemeEditorStore } from '$lib/context';
-	import type { ColorPalette, ComponentColor } from '@a-luna/shared-ui';
+	import { getAppContext } from '$lib/context';
+	import type { ColorPalette } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
-	export let editorId: string;
-	export let componentColor: ComponentColor;
 	export let themeColorPalettes: ColorPalette[];
 	export let x11PalettesShown: boolean;
-	let app = getAppStore(editorId);
-	let state = getThemeEditorStore(editorId);
+	let { themeEditor } = getAppContext();
 	const dispatch = createEventDispatcher();
 
-	$: disabled = !themeColorPalettes.length || $state.editMode || x11PalettesShown;
+	$: disabled = !themeColorPalettes.length || $themeEditor.editMode || x11PalettesShown;
 </script>
 
 <div class="user-theme-controls">
 	<div class="buttons-left">
-		{#if $state.editMode}
-			<FinishEditingButton color={componentColor} on:click={() => ($state.editMode = false)} />
+		{#if $themeEditor.editMode}
+			<FinishEditingButton on:click={() => ($themeEditor.editMode = false)} />
 		{:else}
-			<EditPalettesButton color={componentColor} on:click={() => ($state.editMode = true)} {disabled} />
+			<EditPalettesButton on:click={() => ($themeEditor.editMode = true)} {disabled} />
 		{/if}
-		<EditSettingsButton color={componentColor} {disabled} on:click={() => dispatch('editThemeSettings')} />
-		<SaveUserThemeButton color={componentColor} {disabled} on:click={() => dispatch('saveUserTheme')} />
-		<ExportUserThemeButton color={componentColor} {disabled} on:click={() => dispatch('exportUserTheme')} />
+		<EditSettingsButton {disabled} on:click={() => dispatch('editThemeSettings')} />
+		<SaveUserThemeButton {disabled} on:click={() => dispatch('saveUserTheme')} />
+		<ExportUserThemeButton {disabled} on:click={() => dispatch('exportUserTheme')} />
 	</div>
 	<div class="buttons-right">
-		<CloseUserThemeButton color={componentColor} {disabled} on:click={() => dispatch('closeUserTheme')} />
+		<CloseUserThemeButton {disabled} on:click={() => dispatch('closeUserTheme')} />
 	</div>
 </div>
 

@@ -18,10 +18,12 @@
 	];
 	$: style = `grid-column: 3 / span 1; grid-row: 2 / span 1; --select-list-width: 100%;`;
 
-	function handleSelectorChanged(e: CustomEvent<{ selectedValue: string }>) {
-		const { selectedValue } = e.detail;
-		value = selectedValue;
-		dispatch('cssRuleSelectorChanged', { selector: selectedValue });
+	function handleSelectorChanged(e: CustomEvent<{ selected: string | number }>) {
+		const { selected } = e.detail;
+		if (typeof selected === 'string') {
+			value = selected;
+			dispatch('cssRuleSelectorChanged', { selector: selected });
+		}
 	}
 </script>
 
@@ -32,5 +34,5 @@
 	{menuId}
 	{disabled}
 	{style}
-	on:changed={(e) => handleSelectorChanged(e.detail)}
+	on:selectedOptionChanged={handleSelectorChanged}
 />

@@ -1,12 +1,11 @@
 <script lang="ts">
+	import ColorSettings from '$lib/components/ComponentEditor/Modals/ColorSettings.svelte';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { getAppStore, getThemeEditorStore } from '$lib/context';
-	import { getCssValueForColor } from '$lib/theme';
-	import { ColorParser, InputTextBox, Modal, defaultCssColor, type ThemeColor } from '@a-luna/shared-ui';
+	import { getAppContext } from '$lib/context';
+	import { getCssValueForThemeColor } from '$lib/theme';
+	import { InputTextBox, Modal, defaultCssColorForColorSpace, type CssColor, type ThemeColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
-	import ColorSettings from './ColorSettings.svelte';
 
-	export let editorId: string;
 	let modal: Modal;
 	let closed: boolean;
 	let themeColor: ThemeColor;
@@ -15,26 +14,36 @@
 	let cssVarName = '';
 	let displayName = '';
 	let disableSaveButton = false;
-	let state = getThemeEditorStore(editorId);
-	let app = getAppStore(editorId);
-	const dispatch = createEventDispatcher();
+	let invalidPropName = false;
+	let invalidCssVarName = false;
+	let { themeEditor, app } = getAppContext();
+	const dispatchAddNewColor = createEventDispatcher<{ addNewColor: { color: ThemeColor } }>();
 
 	$: selectedPalette = $app?.selectedThemePalette?.displayName;
 
-	export function toggleModal(color: string = '') {
+	export function addColorToPalette(e: CustomEvent<{ color: CssColor }>) {
+		const { color } = e.detail;
 		if (closed) {
 			setDefaultValues(color);
 		}
-		modal.toggleModal();
-		$state.modalOpen = !$state.modalOpen;
+		toggleModal();
 	}
 
-	function setDefaultValues(color: string) {
-		const result = ColorParser.parse(color);
-		const parsed = result.success ? result.value : defaultCssColor;
-		themeColor = { color: parsed };
+	function toggleModal() {
+		modal.toggleModal();
+		$themeEditor.modalOpen = !$themeEditor.modalOpen;
+	}
+
+	function setDefaultValues(color: CssColor) {
+		themeColor = {
+			color,
+			colorSpace: color.space,
+			colorInGamut: color.space === 'srgb' ? color.srbgColor : color.p3Color,
+		};
 		propName = '';
-		propValue = getCssValueForColor(themeColor, $state.userTheme.colorFormat);
+		const colorFormat =
+			color.space === 'srgb' ? $themeEditor.userTheme.colorFormatSrgb : $themeEditor.userTheme.colorFormatP3;
+		propValue = getCssValueForThemeColor(themeColor, colorFormat);
 		cssVarName = '';
 		displayName = '';
 		themeColor.isSelected = false;
@@ -46,7 +55,7 @@
 		themeColor.cssVarName = cssVarName;
 		themeColor.displayName = displayName;
 		themeColor.color.name = displayName;
-		dispatch('addNewColor', themeColor);
+		dispatchAddNewColor('addNewColor', { color: themeColor });
 		toggleModal();
 	}
 
@@ -69,7 +78,7 @@
 		<div class="color-swatch-wrapper">
 			<label for="color-swatch">Add color</label>
 			<div class="swatch-border">
-				<ColorSwatch color={themeColor?.color ?? defaultCssColor} />
+				<ColorSwatch variant={'small'} color={themeColor?.colorInGamut ?? defaultCssColorForColorSpace} />
 			</div>
 		</div>
 		<div class="pallete-name-wrapper">
@@ -77,12 +86,13 @@
 			<InputTextBox id={'palette-name'} bind:inputText={selectedPalette} readonly={true} />
 		</div>
 		<ColorSettings
-			{editorId}
 			bind:propName
 			bind:propValue
 			bind:displayName
 			bind:cssVarNameFinal={cssVarName}
 			bind:validationError={disableSaveButton}
+			bind:invalidPropName
+			bind:invalidCssVarName
 			on:submit={() => submitForm()}
 		/>
 	</div>

@@ -1,50 +1,54 @@
 <script lang="ts">
 	import ColorSlider from '$lib/components/ColorPicker/ColorChannels/ColorSlider.svelte';
 	import type { CssColor } from '@a-luna/shared-ui';
-	import { cssColorFromHsl } from '@a-luna/shared-ui/color/parsers';
+	import { cssColorFromOklab } from '@a-luna/shared-ui/color/parsers';
 	import { clampColorComponents } from '@a-luna/shared-ui/color/util';
 	import { createEventDispatcher } from 'svelte';
 
 	export let editable: boolean;
-	export let h: number;
-	export let s: number;
 	export let l: number;
-	export let a: number = 0;
+	export let a: number;
+	export let b: number;
+	export let A: number = 0;
 	const dispatch = createEventDispatcher<{ colorChanged: { color: CssColor } }>();
 
 	$: disabled = !editable;
-	$: color = cssColorFromHsl({ h, s, l, a });
+	$: color = cssColorFromOklab({ l, a, b, A });
 	$: clamped = clampColorComponents(color);
 </script>
 
 <ColorSlider
-	name="H"
-	bind:value={h}
-	display={clamped.hsl.h}
-	max={359}
-	{disabled}
-	on:change={() => dispatch('colorChanged', { color })}
-/>
-<ColorSlider
-	name="S"
-	bind:value={s}
-	display={clamped.hsl.s}
-	max={100}
-	{disabled}
-	on:change={() => dispatch('colorChanged', { color })}
-/>
-<ColorSlider
 	name="L"
 	bind:value={l}
-	display={clamped.hsl.l}
+	display={clamped.oklab.l}
 	max={100}
+	{disabled}
+	on:change={() => dispatch('colorChanged', { color })}
+/>
+<ColorSlider
+	name="a"
+	bind:value={a}
+	display={clamped.oklab.a}
+	min={-0.4}
+	max={0.4}
+	step={0.01}
+	{disabled}
+	on:change={() => dispatch('colorChanged', { color })}
+/>
+<ColorSlider
+	name="b"
+	bind:value={b}
+	display={clamped.oklab.b}
+	min={-0.4}
+	max={0.4}
+	step={0.01}
 	{disabled}
 	on:change={() => dispatch('colorChanged', { color })}
 />
 <ColorSlider
 	name="A"
-	bind:value={a}
-	display={clamped.hsl.a}
+	bind:value={A}
+	display={clamped.oklab.A}
 	max={1}
 	step={0.01}
 	{disabled}

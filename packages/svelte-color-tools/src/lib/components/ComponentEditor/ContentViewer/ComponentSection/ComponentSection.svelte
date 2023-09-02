@@ -1,11 +1,10 @@
 <script lang="ts">
 	import BgColorSelector from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/BgColorSelector.svelte';
+	import UseCustomColorCheckbox from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/UseCustomColorCheckbox.svelte';
 	import { alphaBgPattern } from '$lib/constants';
-	import { getAppStore } from '$lib/context';
+	import { getAppContext } from '$lib/context';
 	import { ColorParser, InputTextBox, type ComponentColor, type CssColor, type Result } from '@a-luna/shared-ui';
-	import UseCustomColorCheckbox from './UseCustomColorCheckbox.svelte';
 
-	export let editorId: string;
 	export let componentColor: ComponentColor;
 	let useCustomColor = false;
 	let bgColorHex: string;
@@ -13,7 +12,7 @@
 	let customColor = '#000000';
 	let customColorTextBox: InputTextBox;
 	let bgColor = '';
-	let app = getAppStore(editorId);
+	let { app } = getAppContext();
 
 	$: if (useCustomColor && customColorTextBox) customColorTextBox.focus();
 	$: if (useCustomColor) {
@@ -49,7 +48,6 @@
 	.component-padding {
 		padding: 0.75rem;
 		border-radius: 6px;
-		border: 1px solid;
 		width: auto;
 	}
 	.bg-color-selector {
@@ -61,6 +59,7 @@
 		--swatch-width: 15px;
 		--swatch-height: 15px;
 		--swatch-border-radius: 0;
+		--select-list-menu-item-text-align: center;
 
 		display: flex;
 		align-items: center;

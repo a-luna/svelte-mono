@@ -1,26 +1,27 @@
-import type { ThemeColor, ThemeColorShallowCopy } from '$lib/types';
-import type { ColorFormat } from '@a-luna/shared-ui';
+import type { ThemeColorShallowCopy, UserThemeImported } from '$lib/types';
+import type { ColorFormat, CssColor, ThemeColor } from '@a-luna/shared-ui';
+
+// TODO: Investigate error raised when updating/adding new color to palette which sais that the PROP_NAME_REGEX is an invalid regular expression.
 
 export const CAMEL_CASE_REGEX = /^[a-z](?=.*[A-Z])[A-Za-z]*[^[-`]$/;
 export const PROP_NAME_REGEX = /^[a-z]+$|^[a-z](?=.*[A-Z])[A-Za-z]*[^[-`]$/;
-export const CSS_VAR_NAME_REGEX = /^--[\w-]*$/;
+export const CSS_VAR_NAME_REGEX = /^--[A-Za-z][0-9A-Za-z-]*$/;
 
-export const getCssValueForColor = (color: ThemeColor, colorFormat: ColorFormat): string =>
-	['currentcolor', 'inherit'].includes(color?.value ?? '')
-		? color?.value ?? ''
-		: colorFormat === 'hsl'
-		? color.color.hslString
-		: colorFormat === 'rgb'
-		? color.color.rgbString
-		: colorFormat === 'hex'
-		? color.color.hex
-		: colorFormat === 'lch'
-		? color.color.lchString
-		: colorFormat === 'oklch'
-		? color.color.oklchString
-		: colorFormat === 'lab'
-		? color.color.labString
-		: color.color.oklabString;
+export function getCssValueForThemeColor(color: ThemeColor, colorFormat: ColorFormat): string {
+	if (color && color.value && (color.value === 'currentColor' || color.value === 'inherit')) {
+		return color.value;
+	}
+
+	const colorFormatToCssValueMap = new Map<ColorFormat, string>();
+	colorFormatToCssValueMap.set('hex', color.colorInGamut.hex);
+	colorFormatToCssValueMap.set('rgb', color.colorInGamut.rgbString);
+	colorFormatToCssValueMap.set('hsl', color.colorInGamut.hslString);
+	colorFormatToCssValueMap.set('lab', color.colorInGamut.labString);
+	colorFormatToCssValueMap.set('lch', color.colorInGamut.lchString);
+	colorFormatToCssValueMap.set('oklab', color.colorInGamut.oklabString);
+	colorFormatToCssValueMap.set('oklch', color.colorInGamut.oklchString);
+	return colorFormatToCssValueMap.get(colorFormat) ?? '';
+}
 
 export function copyThemeColor(color: ThemeColor): ThemeColorShallowCopy {
 	const copy: ThemeColorShallowCopy = {};
@@ -31,3 +32,6 @@ export function copyThemeColor(color: ThemeColor): ThemeColorShallowCopy {
 	});
 	return copy;
 }
+
+export const getColorFormatForColor = (color: CssColor, userTheme: UserThemeImported): ColorFormat =>
+	color.space === 'srgb' ? userTheme.colorFormatSrgb : userTheme.colorFormatP3;

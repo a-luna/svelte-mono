@@ -1,8 +1,8 @@
 <script lang="ts">
 	import X11ColorSwatch from '$lib/components/ColorPicker/X11Palettes/X11ColorSwatch.svelte';
-	import type { ColorPalette } from '@a-luna/shared-ui';
+	import type { X11ColorPalette } from '@a-luna/shared-ui';
 
-	export let x11ColorPalettes: ColorPalette[];
+	export let x11ColorPalettes: X11ColorPalette[];
 	export let activePaletteId: string = '';
 	let swatchMap: Record<string, X11ColorSwatch> = {} as Record<string, X11ColorSwatch>;
 
@@ -18,8 +18,8 @@
 {#each x11ColorPalettes as palette}
 	<X11ColorSwatch
 		paletteId={palette.id}
-		{activePaletteId}
 		color={palette.componentColor}
+		{activePaletteId}
 		tooltip={palette.displayName}
 		on:x11PaletteSelected={handleX11PaletteSelected}
 		on:x11PaletteSelected

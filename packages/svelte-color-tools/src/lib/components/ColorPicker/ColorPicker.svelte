@@ -3,105 +3,87 @@
 <script lang="ts">
 	import ColorChannels from '$lib/components/ColorPicker/ColorChannels/ColorChannels.svelte';
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
-	import ColorSpaceSelector from '$lib/components/ColorPicker/ColorSpaceSelector.svelte';
 	import X11Palettes from '$lib/components/ColorPicker/X11Palettes/X11Palettes.svelte';
+	import ColorFormatSelector from '$lib/components/Shared/ColorFormatSelector.svelte';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
 	import { initColorPickerStore } from '$lib/context';
-	import type { ColorPickerState } from '$lib/types';
+	import { createColorPickerStore } from '$lib/stores';
+	import type { ColorPickerStore } from '$lib/types';
 	import {
 		BasicIconRenderer,
 		ColorParser,
-		defaultCssColor,
-		getX11ColorPalettes,
+		type ColorFormat,
 		type CssColor,
-		type ThemeColor,
+		type CssColorForColorSpace,
 	} from '@a-luna/shared-ui';
-	import { copyCssColor, hslToString } from '@a-luna/shared-ui/color/util';
+	import { finalizeLabColor, getColorFormatFromCssString } from '@a-luna/shared-ui/color/parsers';
+	import { copyCssColor, oklchToString } from '@a-luna/shared-ui/color/util';
 	import { onDestroy, onMount, tick } from 'svelte';
-	import type { Writable } from 'svelte/store';
-	import { writable } from 'svelte/store';
 
 	export let pickerId = `color-picker`;
-	export let state: Writable<ColorPickerState>;
+	export let picker: ColorPickerStore;
 	export let editMode = false;
 	let initialized = false;
 	let timeout: NodeJS.Timeout;
 	let colorPicker: HTMLInputElement;
+	let colorLabel: ColorLabel;
 
-	$: if ($state) $state.editable = !editMode;
-	// $: if ($state) $state.alphaEnabled = $state?.colorSpace === 'rgba' || $state?.colorSpace === 'hsla';
-
+	$: if ($picker) $picker.editable = !editMode;
 	$: if (typeof window !== 'undefined' && !initialized) {
-		const result = ColorParser.parse('rgba(128 128 128 / 0.9)');
-		state = writable<ColorPickerState>({
-			pickerId,
-			color: result.success ? result.value : defaultCssColor,
-			x11PalettesShown: false,
-			x11ColorPalettes: getX11ColorPalettes(),
-			colorSpace: 'rgb',
-			labelState: 'prerender',
-			editable: true,
-			alphaEnabled: true,
-		});
-		state = initColorPickerStore(state);
+		picker = initColorPickerStore(createColorPickerStore(pickerId));
 		initialized = true;
 	}
-
-	$: swatchBorderColor = { ...$state?.color?.hsl, l: $state?.color?.hsl.l - 20, a: 1 };
-	$: swatchBorderStyles = `border: 2px solid ${hslToString(swatchBorderColor)};`;
-	$: pointerStyles = !$state.editable ? `pointer-events: none` : '';
+	$: swatchBorderColor = { ...$picker?.colorInGamut?.oklch, l: $picker?.colorInGamut?.oklch.l - 20, a: 1 };
+	$: swatchBorderStyles = `border: 2px solid ${oklchToString(swatchBorderColor)};`;
+	$: pointerStyles = !$picker.editable ? `pointer-events: none` : '';
 	$: tooltip = 'Click to open color picker';
-
-	function handleX11ColorSelected(color: ThemeColor) {
-		setColor(copyCssColor(color.color));
-	}
-
-	export function setColor(color: CssColor) {
-		// setCorrectColorSpace(color);
-		$state.color = color;
-		$state.labelState = 'success';
+	$: if ($picker.labelState === 'success') {
 		timeout = setTimeout(() => {
-			$state.labelState = 'inactive';
+			$picker.labelState = 'inactive';
 		}, 500);
 	}
 
-	// function setCorrectColorSpace(color: CssColor) {
-	// 	if ($state.colorSpace === 'rgba' && !color.hasAlpha) {
-	// 		$state.colorSpace = 'rgb';
-	// 	} else if ($state.colorSpace === 'rgb' && color.hasAlpha) {
-	// 		$state.colorSpace = 'rgba';
-	// 	} else if ($state.colorSpace === 'hsla' && !color.hasAlpha) {
-	// 		$state.colorSpace = 'hsl';
-	// 	} else if ($state.colorSpace === 'hsl' && color.hasAlpha) {
-	// 		$state.colorSpace = 'hsla';
-	// 	}
-	// }
+	function handleX11ColorSelected(e: CustomEvent<{ color: CssColorForColorSpace }>) {
+		const { color } = e.detail;
+		picker.setColor(finalizeLabColor(copyCssColor(color)), 'rgb');
+	}
 
-	function handleStringValueChanged(color: string) {
-		const result = ColorParser.parse(color);
-		if (result.success) {
-			$state.color = result.value ?? $state.color;
-			$state.labelState = 'success';
-		} else {
-			$state.labelState = 'error';
+	function handleColorChanged(e: CustomEvent<{ color: CssColor }>) {
+		const { color } = e.detail;
+		if ($picker.labelState === 'inactive') {
+			picker.setColor(color, $picker.colorFormat);
 		}
-		timeout = setTimeout(() => {
-			$state.labelState = 'inactive';
-		}, 500);
+	}
+
+	function handleStringValueChanged(e: CustomEvent<{ css: string }>) {
+		const { css } = e.detail;
+		parseCssColorFromString(css);
 	}
 
 	function handleColorPickerValueChanged() {
-		const result = ColorParser.parse(colorPicker.value);
-		$state.color = result.success ? result.value : $state.color;
-		$state.labelState = 'success';
-		timeout = setTimeout(() => {
-			$state.labelState = 'inactive';
-		}, 500);
+		parseCssColorFromString(colorPicker.value);
+	}
+
+	function parseCssColorFromString(css: string) {
+		const result = ColorParser.parse(css);
+		const colorFormat = getColorFormatFromCssString(css) ?? $picker.colorFormat;
+		if (result.success) {
+			const color = result.value ?? $picker.color;
+			picker.setColor(color, colorFormat);
+		} else {
+			$picker.labelState = 'error';
+		}
+	}
+
+	function handleColorFormatChanged(e: CustomEvent<{ colorFormat: ColorFormat }>) {
+		const { colorFormat } = e.detail;
+		picker.setColorFormat(colorFormat);
+		colorLabel.setColorFormat(colorFormat);
 	}
 
 	onMount(async () => {
 		await tick();
-		$state.labelState = 'inactive';
+		$picker.labelState = 'inactive';
 	});
 
 	onDestroy(() => clearTimeout(timeout));
@@ -112,25 +94,29 @@
 		bind:this={colorPicker}
 		type="color"
 		style="display: none"
-		value={$state?.color?.hex}
+		value={$picker?.color?.hex}
 		on:change={() => handleColorPickerValueChanged()}
 	/>
-	{#if !$state.x11PalettesShown}
-		<div class="color-picker" data-testid={$state?.pickerId}>
+	{#if !$picker.x11PalettesShown}
+		<div class="color-picker" data-testid={$picker?.pickerId}>
 			<div class="picker-left-col">
-				<ColorSpaceSelector bind:value={$state.colorSpace} disabled={!$state.editable} />
+				<ColorFormatSelector
+					bind:value={$picker.colorFormat}
+					disabled={!$picker.editable}
+					on:colorFormatChanged={handleColorFormatChanged}
+				/>
 				<div
 					class="swatch-wrapper"
-					class:cursor-pointer={$state?.editable}
-					class:cursor-not-allowed={!$state?.editable}
+					class:cursor-pointer={$picker?.editable}
+					class:cursor-not-allowed={!$picker?.editable}
 					title={tooltip}
 					style="{swatchBorderStyles} {pointerStyles}"
 				>
 					<ColorSwatch
-						color={$state.color}
+						color={$picker.colorInGamut}
 						iconSize={'30px'}
 						iconTooltip={'Open X11 Color Palettes'}
-						on:iconClicked={() => ($state.x11PalettesShown = true)}
+						on:iconClicked={() => ($picker.x11PalettesShown = true)}
 						on:swatchClicked={() => colorPicker.click()}
 					>
 						<svelte:fragment slot="icon">
@@ -140,16 +126,16 @@
 				</div>
 			</div>
 			<div class="picker-right-col">
-				<ColorLabel pickerId={$state.pickerId} on:updateColor={(e) => handleStringValueChanged(e.detail)} />
-				<ColorChannels pickerId={$state.pickerId} />
+				<ColorLabel {pickerId} bind:this={colorLabel} on:stringValueChanged={handleStringValueChanged} />
+				<ColorChannels {pickerId} on:colorChanged={handleColorChanged} />
 			</div>
 		</div>
-	{:else if $state.x11ColorPalettes}
+	{:else if $picker.x11ColorPalettes}
 		<X11Palettes
-			x11ColorPalettes={$state.x11ColorPalettes}
-			on:colorSelected={() => ($state.x11PalettesShown = false)}
-			on:colorSelected={(e) => handleX11ColorSelected(e.detail)}
-			on:hideX11Palettes={() => ($state.x11PalettesShown = false)}
+			x11ColorPalettes={$picker.x11ColorPalettes}
+			on:colorSelected={() => ($picker.x11PalettesShown = false)}
+			on:colorSelected={handleX11ColorSelected}
+			on:hideX11Palettes={() => ($picker.x11PalettesShown = false)}
 		/>
 	{/if}
 {/if}
@@ -158,7 +144,8 @@
 	.color-picker {
 		--swatch-width: 109px;
 		--swatch-height: 109px;
-		--swatch-border-radius: 4px;
+		--swatch-border-radius: 6px;
+		--select-list-open-button-height: 30px;
 
 		display: flex;
 		flex-flow: row nowrap;
@@ -166,7 +153,7 @@
 		gap: 10px;
 		width: 371px;
 		height: 169px;
-		background-color: var(--color-picker-background-color);
+		background-color: var(--panel-bg-color);
 		border: 1px solid var(--fg-color, --black2);
 		border-radius: 6px;
 		padding: 0.5rem;

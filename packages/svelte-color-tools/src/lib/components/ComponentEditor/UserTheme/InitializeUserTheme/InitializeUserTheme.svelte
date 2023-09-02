@@ -8,27 +8,16 @@
 	const dispatch = createEventDispatcher();
 
 	$: componentColor = getRandomArrayItem<ComponentColor>(COMPONENT_COLORS);
-	$: style = `color: var(--${componentColor}-fg-color); border: 1px solid var(--${componentColor}-fg-color); background-color: var(--${componentColor}-panel-bg-color);`;
 </script>
 
-<div class="init-theme" {style}>
+<div class="init-theme">
 	<div class="intro-text">
 		<p class="headline">Welcome to the Component Theme Editor!</p>
 		<p>Would you like to create a new theme or load an existing theme?</p>
 	</div>
 	<div class="button-wrapper">
-		<NewUserThemeButton
-			color={componentColor}
-			compact={false}
-			width={'113px'}
-			on:click={() => dispatch('newUserTheme')}
-		/>
-		<LoadUserThemeButton
-			color={componentColor}
-			compact={false}
-			width={'113px'}
-			on:click={() => dispatch('importUserTheme')}
-		/>
+		<NewUserThemeButton compact={false} width={'113px'} on:click={() => dispatch('newUserTheme')} />
+		<LoadUserThemeButton compact={false} width={'113px'} on:click={() => dispatch('importUserTheme')} />
 	</div>
 </div>
 
@@ -42,6 +31,10 @@
 		height: 169px;
 		padding: 1rem;
 		border-radius: 6px;
+
+		color: var(--theme-text-color, var(--theme-default-text-color));
+		border: 1px solid var(--theme-text-color, var(--theme-default-text-color));
+		background-color: var(--theme-panel-background-color, var(--theme-default-panel-background-color));
 	}
 	.intro-text {
 		display: flex;

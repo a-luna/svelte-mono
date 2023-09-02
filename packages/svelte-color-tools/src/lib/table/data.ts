@@ -1,4 +1,4 @@
-import type { PitchFx } from './PitchFx';
+import type { PitchFx } from '$lib/table/PitchFx';
 
 export const data: PitchFx[] = [
 	{

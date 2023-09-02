@@ -1,26 +1,23 @@
 <script lang="ts">
 	import AddPaletteButton from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/AddPaletteButton.svelte';
 	import EditPaletteForm from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/EditPaletteForm.svelte';
-	import { getThemeEditorStore } from '$lib/context';
-	import type { ComponentColor } from '@a-luna/shared-ui';
+	import { getAppContext } from '$lib/context';
 	import { createEventDispatcher } from 'svelte';
 
-	export let editorId: string;
-	export let color: ComponentColor;
-	let state = getThemeEditorStore(editorId);
-	const dispatch = createEventDispatcher();
+	let { themeEditor } = getAppContext();
+	const dispatchCreatePalette = createEventDispatcher<{ createPalette: {} }>();
 
-	$: disabled = $state.userTheme.palettes.length === 1;
+	$: disabled = $themeEditor.userTheme.palettes.length === 1;
 </script>
 
 <div class="palette-editor">
 	<div class="palette-list">
-		{#each $state.userTheme.palettes as palette, i (palette.id)}
+		{#each $themeEditor.userTheme.palettes as palette, i (palette.id)}
 			<EditPaletteForm bind:palette {disabled} paletteNumber={i + 1} on:deletePalette />
 		{/each}
 	</div>
 	<div class="add-palette-controls">
-		<AddPaletteButton {color} on:click={() => dispatch('createPalette')} />
+		<AddPaletteButton on:click={() => dispatchCreatePalette('createPalette')} />
 	</div>
 </div>
 
