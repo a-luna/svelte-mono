@@ -32,7 +32,7 @@ export const NAV_ICON_NAMES = [
 	'dustcloud',
 	'firesilhouette',
 	'heptagram',
-	'highfive',
+	'stigmata',
 	'moebiusstar',
 	'orbital',
 	'ramprofile',
@@ -41,6 +41,11 @@ export const NAV_ICON_NAMES = [
 	'summits',
 	'sverdifjell',
 	'teleport',
+	'tronarrow',
+	'uluru',
+	'vial',
+	'vulture',
+	'woodensign',
 ] as const;
 
 export const TECH_LIST = [

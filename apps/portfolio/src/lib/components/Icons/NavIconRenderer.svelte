@@ -7,15 +7,20 @@
 		DustCloud,
 		FireSilhouette,
 		Heptagram,
-		HighFive,
 		MoebiusStar,
 		Orbital,
 		RamProfile,
 		Spatter,
 		Stairs3D,
+		Stigmata,
 		Summits,
 		SverdIFjell,
 		Teleport,
+		TronArrow,
+		Uluru,
+		Vial,
+		Vulture,
+		WoodenSign,
 	} from '$lib/components/Icons';
 	import type { NavIcon, NavIconName } from '$lib/types';
 	import { getRandomArrayItem } from '$lib/util';
@@ -37,15 +42,20 @@
 		iconMap.set('boltspellcast', BoltSpellCast);
 		iconMap.set('firesilhouette', FireSilhouette);
 		iconMap.set('heptagram', Heptagram);
-		iconMap.set('highfive', HighFive);
 		iconMap.set('moebiusstar', MoebiusStar);
 		iconMap.set('orbital', Orbital);
 		iconMap.set('ramprofile', RamProfile);
 		iconMap.set('spatter', Spatter);
 		iconMap.set('stairs3d', Stairs3D);
+		iconMap.set('stigmata', Stigmata);
 		iconMap.set('summits', Summits);
 		iconMap.set('sverdifjell', SverdIFjell);
 		iconMap.set('teleport', Teleport);
+		iconMap.set('tronarrow', TronArrow);
+		iconMap.set('uluru', Uluru);
+		iconMap.set('woodensign', WoodenSign);
+		iconMap.set('vial', Vial);
+		iconMap.set('vulture', Vulture);
 		return iconMap;
 	}
 

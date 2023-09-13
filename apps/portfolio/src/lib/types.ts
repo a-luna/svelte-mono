@@ -6,15 +6,20 @@ import type {
 	DustCloud,
 	FireSilhouette,
 	Heptagram,
-	HighFive,
 	MoebiusStar,
 	Orbital,
 	RamProfile,
 	Spatter,
 	Stairs3D,
+	Stigmata,
 	Summits,
 	SverdIFjell,
 	Teleport,
+	TronArrow,
+	Uluru,
+	Vial,
+	Vulture,
+	WoodenSign,
 } from '$lib/components/Icons';
 import type {
 	BACKEND_CATEGORIES,
@@ -339,7 +344,7 @@ export type NavIcon =
 	| typeof BoltSpellCast
 	| typeof FireSilhouette
 	| typeof Heptagram
-	| typeof HighFive
+	| typeof Stigmata
 	| typeof MoebiusStar
 	| typeof Orbital
 	| typeof RamProfile
@@ -347,7 +352,12 @@ export type NavIcon =
 	| typeof Stairs3D
 	| typeof Summits
 	| typeof SverdIFjell
-	| typeof Teleport;
+	| typeof Teleport
+	| typeof TronArrow
+	| typeof Uluru
+	| typeof Vial
+	| typeof Vulture
+	| typeof WoodenSign;
 
 export interface ProjectCategoryDetails {
 	displayName: string;

@@ -5,15 +5,20 @@ import CyberEye from './CyberEye.svelte';
 import DustCloud from './DustCloud.svelte';
 import FireSilhouette from './FireSilhouette.svelte';
 import Heptagram from './Heptagram.svelte';
-import HighFive from './HighFive.svelte';
 import MoebiusStar from './MoebiusStar.svelte';
 import Orbital from './Orbital.svelte';
 import RamProfile from './RamProfile.svelte';
 import Spatter from './Spatter.svelte';
 import Stairs3D from './Stairs3D.svelte';
+import Stigmata from './Stigmata.svelte';
 import Summits from './Summits.svelte';
 import SverdIFjell from './SverdIFjell.svelte';
 import Teleport from './Teleport.svelte';
+import TronArrow from './TronArrow.svelte';
+import Uluru from './Uluru.svelte';
+import Vial from './Vial.svelte';
+import Vulture from './Vulture.svelte';
+import WoodenSign from './WoodenSign.svelte';
 
 export {
 	AndroidMask,
@@ -23,15 +28,20 @@ export {
 	DustCloud,
 	FireSilhouette,
 	Heptagram,
-	HighFive,
 	MoebiusStar,
 	Orbital,
 	RamProfile,
 	Spatter,
 	Stairs3D,
+	Stigmata,
 	Summits,
 	SverdIFjell,
 	Teleport,
+	TronArrow,
+	Uluru,
+	Vial,
+	Vulture,
+	WoodenSign,
 };
 
 export const NAV_ICONS = {
@@ -42,13 +52,18 @@ export const NAV_ICONS = {
 	dustcloud: DustCloud,
 	firesilhouette: FireSilhouette,
 	heptagram: Heptagram,
-	highfive: HighFive,
 	moebiusstar: MoebiusStar,
 	orbital: Orbital,
 	ramprofile: RamProfile,
 	spatter: Spatter,
 	stairs3d: Stairs3D,
+	stigmata: Stigmata,
 	summits: Summits,
 	sverdifjell: SverdIFjell,
 	teleport: Teleport,
+	uluru: Uluru,
+	vial: Vial,
+	vulture: Vulture,
+	woodensign: WoodenSign,
+	tronarrow: TronArrow,
 };
