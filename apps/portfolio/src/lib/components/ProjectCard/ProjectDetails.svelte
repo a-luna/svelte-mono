@@ -14,14 +14,14 @@
 
 	function getAllLanguageListTitleColor() {
 		let titleColor: IconColor;
-		const verbotenColors = [...categoryColors, 'red', 'dark-blue'];
+		const verbotenColors = [...categoryColors, 'red', 'dark-blue', 'purple'];
 		do {
 			titleColor = getRandomArrayItem<IconColor>(
 				ICON_COLORS.filter((icon) => icon !== 'default'),
 				'blue',
 			);
 		} while (verbotenColors.some((color) => color?.includes(titleColor)));
-		return titleColor;
+		return titleColor ?? 'blue';
 	}
 </script>
 
