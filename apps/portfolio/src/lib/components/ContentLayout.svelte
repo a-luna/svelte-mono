@@ -54,7 +54,7 @@
 			<PostNav slug={content.slug} {contentType} />
 		</div>
 		{#if !dev}
-			<div class="wrapper">
+			<div class="wrapper comments-wrapper">
 				<Giscus
 					repo="a-luna/svelte-mono"
 					repoId="R_kgDOJRXMQw"
@@ -104,7 +104,7 @@
 		background-clip: text;
 		-webkit-box-decoration-break: text;
 		box-decoration-break: clone;
-		background-image: var(--heading-gradient);
+		background-image: var(--page-title-gradient);
 		background-color: var(--black-tint2);
 	}
 	.wrapper {
@@ -116,7 +116,8 @@
 		max-width: var(--max-width);
 	}
 	.content-wrapper,
-	.nav-wrapper {
+	.nav-wrapper,
+	.comments-wrapper {
 		background-color: var(--page-bg-color);
 		margin: 0 auto 2rem auto;
 		padding-top: 0;
