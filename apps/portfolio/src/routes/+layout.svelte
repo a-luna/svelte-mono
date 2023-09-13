@@ -16,10 +16,10 @@
 	let scrollY: number;
 	let showScrollToTopButton: boolean;
 
-	$: fadeInDelay = $initialFadePerformed ? 450 : 0;
+	$: fadeInDelay = $initialFadePerformed ? 200 : 0;
 	$: if (typeof window !== 'undefined') {
 		showScrollToTopButton = pageHeight > windowHeight && scrollY > 0;
-		$mobileDisplay = pageWidth < 760;
+		$mobileDisplay = pageWidth < 753;
 	}
 </script>
 
