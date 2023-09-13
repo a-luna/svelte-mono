@@ -15,7 +15,7 @@ import type {
 	RgbColor,
 	ThemeColor,
 } from '$lib/types';
-import { getRandomArrayItem, getRandomHexString } from '$lib/util';
+import { copyObject, getRandomArrayItem, getRandomHexString } from '$lib/util';
 
 export const getRandomHueValue = (): number =>
 	getRandomArrayItem<number>(Array.from({ length: 360 }, (_, i) => i)) || 0;
@@ -135,7 +135,7 @@ export function colorNameisCustomized(color: ThemeColor): boolean {
 export const normalize = (s: string): string =>
 	s.toLowerCase().trim().replace(/\s+/g, '').replaceAll('-', '').replaceAll('_', '');
 
-export const copyCssColor = (color: CssColorBase): CssColorBase => JSON.parse(JSON.stringify(color));
+export const copyCssColor = (color: CssColorBase): CssColorBase => copyObject<CssColorBase>(color);
 
 export const clampColorComponents = (color: CssColor | CssColorForColorSpace): CssColor | CssColorForColorSpace => ({
 	...color,
@@ -194,17 +194,11 @@ export const addStringValuesToCssColor = (color: CssColorBase): CssColorForColor
 	oklchString: oklchToString(color.oklch),
 });
 
-export const changeColorName = (color: CssColorForColorSpace, newName: string): CssColorForColorSpace => ({
-	...color,
-	name: newName,
-	rgb: { ...color.rgb },
-	hsl: { ...color.hsl },
-	lab: { ...color.lab },
-	lch: { ...color.lch },
-	okhsl: { ...color.okhsl },
-	oklab: { ...color.oklab },
-	oklch: { ...color.oklch },
-});
+export function changeColorName(color: CssColorForColorSpace, newName: string): CssColorForColorSpace {
+	const updatedColor = copyObject<CssColorForColorSpace>(color);
+	updatedColor.name = newName;
+	return updatedColor;
+}
 
 export function getX11ColorNamesNormalized(): Map<string, string> {
 	const x11ColorNames = new Map<string, string>();

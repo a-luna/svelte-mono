@@ -12,6 +12,8 @@ export function getRandomHexString(options: { length: number }): string {
 		.join('');
 }
 
+export const copyObject = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
+
 export function groupByProperty<T>(array: T[], property: keyof T): { [k: string]: T[] } {
 	return array.reduce((grouped, item) => {
 		const groupVal = item[property] as string;
