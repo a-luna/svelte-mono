@@ -93,28 +93,8 @@
 	--pink3: hsl(315, 100%, 55%);
 	--pink4: hsl(301, 93%, 71%);
 
-	--bg-color-red: var(--red4);
-	--bg-color-pink: var(--pink4);
-	--bg-color-orange: var(--orange2);
-	--bg-color-teal: var(--teal4);
-	--bg-color-green: var(--green4);
-	--bg-color-blue: var(--blue-green2);
-	--bg-color-gray: var(--gray1);
-	--bg-color-yellow: var(--yellow3);
-	--bg-color-indigo: var(--indigo4);
-
-	--fg-color-on-red: var(--black4);
-	--fg-color-on-pink: var(--black4);
-	--fg-color-on-orange: var(--black4);
-	--fg-color-on-teal: var(--black4);
-	--fg-color-on-green: var(--black4);
-	--fg-color-on-blue: var(--black4);
-	--fg-color-on-gray: var(--black4);
-	--fg-color-on-yellow: var(--black4);
-	--fg-color-on-indigo: var(--black4);
-
-	--button-disabled-bg-color: var(--gray2);
-	--button-disabled-text-color: var(--dark-gray3);
+	--button-disabled-bg-color: hsl(0, 0%, 50%);
+	--button-disabled-text-color: hsl(0, 0%, 25%);
 
 	--page-bg-color: var(--dark-gray4);
 	--hl-text-shadow: hsla(0, 0%, 100%, 0.6);

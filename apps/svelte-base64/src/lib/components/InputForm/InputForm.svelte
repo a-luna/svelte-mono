@@ -4,17 +4,22 @@
 	import InputStringEncodingRadioButtons from '$lib/components/InputForm/InputStringEncodingRadioButtons.svelte';
 	import OutputBase64EncodingRadioButtons from '$lib/components/InputForm/OutputBase64EncodingRadioButtons.svelte';
 	import InputTextBox from '$lib/components/InputTextBox.svelte';
-	import PushableButton from '$lib/components/PushableButton.svelte';
 	import { alert } from '$lib/stores/alert';
 	import { app } from '$lib/stores/app';
 	import { state } from '$lib/stores/state';
+	import type { ButtonColor } from '@a-luna/shared-ui';
+	import { PushableButton } from '@a-luna/shared-ui';
 
 	let inputText: string;
 	let inputTextBox: InputTextBox;
 	let inputStringEncodingButtons: InputStringEncodingRadioButtons;
 	let inputBase64EncodingOptions: InputBase64EncodingRadioButtons;
 	let outputBase64EncodingOptions: OutputBase64EncodingRadioButtons;
+	let priColor: ButtonColor;
+	let secColor: ButtonColor;
 
+	$: priColor = $app.encoderMode ? 'teal' : 'green';
+	$: secColor = $app.encoderMode ? 'pink' : 'indigo';
 	$: inputTextBoxGridStyles = 'grid-column: 1 / span 3;';
 	$: defaultFlexStyles = 'display: flex; gap: 0.5rem;';
 	$: encodingOptionsFlexStyles = $app.isDefaultDisplay
@@ -78,7 +83,7 @@
 	<div class="switch-mode-button-wrapper">
 		<PushableButton
 			size={$app.buttonSize}
-			color={'pri'}
+			color={priColor}
 			width={'100%'}
 			testid={'switch-mode-button'}
 			on:click={() => toggleMode()}>Switch Mode</PushableButton
@@ -87,7 +92,7 @@
 	<div class="reset-form-button-wrapper">
 		<PushableButton
 			size={$app.buttonSize}
-			color={'sec'}
+			color={secColor}
 			width={'100%'}
 			testid={'reset-form-button'}
 			on:click={() => resetForm()}>Reset</PushableButton
