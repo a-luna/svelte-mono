@@ -220,7 +220,7 @@
 		color: var(--default);
 	}
 	.filter-settings label:hover {
-		color: var(--accent-color);
+		color: var(--link-color);
 	}
 	.filter-setings label.selected,
 	.filter-setings label.hovered {

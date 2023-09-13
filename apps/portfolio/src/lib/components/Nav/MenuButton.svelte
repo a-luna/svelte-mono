@@ -30,8 +30,8 @@
 		z-index: 5;
 	}
 	.menu-button:hover {
-		border-color: var(--accent-color);
-		color: var(--accent-color);
+		border-color: var(--link-color);
+		color: var(--link-color);
 	}
 	.icon-wrapper {
 		width: 26px;

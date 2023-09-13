@@ -43,11 +43,11 @@
 		color: var(--tw-prose-invert-body);
 	}
 	.post-title {
-		color: var(--accent-color);
+		color: var(--link-color);
 		background-color: var(--page-bg-color);
 	}
 	a:hover {
 		color: var(--page-bg-color);
-		background-color: var(--yellow-green);
+		background-color: var(--link-color);
 	}
 </style>

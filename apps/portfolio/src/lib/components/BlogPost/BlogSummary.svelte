@@ -92,11 +92,11 @@
 	}
 
 	.blog-summary :global(.filter-value) {
-		color: var(--tw-prose-headings);
+		color: var(--gray);
 	}
 
 	.blog-summary:hover {
-		border-color: var(--accent-color);
+		border-color: var(--link-color);
 	}
 
 	.top-right-wrapper {
@@ -124,7 +124,7 @@
 	.post-title:hover {
 		font-size: 1.3rem;
 		font-weight: 400;
-		color: var(--accent-color);
+		color: var(--link-color);
 		background-color: var(--black);
 		text-decoration: none;
 		line-height: 1.3;
@@ -133,7 +133,7 @@
 
 	.published {
 		font-size: 1rem;
-		color: var(--tw-prose-headings);
+		color: var(--gray);
 	}
 
 	.description {

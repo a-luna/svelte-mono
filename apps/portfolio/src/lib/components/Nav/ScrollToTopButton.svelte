@@ -13,7 +13,7 @@
 		height: 3rem;
 		border-radius: 50%;
 		color: var(--black);
-		background: var(--accent-color);
+		background: var(--link-color);
 		opacity: 0.5;
 		z-index: 3;
 		padding: 0.5rem 0.25rem;
@@ -22,7 +22,7 @@
 	a:focus,
 	a:active {
 		color: var(--black);
-		background: var(--accent-color);
+		background: var(--link-color);
 	}
 	a:hover {
 		opacity: 0.8;

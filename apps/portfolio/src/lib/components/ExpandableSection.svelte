@@ -60,7 +60,7 @@
 	summary {
 		display: list-item;
 		list-style: none;
-		color: var(--accent-color);
+		color: var(--link-color);
 		border-width: 1.5px;
 		border-style: solid;
 		border-color: var(--dark-gray);
@@ -71,13 +71,13 @@
 		transition: background-color 0.3s ease-in;
 	}
 	summary:hover {
-		color: var(--accent-color);
-		border-color: var(--accent-color);
+		color: var(--link-color);
+		border-color: var(--link-color);
 	}
 	details[open] > summary {
 		color: var(--toggle-section-bg-color);
-		background-color: var(--accent-color);
-		border-color: var(--accent-color);
+		background-color: var(--link-color);
+		border-color: var(--link-color);
 	}
 	summary > .summary-wrapper {
 		display: flex;
@@ -91,7 +91,7 @@
 		transform: rotate(90deg);
 	}
 	::marker {
-		color: var(--accent-color);
+		color: var(--link-color);
 	}
 	summary::-webkit-details-marker {
 		/* Hides marker on Safari */
@@ -130,7 +130,7 @@
 		border-bottom-color: var(--dark-gray);
 	}
 	details[open] .toc-wrapper {
-		border-color: var(--accent-color);
+		border-color: var(--link-color);
 	}
 
 	@media (min-width: 640px) {

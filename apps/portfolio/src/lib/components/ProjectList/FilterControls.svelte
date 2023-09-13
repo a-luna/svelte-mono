@@ -51,8 +51,8 @@
 	}
 
 	.show-filters.open {
-		border-color: var(--accent-color);
-		background-color: var(--accent-color);
+		border-color: var(--link-color);
+		background-color: var(--link-color);
 		color: var(--black);
 	}
 
@@ -67,8 +67,8 @@
 
 	.show-filters:hover,
 	.reset-filters:not([disabled]):hover {
-		border-color: var(--accent-color);
-		color: var(--accent-color);
+		border-color: var(--link-color);
+		color: var(--link-color);
 	}
 
 	.show-filters .icon {

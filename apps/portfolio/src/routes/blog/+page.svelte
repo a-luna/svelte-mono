@@ -144,11 +144,11 @@
 	}
 	.button-wrapper {
 		background-color: var(--page-bg-color);
-		border: 1px solid var(--accent-color);
+		border: 1px solid var(--link-color);
 		padding: 0.75rem 1rem;
 	}
 	.load-more-button {
-		color: var(--accent-color);
+		color: var(--link-color);
 		background-color: var(--page-bg-color);
 		display: flex;
 		justify-content: center;

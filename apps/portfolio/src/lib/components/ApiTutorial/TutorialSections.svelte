@@ -67,18 +67,18 @@
 
 	#tutorial-sections[open] .tutorial-sections-wrapper,
 	#tutorial-sections > summary:hover {
-		color: var(--accent-color);
-		border-color: var(--accent-color);
+		color: var(--link-color);
+		border-color: var(--link-color);
 	}
 
 	#tutorial-sections[open] > summary {
 		color: var(--toggle-section-bg-color);
-		border-color: var(--accent-color);
+		border-color: var(--link-color);
 	}
 
 	#tutorial-sections[open] > summary,
 	#tutorial-sections > summary:hover {
-		border-bottom: 1.5px solid var(--accent-color);
+		border-bottom: 1.5px solid var(--link-color);
 	}
 
 	.tutorial-sections-wrapper {
@@ -95,7 +95,7 @@
 
 		#tutorial-sections[open] > summary,
 		#tutorial-sections > summary:hover {
-			border-bottom: 2px solid var(--accent-color);
+			border-bottom: 2px solid var(--link-color);
 		}
 
 		.tutorial-sections-wrapper {

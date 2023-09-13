@@ -60,7 +60,7 @@
 		border-color: var(--dark-gray);
 	}
 	.project-summary:hover {
-		border-color: var(--accent-color);
+		border-color: var(--link-color);
 	}
 	.project-image,
 	.project-image:hover,
@@ -114,7 +114,7 @@
 			background-color: var(--black);
 		}
 		.project-summary-wrapper:hover {
-			border-color: var(--accent-color);
+			border-color: var(--link-color);
 		}
 		.project-image {
 			display: block;

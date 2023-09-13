@@ -75,7 +75,7 @@
 	}
 
 	.api-tutorial-section:hover {
-		border-color: var(--yellow-green);
+		border-color: var(--link-color);
 	}
 
 	h4 {
@@ -171,13 +171,13 @@
 	}
 
 	.links-left a {
-		color: var(--yellow-green);
+		color: var(--link-color);
 		background-color: var(--black);
 		border: 1px solid currentColor;
 	}
 
 	.links-left a:hover {
-		background-color: var(--yellow-green);
+		background-color: var(--link-color);
 		color: var(--black);
 	}
 

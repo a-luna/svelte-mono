@@ -190,12 +190,12 @@
 	}
 
 	:focus-visible {
-		outline: 2px solid var(--accent-color);
+		outline: 2px solid var(--link-color);
 	}
 
 	::selection {
 		color: var(--black);
-		background-color: var(--accent-color);
+		background-color: var(--link-color);
 	}
 
 	::strong {
@@ -211,7 +211,7 @@
 		::-webkit-clear-button,
 		::-webkit-inner-spin-button,
 		::-webkit-outer-spin-button) {
-		color: var(--accent-color);
+		color: var(--link-color);
 	}
 
 	details>summary>*:first-child {
@@ -389,6 +389,9 @@
 	--teal: hsl(161.97 100% 49%);
 	--teal: oklch(86.47% 0.257 162.56);
 
+	--dark-teal: hsl(165.05 100% 49%);
+	--dark-teal: oklch(86.91% 0.238 166.74);
+
 	--blue: hsl(196.29 100% 47%);
 	--blue: oklch(70.59% 0.19 234.26);
 
@@ -401,11 +404,14 @@
 	--pink: hsl(321.68 100% 63%);
 	--pink: oklch(69.12% 0.323 346.56);
 
-	--yellow-green-dim: hsl(75.87 100% 40%);
-	--yellow-green-dim: oklch(77.2% 0.229 126.4);
+	--teal-dim: hsl(161.97 100% 34%);
 
-	--accent-color: var(--yellow-green);
-	--accent-color-dim: var(--yellow-green-dim);
+	--link-color: var(--yellow-green);
+
+	--accent-color: var(--sea-green);
+	--accent-color-dim: hsl(149.93 100% 33%);
+
+	--social-color: var(--purple);
 
 	/* Post Title */
 	--post-title-text-color: var(--white-shade2);
@@ -418,7 +424,10 @@
 		-20px 20px 31.8px -2.5px hsl(var(--shadow-color) / 0.36);
 
 
-	--heading-gradient: linear-gradient(to bottom right, var(--green), var(--yellow-green));
+	--page-title-gradient: linear-gradient(to bottom right, var(--sea-green), var(--yellow-green));
+	--g-color-1: var(--purple);
+	--g-color-2: var(--sea-green);
+	--heading-underline-gradient: linear-gradient(to right, var(--g-color-1), var(--g-color-2));
 }
 
 body {
@@ -438,8 +447,6 @@ body {
 	--nodejs-color-h: 256;
 	--css-color-h: 298; */
 
-	--g-color-1: var(--indigo);
-	--g-color-2: var(--teal);
 	--g-color-1-dim: hsl(185 9% 20%);
 	--g-color-2-dim: hsl(215 9% 20%);
 	--g-color-3-dim: hsl(256 9% 20%);
@@ -547,13 +554,11 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	color: var(--yellow);
 }
 
-.yellow-green,
-.accent-color {
+.yellow-green {
 	color: var(--yellow-green)
 }
 
-.yellow-green-dim,
-.accent-color-dim {
+.yellow-green-dim {
 	color: var(--yellow-green-dim);
 }
 
@@ -569,6 +574,16 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 
 .teal {
 	color: var(--teal);
+}
+
+.dark-teal,
+.accent-color {
+	color: var(--dark-teal);
+}
+
+.dark-teal-dim,
+.accent-color-dim {
+	color: var(--dark-teal-dim);
 }
 
 .blue {
@@ -900,7 +915,7 @@ article .heading-text a {
 }
 
 article .heading-text a:hover {
-	color: var(--yellow-green);
+	color: var(--link-color);
 	background-color: var(--page-bg-color);
 }
 
@@ -1078,7 +1093,7 @@ summary .heading-text {
 }
 
 .underline--magical {
-	background-image: linear-gradient(to right, var(--purple), var(--sea-green));
+	background-image: var(--heading-underline-gradient);
 	background-repeat: no-repeat;
 	background-size: 100% 1px;
 	background-position: 0 90%;
@@ -1106,7 +1121,7 @@ details .underline--magical h4 {
 .home .section-content .normal-text a.icon,
 .home .section-content .normal-text a.icon:hover {
 	display: inline-block;
-	color: var(--yellow-green);
+	color: var(--link-color);
 	background-color: hsl(0 0% 0% / 0.4);
 	height: 16px;
 	width: 18px;
@@ -1335,7 +1350,7 @@ blockquote .http-response code {
 }
 
 .list-of-links li::marker {
-	color: var(--accent-color);
+	color: var(--link-color);
 }
 
 pre:not(.shiki) {
@@ -1404,7 +1419,7 @@ pre:not(.shiki) {
 }
 
 .shiki.linenos .hl::before {
-	color: VAR(--accent-color);
+	color: var(--link-color);
 }
 
 .shiki-wrapper {
@@ -1660,7 +1675,7 @@ article ul .emphasis {
 article a.eyeballs {
 	font-size: 1.2rem;
 	font-weight: 500;
-	color: var(--accent-color);
+	color: var(--link-color);
 }
 
 article a.eyeballs:hover,
@@ -1668,7 +1683,7 @@ article a.eyeballs:active,
 article a.eyeballs:focus,
 article a.eyeballs:active:hover {
 	color: var(--page-bg-color);
-	background-color: var(--accent-color);
+	background-color: var(--link-color);
 }
 
 article figure {
@@ -1722,7 +1737,7 @@ article figure {
 
 article .hero-buttons a {
 	color: var(--black-tint1);
-	background-color: var(--accent-color);
+	background-color: var(--link-color);
 	text-align: center;
 	white-space: pre;
 	flex: 0 1 40%;
@@ -1738,7 +1753,7 @@ article .hero-buttons a:active,
 article .hero-buttons a:focus,
 article .hero-buttons a:active:hover {
 	color: var(--black-tint1);
-	background-color: var(--accent-color-dim);
+	background-color: var(--link-color-dim);
 	text-decoration: none;
 }
 
@@ -2025,7 +2040,7 @@ ul .table-wrapper {
 
 .responsive tbody td {
 	color: var(--white-shade3);
-	border: 1px solid var(--accent-color);
+	border: 1px solid var(--link-color);
 }
 
 #tutorial-part-5-table-2 .responsive tbody td:not(.last-column) {
@@ -2037,7 +2052,7 @@ ul .table-wrapper {
 }
 
 .responsive table a {
-	color: var(--accent-color);
+	color: var(--link-color);
 	font-weight: 500;
 }
 
@@ -2054,10 +2069,10 @@ ul .table-wrapper {
 
 th.column-header,
 .responsive thead tr th {
-	background-color: var(--accent-color);
+	background-color: var(--link-color);
 	color: var(--page-bg-color);
 	line-height: 0.8;
-	border: 1px solid var(--accent-color);
+	border: 1px solid var(--link-color);
 	vertical-align: middle;
 	text-align: center;
 	padding: 0;
@@ -2067,7 +2082,7 @@ th.first-column,
 .responsive td.first-column,
 .responsive tbody tr td:first-child,
 .responsive thead tr th:first-child {
-	border-left: 1px solid var(--accent-color);
+	border-left: 1px solid var(--link-color);
 	padding: 5px 5px 5px 8px;
 	vertical-align: middle;
 }
@@ -2080,14 +2095,14 @@ th.last-column,
 .responsive td.last-column,
 .responsive tbody tr td:last-child,
 .responsive thead tr th:last-child {
-	border-right: 1px solid var(--accent-color);
+	border-right: 1px solid var(--link-color);
 	padding: 5px 8px 5px 5px;
 	vertical-align: middle;
 }
 
 .responsive td.last-row,
 .responsive tbody tr:last-child td {
-	border-bottom: 1px solid var(--accent-color);
+	border-bottom: 1px solid var(--link-color);
 }
 
 .responsive td.table-footer {
@@ -2171,15 +2186,15 @@ th.last-column,
 }
 
 .table-wrapper .aws-hosting-costs tbody td.first-column {
-	border-left: 1px solid var(--accent-color);
+	border-left: 1px solid var(--link-color);
 }
 
 .table-wrapper .aws-hosting-costs tbody td.last-column {
-	border-right: 1px solid var(--accent-color);
+	border-right: 1px solid var(--link-color);
 }
 
 .table-wrapper .aws-hosting-costs tbody td.last-row {
-	border-bottom: 1px solid var(--accent-color);
+	border-bottom: 1px solid var(--link-color);
 }
 
 .table-wrapper .aws-hosting-costs tbody td.common-config {
@@ -2246,7 +2261,7 @@ table.aws-hosting-costs {
 }
 
 .article-list a {
-	color: var(--accent-color);
+	color: var(--link-color);
 	text-decoration-line: none;
 }
 
@@ -2436,7 +2451,7 @@ a.feature-card:hover>div {
 #table-of-contents summary {
 	display: list-item;
 	list-style: none;
-	color: var(--accent-color);
+	color: var(--link-color);
 	line-height: 1;
 	padding: 0.75rem 0.5rem;
 	cursor: pointer;
@@ -2448,7 +2463,7 @@ a.feature-card:hover>div {
 #table-of-contents[open]>summary {
 	color: var(--toggle-section-bg-color);
 	font-weight: 500;
-	background-color: var(--accent-color);
+	background-color: var(--link-color);
 }
 
 .toggle-groups details[open] .details-icon,
@@ -2457,7 +2472,7 @@ a.feature-card:hover>div {
 }
 
 .toggle-groups ::marker {
-	color: var(--accent-color);
+	color: var(--link-color);
 }
 
 .toggle-groups summary>.summary-wrapper,
@@ -2484,7 +2499,7 @@ a.feature-card:hover>div {
 
 .toggle-groups ul>li::marker,
 .toc-wrapper ul>li::marker {
-	color: var(--accent-color);
+	color: var(--link-color);
 }
 
 .toggle-groups ul>li,
@@ -2508,7 +2523,7 @@ a.feature-card:hover>div {
 
 .toggle-groups a,
 .toggle-groups a:hover {
-	color: var(--accent-color);
+	color: var(--link-color);
 	background-color: inherit;
 	transition: all 350ms ease-out;
 }
@@ -2594,13 +2609,13 @@ a.feature-card:hover>div {
 }
 
 #table-of-contents>summary:hover {
-	color: var(--accent-color);
-	border-color: var(--accent-color);
+	color: var(--link-color);
+	border-color: var(--link-color);
 }
 
 #table-of-contents[open]>summary {
 	color: var(--toggle-section-bg-color);
-	border-color: var(--accent-color);
+	border-color: var(--link-color);
 }
 
 .toc-wrapper {
@@ -2623,7 +2638,7 @@ a.feature-card:hover>div {
 
 #table-of-contents[open] .toc-wrapper,
 .toc-wrapper:hover {
-	border-color: var(--accent-color);
+	border-color: var(--link-color);
 }
 
 @media (min-width: 640px) {

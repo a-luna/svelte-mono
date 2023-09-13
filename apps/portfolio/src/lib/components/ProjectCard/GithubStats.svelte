@@ -32,7 +32,7 @@
 	.gh-url {
 		display: flex;
 		gap: 5px;
-		color: var(--tw-prose-headings);
+		color: var(--gray);
 		background-color: var(--black);
 		text-decoration: none;
 	}

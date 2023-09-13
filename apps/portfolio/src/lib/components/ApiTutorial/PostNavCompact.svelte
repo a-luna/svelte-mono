@@ -59,7 +59,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		font-weight: 400;
-		color: var(--accent-color);
+		color: var(--link-color);
 		background-color: var(--page-bg-color);
 		padding: 0;
 		text-decoration: none;

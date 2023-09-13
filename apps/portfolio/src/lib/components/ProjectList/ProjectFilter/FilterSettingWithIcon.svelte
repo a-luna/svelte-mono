@@ -9,7 +9,7 @@
 	let iconColor: string;
 
 	$: details = getFilterSettingDetails(value) as unknown as ProjectTypeDetails;
-	$: iconColor = details ? details.color : '--yellow-green';
+	$: iconColor = details ? details.color : '--link-color';
 	$: displayName = details.displayName;
 	$: iconSize = details?.size ?? 16;
 	$: marginRight = Math.max(5, 23 - iconSize);
@@ -35,7 +35,7 @@
 	}
 	.hovered,
 	.hovered.selected {
-		color: var(--accent-color);
+		color: var(--link-color);
 	}
 	.selected {
 		background-color: var(--dark-gray-shade1);
@@ -49,6 +49,7 @@
 		font-size: 1rem;
 		letter-spacing: 0.6px;
 		white-space: nowrap;
+		color: var(--gray);
 	}
 	:global(.icon .filter-settings) .filter-value {
 		font-size: 0.9rem;

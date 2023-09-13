@@ -18,9 +18,9 @@ module.exports = {
 						blockquote: {
 							fontWeight: '400',
 							fontStyle: 'italic',
-							color: 'var(--yellow-green)',
+							color: 'var(--link-color)',
 							background: 'var(--black-tint2)',
-							'border-left': '2px solid var(--yellow-green)',
+							'border-left': '2px solid var(--link-color)',
 							padding: '5px 10px',
 							margin: '0 0 20px 1em',
 						},
@@ -57,7 +57,7 @@ module.exports = {
 						},
 						'main a': {
 							fontWeight: '400',
-							color: 'var(--yellow-green)',
+							color: 'var(--link-color)',
 							'background-color': 'inherit',
 							textDecoration: 'none',
 							transition: 'all 350ms ease-out',
@@ -65,7 +65,7 @@ module.exports = {
 						'main a:hover': {
 							fontWeight: '400',
 							color: 'var(--black-tint3)',
-							'background-color': 'var(--yellow-green)',
+							'background-color': 'var(--link-color)',
 							textDecoration: 'none',
 							'border-bottom': 'none',
 							'box-shadow': 'none',
@@ -78,7 +78,7 @@ module.exports = {
 						},
 						'article a:hover code': {
 							color: 'var(--black-tint3)',
-							'background-color': 'var(--yellow-green)',
+							'background-color': 'var(--link-color)',
 							transition: 'all 350ms ease-out',
 						},
 						'a code': {

@@ -29,7 +29,7 @@
 	}
 	.project-card:hover {
 		color: var(--body-text);
-		border-color: var(--yellow-green);
+		border-color: var(--link-color);
 	}
 	.project-card {
 		display: grid;

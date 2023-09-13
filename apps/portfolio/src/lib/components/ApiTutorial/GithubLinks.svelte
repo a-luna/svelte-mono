@@ -84,18 +84,18 @@
 
 	#github-links[open] .github-links-wrapper,
 	#github-links > summary:hover {
-		color: var(--accent-color);
-		border-color: var(--accent-color);
+		color: var(--link-color);
+		border-color: var(--link-color);
 	}
 
 	#github-links[open] > summary {
 		color: var(--toggle-section-bg-color);
-		border-color: var(--accent-color);
+		border-color: var(--link-color);
 	}
 
 	#github-links[open] > summary,
 	#github-links > summary:hover {
-		border-top: 1.5px solid var(--accent-color);
+		border-top: 1.5px solid var(--link-color);
 	}
 
 	.github-links-wrapper {
@@ -112,7 +112,7 @@
 
 		#github-links[open] > summary,
 		#github-links > summary:hover {
-			border-top: 2px solid var(--accent-color);
+			border-top: 2px solid var(--link-color);
 		}
 
 		.github-links-wrapper {

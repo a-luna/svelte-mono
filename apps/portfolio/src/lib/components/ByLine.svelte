@@ -17,6 +17,7 @@
 		</div>
 		<span class="author-name">{AUTHOR_NAME}</span>
 	</a>
+	<span class="separator">/</span>
 	<span class="publish-date">{@html publishDate}</span>
 </div>
 
@@ -38,7 +39,7 @@
 		display: inline-block;
 		border-width: 2px;
 		border-style: solid;
-		border-color: var(--gray-shade2);
+		border-color: var(--gray-shade3);
 		border-radius: 50%;
 		height: 50px;
 		width: 50px;
@@ -46,7 +47,7 @@
 		flex: 0 0 50px;
 	}
 	.author:hover .avatar {
-		border-color: var(--white);
+		border-color: var(--white-shade3);
 	}
 	.avatar img {
 		border-radius: 50%;
@@ -57,23 +58,23 @@
 		background-color: var(--dark-gray-shade2);
 	}
 	.author-name,
+	.separator,
 	.publish-date {
+		color: var(--gray-shade3);
 		font-size: 0.875rem;
 		font-weight: 400;
 		white-space: nowrap;
 	}
 	.author-name {
-		color: var(--gray-shade2);
 		transition: color 0.3s ease-in;
 		align-self: center;
 	}
 
 	.author:hover .author-name {
-		color: var(--white);
+		color: var(--white-shade3);
 	}
 	.publish-date {
 		flex: 1;
-		color: var(--gray-shade2);
 	}
 	@media (min-width: 640px) {
 		.avatar {

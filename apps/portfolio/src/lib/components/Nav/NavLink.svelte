@@ -21,13 +21,13 @@
 	}
 
 	a:hover {
-		color: var(--accent-color);
+		color: var(--link-color);
 		background-color: var(--black-tint2);
 	}
 
 	a.active,
 	a.active:hover {
-		color: var(--accent-color);
+		color: var(--link-color);
 	}
 
 	@media (min-width: 768px) {
@@ -43,18 +43,14 @@
 			transition: border-color 0.5s, color 0.5s;
 		}
 
-		a.active {
-			color: var(--accent-color);
-		}
-
 		a:hover {
-			color: var(--accent-color);
+			color: var(--white-shade2);
 			background-color: var(--page-bg-color);
 		}
 
 		a.active,
 		a.active:hover {
-			color: var(--accent-color);
+			color: var(--white-shade2);
 			border-bottom: 1.5px solid var(--accent-color);
 		}
 	}

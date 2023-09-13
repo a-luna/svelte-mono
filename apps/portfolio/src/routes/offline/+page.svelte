@@ -37,7 +37,7 @@
 	}
 
 	.warning__code {
-		color: var(--accent-color);
+		color: var(--link-color);
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
@@ -54,7 +54,7 @@
 	}
 
 	.warning__headline {
-		color: var(--accent-color);
+		color: var(--link-color);
 		font-size: 1.2rem;
 		font-weight: 500;
 		margin: 0;

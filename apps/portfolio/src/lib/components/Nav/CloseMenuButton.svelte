@@ -28,8 +28,8 @@
 		z-index: 5;
 	}
 	.menu-button:hover {
-		border-color: var(--accent-color);
-		color: var(--accent-color);
+		border-color: var(--link-color);
+		color: var(--link-color);
 	}
 
 	@media (min-width: 768px) {
