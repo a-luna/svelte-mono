@@ -3,7 +3,7 @@
 	import { getRandomHexString } from '$lib/util';
 	import { createEventDispatcher } from 'svelte';
 
-	export let modalId = `modal-${getRandomHexString(4)}`;
+	export let modalId = `modal-${getRandomHexString({ length: 4 })}`;
 	export let title = '';
 	export let closed = true;
 	export let disableSaveButton = false;

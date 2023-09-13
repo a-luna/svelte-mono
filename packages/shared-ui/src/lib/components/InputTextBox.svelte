@@ -10,7 +10,7 @@
 	export let readonly = false;
 	export let error = false;
 	export let tooltip = '';
-	export let id = `text-box-${getRandomHexString(4)}`;
+	export let id = `text-box-${getRandomHexString({ length: 4 })}`;
 	let inputTextElement: HTMLInputElement;
 	const dispatch = createEventDispatcher();
 

@@ -5,10 +5,12 @@ export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLo
 export const getVariableName = (x: object) => Object.keys(x)[0];
 export const objectIsEmpty = (obj: object) => JSON.stringify(obj) === '{}';
 
-export const getRandomHexString = (length: number): string =>
-	Array.from({ length }, () => Math.floor(Math.random() * 16))
+export function getRandomHexString(options: { length: number }): string {
+	const { length } = options;
+	return Array.from({ length }, () => Math.floor(Math.random() * 16))
 		.map((n) => Number(n).toString(16))
 		.join('');
+}
 
 export function groupByProperty<T>(array: T[], property: keyof T): { [k: string]: T[] } {
 	return array.reduce((grouped, item) => {

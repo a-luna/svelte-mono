@@ -17,13 +17,13 @@ export function getX11ColorPalettes(): X11ColorPalette[] {
 	];
 	const [colors, grays] = getX11ColorsOrderedByHue();
 	const colorPalettes: X11ColorPalette[] = hueRanges.map(({ hueStart, hueEnd, name, componentColor }) => ({
-		id: getRandomHexString(4),
+		id: getRandomHexString({ length: 4 }),
 		displayName: name,
 		colors: getColorsInHueRange(hueStart, hueEnd, colors),
 		componentColor,
 	}));
 	const grayPalette: X11ColorPalette = {
-		id: getRandomHexString(4),
+		id: getRandomHexString({ length: 4 }),
 		displayName: 'black - white',
 		colors: grays,
 		componentColor: 'black' as ComponentColor,

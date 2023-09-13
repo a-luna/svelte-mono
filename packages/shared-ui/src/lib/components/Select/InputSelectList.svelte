@@ -9,7 +9,7 @@
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
-	export let menuId = `select-menu-${getRandomHexString(4)}`;
+	export let menuId = `select-menu-${getRandomHexString({ length: 4 })}`;
 	export let menuLabel = 'Options';
 	export let options: SelectListOption[] = [];
 	export let selectedValue: number | string;

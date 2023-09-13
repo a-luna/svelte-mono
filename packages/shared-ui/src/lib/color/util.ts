@@ -213,7 +213,7 @@ export function getX11ColorNamesNormalized(): Map<string, string> {
 }
 
 export function createEmptyColorPalette(name = 'custom palette'): ColorPalette {
-	const id = getRandomHexString(4);
+	const id = getRandomHexString({ length: 4 });
 	return {
 		id,
 		propName: `palette-${id}`,
