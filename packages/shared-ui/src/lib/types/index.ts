@@ -26,6 +26,8 @@ import type {
 import type { HueRange } from '$lib/types/HueRange';
 import type {
 	AdjustableColorFormat,
+	ButtonColor,
+	ButtonSize,
 	ColorFormat,
 	ColorScheme,
 	ColorSpace,
@@ -60,6 +62,8 @@ import type { ThemeColor } from '$lib/types/ThemeColor';
 export * from '$lib/types/Icons';
 export type {
 	AdjustableColorFormat,
+	ButtonColor,
+	ButtonSize,
 	ColorFormat,
 	ColorPalette,
 	ColorScheme,

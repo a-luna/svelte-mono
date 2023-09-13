@@ -1,4 +1,6 @@
 import type {
+	BUTTON_COLORS,
+	BUTTON_SIZES,
 	COLOR_FORMATS,
 	COLOR_FORMAT_COMPONENTS,
 	COLOR_SCHEMES,
@@ -29,3 +31,5 @@ export type RgbHexComponent = Subset<ColorFormatComponents, 'red' | 'green' | 'b
 export type HslComponent = Subset<ColorFormatComponents, 'hue' | 'sat' | 'light' | 'alpha'>;
 export type LchComponent = Subset<ColorFormatComponents, 'light' | 'chroma' | 'hue' | 'alpha'>;
 export type LabComponent = Subset<ColorFormatComponents, 'light' | 'aaxis' | 'baxis' | 'alpha'>;
+export type ButtonColor = (typeof BUTTON_COLORS)[number];
+export type ButtonSize = (typeof BUTTON_SIZES)[number];

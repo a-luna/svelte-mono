@@ -3,6 +3,8 @@ export const COLOR_SPACES = ['srgb', 'p3', 'rec2020', 'out'] as const;
 export const COLOR_FORMATS = ['hex', 'rgb', 'hsl', 'okhsl', 'lch', 'oklch', 'lab', 'oklab'] as const;
 export const HEX_STRING_FORMATS = ['condensed', 'full'] as const;
 export const NUMBER_TYPES = ['hex', 'decimal', 'percent', 'float', 'degree', 'rad', 'turn'] as const;
+export const BUTTON_COLORS = ['red', 'pink', 'orange', 'teal', 'green', 'blue', 'gray', 'yellow', 'indigo'] as const;
+export const BUTTON_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
 
 export const COLOR_SCHEMES = [
 	'base',
