@@ -1,5 +1,5 @@
-import { labToRgb, lchToLab, oklabToOklch, rgbToHex, rgbToHsl, rgbToOkhsl, rgbToOklab } from '$lib/color/converters';
-import { finalizeLabColor, parseHueValue } from '$lib/color/parsers/util';
+import { createCssColorBaseFromLchColor, finalizeLabColor } from '$lib/color/gamut';
+import { parseHueValue } from '$lib/color/parsers/util';
 import { LCH_VAL_NAME_REGEX } from '$lib/color/regex';
 import type { CssColor, HslLabNumberType, LchColor, LchComponent, ParsedLchComponent } from '$lib/types';
 
@@ -48,24 +48,4 @@ const getLchColorFromComponents = (components: ParsedLchComponent[]): LchColor =
 	a: components.find((c) => c.component === 'alpha')?.value ?? 1.0,
 });
 
-export function cssColorFromLch(lch: LchColor): CssColor {
-	const lab = lchToLab(lch);
-	const rgb = labToRgb(lab);
-	const hex = rgbToHex(rgb);
-	const hsl = rgbToHsl(rgb);
-	const oklab = rgbToOklab(rgb);
-	const oklch = oklabToOklch(oklab);
-	const okhsl = rgbToOkhsl(rgb);
-	const color = {
-		hex,
-		rgb,
-		hsl,
-		lab,
-		lch,
-		oklab,
-		oklch,
-		okhsl,
-		name: hex,
-	};
-	return finalizeLabColor(color);
-}
+export const cssColorFromLch = (lch: LchColor): CssColor => finalizeLabColor(createCssColorBaseFromLchColor(lch));

@@ -8,7 +8,7 @@ import {
 } from '$lib/color/converters/util';
 import type { LabColor, Matrix3x3, RgbColor, XyzColor } from '$lib/types';
 
-export const labToRgb = (lab: LabColor): RgbColor => xyzToRgb(labToXyz(lab));
+export const labToRgb = (lab: LabColor): RgbColor => xyzToSrgb(labToXyz(lab));
 export const labToP3 = (lab: LabColor): RgbColor => xyzToP3(labToXyz(lab));
 export const labToRec2020 = (lab: LabColor): RgbColor => xyzToRec2020(labToXyz(lab));
 
@@ -40,13 +40,13 @@ function xyzToRgbInColorSpace(xyz: XyzColor, conversionMatrix: Matrix3x3): RgbCo
 		r: compressGamma(nonLinearRgb[0]),
 		g: compressGamma(nonLinearRgb[1]),
 		b: compressGamma(nonLinearRgb[2]),
-		a: a * 255.0,
+		a,
 	};
 }
 
 const compressGamma = (linearValue: number): number =>
 	linearValue <= 0.0031306684425006078 ? 3294.6 * linearValue : 269.025 * Math.pow(linearValue, 5.0 / 12.0) - 14.025;
 
-const xyzToRgb = (xyz: XyzColor): RgbColor => xyzToRgbInColorSpace(xyz, XYZ_TO_RGB_MATRIX);
+const xyzToSrgb = (xyz: XyzColor): RgbColor => xyzToRgbInColorSpace(xyz, XYZ_TO_RGB_MATRIX);
 const xyzToP3 = (xyz: XyzColor): RgbColor => xyzToRgbInColorSpace(xyz, XYZ_TO_P3_MATRIX);
 const xyzToRec2020 = (xyz: XyzColor): RgbColor => xyzToRgbInColorSpace(xyz, XYZ_TO_REC2020_MATRIX);

@@ -49,7 +49,7 @@ export function okhslToRgb(okhsl: OkhslColor): RgbColor {
 		r: srgb_transfer_function(rgb.r) * 255.0,
 		g: srgb_transfer_function(rgb.g) * 255.0,
 		b: srgb_transfer_function(rgb.b) * 255.0,
-		a: rgb.a * 255.0,
+		a: rgb.a,
 	};
 }
 

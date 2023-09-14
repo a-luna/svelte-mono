@@ -36,6 +36,6 @@ export function hslToRgb(hsl: HslColor): RgbColor {
 	r = (r + match) * 255.0;
 	g = (g + match) * 255.0;
 	b = (b + match) * 255.0;
-	a = hsl.a * 255.0;
+	a = hsl.a;
 	return { r, g, b, a };
 }

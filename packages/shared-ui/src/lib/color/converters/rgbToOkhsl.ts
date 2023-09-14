@@ -1,5 +1,4 @@
 import { get_Cs } from '$lib/color/converters/util/okhsl';
-import { decimalToOpacityValue } from '$lib/color/util';
 import type { OkhslColor, OklabColor, RgbColor } from '$lib/types';
 
 export function rgbToOkhsl(rgb: RgbColor): OkhslColor {
@@ -42,7 +41,7 @@ export function rgbToOkhsl(rgb: RgbColor): OkhslColor {
 
 	s = Number.isNaN(s) ? 0 : s;
 	const l = toe(L);
-	return { h: h * 360.0, s: s * 100.0, l: l * 100.0, a: decimalToOpacityValue(a) };
+	return { h: h * 360.0, s: s * 100.0, l: l * 100.0, a };
 }
 
 function toe(x: number): number {
@@ -67,7 +66,7 @@ function linear_srgb_to_oklab(rgb: RgbColor): OklabColor {
 		l: 0.2104542553 * l_ + 0.793617785 * m_ - 0.0040720468 * s_,
 		a: 1.9779984951 * l_ - 2.428592205 * m_ + 0.4505937099 * s_,
 		b: 0.0259040371 * l_ + 0.7827717662 * m_ - 0.808675766 * s_,
-		A: decimalToOpacityValue(a),
+		A: a,
 	};
 }
 

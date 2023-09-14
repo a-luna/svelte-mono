@@ -1,5 +1,5 @@
-import { labToLch, oklabToOklch, rgbToHex, rgbToHsl, rgbToLab, rgbToOkhsl, rgbToOklab } from '$lib/color/converters';
-import { finalizeRgbColor, getRgbColorFromComponents } from '$lib/color/parsers/util';
+import { createCssColorBaseFromRgbColor, finalizeRgbColor } from '$lib/color/gamut';
+import { getRgbColorFromComponents } from '$lib/color/parsers/util';
 import { RGB_VAL_NAME_REGEX } from '$lib/color/regex';
 import type { CssColor, ParsedRgbComponent, RgbColor, RgbHexComponent, RgbNumberType } from '$lib/types';
 
@@ -15,7 +15,7 @@ function extractRgbComponents(regExpGroups: object): ParsedRgbComponent[] {
 				const component = match.groups?.value as RgbHexComponent;
 				const numType = match.groups?.numFormat?.toLowerCase() as RgbNumberType;
 				const parsed = parseRgbComponentValue(component, numType, value);
-				components.push({ component, numType: 'decimal', value: parsed });
+				components.push({ component, numType, value: parsed });
 			}
 		}
 	});
@@ -26,29 +26,9 @@ const parseRgbComponentValue = (component: RgbHexComponent, numType: RgbNumberTy
 	component === 'alpha' ? parseRgbAlphaValue(numType, value) : parseRgbChannelValue(numType, value);
 
 const parseRgbAlphaValue = (numType: RgbNumberType, value: string): number =>
-	numType === 'float' ? parseFloat(value) * 255.0 : (parseFloat(value) / 100) * 255.0;
+	numType === 'float' ? parseFloat(value) : parseFloat(value) / 100.0;
 
 const parseRgbChannelValue = (numType: RgbNumberType, value: string): number =>
 	numType === 'decimal' ? parseFloat(value) : (parseFloat(value) / 100) * 255.0;
 
-export function cssColorFromRgb(rgb: RgbColor): CssColor {
-	const hex = rgbToHex(rgb);
-	const hsl = rgbToHsl(rgb);
-	const lab = rgbToLab(rgb);
-	const oklab = rgbToOklab(rgb);
-	const okhsl = rgbToOkhsl(rgb);
-	const lch = labToLch(lab);
-	const oklch = oklabToOklch(oklab);
-	const color = {
-		hex,
-		rgb,
-		hsl,
-		lab,
-		lch,
-		oklab,
-		oklch,
-		okhsl,
-		name: hex,
-	};
-	return finalizeRgbColor(color);
-}
+export const cssColorFromRgb = (rgb: RgbColor): CssColor => finalizeRgbColor(createCssColorBaseFromRgbColor(rgb));

@@ -1,19 +1,24 @@
 import { EPSILON, KAPPA, P3_TO_XYZ_MATRIX, REC2020_TO_XYZ_MATRIX, RGB_TO_XYZ_MATRIX } from '$lib/color/converters/util';
 import { multiplyMatrix3x3ByVector } from '$lib/color/converters/util/matrix';
-import { decimalToOpacityValue } from '$lib/color/util';
-import type { LabColor, Matrix1x3, Matrix3x3, RgbColor, XyzColor } from '$lib/types';
+import type { ColorSpace, LabColor, Matrix1x3, Matrix3x3, RgbColor, XyzColor } from '$lib/types';
 
 export const rgbToLab = (rgb: RgbColor): LabColor => xyzToLab(rgbToXyz(rgb));
 export const p3ToLab = (p3: RgbColor): LabColor => xyzToLab(p3ToXyz(p3));
 export const rec2020ToLab = (r2020: RgbColor): LabColor => xyzToLab(rec2020ToXyz(r2020));
 
+export function labFromRgbInColorSpace(rgb: RgbColor, colorSpace: ColorSpace): LabColor {
+	if (colorSpace === 'srgb') return rgbToLab(rgb);
+	if (colorSpace === 'p3') return p3ToLab(rgb);
+	return rec2020ToLab(rgb);
+}
+
 // Converts sRGB colour given as a triple of 8-bit integers
 // into XYZ colour space (with white’s Y value equal 1).
 function rgbToXyzInColorSpace(rgb: RgbColor, conversionMatrix: Matrix3x3): XyzColor {
-	const { r, g, b } = rgb;
+	const { r, g, b, a } = rgb;
 	const linearRgb: Matrix1x3 = [expandGamma(r), expandGamma(g), expandGamma(b)];
 	const [x, y, z] = multiplyMatrix3x3ByVector(conversionMatrix, linearRgb);
-	return { x, y, z, a: decimalToOpacityValue(rgb.a) };
+	return { x, y, z, a };
 }
 
 const rgbToXyz = (rgb: RgbColor): XyzColor => rgbToXyzInColorSpace(rgb, RGB_TO_XYZ_MATRIX);

@@ -1,5 +1,4 @@
-import { labToLch, oklabToOklch, oklabToRgb, rgbToHex, rgbToHsl, rgbToLab, rgbToOkhsl } from '$lib/color/converters';
-import { finalizeLabColor } from '$lib/color/parsers/util';
+import { createCssColorBaseFromOklabColor, finalizeOklabColor } from '$lib/color/gamut';
 import { LAB_VAL_NAME_REGEX } from '$lib/color/regex';
 import type { CssColor, HslLabNumberType, LabColor, LabComponent, OklabColor, ParsedLabComponent } from '$lib/types';
 
@@ -43,24 +42,5 @@ const getOklabColorFromComponents = (components: ParsedLabComponent[]): LabColor
 	A: components.find((c) => c.component === 'alpha')?.value ?? 1.0,
 });
 
-export function cssColorFromOklab(oklab: OklabColor): CssColor {
-	const oklch = oklabToOklch(oklab);
-	const rgb = oklabToRgb(oklab);
-	const hex = rgbToHex(rgb);
-	const hsl = rgbToHsl(rgb);
-	const lab = rgbToLab(rgb);
-	const lch = labToLch(lab);
-	const okhsl = rgbToOkhsl(rgb);
-	const color = {
-		hex,
-		rgb,
-		hsl,
-		lab,
-		lch,
-		oklab,
-		oklch,
-		okhsl,
-		name: hex,
-	};
-	return finalizeLabColor(color);
-}
+export const cssColorFromOklab = (oklab: OklabColor): CssColor =>
+	finalizeOklabColor(createCssColorBaseFromOklabColor(oklab));

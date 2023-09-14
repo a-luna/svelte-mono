@@ -1,4 +1,3 @@
-import { decimalToOpacityValue } from '$lib/color/util';
 import type { HslColor, RgbColor } from '$lib/types';
 
 export function rgbToHsl(rgb: RgbColor): HslColor {
@@ -14,7 +13,7 @@ export function rgbToHsl(rgb: RgbColor): HslColor {
 		h: calculateHue(r, g, b, cmax, delta),
 		s: parseFloat((s * 100).toFixed(1)),
 		l: parseFloat((l * 100).toFixed(1)),
-		a: decimalToOpacityValue(rgb.a),
+		a: rgb.a,
 	};
 }
 

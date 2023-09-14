@@ -1,5 +1,5 @@
-import { labToLch, oklabToOklch, rgbToHex, rgbToHsl, rgbToLab, rgbToOkhsl, rgbToOklab } from '$lib/color/converters';
-import { finalizeRgbColor, getRgbColorFromComponents } from '$lib/color/parsers/util';
+import { createCssColorBaseFromRgbColor, finalizeRgbColor } from '$lib/color/gamut';
+import { getRgbColorFromComponents } from '$lib/color/parsers/util';
 import { HEX_VAL_NAME_REGEX } from '$lib/color/regex';
 import type {
 	CssColor,
@@ -32,15 +32,39 @@ function parseHexString(regExpGroups: object): EarlyParsedHexComponent[] {
 
 const extractHexComponents = (hex: EarlyParsedHexComponent[], hasAlpha: boolean): ParsedHexComponent[] =>
 	getHexStringFormat(hex) === 'condensed'
-		? convertCondensedHexComponents(hex)
+		? convertCondensedHexComponents(hex, hasAlpha)
 		: convertFullHexComponents(hex, hasAlpha);
 
 function getHexStringFormat<Type extends IsEnumerable>(components: Type): HexStringFormat {
 	return components.length === 3 || components.length === 4 ? 'condensed' : 'full';
 }
 
-const convertCondensedHexComponents = (hex: EarlyParsedHexComponent[]): ParsedHexComponent[] =>
-	hex.map(({ component, value }) => ({ component, numType: 'decimal', value: parseInt(`${value}${value}`, 16) }));
+function convertCondensedHexComponents(earlyHex: EarlyParsedHexComponent[], hasAlpha: boolean): ParsedHexComponent[] {
+	if (!hasAlpha) {
+		return earlyHex.map(({ component, value }) => ({
+			component,
+			numType: 'decimal',
+			value: parseInt(`${value}${value}`, 16),
+		}));
+	}
+	const r = earlyHex.filter((c) => c.component === 'red');
+	const g = earlyHex.filter((c) => c.component === 'green');
+	const b = earlyHex.filter((c) => c.component === 'blue');
+	const components: ParsedHexComponent[] = [
+		{ component: 'red', numType: 'decimal', value: parseInt(`${r[0]?.value}${r[0]?.value}`, 16) },
+		{ component: 'green', numType: 'decimal', value: parseInt(`${g[0]?.value}${g[0]?.value}`, 16) },
+		{ component: 'blue', numType: 'decimal', value: parseInt(`${b[0]?.value}${b[0]?.value}`, 16) },
+	];
+	if (hasAlpha) {
+		const a = earlyHex.filter((c) => c.component === 'alpha');
+		components.push({
+			component: 'alpha',
+			numType: 'decimal',
+			value: parseInt(`${a[0]?.value}${a[0]?.value}`, 16) / 255.0,
+		});
+	}
+	return components;
+}
 
 function convertFullHexComponents(earlyHex: EarlyParsedHexComponent[], hasAlpha: boolean): ParsedHexComponent[] {
 	const r = earlyHex.filter((c) => c.component === 'red');
@@ -53,30 +77,14 @@ function convertFullHexComponents(earlyHex: EarlyParsedHexComponent[], hasAlpha:
 	];
 	if (hasAlpha) {
 		const a = earlyHex.filter((c) => c.component === 'alpha');
-		components.push({ component: 'alpha', numType: 'decimal', value: parseInt(`${a[0]?.value}${a[1]?.value}`, 16) });
+		components.push({
+			component: 'alpha',
+			numType: 'decimal',
+			value: parseInt(`${a[0]?.value}${a[1]?.value}`, 16) / 255.0,
+		});
 	}
 	return components;
 }
 
-export function cssColorFromHexComponents(components: ParsedHexComponent[]): CssColor {
-	const rgb = getRgbColorFromComponents(components);
-	const hex = rgbToHex(rgb);
-	const hsl = rgbToHsl(rgb);
-	const lab = rgbToLab(rgb);
-	const lch = labToLch(lab);
-	const oklab = rgbToOklab(rgb);
-	const oklch = oklabToOklch(oklab);
-	const okhsl = rgbToOkhsl(rgb);
-	const color = {
-		hex,
-		rgb,
-		hsl,
-		lab,
-		lch,
-		oklab,
-		oklch,
-		okhsl,
-		name: hex,
-	};
-	return finalizeRgbColor(color);
-}
+export const cssColorFromHexComponents = (components: ParsedHexComponent[]): CssColor =>
+	finalizeRgbColor(createCssColorBaseFromRgbColor(getRgbColorFromComponents(components)));
