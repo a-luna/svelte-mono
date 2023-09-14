@@ -15,7 +15,8 @@
 		type CssColor,
 		type CssColorForColorSpace,
 	} from '@a-luna/shared-ui';
-	import { finalizeLabColor, getColorFormatFromCssString } from '@a-luna/shared-ui/color/parsers';
+	import { finalizeLabColor } from '@a-luna/shared-ui/color/gamut';
+	import { getColorFormatFromCssString } from '@a-luna/shared-ui/color/parsers';
 	import { copyCssColor, oklchToString } from '@a-luna/shared-ui/color/util';
 	import { onDestroy, onMount, tick } from 'svelte';
 
@@ -41,9 +42,9 @@
 		}, 500);
 	}
 
-	function handleX11ColorSelected(e: CustomEvent<{ color: CssColorForColorSpace }>) {
-		const { color } = e.detail;
-		picker.setColor(finalizeLabColor(copyCssColor(color)), 'rgb');
+	function handleX11ColorSelected(e: CustomEvent<{ x11Color: CssColorForColorSpace }>) {
+		const { x11Color } = e.detail;
+		picker.setColor(finalizeLabColor(copyCssColor(x11Color)), 'rgb');
 	}
 
 	function handleColorChanged(e: CustomEvent<{ color: CssColor }>) {
