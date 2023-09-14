@@ -13,6 +13,12 @@
 		}
 	}
 
+	function handleEscapeKeyPress(key: string) {
+		if (key === 'Escape') {
+			dispatchKeepCurrentColor('keepCurrentColor');
+		}
+	}
+
 	onMount(async () => {
 		await tick();
 		textInput.focus();
@@ -33,6 +39,7 @@
 	type="text"
 	data-testid="color-name-input"
 	on:keypress={(e) => handleKeyPress(e.key)}
+	on:keyup={(e) => handleEscapeKeyPress(e.key)}
 />
 <div
 	id="change-color-button"
@@ -46,7 +53,7 @@
 <style lang="postcss">
 	input {
 		flex: 1;
-		font-size: 0.875rem;
+		font-size: 0.75rem;
 		line-height: 1.25rem;
 		padding: 0 0.25rem;
 		border: 1px solid var(--gray2);
