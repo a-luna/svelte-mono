@@ -112,41 +112,49 @@
 
 	--black-bg-color: hsl(0, 0%, 95%);
 	--black-hover-bg-color: hsl(0, 0%, 90%);
+	--black-active-bg-color: hsl(0, 0%, 99%);
 	--black-fg-color: hsl(0, 0%, 10%);
 	--black-active-fg-color: hsl(0, 0%, 0%);
 
 	--red-bg-color: hsl(var(--red-hue, 0) 100% 94%);
 	--red-hover-bg-color: hsl(var(--red-hue, 0) 100% 90%);
+	--red-active-bg-color: hsl(var(--red-hue, 0) 100% 99%);
 	--red-fg-color: hsl(var(--red-hue, 0) 63% 26%);
 	--red-active-fg-color: hsl(var(--red-hue, 0) 56% 50%);
 
 	--orange-bg-color: hsl(var(--orange-hue, 39) 100% 94%);
 	--orange-hover-bg-color: hsl(var(--orange-hue, 39) 100% 90%);
+	--orange-active-bg-color: hsl(var(--orange-hue, 39) 100% 99%);
 	--orange-fg-color: hsl(var(--orange-hue, 39) 63% 26%);
 	--orange-active-fg-color: hsl(var(--orange-hue, 39) 56% 50%);
 
 	--yellow-bg-color: hsl(var(--yellow-hue, 60) 100% 94%);
 	--yellow-hover-bg-color: hsl(var(--yellow-hue, 60) 100% 90%);
+	--yellow-active-bg-color: hsl(var(--yellow-hue, 60) 100% 99%);
 	--yellow-fg-color: hsl(var(--yellow-hue, 60) 90% 30%);
 	--yellow-active-fg-color: hsl(var(--yellow-hue, 60) 85% 50%);
 
 	--green-bg-color: hsl(var(--green-hue, 120) 100% 94%);
 	--green-hover-bg-color: hsl(var(--green-hue, 120) 100% 90%);
+	--green-active-bg-color: hsl(var(--green-hue, 120) 100% 99%);
 	--green-fg-color: hsl(var(--green-hue, 120) 63% 26%);
 	--green-active-fg-color: hsl(var(--green-hue, 120) 56% 50%);
 
 	--teal-bg-color: hsl(var(--teal-hue, 180) 100% 94%);
 	--teal-hover-bg-color: hsl(var(--teal-hue, 180) 100% 90%);
+	--teal-active-bg-color: hsl(var(--teal-hue, 180) 100% 99%);
 	--teal-fg-color: hsl(var(--teal-hue, 180) 63% 26%);
 	--teal-active-fg-color: hsl(var(--teal-hue, 180) 56% 50%);
 
 	--blue-bg-color: hsl(var(--blue-hue, 180) 100% 94%);
 	--blue-hover-bg-color: hsl(var(--blue-hue, 180) 100% 90%);
+	--blue-active-bg-color: hsl(var(--blue-hue, 180) 100% 99%);
 	--blue-fg-color: hsl(var(--blue-hue, 180) 63% 26%);
 	--blue-active-fg-color: hsl(var(--blue-hue, 180) 56% 50%);
 
 	--indigo-bg-color: hsl(var(--indigo-hue, 180) 100% 94%);
 	--indigo-hover-bg-color: hsl(var(--indigo-hue, 180) 100% 90%);
+	--indigo-active-bg-color: hsl(var(--indigo-hue, 180) 100% 99%);
 	--indigo-fg-color: hsl(var(--indigo-hue, 180) 100% 25%);
 	--indigo-active-fg-color: hsl(var(--indigo-hue, 180) 100% 50%);
 }

@@ -169,6 +169,7 @@
 		justify-content: flex-start;
 		align-items: stretch;
 		gap: 0.5rem;
+		height: 100%;
 	}
 
 	.swatch-wrapper {

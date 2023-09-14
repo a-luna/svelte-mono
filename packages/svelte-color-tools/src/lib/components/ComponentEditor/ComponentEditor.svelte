@@ -168,7 +168,7 @@
 		storesInitialized = true;
 	}
 	$: componentColor = $themeEditor?.userTheme?.uiColor ?? 'black';
-	$: themeStyles = `--button-color-active: var(--${componentColor}-active-fg-color);`;
+	$: themeStyles = `--fg-color: var(--${componentColor}-fg-color); --active-fg-color: var(--${componentColor}-active-fg-color); --bg-color: var(--${componentColor}-bg-color); --hover-bg-color: var(--${componentColor}-hover-bg-color); --active-bg-color: var(--${componentColor}-active-bg-color); --border-color: var(--${componentColor}-fg-color); --panel-bg-color:var(--${componentColor}-active-bg-color);`;
 
 	function handleUserThemeImported(e: CustomEvent<{ userTheme: UserThemeImported }>) {
 		const { userTheme } = e.detail;
@@ -288,62 +288,7 @@
 
 <style lang="postcss">
 	.theme-editor-wrapper {
-		/* --select-list-open-button-height: 30px;
-		--select-list-open-button-icon-height: 14px;
-		--select-list-open-button-icon-width: 14px;
-		--select-list-open-button-padding: 0 4px;
-		--select-list-open-button-text-color: var(--fg-color);
-		--select-list-open-button-background-color: var(--bg-color);
-		--select-list-open-button-hover-background-color: var(--hover-bg-color);
-		--select-list-open-button-border-color: var(--fg-color);
-		--select-list-no-selection-text-color: var(--fg-color);
-
-		--select-list-dropdown-text-color: var(--fg-color);
-		--select-list-dropdown-background-color: var(--bg-color);
-		--select-list-dropdown-border-color: var(--fg-color);
-		--select-list-dropdown-border-radius: 6px;
-
-		--select-list-selected-item-background-color: var(--hover-bg-color);
-
-		--select-list-width: 100%;
-		--select-list-background-color: var(--white3);
-		--select-list-hover-background-color: var(--hover-bg-color);
-		--select-list-text-color: var(--fg-color);
-		--select-list-border-color: var(--fg-color);
-		--select-list-padding: 0 4px;
-		--select-list-height: 30px;
-		--select-list-dropdown-max-height: 300px;
-		--select-list-no-selection-text-color: var(--fg-color);
-
-		--color-picker-background-color: var(--panel-bg-color);
-
-		--text-box-font-size: 0.875rem;
-		--text-box-border-color: var(--theme-default-text-color);
-		--text-box-text-color: var(--theme-default-text-color);
-		--text-box-background-color: var(--theme-default-background-color);
-		--text-box-disabled-text-color: var(--gray4);
-		--text-box-disabled-background-color: var(--white1);
-		--text-box-disabled-border-color: var(--gray4);
-
-		--sst-button-bg-color: var(--button-bg-color);
-		--sst-button-text-color: var(--button-fg-color);
-		--sst-button-border-color: var(--button-fg-color);
-		--sst-button-hover-bg-color: var(--hover-bg-color);
-		--sst-button-hover-text-color: var(--button-fg-color);
-		--sst-button-hover-border-color: var(--button-fg-color);
-		--sst-button-disabled-bg-color: var(--white1);
-		--sst-button-disabled-text-color: var(--gray4);
-		--sst-button-disabled-border-color: var(--gray4); */
-
-		--fg-color: var(--theme-text-color, var(--theme-default-text-color));
-		--active-fg-color: var(--theme-text-color-active, var(--theme-default-text-color-active));
-		--bg-color: var(--theme-background-color, var(--theme-default-background-color));
-		--hover-bg-color: var(--theme-background-color-hover, var(--theme-default-background-color-hover));
-		--active-bg-color: var(--theme-background-color-active, var(--theme-default-background-color-active));
 		--disabled-bg-color: var(--theme-background-color-disabled, var(--theme-default-background-color-disabled));
-		--border-color: var(--theme-text-color, var(--theme-default-text-color));
-		--panel-bg-color: var(--theme-panel-background-color, var(--theme-default-panel-background-color));
-
 		--button-color: var(--fg-color);
 		--button-color-hover: var(--fg-color);
 		--button-color-active: var(--active-fg-color);
