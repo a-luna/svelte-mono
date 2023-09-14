@@ -1,6 +1,15 @@
 import { BUTTON_COLORS, COLOR_FORMATS, COMPONENT_COLORS } from '$lib/constants';
-import type { AdjustableColorFormat, ButtonColor, ColorFormat, ComponentColor } from '$lib/types';
-import type { HasHueAndLightness, HslColor, LchColor, OkhslColor, OklchColor } from './types/ColorFormats';
+import type {
+	AdjustableColorFormat,
+	ButtonColor,
+	ColorFormat,
+	ComponentColor,
+	HasHueAndLightness,
+	HslColor,
+	LchColor,
+	OkhslColor,
+	OklchColor,
+} from '$lib/types';
 
 export const isComponentColor = (arg: string): arg is ComponentColor =>
 	COMPONENT_COLORS.includes(arg as ComponentColor);
