@@ -26,7 +26,7 @@ export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse
 
 async function fetchUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfo[]> {
 	const api_base_url = dev ? PUBLIC_API_BASE_URL : 'https://unicode-api.aaronluna.dev/v1';
-	const endpoint = `${api_base_url}/characters/${strictUriEncode(utf8)}?show_props=UTF8&show_props=Basic`;
+	const endpoint = `${api_base_url}/characters/-/${strictUriEncode(utf8)}?show_props=UTF8&show_props=Basic`;
 	const response = await fetch(endpoint, {
 		method: 'GET',
 		headers: { Accept: 'application/json', 'x-unicodeapi-test': 'true' },
