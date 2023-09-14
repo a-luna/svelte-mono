@@ -87,6 +87,6 @@
 		display: grid;
 		grid-template-columns: 6px auto 6px 1fr 6px auto 6px;
 		gap: 0;
-		padding: 6px 0;
+		padding: 3px 0;
 	}
 </style>

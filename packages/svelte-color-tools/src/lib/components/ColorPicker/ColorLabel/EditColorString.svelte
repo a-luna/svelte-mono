@@ -21,7 +21,7 @@
 
 	onMount(async () => {
 		await tick();
-		textInput.focus();
+		textInput.select();
 	});
 </script>
 

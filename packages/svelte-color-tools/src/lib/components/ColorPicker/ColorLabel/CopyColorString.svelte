@@ -30,12 +30,7 @@
 	$: currentColor = colorLabels.at(currentLabelIndex) || color.hex;
 	$: currentColorFormat = ['Hex', 'RGB', 'HSL', 'OKHSK', 'LAB', 'LCH', 'OKLAB', 'OKLCH'][currentLabelIndex];
 	$: tooltip = 'Click to toggle CSS Color Space string values';
-	$: fontSize =
-		currentColorFormat === 'RGB' || currentColorFormat === 'Hex'
-			? '0.8rem'
-			: currentColorFormat === 'OKLAB' || currentColorFormat === 'OKLCH'
-			? '0.6rem'
-			: '0.65rem';
+	$: fontSize = currentColorFormat === 'RGB' || currentColorFormat === 'Hex' ? '0.8rem' : '0.6rem';
 	$: if ($picker.labelState === 'success') {
 		setColorFormat($picker.colorFormat);
 	}
@@ -71,7 +66,8 @@
 	type="button"
 	id="copy-color-string-button"
 	data-testid="copy-color-string-button"
-	class="flex-initial h-4 w-4 my-auto cursor-pointer"
+	class:cursor-pointer={editable}
+	class:cursor-not-allowed={!editable}
 	title="Copy {currentColorFormat} value"
 	on:click={() => copyColorStringEventDispatcher('copyColorString', { currentColor })}
 >
@@ -88,7 +84,6 @@
 	type="button"
 	id="edit-color-string-button"
 	data-testid="edit-color-string-button"
-	class="flex-initial h-4 w-4 my-auto"
 	class:cursor-pointer={editable}
 	class:cursor-not-allowed={!editable}
 	title="Edit string value"
@@ -101,6 +96,13 @@
 	button {
 		background-color: transparent;
 		border: none;
+	}
+	button,
+	.cursor-pointer {
+		flex: 0 1 auto;
+		width: 1rem;
+		height: 1rem;
+		margin: auto 0;
 	}
 	.color-string {
 		flex-grow: 1;
