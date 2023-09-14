@@ -30,6 +30,7 @@
 	bind:value={s}
 	display={clamped.okhsl.s}
 	max={100}
+	isPercent={true}
 	{disabled}
 	on:change={() => dispatch('colorChanged', { color })}
 />
@@ -38,6 +39,7 @@
 	bind:value={l}
 	display={clamped.okhsl.l}
 	max={100}
+	isPercent={true}
 	{disabled}
 	on:change={() => dispatch('colorChanged', { color })}
 />

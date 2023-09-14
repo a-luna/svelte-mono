@@ -12,7 +12,7 @@
 	let picker = getColorPickerStore(pickerId);
 </script>
 
-<div class="text-sm flex flex-col flex-nowrap justify-center items-stretch gap-1.5">
+<div class="color-channels">
 	{#if $picker?.colorFormat === 'rgb'}
 		<RgbColorChannels
 			r={$picker.colorInGamut.rgb.r}
@@ -78,3 +78,16 @@
 		/>
 	{/if}
 </div>
+
+<style lang="postcss">
+	.color-channels {
+		font-size: 0.75rem;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		gap: 0.375rem;
+		justify-content: space-around;
+		align-items: stretch;
+		height: 100%;
+	}
+</style>

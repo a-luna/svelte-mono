@@ -22,6 +22,7 @@
 	bind:value={l}
 	display={clamped.oklch.l}
 	max={100}
+	isPercent={true}
 	{disabled}
 	on:change={() => dispatch('colorChanged', { color })}
 />

@@ -42,6 +42,8 @@
 	name="A"
 	bind:value={a}
 	display={clamped.rgb.a}
+	max={1}
+	step={0.01}
 	{disabled}
 	on:change={() => dispatch('colorChanged', { color })}
 />

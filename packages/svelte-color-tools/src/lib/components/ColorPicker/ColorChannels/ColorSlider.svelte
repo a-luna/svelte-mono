@@ -6,14 +6,15 @@
 	export let max: number = 255;
 	export let step: number = 1;
 	export let value: number;
+	export let isPercent: boolean = false;
 	export let display: number;
 	export let disabled: boolean = false;
 
-	// $: formattedValue = disabled ? '' : ['S', 'L'].includes(name) ? `${display}%` : display.toString();
+	$: formattedValue = disabled ? '' : isPercent ? `${display}%` : display.toString();
 </script>
 
-<div class="flex flex-row flex-nowrap items-center gap-2" class:disabled>
-	<label for="slider" class="text-right flex-initial font-medium">{name}</label>
+<div class="color-slider" class:disabled>
+	<label for="slider">{name}</label>
 	<input
 		id="{name}-slider"
 		data-testid="{name}-slider"
@@ -22,24 +23,39 @@
 		{max}
 		{step}
 		{disabled}
-		class="m-0 flex-grow"
 		bind:value
 		on:change
 	/>
-	<span class="value flex-initial font-medium" data-testid="{name}-slider-value">{display}</span>
+	<span class="value" data-testid="{name}-slider-value">{formattedValue}</span>
 </div>
 
 <style>
+	.color-slider {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		gap: 0.5rem;
+		align-items: center;
+	}
 	label {
+		flex: 0 1 auto;
+		font-weight: 500;
+		text-align: right;
 		width: 15px;
 	}
+	input[type='range'] {
+		margin: 0;
+		flex-grow: 1;
+	}
+	input[type='range']:focus {
+		outline: 1px solid transparent;
+	}
 	.value {
+		flex: 0 1 auto;
+		font-weight: 500;
 		width: 43px;
 	}
 	.disabled {
 		color: var(--dark-gray1);
-	}
-	input[type='range']:focus {
-		outline: 1px solid transparent;
 	}
 </style>
