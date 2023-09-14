@@ -59,18 +59,26 @@
 	}
 
 	function handleColorPickerValueChanged() {
-		parseCssColorFromString(colorPicker.value);
+		const hex = colorPicker.value;
+		const alpha = Math.floor($picker.color.rgb.a * 255.0).toString(16);
+		parseCssColorFromString(`${hex}${alpha}`);
 	}
 
 	function parseCssColorFromString(css: string) {
 		const result = ColorParser.parse(css);
-		const colorFormat = getColorFormatFromCssString(css) ?? $picker.colorFormat;
-		if (result.success) {
-			const color = result.value ?? $picker.color;
-			picker.setColor(color, colorFormat);
+		if (result.success && result.value) {
+			const color = result.value;
+			picker.setColor(color, getColorFormatFromStringValue(css));
 		} else {
 			$picker.labelState = 'error';
 		}
+	}
+
+	function getColorFormatFromStringValue(css: string): ColorFormat {
+		const colorFormat = getColorFormatFromCssString(css);
+		if (!colorFormat) return $picker.colorFormat;
+		if (colorFormat === 'hex') return 'rgb';
+		return colorFormat;
 	}
 
 	function handleColorFormatChanged(e: CustomEvent<{ colorFormat: ColorFormat }>) {
