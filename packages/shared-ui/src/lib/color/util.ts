@@ -6,6 +6,7 @@ import type {
 	CssColor,
 	CssColorBase,
 	CssColorForColorSpace,
+	HasHueAndLightness,
 	HslColor,
 	LabColor,
 	LchColor,
@@ -34,7 +35,7 @@ const clamp = (n: number): number =>
 		? 0
 		: signedInteger.test(n.toFixed(2))
 		? parseInt(n.toFixed(0))
-		: parseFloat(n.toFixed(2));
+		: parseFloat(n.toFixed(3));
 
 function clampString(n: number, p = 2): string {
 	let clamped =
@@ -75,13 +76,13 @@ export const byteIntToHexString = (byteInt: number): string =>
 		: 'FF';
 
 export const rgbToString = ({ r, g, b, a }: RgbColor): string =>
-	a < 255
-		? `rgb(${Math.round(r)} ${Math.round(g)} ${Math.round(b)} / ${Math.round(a)})`
+	a < 1.0
+		? `rgb(${Math.round(r)} ${Math.round(g)} ${Math.round(b)} / ${clampString(a)})`
 		: `rgb(${Math.round(r)} ${Math.round(g)} ${Math.round(b)})`;
 
 export const hslToString = ({ h, s, l, a }: HslColor): string =>
 	a < 1.0
-		? `hsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)} / ${a})`
+		? `hsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)} / ${clampString(a)})`
 		: `hsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)})`;
 
 export const labToString = ({ l, a, b, A }: LabColor): string =>
@@ -96,7 +97,7 @@ export const lchToString = ({ l, c, h, a }: LchColor): string =>
 
 export const okhslToString = ({ h, s, l, a }: OkhslColor): string =>
 	a < 1.0
-		? `okhsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)} / ${a})`
+		? `okhsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)} / ${clampString(a)})`
 		: `okhsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)})`;
 
 export const oklabToString = ({ l, a, b, A }: OklabColor): string =>
@@ -112,10 +113,7 @@ export const oklchToString = ({ l, c, h, a }: OklchColor): string =>
 export const sortColors = (a: CssColor | CssColorForColorSpace, b: CssColor | CssColorForColorSpace): number =>
 	a.hsl.h - b.hsl.h || a.hsl.s - b.hsl.s || a.hsl.l - b.hsl.l;
 
-export const sortByLightnessAscending = (
-	a: CssColor | CssColorForColorSpace,
-	b: CssColor | CssColorForColorSpace,
-): number => a.hsl.l - b.hsl.l;
+export const sortByLightnessAscending = (a: HasHueAndLightness, b: HasHueAndLightness): number => a.l - b.l;
 
 export function colorNameisCustomized(color: ThemeColor): boolean {
 	const cssColorStrings = [
@@ -137,13 +135,13 @@ export const normalize = (s: string): string =>
 
 export const copyCssColor = (color: CssColorBase): CssColorBase => copyObject<CssColorBase>(color);
 
-export const clampColorComponents = (color: CssColor | CssColorForColorSpace): CssColor | CssColorForColorSpace => ({
+export const clampColorComponents = <T extends CssColor | CssColorForColorSpace>(color: T): T => ({
 	...color,
 	rgb: {
 		r: Math.floor(color.rgb.r),
 		g: Math.floor(color.rgb.g),
 		b: Math.floor(color.rgb.b),
-		a: Math.floor(color.rgb.a),
+		a: clamp(color.rgb.a),
 	},
 	hsl: {
 		h: clamp(color.hsl.h),
@@ -225,9 +223,12 @@ export function getCssColorString(color: CssColor, space: ColorSpace, format: Co
 		hsl: colorInGamut.hslString,
 		lab: colorInGamut.labString,
 		lch: colorInGamut.lchString,
-		okhsl: colorInGamut.okhslString,
+		okhsl: colorInGamut.hslString,
 		oklab: colorInGamut.oklabString,
 		oklch: colorInGamut.oklchString,
 	};
 	return colorStrings[format];
 }
+
+export const isGrayscaleColor = (color: CssColorBase): boolean =>
+	color.rgb.r === color.rgb.g && color.rgb.g === color.rgb.b;

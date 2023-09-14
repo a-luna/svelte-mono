@@ -4,6 +4,7 @@ import { writable, type Writable } from 'svelte/store';
 export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 export const getVariableName = (x: object) => Object.keys(x)[0];
 export const objectIsEmpty = (obj: object) => JSON.stringify(obj) === '{}';
+export const divmod = (x: number, y: number): [number, number] => [(x / y) | 0, x % y];
 
 export function getRandomHexString(options: { length: number }): string {
 	const { length } = options;

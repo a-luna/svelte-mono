@@ -1,8 +1,16 @@
 import { cssColorFromHsl, cssColorFromLch, cssColorFromOkhsl, cssColorFromOklch } from '$lib/color/parsers';
-import { getCssColorString, sortByLightnessAscending } from '$lib/color/util';
+import { getCssColorString } from '$lib/color/util';
 import { COLOR_FORMATS } from '$lib/constants';
 import { isAdjustableColorFormat, isHslColor, isLchColor, isOkhslColor, isOklchColor } from '$lib/typeguards';
-import type { AdjustableColorFormat, ColorFormat, ColorSchemeSet, ColorSpace, CssColor, Result } from '$lib/types';
+import type {
+	AdjustableColorFormat,
+	ColorFormat,
+	ColorSchemeSet,
+	ColorSpace,
+	CssColor,
+	CssColorForColorSpace,
+	Result,
+} from '$lib/types';
 import type { HasHueAndLightness } from '$lib/types/ColorFormats';
 import type { ColorSchemeComparisonForAllColorFormats, ColorSchemeSetForColorFormat } from '$lib/types/ColorScheme';
 import { defaultColorSchemeSet } from './constants';
@@ -182,59 +190,45 @@ function getMonochromePalette(
 	const defaultOptions = { paletteSize: 10, stepSize: 5 };
 	const { paletteSize, stepSize } = { ...defaultOptions, ...options };
 	const idealNumberOfShadesAndTints = Math.floor(paletteSize / 2);
-	const palette = [
-		...getShadesForColor(color, colorFormat, { stepSize }),
-		color,
-		...getTintsForColor(color, colorFormat, { stepSize }),
-	].sort(sortByLightnessAscending);
-	const colorIndex = palette.findIndex((pColor) => pColor.hsl.l === color.hsl.l);
-	return colorIndex < idealNumberOfShadesAndTints
-		? palette.slice(0, paletteSize + 1)
-		: colorIndex >= palette.length - idealNumberOfShadesAndTints
-		? palette.slice(-(paletteSize + 1))
-		: palette.slice(colorIndex - idealNumberOfShadesAndTints, colorIndex + idealNumberOfShadesAndTints + 1);
+	const palette = getShadesAndTintsForColor(color, colorFormat, { stepSize });
+	const colorIndex = palette.findIndex((pColor) => pColor[colorFormat].l === color[colorFormat].l);
+	if (colorIndex < idealNumberOfShadesAndTints) return palette.slice(0, paletteSize + 1);
+	if (colorIndex >= palette.length - idealNumberOfShadesAndTints) return palette.slice(-(paletteSize + 1));
+	return palette.slice(colorIndex - idealNumberOfShadesAndTints, colorIndex + idealNumberOfShadesAndTints + 1);
 }
 
-function getShadesForColor(
+function getShadesAndTintsForColor(
 	color: CssColor,
 	colorFormat: AdjustableColorFormat,
 	options: { stepSize: number },
 ): CssColor[] {
 	const { stepSize } = options;
-	const shades = [];
-	let lightChange = 0;
-	let exit = false;
-	while (!exit) {
-		lightChange -= stepSize;
-		const result = adjustLightness(color, colorFormat, { lightChange });
-		if (!result.success) {
-			exit = true;
-			continue;
-		}
-		shades.push(result.value);
-	}
-	return shades.sort(sortByLightnessAscending);
-}
-
-function getTintsForColor(
-	color: CssColor,
-	colorFormat: AdjustableColorFormat,
-	options: { stepSize: number },
-): CssColor[] {
-	const { stepSize } = options;
-	const tints = [];
-	let lightChange = 0;
-	let exit = false;
-	while (!exit) {
-		lightChange += stepSize;
-		const result = adjustLightness(color, colorFormat, { lightChange });
-		if (!result.success) {
-			exit = true;
-			continue;
-		}
-		tints.push(result.value);
-	}
-	return tints.sort(sortByLightnessAscending);
+	const colorInGamut = getColorInGamut(color, colorFormat);
+	const [totalShades, totalTints] = [~~(colorInGamut[colorFormat].l / 5), ~~((100 - colorInGamut[colorFormat].l) / 5)];
+	const shades = Array.from({ length: totalShades }, (_, i) => i)
+		.flatMap((i) => {
+			const lightChange = stepSize * (i + 1);
+			const result = adjustLightness(color, colorFormat, { lightChange: -lightChange });
+			return result.success ? [result.value] : [];
+		})
+		.sort((a: CssColor, b: CssColor) => a[colorFormat].l - b[colorFormat].l);
+	const tints = Array.from({ length: totalTints }, (_, i) => i)
+		.flatMap((i) => {
+			const lightChange = stepSize * (i + 1);
+			const result = adjustLightness(color, colorFormat, { lightChange });
+			return result.success ? [result.value] : [];
+		})
+		.sort((a: CssColor, b: CssColor) => a[colorFormat].l - b[colorFormat].l);
+	const monoUnsorted = [...shades, color, ...tints];
+	console.log({
+		color: colorInGamut[colorFormat],
+		colorInGamut,
+		colorInGamut2: colorInGamut[colorFormat],
+		shades: shades.map((c) => c[colorFormat]),
+		tints: tints.map((c) => c[colorFormat]),
+		monoUnsorted: monoUnsorted.map((c) => c[colorFormat]),
+	});
+	return [...shades, color, ...tints];
 }
 
 function adjustHue(
@@ -266,12 +260,15 @@ function adjustLightness(
 	return createAdjustedColor(color, colorFormat, { adjustedLight });
 }
 
-function getColorByFormat(color: CssColor, colorFormat: AdjustableColorFormat): HasHueAndLightness {
+function getColorInGamut(color: CssColor, colorFormat: ColorFormat): CssColorForColorSpace {
 	if (colorFormat === 'hsl' || colorFormat === 'okhsl') {
-		return color.srbgColor[colorFormat];
+		return color.srbgColor;
 	}
-	return color.space === 'p3' ? color.p3Color[colorFormat] : color.srbgColor[colorFormat];
+	return color.space === 'p3' ? color.p3Color : color.srbgColor;
 }
+
+const getColorByFormat = (color: CssColor, colorFormat: AdjustableColorFormat): HasHueAndLightness =>
+	getColorInGamut(color, colorFormat)[colorFormat];
 
 function createAdjustedColor(
 	color: CssColor,

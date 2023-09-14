@@ -1,4 +1,5 @@
 import type {
+	HasHueAndLightness,
 	HslColor,
 	LabColor,
 	LchColor,
@@ -77,6 +78,7 @@ export type {
 	CssColorBase,
 	CssColorForColorSpace,
 	EarlyParsedHexComponent,
+	HasHueAndLightness,
 	HexNumberType,
 	HexStringFormat,
 	HslColor,
