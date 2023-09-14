@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ColorSettings from '$lib/components/ComponentEditor/Modals/ColorSettings.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import { copyThemeColor } from '$lib/theme';
 	import type { ThemeColorShallowCopy } from '$lib/types';
 	import { Modal, type ThemeColor } from '@a-luna/shared-ui';

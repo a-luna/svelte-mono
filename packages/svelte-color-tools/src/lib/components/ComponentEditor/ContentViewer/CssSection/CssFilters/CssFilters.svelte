@@ -2,7 +2,7 @@
 	import IgnoreTailwindsCheckbox from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/IgnoreTailwindsCheckbox.svelte';
 	import RuleSelectorList from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/RuleSelectorList.svelte';
 	import UseThemePrefixCheckbox from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/UseThemePrefixCheckbox.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import { InputTextBox, type ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 

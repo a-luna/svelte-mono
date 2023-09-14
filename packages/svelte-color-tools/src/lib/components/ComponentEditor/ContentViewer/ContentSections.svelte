@@ -2,7 +2,7 @@
 	import ComponentSection from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/ComponentSection.svelte';
 	import CssSection from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssSection.svelte';
 	import JsonSection from '$lib/components/ComponentEditor/ContentViewer/JsonSection/JsonSection.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import type { ComponentColor } from '@a-luna/shared-ui';
 
 	export let componentColor: ComponentColor;

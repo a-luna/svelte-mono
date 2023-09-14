@@ -2,7 +2,7 @@
 	import BgColorSelector from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/BgColorSelector.svelte';
 	import UseCustomColorCheckbox from '$lib/components/ComponentEditor/ContentViewer/ComponentSection/UseCustomColorCheckbox.svelte';
 	import { alphaBgPattern } from '$lib/constants';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import { ColorParser, InputTextBox, type ComponentColor, type CssColor, type Result } from '@a-luna/shared-ui';
 
 	export let componentColor: ComponentColor;

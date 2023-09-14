@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CopyColorString from '$lib/components/ColorPicker/ColorLabel/CopyColorString.svelte';
 	import EditColorString from '$lib/components/ColorPicker/ColorLabel/EditColorString.svelte';
-	import { getColorPickerStore } from '$lib/context';
+	import { getColorPickerStore } from '$lib/stores';
 	import { copyToClipboard } from '$lib/util';
 	import type { ColorFormat } from '@a-luna/shared-ui';
 	import { onDestroy } from 'svelte';

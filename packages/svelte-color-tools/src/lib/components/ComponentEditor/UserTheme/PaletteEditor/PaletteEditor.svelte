@@ -1,7 +1,7 @@
 <script lang="ts">
 	import AddPaletteButton from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/AddPaletteButton.svelte';
 	import EditPaletteForm from '$lib/components/ComponentEditor/UserTheme/PaletteEditor/EditPaletteForm.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import { createEventDispatcher } from 'svelte';
 
 	let { themeEditor } = getAppContext();

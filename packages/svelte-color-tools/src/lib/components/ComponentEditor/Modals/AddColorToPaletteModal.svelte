@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ColorSettings from '$lib/components/ComponentEditor/Modals/ColorSettings.svelte';
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import { getCssValueForThemeColor } from '$lib/theme';
 	import { InputTextBox, Modal, defaultCssColorForColorSpace, type CssColor, type ThemeColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';

@@ -2,7 +2,7 @@
 	import CssControls from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssControls/CssControls.svelte';
 	import CssCustomPropTable from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssCustomPropTable.svelte';
 	import CssFilters from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/CssFilters.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import type { CssVariable } from '$lib/types';
 	import { getAllCssVariables } from '$lib/util';
 	import type { ComponentColor } from '@a-luna/shared-ui';

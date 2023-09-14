@@ -2,7 +2,7 @@
 	import ColorFormatSelector from '$lib/components/Shared/ColorFormatSelector.svelte';
 	import ComponentColorSelector from '$lib/components/Shared/ComponentColorSelector/ComponentColorSelector.svelte';
 	import P3ColorFormatSelector from '$lib/components/Shared/P3ColorFormatSelector.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import type { UserThemeSettings } from '$lib/types';
 	import { InputTextBox, Modal, type ColorFormat, type ComponentColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher, tick } from 'svelte';

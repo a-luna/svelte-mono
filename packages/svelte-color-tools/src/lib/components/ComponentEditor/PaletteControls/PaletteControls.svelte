@@ -5,7 +5,7 @@
 	import SelectedPalette from '$lib/components/ComponentEditor/PaletteControls/SelectedPalette.svelte';
 	import SetColorPickerButton from '$lib/components/ComponentEditor/PaletteControls/SetColorPickerButton.svelte';
 	import UpdateColorButton from '$lib/components/ComponentEditor/PaletteControls/UpdateColorButton.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import { defaultColorPalette, type CssColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 

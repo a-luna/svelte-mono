@@ -9,8 +9,7 @@
 	import PaletteControls from '$lib/components/ComponentEditor/PaletteControls/PaletteControls.svelte';
 	import UserTheme from '$lib/components/ComponentEditor/UserTheme/UserTheme.svelte';
 	import { defaultUserThemeImported } from '$lib/constants';
-	import { initAppContext } from '$lib/context';
-	import { createThemeEditorStore } from '$lib/stores/themeEditor';
+	import { createThemeEditorStore, initAppContext } from '$lib/stores';
 	import { downloadUserThemeJson } from '$lib/theme';
 	import type { AppStore, ColorPickerStore, ThemeEditorStore, UserThemeImported } from '$lib/types';
 	import { getThemeEditorSlotExampleCode } from '$lib/util';
@@ -37,7 +36,6 @@
 	let addColorModal: AddColorToPaletteModal;
 	let editThemeSettingsModal: EditThemeSettingsModal;
 	let componentColor: ComponentColor = 'black';
-	let colorPicker: ColorPicker;
 	let contentViewer: ContentViewer;
 	const dispatchUiColorChanged = createEventDispatcher<{ uiColorChanged: { uiColor: ComponentColor } }>();
 
@@ -237,7 +235,7 @@
 	<div class="theme-editor-wrapper" style={themeStyles}>
 		<div id="theme-editor" data-testid={$themeEditor.editorId}>
 			<div class="editor-left-col">
-				<ColorPicker editMode={$themeEditor.editMode} bind:this={colorPicker} bind:picker />
+				<ColorPicker editMode={$themeEditor.editMode} bind:picker />
 				{#if themeInitialized}
 					<PaletteControls
 						on:addColorToPalette={addColorModal.addColorToPalette}

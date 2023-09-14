@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 
 	let { themeEditor } = getAppContext();
 

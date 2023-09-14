@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import Color from '$lib/components/Shared/Palettes/Color.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import type { ColorPalette } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';

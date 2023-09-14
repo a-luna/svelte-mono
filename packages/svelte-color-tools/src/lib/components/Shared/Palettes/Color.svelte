@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import { getCssValueForThemeColor } from '$lib/theme';
 	import type { ComponentColor, ThemeColor } from '@a-luna/shared-ui';
 	import { colorNameisCustomized } from '@a-luna/shared-ui/color/util';

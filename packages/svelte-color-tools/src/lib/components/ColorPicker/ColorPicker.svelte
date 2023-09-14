@@ -5,9 +5,7 @@
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
 	import X11Palettes from '$lib/components/ColorPicker/X11Palettes/X11Palettes.svelte';
 	import ColorFormatSelector from '$lib/components/Shared/ColorFormatSelector.svelte';
-	import ColorSwatch from '$lib/components/Shared/ColorSwatch.svelte';
-	import { initColorPickerStore } from '$lib/context';
-	import { createColorPickerStore } from '$lib/stores';
+	import { createColorPickerStore, initColorPickerStore } from '$lib/stores';
 	import type { ColorPickerStore } from '$lib/types';
 	import {
 		BasicIconRenderer,

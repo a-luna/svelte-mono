@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getColorPickerStore } from '$lib/context';
+	import { getColorPickerStore } from '$lib/stores';
 	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import type { ColorFormat, CssColorForColorSpace } from '@a-luna/shared-ui/types';
 	import { createEventDispatcher } from 'svelte';

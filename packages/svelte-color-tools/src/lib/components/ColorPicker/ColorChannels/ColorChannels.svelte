@@ -6,7 +6,7 @@
 	import OklabColorChannels from '$lib/components/ColorPicker/ColorChannels/OklabColorChannels.svelte';
 	import OklchColorChannels from '$lib/components/ColorPicker/ColorChannels/OklchColorChannels.svelte';
 	import RgbColorChannels from '$lib/components/ColorPicker/ColorChannels/RgbColorChannels.svelte';
-	import { getColorPickerStore } from '$lib/context';
+	import { getColorPickerStore } from '$lib/stores';
 
 	export let pickerId: string;
 	let picker = getColorPickerStore(pickerId);

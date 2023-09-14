@@ -4,7 +4,7 @@
 	import ThemeName from '$lib/components/ComponentEditor/UserTheme/ThemeName.svelte';
 	import UserThemeControls from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/UserThemeControls.svelte';
 	import ColorPalettes from '$lib/components/Shared/Palettes/ColorPalettes.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import type { ColorPalette } from '@a-luna/shared-ui';
 
 	export let initialized = false;

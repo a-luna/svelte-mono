@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import {
 		CSS_VAR_NAME_REGEX,
 		PROP_NAME_REGEX,

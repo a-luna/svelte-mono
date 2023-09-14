@@ -5,7 +5,7 @@
 	import ExportUserThemeButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/ExportUserThemeButton.svelte';
 	import FinishEditingButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/FinishEditingButton.svelte';
 	import SaveUserThemeButton from '$lib/components/ComponentEditor/UserTheme/UserThemeControls/SaveUserThemeButton.svelte';
-	import { getAppContext } from '$lib/context';
+	import { getAppContext } from '$lib/stores';
 	import type { ColorPalette } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
