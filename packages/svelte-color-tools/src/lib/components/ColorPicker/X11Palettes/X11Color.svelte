@@ -4,14 +4,18 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let color: CssColorForColorSpace;
-	const dispatchColorSelected = createEventDispatcher<{ colorSelected: { color: CssColorForColorSpace } }>();
+	const dispatchColorSelected = createEventDispatcher<{ colorSelected: { x11Color: CssColorForColorSpace } }>();
 
 	$: buttonToolTip = `${color.name} (${color.hex}, hue: ${color.hsl.h})`;
 </script>
 
 <div class="color-wrapper x11-color named-color">
 	<div class="color-wrapper-top">
-		<button type="button" title={buttonToolTip} on:click={() => dispatchColorSelected('colorSelected', { color })}>
+		<button
+			type="button"
+			title={buttonToolTip}
+			on:click={() => dispatchColorSelected('colorSelected', { x11Color: color })}
+		>
 			<ColorSwatch {color} />
 		</button>
 	</div>

@@ -3,6 +3,7 @@
 <script lang="ts">
 	import ColorChannels from '$lib/components/ColorPicker/ColorChannels/ColorChannels.svelte';
 	import ColorLabel from '$lib/components/ColorPicker/ColorLabel/ColorLabel.svelte';
+	import ColorSwatch from '$lib/components/ColorPicker/ColorSwatch.svelte';
 	import X11Palettes from '$lib/components/ColorPicker/X11Palettes/X11Palettes.svelte';
 	import ColorFormatSelector from '$lib/components/Shared/ColorFormatSelector.svelte';
 	import { createColorPickerStore, initColorPickerStore } from '$lib/stores';
@@ -34,7 +35,6 @@
 	$: swatchBorderColor = { ...$picker?.colorInGamut?.oklch, l: $picker?.colorInGamut?.oklch.l - 20, a: 1 };
 	$: swatchBorderStyles = `border: 2px solid ${oklchToString(swatchBorderColor)};`;
 	$: pointerStyles = !$picker.editable ? `pointer-events: none` : '';
-	$: tooltip = 'Click to open color picker';
 	$: if ($picker.labelState === 'success') {
 		timeout = setTimeout(() => {
 			$picker.labelState = 'inactive';
@@ -105,15 +105,12 @@
 				/>
 				<div
 					class="swatch-wrapper"
-					class:cursor-pointer={$picker?.editable}
 					class:cursor-not-allowed={!$picker?.editable}
-					title={tooltip}
+					title={'Click to open color picker'}
 					style="{swatchBorderStyles} {pointerStyles}"
 				>
 					<ColorSwatch
-						color={$picker.colorInGamut}
-						iconSize={'30px'}
-						iconTooltip={'Open X11 Color Palettes'}
+						{pickerId}
 						on:iconClicked={() => ($picker.x11PalettesShown = true)}
 						on:swatchClicked={() => colorPicker.click()}
 					>
