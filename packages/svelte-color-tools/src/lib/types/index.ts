@@ -5,10 +5,12 @@ export type { ColorPickerStore } from '$lib/types/ColorPickerStore';
 export type { CssVariable } from '$lib/types/CssVariable';
 export type { HueRange } from '$lib/types/HueRange';
 export type {
-	CssColorProperty as CssColorPropType,
-	CssPropertyName as CssProptype,
-	CssStringProperty as CssStringPropType,
+	CssColorPropertyName,
+	CssCustomPropertyType,
+	CssPropertyName,
+	CssStringPropertyName,
 	LabelState,
+	TemporaryLabelState,
 	ViewOption,
 } from '$lib/types/Literals';
 export type { ThemeColorShallowCopy } from '$lib/types/ThemeColor';

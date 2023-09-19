@@ -1,4 +1,5 @@
 import { SCOPED_CSS_REGEX } from '$lib/constants';
+import { isCssStyleRule } from '$lib/typeguards';
 import type { CssVariable } from '$lib/types';
 
 export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
@@ -17,8 +18,6 @@ export async function copyToClipboard(text: string): Promise<void> {
 
 const styleSheetIsInThisDomain = (styleSheet: CSSStyleSheet): boolean =>
 	!styleSheet.href || styleSheet.href.indexOf(window.location.origin) === 0;
-
-export const isCssStyleRule = (rule: CSSRule): rule is CSSStyleRule => rule instanceof CSSStyleRule;
 
 export function getAllCssVariables(args: {
 	ignoreTailwinds?: boolean;
