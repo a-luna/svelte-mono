@@ -4,7 +4,7 @@ import type { ColorFormat, CssColor, ThemeColor } from '@a-luna/shared-ui';
 // TODO: Investigate error raised when updating/adding new color to palette which sais that the PROP_NAME_REGEX is an invalid regular expression.
 
 export const CAMEL_CASE_REGEX = /^[a-z](?=.*[A-Z])[A-Za-z]*[^[-`]$/;
-export const PROP_NAME_REGEX = /^[a-z]+$|^[a-z](?=.*[A-Z])[A-Za-z]*[^[-`]$/;
+export const PROP_NAME_REGEX = /^[a-z]+$|^[a-z](?=.*[A-Z])[A-Za-z]*[^\[-`]$/;
 export const CSS_VAR_NAME_REGEX = /^--[A-Za-z][0-9A-Za-z-]*$/;
 
 export function getCssValueForThemeColor(color: ThemeColor, colorFormat: ColorFormat): string {
