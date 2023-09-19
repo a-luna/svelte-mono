@@ -2,7 +2,7 @@
 	import ColorSlider from '$lib/components/ColorPicker/ColorChannels/ColorSlider.svelte';
 	import type { CssColor } from '@a-luna/shared-ui';
 	import { cssColorFromOklab } from '@a-luna/shared-ui/color/parsers';
-	import { clampColorComponents } from '@a-luna/shared-ui/color/util';
+	import { clampColorComponents, toFixedPercent } from '@a-luna/shared-ui/color/util';
 	import { createEventDispatcher } from 'svelte';
 
 	export let editable: boolean;
@@ -15,6 +15,7 @@
 	$: disabled = !editable;
 	$: color = cssColorFromOklab({ l, a, b, A });
 	$: clamped = clampColorComponents(color);
+	$: alpha = parseFloat(toFixedPercent(clamped.oklab.A));
 </script>
 
 <ColorSlider
@@ -49,9 +50,10 @@
 <ColorSlider
 	name="A"
 	bind:value={A}
-	display={clamped.oklab.A}
+	display={alpha}
 	max={1}
 	step={0.01}
+	isPercent={true}
 	{disabled}
 	on:change={() => dispatch('colorChanged', { color })}
 />
