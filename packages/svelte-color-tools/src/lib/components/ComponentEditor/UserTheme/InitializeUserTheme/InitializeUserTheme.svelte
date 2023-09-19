@@ -27,7 +27,6 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1rem;
-		width: 371px;
 		height: 169px;
 		padding: 1rem;
 		border-radius: 6px;

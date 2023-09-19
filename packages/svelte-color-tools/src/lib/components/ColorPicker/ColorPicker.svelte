@@ -155,7 +155,7 @@
 		flex-flow: row nowrap;
 		align-items: flex-start;
 		gap: 10px;
-		width: 371px;
+		width: 386px;
 		height: 169px;
 		background-color: var(--panel-bg-color);
 		border: 1px solid var(--fg-color, --black2);

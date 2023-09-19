@@ -78,7 +78,7 @@
 		border: 1px solid var(--fg-color, --light-gray2);
 		border-radius: 6px;
 		transition: background-color, color 350ms ease-out;
-		width: 230px;
+		width: 245px;
 		padding: 6px 9px;
 		height: 30px;
 	}

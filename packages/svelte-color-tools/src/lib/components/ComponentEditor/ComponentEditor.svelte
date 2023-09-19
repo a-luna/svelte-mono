@@ -312,7 +312,7 @@
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 1rem;
-		margin: 0 auto 0 0;
+		margin: 0;
 	}
 
 	.editor-left-col {
