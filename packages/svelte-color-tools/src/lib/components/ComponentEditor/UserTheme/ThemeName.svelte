@@ -39,7 +39,7 @@
 		/>
 	{:else}
 		<div class="theme-name">
-			<span title="Click to change theme name">{themeName}</span>
+			<span>{themeName}</span>
 		</div>
 	{/if}
 </div>
