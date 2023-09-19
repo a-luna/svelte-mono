@@ -16,15 +16,15 @@
 	const dispatchPaletteToggled = createEventDispatcher<{ paletteToggled: { paletteId: string } }>();
 
 	$: hasColors = palette.colors.length > 0;
-	$: color = $themeEditor.userTheme.uiColor;
+	$: color = palette.componentColor;
 	$: accordionButtonPadding = alwaysExpanded ? 'padding: 6px 1px 0px 1px;' : 'padding: 0.5rem;';
 	$: accordionButtonBorder = expanded
 		? 'border-top-left-radius: var(--border-radius, var(--default-border-radius)); border-top-right-radius: var(--border-radius, var(--default-border-radius)); border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; border-top: 1px solid var(--border-color, var(--black2)); border-bottom: none; border-right: 1px solid var(--border-color, var(--black2)); border-left: 1px solid var(--border-color, var(--black2));'
 		: 'border: 1px solid var(--border-color, var(--black2)); border-radius: var(--border-radius, var(--default-border-radius));';
-	$: accordionStylesSlide = `--text-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --color-wrapper-bg-color: var(--${color}-bg-color); --hover-border-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color);`;
+	$: accordionStylesSlide = `--color-wrapper-bg-color: var(--${color}-bg-color); --hover-bg-color: var(--${color}-hover-bg-color); --active-bg-color: var(--${color}-active-bg-color); --text-color: var(--${color}-fg-color); --hover-text-color: var(--${color}-fg-color); --active-text-color: var(--${color}-fg-color); --border-radius: 6px; --hover-border-color: var(--${color}-fg-color); --active-border-color: var(--${color}-fg-color);`;
 	$: accordionStyles = expanded
 		? `${accordionStylesSlide} --bg-color: var(--${color}-hover-bg-color);`
-		: accordionStylesSlide;
+		: `${accordionStylesSlide} --bg-color: var(--${color}-bg-color);`;
 	$: if (palette?.updated) {
 		if (!expanded) {
 			togglePalette();
