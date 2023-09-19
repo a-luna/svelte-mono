@@ -26,16 +26,16 @@ export const decimalToOpacityValue = (decimal: number): number => parseFloat(toF
 
 const signedInteger = /-?\d*\.0+$/;
 
-const clamp = (n: number): number =>
+const clamp = (n: number, p = 2): number =>
 	Math.abs(n) < 1
-		? Object.is(parseFloat(n.toFixed(4)), -0)
+		? Object.is(parseFloat(n.toFixed(3)), -0)
 			? 0
-			: parseFloat(n.toFixed(4))
+			: parseFloat(n.toFixed(3))
 		: Object.is(n, -0)
 		? 0
 		: signedInteger.test(n.toFixed(2))
 		? parseInt(n.toFixed(0))
-		: parseFloat(n.toFixed(3));
+		: parseFloat(n.toFixed(p));
 
 function clampString(n: number, p = 2): string {
 	let clamped =
@@ -85,29 +85,29 @@ export const hslToString = ({ h, s, l, a }: HslColor): string =>
 		? `hsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)} / ${clampString(a)})`
 		: `hsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)})`;
 
-export const labToString = ({ l, a, b, A }: LabColor): string =>
-	A < 1.0
-		? `lab(${clampString(l)} ${clampString(a)} ${clampString(b)} / ${toFixedPercent(A)})`
-		: `lab(${clampString(l)} ${clampString(a)} ${clampString(b)})`;
-
-export const lchToString = ({ l, c, h, a }: LchColor): string =>
-	a < 1.0
-		? `lch(${clampString(l)} ${clampString(c)} ${clampString(h)} / ${toFixedPercent(a)})`
-		: `lch(${clampString(l)} ${clampString(c)} ${clampString(h)})`;
-
 export const okhslToString = ({ h, s, l, a }: OkhslColor): string =>
 	a < 1.0
 		? `okhsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)} / ${clampString(a)})`
 		: `okhsl(${clampString(h)} ${toFixedPercent(s / 100.0)} ${toFixedPercent(l / 100.0)})`;
 
+export const labToString = ({ l, a, b, A }: LabColor): string =>
+	A < 1.0
+		? `lab(${clampString(l)} ${clampString(a)} ${clampString(b)} / ${toFixedPercent(A, 1)})`
+		: `lab(${clampString(l)} ${clampString(a)} ${clampString(b)})`;
+
 export const oklabToString = ({ l, a, b, A }: OklabColor): string =>
 	A < 1.0
-		? `oklab(${clampString(l)}% ${clampString(a, 3)} ${clampString(b, 3)} / ${toFixedPercent(A)})`
+		? `oklab(${clampString(l)}% ${clampString(a, 3)} ${clampString(b, 3)} / ${toFixedPercent(A, 1)})`
 		: `oklab(${clampString(l)}% ${clampString(a, 3)} ${clampString(b, 3)})`;
+
+export const lchToString = ({ l, c, h, a }: LchColor): string =>
+	a < 1.0
+		? `lch(${clampString(l)} ${clampString(c)} ${clampString(h)} / ${toFixedPercent(a, 1)})`
+		: `lch(${clampString(l)} ${clampString(c)} ${clampString(h)})`;
 
 export const oklchToString = ({ l, c, h, a }: OklchColor): string =>
 	a < 1.0
-		? `oklch(${toFixedPercent(l / 100.0)} ${clampString(c, 3)} ${clampString(h)} / ${toFixedPercent(a)})`
+		? `oklch(${toFixedPercent(l / 100.0)} ${clampString(c, 3)} ${clampString(h)} / ${toFixedPercent(a, 1)})`
 		: `oklch(${toFixedPercent(l / 100.0)} ${clampString(c, 3)} ${clampString(h)})`;
 
 export const sortColors = (a: CssColor | CssColorForColorSpace, b: CssColor | CssColorForColorSpace): number =>
