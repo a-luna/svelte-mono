@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { alphaBgPattern } from '$lib/constants';
 	import { getColorPickerStore } from '$lib/stores';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { getCssColorString } from '@a-luna/shared-ui/color/util';
 	import { createEventDispatcher } from 'svelte';
 
@@ -17,16 +18,14 @@
 <div class="swatch-wrapper">
 	<div class="swatch" style={swatchColor} />
 	<div class="swatch-overlay" style={overlayColor} on:click={() => dispatchSwatchClicked('swatchClicked')} />
-	{#if $$slots.icon}
-		<div
-			class="icon"
-			title={'Open X11 Color Palettes'}
-			style="width: 30px; height: 30px;"
-			on:click|stopPropagation={() => dispatchIconClicked('iconClicked')}
-		>
-			<slot name="icon" />
-		</div>
-	{/if}
+	<div
+		class="icon"
+		title={'Open X11 Color Palettes'}
+		style="width: 30px; height: 30px;"
+		on:click|stopPropagation={() => dispatchIconClicked('iconClicked')}
+	>
+		<BasicIconRenderer icon={'colorswatches'} height={'25px'} width={'25px'} />
+	</div>
 </div>
 
 <style lang="postcss">

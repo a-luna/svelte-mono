@@ -99,11 +99,7 @@
 						{pickerId}
 						on:iconClicked={() => ($picker.x11PalettesShown = true)}
 						on:swatchClicked={() => colorPicker.click()}
-					>
-						<svelte:fragment slot="icon">
-							<BasicIconRenderer icon={'colorswatches'} height={'25px'} width={'25px'} />
-						</svelte:fragment>
-					</ColorSwatch>
+					/>
 				</div>
 			</div>
 			<div class="picker-right-col">
