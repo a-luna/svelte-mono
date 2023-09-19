@@ -28,9 +28,9 @@
 		color.oklchString,
 	];
 	$: currentColor = colorLabels.at(currentLabelIndex) || color.hex;
-	$: currentColorFormat = ['Hex', 'RGB', 'HSL', 'OKHSK', 'LAB', 'LCH', 'OKLAB', 'OKLCH'][currentLabelIndex];
+	$: currentColorFormat = $picker.colorFormat;
 	$: tooltip = 'Click to toggle CSS Color Space string values';
-	$: fontSize = currentColorFormat === 'RGB' || currentColorFormat === 'Hex' ? '0.8rem' : '0.6rem';
+	$: fontSize = currentColorFormat === 'rgb' || currentColorFormat === 'hex' ? '0.8rem' : '0.6rem';
 	$: if ($picker.labelState === 'success') {
 		setColorFormat($picker.colorFormat);
 	}
