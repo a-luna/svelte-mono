@@ -117,6 +117,7 @@ export const SOCIAL_ICON_NAMES = [
 	'linkedinsquare',
 	'twitter',
 	'twittersquare',
+	'twitterx',
 ] as const;
 
 export const LANGTECH_ICON_NAMES = [

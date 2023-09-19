@@ -5,5 +5,6 @@ import LinkedIn from '$lib/components/Icons/Social/LinkedIn.svelte';
 import LinkedInSquare from '$lib/components/Icons/Social/LinkedInSquare.svelte';
 import Twitter from '$lib/components/Icons/Social/Twitter.svelte';
 import TwitterSquare from '$lib/components/Icons/Social/TwitterSquare.svelte';
+import TwitterX from '$lib/components/Icons/Social/TwitterX.svelte';
 
-export { Codepen, Github, GithubSquare, LinkedIn, LinkedInSquare, Twitter, TwitterSquare };
+export { Codepen, Github, GithubSquare, LinkedIn, LinkedInSquare, Twitter, TwitterSquare, TwitterX };

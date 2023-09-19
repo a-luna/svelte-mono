@@ -85,6 +85,7 @@ import {
 	LinkedInSquare,
 	Twitter,
 	TwitterSquare,
+	TwitterX,
 } from '$lib/components/Icons/Social';
 
 import {
@@ -201,6 +202,7 @@ function createSocialIconMap(): Map<SocialIconName, SocialIcon> {
 	iconMap.set('linkedinsquare', LinkedInSquare);
 	iconMap.set('twitter', Twitter);
 	iconMap.set('twittersquare', TwitterSquare);
+	iconMap.set('twitterx', TwitterX);
 	return iconMap;
 }
 
