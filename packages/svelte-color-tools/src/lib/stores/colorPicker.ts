@@ -1,5 +1,6 @@
 import type { ColorPickerState, ColorPickerStore } from '$lib/types';
 import { ColorParser, defaultCssColor, getX11ColorPalettes, type ColorFormat, type CssColor } from '@a-luna/shared-ui';
+import { getColorFormatFromCssString } from '@a-luna/shared-ui/color/parsers';
 import { writable } from 'svelte/store';
 
 export function createColorPickerStore(pickerId: string): ColorPickerStore {
@@ -17,12 +18,30 @@ export function createColorPickerStore(pickerId: string): ColorPickerStore {
 		editable: true,
 	});
 
+	function parseColor(css: string, state: ColorPickerState): ColorPickerState {
+		const result = ColorParser.parse(css);
+		if (result.success && result.value) {
+			const color = result.value;
+			state = setColor(color, _getColorFormatFromStringValue(css, state), state);
+			state.labelState = 'success';
+		} else {
+			state.labelState = 'error';
+		}
+		return state;
+	}
+
+	function _getColorFormatFromStringValue(css: string, state: ColorPickerState): ColorFormat {
+		const colorFormat = getColorFormatFromCssString(css);
+		if (!colorFormat) return state.colorFormat;
+		if (colorFormat === 'hex') return 'rgb';
+		return colorFormat;
+	}
+
 	function setColor(color: CssColor, colorFormat: ColorFormat, state: ColorPickerState): ColorPickerState {
 		state.color = color;
 		state.colorSpace = color.space;
 		state.colorInGamut = color.space === 'srgb' ? color.srbgColor : color.p3Color;
 		state = _updateColorFormat(color, colorFormat, state);
-		state.labelState = 'success';
 		return state;
 	}
 
@@ -55,6 +74,7 @@ export function createColorPickerStore(pickerId: string): ColorPickerStore {
 		set,
 		subscribe,
 		update,
+		parseColor: (css: string) => update((state) => parseColor(css, state)),
 		setColor: (color: CssColor, colorFormat: ColorFormat) => update((state) => setColor(color, colorFormat, state)),
 		setColorFormat: (colorFormat: ColorFormat) => update((state) => setColorFormat(colorFormat, state)),
 	};

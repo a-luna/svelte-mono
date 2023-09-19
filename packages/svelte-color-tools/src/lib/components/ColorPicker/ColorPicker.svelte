@@ -7,16 +7,10 @@
 	import X11Palettes from '$lib/components/ColorPicker/X11Palettes/X11Palettes.svelte';
 	import ColorFormatSelector from '$lib/components/Shared/ColorFormatSelector.svelte';
 	import { createColorPickerStore, initColorPickerStore } from '$lib/stores';
+	import { isTemporaryLabelState } from '$lib/typeguards';
 	import type { ColorPickerStore } from '$lib/types';
-	import {
-		BasicIconRenderer,
-		ColorParser,
-		type ColorFormat,
-		type CssColor,
-		type CssColorForColorSpace,
-	} from '@a-luna/shared-ui';
+	import type { ColorFormat, CssColor, CssColorForColorSpace } from '@a-luna/shared-ui';
 	import { finalizeLabColor } from '@a-luna/shared-ui/color/gamut';
-	import { getColorFormatFromCssString } from '@a-luna/shared-ui/color/parsers';
 	import { copyCssColor, oklchToString } from '@a-luna/shared-ui/color/util';
 	import { onDestroy, onMount, tick } from 'svelte';
 
@@ -36,7 +30,7 @@
 	$: swatchBorderColor = { ...$picker?.colorInGamut?.oklch, l: $picker?.colorInGamut?.oklch.l - 20, a: 1 };
 	$: swatchBorderStyles = `border: 2px solid ${oklchToString(swatchBorderColor)};`;
 	$: pointerStyles = !$picker.editable ? `pointer-events: none` : '';
-	$: if ($picker.labelState === 'success') {
+	$: if (isTemporaryLabelState($picker.labelState)) {
 		timeout = setTimeout(() => {
 			$picker.labelState = 'inactive';
 		}, 500);
@@ -56,30 +50,13 @@
 
 	function handleStringValueChanged(e: CustomEvent<{ css: string }>) {
 		const { css } = e.detail;
-		parseCssColorFromString(css);
+		picker.parseColor(css);
 	}
 
 	function handleColorPickerValueChanged() {
 		const hex = colorPicker.value;
 		const alpha = Math.floor($picker.color.rgb.a * 255.0).toString(16);
-		parseCssColorFromString(`${hex}${alpha}`);
-	}
-
-	function parseCssColorFromString(css: string) {
-		const result = ColorParser.parse(css);
-		if (result.success && result.value) {
-			const color = result.value;
-			picker.setColor(color, getColorFormatFromStringValue(css));
-		} else {
-			$picker.labelState = 'error';
-		}
-	}
-
-	function getColorFormatFromStringValue(css: string): ColorFormat {
-		const colorFormat = getColorFormatFromCssString(css);
-		if (!colorFormat) return $picker.colorFormat;
-		if (colorFormat === 'hex') return 'rgb';
-		return colorFormat;
+		picker.parseColor(`${hex}${alpha}`);
 	}
 
 	function handleColorFormatChanged(e: CustomEvent<{ colorFormat: ColorFormat }>) {
