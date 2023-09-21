@@ -89,14 +89,14 @@
 		margin: 2px 0 0 0;
 	}
 	.top-gradient {
-		background-image: linear-gradient(to right, var(--purple), var(--sea-green));
+		background-image: var(--heading-underline-gradient);
 		background-repeat: no-repeat;
 		background-size: 100% 1px;
 		background-position: 0 0%;
 		transition: background-size 0.25s ease-in;
 	}
 	.bottom-gradient {
-		background-image: linear-gradient(to right, var(--purple), var(--sea-green));
+		background-image: var(--heading-underline-gradient);
 		background-repeat: no-repeat;
 		background-size: 100% 1px;
 		background-position: 0 100%;

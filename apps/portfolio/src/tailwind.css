@@ -245,9 +245,9 @@
 	--yellow-green-hue: 75;
 	--lime-hue: 90;
 	--chartreuse-hue: 105;
-	--green-hue: 120;
+	--green-hue: 144;
 	--spring-green-hue: 135;
-	--sea-green-hue: 150;
+	/* --sea-green-hue: 150; */
 	--turquoise-hue: 165;
 	--teal-hue: 180;
 	--slate-blue-hue: 210;
@@ -380,11 +380,13 @@
 	--yellow-green: hsl(76.18 100% 50%);
 	--yellow-green: oklch(91.47% 0.274 126.84);
 
-	--green: hsl(137.31 100% 48%);
-	--green: oklch(84.88% 0.356 145.06);
+	/* --green: hsl(137.31 100% 48%);
+	--green: oklch(84.88% 0.356 145.06); */
 
-	--sea-green: hsl(149.93 100% 48%);
-	--sea-green: oklch(85.29% 0.317 151.1);
+	/* --sea-green: hsl(149.93 100% 48%); */
+	/* --sea-green: oklch(85.29% 0.317 151.1); */
+	--green: hsl(144.1 94.2% 49.7%);
+	--green: oklch(85.01% 0.342 148.19);
 
 	--teal: hsl(161.97 100% 49%);
 	--teal: oklch(86.47% 0.257 162.56);
@@ -398,17 +400,17 @@
 	--dark-blue: hsl(216.7 100% 31%);
 	--dark-blue: oklch(39.41% 0.206 260.55);
 
-	--purple: hsl(252.08 100% 56%);
-	--purple: oklch(49.25% 0.301 276.35);
+	--purple: hsl(259.36 100% 52%);
+	--purple: oklch(49.56% 0.301 281.2);
 
 	--pink: hsl(321.68 100% 63%);
 	--pink: oklch(69.12% 0.323 346.56);
 
 	--teal-dim: hsl(161.97 100% 34%);
 
-	--link-color: var(--yellow-green);
+	--link-color: var(--green);
 
-	--accent-color: var(--sea-green);
+	--accent-color: var(--green);
 	--accent-color-dim: hsl(149.93 100% 33%);
 
 	--social-color: var(--purple);
@@ -424,9 +426,9 @@
 		-20px 20px 31.8px -2.5px hsl(var(--shadow-color) / 0.36);
 
 
-	--page-title-gradient: linear-gradient(to bottom right, var(--sea-green), var(--yellow-green));
+	--page-title-gradient: linear-gradient(to bottom right, var(--accent-color), var(--accent-color-dim));
 	--g-color-1: var(--purple);
-	--g-color-2: var(--sea-green);
+	--g-color-2: var(--green);
 	--heading-underline-gradient: linear-gradient(to right, var(--g-color-1), var(--g-color-2));
 }
 
@@ -566,10 +568,6 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 .success,
 .tox-passed {
 	color: var(--green);
-}
-
-.sea-green {
-	color: var(--sea-green);
 }
 
 .teal {
@@ -1586,7 +1584,7 @@ code [class*="cmd-"] {
 
 .cmd-comment,
 .cmd-repl-prompt {
-	color: var(--sea-green);
+	color: var(--green);
 }
 
 .cmd-repl-comment {
@@ -1777,7 +1775,7 @@ code.unmodified-file {
 
 pre .work-file,
 code.work-file {
-	color: var(--sea-green);
+	color: var(--green);
 	font-weight: 500;
 }
 

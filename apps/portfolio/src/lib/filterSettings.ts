@@ -57,14 +57,14 @@ const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	alllanguages: {
 		displayName: 'All Languages',
-		color: 'red',
+		color: 'yellow-green',
 		hasIcon: true,
 		icon: AllProjects,
 		size: 16,
 	},
 	aws: {
 		displayName: 'AWS/Boto3',
-		color: 'purple',
+		color: 'green',
 		hasIcon: true,
 		icon: Aws,
 		size: 20,
@@ -106,7 +106,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	lxml: {
 		displayName: 'lxml',
-		color: 'dark-blue',
+		color: 'teal',
 		hasIcon: true,
 		icon: Lxml,
 		size: 16,
@@ -155,7 +155,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	shell: {
 		displayName: 'Shell',
-		color: 'teal',
+		color: 'yellow',
 		hasIcon: true,
 		icon: Shell,
 		size: 16,
@@ -176,7 +176,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	svelte: {
 		displayName: 'Svelte',
-		color: 'yellow',
+		color: 'teal',
 		hasIcon: true,
 		icon: Svelte,
 		size: 18,
@@ -190,14 +190,14 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 	},
 	typescript: {
 		displayName: 'TypeScript',
-		color: 'dark-blue',
+		color: 'blue',
 		hasIcon: true,
 		icon: TypeScript,
 		size: 15,
 	},
 	xpath: {
 		displayName: 'XPath',
-		color: 'orange',
+		color: 'purple',
 		hasIcon: true,
 		icon: Xml,
 		size: 16,
@@ -244,7 +244,7 @@ const projectCategoriesDetailsDatabase: { [k: string]: ProjectCategoryDetails } 
 	},
 	design_patterns: {
 		displayName: 'Design Patterns',
-		color: 'dark-blue',
+		color: 'teal',
 		hasIcon: false,
 	},
 	dev_tools: {

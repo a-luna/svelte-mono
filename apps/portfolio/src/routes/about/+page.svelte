@@ -18,7 +18,7 @@
 	const getRandomIconColor = () =>
 		getRandomArrayItem<IconColor>(
 			ICON_COLORS.filter((icon) => icon !== 'default'),
-			'blue',
+			'green',
 		);
 </script>
 
