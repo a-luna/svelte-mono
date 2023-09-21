@@ -10,7 +10,7 @@
 		<SocialIconRenderer icon={'linkedin'} title={'Link to my LinkedIn profile'} />
 	</a>
 	<a href="https://twitter.com/aaronlunadev/" target="_blank" rel="noreferrer">
-		<SocialIconRenderer icon={'twitter'} title={'Link to my Twitter profile'} />
+		<SocialIconRenderer icon={'twitterx'} title={'Link to my Twitter profile'} />
 	</a>
 	<a href="https://codepen.io/a-luna/" target="_blank" rel="noreferrer">
 		<SocialIconRenderer icon={'codepen'} title={'Link to my Codepen profile'} />

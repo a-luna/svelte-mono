@@ -29,7 +29,7 @@
 			>
 			or
 			<a href="https://twitter.com/aaronlunadev/" class="icon" target="_blank" rel="noreferrer"
-				><SocialIconRenderer icon={'twitter'} title={'Link to my Twitter profile'} /></a
+				><SocialIconRenderer icon={'twittersquare'} title={'Link to my Twitter profile'} /></a
 			>, or email me at
 			<a href="mailto:contact@aaronluna.dev">contact@aaronluna.dev</a></span
 		>
