@@ -1,8 +1,11 @@
 import AndroidMask from './AndroidMask.svelte';
+import Arrowed from './Arrowed.svelte';
 import AudioCassette from './AudioCassette.svelte';
 import BoltSpellCast from './BoltSpellCast.svelte';
+import ChemicalDrop from './ChemicalDrop.svelte';
 import CyberEye from './CyberEye.svelte';
 import DustCloud from './DustCloud.svelte';
+import FireFlake from './FireFlake.svelte';
 import FireSilhouette from './FireSilhouette.svelte';
 import Heptagram from './Heptagram.svelte';
 import MoebiusStar from './MoebiusStar.svelte';
@@ -16,16 +19,17 @@ import SverdIFjell from './SverdIFjell.svelte';
 import Teleport from './Teleport.svelte';
 import TronArrow from './TronArrow.svelte';
 import Uluru from './Uluru.svelte';
-import Vial from './Vial.svelte';
 import Vulture from './Vulture.svelte';
-import WoodenSign from './WoodenSign.svelte';
 
 export {
 	AndroidMask,
+	Arrowed,
 	AudioCassette,
 	BoltSpellCast,
+	ChemicalDrop,
 	CyberEye,
 	DustCloud,
+	FireFlake,
 	FireSilhouette,
 	Heptagram,
 	MoebiusStar,
@@ -39,17 +43,18 @@ export {
 	Teleport,
 	TronArrow,
 	Uluru,
-	Vial,
 	Vulture,
-	WoodenSign,
 };
 
 export const NAV_ICONS = {
+	arrowed: Arrowed,
 	androidmask: AndroidMask,
 	audiocassette: AudioCassette,
 	boltspellcast: BoltSpellCast,
+	chemicaldrop: ChemicalDrop,
 	cybereye: CyberEye,
 	dustcloud: DustCloud,
+	fireflake: FireFlake,
 	firesilhouette: FireSilhouette,
 	heptagram: Heptagram,
 	moebiusstar: MoebiusStar,
@@ -62,8 +67,6 @@ export const NAV_ICONS = {
 	sverdifjell: SverdIFjell,
 	teleport: Teleport,
 	uluru: Uluru,
-	vial: Vial,
 	vulture: Vulture,
-	woodensign: WoodenSign,
 	tronarrow: TronArrow,
 };

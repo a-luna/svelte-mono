@@ -1,9 +1,12 @@
 import type {
 	AndroidMask,
+	Arrowed,
 	AudioCassette,
 	BoltSpellCast,
+	ChemicalDrop,
 	CyberEye,
 	DustCloud,
+	FireFlake,
 	FireSilhouette,
 	Heptagram,
 	MoebiusStar,
@@ -17,9 +20,7 @@ import type {
 	Teleport,
 	TronArrow,
 	Uluru,
-	Vial,
 	Vulture,
-	WoodenSign,
 } from '$lib/components/Icons';
 import type {
 	BACKEND_CATEGORIES,
@@ -337,11 +338,14 @@ export type FilterSettingIcon =
 	| typeof XState;
 
 export type NavIcon =
+	| typeof Arrowed
 	| typeof AndroidMask
 	| typeof AudioCassette
+	| typeof ChemicalDrop
 	| typeof CyberEye
 	| typeof DustCloud
 	| typeof BoltSpellCast
+	| typeof FireFlake
 	| typeof FireSilhouette
 	| typeof Heptagram
 	| typeof Stigmata
@@ -355,9 +359,7 @@ export type NavIcon =
 	| typeof Teleport
 	| typeof TronArrow
 	| typeof Uluru
-	| typeof Vial
-	| typeof Vulture
-	| typeof WoodenSign;
+	| typeof Vulture;
 
 export interface ProjectCategoryDetails {
 	displayName: string;

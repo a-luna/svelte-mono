@@ -25,11 +25,14 @@ export const ICON_COLORS = [
 ] as const;
 
 export const NAV_ICON_NAMES = [
+	'arrowed',
 	'androidmask',
 	'audiocassette',
 	'boltspellcast',
+	'chemicaldrop',
 	'cybereye',
 	'dustcloud',
+	'fireflake',
 	'firesilhouette',
 	'heptagram',
 	'stigmata',
@@ -43,9 +46,7 @@ export const NAV_ICON_NAMES = [
 	'teleport',
 	'tronarrow',
 	'uluru',
-	'vial',
 	'vulture',
-	'woodensign',
 ] as const;
 
 export const TECH_LIST = [

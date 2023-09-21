@@ -1,10 +1,13 @@
 <script lang="ts">
 	import {
 		AndroidMask,
+		Arrowed,
 		AudioCassette,
 		BoltSpellCast,
+		ChemicalDrop,
 		CyberEye,
 		DustCloud,
+		FireFlake,
 		FireSilhouette,
 		Heptagram,
 		MoebiusStar,
@@ -18,9 +21,7 @@
 		Teleport,
 		TronArrow,
 		Uluru,
-		Vial,
 		Vulture,
-		WoodenSign,
 	} from '$lib/components/Icons';
 	import type { NavIcon, NavIconName } from '$lib/types';
 	import { getRandomArrayItem } from '$lib/util';
@@ -35,11 +36,14 @@
 
 	function createNavIconMap(): Map<NavIconName, NavIcon> {
 		const iconMap = new Map<NavIconName, NavIcon>();
+		iconMap.set('arrowed', Arrowed);
 		iconMap.set('androidmask', AndroidMask);
 		iconMap.set('audiocassette', AudioCassette);
+		iconMap.set('chemicaldrop', ChemicalDrop);
 		iconMap.set('cybereye', CyberEye);
 		iconMap.set('dustcloud', DustCloud);
 		iconMap.set('boltspellcast', BoltSpellCast);
+		iconMap.set('fireflake', FireFlake);
 		iconMap.set('firesilhouette', FireSilhouette);
 		iconMap.set('heptagram', Heptagram);
 		iconMap.set('moebiusstar', MoebiusStar);
@@ -53,8 +57,6 @@
 		iconMap.set('teleport', Teleport);
 		iconMap.set('tronarrow', TronArrow);
 		iconMap.set('uluru', Uluru);
-		iconMap.set('woodensign', WoodenSign);
-		iconMap.set('vial', Vial);
 		iconMap.set('vulture', Vulture);
 		return iconMap;
 	}
@@ -68,6 +70,6 @@
 
 {#if NAV_ICON_MAP}
 	<div class="icon-wrapper" {style}>
-		<svelte:component this={NAV_ICON_MAP.get(icon)} {title} />
+		<svelte:component this={NAV_ICON_MAP.get('fireflake')} {title} />
 	</div>
 {/if}
