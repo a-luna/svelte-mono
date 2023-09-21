@@ -43,6 +43,7 @@
 		height: 100vh;
 		left: -100%;
 		transition: left 0.3s ease-in-out;
+		padding: 0 15px 0 0;
 	}
 	.open {
 		left: 0;
