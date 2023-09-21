@@ -682,6 +682,10 @@ body:has(.nav-sidebar.open)::-webkit-scrollbar-thumb {
 	width: 100%;
 }
 
+.readme details summary code {
+	background-color: inherit;
+}
+
 .readme details summary .heading-text h3,
 .readme details summary .heading-text h4,
 .readme summary>div>span>strong>h3,
@@ -869,6 +873,7 @@ article.readme .wrapper>ul {
 	flex-flow: row nowrap;
 	justify-content: flex-start;
 	align-items: flex-start;
+	margin: 0;
 }
 
 .readme .wrapper div dl dt:has(.cjk-only) {
