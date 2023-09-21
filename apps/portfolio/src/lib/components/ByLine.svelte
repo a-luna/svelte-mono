@@ -15,16 +15,17 @@
 		<div class="avatar">
 			<img src={authorImage} alt="" />
 		</div>
-		<span class="author-name">{AUTHOR_NAME}</span>
 	</a>
-	<span class="separator">/</span>
-	<span class="publish-date">{@html publishDate}</span>
+	<div class="details">
+		<a href="/about" class="author author-name">{AUTHOR_NAME}</a>
+		<span class="publish-date">{@html publishDate}</span>
+	</div>
 </div>
 
 <style lang="postcss">
 	.by-line {
 		display: flex;
-		gap: 0.5rem;
+		gap: 0.75rem;
 		align-items: center;
 		line-height: 1;
 		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
@@ -37,14 +38,14 @@
 	}
 	.avatar {
 		display: inline-block;
-		border-width: 2px;
+		border-width: 1px;
 		border-style: solid;
-		border-color: var(--gray-shade3);
+		border-color: var(--gray);
 		border-radius: 50%;
-		height: 50px;
-		width: 50px;
+		height: 45px;
+		width: 45px;
 		transition: border-color 0.3s ease-in;
-		flex: 0 0 50px;
+		flex: 0 0 45px;
 	}
 	.author:hover .avatar {
 		border-color: var(--white-shade3);
@@ -57,34 +58,43 @@
 	.author:hover img {
 		background-color: var(--dark-gray-shade2);
 	}
+	.details {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 0.375rem;
+	}
 	.author-name,
-	.separator,
 	.publish-date {
-		color: var(--gray-shade3);
-		font-size: 0.875rem;
+		color: var(--gray);
+		font-size: 0.75rem;
 		font-weight: 400;
 		white-space: nowrap;
 	}
 	.author-name {
 		transition: color 0.3s ease-in;
-		align-self: center;
 	}
 
-	.author:hover .author-name {
+	.author-name:hover {
 		color: var(--white-shade3);
 	}
 	.publish-date {
 		flex: 1;
 	}
 	@media (min-width: 640px) {
+		.by-line {
+			gap: 1rem;
+		}
 		.avatar {
-			height: 65px;
-			width: 65px;
-			flex: 0 0 65px;
+			height: 50px;
+			width: 50px;
+			flex: 0 0 50px;
 		}
 		.author-name,
 		.publish-date {
-			font-size: 1rem;
+			font-size: 0.9rem;
+		}
+		.details {
+			gap: 0.5rem;
 		}
 	}
 </style>

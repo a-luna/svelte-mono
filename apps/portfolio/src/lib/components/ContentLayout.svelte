@@ -90,7 +90,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1.5rem;
-		margin: 1.5rem auto;
+		margin: 1rem auto;
 	}
 	h1 {
 		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
@@ -99,13 +99,13 @@
 		line-height: 1.3;
 	}
 	.gradient-heading {
-		color: transparent;
-		-webkit-background-clip: text;
+		color: var(--white);
+		/* -webkit-background-clip: text;
 		background-clip: text;
 		-webkit-box-decoration-break: text;
-		box-decoration-break: clone;
-		background-image: var(--page-title-gradient);
-		background-color: var(--black-tint2);
+		box-decoration-break: clone; */
+		/* background-image: var(--page-title-gradient);
+		background-color: var(--black-tint2); */
 	}
 	.wrapper {
 		padding-top: 0;
