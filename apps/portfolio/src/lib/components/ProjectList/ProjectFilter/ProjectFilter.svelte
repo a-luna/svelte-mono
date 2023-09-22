@@ -28,8 +28,8 @@
 	function getInactiveCategoryColors(): { [k: string]: string } {
 		const colors: { [k: string]: string } = {};
 		colors[noFilterSetting.toString()] = 'black';
-		PROJECT_TYPES.forEach((type) => (colors[type.toString()] = 'var(--black-tint2)'));
-		TECH_LIST.forEach((type) => (colors[type.toString()] = 'var(--black-tint2)'));
+		PROJECT_TYPES.forEach((type) => (colors[type.toString()] = 'black-tint2'));
+		TECH_LIST.forEach((type) => (colors[type.toString()] = 'black-tint2'));
 		PROJECT_CATEGORIES.forEach((setting) => (colors[setting.toString()] = 'black'));
 		return colors;
 	}
@@ -37,8 +37,8 @@
 	function getActiveCategoryColors(): { [k: string]: string } {
 		const colors: { [k: string]: string } = {};
 		colors[noFilterSetting.toString()] = 'default';
-		PROJECT_TYPES.forEach((type) => (colors[type.toString()] = 'var(--dark-gray-shade1)'));
-		TECH_LIST.forEach((type) => (colors[type.toString()] = 'var(--dark-gray-shade1)'));
+		PROJECT_TYPES.forEach((type) => (colors[type.toString()] = 'dark-gray-shade1'));
+		TECH_LIST.forEach((type) => (colors[type.toString()] = 'dark-gray-shade1'));
 		PROJECT_CATEGORIES.forEach(
 			(setting) => (colors[setting.toString()] = getFilterSettingDetails(setting).color?.toString() || ''),
 		);
@@ -213,11 +213,12 @@
 		z-index: -1;
 	}
 	.filter-settings label {
-		--default: var(--white-shade2);
+		--default: var(--white);
 
 		cursor: pointer;
 		padding: 0.75rem 1rem;
-		color: var(--default);
+		color: var(--gray);
+		transition: all 250ms ease-out;
 	}
 	.filter-settings label:hover {
 		color: var(--link-color);

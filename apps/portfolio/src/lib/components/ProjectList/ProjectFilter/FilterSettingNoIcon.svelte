@@ -25,6 +25,7 @@
 		align-items: center;
 		font-weight: 500;
 		line-height: 1;
+		transition: all 250ms ease-out;
 	}
 	.filter-value {
 		white-space: nowrap;

@@ -33,13 +33,13 @@
 		background-color: inherit;
 		font-weight: 400;
 	}
-	.hovered,
-	.hovered.selected {
+	.hovered {
 		color: var(--link-color);
 	}
-	.selected {
+	.selected,
+	.selected.hovered {
+		color: var(--white);
 		background-color: var(--dark-gray-shade1);
-		color: var(--white-shade1);
 	}
 	.icon-wrapper {
 		object-fit: contain;
@@ -49,7 +49,6 @@
 		font-size: 1rem;
 		letter-spacing: 0.6px;
 		white-space: nowrap;
-		color: var(--gray);
 	}
 	:global(.icon .filter-settings) .filter-value {
 		font-size: 0.9rem;
