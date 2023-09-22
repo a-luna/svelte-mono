@@ -70,6 +70,6 @@
 
 {#if NAV_ICON_MAP}
 	<div class="icon-wrapper" {style}>
-		<svelte:component this={NAV_ICON_MAP.get('fireflake')} {title} />
+		<svelte:component this={NAV_ICON_MAP.get(icon)} {title} />
 	</div>
 {/if}
