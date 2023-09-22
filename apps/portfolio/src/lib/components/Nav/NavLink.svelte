@@ -22,7 +22,6 @@
 
 	a:hover {
 		color: var(--link-color);
-		background-color: var(--black-tint2);
 	}
 
 	a.active,
@@ -44,14 +43,13 @@
 		}
 
 		a:hover {
-			color: var(--white-shade2);
 			background-color: var(--page-bg-color);
 		}
 
 		a.active,
 		a.active:hover {
 			color: var(--white-shade2);
-			border-bottom: 1.5px solid var(--accent-color);
+			border-bottom: 1.5px solid var(--white-shade2);
 		}
 	}
 </style>
