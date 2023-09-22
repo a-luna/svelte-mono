@@ -71,11 +71,12 @@ export const defaultThemeEditorState: ThemeEditorState = {
 export const defaultColorPickerState: ColorPickerState = {
 	pickerId: '',
 	color: defaultCssColor,
-	x11PalettesShown: false,
-	x11ColorPalettes: [defaultX11ColorPalette],
+	cssString: '',
 	colorSpace: defaultCssColor.space,
 	colorFormat: 'rgb',
 	colorInGamut: defaultCssColor.srbgColor,
+	x11PalettesShown: false,
+	x11ColorPalettes: [defaultX11ColorPalette],
 	labelState: 'prerender',
 	editable: true,
 };

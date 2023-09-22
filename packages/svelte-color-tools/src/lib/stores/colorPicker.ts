@@ -9,16 +9,18 @@ export function createColorPickerStore(pickerId: string): ColorPickerStore {
 	const { set, subscribe, update } = writable<ColorPickerState>({
 		pickerId,
 		color,
-		x11PalettesShown: false,
-		x11ColorPalettes: getX11ColorPalettes(),
+		cssString: '',
 		colorSpace: color.space,
 		colorFormat: 'rgb',
 		colorInGamut: color.srbgColor,
+		x11PalettesShown: false,
+		x11ColorPalettes: getX11ColorPalettes(),
 		labelState: 'prerender',
 		editable: true,
 	});
 
 	function parseColor(css: string, state: ColorPickerState): ColorPickerState {
+		state.cssString = css;
 		const result = ColorParser.parse(css);
 		if (result.success && result.value) {
 			const color = result.value;
@@ -41,16 +43,12 @@ export function createColorPickerStore(pickerId: string): ColorPickerStore {
 		state.color = color;
 		state.colorSpace = color.space;
 		state.colorInGamut = color.space === 'srgb' ? color.srbgColor : color.p3Color;
-		state = _updateColorFormat(color, colorFormat, state);
+		state = _updateColorFormat(colorFormat, state);
 		return state;
 	}
 
-	function _updateColorFormat(
-		changedColor: CssColor,
-		colorFormat: ColorFormat,
-		state: ColorPickerState,
-	): ColorPickerState {
-		if (['hex', 'hsl', 'rgb', 'okhsl'].includes(colorFormat) && changedColor.space === 'p3') {
+	function _updateColorFormat(colorFormat: ColorFormat, state: ColorPickerState): ColorPickerState {
+		if (['hex', 'hsl', 'rgb', 'okhsl'].includes(colorFormat) && state.color.space === 'p3') {
 			state.colorFormat = 'oklch';
 		} else {
 			state.colorFormat = colorFormat;
@@ -67,6 +65,7 @@ export function createColorPickerStore(pickerId: string): ColorPickerStore {
 			state.colorSpace = state.color.space;
 			state.colorInGamut = state.color.space === 'srgb' ? state.color.srbgColor : state.color.p3Color;
 		}
+		state.colorFormat = colorFormat;
 		return state;
 	}
 

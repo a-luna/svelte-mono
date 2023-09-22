@@ -4,11 +4,12 @@ import type { ColorFormat, ColorSpace, CssColor, CssColorForColorSpace, X11Color
 export interface ColorPickerState {
 	pickerId: string;
 	color: CssColor;
-	x11PalettesShown: boolean;
-	x11ColorPalettes: X11ColorPalette[];
+	cssString: string;
 	colorSpace: ColorSpace;
 	colorFormat: ColorFormat;
 	colorInGamut: CssColorForColorSpace;
+	x11PalettesShown: boolean;
+	x11ColorPalettes: X11ColorPalette[];
 	labelState: LabelState;
 	editable: boolean;
 }
