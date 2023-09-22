@@ -22,7 +22,7 @@
 	<p class="normal-text">
 		<span
 			>You can contact me through <a href="http://github.com/a-luna" class="icon" target="_blank" rel="noreferrer"
-				><SocialIconRenderer icon={'github'} title={'Link to my Github profile'} /></a
+				><SocialIconRenderer icon={'githubsquare'} title={'Link to my Github profile'} /></a
 			>,
 			<a href="https://www.linkedin.com/in/aaron-luna-reno-nv/" class="icon" target="_blank" rel="noreferrer"
 				><SocialIconRenderer icon={'linkedinsquare'} title={'Link to my LinkedIn profile'} /></a
