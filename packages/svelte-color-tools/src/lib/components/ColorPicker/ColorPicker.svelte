@@ -31,9 +31,9 @@
 		}, 500);
 	}
 
-	function handleX11ColorSelected(e: CustomEvent<{ x11Color: CssColorForColorSpace }>) {
-		const { x11Color } = e.detail;
-		picker.setColor(finalizeLabColor(copyCssColor(x11Color)), 'rgb');
+	function handleX11ColorSelected(e: CustomEvent<{ hex: string }>) {
+		const { hex } = e.detail;
+		picker.parseColor(hex);
 	}
 
 	function handleColorChanged(e: CustomEvent<{ color: CssColor }>) {
