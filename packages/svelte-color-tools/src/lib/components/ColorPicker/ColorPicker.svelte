@@ -9,9 +9,7 @@
 	import { createColorPickerStore, initColorPickerStore } from '$lib/stores';
 	import { isTemporaryLabelState } from '$lib/typeguards';
 	import type { ColorPickerStore } from '$lib/types';
-	import type { ColorFormat, CssColor, CssColorForColorSpace } from '@a-luna/shared-ui';
-	import { finalizeLabColor } from '@a-luna/shared-ui/color/gamut';
-	import { copyCssColor, oklchToString } from '@a-luna/shared-ui/color/util';
+	import type { ColorFormat, CssColor } from '@a-luna/shared-ui';
 	import { onDestroy, onMount, tick } from 'svelte';
 
 	export let pickerId = `color-picker`;
@@ -27,9 +25,6 @@
 		picker = initColorPickerStore(createColorPickerStore(pickerId));
 		initialized = true;
 	}
-	$: swatchBorderColor = { ...$picker?.colorInGamut?.oklch, l: $picker?.colorInGamut?.oklch.l - 20, a: 1 };
-	$: swatchBorderStyles = `border: 2px solid ${oklchToString(swatchBorderColor)};`;
-	$: pointerStyles = !$picker.editable ? `pointer-events: none` : '';
 	$: if (isTemporaryLabelState($picker.labelState)) {
 		timeout = setTimeout(() => {
 			$picker.labelState = 'inactive';
@@ -89,18 +84,11 @@
 					disabled={!$picker.editable}
 					on:colorFormatChanged={handleColorFormatChanged}
 				/>
-				<div
-					class="swatch-wrapper"
-					class:cursor-not-allowed={!$picker?.editable}
-					title={'Click to open color picker'}
-					style="{swatchBorderStyles} {pointerStyles}"
-				>
-					<ColorSwatch
-						{pickerId}
-						on:iconClicked={() => ($picker.x11PalettesShown = true)}
-						on:swatchClicked={() => colorPicker.click()}
-					/>
-				</div>
+				<ColorSwatch
+					{pickerId}
+					on:iconClicked={() => ($picker.x11PalettesShown = true)}
+					on:swatchClicked={() => colorPicker.click()}
+				/>
 			</div>
 			<div class="picker-right-col">
 				<ColorLabel {pickerId} bind:this={colorLabel} on:stringValueChanged={handleStringValueChanged} />
@@ -122,6 +110,7 @@
 		--swatch-width: 109px;
 		--swatch-height: 109px;
 		--swatch-border-radius: 6px;
+		--x11-color-palettes-icon-size: 25px;
 		--select-list-open-button-height: 30px;
 
 		display: flex;
@@ -144,9 +133,5 @@
 		align-items: stretch;
 		gap: 0.5rem;
 		height: 100%;
-	}
-
-	.swatch-wrapper {
-		border-radius: 6px;
 	}
 </style>
