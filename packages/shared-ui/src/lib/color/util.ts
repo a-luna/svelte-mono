@@ -1,4 +1,5 @@
 import { X11_NAMED_COLORS } from '$lib/constants';
+import { isLabColorFormat } from '$lib/typeguards';
 import type {
 	ColorFormat,
 	ColorPalette,
@@ -232,3 +233,21 @@ export function getCssColorString(color: CssColor, space: ColorSpace, format: Co
 
 export const isGrayscaleColor = (color: CssColorBase): boolean =>
 	color.rgb.r === color.rgb.g && color.rgb.g === color.rgb.b;
+
+export function getColorFormatDetails(css: string, colorFormat: ColorFormat, colorSpace: ColorSpace): string {
+	switch (colorSpace) {
+		case 'out':
+		case 'rec2020':
+			return isLabColorFormat(colorFormat)
+				? `Color ${css} is not displayable on most screens as of 2023, autocorrected to P3 boundary.`
+				: `Color ${css} is not displayable on most screens as of 2023, autocorrected to sRGB boundary.`;
+
+		case 'p3':
+			return isLabColorFormat(colorFormat)
+				? `Color ${css} can only be rendered on screens that support P3 colors.`
+				: `Color ${css} is out of sRGB gamut, autocorrected to sRGB boundary.`;
+
+		case 'srgb':
+			return `Color ${css} is within the sRGB gamut.`;
+	}
+}

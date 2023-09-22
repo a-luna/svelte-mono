@@ -6,6 +6,7 @@ import type {
 	ComponentColor,
 	HasHueAndLightness,
 	HslColor,
+	LabColorFormat,
 	LchColor,
 	OkhslColor,
 	OklchColor,
@@ -15,6 +16,9 @@ export const isComponentColor = (arg: string): arg is ComponentColor =>
 	COMPONENT_COLORS.includes(arg as ComponentColor);
 
 export const isColorFormat = (arg: string): arg is ColorFormat => COLOR_FORMATS.includes(arg as ColorFormat);
+
+export const isLabColorFormat = (arg: ColorFormat): arg is LabColorFormat =>
+	['lab', 'oklab', 'lch', 'oklch'].includes(arg as LabColorFormat);
 
 export const isAdjustableColorFormat = (arg: string): arg is AdjustableColorFormat =>
 	['hsl', 'lch', 'okhsl', 'oklch'].includes(arg as AdjustableColorFormat);

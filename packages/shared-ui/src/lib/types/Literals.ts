@@ -20,6 +20,7 @@ export type ColorSpace = (typeof COLOR_SPACES)[number];
 export type ColorFormat = (typeof COLOR_FORMATS)[number];
 export type ColorScheme = (typeof COLOR_SCHEMES)[number];
 export type AdjustableColorFormat = Subset<ColorFormat, 'hsl' | 'lch' | 'okhsl' | 'oklch'>;
+export type LabColorFormat = Subset<ColorFormat, 'lab' | 'oklab' | 'lch' | 'oklch'>;
 export type NumberType = (typeof NUMBER_TYPES)[number];
 export type HexNumberType = Subset<NumberType, 'hex' | 'decimal'>;
 export type HexStringFormat = (typeof HEX_STRING_FORMATS)[number];
