@@ -140,6 +140,9 @@ body {
 	color: var(--white1);
 	margin: 0;
 	box-sizing: border-box;
+	overflow-wrap: break-word;
+	overflow-y: auto;
+	scrollbar-gutter: stable;
 }
 
 :focus {
@@ -273,6 +276,26 @@ main {
 		var(--sec-h) 
 		var(--sec-s) 
 		var(--sec-l) / 
+		max((calc(var(--sec-a) - 0.15)), 0)
+	);
+	--nav-button-autoplay-hover-text-color: var(--black4);
+	--nav-button-autoplay-hover-bg-color: hsl(
+		var(--sec-h) 
+		min(calc(var(--sec-s) + 7%), 100%) 
+		min(calc(var(--sec-l) + 10%), 100%) / 
+		max((calc(var(--pri-a) - 0.3)), 0)
+	);
+	--nav-button-autoplay-active-text-color: var(--black4);
+	--nav-button-autoplay-active-bg-color: hsl(
+		var(--sec-h) 
+		min(calc(var(--sec-s) + 7%), 100%) 
+		min(calc(var(--sec-l) + 10%), 100%) / 
+		max((calc(var(--sec-a) - 0.15)), 0)
+	);
+	--nav-button-autoplay-active-border-color: hsl(
+		var(--sec-h) 
+		min(calc(var(--sec-s) + 7%), 100%) 
+		min(calc(var(--sec-l) + 10%), 100%) / 
 		max((calc(var(--sec-a) - 0.15)), 0)
 	);
 	--nav-button-autoplay-disabled-text-color: var(--dark-gray4);
@@ -452,6 +475,10 @@ button {
 
 #demo-text strong {
 	color: var(--white2);
+}
+
+#demo-text .legend strong {
+	color: inherit
 }
 
 #demo-text code {
@@ -1047,9 +1074,19 @@ div[id*="modal"] .help-docs button:active:focus {
 	cursor: pointer;
 }
 
+.algo-nav-buttons.autoplay button {
+	color: var(--nav-button-autoplay-text-color);
+	background-color: var(--nav-button-autoplay-bg-color);
+}
+
 .base64-algo-demo button:hover {
 	color: var(--nav-button-hover-text-color);
 	background-color: var(--nav-button-hover-bg-color);
+}
+
+.algo-nav-buttons.autoplay button:hover {
+	color: var(--nav-button-autoplay-hover-text-color);
+	background-color: var(--nav-button-autoplay-hover-bg-color);
 }
 
 .base64-algo-demo button:focus,
@@ -1057,6 +1094,13 @@ div[id*="modal"] .help-docs button:active:focus {
 .base64-algo-demo button:active:focus {
 	color: var(--nav-button-active-text-color);
 	background-color: var(--nav-button-active-bg-color);
+}
+
+.algo-nav-buttons.autoplay button:focus,
+.algo-nav-buttons.autoplay button:active,
+.algo-nav-buttons.autoplay button:active:focus {
+	color: var(--nav-button-autoplay-active-text-color);
+	background-color: var(--nav-button-autoplay-active-bg-color);
 }
 
 .algo-nav-buttons button {
@@ -1067,6 +1111,12 @@ div[id*="modal"] .help-docs button:active:focus {
 	border-radius: 0;
 }
 
+.algo-nav-buttons.autoplay button {
+	border-top: 1px solid var(--nav-button-autoplay-border-color);
+	border-bottom: 1px solid var(--nav-button-autoplay-border-color);
+	border-left: 0.5px solid var(--nav-button-autoplay-border-color);
+}
+
 .algo-nav-buttons button:focus,
 .algo-nav-buttons button:active,
 .algo-nav-buttons button:active:focus {
@@ -1075,10 +1125,22 @@ div[id*="modal"] .help-docs button:active:focus {
 	border-bottom: 1px solid var(--nav-button-active-border-color);
 }
 
+.algo-nav-buttons.autoplay button:focus,
+.algo-nav-buttons.autoplay button:active,
+.algo-nav-buttons.autoplay button:active:focus {
+	border-left: 0.5px solid var(--nav-button-autoplay-active-border-color);
+	border-top: 1px solid var(--nav-button-autoplay-active-border-color);
+	border-bottom: 1px solid var(--nav-button-autoplay-active-border-color);
+}
+
 .algo-nav-buttons button:first-of-type {
 	border-top-left-radius: 6px;
 	border-bottom-left-radius: 6px;
 	border-left: 1px solid var(--nav-button-border-color);
+}
+
+.algo-nav-buttons.autoplay button:first-of-type {
+	border-left: 1px solid var(--nav-button-autoplay-border-color);
 }
 
 .algo-nav-buttons button:first-of-type:focus,
@@ -1087,16 +1149,32 @@ div[id*="modal"] .help-docs button:active:focus {
 	border-left: 1px solid var(--nav-button-active-border-color);
 }
 
+.algo-nav-buttons.autoplay button:first-of-type:focus,
+.algo-nav-buttons.autoplay button:first-of-type:active,
+.algo-nav-buttons.autoplay button:first-of-type:active:focus {
+	border-left: 1px solid var(--nav-button-autoplay-active-border-color);
+}
+
 .algo-nav-buttons button:last-child {
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
 	border-right: 1px solid var(--nav-button-border-color);
 }
 
+.algo-nav-buttons.autoplay button:last-child {
+	border-right: 1px solid var(--nav-button-autoplay-border-color);
+}
+
 .algo-nav-buttons button:last-child:focus,
 .algo-nav-buttons button:last-child:active,
 .algo-nav-buttons button:last-child:active:focus {
 	border-right: 1px solid var(--nav-button-active-border-color);
+}
+
+.algo-nav-buttons.autoplay button:last-child:focus,
+.algo-nav-buttons.autoplay button:last-child:active,
+.algo-nav-buttons.autoplay button:last-child:active:focus {
+	border-right: 1px solid var(--nav-button-autoplay-active-border-color);
 }
 
 .base64-algo-demo button:disabled,
@@ -1119,6 +1197,16 @@ div[id*="modal"] .help-docs button:active:focus {
 	border-bottom: 1px solid var(--button-disabled-border-color);
 }
 
+.algo-nav-buttons.autoplay button:disabled,
+.algo-nav-buttons.autoplay button:disabled:hover,
+.algo-nav-buttons.autoplay button:disabled:focus,
+.algo-nav-buttons.autoplay button:disabled:active,
+.algo-nav-buttons.autoplay button:disabled:active:focus {
+	border-left: 0.5px solid var(--nav-button-autoplay-disabled-border-color);
+	border-top: 1px solid var(--nav-button-autoplay-disabled-border-color);
+	border-bottom: 1px solid var(--nav-button-autoplay-disabled-border-color);
+}
+
 .nav-buttons-help button:disabled,
 .nav-buttons-help button:disabled:hover,
 .nav-buttons-help button:disabled:focus,
@@ -1139,6 +1227,13 @@ div[id*="modal"] .help-docs button:active:focus {
 	border-left: 1px solid var(--button-disabled-border-color);
 }
 
+.algo-nav-buttons.autoplay button:disabled:first-of-type,
+.algo-nav-buttons.autoplay button:disabled:first-of-type:focus,
+.algo-nav-buttons.autoplay button:disabled:first-of-type:active,
+.algo-nav-buttons.autoplay button:disabled:first-of-type:active:focus {
+	border-left: 1px solid var(--nav-button-autoplay-disabled-border-color);
+}
+
 .algo-nav-buttons button:disabled:last-child,
 .algo-nav-buttons button:disabled:last-child:focus,
 .algo-nav-buttons button:disabled:last-child:active,
@@ -1146,14 +1241,21 @@ div[id*="modal"] .help-docs button:active:focus {
 	border-right: 1px solid var(--button-disabled-border-color);
 }
 
-.autoplay button,
+.algo-nav-buttons.autoplay button:disabled:last-child,
+.algo-nav-buttons.autoplay button:disabled:last-child:focus,
+.algo-nav-buttons.autoplay button:disabled:last-child:active,
+.algo-nav-buttons.autoplay button:disabled:last-child:active:focus {
+	border-right: 1px solid var(--nav-button-autoplay-disabled-border-color);
+}
+
+/* .autoplay button,
 .autoplay button:hover,
 .autoplay button:focus,
 .autoplay button:active,
 .autoplay button:active:focus {
 	color: var(--nav-button-autoplay-text-color);
 	background-color: var(--nav-button-autoplay-bg-color);
-}
+} */
 
 .nav-buttons-help .autoplay button,
 .nav-buttons-help .autoplay button:hover,
@@ -1163,7 +1265,7 @@ div[id*="modal"] .help-docs button:active:focus {
 	border: 1px solid var(--nav-button-autoplay-border-color);
 }
 
-.algo-nav-buttons.autoplay button,
+/* .algo-nav-buttons.autoplay button,
 .algo-nav-buttons.autoplay button:hover,
 .algo-nav-buttons.autoplay button:focus,
 .algo-nav-buttons.autoplay button:active,
@@ -1181,7 +1283,7 @@ div[id*="modal"] .help-docs button:active:focus {
 	cursor: default;
 	color: var(--nav-button-autoplay-disabled-text-color);
 	background-color: var(--nav-button-autoplay-disabled-bg-color);
-}
+} */
 
 .nav-buttons-help .autoplay button:disabled,
 .nav-buttons-help .autoplay button:disabled:hover,
@@ -1191,7 +1293,7 @@ div[id*="modal"] .help-docs button:active:focus {
 	border: 1px solid var(--nav-button-autoplay-disabled-border-color);
 }
 
-.algo-nav-buttons.autoplay button:disabled,
+/* .algo-nav-buttons.autoplay button:disabled,
 .algo-nav-buttons.autoplay button:disabled:hover,
 .algo-nav-buttons.autoplay button:disabled:focus,
 .algo-nav-buttons.autoplay button:disabled:active,
@@ -1215,7 +1317,7 @@ div[id*="modal"] .help-docs button:active:focus {
 .algo-nav-buttons.autoplay button:disabled:first-of-type:active,
 .algo-nav-buttons.autoplay button:disabled:first-of-type:active:focus {
 	border-left: 1px solid var(--nav-button-autoplay-disabled-border-color);
-}
+} */
 
 .nav-buttons-help button,
 .modal button {
