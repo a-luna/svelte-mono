@@ -14,27 +14,41 @@
 		],
 		"editor.bracketPairColorization.enabled": true,
 		"editor.codeActionsOnSave": {
-			"source.fixAll": true,
-			"source.fixAll.eslint": true,
-			"source.organizeImports": true
+			"source.fixAll": "explicit",
+			"source.fixAll.eslint": "explicit",
+			"source.organizeImports": "explicit"
 		},
 		"editor.fontFamily": "Hack Nerd Font Mono",
 		"editor.fontLigatures": true,
-		"editor.fontSize": 13,
 		"editor.formatOnSave": true,
 		"editor.guides.bracketPairs": true,
-		"eslint.probe": ["javascript", "typescript", "html", "markdown", "svelte"],
-		"eslint.validate": ["typescript", "svelte"],
+		"eslint.probe": [
+			"javascript",
+			"typescript",
+			"html",
+			"markdown",
+			"svelte"
+		],
+		"eslint.validate": [
+			"typescript",
+			"svelte"
+		],
 		"terminal.integrated.fontFamily": "Hack Nerd Font Mono",
 		"testing.automaticallyOpenPeekView": "never",
-		"workbench.colorTheme": "Monokai Vibrant",
+		"workbench.colorTheme": "Midnight Codex",
 		"todo-tree.general.showActivityBarBadge": true,
 		"todo-tree.general.showIconsInsteadOfTagsInStatusBar": false,
 		"todo-tree.general.statusBar": "tags",
-		"todo-tree.filtering.scopes": ["monorepo", "portfolio", "svelte-base64", "shared-ui", "svelte-color-tools"],
+		"todo-tree.filtering.scopes": [
+			"monorepo",
+			"portfolio",
+			"svelte-base64",
+			"shared-ui",
+			"svelte-color-tools"
+		],
 		"[html]": {
 			"editor.defaultFormatter": "esbenp.prettier-vscode"
-		}
+		},
 	},
 	"folders": [
 		{
