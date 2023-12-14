@@ -80,6 +80,7 @@ import {
 import {
 	Codepen,
 	Github,
+	Github2,
 	GithubSquare,
 	LinkedIn,
 	LinkedInSquare,
@@ -108,12 +109,10 @@ import {
 	XState,
 } from '$lib/components/Icons/LanguageTech';
 
-import type { BasicIcon, BasicIconName } from '$lib/types/Icons';
-import type { LanguageTechIcon, LanguageTechIconName } from '$lib/types/Icons/LangTechIcons';
-import type { SocialIcon, SocialIconName } from '$lib/types/Icons/SocialIcons';
+import type { AllIcons, BasicIconName, LanguageTechIconName, SocialIconName } from '$lib/types/Icons';
 
-function createBasicIconMap(): Map<BasicIconName, BasicIcon> {
-	const iconMap = new Map<BasicIconName, BasicIcon>();
+function createBasicIconMap(): Map<BasicIconName, AllIcons> {
+	const iconMap = new Map<BasicIconName, AllIcons>();
 	iconMap.set('angledoubleleft', AngleDoubleLeft);
 	iconMap.set('angledoubleright', AngleDoubleRight);
 	iconMap.set('arrow', Arrow);
@@ -193,10 +192,11 @@ function createBasicIconMap(): Map<BasicIconName, BasicIcon> {
 	return iconMap;
 }
 
-function createSocialIconMap(): Map<SocialIconName, SocialIcon> {
-	const iconMap = new Map<SocialIconName, SocialIcon>();
+function createSocialIconMap(): Map<SocialIconName, AllIcons> {
+	const iconMap = new Map<SocialIconName, AllIcons>();
 	iconMap.set('codepen', Codepen);
 	iconMap.set('github', Github);
+	iconMap.set('github2', Github2);
 	iconMap.set('githubsquare', GithubSquare);
 	iconMap.set('linkedin', LinkedIn);
 	iconMap.set('linkedinsquare', LinkedInSquare);
@@ -206,19 +206,23 @@ function createSocialIconMap(): Map<SocialIconName, SocialIcon> {
 	return iconMap;
 }
 
-function createLangTechIconMap(): Map<LanguageTechIconName, LanguageTechIcon> {
-	const iconMap = new Map<LanguageTechIconName, LanguageTechIcon>();
+function createLangTechIconMap(): Map<LanguageTechIconName, AllIcons> {
+	const iconMap = new Map<LanguageTechIconName, AllIcons>();
 	iconMap.set('aws', Aws);
+	iconMap.set('csharp', Microsoft);
 	iconMap.set('cypress', Cypress);
 	iconMap.set('fastapi', FastApi);
 	iconMap.set('flask', Flask);
 	iconMap.set('hugo', Hugo);
+	iconMap.set('lxml', Code);
 	iconMap.set('microsoft', Microsoft);
 	iconMap.set('playwright', Playwright);
 	iconMap.set('puppeteer', Puppeteer);
 	iconMap.set('python', Python);
 	iconMap.set('redis', Redis);
 	iconMap.set('regexp', RegExp);
+	iconMap.set('shell', ShellPrompt);
+	iconMap.set('sqlalchemy', Database);
 	iconMap.set('sqlite', Sqlite);
 	iconMap.set('svelte', Svelte);
 	iconMap.set('tailwind', Tailwind);

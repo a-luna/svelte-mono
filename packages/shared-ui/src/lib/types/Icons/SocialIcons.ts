@@ -1,6 +1,7 @@
 import type {
 	Codepen,
 	Github,
+	Github2,
 	GithubSquare,
 	LinkedIn,
 	LinkedInSquare,
@@ -13,6 +14,7 @@ import type { SOCIAL_ICON_NAMES } from '$lib/constants';
 export type SocialIcon =
 	| typeof Codepen
 	| typeof Github
+	| typeof Github2
 	| typeof GithubSquare
 	| typeof LinkedIn
 	| typeof LinkedInSquare

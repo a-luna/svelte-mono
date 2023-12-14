@@ -112,6 +112,7 @@ export const BASIC_ICON_NAMES = [
 export const SOCIAL_ICON_NAMES = [
 	'codepen',
 	'github',
+	'github2',
 	'githubsquare',
 	'linkedin',
 	'linkedinsquare',
@@ -122,16 +123,20 @@ export const SOCIAL_ICON_NAMES = [
 
 export const LANGTECH_ICON_NAMES = [
 	'aws',
+	'csharp',
 	'cypress',
 	'fastapi',
 	'flask',
 	'hugo',
+	'lxml',
 	'microsoft',
 	'playwright',
 	'puppeteer',
 	'python',
 	'redis',
 	'regexp',
+	'shell',
+	'sqlalchemy',
 	'sqlite',
 	'svelte',
 	'tailwind',
