@@ -9,27 +9,10 @@
 </script>
 
 {#if languages.length > 0}
-	<div class="all-language-list">
-		{#each languages as language}
-			<FilterSettingWithIcon value={language} />
-		{/each}
-	</div>
+	{#each languages as language}
+		<FilterSettingWithIcon value={language} />
+	{/each}
 {/if}
 
 <style lang="postcss">
-	.all-language-list {
-		display: flex;
-		flex-flow: row wrap;
-		font-size: 0.8rem;
-		gap: 0.25rem;
-	}
-
-	.all-language-list :global(.filter-setting) {
-		margin: 0.5rem 1rem 0 0;
-	}
-
-	.all-language-list :global(.filter-value) {
-		font-size: 0.9rem;
-		color: var(--white-shade5);
-	}
 </style>

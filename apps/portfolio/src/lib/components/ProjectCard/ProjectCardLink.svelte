@@ -28,6 +28,13 @@
 		grid-row: 1 / span 3;
 	}
 
+	:global(.project-card:hover) .project-card-link {
+		color: var(--black);
+		background-color: var(--link-color);
+		border-left-color: var(--link-color);
+		border-bottom-color: var(--link-color);
+	}
+
 	.icon {
 		transform: rotate(45deg);
 	}

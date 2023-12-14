@@ -1059,29 +1059,45 @@ details .underline--magical h4 {
 		height: 19.5px;
 		width: 25.5px;
 	}
+.language-list {
+	display: flex;
+	flex-flow: row wrap;
+	font-size: 0.8rem;
+	column-gap: 1rem;
+	row-gap: 0.75rem;
+	align-items: center;
 }
 
-.featured-projects div.category-list {
+.project-list .language-list .filter-value {
+	font-size: 0.8rem;
+	color: var(--white-shade5);
+}
+
+div.category-list {
 	font-size: 0.8rem;
 }
 
-.featured-projects div.category-list .project-category {
+div.category-list .project-category {
 	padding: 6px;
 }
 
-.featured-projects div.all-language-list {
+div.language-list {
 	column-gap: 1rem;
 	row-gap: 0.5rem;
 	line-height: 1;
 }
 
-.featured-projects div.all-language-list button.filter-setting {
+div.language-list button.filter-setting {
 	margin: 0;
 }
 
 .featured-projects div.project-name-wrapper .filter-value,
-.featured-projects div.all-language-list .filter-value {
+.featured-projects div.language-list .filter-value {
 	font-size: 0.75rem;
+}
+
+div.project-name-wrapper .filter-value,
+div.language-list .filter-value {
 	color: var(--gray-shade1);
 }
 
