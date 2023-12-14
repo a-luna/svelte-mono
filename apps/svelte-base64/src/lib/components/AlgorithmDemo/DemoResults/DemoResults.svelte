@@ -28,7 +28,7 @@
 		<div class="binary-chunks">
 			{#each $state.context.updatedByteMaps as byte, byteIndex}
 				<div
-					transition:fade={{ duration: 200 }}
+					in:fade={{ duration: 200 }}
 					class="encoded-byte"
 					data-chunk-id={getChunkIndexFromByteIndex(byteIndex) + 1}
 					data-byte-number={byteIndex + 1}
@@ -65,7 +65,7 @@
 		<div class="binary-chunks">
 			{#each $state.context.base64Maps as _, charIndex}
 				<div
-					transition:fade={{ duration: 200 }}
+					in:fade={{ duration: 200 }}
 					class="encoded-base64"
 					data-chunk-id={getChunkIndexFromBase64CharIndex(charIndex) + 1}
 					data-b64char-number={charIndex + 1}
@@ -82,7 +82,7 @@
 		<div class="binary-chunks">
 			{#each $state.context.updatedBase64Maps as b64, charIndex}
 				<div
-					transition:fade={{ duration: 200 }}
+					in:fade={{ duration: 200 }}
 					class="encoded-base64"
 					data-chunk-id={getChunkIndexFromBase64CharIndex(charIndex) + 1}
 					data-bit-group={b64.groupId}

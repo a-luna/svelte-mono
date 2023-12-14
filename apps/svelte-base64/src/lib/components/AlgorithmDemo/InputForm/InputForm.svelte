@@ -59,8 +59,7 @@
 		column-gap: 1rem;
 		margin: 0;
 
-		grid-column: 1 / span 1;
-		grid-row: 2 / span 1;
+		grid-area: input-form;
 	}
 	.form-label {
 		margin: 0 0 0.5rem 0;
@@ -119,11 +118,7 @@
 			display: grid;
 			grid-template-columns: 100px 100px auto;
 			grid-template-rows: auto auto 20px 33px auto;
-			margin: 0 0 1rem 0;
 			width: 701px;
-
-			grid-column: 1 / span 1;
-			grid-row: 2 / span 1;
 		}
 		.input-text-label {
 			justify-self: start;

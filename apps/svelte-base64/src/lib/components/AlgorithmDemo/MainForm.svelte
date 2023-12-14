@@ -27,6 +27,12 @@
 	.base64-algo-demo {
 		display: grid;
 		grid-template-columns: auto;
+		grid-template-areas:
+			'top-row'
+			'input-form'
+			'demo-steps'
+			'bottom-row';
+		row-gap: 2rem;
 		position: relative;
 		background-color: var(--page-bg-color);
 		padding: 1rem;
