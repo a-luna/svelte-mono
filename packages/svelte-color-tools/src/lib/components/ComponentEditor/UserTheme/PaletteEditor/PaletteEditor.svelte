@@ -5,7 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	let { themeEditor } = getAppContext();
-	const dispatchCreatePalette = createEventDispatcher<{ createPalette: {} }>();
+	const dispatchCreatePalette = createEventDispatcher<{ createPalette: null }>();
 
 	$: disabled = $themeEditor.userTheme.palettes.length === 1;
 </script>

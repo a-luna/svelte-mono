@@ -11,10 +11,14 @@
 
 	export let gridStyle: string = '';
 	let { picker, themeEditor, app } = getAppContext();
-	const dispatchAddColorToPalette = createEventDispatcher<{ addColorToPalette: { color: CssColor } }>();
-	const dispatchSetColorPickerValue = createEventDispatcher<{ setColorPickerValue: { color: CssColor } }>();
-	const dispatchUpdateThemeColor = createEventDispatcher<{ updateThemeColor: { color: CssColor } }>();
-	const dispatchDeselectThemeColor = createEventDispatcher<{ deselectThemeColor: {} }>();
+
+	interface PaletteControls {
+		addColorToPalette: { color: CssColor };
+		setColorPickerValue: { color: CssColor };
+		updateThemeColor: { color: CssColor };
+		deselectThemeColor: null;
+	}
+	const dispatch = createEventDispatcher<PaletteControls>();
 
 	$: disableControls =
 		$themeEditor?.userTheme?.palettes.length === 0 ||
@@ -30,7 +34,7 @@
 	<SelectedPalette {selectedPalette} />
 	<AddColorButton
 		style={'grid-column: 2 / span 1; grid-row: 2 / span 1;'}
-		on:click={() => dispatchAddColorToPalette('addColorToPalette', { color: $picker.color })}
+		on:click={() => dispatch('addColorToPalette', { color: $picker.color })}
 		disabled={disableControls}
 	/>
 
@@ -39,15 +43,15 @@
 	<div class="button-list">
 		<SetColorPickerButton
 			style={'grid-column: 2 / span 1; grid-row: 4 / span 1;'}
-			on:click={() => dispatchSetColorPickerValue('setColorPickerValue', { color: $themeEditor.selectedColor.color })}
+			on:click={() => dispatch('setColorPickerValue', { color: $themeEditor.selectedColor.color })}
 			disabled={disableControls || !$themeEditor.colorSelected}
 		/>
 		<UpdateColorButton
-			on:click={() => dispatchUpdateThemeColor('updateThemeColor', { color: $picker.color })}
+			on:click={() => dispatch('updateThemeColor', { color: $picker.color })}
 			disabled={disableControls || !$themeEditor.colorSelected}
 		/>
 		<DeselectColorButton
-			on:click={() => dispatchDeselectThemeColor('deselectThemeColor')}
+			on:click={() => dispatch('deselectThemeColor')}
 			disabled={disableControls || !$themeEditor.colorSelected}
 		/>
 	</div>

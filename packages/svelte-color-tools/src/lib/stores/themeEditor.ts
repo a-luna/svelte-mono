@@ -15,7 +15,8 @@ export function createThemeEditorStore(): ThemeEditorStore {
 		return state;
 	}
 
-	function deletePalette(paletteId: string, state: ThemeEditorState): ThemeEditorState {
+	function deletePalette(e: CustomEvent<{paletteId: string}>, state: ThemeEditorState): ThemeEditorState {
+		const { paletteId } = e.detail;
 		state.userTheme.palettes = [...state.userTheme.palettes.filter((p) => p.id !== paletteId)];
 		if (state.selectedPaletteId === paletteId) {
 			state.selectedPaletteId = '';
@@ -109,11 +110,11 @@ export function createThemeEditorStore(): ThemeEditorStore {
 		set,
 		subscribe,
 		createNewPalette: () => update((state) => createNewPalette(state)),
-		deletePalette: (id: string) => update((state) => deletePalette(id, state)),
+		deletePalette: (e: CustomEvent<{paletteId: string}>) => update((state) => deletePalette(e, state)),
 		changeSelectedPalette: (id: string) => update((state) => changeSelectedPalette(id, state)),
 		changeSelectedColor: (color: ThemeColor) => update((state) => changeSelectedColor(color, state)),
 		updateThemeColor: (e: CustomEvent<{ color: CssColor }>) => update((state) => updateThemeColor(e, state)),
-		deselectColor: (_: CustomEvent<{}>) => update((state) => deselectColor(state)),
+		deselectColor: (_: CustomEvent<null>) => update((state) => deselectColor(state)),
 		addColorToPalette: (color: ThemeColor) => update((state) => addColorToPalette(color, state)),
 		deleteColorFromPalette: (color: ThemeColor) => update((state) => deleteColorFromPalette(color, state)),
 	};

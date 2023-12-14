@@ -8,8 +8,12 @@
 
 	export let pickerId: string;
 	let picker = getColorPickerStore(pickerId);
-	const dispatchSwatchClicked = createEventDispatcher<{ swatchClicked: {} }>();
-	const dispatchIconClicked = createEventDispatcher<{ iconClicked: {} }>();
+
+	interface ColorSwatchEvent {
+		swatchClicked: null;
+		iconClicked: null;
+	}
+	const dispatch = createEventDispatcher<ColorSwatchEvent>();
 
 	$: swatchBorderColor =
 		$picker?.colorInGamut?.oklch.l > 20
@@ -44,7 +48,7 @@
 		class="swatch-overlay"
 		class:hidden={showBothSwatches}
 		style="{overlayColorSrgb} {swatchBorderStyles}"
-		on:click={() => dispatchSwatchClicked('swatchClicked')}
+		on:click={() => dispatch('swatchClicked')}
 	/>
 	<div class="swatch-p3" class:hidden={!showBothSwatches} style={swatchColor} />
 	<button
@@ -52,7 +56,7 @@
 		class:hidden={!showBothSwatches}
 		class:selected-color={selectedColorP3}
 		style="{overlayColorP3} {swatchTextStyles} {swatchBorderStyles} {selectedColorP3 ? selectedColorOutlineColor : ''}"
-		on:click={() => dispatchSwatchClicked('swatchClicked')}
+		on:click={() => dispatch('swatchClicked')}
 		>P3
 	</button>
 	<div class="swatch-srgb" class:hidden={!showBothSwatches} style={swatchColor} />
@@ -63,14 +67,14 @@
 		style="{overlayColorSrgb} {swatchTextStyles} {swatchBorderStyles} {selectedColorP3
 			? ''
 			: selectedColorOutlineColor}"
-		on:click={() => dispatchSwatchClicked('swatchClicked')}
+		on:click={() => dispatch('swatchClicked')}
 		>sRGB
 	</button>
 	<button
 		class="icon"
 		title={'Open X11 Color Palettes'}
 		style="width: var(--x11-color-palettes-icon-size); height: var(--x11-color-palettes-icon-size);"
-		on:click|stopPropagation={() => dispatchIconClicked('iconClicked')}
+		on:click|stopPropagation={() => dispatch('iconClicked')}
 	>
 		<BasicIconRenderer icon={'colorswatches'} />
 	</button>

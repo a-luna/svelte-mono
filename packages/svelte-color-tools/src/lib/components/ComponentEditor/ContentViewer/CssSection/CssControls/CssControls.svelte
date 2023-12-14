@@ -6,8 +6,12 @@
 	export let totalSelected: number;
 	export let allCustomPropsSelected: boolean;
 	export let anyCustomPropsSelected: boolean;
-	const selectAllCustomPropertiesDispatcher = createEventDispatcher<{ selectAllCustomProperties: {} }>();
-	const deselectAllCustomPropertiesDispatcher = createEventDispatcher<{ deselectAllCustomProperties: {} }>();
+
+	interface CssControlsEvent {
+		selectAllCustomProperties: null;
+		deselectAllCustomProperties: null;
+	}
+	const dispatch = createEventDispatcher<CssControlsEvent>();
 </script>
 
 <div class="css-controls">
@@ -15,12 +19,12 @@
 		<SelectAllCustomPropsButton
 			disabled={allCustomPropsSelected}
 			wrapperWidth={'100px'}
-			on:click={() => selectAllCustomPropertiesDispatcher('selectAllCustomProperties')}
+			on:click={() => dispatch('selectAllCustomProperties')}
 		/>
 		<SelectNoneCustomPropsButton
 			disabled={!anyCustomPropsSelected}
 			wrapperWidth={'112px'}
-			on:click={() => deselectAllCustomPropertiesDispatcher('deselectAllCustomProperties')}
+			on:click={() => dispatch('deselectAllCustomProperties')}
 		/>
 	</div>
 	<span class="total-selected"><strong>{totalSelected}</strong> custom properties selected</span>

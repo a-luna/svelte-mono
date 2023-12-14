@@ -12,7 +12,7 @@
 
 	let carouselElement: HTMLDivElement;
 	let carouselItemSize: number;
-	const hideX11PalettesEventDispatcher = createEventDispatcher<{ hideX11Palettes: {} }>();
+	const dispatch = createEventDispatcher<{ hideX11Palettes: null }>();
 	const handleX11PaletteSelected = (e: CustomEvent<{ paletteId: string }>) =>
 		scrollToSelectedPalette(e.detail.paletteId);
 
@@ -50,7 +50,7 @@
 
 	async function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
-			hideX11PalettesEventDispatcher('hideX11Palettes');
+			dispatch('hideX11Palettes');
 		}
 		if (event.key === 'ArrowLeft') {
 			scrollToPreviousPalette();
@@ -77,7 +77,7 @@
 			aria-label="Close"
 			title="Close X11 Color Palettes"
 			style="color: var(--{paletteColor}-fg-color)"
-			on:click={() => hideX11PalettesEventDispatcher('hideX11Palettes')}
+			on:click={() => dispatch('hideX11Palettes')}
 		>
 			<BasicIconRenderer icon={'close'} />
 		</button>

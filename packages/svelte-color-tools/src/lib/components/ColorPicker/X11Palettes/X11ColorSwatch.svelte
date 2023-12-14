@@ -9,7 +9,7 @@
 	export let tooltip: string;
 	let buttonComponent: HTMLButtonElement;
 
-	const x11PaletteSelectedEventDispatcher = createEventDispatcher<{ x11PaletteSelected: { paletteId: string } }>();
+	const dispatch = createEventDispatcher<{ x11PaletteSelected: { paletteId: string } }>();
 
 	$: active = paletteId === activePaletteId;
 	$: style = `--button-background-color: var(--${color}-bg-color); --button-background-color-hover: var(--${color}-hover-bg-color); --button-background-color-active: var(--${color}-fg-color); --button-color: var(--${color}-fg-color); --button-color-hover: var(--${color}-fg-color); --button-color-active: var(--${color}-fg-color);`;
@@ -26,7 +26,7 @@
 	title={tooltip}
 	{disabled}
 	{style}
-	on:click={() => x11PaletteSelectedEventDispatcher('x11PaletteSelected', { paletteId })}
+	on:click={() => dispatch('x11PaletteSelected', { paletteId })}
 />
 
 <style lang="postcss">

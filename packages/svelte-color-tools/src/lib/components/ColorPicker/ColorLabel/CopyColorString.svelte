@@ -10,8 +10,12 @@
 	export let currentColor = '';
 	let picker = getColorPickerStore(pickerId);
 	let currentLabelIndex = 0;
-	const editColorStringEventDispatcher = createEventDispatcher<{ editColorString: {} }>();
-	const copyColorStringEventDispatcher = createEventDispatcher<{ copyColorString: { currentColor: string } }>();
+
+	interface CopyColorStringEvent {
+		editColorString: null;
+		copyColorString: { currentColor: string };
+	}
+	const dispatch = createEventDispatcher<CopyColorStringEvent>();
 
 	export function setColorFormat(colorFormat: ColorFormat) {
 		currentLabelIndex = getColorFormatIndex(colorFormat);
@@ -57,7 +61,7 @@
 
 	function handleEditColorStringButton() {
 		if (editable) {
-			editColorStringEventDispatcher('editColorString');
+			dispatch('editColorString');
 		}
 	}
 </script>
@@ -69,7 +73,7 @@
 	class:cursor-pointer={editable}
 	class:cursor-not-allowed={!editable}
 	title="Copy {currentColorFormat} value"
-	on:click={() => copyColorStringEventDispatcher('copyColorString', { currentColor })}
+	on:click={() => dispatch('copyColorString', { currentColor })}
 >
 	<BasicIconRenderer icon={'copy'} width={'16px'} height={'16px'} />
 </button>

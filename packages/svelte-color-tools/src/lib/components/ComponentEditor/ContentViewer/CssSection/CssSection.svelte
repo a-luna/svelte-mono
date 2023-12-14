@@ -5,11 +5,9 @@
 	import { getAppContext } from '$lib/stores';
 	import type { CssVariable } from '$lib/types';
 	import { getAllCssVariables } from '$lib/util';
-	import type { ComponentColor } from '@a-luna/shared-ui';
 	import type { TableState } from '@a-luna/svelte-simple-tables/types';
 	import { onMount, tick } from 'svelte';
 
-	export let componentColor: ComponentColor;
 	export let themeInitialized: boolean;
 	let { themeEditor } = getAppContext();
 	let data: CssVariable[];
@@ -79,12 +77,12 @@
 		}
 	}
 
-	function selectAllCustomProperties(e: CustomEvent<{}>) {
+	function selectAllCustomProperties(e: CustomEvent<null>) {
 		data.forEach((prop) => (prop.addToTheme = true));
 		refreshTable(false);
 	}
 
-	function deselectAllCustomProperties(e: CustomEvent<{}>) {
+	function deselectAllCustomProperties(e: CustomEvent<null>) {
 		data.forEach((prop) => (prop.addToTheme = false));
 		refreshTable(false);
 	}
@@ -138,7 +136,6 @@
 <CssFilters
 	bind:this={cssFilters}
 	{allSelectors}
-	{componentColor}
 	{themeInitialized}
 	bind:prefix
 	on:componentPrefixChanged={handleComponentPrefixChanged}

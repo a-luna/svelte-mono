@@ -22,7 +22,7 @@
 	let { themeEditor } = getAppContext();
 	let themeNameError = false;
 	let themePrefixError = false;
-	const dispatchUiColorChanged = createEventDispatcher<{ uiColorChanged: {} }>();
+	const dispatch = createEventDispatcher<{ uiColorChanged: null }>();
 
 	$: if (usesPrefix && prefixTextBox) focusPrefixTextBox();
 	$: if (usesPrefix && themePrefix)
@@ -58,7 +58,7 @@
 		usesPrefix = false;
 		themePrefix = '';
 		modal.toggleModal();
-		dispatchUiColorChanged('uiColorChanged', {});
+		dispatch('uiColorChanged');
 	}
 	function discardChanges() {
 		$themeEditor.userTheme.themeName = previousSettings['themeName'];

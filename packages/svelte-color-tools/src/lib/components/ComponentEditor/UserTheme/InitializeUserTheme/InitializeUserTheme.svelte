@@ -1,13 +1,13 @@
 <script lang="ts">
 	import LoadUserThemeButton from '$lib/components/ComponentEditor/UserTheme/InitializeUserTheme/LoadUserThemeButton.svelte';
 	import NewUserThemeButton from '$lib/components/ComponentEditor/UserTheme/InitializeUserTheme/NewUserThemeButton.svelte';
-	import { COMPONENT_COLORS, type ComponentColor } from '@a-luna/shared-ui';
-	import { getRandomArrayItem } from '@a-luna/shared-ui/util';
 	import { createEventDispatcher } from 'svelte';
 
-	const dispatch = createEventDispatcher();
-
-	$: componentColor = getRandomArrayItem<ComponentColor>(COMPONENT_COLORS);
+	interface InitializeUserThemeEvent {
+		newUserTheme: null;
+		importUserTheme: null;
+	}
+	const dispatch = createEventDispatcher<InitializeUserThemeEvent>();
 </script>
 
 <div class="init-theme">

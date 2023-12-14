@@ -16,7 +16,7 @@
 	let displayName: string;
 	let disableSaveButton = false;
 	let { themeEditor } = getAppContext();
-	const dispatchColorDetailsChanged = createEventDispatcher<{ colorDetailsChanged: {} }>();
+	const dispatch = createEventDispatcher<{ colorDetailsChanged: null }>();
 
 	export function openModal(editColor: ThemeColor) {
 		if (closed) {
@@ -43,7 +43,7 @@
 		propName = '';
 		cssVarName = '';
 		displayName = '';
-		dispatchColorDetailsChanged('colorDetailsChanged');
+		dispatch('colorDetailsChanged');
 		toggleModal();
 	}
 	function discardChanges() {

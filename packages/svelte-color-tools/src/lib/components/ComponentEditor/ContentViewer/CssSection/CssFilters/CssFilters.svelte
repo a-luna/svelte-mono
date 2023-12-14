@@ -3,42 +3,31 @@
 	import RuleSelectorList from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/RuleSelectorList.svelte';
 	import UseThemePrefixCheckbox from '$lib/components/ComponentEditor/ContentViewer/CssSection/CssFilters/UseThemePrefixCheckbox.svelte';
 	import { getAppContext } from '$lib/stores';
-	import { InputTextBox, type ComponentColor } from '@a-luna/shared-ui';
+	import { InputTextBox } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 
 	export let allSelectors: string[];
 	export let useThemePrefix = false;
 	export let ignoreTailwinds = false;
 	export let selector = '';
-	export let componentColor: ComponentColor;
 	export let prefix: string;
 	export let themeInitialized: boolean;
-	const dispatchIgnoreTailwindsChanged = createEventDispatcher<{
+
+	interface CssFiltersEvent {
 		ignoreTailwindsChanged: { ignore: boolean };
-	}>();
-	const dispatchUseThemePrefixChanged = createEventDispatcher<{
 		useThemePrefixChanged: { usePrefix: boolean };
-	}>();
-	const dispatchComponentPrefixChanged = createEventDispatcher<{ componentPrefixChanged: { newPrefix: string } }>();
+		componentPrefixChanged: { newPrefix: string };
+	}
+	const dispatch = createEventDispatcher<CssFiltersEvent>();
 	let { themeEditor } = getAppContext();
 
 	$: themePrefixExists = Boolean($themeEditor?.userTheme?.usesPrefix && $themeEditor?.userTheme?.themePrefix);
 	$: themePrefixInputTextBoxDisabled = !themeInitialized || (themeInitialized && useThemePrefix && themePrefixExists);
-	$: if (ignoreTailwinds || !ignoreTailwinds) {
-		dispatchIgnoreTailwindsChanged('ignoreTailwindsChanged', { ignore: ignoreTailwinds });
-	}
-	$: if (!themeInitialized) {
-		prefix = '';
-	}
-	$: if (useThemePrefix || !useThemePrefix) {
-		dispatchUseThemePrefixChanged('useThemePrefixChanged', { usePrefix: useThemePrefix });
-	}
-	$: if (useThemePrefix && themePrefixExists) {
-		prefix = $themeEditor?.userTheme?.themePrefix;
-	}
-	$: if (prefix) {
-		dispatchComponentPrefixChanged('componentPrefixChanged', { newPrefix: prefix });
-	}
+	$: if (ignoreTailwinds || !ignoreTailwinds) dispatch('ignoreTailwindsChanged', { ignore: ignoreTailwinds });
+	$: if (!themeInitialized) prefix = '';
+	$: if (useThemePrefix || !useThemePrefix) dispatch('useThemePrefixChanged', { usePrefix: useThemePrefix });
+	$: if (useThemePrefix && themePrefixExists) prefix = $themeEditor?.userTheme?.themePrefix;
+	$: if (prefix) dispatch('componentPrefixChanged', { newPrefix: prefix });
 
 	export function handleUserThemeUpdated(usesPrefix: boolean) {
 		useThemePrefix = usesPrefix;
@@ -53,10 +42,10 @@
 		id={'theme-prefix-textbox'}
 		style="grid-column: 1 / span 1; grid-row: 2 / span 1;"
 	/>
-	<UseThemePrefixCheckbox {componentColor} bind:checked={useThemePrefix} disabled={!themeInitialized} />
+	<UseThemePrefixCheckbox bind:checked={useThemePrefix} disabled={!themeInitialized} />
 	<span class="selector-label label">CSS Rule Selector:</span>
 	<RuleSelectorList {allSelectors} bind:value={selector} on:cssRuleSelectorChanged />
-	<IgnoreTailwindsCheckbox {componentColor} bind:checked={ignoreTailwinds} />
+	<IgnoreTailwindsCheckbox bind:checked={ignoreTailwinds} />
 </div>
 
 <style lang="postcss">
