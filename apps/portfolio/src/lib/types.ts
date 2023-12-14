@@ -34,6 +34,7 @@ import type {
 	PROJECT_CATEGORIES,
 	PROJECT_TYPES,
 	REPO_NAMES,
+	SCREEN_SIZES,
 	SITE_SECTIONS,
 	TECH_LIST,
 } from '$lib/constants';
@@ -62,6 +63,7 @@ import type {
 	Xml,
 } from '@a-luna/shared-ui';
 
+export type ScreenSize = (typeof SCREEN_SIZES)[number];
 export type SiteSection = (typeof SITE_SECTIONS)[number];
 export type ContentType = (typeof CONTENT_TYPES)[number];
 export type HttpMethod = (typeof HTTP_METHODS)[number];
@@ -390,6 +392,6 @@ export interface hasDate {
 	date: Date | string;
 }
 
-export interface ISortByDateFunction<T extends hasDate> {
+export interface ISortByDateFunction<T> {
 	(a: T, b: T): number;
 }

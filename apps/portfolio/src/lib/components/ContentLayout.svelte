@@ -93,20 +93,20 @@
 		margin: 1rem auto;
 	}
 	h1 {
-		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
+		color: var(--tw-prose-invert-headings);
 		font-size: 1.65rem;
 		font-weight: 400;
 		line-height: 1.3;
 	}
-	.gradient-heading {
-		color: var(--white);
-		/* -webkit-background-clip: text;
+	/* .gradient-heading {
+		color: transparent;
+		-webkit-background-clip: text;
 		background-clip: text;
 		-webkit-box-decoration-break: text;
-		box-decoration-break: clone; */
-		/* background-image: var(--page-title-gradient);
-		background-color: var(--black-tint2); */
-	}
+		box-decoration-break: clone;
+		background-image: var(--page-title-gradient);
+		background-color: var(--black-tint2);
+	} */
 	.wrapper {
 		padding-top: 0;
 		padding-bottom: 0;

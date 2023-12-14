@@ -7,7 +7,6 @@
 	export let contentType: ContentType;
 
 	$: authorImage = `${SITE_URL}/avatar.png`;
-	$: publishDate = contentType === 'tutorial' ? '&nbsp;' : formatDateString(published);
 </script>
 
 <div class="by-line">
@@ -18,7 +17,9 @@
 	</a>
 	<div class="details">
 		<a href="/about" class="author author-name">{AUTHOR_NAME}</a>
-		<span class="publish-date">{@html publishDate}</span>
+		{#if contentType !== 'tutorial'}
+			<span class="publish-date">{@html formatDateString(published)}</span>
+		{/if}
 	</div>
 </div>
 
@@ -28,7 +29,6 @@
 		gap: 0.75rem;
 		align-items: center;
 		line-height: 1;
-		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
 		font-weight: 500;
 	}
 	.author {

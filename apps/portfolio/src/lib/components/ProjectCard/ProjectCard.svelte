@@ -34,7 +34,7 @@
 	.project-card {
 		display: grid;
 		grid-template-columns: 2rem 1fr auto 48px;
-		grid-template-rows: 1.5rem calc(48px - 2.5rem) 1rem 1fr 1.5rem;
+		grid-template-rows: 1.5rem calc(48px - 2.5rem) 1.5rem 1fr 1.5rem;
 		align-content: flex-start;
 
 		width: 100%;

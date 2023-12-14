@@ -31,7 +31,6 @@
 
 	@media (min-width: 768px) {
 		a {
-			font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
 			font-size: 1.1rem;
 			font-weight: 400;
 			padding: 0;

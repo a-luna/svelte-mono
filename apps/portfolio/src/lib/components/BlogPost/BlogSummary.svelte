@@ -2,6 +2,7 @@
 	import PreviewImage from '$lib/components/BlogPost/PreviewImage.svelte';
 	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
+	import { screenSize } from '$lib/stores';
 	import type { LanguageOrTech, ProjectCategory as ProjectCategoryType } from '$lib/types';
 	import { formatDateString } from '$lib/util';
 
@@ -11,12 +12,7 @@
 	export let publishDate: Date = new Date(0);
 	export let categories: ProjectCategoryType[] = [];
 	export let language: LanguageOrTech = 'allLanguages';
-	let pageWidth: number;
-
-	$: mobileDisplay = pageWidth < 640;
 </script>
-
-<svelte:window bind:innerWidth={pageWidth} />
 
 <div class="blog-summary">
 	<div class="summary-top">
@@ -28,14 +24,14 @@
 		<div class="top-right">
 			<div class="top-right-wrapper">
 				<div class="top-right-row">
+					<div class="published">{formatDateString(publishDate)}</div>
 					{#if language}
 						<FilterSettingWithIcon value={language} />
 					{/if}
-					<div class="published">{formatDateString(publishDate)}</div>
 				</div>
-				<a {href} class="post-title"><h4>{title}</h4></a>
+				<h4><a {href} class="post-title">{title}</a></h4>
 			</div>
-			{#if !mobileDisplay}
+			{#if $screenSize === 'sm' || $screenSize === 'md'}
 				<div class="tags">
 					{#each categories as category}
 						<ProjectCategory {category} />
@@ -44,7 +40,7 @@
 			{/if}
 		</div>
 	</div>
-	{#if mobileDisplay}
+	{#if $screenSize === 'lg'}
 		<div class="tags">
 			{#each categories as category}
 				<ProjectCategory {category} />
@@ -124,7 +120,7 @@
 	.post-title:hover {
 		font-size: 1.3rem;
 		font-weight: 400;
-		color: var(--link-color);
+		color: var(--tw-prose-invert-headings);
 		background-color: var(--black);
 		text-decoration: none;
 		line-height: 1.3;
@@ -149,7 +145,6 @@
 		font-size: 0.9rem;
 		align-items: center;
 	}
-
 	@media (min-width: 640px) {
 		.top-left {
 			flex: 0 1 150px;

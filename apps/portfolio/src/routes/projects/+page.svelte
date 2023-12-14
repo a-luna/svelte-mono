@@ -1,13 +1,10 @@
 <script lang="ts">
-	import { userRepos } from '$lib/stores';
 	import ProjectList from '$lib/components/ProjectList/ProjectList.svelte';
-	import { MY_TWITTER_HANDLE } from '$lib/siteConfig';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
+	import { MY_TWITTER_HANDLE } from '$lib/siteConfig';
 
 	const description =
 		'A curated list of my open-source projects. Use the filters to narrow down the list by project type or technology/programming language.';
-
-	$: allRepos = $userRepos.repos;
 </script>
 
 <svelte:head>
@@ -20,5 +17,5 @@
 </svelte:head>
 
 <SectionLayout section={'projects'}>
-	<ProjectList {allRepos} />
+	<ProjectList />
 </SectionLayout>

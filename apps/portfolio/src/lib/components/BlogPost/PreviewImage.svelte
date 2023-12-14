@@ -18,6 +18,7 @@
 	import Post17 from '../../../images/blog/parallel-async-csharp-best-practices-tpl.jpg?w=300&h=300';
 	import Post18 from '../../../images/blog/periodic-table-of-devops-tools.jpg?w=300&h=300';
 
+	import { screenSize } from '$lib/stores';
 	import Post1Mobile from '../../../images/blog/add-copy-button-to-code-blocks-hugo-chroma.jpg?w=707&h=200';
 	import Post2Mobile from '../../../images/blog/add-search-to-static-site-lunrjs-hugo-vanillajs.jpg?w=707&h=200';
 	import Post3Mobile from '../../../images/blog/aws-free-usage-tier.jpg?w=707&h=200';
@@ -38,10 +39,8 @@
 	import Post18Mobile from '../../../images/blog/periodic-table-of-devops-tools.jpg?w=707&h=200';
 
 	export let slug: string;
-	let pageWidth: number;
 
-	$: mobileDisplay = pageWidth < 640;
-	$: src = mobileDisplay ? mobileImages?.[slug] : desktopImages?.[slug];
+	$: src = $screenSize === 'sm' ? mobileImages?.[slug] : desktopImages?.[slug];
 
 	const mobileImages: { [k: string]: string } = {
 		'add-copy-button-to-code-blocks-hugo-chroma': Post1Mobile,
@@ -61,7 +60,7 @@
 		'optimize-vm-performance-windows10-visual-studio-vmware-fusion': Post15Mobile,
 		'packer-template-aws-ec2-ubuntu-nginx': Post16Mobile,
 		'parallel-async-csharp-best-practices-tpl': Post17Mobile,
-		'periodic-table-of-devops-tools': Post18Mobile
+		'periodic-table-of-devops-tools': Post18Mobile,
 	};
 
 	const desktopImages: { [k: string]: string } = {
@@ -82,10 +81,8 @@
 		'optimize-vm-performance-windows10-visual-studio-vmware-fusion': Post15,
 		'packer-template-aws-ec2-ubuntu-nginx': Post16,
 		'parallel-async-csharp-best-practices-tpl': Post17,
-		'periodic-table-of-devops-tools': Post18
+		'periodic-table-of-devops-tools': Post18,
 	};
 </script>
-
-<svelte:window bind:innerWidth={pageWidth} />
 
 <img {src} type="image/jpeg" alt="Click to read the blog post" />

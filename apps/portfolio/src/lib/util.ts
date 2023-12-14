@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import type { hasDate, ISortByDateFunction } from './types';
+import type { ISortByDateFunction } from './types';
 
 export const formatDateString = (date: Date) => format(date, 'PPP');
 
@@ -39,24 +39,24 @@ export function getScrollbarWidth() {
 	return scrollbarWidth;
 }
 
-export const sortByDate = <T extends hasDate>(asc = true): ISortByDateFunction<T> => {
+export const sortByDate = <T, K extends keyof T>(key: K, asc = true): ISortByDateFunction<T> => {
 	if (asc) {
 		return (a: T, b: T) => {
-			if (typeof a.date == 'string' && typeof b.date == 'string') {
-				return new Date(a.date).valueOf() - new Date(b.date).valueOf();
+			if (typeof a[key] == 'string' && typeof b[key] == 'string') {
+				return new Date(a[key]).valueOf() - new Date(b[key]).valueOf();
 			}
-			if (typeof a.date != 'string' && typeof b.date != 'string') {
-				return a.date.valueOf() - b.date.valueOf();
+			if (typeof a[key] != 'string' && typeof b[key] != 'string') {
+				return a[key].valueOf() - b[key].valueOf();
 			}
 			return 0;
 		};
 	}
 	return (a: T, b: T) => {
-		if (typeof a.date == 'string' && typeof b.date == 'string') {
-			return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+		if (typeof a[key] == 'string' && typeof b[key] == 'string') {
+			return new Date(b[key]).valueOf() - new Date(a[key]).valueOf();
 		}
-		if (typeof a.date != 'string' && typeof b.date != 'string') {
-			return b.date.valueOf() - a.date.valueOf();
+		if (typeof a[key] != 'string' && typeof b[key] != 'string') {
+			return b[key].valueOf() - a[key].valueOf();
 		}
 		return 0;
 	};

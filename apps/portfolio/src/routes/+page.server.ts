@@ -1,18 +1,18 @@
-import { blogPosts, tutorialSections } from '$lib/stores';
+import { cacheIsStale, convertGHRepos } from '$lib/projectMetaData';
+import { userRepos } from '$lib/stores';
 import { get } from 'svelte/store';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch }) => {
-	let allBlogPosts = get(blogPosts);
-	if (!allBlogPosts || !allBlogPosts.length) {
-		allBlogPosts = await fetch('/blog.json').then((r) => r.json());
-		blogPosts.set(allBlogPosts);
+	const allBlogPosts = await fetch('/blog.json').then((r) => r.json());
+	const allTutorialSections = await fetch('/series/flask-api-tutorial.json').then((r) => r.json());
+
+	let { repos, cachedAt } = get(userRepos);
+	if (!repos.length || cacheIsStale(cachedAt)) {
+		const projectData = await fetch('/repos.json').then((r) => r.json());
+		repos = convertGHRepos(projectData.repos);
+		cachedAt = projectData.cachedAt
 	}
 
-	let allTutorialSections = get(tutorialSections);
-	if (!allTutorialSections || !allTutorialSections.length) {
-		allTutorialSections = await fetch('/series/flask-api-tutorial.json').then((r) => r.json());
-		tutorialSections.set(allTutorialSections);
-	}
-	return { allBlogPosts, allTutorialSections };
+	return { allBlogPosts, allTutorialSections, allRepos: repos, reposCachedAt: cachedAt };
 };
