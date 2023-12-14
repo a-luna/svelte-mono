@@ -22,14 +22,14 @@
 	<p class="normal-text">
 		<span
 			>You can contact me through <a href="http://github.com/a-luna" class="icon" target="_blank" rel="noreferrer"
-				><SocialIconRenderer icon={'githubsquare'} title={'Link to my Github profile'} /></a
+				><SocialIconRenderer icon={'github2'} title={'Link to my Github profile'} /></a
 			>,
 			<a href="https://www.linkedin.com/in/aaron-luna-reno-nv/" class="icon" target="_blank" rel="noreferrer"
-				><SocialIconRenderer icon={'linkedinsquare'} title={'Link to my LinkedIn profile'} /></a
+				><SocialIconRenderer icon={'linkedin'} title={'Link to my LinkedIn profile'} /></a
 			>
 			or
 			<a href="https://twitter.com/aaronlunadev/" class="icon" target="_blank" rel="noreferrer"
-				><SocialIconRenderer icon={'twittersquare'} title={'Link to my Twitter profile'} /></a
+				><SocialIconRenderer icon={'twitterx'} title={'Link to my Twitter profile'} /></a
 			>, or email me at
 			<a href="mailto:contact@aaronluna.dev">contact@aaronluna.dev</a></span
 		>
