@@ -6,6 +6,7 @@ import type {
 	Utf8StandardCharacterMap,
 	Utf8StringComposition,
 } from '$lib/types';
+import type { FlattenedError } from '$lib/types/api';
 import { getUnicodeCharInfo } from '$lib/unicode/api';
 import { COMPLEX_SYMBOL_REGEX } from '$lib/unicode/regex';
 import {
@@ -23,15 +24,19 @@ const isUnihanChar = (charData: UnicodeCharInfo): boolean =>
 
 export async function getUtf8StringDecomposition(s: string): Promise<Utf8StringComposition> {
 	const result = await getFullUtf8StringDecomposition(s);
+	if (!result.success && result.error) {
+		const { formErrors, fieldErrors } = result.error;
+		console.log({ formErrors, fieldErrors });
+	}
 	return result.success && result.value ? result.value : getSimpleUtf8StringDecomposition(s);
 }
 
-async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8StringComposition>> {
+async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8StringComposition, FlattenedError>> {
 	const result = await getUnicodeCharInfo(s);
 	if (!result.success) {
 		return { success: false, error: result.error };
 	}
-	const unicodeInfo = result.value;
+	const unicodeInfo = result.value ?? [];
 	const complexCharMap: Utf8ComplexCharacterMap[] = unicodeInfo?.map(({ char, results }) => {
 		const charMap = results.map((charData) => {
 			return {
@@ -82,7 +87,7 @@ async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8Str
 }
 
 export function getSimpleUtf8StringDecomposition(s: string): Utf8StringComposition {
-	const complexCharMap: Utf8ComplexCharacterMap[] = s.match(COMPLEX_SYMBOL_REGEX).map((utf8) => {
+	const complexCharMap: Utf8ComplexCharacterMap[] | undefined = s.match(COMPLEX_SYMBOL_REGEX)?.map((utf8) => {
 		const charMap: Utf8StandardCharacterMap[] = [...utf8].map((char) => {
 			const charData = getUtf8EncodedByteMaps(char).map((byteMap) => ({ hex: byteMap.hex, byte: byteMap.byte }));
 			const bytes = charData.map((data) => data.byte);
@@ -95,7 +100,7 @@ export function getSimpleUtf8StringDecomposition(s: string): Utf8StringCompositi
 				isASCII: validateAsciiBytes(bytes),
 				hexBytes: charData.map((data) => data.hex),
 				bytes,
-				codepoint: codepoints?.hex,
+				codepoint: codepoints?.hex ?? "",
 				decimalCodepoint,
 				totalBytes,
 				encoded: strictUriEncode(char),
@@ -118,17 +123,17 @@ export function getSimpleUtf8StringDecomposition(s: string): Utf8StringCompositi
 		}
 		return complexCharMap;
 	});
-	const bytes = complexCharMap.map((charMap) => charMap.bytes).flat();
+	const bytes = complexCharMap?.map((charMap) => charMap.bytes).flat();
 	return {
 		utf8: s,
 		hasCharacterNames: false,
-		hasCombinedChars: complexCharMap.some((charMap) => charMap.isCombined),
-		stringLength: complexCharMap.length,
+		hasCombinedChars: complexCharMap?.some((charMap) => charMap.isCombined) ?? false,
+		stringLength: complexCharMap?.length ?? 0,
 		encoded: strictUriEncode(s),
-		totalBytes: bytes.length,
-		hexBytes: complexCharMap.map((charMap) => charMap.hexBytes).flat(),
-		bytes,
-		charMap: complexCharMap,
+		totalBytes: bytes?.length ?? 0,
+		hexBytes: complexCharMap?.map((charMap) => charMap.hexBytes).flat() ?? [],
+		bytes: bytes ?? [],
+		charMap: complexCharMap ?? [],
 	};
 }
 
@@ -144,15 +149,15 @@ export function getUtf8EncodedByteMaps(s: string): ByteEncodingMap[] {
 function getUtf8ByteMaps(utf8Encoded: string): ByteEncodingMap[] {
 	const encodedUtf8Bytes = [...utf8Encoded.matchAll(/%(?<encodedByte>[0-9A-F]{2,2})/g)];
 	return encodedUtf8Bytes.map((match) => ({
-		byte: hexStringToByte(match.groups.encodedByte),
-		hex: match.groups.encodedByte,
-		start: match.index,
-		end: match.index + match[0].length,
+		byte: hexStringToByte(match.groups?.encodedByte ?? "0"),
+		hex: match.groups?.encodedByte ?? "",
+		start: match.index ?? 0,
+		end: match.index ?? 0 + match[0].length,
 	}));
 }
 
 function findMissingAsciiBytes(utf8ByteMaps: ByteEncodingMap[], utf8Encoded: string) {
-	let index = utf8ByteMaps.at(0).start;
+	let index = utf8ByteMaps.at(0)?.start ?? 0;
 	const missingAsciiBytes = utf8ByteMaps
 		.map((byte) => {
 			const missingByteMaps = getAsciiByteMaps(utf8Encoded, index, byte.start);
@@ -161,9 +166,9 @@ function findMissingAsciiBytes(utf8ByteMaps: ByteEncodingMap[], utf8Encoded: str
 		})
 		.flat();
 	return [
-		...getAsciiByteMaps(utf8Encoded, 0, utf8ByteMaps.at(0).start),
+		...getAsciiByteMaps(utf8Encoded, 0, utf8ByteMaps.at(0)?.start ?? 0),
 		...missingAsciiBytes,
-		...getAsciiByteMaps(utf8Encoded, utf8ByteMaps.at(-1).end, utf8Encoded.length),
+		...getAsciiByteMaps(utf8Encoded, utf8ByteMaps.at(-1)?.end ?? 0, utf8Encoded.length),
 	];
 }
 
