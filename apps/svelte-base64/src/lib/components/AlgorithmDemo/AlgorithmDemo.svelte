@@ -188,24 +188,23 @@
 <style lang="postcss">
 	.top-row {
 		display: grid;
-		grid-template-columns: auto auto;
+		grid-template-columns: auto;
 		grid-template-rows: auto auto;
+		grid-template-areas:
+			'demo-title'
+			'author-name';
 		align-items: baseline;
 		gap: 1rem;
-		margin: 0 0 1.5rem 0;
+		margin: 0;
 
-		grid-column: 1 / span 1;
-		grid-row: 1 / span 1;
+		grid-area: top-row;
 	}
 	.form-title-wrappper {
-		justify-self: center;
-
-		grid-column: 1 / span 2;
-		grid-row: 1 / span 1;
+		grid-area: demo-title;
 	}
 	.author-name {
-		grid-column: 2 / span 1;
-		grid-row: 2 / span 1;
+		justify-self: flex-end;
+		grid-area: author-name;
 	}
 	#demo-steps-wrapper {
 		display: block;
@@ -214,11 +213,10 @@
 		overflow: auto;
 		padding: 0.75rem 1rem;
 		transition: transform 0.75s ease-in-out;
-		margin: 1rem 0;
+		margin: 0;
 		font-family: 'Roboto Mono', menlo, monospace;
 
-		grid-column: 1 / span 1;
-		grid-row: 3 / span 1;
+		grid-area: demo-steps;
 	}
 	.demo-steps {
 		position: relative;
@@ -244,9 +242,7 @@
 	}
 	.bottom-row {
 		overflow: auto;
-
-		grid-column: 1 / span 1;
-		grid-row: 4 / span 1;
+		grid-area: bottom-row;
 	}
 	:global(.highlight-hex-byte),
 	:global(.highlight-base64) {
@@ -256,28 +252,22 @@
 	}
 	@media screen and (min-width: 764px) {
 		.top-row {
-			grid-template-columns: auto auto 1fr auto;
+			grid-template-columns: 1fr auto;
 			grid-template-rows: auto;
-			align-items: center;
-			margin: 0 0 2rem 0;
+			grid-template-areas: 'demo-title author-name';
 			width: 701px;
-
-			grid-column: 1 / span 1;
-			grid-row: 1 / span 1;
 		}
 		.form-title-wrappper {
-			grid-column: 1 / span 1;
+			justify-self: flex-start;
 		}
 		.author-name {
-			grid-column: 4 / span 1;
-			grid-row: 1 / span 1;
+			justify-self: flex-end;
 		}
 		#demo-steps-wrapper {
 			padding: 1.5rem;
 			width: 653px;
 
-			grid-column: 1 / span 1;
-			grid-row: 3 / span 1;
+			grid-area: demo-steps;
 		}
 		.demo-steps {
 			grid-template-columns: 148px 5px 353px 5px 122px;
@@ -290,10 +280,7 @@
 			grid-row: 2 / span 1;
 		}
 		.bottom-row {
-			margin: 1rem 0 0 0;
-
-			grid-column: 1 / span 1;
-			grid-row: 4 / span 1;
+			margin: 0;
 		}
 	}
 </style>

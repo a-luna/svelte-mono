@@ -1,5 +1,5 @@
 import type { HTTP_METHODS } from '$lib/constants';
-import { z } from 'zod';
+import { ZodError, z } from 'zod';
 
 export type HttpMethod = (typeof HTTP_METHODS)[number];
 export type HttpError = { status: number; message: string };
@@ -21,9 +21,18 @@ export const UnicodeCharInfoSchema = z.object({
 });
 
 export const HttpResponseSchema = z.object({
-	char: z.string(),
+	char: z.string(),	
 	results: z.array(UnicodeCharInfoSchema),
+});
+
+export const FlattenedErrorSchema = z.object({
+	formErrors: z.array(z.string()),
+	fieldErrors: z.record(UnicodeCharInfoSchema.keyof(), z.array(z.string())),
 });
 
 export type UnicodeCharInfo = z.infer<typeof UnicodeCharInfoSchema>;
 export type HttpResponse = z.infer<typeof HttpResponseSchema>;
+export type UnicodeCharInfoParseResult = 
+	| { success: true; data: UnicodeCharInfo[]; } 
+	| { success: false; error: ZodError; }
+export type FlattenedError = z.infer<typeof FlattenedErrorSchema>;
