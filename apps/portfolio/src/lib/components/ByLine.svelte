@@ -28,7 +28,6 @@
 		gap: 0.75rem;
 		align-items: center;
 		line-height: 1;
-		font-family: 'Noto Sans', Inter, Arial, Helvetica, sans-serif;
 		font-weight: 500;
 	}
 	.author {
