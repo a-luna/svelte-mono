@@ -139,7 +139,7 @@ Since the JSON output template cannot be found, you will receive a 404 response 
 
 Create a file in the root of the `layouts` folder named `index.json` and add the content below:
 
-```go-html-template {linenos=table,hl_lines=[3]}
+```go {linenos=table,hl_lines=[3]}
 {{- $.Scratch.Add "pagesIndex" slice -}}
 {{- range $index, $page := .Site.Pages -}}
   {{- if eq $page.Type "post" -}}
@@ -154,7 +154,7 @@ Create a file in the root of the `layouts` folder named `index.json` and add the
 
 Most of this should be self-explanatory. The only line that I am calling attention to is the `if` statement in **Line 3**. For my site, I have pages of types other than `post` that I need to make searchable, so my template includes these other page types with the code below:
 
-```go-html-template {linenos=table,linenostart=3}
+```go {linenos=table,linenostart=3}
 {{- if in (slice "post" "flask_api_tutorial" "projects") $page.Type -}}
 ```
 
@@ -247,7 +247,7 @@ My implementation is tied directly to [the base theme I started with](https://gi
 
 I have removed class names that are related to the base theme/widget system from the HTML below to make the markup more readable and generic (You can compare it to [the actual template in the github repo for this site](https://github.com/a-luna/aaronluna.dev/blob/master/layouts/partials/widgets/search.html)). For the purposes of this guide, I assume that you will adapt my template to suit your needs or create a new layout:
 
-```HTML
+```html
 <div id="site-search">
   <h4><span class="underline--magical">Search</span></h4>
   <div class="search-flex">
