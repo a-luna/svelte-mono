@@ -37,7 +37,7 @@
 	let editThemeSettingsModal: EditThemeSettingsModal;
 	let componentColor: ComponentColor = 'black';
 	let contentViewer: ContentViewer;
-	const dispatchUiColorChanged = createEventDispatcher<{ uiColorChanged: { uiColor: ComponentColor } }>();
+	const dispatch = createEventDispatcher<{ uiColorChanged: { uiColor: ComponentColor } }>();
 
 	// # NEW IDEAS
 	// New high-level data structure: ThemeSet
@@ -175,11 +175,11 @@
 		$themeEditor.userTheme = userTheme;
 		themeInitialized = true;
 		contentViewer.changeComponentPrefix(userTheme.usesPrefix, userTheme.themePrefix);
-		dispatchUiColorChanged('uiColorChanged', { uiColor: userTheme.uiColor });
+		dispatch('uiColorChanged', { uiColor: userTheme.uiColor });
 	}
 
-	function handleUiColorChanged(e: CustomEvent<{}>) {
-		dispatchUiColorChanged('uiColorChanged', { uiColor: $themeEditor.userTheme.uiColor });
+	function handleUiColorChanged(e: CustomEvent<null>) {
+		dispatch('uiColorChanged', { uiColor: $themeEditor.userTheme.uiColor });
 	}
 
 	function newUserTheme() {
@@ -202,7 +202,7 @@
 		$themeEditor.selectedPaletteId = '';
 		$themeEditor.userTheme = defaultUserThemeImported;
 		themeInitialized = false;
-		dispatchUiColorChanged('uiColorChanged', { uiColor: $themeEditor.userTheme.uiColor });
+		dispatch('uiColorChanged', { uiColor: $themeEditor.userTheme.uiColor });
 	}
 
 	function handleSetColorPicker(e: CustomEvent<{ color: CssColor }>) {
@@ -256,8 +256,8 @@
 						on:editThemeSettings={() => editThemeSettingsModal.toggleModal()}
 						on:saveUserTheme={() => downloadUserThemeJson($themeEditor.userTheme)}
 						on:closeUserTheme={() => closeUserTheme()}
-						on:createPalette={() => themeEditor.createNewPalette()}
-						on:deletePalette={(e) => themeEditor.deletePalette(e.detail)}
+						on:createPalette={themeEditor.createNewPalette}
+						on:deletePalette={themeEditor.deletePalette}
 						on:paletteSelected={handlePaletteSelected}
 						on:colorSelected={(e) => themeEditor.changeSelectedColor(e.detail)}
 						on:deleteColor={(e) => themeEditor.deleteColorFromPalette(e.detail)}

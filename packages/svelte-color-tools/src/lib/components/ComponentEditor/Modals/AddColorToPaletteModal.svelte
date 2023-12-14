@@ -17,7 +17,7 @@
 	let invalidPropName = false;
 	let invalidCssVarName = false;
 	let { themeEditor, app } = getAppContext();
-	const dispatchAddNewColor = createEventDispatcher<{ addNewColor: { color: ThemeColor } }>();
+	const dispatch = createEventDispatcher<{ addNewColor: { color: ThemeColor } }>();
 
 	$: selectedPalette = $app?.selectedThemePalette?.displayName;
 
@@ -55,7 +55,7 @@
 		themeColor.cssVarName = cssVarName;
 		themeColor.displayName = displayName;
 		themeColor.color.name = displayName;
-		dispatchAddNewColor('addNewColor', { color: themeColor });
+		dispatch('addNewColor', { color: themeColor });
 		toggleModal();
 	}
 

@@ -14,7 +14,7 @@
 	let error = '';
 	let code = '';
 	let userTheme: UserThemeImported;
-	const loadUserThemeDispatcher = createEventDispatcher<{ loadUserTheme: { userTheme: UserThemeImported } }>();
+	const dispatch = createEventDispatcher<{ loadUserTheme: { userTheme: UserThemeImported } }>();
 
 	export function toggleModal() {
 		error = '';
@@ -24,7 +24,7 @@
 
 	function saveChanges() {
 		if (userTheme) {
-			loadUserThemeDispatcher('loadUserTheme', { userTheme });
+			dispatch('loadUserTheme', { userTheme });
 			modal.toggleModal();
 		}
 	}

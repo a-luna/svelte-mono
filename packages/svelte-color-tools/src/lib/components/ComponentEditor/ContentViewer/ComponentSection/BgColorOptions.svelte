@@ -9,9 +9,7 @@
 	export let options: SelectListOption[] = [];
 	export let menuId: string = '';
 	let selectedOption: SelectListOption;
-	const selectedOptionChangedDispatcher = createEventDispatcher<{
-		selectedOptionChanged: { selected: string | number };
-	}>();
+	const dispatch = createEventDispatcher<{ selectedOptionChanged: { selected: string | number } }>();
 
 	export function handleSelectedOptionChanged(e: CustomEvent<{ optionNumber: number }>) {
 		const { optionNumber } = e.detail;
@@ -20,7 +18,7 @@
 			selectedOption = options.find((menuOption) => menuOption.optionNumber == optionNumber) ?? selectedOption;
 			selectedOption.active = true;
 			if (typeof selectedOption.value === 'string') {
-				selectedOptionChangedDispatcher('selectedOptionChanged', { selected: selectedOption.value });
+				dispatch('selectedOptionChanged', { selected: selectedOption.value });
 			}
 		}
 	}

@@ -9,7 +9,7 @@
 	export let paletteNumber: number;
 	export let disabled = false;
 	let inputElement: HTMLInputElement;
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{ deletePalette: { paletteId: string } }>();
 
 	$: numberStyles = `color: var(--${palette.componentColor}-fg-color); background-color: var(--${palette.componentColor}-bg-color); border-top: 1.5px solid var(--${palette.componentColor}-fg-color); border-right: none; border-bottom: 1.5px solid var(--${palette.componentColor}-fg-color); border-left: 1.5px solid var(--${palette.componentColor}-fg-color)`;
 	$: borderStyle = `border: 1.5px solid var(--${palette.componentColor}-fg-color)`;
@@ -38,7 +38,11 @@
 		style={borderStyle}
 	/>
 	<ComponentColorSelector bind:value={palette.componentColor} />
-	<DeletePaletteButton tooltip={getToolTip()} on:click={() => dispatch('deletePalette', palette.id)} {disabled} />
+	<DeletePaletteButton
+		tooltip={getToolTip()}
+		on:click={() => dispatch('deletePalette', { paletteId: palette.id })}
+		{disabled}
+	/>
 </div>
 
 <style lang="postcss">

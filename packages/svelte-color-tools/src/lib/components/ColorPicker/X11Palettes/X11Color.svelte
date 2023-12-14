@@ -4,18 +4,14 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let color: CssColorForColorSpace;
-	const dispatchColorSelected = createEventDispatcher<{ colorSelected: { hex: string } }>();
+	const dispatch = createEventDispatcher<{ colorSelected: { hex: string } }>();
 
 	$: buttonToolTip = `${color.name} (${color.hex}, hue: ${color.hsl.h})`;
 </script>
 
 <div class="color-wrapper x11-color named-color">
 	<div class="color-wrapper-top">
-		<button
-			type="button"
-			title={buttonToolTip}
-			on:click={() => dispatchColorSelected('colorSelected', { hex: color.hex })}
-		>
+		<button type="button" title={buttonToolTip} on:click={() => dispatch('colorSelected', { hex: color.hex })}>
 			<ColorSwatch {color} />
 		</button>
 	</div>
