@@ -5,7 +5,7 @@
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
 	import PageTransition from '$lib/components/PageTransition.svelte';
 	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
-	import { initialFadePerformed, mobileDisplay, mobileNavOpen } from '$lib/stores';
+	import { initialFadePerformed, mobileNavOpen, screenSize } from '$lib/stores';
 	import { fade } from 'svelte/transition';
 	import '../tailwind.css';
 
@@ -19,9 +19,11 @@
 	$: fadeInDelay = $initialFadePerformed ? 200 : 0;
 	$: if (typeof window !== 'undefined') {
 		showScrollToTopButton = pageHeight > windowHeight && scrollY > 0;
-		$mobileDisplay = pageWidth < 753;
+		$screenSize = pageWidth < 632 ? 'sm' : pageWidth < 760 ? 'md' : 'lg';
 	}
 </script>
+
+screenSize
 
 <svelte:window bind:innerHeight={windowHeight} bind:scrollY />
 

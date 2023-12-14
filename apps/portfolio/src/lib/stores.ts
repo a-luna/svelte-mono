@@ -1,12 +1,12 @@
 import { browser } from '$app/environment';
 import { initializeProjectData } from '$lib/projectMetaData';
-import type { BlogPost, CachedProjectData, OrderedNavItem, Result, TutorialSection } from '$lib/types';
+import type { BlogPost, CachedProjectData, OrderedNavItem, Result, ScreenSize, TutorialSection } from '$lib/types';
 import { sortByDate } from '$lib/util';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 
 export const initialFadePerformed = writable<boolean>(false);
-export const mobileDisplay = writable<boolean>(false);
+export const screenSize = writable<ScreenSize>('sm');
 export const mobileNavOpen = writable<boolean>(false);
 export const userRepos = writable<CachedProjectData>(initializeProjectData());
 export const blogPosts = writable<BlogPost[]>([]);
@@ -34,7 +34,7 @@ export function createLocalStorageValue<T>(key: string, defaultValue: T): Result
 }
 
 export const blogPostDateMap: Readable<OrderedNavItem[]> = derived(blogPosts, ($blogPosts) =>
-	$blogPosts.sort(sortByDate(true)).map(({ slug, title }, i) => ({
+	$blogPosts.sort(sortByDate("date", true)).map(({ slug, title }, i) => ({
 		slug,
 		title,
 		titleCompact: title,

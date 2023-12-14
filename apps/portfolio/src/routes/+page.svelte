@@ -7,7 +7,7 @@
 	import Mandala from '$lib/components/Mandala.svelte';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { DEFAULT_OG_IMAGE, MY_TWITTER_HANDLE, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
-	import { initialFadePerformed, mobileNavOpen } from '$lib/stores';
+	import { blogPosts, initialFadePerformed, mobileNavOpen, tutorialSections, userRepos } from '$lib/stores';
 	import { parseColorFromString } from '@a-luna/shared-ui/color/parsers';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -27,6 +27,16 @@
 		console.log(result);
 		result = parseColorFromString('hsl(353 100% 38%)');
 		console.log(result);
+	}
+	$: if (data.allRepos.length) {
+		$userRepos.repos = data.allRepos;
+		$userRepos.cachedAt = data.reposCachedAt;
+	}
+	$: if (data.allTutorialSections.length) {
+		$tutorialSections = data.allTutorialSections;
+	}
+	$: if (data.allBlogPosts.length) {
+		$blogPosts = data.allBlogPosts;
 	}
 
 	onMount(() => {
@@ -57,9 +67,15 @@
 			<SectionLayout section={'home'} title={'Welcome!'}>
 				<div class="section-content">
 					<AboutMe />
-					<RecentBlogPosts allBlogPosts={data.allBlogPosts} />
-					<FeaturedProjects />
-					<ApiTutorial />
+					{#if $blogPosts && $blogPosts.length}
+						<RecentBlogPosts />
+					{/if}
+					{#if $userRepos && $userRepos.repos.length}
+						<FeaturedProjects />
+					{/if}
+					{#if $tutorialSections && $tutorialSections.length}
+						<ApiTutorial />
+					{/if}
 				</div>
 			</SectionLayout>
 		{/if}
@@ -81,7 +97,6 @@
 		margin: 0 auto;
 	}
 	.intro-content {
-		font-family: 'Noto Sans';
 		margin: 0 auto;
 		z-index: 2;
 		position: relative;

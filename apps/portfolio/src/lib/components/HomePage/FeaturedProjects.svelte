@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import ProjectSummary from '$lib/components/ProjectCard/ProjectSummary.svelte';
 	import { FEATURED_PROJECTS } from '$lib/constants';
 	import { userRepos } from '$lib/stores';
 	import type { RepoWithMetaData } from '$lib/types';
-	import ProjectSummary from '../ProjectCard/ProjectSummary.svelte';
 
 	let featuredProjects: RepoWithMetaData[] = [];
 
-	$: if (browser && Object.keys(userRepos).length)
-		featuredProjects = $userRepos.repos.filter((project) => FEATURED_PROJECTS.includes(project.name));
+	$: featuredProjects = $userRepos.repos.filter((project) => FEATURED_PROJECTS.includes(project.name));
 </script>
 
 <div>

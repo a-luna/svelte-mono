@@ -4,11 +4,11 @@
 	import FilterList from '$lib/components/ProjectList/FilterList.svelte';
 	import { PROJECT_TYPES } from '$lib/constants';
 	import { getFilterSettingDetails } from '$lib/filterSettings';
+	import { userRepos } from '$lib/stores';
 	import type { LanguageOrTech, ProjectCategory, ProjectType, RepoWithMetaData } from '$lib/types';
-	import { slugify } from '$lib/util';
+	import { slugify, sortByDate } from '$lib/util';
 	import { slide } from 'svelte/transition';
 
-	export let allRepos: RepoWithMetaData[];
 	let filterProjectType: ProjectType = 'allProjects';
 	let filterCategory: ProjectCategory = 'allCategories';
 	let filterLanguage: LanguageOrTech = 'allLanguages';
@@ -16,17 +16,17 @@
 	let showFilters = false;
 
 	let projectTypes = [...PROJECT_TYPES].filter((type) => type !== 'allProjects');
-	let categories = [...new Set(allRepos.map((repo) => repo.categories).flat())]
+	let categories = [...new Set($userRepos.repos.map((repo) => repo.categories).flat())]
 		.filter((category): category is ProjectCategory => !!category)
 		.filter((category) => !PROJECT_TYPES.includes(category as ProjectType));
-	let languages = [...new Set(allRepos.map((repo) => repo.languages).flat())].filter(
+	let languages = [...new Set($userRepos.repos.map((repo) => repo.languages).flat())].filter(
 		(lang): lang is LanguageOrTech => !!lang,
 	);
 
 	$: filterApplied =
 		filterProjectType !== 'allProjects' || filterCategory !== 'allCategories' || filterLanguage !== 'allLanguages';
 	$: if (filterProjectType || filterCategory || filterLanguage) {
-		filtered = filterProjects(allRepos, filterProjectType, filterCategory, filterLanguage);
+		filtered = filterProjects($userRepos.repos, filterProjectType, filterCategory, filterLanguage);
 		[projectTypes, categories, languages] = updateFilterSettings(filtered);
 	}
 	$: description = getFilterDescription(filtered, filterProjectType, filterCategory, filterLanguage);
@@ -63,7 +63,7 @@
 		category: ProjectCategory,
 		language: LanguageOrTech,
 	): RepoWithMetaData[] {
-		filtered = [...projects];
+		filtered = [...projects].sort(sortByDate('updatedAt', false));
 		if (type && type !== 'allProjects') {
 			filtered = filtered.filter((project) => project.primaryCategory === type);
 		}

@@ -1,5 +1,7 @@
 import type { BlogPost, RepoWithMetaData } from '$lib/types';
 
+export const SCREEN_SIZES = ['sm', 'md', 'lg'] as const;
+
 export const SITE_SECTIONS = ['home', 'projects', 'blog', 'about', 'tutorial'] as const;
 
 export const CONTENT_TYPES = ['blog', 'tutorial', 'readme'] as const;

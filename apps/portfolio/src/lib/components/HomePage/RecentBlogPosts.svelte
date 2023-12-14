@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { blogPosts } from '$lib/stores';
 	import type { BlogPost } from '$lib/types';
+	import { sortByDate } from '$lib/util';
 	import { format } from 'date-fns';
 
-	export let allBlogPosts: BlogPost[];
 	let recentBlogPosts: BlogPost[] = [];
 
-	$: if (browser && Object.keys(allBlogPosts).length) $blogPosts = allBlogPosts;
-	$: recentBlogPosts = $blogPosts.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()).slice(0, 4);
+	$: recentBlogPosts = $blogPosts.sort(sortByDate('date', false)).slice(0, 4);
 </script>
 
 <div>
