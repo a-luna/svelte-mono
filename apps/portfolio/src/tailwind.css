@@ -133,7 +133,7 @@
 }
 
 :root {
-	--max-width: 704px;
+	--max-width: 768px;
 
 	--no-hue: 0;
 	--red-hue: 0;
@@ -2357,9 +2357,9 @@ a.feature-card:hover>div {
 	background-color: var(--dark-gray-shade2);
 }
 
-@media (min-width: 815px) {
+@media (min-width: 768px) {
 	:root {
-		--max-width: 725px;
+		--max-width: 712px;
 	}
 }
 

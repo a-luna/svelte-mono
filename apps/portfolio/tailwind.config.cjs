@@ -6,8 +6,8 @@ module.exports = {
 			typography: {
 				DEFAULT: {
 					css: {
-						'--tw-prose-invert-body': 'var(--gray)',
-						'--tw-prose-invert-headings': 'var(--white)',
+						'--tw-prose-invert-body': 'var(--white-shade4)',
+						'--tw-prose-invert-headings': 'var(--white-shade2)',
 						'--tw-prose-invert-code': 'var(--heading-code-color)',
 						'line-height': '1.6',
 						'h2, h3, h4, h5, h6': {
@@ -53,7 +53,7 @@ module.exports = {
 							border: 'none',
 							'border-radius': '4px',
 							fontStyle: 'normal',
-							padding: '0 2px',
+							padding: '2px',
 						},
 						'main a': {
 							fontWeight: '400',

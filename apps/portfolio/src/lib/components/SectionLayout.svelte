@@ -25,12 +25,12 @@
 	.section-outer {
 		z-index: 3;
 		width: 100%;
-		max-width: var(--max-width);
-		margin: 0 auto;
 	}
 
 	.section {
 		padding: var(--mobile-page-padding);
+		max-width: var(--max-width);
+		margin: 0 auto;
 	}
 
 	.section-header {
