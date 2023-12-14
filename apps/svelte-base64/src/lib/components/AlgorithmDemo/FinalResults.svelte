@@ -12,7 +12,7 @@
 	async function handleCopyButtonClicked(colorString: string) {
 		const result = await copyToClipboard(colorString);
 		if (!result.success) {
-			$alert = result.error.message;
+			$alert = result.error?.message ?? '';
 		}
 	}
 </script>
@@ -68,13 +68,13 @@
 		grid-row: 1 / span 1;
 	}
 	.input-value {
-		border: 1px solid var(--nav-button-bg-color);
+		border: 1px solid var(--nav-button-border-color);
 	}
 	.input-value .result-label {
 		color: var(--pri-color);
 	}
 	.output-value {
-		border: 1px solid var(--nav-button-stop-autoplay-bg-color);
+		border: 1px solid var(--nav-button-autoplay-border-color);
 	}
 	.output-value .result-label {
 		color: var(--sec-color);

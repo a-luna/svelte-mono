@@ -17,12 +17,12 @@
 	const vs15_1 = ' Stands for ';
 	const vs15_2 = 'Variation Selector-15';
 	const vs15_3 =
-		'. This codepoint may change the appearance of the preceding character. If that is a symbol, dingbat or emoji, VS15 forces it to be rendered in a monochrome, textual fashion rather than as a colorful image.';
+		'. This codepoint may change the appearance of the preceding character. If that is a symbol, dingbat or emoji, <strong>VS15 forces it to be rendered in a monochrome, textual fashion</strong> rather than as a colorful image.';
 
 	const vs16_1 = ' Stands for ';
 	const vs16_2 = 'Variation Selector-16';
 	const vs16_3 =
-		'. This codepoint may change the appearance of the preceding character. If that is a symbol, dingbat or emoji, VS16 forces it to be rendered as a colorful image rather than in a monochrome, textual fashion.';
+		'. This codepoint may change the appearance of the preceding character. If that is a symbol, dingbat or emoji, <strong>VS16 forces it to be rendered as a colorful image</strong> rather than in a monochrome, textual fashion.';
 </script>
 
 <div transition:fade class="legend">
@@ -35,13 +35,13 @@
 		{#if hasVarSelector15}
 			<li class="variation">
 				<strong>VS15: </strong>{vs15_1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs15_2}</a></strong
-				>{vs15_3}
+				>{@html vs15_3}
 			</li>
 		{/if}
 		{#if hasVarSelector16}
 			<li class="variation">
 				<strong>VS16: </strong>{vs16_1}<strong><a href={varUrl} target="_blank" rel="noreferrer">{vs16_2}</a></strong
-				>{vs16_3}
+				>{@html vs16_3}
 			</li>
 		{/if}
 		{#if hasWhiteSpace || inputHasWhiteSpace}
