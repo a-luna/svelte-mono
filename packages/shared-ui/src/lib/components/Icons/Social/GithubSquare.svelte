@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IconBase from '$lib/components/Icons/IconBase.svelte';
 
-	export let stroke: string = 'currentColor';
+	export let stroke = 'currentColor';
 
 	export let title = '';
 	export let strokeWidth = '0';
