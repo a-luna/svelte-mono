@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 RUN npm --no-update-notifier --no-fund --global install pnpm
 ARG PACKAGE_PATH=apps/svelte-base64
 ARG DEPS_PATH=packages/shared-ui
