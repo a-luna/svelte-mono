@@ -13,8 +13,7 @@
 	let search: string;
 	// let filteredCategory: string;
 
-	$: list = data.allBlogPosts
-		.sort(sortByDate('date', false))
+	$: list = sortByDate(data.allBlogPosts, { key: 'date', asc: false })
 		.filter((item) => {
 			if (search) {
 				return item.title.toLowerCase().includes(search.toLowerCase());

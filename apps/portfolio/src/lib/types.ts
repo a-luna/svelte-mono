@@ -392,6 +392,6 @@ export interface hasDate {
 	date: Date | string;
 }
 
-export interface ISortByDateFunction<T> {
+export interface SortFunction<T> {
 	(a: T, b: T): number;
 }

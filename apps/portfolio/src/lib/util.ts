@@ -1,5 +1,5 @@
+import { isDate, isDateLike } from '$lib/typeguards';
 import { format } from 'date-fns';
-import type { ISortByDateFunction } from './types';
 
 export const formatDateString = (date: Date) => format(date, 'PPP');
 
@@ -39,25 +39,32 @@ export function getScrollbarWidth() {
 	return scrollbarWidth;
 }
 
-export const sortByDate = <T, K extends keyof T>(key: K, asc = true): ISortByDateFunction<T> => {
+export function sortByDate<T, K extends keyof T>(list: T[], options: {key: K; asc?: boolean}): T[] {
+	const { key, asc } = {...{asc: true }, ...options}
+	let byDate: (a: T, b: T) => number;
 	if (asc) {
-		return (a: T, b: T) => {
-			if (typeof a[key] == 'string' && typeof b[key] == 'string') {
-				return new Date(a[key]).valueOf() - new Date(b[key]).valueOf();
+		byDate = (a: T, b: T) => {
+			const [aVal, bVal] = [a[key], b[key]];
+			if (isDate(aVal) && isDate(bVal)) {
+				return aVal.valueOf() - bVal.valueOf();
 			}
-			if (typeof a[key] != 'string' && typeof b[key] != 'string') {
-				return a[key].valueOf() - b[key].valueOf();
+			if (isDateLike(aVal) && isDateLike(bVal)) {
+				return new Date(aVal).valueOf() - new Date(bVal).valueOf();
 			}
 			return 0;
 		};
-	}
-	return (a: T, b: T) => {
-		if (typeof a[key] == 'string' && typeof b[key] == 'string') {
-			return new Date(b[key]).valueOf() - new Date(a[key]).valueOf();
-		}
-		if (typeof a[key] != 'string' && typeof b[key] != 'string') {
-			return b[key].valueOf() - a[key].valueOf();
-		}
-		return 0;
-	};
+	} else {
+		byDate = (a: T, b: T) => {
+			const [aVal, bVal] = [a[key], b[key]];
+			if (isDate(aVal) && isDate(bVal)) {
+				return bVal.valueOf() - aVal.valueOf();
+			}
+			if (isDateLike(aVal) && isDateLike(bVal)) {
+				return new Date(bVal).valueOf() - new Date(aVal).valueOf();
+			}
+			return 0;
+		};
+	}    
+	
+	return list.sort(byDate);
 };
