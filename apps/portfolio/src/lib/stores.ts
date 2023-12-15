@@ -34,7 +34,7 @@ export function createLocalStorageValue<T>(key: string, defaultValue: T): Result
 }
 
 export const blogPostDateMap: Readable<OrderedNavItem[]> = derived(blogPosts, ($blogPosts) =>
-	$blogPosts.sort(sortByDate("date", true)).map(({ slug, title }, i) => ({
+	sortByDate($blogPosts, { key: 'date'}).map(({ slug, title }, i) => ({
 		slug,
 		title,
 		titleCompact: title,

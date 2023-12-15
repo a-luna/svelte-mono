@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { blogPosts } from '$lib/stores';
-	import type { BlogPost } from '$lib/types';
 	import { sortByDate } from '$lib/util';
 	import { format } from 'date-fns';
 
-	let recentBlogPosts: BlogPost[] = [];
-
-	$: recentBlogPosts = $blogPosts.sort(sortByDate('date', false)).slice(0, 4);
+	$: recentBlogPosts = sortByDate($blogPosts, { key: 'date', asc: false }).slice(0, 4);
 </script>
 
 <div>

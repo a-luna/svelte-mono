@@ -63,7 +63,7 @@
 		category: ProjectCategory,
 		language: LanguageOrTech,
 	): RepoWithMetaData[] {
-		filtered = [...projects].sort(sortByDate('updatedAt', false));
+		filtered = sortByDate([...projects], { key: 'updatedAt', asc: false });
 		if (type && type !== 'allProjects') {
 			filtered = filtered.filter((project) => project.primaryCategory === type);
 		}
