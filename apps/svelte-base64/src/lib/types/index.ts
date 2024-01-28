@@ -1,14 +1,3 @@
-export type {
-	EncodingMachine,
-	EncodingMachineConfig,
-	EncodingMachineOptions,
-	EncodingMachineService,
-	EncodingMachineStateStore,
-	EncodingStateToEventMap,
-	NavButtonEventDispatcher,
-	XStateSendEvent
-} from './alias';
-export type { HttpError, HttpMethod, HttpResponse, HttpResult, UnicodeCharInfo } from './api';
 export type { AppSettings } from './AppSettings';
 export type { AppState } from './AppState';
 export type { AppStore } from './AppStore';
@@ -27,7 +16,7 @@ export type { Encoder } from './Encoder';
 export type { EncoderInput } from './EncoderInput';
 export type { EncoderInputChunk } from './EncoderInputChunk';
 export type { EncoderOutput } from './EncoderOutput';
-export type { HelpSection, HelpSectionMap } from './HelpSection';
+export type { HelpSection, HelpSectionMap, HelpSectionReference } from './HelpSection';
 export type { HexByteMap } from './HexByteMap';
 export type { HslColor } from './HslColor';
 export type {
@@ -37,11 +26,20 @@ export type {
 	ButtonSize,
 	Encoding,
 	StringEncoding,
-	TextEncoding
+	TextEncoding,
 } from './Literals';
 export type { OutputChunk } from './OutputChunk';
 export type { Result } from './Result';
 export type { SelectMenuOption } from './SelectMenuOption';
-export type { ByteEncodingMap, Utf8ComplexCharacterMap, Utf8StandardCharacterMap, Utf8StringComposition } from './utf8';
 export type { MappedLiteral, MappedStringLiteralPick } from './Utilities';
-
+export type {
+	EncodingMachine,
+	EncodingMachineConfig,
+	EncodingMachineOptions,
+	EncodingMachineService,
+	EncodingMachineStateStore,
+	EncodingStateToEventMap,
+	XStateSendEvent,
+} from './alias';
+export type { HttpError, HttpMethod, HttpResponse, HttpResult, UnicodeCharInfo } from './api';
+export type { ByteEncodingMap, Utf8ComplexCharacterMap, Utf8StandardCharacterMap, Utf8StringComposition } from './utf8';

@@ -31,19 +31,19 @@
 			? `${defaultFlexStyles} flex-flow: row nowrap;`
 			: `${defaultFlexStyles} flex-flow: column nowrap;`
 		: $app.isMobileDisplay
-		? `${defaultFlexStyles} flex-flow: column nowrap; `
-		: `${defaultFlexStyles} flex-flow: row nowrap;`;
+			? `${defaultFlexStyles} flex-flow: column nowrap; `
+			: `${defaultFlexStyles} flex-flow: row nowrap;`;
 	$: defaultGridStyles = 'display: grid; gap: 0.5rem; padding: 0.25rem 0.5rem 0.5rem 0.5rem;';
 	$: inputTextEncodingStylesGrid = $app.isDefaultDisplay
 		? `${defaultGridStyles} grid-template-columns: 75px 1fr; grid-template-rows: auto auto;`
 		: $app.isMobileDisplay
-		? `${defaultGridStyles} grid-template-columns: 75px 75px 75px 1fr; grid-template-rows: auto;`
-		: `${defaultGridStyles} grid-template-columns: repeat(4, auto); grid-template-rows: auto;`;
+			? `${defaultGridStyles} grid-template-columns: 75px 75px 75px 1fr; grid-template-rows: auto;`
+			: `${defaultGridStyles} grid-template-columns: repeat(4, auto); grid-template-rows: auto;`;
 	$: outputBase64EncodingStylesGrid = $app.isDefaultDisplay
 		? `${defaultGridStyles} grid-template-columns: 1fr; grid-template-rows: auto auto;`
 		: $app.isMobileDisplay
-		? `${defaultGridStyles} grid-template-columns: 75px 1fr; grid-template-rows: auto;`
-		: `${defaultGridStyles} grid-template-columns: repeat(2, auto); grid-template-rows: auto;`;
+			? `${defaultGridStyles} grid-template-columns: 75px 1fr; grid-template-rows: auto;`
+			: `${defaultGridStyles} grid-template-columns: repeat(2, auto); grid-template-rows: auto;`;
 	$: inputBase64EncodingStylesGrid = `${defaultGridStyles} grid-template-columns: auto 1fr; grid-template-rows: auto;`;
 	$: state.changeInputText(inputText);
 	$: if ($state.resetPerformed) {

@@ -1,5 +1,7 @@
 module.exports = {
+	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:svelte/recommended', 'prettier'],
 	parser: '@typescript-eslint/parser',
+	plugins: ['@typescript-eslint'],
 	parserOptions: {
 		ecmaVersion: '2020',
 		sourceType: 'module',
@@ -12,23 +14,26 @@ module.exports = {
 		es2021: true,
 		node: true,
 	},
-	extends: [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:@typescript-eslint/recommended-requiring-type-checking',
-	],
-	globals: {
-		NodeJS: true,
-	},
-	plugins: ['svelte3', '@typescript-eslint'],
-	ignorePatterns: ['*.cjs'],
-	settings: {
-		'svelte3/typescript': true,
+	rules: {
+		// Note: you must disable the base rule as it can report incorrect errors
+		'no-unused-vars': 'off',
+		'@typescript-eslint/no-unused-vars': [
+			'error',
+			{
+				varsIgnorePattern: '^_',
+				argsIgnorePattern: '^_',
+				caughtErrorsIgnorePattern: '^_',
+				destructuredArrayIgnorePattern: '^_',
+			},
+		],
 	},
 	overrides: [
 		{
 			files: ['*.svelte'],
-			processor: 'svelte3/svelte3',
+			parser: 'svelte-eslint-parser',
+			parserOptions: {
+				parser: '@typescript-eslint/parser',
+			},
 		},
 		{
 			files: ['*.ts'],
@@ -37,4 +42,23 @@ module.exports = {
 			},
 		},
 	],
+	settings: {
+		svelte: {
+			ignoreWarnings: ['svelte/no-at-html-tags'],
+			compileOptions: {
+				postcss: {
+					configFilePath: './postcss.config.cjs',
+				},
+			},
+			kit: {
+				files: {
+					routes: 'src/routes',
+				},
+			},
+		},
+	},
+	globals: {
+		NodeJS: true,
+	},
+	ignorePatterns: ['*.cjs'],
 };

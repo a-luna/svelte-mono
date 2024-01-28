@@ -1,4 +1,5 @@
-import type { Base64Encoding, ButtonColor, ButtonSize, Encoding, OutputChunk } from '.';
+import type { ButtonColor } from '@a-luna/shared-ui';
+import type { Base64Encoding, ButtonSize, Encoding, OutputChunk } from '.';
 
 export interface AppStore {
 	encoderMode: boolean;

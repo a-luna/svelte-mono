@@ -1,6 +1,5 @@
 import type { EncodingContext, EncodingEvent, EncodingSchema, EncodingTypeStates } from '$lib/xstate/b64Encode';
 import type { Typegen0 } from '$lib/xstate/b64Encode.typegen';
-import type { DispatchOptions } from 'svelte/internal';
 import type { Readable } from 'svelte/store';
 import type {
 	BaseActionObject,
@@ -54,15 +53,5 @@ export type EncodingMachineService = Interpreter<
 >;
 
 export type XStateSendEvent = (event: EncodingEvent, payload?: EventData) => EncodingMachineState;
-
-export type NavButtonEventDispatcher = <EventKey extends 'navButtonEvent'>(
-	type: EventKey,
-	detail?: {
-		navButtonEvent: {
-			action: EncodingEvent;
-		};
-	}[EventKey],
-	options?: DispatchOptions,
-) => boolean;
 
 export type EncodingStateToEventMap = { requiredState: EncodingTypeStates; navAction: () => EncodingEvent }[];

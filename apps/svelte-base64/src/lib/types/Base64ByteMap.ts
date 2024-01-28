@@ -5,6 +5,6 @@ export interface Base64ByteMap {
 	dec: number;
 	b64: string;
 	isPad: boolean;
-	groupId?: string;
-	bitGroups?: BitGroup[];
+	groupId: string;
+	bitGroups: BitGroup[];
 }

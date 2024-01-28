@@ -21,6 +21,6 @@
 	kbd {
 		display: inline-flex;
 		margin: auto;
-		padding: 1px;
+		padding: 2px;
 	}
 </style>
