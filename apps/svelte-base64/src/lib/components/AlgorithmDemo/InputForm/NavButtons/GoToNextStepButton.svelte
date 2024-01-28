@@ -10,7 +10,7 @@
 	let defaultNavAction: EncodingEvent = { type: 'GO_TO_NEXT_STEP' };
 	let encodingStateToEventMap: EncodingStateToEventMap = [
 		{
-			requiredState: { value: 'inactive', context: $state.context },
+			requiredState: { value: 'inactive', context: $state?.context },
 			navAction: () => ({
 				type: 'VALIDATE_TEXT',
 				inputText: $state?.context.input.inputText,

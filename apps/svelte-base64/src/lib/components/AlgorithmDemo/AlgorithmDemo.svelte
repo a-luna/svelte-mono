@@ -13,7 +13,6 @@
 	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Base64Encoding, StringEncoding } from '$lib/types';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
-	import { createTestSet } from '$lib/xstate/b64Encode.test/testSetGenerator';
 
 	const { state, demoState, demoUIState, send } = getDemoAppContext();
 	let inputText = defaultEncoderInput.inputText;
@@ -21,26 +20,29 @@
 	let outputBase64Encoding: Base64Encoding = defaultEncoderInput.outputEncoding;
 	let helpModal: HelpDocsModal;
 
-	$: if ($state.context.autoplay && $state.value) eventLog.add({ type: 'AUTOPLAYING' });
+	// $: if ($state.context.autoplay && $state.value) eventLog.add({ type: 'AUTOPLAYING' });
 	$: if (inputText) updateInputText(inputText, inputTextEncoding, outputBase64Encoding);
-	$: if ($demoState.errorOccurred) $alert = $state.context.input.validationResult.error?.message ?? '';
-	$: if ($demoState.startedSubProcess) {
+	$: if ($demoState?.errorOccurred) $alert = $state.context.input.validationResult.error?.message ?? '';
+	$: if ($demoState?.startedSubProcess) {
 		$demoUIState.highlightHexByte = undefined;
 		$demoUIState.highlightBase64 = '';
 	}
-	$: if ($state.matches({ encodeInput: 'autoPlayEncodeByte' }) || $state.matches({ encodeInput: 'encodeByte' })) {
+	$: if ($state?.matches({ encodeInput: 'autoPlayEncodeByte' }) || $state?.matches({ encodeInput: 'encodeByte' })) {
 		$demoUIState.highlightHexByte = $state.context.currentByte.byte;
 	}
-	$: if ($state.matches({ encodeOutput: 'autoPlayEncodeBase64' }) || $state.matches({ encodeOutput: 'encodeBase64' })) {
+	$: if (
+		$state?.matches({ encodeOutput: 'autoPlayEncodeBase64' }) ||
+		$state?.matches({ encodeOutput: 'encodeBase64' })
+	) {
 		$demoUIState.highlightBase64 = $state.context.currentBase64Char.b64;
 	}
-	$: if ($state.context.resetForm) {
+	$: if ($state?.context.resetForm) {
 		inputText = defaultEncoderInput.inputText;
 		inputTextEncoding = defaultEncoderInput.inputEncoding;
 		outputBase64Encoding = defaultEncoderInput.outputEncoding;
 	}
-	$: bottomRowHeight = $demoState.isMobileDisplay ? 'auto' : '260px';
-	$: formTitleFontSize = $demoState.isMobileDisplay ? '1.6rem' : '1.9rem';
+	$: bottomRowHeight = $demoState?.isMobileDisplay ? 'auto' : '260px';
+	$: formTitleFontSize = $demoState?.isMobileDisplay ? '1.6rem' : '1.9rem';
 
 	// $: if ($demoState.dev) {
 	// 	const test = '∑ßåœ ≈ ∆c';
@@ -112,27 +114,27 @@
 		if (key === 'KeyC') {
 			console.log({ context: $state.context });
 		}
-		if (key === 'KeyE') {
-			console.log({ log: eventLog.entries() });
-		}
-		if (key === 'KeyL') {
-			eventLog.clear();
-			console.log({ $eventLog });
-		}
 		if (key === 'KeyS') {
 			console.log({ state: $state.value });
 		}
-		if (key === 'KeyT') {
-			const result = await copyToClipboard(createTestSet());
-			if (result.success) {
-				console.log('Successfully created test set and copied to clipboard!');
-			}
-		}
+		// if (key === 'KeyE') {
+		// 	console.log({ log: eventLog.entries() });
+		// }
+		// if (key === 'KeyL') {
+		// 	eventLog.clear();
+		// 	console.log({ $eventLog });
+		// }
+		// if (key === 'KeyT') {
+		// 	const result = await copyToClipboard(createTestSet());
+		// 	if (result.success) {
+		// 		console.log('Successfully created test set and copied to clipboard!');
+		// 	}
+		// }
 	}
 
 	function sendEvent(action: EncodingEvent) {
 		if ($state.can(action)) {
-			eventLog.add(action);
+			// eventLog.add(action);
 			send(action);
 		}
 	}
@@ -161,10 +163,10 @@
 		<div
 			id="demo-text"
 			data-testid="demo-text"
-			data-state={$demoState.machineState}
-			data-sub-state={$demoState.machineSubState}
+			data-state={$demoState?.machineState}
+			data-sub-state={$demoState?.machineSubState}
 		>
-			{#if $state.matches('inactive') || $state.matches({ validateInputText: 'error' })}
+			{#if $state?.matches('inactive') || $state?.matches({ validateInputText: 'error' })}
 				<DemoIntro on:openHelpModal={(e) => openHelpDocsModal(e.detail)} />
 			{:else}
 				<DemoText on:openHelpModal={(e) => openHelpDocsModal(e.detail)} />
@@ -176,8 +178,8 @@
 <div class="bottom-row" style="flex: 1 0 {bottomRowHeight}">
 	<LookupTables
 		{outputBase64Encoding}
-		highlightBase64={$demoUIState.highlightBase64}
-		highlightHexByte={$demoUIState.highlightHexByte}
+		highlightBase64={$demoUIState?.highlightBase64}
+		highlightHexByte={$demoUIState?.highlightHexByte}
 	/>
 	<FinalResults />
 </div>
@@ -268,10 +270,10 @@
 			grid-area: demo-steps;
 		}
 		.demo-steps {
-			grid-template-columns: 148px 5px 353px 5px 122px;
+			grid-template-columns: 161px 0px 361px 0px 115px;
 			grid-template-rows: auto auto auto auto;
 			align-items: flex-start;
-			column-gap: 0.5rem;
+			column-gap: 0.25rem;
 		}
 		#demo-text {
 			grid-column: 1 / span 5;

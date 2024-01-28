@@ -13,8 +13,8 @@
 	let closed: boolean;
 	const { demoState, demoUIState } = getDemoAppContext();
 
-	$: $demoUIState.modalOpen = !closed;
-	$: showContentsPanel = $demoState.pageWidth >= 764;
+	$: if ($demoUIState) $demoUIState.modalOpen = !closed;
+	$: showContentsPanel = $demoState?.pageWidth >= 764;
 	$: displayedSectionTitle = helpTopicsExpanded ? 'Help Topics' : encodingHelpSections[index]?.title;
 
 	const getNextIndex = (i: number) => (i + 1) % encodingHelpSections.length;

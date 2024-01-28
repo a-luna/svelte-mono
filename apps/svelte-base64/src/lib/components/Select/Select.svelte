@@ -3,9 +3,10 @@
 <script lang="ts">
 	import Option from '$lib/components/Select/Option.svelte';
 	import type { SelectMenuOption } from '$lib/types';
-	import { clickOutside, getRandomHexString } from '$lib/util';
+	import { clickOutside } from '$lib/util';
+	import { BasicIconRenderer } from '@a-luna/shared-ui';
+	import { getRandomHexString } from '@a-luna/shared-ui/util';
 	import { createEventDispatcher } from 'svelte';
-	import FaCaretDown from 'svelte-icons/fa/FaCaretDown.svelte';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
@@ -18,12 +19,12 @@
 	export let fontSize = '0.95rem';
 	export let disabled = false;
 	export let displaySelectedOptionText = true;
-	export let menuId = `select-menu-${getRandomHexString(4)}`;
+	export let menuId = `select-menu-${getRandomHexString({ length: 4 })}`;
 	export let buttonHeight = '33px';
 	export let buttonPadding = '9px 11px 9px 14px';
 	export let dropdownShown = false;
 	export let tooltip = '';
-	let selectedOption: SelectMenuOption;
+	let selectedOption: SelectMenuOption | undefined;
 	const dispatch = createEventDispatcher();
 
 	$: label = displaySelectedOptionText ? selectedOption?.label ?? menuLabel : menuLabel;
@@ -82,7 +83,7 @@
 				</slot>
 			</span>
 			<div style="width: {fontSize}; height: {fontSize}">
-				<FaCaretDown />
+				<BasicIconRenderer icon={'caretdown'} />
 			</div>
 		</button>
 	</div>

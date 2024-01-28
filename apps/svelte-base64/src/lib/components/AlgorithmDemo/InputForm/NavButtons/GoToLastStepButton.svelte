@@ -10,7 +10,7 @@
 	let defaultNavAction: EncodingEvent = { type: 'GO_TO_LAST_STEP' };
 	let encodingStateToEventMap: EncodingStateToEventMap = [
 		{
-			requiredState: { value: 'inactive', context: $state.context },
+			requiredState: { value: 'inactive', context: $state?.context },
 			navAction: () => ({
 				type: 'SKIP_DEMO',
 				inputText: $state?.context.input.inputText,

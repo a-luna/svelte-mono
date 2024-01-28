@@ -15,12 +15,12 @@ const convertNumber = (num: number) =>
 	(num < 4 || num > 20) && num.toString().slice(-1)[0] === '1'
 		? `${num}st`
 		: (num < 4 || num > 20) && num.toString().slice(-1)[0] === '2'
-		? `${num}nd`
-		: (num < 4 || num > 20) && num.toString().slice(-1)[0] === '3'
-		? `${num}rd`
-		: `${num}th`;
+			? `${num}nd`
+			: (num < 4 || num > 20) && num.toString().slice(-1)[0] === '3'
+				? `${num}rd`
+				: `${num}th`;
 
-const getSequentialColor = (i: number): string => rotatingColors[i % rotatingColors.length];
+const getSequentialColor = (i: number): string => rotatingColors[i % rotatingColors.length] ?? '--green3';
 const getByteNumHtml = (num: number, colorNum: number) =>
 	`<div class="byte-id" style="color: var(${getSequentialColor(
 		colorNum,
@@ -110,8 +110,8 @@ export function describeInputChunk(chunk: EncoderInputChunk, chunkIndex: number,
 		chunk.bytes.length === 1
 			? chunkBytesHtmlList[0]
 			: chunk.bytes.length === 2
-			? chunkBytesHtmlList.join(' and ')
-			: chunkBytesHtmlList.join(', ');
+				? chunkBytesHtmlList.join(' and ')
+				: chunkBytesHtmlList.join(', ');
 	const chunkBytes =
 		chunk.bytes.length > 1 ? `is comprised of bytes ${chunkBytesHtml}` : `contains a single byte, ${chunkBytesHtml}`;
 	const padLength = chunk.bytes.length === 1 ? 'four' : 'two';
@@ -152,8 +152,8 @@ export function describeOutputChunk(chunk: OutputChunk, chunkIndex: number, tota
 		chunk.bytes.length === 1
 			? chunkHexBytesHtmlList[0]
 			: chunk.bytes.length === 2
-			? chunkHexBytesHtmlList.join(' and ')
-			: chunkHexBytesHtmlList.join(', ');
+				? chunkHexBytesHtmlList.join(' and ')
+				: chunkHexBytesHtmlList.join(', ');
 	const chunkHexBytes = `byte${chunk.bytes.length > 1 ? 's' : ''} ${chunkHexBytesHtml} of the input data`;
 	const chunkB64Chars = `contains ${totalB64CharsVerbose} Base64 digits ${getChunkB64CharsHtml(
 		totalB64Chars,
@@ -224,47 +224,47 @@ function describeBitSourceForB64Char(base64: Base64ByteMap): string {
 	const { b64IndexWithinChunk } = parseGroupId(base64.groupId);
 	let b64BitSourceDescription = '';
 	if (b64IndexWithinChunk === 0) {
-		const hexBitGroup = base64.bitGroups[0].groupId;
+		const hexBitGroup = base64.bitGroups[0]?.groupId ?? '';
 		const { chunkIndex, byteIndex: byteNumber } = parseGroupId(hexBitGroup);
 		const byteNumHtml = getByteNumHtml(byteNumber + 1, chunkIndex);
-		const bits = `<code>${base64.bitGroups[0].bits}</code>`;
+		const bits = `<code>${base64.bitGroups[0]?.bits}</code>`;
 		b64BitSourceDescription = `All 6 bits are taken from the first 6 bits of byte ${byteNumHtml} (${bits}).`;
 	}
 	if (b64IndexWithinChunk === 1) {
-		const hexBitGroup1 = base64.bitGroups[0].groupId;
-		const hexBitGroup2 = base64.bitGroups[1].groupId;
+		const hexBitGroup1 = base64.bitGroups[0]?.groupId ?? '';
+		const hexBitGroup2 = base64.bitGroups[1]?.groupId ?? '';
 		const { chunkIndex, byteIndex: byteNumber1 } = parseGroupId(hexBitGroup1);
 		const byteNumHtml1 = getByteNumHtml(byteNumber1 + 1, chunkIndex);
-		const bits1 = `<code>${base64.bitGroups[0].bits}</code>`;
+		const bits1 = `<code>${base64.bitGroups[0]?.bits}</code>`;
 		if (hexBitGroup2 === 'pad') {
 			b64BitSourceDescription = `The first 2 bits are taken from the last 2 bits of byte ${byteNumHtml1} (${bits1}), and the final 4 zeroes were added to pad the length of the chunk to 12 bits.`;
 		} else {
 			const { byteIndex: byteNumber2 } = parseGroupId(hexBitGroup2);
 			const byteNumHtml2 = getByteNumHtml(byteNumber2 + 1, chunkIndex);
-			const bits2 = `<code>${base64.bitGroups[1].bits}</code>`;
+			const bits2 = `<code>${base64.bitGroups[1]?.bits}</code>`;
 			b64BitSourceDescription = `The first 2 bits are taken from the last 2 bits of byte ${byteNumHtml1} (${bits1}), and the final 4 bits are taken from the first 4 bits of byte ${byteNumHtml2} (${bits2}).`;
 		}
 	}
 	if (b64IndexWithinChunk === 2) {
-		const hexBitGroup1 = base64.bitGroups[0].groupId;
-		const hexBitGroup2 = base64.bitGroups[1].groupId;
+		const hexBitGroup1 = base64.bitGroups[0]?.groupId ?? '';
+		const hexBitGroup2 = base64.bitGroups[1]?.groupId ?? '';
 		const { chunkIndex, byteIndex: byteNumber1 } = parseGroupId(hexBitGroup1);
 		const byteNumHtml1 = getByteNumHtml(byteNumber1 + 1, chunkIndex);
-		const bits1 = `<code>${base64.bitGroups[0].bits}</code>`;
+		const bits1 = `<code>${base64.bitGroups[0]?.bits}</code>`;
 		if (hexBitGroup2 === 'pad') {
 			b64BitSourceDescription = `The first 4 bits are taken from the last 4 bits of byte ${byteNumHtml1} (${bits1}), and the final 2 zeroes were added to pad the length of the chunk to 18 bits.`;
 		} else {
 			const { byteIndex: byteNumber2 } = parseGroupId(hexBitGroup2);
 			const byteNumHtml2 = getByteNumHtml(byteNumber2 + 1, chunkIndex);
-			const bits2 = `<code>${base64.bitGroups[1].bits}</code>`;
+			const bits2 = `<code>${base64.bitGroups[1]?.bits}</code>`;
 			b64BitSourceDescription = `The first 4 bits are taken from the last 4 bits of byte ${byteNumHtml1} (${bits1}), and the final 2 bits are taken from the first 2 bits of byte ${byteNumHtml2} (${bits2}).`;
 		}
 	}
 	if (b64IndexWithinChunk === 3) {
-		const hexBitGroup = base64.bitGroups[0].groupId;
+		const hexBitGroup = base64.bitGroups[0]?.groupId ?? '';
 		const { chunkIndex, byteIndex: byteNumber } = parseGroupId(hexBitGroup);
 		const byteNumHtml = getByteNumHtml(byteNumber + 1, chunkIndex);
-		const bits = `<code>${base64.bitGroups[0].bits}</code>`;
+		const bits = `<code>${base64.bitGroups[0]?.bits}</code>`;
 		b64BitSourceDescription = `All 6 bits are taken from the last 6 bits of byte ${byteNumHtml} (${bits}).`;
 	}
 	return b64BitSourceDescription;

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getSimpleAppContext } from '$lib/stores/context';
 	import type { AppStore } from '$lib/types';
+	import type { RadioButtonDetails } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import type { Readable } from 'svelte/store';
 
@@ -12,8 +13,8 @@
 	export let groupId = '';
 	export let groupName = '';
 	export let style: string;
-	export let buttons = [];
-	let instances = {};
+	export let buttons: RadioButtonDetails[] = [];
+	let instances: { [k: string]: HTMLInputElement } = {};
 	const radioButtonSelectionChangedEventDispatcher = createEventDispatcher<{
 		radioButtonSelectionChanged: { groupId: string; groupName: string; selectionId: string; value: string };
 	}>();
@@ -24,7 +25,13 @@
 			: 'margin: 0 auto 0 0.5rem;'
 		: 'margin: 0 auto 0 0.5rem;';
 
-	export const reset = () => buttons.forEach((button) => (instances[button.id].checked = button.checked));
+	export const reset = () =>
+		buttons.forEach((button: RadioButtonDetails) => {
+			const thisInstance = instances[button.id];
+			if (thisInstance) {
+				thisInstance.checked = button.checked;
+			}
+		});
 
 	function raiseSelectionChanged(id: string, value: string) {
 		radioButtonSelectionChangedEventDispatcher('radioButtonSelectionChanged', {
@@ -40,7 +47,7 @@
 	<fieldset name={groupName} {form}>
 		<legend style={legendMarginStyles}>{title}</legend>
 		<div class="radio-buttons" {style}>
-			{#each buttons as button, i}
+			{#each buttons as button}
 				<div class="button-wrapper">
 					<input
 						type="radio"
@@ -49,7 +56,7 @@
 						value={button.value}
 						checked={button.checked}
 						bind:this={instances[button.id]}
-						on:change={(e) => raiseSelectionChanged(button.id, button.value)}
+						on:change={(_) => raiseSelectionChanged(button.id, button.value)}
 					/>
 					<label for={button.id}>{button.label}</label>
 				</div>

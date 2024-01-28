@@ -6,7 +6,7 @@
 	export let label: string;
 	export let helpTopic: string = 'why-base64-1';
 	export let helpTopicsExpanded = false;
-	export let name: string = null;
+	export let name: string = '';
 	export let disabled = false;
 	export let margin = '0';
 	export let style = '';

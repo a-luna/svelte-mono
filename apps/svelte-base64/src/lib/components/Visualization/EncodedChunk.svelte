@@ -13,13 +13,13 @@
 	$: textEncoding = isUTF8 || $app.isAscii;
 
 	function highlightHexByteValue(highlight: boolean, hexMap: HexByteMap) {
-		$state.highlightHexByte = highlight ? hexMap.byte : null;
-		$state.highlightHexBitGroup = highlight ? hexMap.groupId : null;
+		$state.highlightHexByte = highlight ? hexMap.byte : 0;
+		$state.highlightHexBitGroup = highlight ? hexMap.groupId : '';
 	}
 
 	function highlightBase64Value(highlight: boolean, b64Map: Base64ByteMap) {
-		$state.highlightBase64 = highlight ? b64Map.b64 : null;
-		$state.highlightBase64BitGroup = highlight ? b64Map.groupId : null;
+		$state.highlightBase64 = highlight ? b64Map.b64 : '';
+		$state.highlightBase64BitGroup = highlight ? b64Map.groupId : '';
 	}
 </script>
 
@@ -28,6 +28,7 @@
 		<div class="hex-map">
 			{#each chunk.hexMap as hexMap}
 				<div
+					role="mark"
 					class="hex-byte"
 					class:highlight-hex-byte={$state.highlightHexBitGroup === hexMap.groupId}
 					data-eight-bit="{hexMap.bin_word1}{hexMap.bin_word2}"
@@ -78,6 +79,7 @@
 		<div class="base64-map">
 			{#each chunk.base64Map as b64Map}
 				<div
+					role="mark"
 					class="base64"
 					class:highlight-base64={$state.highlightBase64BitGroup === b64Map.groupId}
 					data-six-bit={b64Map.bin}
@@ -130,7 +132,9 @@
 
 	.hex-map,
 	.base64-map {
-		transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+		transition:
+			background-color 0.35s ease-in-out,
+			color 0.35s ease-in-out;
 	}
 
 	.hex-map {
@@ -227,8 +231,11 @@
 	:global(.highlight-bit-group),
 	:global(.highlight-hex-byte),
 	:global(.highlight-base64) {
-		text-shadow: var(--hl-text-shadow) 1px 0px 1px, var(--hl-text-shadow) 0px 1px 1px,
-			var(--hl-text-shadow) -1px 0px 1px, var(--hl-text-shadow) 0px -1px 1px;
+		text-shadow:
+			var(--hl-text-shadow) 1px 0px 1px,
+			var(--hl-text-shadow) 0px 1px 1px,
+			var(--hl-text-shadow) -1px 0px 1px,
+			var(--hl-text-shadow) 0px -1px 1px;
 		transition: text-shadow 0.35s ease-in-out;
 	}
 </style>

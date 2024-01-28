@@ -13,7 +13,7 @@
 	const { state } = getDemoAppContext();
 
 	$: inputTextBoxStyles = 'flex: 1;';
-	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });
+	$: controlsDisabled = !$state?.matches('inactive') && !$state?.matches({ validateInputText: 'error' });
 	$: error =
 		inputText &&
 		!$state.matches('inactive') &&

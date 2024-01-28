@@ -1,8 +1,6 @@
 <script lang="ts">
-	/** @type { number } */
-	export let status;
-	/** @type { Error } */
-	export let error;
+	export let status: number;
+	export let error: Error;
 </script>
 
 <main>

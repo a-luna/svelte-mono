@@ -10,16 +10,14 @@
 	export let highlightBase64: string;
 	const { demoState } = getDemoAppContext();
 
-	const { demoState } = getAppContext();
-
-	$: tableChunkSize = $demoState.isMobileDisplay ? 32 : 16;
+	$: tableChunkSize = $demoState?.isMobileDisplay ? 32 : 16;
 </script>
 
-{#if $demoState.showAsciiTable}
+{#if $demoState?.showAsciiTable}
 	<div transition:fade class="ascii-table">
 		<AsciiLookupTable asciiTableChunkSize={tableChunkSize} {highlightHexByte} fontSize={'0.65rem'} />
 	</div>
-{:else if $demoState.showBase64Table}
+{:else if $demoState?.showBase64Table}
 	<div transition:fade class="base64-table">
 		<Base64LookupTable
 			base64Encoding={outputBase64Encoding}

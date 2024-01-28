@@ -13,7 +13,7 @@
 	$: inputEncoding = $state.context.input.inputEncoding;
 	$: chunkId = getChunkIndexFromByteIndex(byteIndex);
 	$: chunkNumber = chunkId + 1;
-	$: chunkColor = rotatingColors[chunkId % rotatingColors.length];
+	$: chunkColor = rotatingColors[chunkId % rotatingColors.length] ?? '';
 	$: currentInputChunk = $state.context.inputChunkIndex;
 	$: currentOutputChunk = $state.context.outputChunkIndex;
 	$: inputChunkMappingInProgress =
@@ -31,7 +31,7 @@
 	$: currentChunkColor = currentChunkIsMapped ? chunkColor : '--light-gray3';
 
 	$: byteNumber = byteIndex + 1;
-	$: byteColor = rotatingColors[byteIndex % rotatingColors.length];
+	$: byteColor = rotatingColors[byteIndex % rotatingColors.length] ?? '';
 	$: currentByte = $state.context.byteIndex;
 	$: byteMappingInProgress =
 		$state.matches({ encodeInput: 'autoPlayEncodeByte' }) ||
@@ -44,19 +44,19 @@
 		currentByteIsMapped || currentByteIsHovered
 			? byteColor
 			: currentInputChunkIsMapped
-			? currentChunkColor
-			: '--light-gray3';
+				? currentChunkColor
+				: '--light-gray3';
 	$: currentByteIdColor =
 		currentByteIsMapped || currentByteIsHovered || $state.matches('verifyResults')
 			? byteColor
 			: currentChunkIsMapped || b64MappingInProgress
-			? chunkColor
-			: '--light-gray3';
+				? chunkColor
+				: '--gray3';
 
 	const bitGroupIsHovered = (currentGroupId: string, checkGroupId: string): boolean =>
 		$state.matches('verifyResults') && currentGroupId === checkGroupId;
 	const getBase64CharColor = (groupId: string): string =>
-		rotatingColors[getBase64CharIndexFromGroupId(groupId) % rotatingColors.length];
+		rotatingColors[getBase64CharIndexFromGroupId(groupId) % rotatingColors.length] ?? '--purple3';
 	const highlightBitGroup = (base64CharIndex: number, groupId: string): boolean =>
 		b64MappingInProgress && base64CharIndex === getBase64CharIndexFromGroupId(groupId);
 	const getCurrentBitGroupColor = (base64CharIndex: number, currentGroupId: string, checkGroupId: string): string =>

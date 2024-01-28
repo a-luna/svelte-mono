@@ -10,7 +10,7 @@
 
 	const { state } = getDemoAppContext();
 
-	$: autoplay = $state.context.autoplay && !$state.matches({ validateInputText: 'error' });
+	$: autoplay = $state?.context.autoplay && !$state?.matches({ validateInputText: 'error' });
 </script>
 
 <div class="algo-nav-buttons" class:autoplay>

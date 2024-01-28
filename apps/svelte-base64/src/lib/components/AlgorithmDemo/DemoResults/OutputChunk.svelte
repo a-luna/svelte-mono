@@ -10,7 +10,7 @@
 	const { state, demoUIState } = getDemoAppContext();
 
 	$: chunkNumber = chunkIndex + 1;
-	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length];
+	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length] ?? '--teal4';
 	$: chunkIdColor = $state.matches('verifyResults') ? '--light-gray3' : chunkColor;
 	$: currentInputChunk = $state.context.inputChunkIndex;
 	$: currentOutputChunk = $state.context.outputChunkIndex;
@@ -33,10 +33,10 @@
 		$state.matches('verifyResults') && currentGroupId === checkGroupId;
 
 	const getHexByteColor = (groupId: string): string =>
-		rotatingColors[getHexByteIndexFromGroupId(groupId) % rotatingColors.length];
+		rotatingColors[getHexByteIndexFromGroupId(groupId) % rotatingColors.length] ?? '--green3';
 
 	const getBase64CharColor = (groupId: string): string =>
-		rotatingColors[getBase64CharIndexFromGroupId(groupId) % rotatingColors.length];
+		rotatingColors[getBase64CharIndexFromGroupId(groupId) % rotatingColors.length] ?? '--purple3';
 	const highlightBitGroup = (base64CharIndex: number, groupId: string): boolean =>
 		!stateName.includes('idle') &&
 		stateName.includes('encodeOutput') &&
@@ -51,8 +51,8 @@
 		highlightBitGroup(base64CharIndex, checkB64GroupId) || bitGroupIsHovered(currentB64GroupId, checkB64GroupId)
 			? getBase64CharColor(checkB64GroupId)
 			: bitGroupIsHovered(currentHexGroupId, checkHexGroupId)
-			? getHexByteColor(checkHexGroupId)
-			: currentChunkColor;
+				? getHexByteColor(checkHexGroupId)
+				: currentChunkColor;
 	const getCurrentBitGroupOutlineStyle = (
 		base64CharIndex: number,
 		currentB64GroupId: string,

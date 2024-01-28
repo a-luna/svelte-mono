@@ -10,7 +10,7 @@
 	let defaultNavAction: EncodingEvent = { type: 'RESUME_AUTO_PLAY' };
 	let encodingStateToEventMap: EncodingStateToEventMap = [
 		{
-			requiredState: { value: 'inactive', context: $state.context },
+			requiredState: { value: 'inactive', context: $state?.context },
 			navAction: () => ({
 				type: 'START_AUTOPLAY',
 				inputText: $state?.context.input.inputText,

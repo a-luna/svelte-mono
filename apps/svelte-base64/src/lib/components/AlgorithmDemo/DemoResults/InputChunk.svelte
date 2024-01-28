@@ -10,14 +10,14 @@
 	const { state, demoUIState } = getDemoAppContext();
 
 	$: chunkNumber = chunkIndex + 1;
-	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length];
+	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length] ?? '--teal4';
 	$: chunkIdColor = $state.matches('verifyResults') ? '--light-gray3' : chunkColor;
 	$: chunkMappingInProgress =
 		$state.matches({ createInputChunks: 'autoPlayCreateInputChunk' }) ||
 		$state.matches({ createInputChunks: 'createInputChunk' }) ||
 		$state.matches({ createInputChunks: 'createLastPaddedChunk' });
 	$: highlightChunk = chunkMappingInProgress && $state.context.inputChunkIndex === chunkIndex;
-	$: finalBase64GroupId = chunk.inputMap.slice(-1)[0].bitGroups.slice(-1)[0].groupId;
+	$: finalBase64GroupId = chunk.inputMap.slice(-1)[0]?.bitGroups.slice(-1)[0]?.groupId ?? '';
 	$: highlightPadBits = chunk.isPadded && $state.matches({ createInputChunks: 'explainLastPaddedChunk' });
 	$: byteMappingInProgress =
 		$state.matches({ encodeInput: 'autoPlayEncodeByte' }) ||
@@ -28,10 +28,10 @@
 		$state.matches('verifyResults') && currentGroupId === checkGroupId;
 
 	const getHexByteColor = (groupId: string): string =>
-		rotatingColors[getHexByteIndexFromGroupId(groupId) % rotatingColors.length];
+		rotatingColors[getHexByteIndexFromGroupId(groupId) % rotatingColors.length] ?? '--green3';
 
 	const getBase64CharColor = (groupId: string): string =>
-		rotatingColors[getBase64CharIndexFromGroupId(groupId) % rotatingColors.length];
+		rotatingColors[getBase64CharIndexFromGroupId(groupId) % rotatingColors.length] ?? '--purple3';
 	const highlightBitGroup = (base64CharIndex: number, groupId: string): boolean =>
 		byteMappingInProgress && base64CharIndex === getBase64CharIndexFromGroupId(groupId);
 	const getCurrentB64BitGroupColor = (
@@ -45,10 +45,10 @@
 		highlightBitGroup(base64CharIndex, checkB64GroupId) || bitGroupIsHovered(currentB64GroupId, checkB64GroupId)
 			? getBase64CharColor(checkB64GroupId)
 			: bitGroupIsHovered(currentHexGroupId, checkHexGroupId)
-			? getHexByteColor(checkHexGroupId)
-			: highlightChunk && !padding
-			? chunkColor
-			: '--light-gray3';
+				? getHexByteColor(checkHexGroupId)
+				: highlightChunk && !padding
+					? chunkColor
+					: '--light-gray3';
 </script>
 
 <div

@@ -4,6 +4,7 @@
 	import OutputByte from '$lib/components/AlgorithmDemo/DemoResults/OutputByte.svelte';
 	import OutputBytePlaceholder from '$lib/components/AlgorithmDemo/DemoResults/OutputBytePlaceholder.svelte';
 	import OutputChunk from '$lib/components/AlgorithmDemo/DemoResults/OutputChunk.svelte';
+	import { defaultEncoderInputChunk } from '$lib/constants';
 	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Base64ByteMap, HexByteMap } from '$lib/types';
 	import { getChunkIndexFromBase64CharIndex, getChunkIndexFromByteIndex } from '$lib/util';
@@ -22,19 +23,20 @@
 	}
 </script>
 
-{#if $demoState.showInputBytes}
+{#if $demoState?.showInputBytes}
 	<h3 class="input-heading">Input</h3>
 	<div id="input-hex" class="encoded-bytes">
 		<div class="binary-chunks">
 			{#each $state.context.updatedByteMaps as byte, byteIndex}
 				<div
+					role="mark"
 					in:fade={{ duration: 200 }}
 					class="encoded-byte"
 					data-chunk-id={getChunkIndexFromByteIndex(byteIndex) + 1}
 					data-byte-number={byteIndex + 1}
 					data-bin="{byte.bin_word1}{byte.bin_word2}"
 					data-hex="{byte.hex_word1}{byte.hex_word2}"
-					data-ascii={byte.ascii}
+					data-ascii={byte.char}
 					on:mouseenter={() => highlightHexByteValue(true, byte)}
 					on:mouseleave={() => highlightHexByteValue(false, byte)}
 				>
@@ -44,22 +46,22 @@
 		</div>
 	</div>
 {/if}
-{#if $demoState.showInputChunks}
+{#if $demoState?.showInputChunks}
 	<div id="hex-b64-mapping" class="binary-chunks data-mapping">
 		{#each $state.context.updatedInputChunks as chunk, i}
 			<InputChunk {chunk} chunkIndex={i} />
 		{/each}
 	</div>
 {/if}
-{#if $demoState.showOutputChunks}
+{#if $demoState?.showOutputChunks}
 	<div id="hex-b64-mapping" class="binary-chunks data-mapping">
 		{#each $state.context.updatedOutputChunks as chunk, i}
-			<InputChunk chunk={$state.context.updatedInputChunks[i]} chunkIndex={i} />
+			<InputChunk chunk={$state.context.updatedInputChunks[i] ?? defaultEncoderInputChunk} chunkIndex={i} />
 			<OutputChunk {chunk} chunkIndex={i} />
 		{/each}
 	</div>
 {/if}
-{#if $demoState.showOutputBytePlaceholders}
+{#if $demoState?.showOutputBytePlaceholders}
 	<h3 class="output-heading">Output</h3>
 	<div id="output-b64" class="encoded-bytes">
 		<div class="binary-chunks">
@@ -76,12 +78,13 @@
 		</div>
 	</div>
 {/if}
-{#if $demoState.showOutputBytes}
+{#if $demoState?.showOutputBytes}
 	<h3 class="output-heading">Output</h3>
 	<div id="output-b64" class="encoded-bytes">
 		<div class="binary-chunks">
 			{#each $state.context.updatedBase64Maps as b64, charIndex}
 				<div
+					role="mark"
 					in:fade={{ duration: 200 }}
 					class="encoded-base64"
 					data-chunk-id={getChunkIndexFromBase64CharIndex(charIndex) + 1}

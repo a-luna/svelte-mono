@@ -18,7 +18,7 @@
 	export let isCombined: boolean;
 	export let charMap: Utf8StandardCharacterMap[] | undefined;
 	export let expanded = false;
-	const dispatch = createEventDispatcher<{ toggled: never }>();
+	const dispatch = createEventDispatcher<{ toggled: null }>();
 	const { demoState } = getDemoAppContext();
 
 	const isVS15 = (encoded: string): boolean => encoded === '%EF%B8%8E';
@@ -30,12 +30,12 @@
 		isVS15(encoded) || isVS16(encoded)
 			? 'variation'
 			: isZWJ(encoded)
-			? 'zwj'
-			: isWhiteSpace(encoded)
-			? 'whitespace'
-			: isASCII
-			? 'ascii'
-			: 'char';
+				? 'zwj'
+				: isWhiteSpace(encoded)
+					? 'whitespace'
+					: isASCII
+						? 'ascii'
+						: 'char';
 
 	const getCharToDisplay = (char: string, encoded: string): string =>
 		isVS15(encoded) ? 'VS15' : isVS16(encoded) ? 'VS16' : isZWJ(encoded) ? 'ZWJ' : isWhiteSpace(encoded) ? 'SP' : char;
@@ -46,13 +46,13 @@
 	$: buttonPlaceholderFlexMobile = anyCharsAreExpanded
 		? 'flex: 0 0 30px;'
 		: anyCharsAreCombined
-		? 'flex: 0 0 20px;'
-		: 'flex: 0;';
+			? 'flex: 0 0 20px;'
+			: 'flex: 0;';
 	$: buttonPlaceholderFlexLarge = anyCharsAreExpanded
 		? 'flex: 0 0 25px;'
 		: anyCharsAreCombined
-		? 'flex: 0 0 20px;'
-		: 'flex: 0;';
+			? 'flex: 0 0 20px;'
+			: 'flex: 0;';
 	$: buttonPlaceholderFlex = $demoState.isMobileDisplay ? buttonPlaceholderFlexMobile : buttonPlaceholderFlexLarge;
 
 	export function expand() {

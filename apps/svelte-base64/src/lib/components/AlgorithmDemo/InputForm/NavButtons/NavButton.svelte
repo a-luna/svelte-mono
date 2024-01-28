@@ -4,8 +4,8 @@
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
 	import { fade } from 'svelte/transition';
 
-	export let defaultNavAction: EncodingEvent = null;
-	export let encodingStateToEventMap: EncodingStateToEventMap = null;
+	export let defaultNavAction: EncodingEvent;
+	export let encodingStateToEventMap: EncodingStateToEventMap | undefined = undefined;
 	export let label: string = '';
 	export let tooltip: string = '';
 	export let buttonNumber: number = 0;
@@ -16,6 +16,10 @@
 	let duration = 1250;
 	let timeout: NodeJS.Timeout;
 	const { state, demoState, send } = getDemoAppContext();
+
+	$: labelColor = $state?.context.autoplay
+		? `var(--nav-button-autoplay-bg-color)`
+		: `var(--nav-button-active-bg-color)`;
 	$: labelStyle = `grid-column: ${buttonNumber} / span 1; grid-row: 1 / span 1; color: ${labelColor}`;
 	$: butttonStyle = `grid-column: ${buttonNumber} / span 1; grid-row: 2 / span 1;`;
 	$: validActions = encodingStateToEventMap
@@ -55,7 +59,7 @@
 	function fireNavAction() {
 		const action = getNavAction();
 		if ($state.can(action)) {
-			eventLog.add(action);
+			// eventLog.add(action);
 			send(action);
 		}
 	}

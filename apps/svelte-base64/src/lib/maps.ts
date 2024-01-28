@@ -3,7 +3,7 @@ import type { AsciiCharacterMap, Base64CharacterMap, Base64Encoding } from '$lib
 import { chunkify, decimalToBinaryString } from '$lib/util';
 
 export const getBase64LookupMap = (base64Encoding: Base64Encoding): { [key: string]: number } => {
-	const base64Lookup = {};
+	const base64Lookup: { [k: string]: number } = {};
 	getBase64Alphabet(base64Encoding).forEach((letter, index) => {
 		base64Lookup[letter] = index;
 	});

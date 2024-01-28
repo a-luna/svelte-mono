@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { rotatingColors } from '$lib/constants';
+	import { defaultBase64ByteMap, rotatingColors } from '$lib/constants';
 	import { getDemoAppContext } from '$lib/stores/context';
 	import { getChunkIndexFromBase64CharIndex } from '$lib/util';
 
 	export let charIndex: number;
 	const { state } = getDemoAppContext();
 
-	$: b64 = $state.context.base64Maps[charIndex];
+	$: b64 = $state.context.base64Maps[charIndex] ?? defaultBase64ByteMap;
 	$: b64CharNumber = charIndex + 1;
 	$: byteDisplayChar = b64.isPad ? '&nbsp;' : 'B';
 	$: byteDisplayNumber = b64.isPad ? '&nbsp;' : `${b64CharNumber}`;
@@ -20,7 +20,7 @@
 		$state.matches({ createOutputChunks: 'createLastPaddedChunk' }) ||
 		$state.matches({ createOutputChunks: 'createdAllOutputChunks' });
 	$: currentChunkIsMapped = chunkMappingInProgress && currentOutputChunk === chunkId;
-	$: currentChunkColor = currentChunkIsMapped ? chunkColor : '--light-gray3';
+	$: currentChunkColor = currentChunkIsMapped ? chunkColor : '--gray3';
 	$: currentBitGroupColor = currentChunkIsMapped ? chunkColor : '--black1';
 </script>
 
