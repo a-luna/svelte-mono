@@ -1,12 +1,13 @@
 name: deploy portfolio
 
 on:
-  push:
+  pull_request:
     branches:
-      - 'main'
+      - main
 
 jobs:
   bake:
+    if: contains(github.event.pull_request.labels.*.name, 'portfolio')
     name: Build docker image for portfolio site and deploy to dokku
     runs-on: ubuntu-latest
     steps:
