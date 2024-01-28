@@ -2,7 +2,7 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export type MachineState = { state: string; substate: string };
 
-export class AlgoDemoTester {
+export class AlgorithmDemoPage {
 	readonly page: Page;
 	readonly inputTextBox: Locator;
 	readonly stringEncodingMenu: Locator;
