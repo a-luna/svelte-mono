@@ -4,11 +4,11 @@ import { isBase64Encoding, isStringEncoding } from '$lib/typeguards';
 import type { AppMode, AppSettings, AppState, Base64Encoding, DecoderInput, EncoderInput, Encoding } from '$lib/types';
 import { writable } from 'svelte/store';
 
-function createAppStateStore(mode: AppMode): AppState {
+export function createAppStateStore(mode: AppMode): AppState {
 	const getDefaultAppSettings = (mode: AppMode, resetPerformed: boolean): AppSettings => ({
 		mode,
 		resetPerformed,
-		highlightHexByte: null,
+		highlightHexByte: 0,
 		highlightBase64: '',
 		highlightHexBitGroup: '',
 		highlightBase64BitGroup: '',
@@ -105,5 +105,3 @@ function createAppStateStore(mode: AppMode): AppState {
 		reset: () => update((settings) => reset(settings.mode, settings)),
 	};
 }
-
-export const state = createAppStateStore('encode');

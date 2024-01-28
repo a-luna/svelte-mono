@@ -1,6 +1,11 @@
 <script lang="ts">
-	import { app } from '$lib/stores/app';
+	import { getSimpleAppContext } from '$lib/stores/context';
+	import type { AppStore } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
+	import type { Readable } from 'svelte/store';
+
+	let app: Readable<AppStore>;
+	({ app } = getSimpleAppContext());
 
 	export let title = '';
 	export let form = '';

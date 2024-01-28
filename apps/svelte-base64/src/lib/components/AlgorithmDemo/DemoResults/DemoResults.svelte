@@ -4,12 +4,12 @@
 	import OutputByte from '$lib/components/AlgorithmDemo/DemoResults/OutputByte.svelte';
 	import OutputBytePlaceholder from '$lib/components/AlgorithmDemo/DemoResults/OutputBytePlaceholder.svelte';
 	import OutputChunk from '$lib/components/AlgorithmDemo/DemoResults/OutputChunk.svelte';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Base64ByteMap, HexByteMap } from '$lib/types';
 	import { getChunkIndexFromBase64CharIndex, getChunkIndexFromByteIndex } from '$lib/util';
 	import { fade } from 'svelte/transition';
 
-	const { state, demoState, demoUIState } = getAppContext();
+	const { state, demoState, demoUIState } = getDemoAppContext();
 
 	function highlightHexByteValue(highlight: boolean, hexMap: HexByteMap) {
 		$demoUIState.highlightHexByte = highlight ? hexMap.byte : 0;

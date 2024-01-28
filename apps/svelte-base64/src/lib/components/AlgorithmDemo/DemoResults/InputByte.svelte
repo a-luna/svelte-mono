@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { rotatingColors } from '$lib/constants';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import { isTextEncoding } from '$lib/typeguards';
 	import type { HexByteMap } from '$lib/types';
 	import { getBase64CharIndexFromGroupId, getChunkIndexFromByteIndex } from '$lib/util';
@@ -8,7 +8,7 @@
 	export let byte: HexByteMap;
 	export let byteIndex: number;
 	let currentByteColor: string;
-	const { state, demoUIState } = getAppContext();
+	const { state, demoUIState } = getDemoAppContext();
 
 	$: inputEncoding = $state.context.input.inputEncoding;
 	$: chunkId = getChunkIndexFromByteIndex(byteIndex);

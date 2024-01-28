@@ -1,14 +1,8 @@
 <script lang="ts">
 	import AlgorithmDemo from '$lib/components/AlgorithmDemo/AlgorithmDemo.svelte';
-	import { initAppContext } from '$lib/stores/context';
-	import type { DemoStore } from '$lib/types';
-	import { encodingMachine } from '$lib/xstate/b64Encode';
-	import { useMachine } from '@xstate/svelte';
-	import type { Readable } from 'svelte/store';
+	import { getDemoAppContext } from '$lib/stores/context';
 
-	const { state, send } = useMachine(encodingMachine, { devTools: false });
-	let demoState: Readable<DemoStore>;
-	({ demoState } = initAppContext(state, send));
+	const { state, demoState } = getDemoAppContext();
 
 	$: gridStyles =
 		$demoState.isMobileDisplay ||

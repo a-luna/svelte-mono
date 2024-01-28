@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { rotatingColors } from '$lib/constants';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Base64ByteMap } from '$lib/types';
 	import { getChunkIndexFromBase64CharIndex, getHexByteIndexFromGroupId } from '$lib/util';
 
 	export let charIndex: number;
 	export let b64: Base64ByteMap;
-	const { state, demoUIState } = getAppContext();
+	const { state, demoUIState } = getDemoAppContext();
 
 	$: b64CharNumber = charIndex + 1;
 	$: byteDisplayChar = b64.isPad ? '&nbsp;' : 'B';

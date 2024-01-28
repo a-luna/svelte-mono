@@ -10,14 +10,12 @@
 	import FormTitle from '$lib/components/FormTitle.svelte';
 	import { defaultEncoderInput } from '$lib/constants';
 	import { alert } from '$lib/stores/alert';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Base64Encoding, StringEncoding } from '$lib/types';
-	import { copyToClipboard } from '$lib/util';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
 	import { createTestSet } from '$lib/xstate/b64Encode.test/testSetGenerator';
 
-	const { state, demoState, demoUIState, eventLog, send } = getAppContext();
-
+	const { state, demoState, demoUIState, send } = getDemoAppContext();
 	let inputText = defaultEncoderInput.inputText;
 	let inputTextEncoding: StringEncoding = defaultEncoderInput.inputEncoding;
 	let outputBase64Encoding: Base64Encoding = defaultEncoderInput.outputEncoding;

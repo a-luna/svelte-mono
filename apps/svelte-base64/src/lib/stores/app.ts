@@ -1,12 +1,11 @@
-import { getPageWidth } from '$lib/stores/pageWidth';
-import { state } from '$lib/stores/state';
-import type { AppState, AppStore, Base64Encoding, ButtonColor, ButtonSize, Encoding, OutputChunk } from '$lib/types';
+import type { AppState, AppStore, Base64Encoding, ButtonSize, Encoding, OutputChunk } from '$lib/types';
 import { hexStringFromByteArray } from '$lib/util';
-import type { Readable } from 'svelte/store';
+import type { ButtonColor } from '@a-luna/shared-ui';
+import type { Readable, Writable } from 'svelte/store';
 import { derived } from 'svelte/store';
 
-function createAppStore(state: AppState): Readable<AppStore> {
-	return derived([state, getPageWidth()], ([$state, $pageWidth]) => {
+export function createAppStore(state: AppState, pageWidth: Writable<number>): Readable<AppStore> {
+	return derived([state, pageWidth], ([$state, $pageWidth]) => {
 		const encoderMode = (): boolean => $state.mode === 'encode';
 		const decoderMode = (): boolean => $state.mode === 'decode';
 
@@ -32,10 +31,10 @@ function createAppStore(state: AppState): Readable<AppStore> {
 					? $state.encoderOutput.output
 					: ''
 				: $state.decoderInput.inputText
-				? $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8'
-					? $state.decoderOutput.output
-					: getOutputHexBytes()
-				: '';
+					? $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8'
+						? $state.decoderOutput.output
+						: getOutputHexBytes()
+					: '';
 
 		const getTotalBytesIn = (): number => (encoderMode() ? $state.encoderInput.bytes.length : 0);
 
@@ -45,8 +44,8 @@ function createAppStore(state: AppState): Readable<AppStore> {
 					? $state.encoderOutput.bytes.length
 					: 0
 				: $state.decoderInput.inputText
-				? $state.decoderOutput.bytes.length
-				: 0;
+					? $state.decoderOutput.bytes.length
+					: 0;
 
 		const getInputEncoding = (): Encoding =>
 			encoderMode() ? $state.encoderInput.inputEncoding : $state.decoderInput.inputEncoding;
@@ -60,8 +59,8 @@ function createAppStore(state: AppState): Readable<AppStore> {
 					? $state.encoderOutput.inputEncoding === 'ascii' || $state.encoderOutput.inputEncoding === 'utf8'
 					: false
 				: $state.decoderInput.inputText
-				? $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8'
-				: false;
+					? $state.decoderOutput.outputEncoding === 'ascii' || $state.decoderOutput.outputEncoding === 'utf8'
+					: false;
 
 		const getBase64Encoding = (): Base64Encoding =>
 			encoderMode()
@@ -69,8 +68,8 @@ function createAppStore(state: AppState): Readable<AppStore> {
 					? $state.encoderOutput.outputEncoding
 					: 'base64'
 				: $state.decoderInput.inputText
-				? $state.decoderOutput.inputEncoding
-				: 'base64';
+					? $state.decoderOutput.inputEncoding
+					: 'base64';
 
 		const getOutputChunks = (): OutputChunk[] =>
 			encoderMode()
@@ -78,13 +77,13 @@ function createAppStore(state: AppState): Readable<AppStore> {
 					? $state.encoderOutput.chunks
 					: []
 				: $state.decoderInput.inputText
-				? $state.decoderOutput.chunks
-				: [];
+					? $state.decoderOutput.chunks
+					: [];
 
 		const getErrorMessage = (): string =>
 			encoderMode()
-				? $state.encoderInput.validationResult?.error?.message
-				: $state.decoderInput.validationResult?.error?.message;
+				? $state.encoderInput.validationResult?.error?.message ?? ''
+				: $state.decoderInput.validationResult?.error?.message ?? '';
 
 		const getSwitchModeButtonColor = (): ButtonColor => (encoderMode() ? 'teal' : 'green');
 		const getButtonColor = (): ButtonColor => (inputStringIsValid() ? (encoderMode() ? 'teal' : 'green') : 'red');
@@ -114,5 +113,3 @@ function createAppStore(state: AppState): Readable<AppStore> {
 		};
 	});
 }
-
-export const app = createAppStore(state);

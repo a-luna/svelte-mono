@@ -1,28 +1,30 @@
-import { getPageWidth } from '$lib/stores/pageWidth';
 import type { DemoState, DemoStore, EncodingMachineStateStore } from '$lib/types';
 import { checkAllTextEncodings } from '$lib/validation';
-import { derived, writable, type Readable } from 'svelte/store';
+import { derived, writable, type Readable, type Writable } from 'svelte/store';
 
 export const demoUIState = writable<DemoState>({
 	mode: 'encode',
 	modalOpen: false,
-	highlightHexByte: null,
+	highlightHexByte: undefined,
 	highlightBase64: '',
 	highlightHexBitGroup: '',
 	highlightBase64BitGroup: '',
 });
 
-export function createDemoStateStore(state: EncodingMachineStateStore): Readable<DemoStore> {
-	return derived([state, getPageWidth()], ([$state, $pageWidth]) => {
+export function createDemoStateStore(
+	state: EncodingMachineStateStore,
+	pageWidth: Writable<number>,
+): Readable<DemoStore> {
+	return derived([state, pageWidth], ([$state, $pageWidth]) => {
 		const machineState = () =>
 			$state.matches('inactive') || $state.matches('finished') || $state.matches('verifyResults')
 				? $state.value
-				: Object.keys($state.value)[0];
+				: Object.keys($state.value)[0] ?? 'inactive';
 
 		const machineSubState = () =>
 			$state.matches('inactive') || $state.matches('finished') || $state.matches('verifyResults')
 				? 'none'
-				: Object.values($state.value)[0];
+				: Object.values($state.value)[0] ?? 'none';
 
 		const startedSubProcess = () =>
 			$state.matches({ encodeInput: 'idle' }) ||

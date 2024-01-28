@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { rotatingColors } from '$lib/constants';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { OutputChunk } from '$lib/types';
 	import { getBase64CharIndexFromGroupId, getHexByteIndexFromGroupId } from '$lib/util';
 	import { slide } from 'svelte/transition';
 
 	export let chunk: OutputChunk;
 	export let chunkIndex: number;
-	const { state, demoUIState } = getAppContext();
+	const { state, demoUIState } = getDemoAppContext();
 
 	$: chunkNumber = chunkIndex + 1;
 	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length];

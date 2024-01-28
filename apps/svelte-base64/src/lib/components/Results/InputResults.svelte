@@ -1,6 +1,11 @@
 <script lang="ts">
-	import { app } from '$lib/stores/app';
-	import { state } from '$lib/stores/state';
+	import { getSimpleAppContext } from '$lib/stores/context';
+	import type { AppState, AppStore } from '$lib/types';
+	import type { Readable } from 'svelte/store';
+
+	let state: AppState;
+	let app: Readable<AppStore>;
+	({ state, app } = getSimpleAppContext());
 
 	$: utf8 = $state.encoderInput.inputEncoding === 'utf8';
 </script>

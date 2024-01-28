@@ -1,10 +1,10 @@
 <script lang="ts">
 	import CopyEncodedText from '$lib/components/AlgorithmDemo/Buttons/CopyEncodedText.svelte';
 	import { alert } from '$lib/stores/alert';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import { copyToClipboard } from '$lib/util';
 
-	const { state } = getAppContext();
+	const { state } = getDemoAppContext();
 
 	$: inputEncoding = $state.context.output.isASCII ? 'ascii' : $state.context.output.inputEncoding;
 	$: utf8 = $state.context.output.inputEncoding === 'utf8';

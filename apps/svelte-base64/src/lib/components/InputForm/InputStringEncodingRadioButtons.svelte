@@ -1,10 +1,15 @@
 <script lang="ts">
 	import RadioButtons from '$lib/components/RadioButtons.svelte';
-	import { state } from '$lib/stores/state';
+	import { getSimpleAppContext } from '$lib/stores/context';
 	import { isEncoding, isStringEncoding } from '$lib/typeguards';
+	import type { AppState } from '$lib/types';
 
 	export let style: string;
 	let buttonsInstance: RadioButtons;
+	let state: AppState;
+
+	({ state } = getSimpleAppContext());
+
 	export const reset = () => buttonsInstance.reset();
 
 	const inputEncodingOptionDefs = {

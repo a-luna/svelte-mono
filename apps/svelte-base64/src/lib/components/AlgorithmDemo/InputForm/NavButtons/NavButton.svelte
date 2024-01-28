@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { EncodingStateToEventMap } from '$lib/types';
 	import type { EncodingEvent } from '$lib/xstate/b64Encode';
 	import { fade } from 'svelte/transition';
@@ -15,8 +15,7 @@
 	let labelShown = false;
 	let duration = 1250;
 	let timeout: NodeJS.Timeout;
-	const { state, demoState, eventLog, send } = getAppContext();
-	$: labelColor = $state.context.autoplay ? `var(--nav-button-autoplay-bg-color)` : `var(--nav-button-active-bg-color)`;
+	const { state, demoState, send } = getDemoAppContext();
 	$: labelStyle = `grid-column: ${buttonNumber} / span 1; grid-row: 1 / span 1; color: ${labelColor}`;
 	$: butttonStyle = `grid-column: ${buttonNumber} / span 1; grid-row: 2 / span 1;`;
 	$: validActions = encodingStateToEventMap

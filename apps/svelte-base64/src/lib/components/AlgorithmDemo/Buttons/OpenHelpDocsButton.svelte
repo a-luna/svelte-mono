@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getHelpTopicIndex } from '$lib/components/AlgorithmDemo/HelpDocs/_helpSections';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import { createEventDispatcher } from 'svelte';
 
 	export let label: string;
@@ -13,7 +13,7 @@
 	const openHelpModalEventDispatcher = createEventDispatcher<{
 		openHelpModal: { helpTopicIndex: number; expanded: boolean };
 	}>();
-	const { state } = getAppContext();
+	const { state } = getDemoAppContext();
 
 	$: helpTopicIndex = helpTopic ? getHelpTopicIndex(helpTopic) : 0;
 

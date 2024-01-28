@@ -17,10 +17,10 @@
 		getEncodeInputText_IdleDemoText,
 	} from '$lib/components/AlgorithmDemo/DemoText/_demoText';
 	import { defaultEncoderInputChunk } from '$lib/constants';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { StringEncoding } from '$lib/types';
 
-	const { state, demoState } = getAppContext();
+	const { state } = getDemoAppContext();
 	const formatEncodingType = (encoding: StringEncoding): string => (encoding === 'bin' ? 'binary' : encoding);
 	const wikiUrl = 'https://en.wikipedia.org/wiki/Least_common_multiple';
 	const lcmSolveUrl =

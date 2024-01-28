@@ -1,15 +1,22 @@
+import { createAppStore } from '$lib/stores/app';
 import { createDemoStateStore, demoUIState } from '$lib/stores/demoState';
-import type { DemoState, DemoStore, EncodingMachineStateStore, XStateSendEvent } from '$lib/types';
-import { createEventLogStore } from '$lib/xstate/b64Encode.test/eventLog';
-import type { EventLogStore } from '$lib/xstate/b64Encode.test/types';
+import { createAppStateStore } from '$lib/stores/state';
+import type { AppState, AppStore, DemoState, DemoStore, EncodingMachineStateStore, XStateSendEvent } from '$lib/types';
+import { encodingMachine } from '$lib/xstate/b64Encode';
+import { getPageWidth } from '@a-luna/shared-ui/stores';
+import { useMachine } from '@xstate/svelte';
 import { getContext, setContext } from 'svelte';
-import type { Readable, Writable } from 'svelte/store';
+import { writable, type Readable, type Writable } from 'svelte/store';
 
-export interface AppContext {
+export interface SimpleAppContext {
+	state: AppState;
+	app: Readable<AppStore>;
+}
+
+export interface DemoAppContext {
 	state: EncodingMachineStateStore;
 	demoState: Readable<DemoStore>;
 	demoUIState: Writable<DemoState>;
-	eventLog: EventLogStore;
 	send: XStateSendEvent;
 }
 
@@ -22,12 +29,34 @@ function getService<T>(key: string): () => T {
 	return () => getContext(key);
 }
 
-export function initAppContext(state: EncodingMachineStateStore, send: XStateSendEvent): AppContext {
-	const demoState = createDemoStateStore(state);
-	const eventLog = createEventLogStore(state);
-	return setService<AppContext>('demo', { state, demoState, demoUIState, eventLog, send });
+export function initSimpleAppContext(): SimpleAppContext {
+	let pageWidth = writable(0);
+	const getPageWidthResult = getPageWidth();
+	if (getPageWidthResult.success) {
+		pageWidth = getPageWidthResult.value;
+	}
+
+	const state = createAppStateStore('encode');
+	const app = createAppStore(state, pageWidth);
+	return setService<SimpleAppContext>('simple', { state, app });
 }
 
-export function getAppContext(): AppContext {
-	return getService<AppContext>('demo')();
+export function getSimpleAppContext(): SimpleAppContext {
+	return getService<SimpleAppContext>('simple')();
+}
+
+export function initDemoAppContext(): DemoAppContext {
+	let pageWidth = writable(0);
+	const getPageWidthResult = getPageWidth();
+	if (getPageWidthResult.success) {
+		pageWidth = getPageWidthResult.value;
+	}
+
+	const { state, send } = useMachine(encodingMachine, { devTools: false });
+	const demoState = createDemoStateStore(state, pageWidth);
+	return setService<DemoAppContext>('demo', { state, demoState, demoUIState, send });
+}
+
+export function getDemoAppContext(): DemoAppContext {
+	return getService<DemoAppContext>('demo')();
 }

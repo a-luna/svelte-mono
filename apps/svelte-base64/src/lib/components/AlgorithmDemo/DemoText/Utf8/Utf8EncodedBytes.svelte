@@ -2,7 +2,7 @@
 	import EncodedBytesForChar from '$lib/components/AlgorithmDemo/DemoText/Utf8/EncodedBytesForChar.svelte';
 	import ToggleExpandAllCharacters from '$lib/components/AlgorithmDemo/DemoText/Utf8/ToggleExpandAllCharacters.svelte';
 	import { defaultUtf8StringComposition } from '$lib/constants';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Utf8StringComposition } from '$lib/types';
 	import { getUtf8StringDecomposition } from '$lib/unicode/utf8';
 	import { sleep } from '$lib/util';
@@ -19,7 +19,7 @@
 	let apiAttempts = 0;
 	const MAX_ATTEMPTS = 3;
 	const DELAY_BETWEEN_ATTEMPTS = 1000;
-	const { state, demoState } = getAppContext();
+	const { state, demoState } = getDemoAppContext();
 	utf8ByteMap = $state.context.input.utf8 || defaultUtf8StringComposition;
 
 	$: unicodeApiRequestFailed = apiAttempts >= MAX_ATTEMPTS && !utf8ByteMap.hasCharacterNames;

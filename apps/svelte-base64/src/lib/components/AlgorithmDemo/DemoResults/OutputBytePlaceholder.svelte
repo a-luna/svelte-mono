@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { rotatingColors } from '$lib/constants';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import { getChunkIndexFromBase64CharIndex } from '$lib/util';
 
 	export let charIndex: number;
-	const { state } = getAppContext();
+	const { state } = getDemoAppContext();
 
 	$: b64 = $state.context.base64Maps[charIndex];
 	$: b64CharNumber = charIndex + 1;

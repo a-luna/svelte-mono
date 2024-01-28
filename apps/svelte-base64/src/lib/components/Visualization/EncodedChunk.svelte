@@ -1,7 +1,11 @@
 <script lang="ts">
-	import { app } from '$lib/stores/app';
-	import { state } from '$lib/stores/state';
-	import type { Base64ByteMap, HexByteMap, OutputChunk } from '$lib/types';
+	import { getSimpleAppContext } from '$lib/stores/context';
+	import type { AppState, AppStore, Base64ByteMap, HexByteMap, OutputChunk } from '$lib/types';
+	import type { Readable } from 'svelte/store';
+
+	let state: AppState;
+	let app: Readable<AppStore>;
+	({ state, app } = getSimpleAppContext());
 
 	export let chunk: OutputChunk;
 

@@ -3,7 +3,7 @@
 	import ShowHelpTopicsButton from '$lib/components/AlgorithmDemo/HelpDocs/ShowHelpTopicsButton.svelte';
 	import { encodingHelpSections } from '$lib/components/AlgorithmDemo/HelpDocs/_helpSections';
 	import Modal from '$lib/components/Modal.svelte';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import { BasicIconRenderer } from '@a-luna/shared-ui';
 	import { slide } from 'svelte/transition';
 
@@ -11,7 +11,7 @@
 	export let helpTopicsExpanded = false;
 	let modal: Modal;
 	let closed: boolean;
-	const { demoState, demoUIState } = getAppContext();
+	const { demoState, demoUIState } = getDemoAppContext();
 
 	$: $demoUIState.modalOpen = !closed;
 	$: showContentsPanel = $demoState.pageWidth >= 764;

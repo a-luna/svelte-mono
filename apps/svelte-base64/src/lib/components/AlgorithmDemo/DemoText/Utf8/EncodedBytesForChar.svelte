@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import ToggleExpandCharacters from '$lib/components/AlgorithmDemo/DemoText/Utf8/ToggleExpandCharacters.svelte';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Utf8StandardCharacterMap } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
@@ -19,7 +19,7 @@
 	export let charMap: Utf8StandardCharacterMap[] | undefined;
 	export let expanded = false;
 	const dispatch = createEventDispatcher<{ toggled: never }>();
-	const { demoState } = getAppContext();
+	const { demoState } = getDemoAppContext();
 
 	const isVS15 = (encoded: string): boolean => encoded === '%EF%B8%8E';
 	const isVS16 = (encoded: string): boolean => encoded === '%EF%B8%8F';

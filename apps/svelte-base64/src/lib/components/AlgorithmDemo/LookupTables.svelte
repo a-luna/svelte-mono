@@ -1,13 +1,14 @@
 <script lang="ts">
 	import AsciiLookupTable from '$lib/components/Results/LookupTables/AsciiLookupTable.svelte';
 	import Base64LookupTable from '$lib/components/Results/LookupTables/Base64LookupTable.svelte';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Base64Encoding } from '$lib/types';
 	import { fade } from 'svelte/transition';
 
 	export let outputBase64Encoding: Base64Encoding;
 	export let highlightHexByte: number | undefined;
 	export let highlightBase64: string;
+	const { demoState } = getDemoAppContext();
 
 	const { demoState } = getAppContext();
 
