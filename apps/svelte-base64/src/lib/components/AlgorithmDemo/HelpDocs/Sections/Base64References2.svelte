@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { references } from '$lib/components/AlgorithmDemo/HelpDocs/Sections/_helpText';
-	const thisRef = references[1];
-	const { title, url, description } = thisRef;
+	import { HelpReference2 } from '$lib/components/AlgorithmDemo/HelpDocs/Sections/_helpText';
+	const { title, url, description } = HelpReference2;
 </script>
 
 <div class="help-module">
@@ -10,7 +9,7 @@
 			<div class="b64-ref-heading">
 				<h4>{title}</h4>
 			</div>
-			<div class="b64-ref-url"><span class="b64-ref-label">src:</span><a href={url}>{url}</a></div>
+			<div class="b64-ref-url"><span class="b64-ref-label">source:</span><a href={url}>{url}</a></div>
 			<div class="b64-ref-content">
 				{#each description as text}
 					<p>{@html text}</p>

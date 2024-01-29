@@ -1,4 +1,4 @@
-import { BIN_TO_HEX, defaultDecoderInput, defaultEncoderInput } from '$lib/constants';
+import { BIN_TO_HEX, defaultDecoderInput, defaultEncoderInput, defaultUtf8StringComposition } from '$lib/constants';
 import { getBase64LookupMap } from '$lib/maps';
 import { isTextEncoding } from '$lib/typeguards';
 import type {
@@ -29,7 +29,7 @@ export function validateEncoderInput(
 	if (!validationResult.success) {
 		return { ...defaultEncoderInput, inputText, inputEncoding, outputEncoding, validationResult };
 	}
-	inputText = validationResult.value;
+	inputText = validationResult.value ?? '';
 	return createEncoderInput(inputText, inputEncoding, outputEncoding, validationResult);
 }
 
@@ -72,7 +72,9 @@ function getEncodingParameters(
 ): EncoderInput {
 	const bytes = stringToByteArray(inputText, inputEncoding);
 	const ascii = inputEncoding === 'ascii' ? inputText : '';
-	const utf8 = isTextEncoding(inputEncoding) ? getSimpleUtf8StringDecomposition(inputText) : null;
+	const utf8 = isTextEncoding(inputEncoding)
+		? getSimpleUtf8StringDecomposition(inputText)
+		: defaultUtf8StringComposition;
 	const binary = inputEncoding === 'bin' ? inputText : byteArrayToBinaryStringArray(bytes).join('');
 	const hex = hexStringFromByteArray(bytes, true, ' ');
 	const hexBytes = hex.split(' ');
@@ -94,6 +96,7 @@ function getEncodingParameters(
 		totalChunks,
 		lastChunkPadded,
 		padLength,
+		chunks: [],
 	};
 }
 
@@ -111,16 +114,22 @@ export function createHexByteMapsForChunk(
 	byteStrings: string[],
 ): HexByteMap[] {
 	return Array.from({ length: inputBytes.length }, (_, i) => {
-		const word1 = byteStrings[i].substring(0, 4);
-		const word2 = byteStrings[i].substring(4, 8);
+		const word1 = byteStrings?.[i]?.substring(0, 4) ?? '';
+		const word2 = byteStrings?.[i]?.substring(4, 8) ?? '';
+		const byte = inputBytes?.[i] ?? 0;
+		const char = String.fromCharCode(byte);
 		return {
-			byte: inputBytes[i],
+			byte,
 			bin_word1: word1,
 			bin_word2: word2,
-			hex_word1: BIN_TO_HEX[word1],
-			hex_word2: BIN_TO_HEX[word2],
-			ascii: encoding === 'ascii' ? (/^\s+$/.test(ascii[i]) ? 'ws' : ascii[i]) : '',
-			isWhiteSpace: /^\s+$/.test(ascii[i]),
+			hex_word1: BIN_TO_HEX?.[word1] ?? '',
+			hex_word2: BIN_TO_HEX?.[word2] ?? '',
+			ascii: encoding === 'ascii' ? (/^\s+$/.test(ascii?.[i] ?? '') ? 'ws' : ascii?.[i] ?? '') : '',
+			char,
+			isWhiteSpace: /^\s+$/.test(char ?? ''),
+			groupId: ``,
+			bitGroups: [],
+			characterId: ``,
 		};
 	});
 }
@@ -169,9 +178,11 @@ function getDecodingParameters(
 		inputEncoding,
 		validationResult,
 		base64,
+		binary: '',
 		totalChunks,
 		lastChunkPadded,
 		padLength,
+		chunks: [],
 	};
 }
 
@@ -183,22 +194,26 @@ function createDecoderInputChunk(
 ): Base64ByteMap[] {
 	const base64lookup = getBase64LookupMap(encoding);
 	const base64Map = base64.split('').map((b64) => {
-		const dec = base64lookup[b64];
+		const dec = base64lookup?.[b64] ?? 0;
 		const bin = `${'0'.repeat(6 - dec.toString(2).length)}${dec.toString(2)}`;
 		return {
 			bin,
 			dec,
 			b64,
 			isPad: false,
+			groupId: '',
+			bitGroups: [],
 		};
 	});
 	if (isPadded) {
 		Array.from({ length: padLength }, (_, i) => i).forEach(() =>
 			base64Map.push({
 				bin: '',
-				dec: null,
+				dec: 0,
 				b64: '=',
 				isPad: true,
+				groupId: '',
+				bitGroups: [],
 			}),
 		);
 	}

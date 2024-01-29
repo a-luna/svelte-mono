@@ -1,7 +1,12 @@
 <script lang="ts">
 	import Alert from '$lib/components/Alert/Alert.svelte';
 	import MainForm from '$lib/components/MainForm.svelte';
-	import { app } from '$lib/stores/app';
+	import { initSimpleAppContext } from '$lib/stores/context';
+	import type { AppStore } from '$lib/types';
+	import type { Readable } from 'svelte/store';
+
+	let app: Readable<AppStore>;
+	({ app } = initSimpleAppContext());
 </script>
 
 <svelte:head>

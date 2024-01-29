@@ -11,6 +11,17 @@ const BASE64_URL_FORMAT = /^[0-9A-Za-z-_]+[=]{0,2}$/;
 export const validateAsciiBytes = (byteArray: number[]): boolean =>
 	byteArray?.every((byte: number) => byte > 31 && byte < 127);
 
+const charCodeIsWhitespace = (byte: number): boolean => /\s/.test(String.fromCharCode(byte));
+
+const getStringRepresentationOfCharCode = (byte: number): string =>
+	charCodeIsWhitespace(byte) ? `' '` : String.fromCharCode(byte);
+
+const getInvalidCharReport = (details: { byte: number; count: number }): string =>
+	`\t${getStringRepresentationOfCharCode(details.byte)} (0x${details.byte
+		.toString(16)
+		.toUpperCase()
+		.padStart(2, '0')}) Count: ${details.count}`;
+
 export function checkAllTextEncodings(input: string): string[] {
 	const validEncodings: string[] = [];
 	if (validateBinaryString(input).success) {
@@ -48,9 +59,8 @@ export function validateTextEncoding(input: string, encoding: StringEncoding): R
 function validateAsciiString(input: string): Result<string> {
 	if (!/^[ -~]+$/.test(input)) {
 		const nonAsciiChars = getNonAsciiCharsFromString(input);
-		const error = `'${input}' contains ${nonAsciiChars.length} invalid character${
-			nonAsciiChars.length > 1 ? 's' : ''
-		}:\n${nonAsciiChars.join('\n')}`;
+		const plural = nonAsciiChars.length > 1 ? 'characters' : 'character';
+		const error = `'${input}' contains ${nonAsciiChars.length} invalid ${plural}:\n${nonAsciiChars.join('\n')}`;
 		return { success: false, error: Error(error) };
 	}
 	return { success: true, value: input };
@@ -62,17 +72,6 @@ function getNonAsciiCharsFromString(input: string): string[] {
 	const byteCounts = nonAsciiBytes.map((byte) => ({ byte, count: bytes.filter((b) => b === byte)?.length ?? 0 }));
 	return byteCounts.sort((a, b) => b.count - a.count).map(getInvalidCharReport);
 }
-
-const charCodeIsWhitespace = (byte: number): boolean => /\s/.test(String.fromCharCode(byte));
-
-const getStringRepresentationOfCharCode = (byte: number): string =>
-	charCodeIsWhitespace(byte) ? `' '` : String.fromCharCode(byte);
-
-const getInvalidCharReport = (details: { byte: number; count: number }): string =>
-	`\t${getStringRepresentationOfCharCode(details.byte)} (0x${details.byte
-		.toString(16)
-		.toUpperCase()
-		.padStart(2, '0')}) Count: ${details.count}`;
 
 function validateHexString(input: string): Result<string> {
 	const originalInput = input;
@@ -109,9 +108,12 @@ export function validateUtf8String(input: string): Result<string> {
 		if (roundtrip === input) {
 			return { success: true, value: input };
 		}
-	} catch (ex: unknown) {
-		return { success: false, error: Error(`Error occurred when encoding URI component: ${input}\n${ex.toString()}`) };
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			return { success: false, error: Error(`Error occurred when encoding URI component: ${input}\n${error.message}`) };
+		}
 	}
+	return { success: false, error: Error(`"${input}" is not a valid UTF-8 string.`) };
 }
 
 export function validateBase64Encoding(input: string, encoding: Base64Encoding): Result {

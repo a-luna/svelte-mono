@@ -6,11 +6,11 @@
 	import ResetButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/ResetButton.svelte';
 	import StartAutoPlayButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/StartAutoPlayButton.svelte';
 	import StopAutoPlayButton from '$lib/components/AlgorithmDemo/InputForm/NavButtons/StopAutoPlayButton.svelte';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 
-	const { state } = getAppContext();
+	const { state } = getDemoAppContext();
 
-	$: autoplay = $state.context.autoplay && !$state.matches({ validateInputText: 'error' });
+	$: autoplay = $state?.context.autoplay && !$state?.matches({ validateInputText: 'error' });
 </script>
 
 <div class="algo-nav-buttons" class:autoplay>

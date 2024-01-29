@@ -47,7 +47,7 @@ describe('Base64Encoder', () => {
 		expect(chunk5HexByte2Map?.bin_word2).toBe('0100');
 		const chunk5Base64Digit4Map = chunk5?.base64Map[3];
 		expect(chunk5Base64Digit4Map?.b64).toBe('=');
-		expect(chunk5Base64Digit4Map?.dec).toBe(null);
+		expect(chunk5Base64Digit4Map?.dec).toBe(0);
 		expect(chunk5Base64Digit4Map?.bin).toBe('');
 	});
 });

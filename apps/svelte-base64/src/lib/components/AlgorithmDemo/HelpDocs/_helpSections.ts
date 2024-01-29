@@ -40,4 +40,4 @@ const createEncodingHelpSections = (): HelpSection[] => [
 export const encodingHelpSections = createEncodingHelpSections();
 
 export const getHelpTopicIndex = (id: string): number =>
-	encodingHelpSections.find((section) => section.id === id).index ?? 0;
+	encodingHelpSections.find((section) => section.id === id)?.index ?? 0;

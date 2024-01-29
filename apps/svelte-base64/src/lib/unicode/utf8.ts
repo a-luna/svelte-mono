@@ -24,10 +24,10 @@ const isUnihanChar = (charData: UnicodeCharInfo): boolean =>
 
 export async function getUtf8StringDecomposition(s: string): Promise<Utf8StringComposition> {
 	const result = await getFullUtf8StringDecomposition(s);
-	if (!result.success && result.error) {
-		const { formErrors, fieldErrors } = result.error;
-		console.log({ formErrors, fieldErrors });
-	}
+	// if (result.error) {
+	// 	const { formErrors, fieldErrors } = result.error;
+	// 	console.log({ formErrors, fieldErrors });
+	// }
 	return result.success && result.value ? result.value : getSimpleUtf8StringDecomposition(s);
 }
 
@@ -80,6 +80,7 @@ async function getFullUtf8StringDecomposition(s: string): Promise<Result<Utf8Str
 		encoded: complexCharMap.map((charMap) => charMap.encoded).join(''),
 		totalBytes: bytes.length,
 		hexBytes: complexCharMap.map((charMap) => charMap.hexBytes).flat(),
+		hexMap: [],
 		bytes,
 		charMap: complexCharMap,
 	};
@@ -90,19 +91,24 @@ export function getSimpleUtf8StringDecomposition(s: string): Utf8StringCompositi
 	const complexCharMap: Utf8ComplexCharacterMap[] | undefined = s.match(COMPLEX_SYMBOL_REGEX)?.map((utf8) => {
 		const charMap: Utf8StandardCharacterMap[] = [...utf8].map((char) => {
 			const charData = getUtf8EncodedByteMaps(char).map((byteMap) => ({ hex: byteMap.hex, byte: byteMap.byte }));
+			const hexBytes = charData.map((data) => data.hex);
 			const bytes = charData.map((data) => data.byte);
-			const totalBytes = bytes.length;
-			const codepoints = totalBytes <= 4 ? unicodeCodepointFromUtf8ByteArray(bytes) : null;
-			const decimalCodepoint = codepoints?.dec;
+
+			let codepoints = { hex: '', dec: 0 };
+			const result = unicodeCodepointFromUtf8ByteArray(bytes);
+			if (result.success) {
+				codepoints = result.value ?? { hex: '', dec: 0 };
+			}
+
 			return {
 				char,
 				isCombined: false,
 				isASCII: validateAsciiBytes(bytes),
-				hexBytes: charData.map((data) => data.hex),
+				hexBytes,
 				bytes,
-				codepoint: codepoints?.hex ?? "",
-				decimalCodepoint,
-				totalBytes,
+				codepoint: codepoints.hex,
+				decimalCodepoint: codepoints.dec,
+				totalBytes: bytes.length,
 				encoded: strictUriEncode(char),
 			};
 		});
@@ -132,6 +138,7 @@ export function getSimpleUtf8StringDecomposition(s: string): Utf8StringCompositi
 		encoded: strictUriEncode(s),
 		totalBytes: bytes?.length ?? 0,
 		hexBytes: complexCharMap?.map((charMap) => charMap.hexBytes).flat() ?? [],
+		hexMap: [],
 		bytes: bytes ?? [],
 		charMap: complexCharMap ?? [],
 	};
@@ -140,19 +147,20 @@ export function getSimpleUtf8StringDecomposition(s: string): Utf8StringCompositi
 export function getUtf8EncodedByteMaps(s: string): ByteEncodingMap[] {
 	const utf8Encoded = strictUriEncode(s);
 	const utf8ByteMaps = getUtf8ByteMaps(utf8Encoded);
-	const asciiByteMaps: ByteEncodingMap[] = utf8ByteMaps.length
-		? findMissingAsciiBytes(utf8ByteMaps, utf8Encoded)
-		: getAsciiByteMaps(utf8Encoded, 0, utf8Encoded.length);
+	const asciiByteMaps: ByteEncodingMap[] =
+		utf8ByteMaps.length > 0
+			? findMissingAsciiBytes(utf8ByteMaps, utf8Encoded)
+			: getAsciiByteMaps(utf8Encoded, 0, utf8Encoded.length);
 	return [...utf8ByteMaps, ...asciiByteMaps].sort((a, b) => a.start - b.start);
 }
 
 function getUtf8ByteMaps(utf8Encoded: string): ByteEncodingMap[] {
 	const encodedUtf8Bytes = [...utf8Encoded.matchAll(/%(?<encodedByte>[0-9A-F]{2,2})/g)];
 	return encodedUtf8Bytes.map((match) => ({
-		byte: hexStringToByte(match.groups?.encodedByte ?? "0"),
-		hex: match.groups?.encodedByte ?? "",
+		byte: hexStringToByte(match.groups?.encodedByte ?? '0'),
+		hex: match.groups?.encodedByte ?? '',
 		start: match.index ?? 0,
-		end: match.index ?? 0 + match[0].length,
+		end: (match.index ?? 0) + match[0].length,
 	}));
 }
 
@@ -180,6 +188,6 @@ function getAsciiByteMaps(utf8Encoded: string, start: number, end: number): Byte
 				hex: hexStringFromByte(byte),
 				start: start + i,
 				end: start + i + 1,
-		  }))
+			}))
 		: [];
 }

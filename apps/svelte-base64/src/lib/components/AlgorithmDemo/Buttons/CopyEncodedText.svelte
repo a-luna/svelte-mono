@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import { createEventDispatcher } from 'svelte';
 
-	const { demoState } = getAppContext();
+	const { demoState } = getDemoAppContext();
 
 	$: style = $demoState.isMobileDisplay ? 'font-weight: 700; align-self: flex-end;' : 'font-weight: 700;';
 

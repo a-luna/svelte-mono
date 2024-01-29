@@ -3,17 +3,17 @@
 	import NavButtons from '$lib/components/AlgorithmDemo/InputForm/NavButtons/NavButtons.svelte';
 	import SelectBase64Encoding from '$lib/components/AlgorithmDemo/InputForm/SelectBase64Encoding.svelte';
 	import SelectStringEncoding from '$lib/components/AlgorithmDemo/InputForm/SelectStringEncoding.svelte';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Base64Encoding, StringEncoding } from '$lib/types';
 	import { InputTextBox } from '@a-luna/shared-ui';
 
 	export let inputText: string;
 	export let inputTextEncoding: StringEncoding = 'utf8';
 	export let outputBase64Encoding: Base64Encoding = 'base64';
-	const { state } = getAppContext();
+	const { state } = getDemoAppContext();
 
 	$: inputTextBoxStyles = 'flex: 1;';
-	$: controlsDisabled = !$state.matches('inactive') && !$state.matches({ validateInputText: 'error' });
+	$: controlsDisabled = !$state?.matches('inactive') && !$state?.matches({ validateInputText: 'error' });
 	$: error =
 		inputText &&
 		!$state.matches('inactive') &&

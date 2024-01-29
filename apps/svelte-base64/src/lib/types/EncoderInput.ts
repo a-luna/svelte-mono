@@ -5,14 +5,14 @@ export interface EncoderInput {
 	inputEncoding: StringEncoding;
 	outputEncoding: Base64Encoding;
 	validationResult: Result<string>;
-	bytes?: number[];
-	hexBytes?: string[];
-	hex?: string;
-	ascii?: string;
-	utf8?: Utf8StringComposition;
-	binary?: string;
-	totalChunks?: number;
-	lastChunkPadded?: boolean;
-	padLength?: number;
-	chunks?: EncoderInputChunk[];
+	bytes: number[];
+	hexBytes: string[];
+	hex: string;
+	ascii: string;
+	utf8: Utf8StringComposition;
+	binary: string;
+	totalChunks: number;
+	lastChunkPadded: boolean;
+	padLength: number;
+	chunks: EncoderInputChunk[];
 }

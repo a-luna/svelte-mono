@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { getHelpTopicIndex } from '$lib/components/AlgorithmDemo/HelpDocs/_helpSections';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import { createEventDispatcher } from 'svelte';
 
 	export let label: string;
 	export let helpTopic: string = 'why-base64-1';
 	export let helpTopicsExpanded = false;
-	export let name: string = null;
+	export let name: string = '';
 	export let disabled = false;
 	export let margin = '0';
 	export let style = '';
 	const openHelpModalEventDispatcher = createEventDispatcher<{
 		openHelpModal: { helpTopicIndex: number; expanded: boolean };
 	}>();
-	const { state } = getAppContext();
+	const { state } = getDemoAppContext();
 
 	$: helpTopicIndex = helpTopic ? getHelpTopicIndex(helpTopic) : 0;
 

@@ -1,7 +1,11 @@
 <script lang="ts">
 	import RadioButtons from '$lib/components/RadioButtons.svelte';
-	import { state } from '$lib/stores/state';
+	import { getSimpleAppContext } from '$lib/stores/context';
 	import { isBase64Encoding, isEncoding } from '$lib/typeguards';
+	import type { AppState } from '$lib/types';
+
+	let state: AppState;
+	({ state } = getSimpleAppContext());
 
 	export let style: string;
 	let buttonsInstance: RadioButtons;

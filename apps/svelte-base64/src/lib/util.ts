@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import type { BitGroupDetails, Result, StringEncoding } from '$lib/types';
 import { getSimpleUtf8StringDecomposition } from '$lib/unicode/utf8';
 import { validateAsciiBytes } from '$lib/validation';
@@ -13,10 +14,10 @@ export const stringToByteArray = (s: string, encoding: StringEncoding): number[]
 	encoding === 'hex'
 		? hexStringToByteArray(s)
 		: encoding === 'bin'
-		? binaryStringToByteArray(s)
-		: encoding === 'utf8'
-		? utf8StringToByteArray(s)
-		: genericStringToByteArray(s);
+			? binaryStringToByteArray(s)
+			: encoding === 'utf8'
+				? utf8StringToByteArray(s)
+				: genericStringToByteArray(s);
 
 export const hexStringToByte = (hex: string): number => parseInt(hex, 16);
 
@@ -34,11 +35,11 @@ export const genericStringToByteArray = (s: string): number[] =>
 export const asciiStringFromByteArray = (byteArray: number[]): string =>
 	validateAsciiBytes(byteArray) ? Array.from(byteArray, (x) => String.fromCharCode(x)).join('') : '';
 
-export const hexStringFromByte = (byte: number, upperCase = true): string =>
-	upperCase ? byte.toString(16).toUpperCase().padStart(2, '0') : byte.toString(16).padStart(2, '0');
+export const hexStringFromByte = (byte: number, minLength = 2, upperCase = true): string =>
+	upperCase ? byte.toString(16).toUpperCase().padStart(minLength, '0') : byte.toString(16).padStart(minLength, '0');
 
 export const hexStringFromByteArray = (byteArray: number[], upperCase = false, separator = ''): string =>
-	byteArray.map((byte) => hexStringFromByte(byte, upperCase)).join(separator);
+	byteArray.map((byte) => hexStringFromByte(byte, 2, upperCase)).join(separator);
 
 export const byteArrayToBinaryStringArray = (byteArray: number[]): string[] =>
 	byteArray.map((byte) => decimalToBinaryString(byte));
@@ -60,29 +61,65 @@ export function utf8StringFromByteArray(byteArray: number[]): string {
 	}
 }
 
-export function unicodeCodepointFromUtf8ByteArray(byteArray: number[]): { hex: string; dec: number } {
-	const [m, n, o, p] = [...byteArray];
-	const codepointDecimal =
-		m < 0x80
-			? (m & 0x7f) << 0
-			: 0xc1 < m && m < 0xe0 && n === (n & 0xbf)
-			? ((m & 0x1f) << 6) | ((n & 0x3f) << 0)
-			: ((m === 0xe0 && 0x9f < n && n < 0xc0) ||
-					(0xe0 < m && m < 0xed && 0x7f < n && n < 0xc0) ||
-					(m === 0xed && 0x7f < n && n < 0xa0) ||
-					(0xed < m && m < 0xf0 && 0x7f < n && n < 0xc0)) &&
-			  (o === o) & 0xbf
-			? ((m & 0x0f) << 12) | ((n & 0x3f) << 6) | ((o & 0x3f) << 0)
-			: ((m === 0xf0 && 0x8f < n && n < 0xc0) ||
-					(m === 0xf4 && 0x7f < n && n < 0x90) ||
-					(0xf0 < m && m < 0xf4 && 0x7f < n && n < 0xc0)) &&
-			  (o === o) & 0xbf &&
-			  (p === p) & 0xbf
-			? ((m & 0x07) << 18) | ((n & 0x3f) << 12) | ((o & 0x3f) << 6) | ((p & 0x3f) << 0)
-			: (() => {
-					throw 'Invalid UTF-8 encoding!';
-			  })();
-	return { hex: `U+${hexStringFromByte(codepointDecimal)}`, dec: codepointDecimal };
+export function unicodeCodepointFromUtf8ByteArray(byteArray: number[]): Result<{ hex: string; dec: number }> {
+	if (!validateUtf8Bytes(byteArray)) {
+		return { success: false, error: Error('Invalid UTF-8 byte sequence') };
+	}
+	const utf32 = utf8ByteArrayToUtf32Byte(byteArray);
+	return { success: true, value: { hex: `U+${hexStringFromByte(utf32, 4)}`, dec: utf32 } };
+}
+
+function validateUtf8Bytes(byteArray: number[]): boolean {
+	const [firstByte, ...remainingBytes] = byteArray;
+	if (!firstByte) {
+		return false;
+	}
+	const expectedByteCount = validateFirstUtf8Byte(firstByte);
+	if (expectedByteCount === 0) {
+		return false;
+	}
+	if (byteArray.length !== expectedByteCount) {
+		return false;
+	}
+	return expectedByteCount === 1 ? true : remainingBytes.every((byte) => (byte & 0xc0) === 0x80);
+}
+
+function validateFirstUtf8Byte(byte: number): number {
+	if ((byte & 0x80) === 0x00) {
+		return 1;
+	}
+	if ((byte & 0xe0) === 0xc0) {
+		return 2;
+	}
+	if ((byte & 0xf0) === 0xe0) {
+		return 3;
+	}
+	if ((byte & 0xf8) === 0xf0) {
+		return 4;
+	}
+	return 0;
+}
+
+function utf8ByteArrayToUtf32Byte(byteArray: number[]): number {
+	switch (byteArray.length) {
+		case 1:
+			return byteArray[0] ? byteArray[0] & 0x7f : 0;
+		case 2:
+			return byteArray[0] && byteArray[1] ? ((byteArray[0] & 0x1f) << 6) | (byteArray[1] & 0x3f) : 0;
+		case 3:
+			return byteArray[0] && byteArray[1] && byteArray[2]
+				? ((byteArray[0] & 0x0f) << 12) | ((byteArray[1] & 0x3f) << 6) | (byteArray[2] & 0x3f)
+				: 0;
+		case 4:
+			return byteArray[0] && byteArray[1] && byteArray[2] && byteArray[3]
+				? ((byteArray[0] & 0x07) << 18) |
+						((byteArray[1] & 0x3f) << 12) |
+						((byteArray[2] & 0x3f) << 6) |
+						(byteArray[3] & 0x3f)
+				: 0;
+		default:
+			return 0;
+	}
 }
 
 export function chunkify<T>(args: { inputList: T[]; chunkSize: number }): T[][] {
@@ -98,8 +135,8 @@ export const getCSSPropValue = (element: HTMLElement, propName: string): string 
 	getComputedStyle(element).getPropertyValue(propName);
 
 export function clickOutside(node: HTMLElement, { enabled: initialEnabled, cb }: { enabled: boolean; cb: () => void }) {
-	const handleOutsideClick = ({ target }) => {
-		if (!node.contains(target)) {
+	const handleOutsideClick = ({ target }: MouseEvent) => {
+		if (target instanceof Node && !node.contains(target)) {
 			cb();
 		}
 	};
@@ -121,46 +158,41 @@ export function clickOutside(node: HTMLElement, { enabled: initialEnabled, cb }:
 	};
 }
 
-export const getRandomHexString = (length: number): string =>
-	Array.from({ length }, () => Math.floor(Math.random() * 16))
-		.map((n) => Number(n).toString(16))
-		.join('');
-
 export function parseGroupId(groupId: string): BitGroupDetails {
 	let match = HEX_BIT_GROUP_REGEX.exec(groupId);
 	if (match) {
-		const { chunk, byte } = match.groups;
-		const chunkIndex = parseInt(chunk) - 1;
-		const byteIndexWithinChunk = parseInt(byte) - 1;
+		const [_, chunk, byte] = match;
+		const chunkIndex = parseInt(chunk ?? '0') - 1;
+		const byteIndexWithinChunk = parseInt(byte ?? '0') - 1;
 		const byteIndex = chunkIndex * 3 + byteIndexWithinChunk;
 		return {
 			chunkIndex,
 			byteIndex,
 			byteIndexWithinChunk,
-			b64CharIndex: null,
-			b64IndexWithinChunk: null,
+			b64CharIndex: 0,
+			b64IndexWithinChunk: 0,
 		};
 	}
 	match = B64_BIT_GROUP_REGEX.exec(groupId);
 	if (match) {
-		const { chunk, b64Char } = match.groups;
-		const chunkIndex = parseInt(chunk) - 1;
-		const b64IndexWithinChunk = parseInt(b64Char) - 1;
+		const [_, chunk, b64Char] = match;
+		const chunkIndex = parseInt(chunk ?? '0') - 1;
+		const b64IndexWithinChunk = parseInt(b64Char ?? '0') - 1;
 		const b64CharIndex = chunkIndex * 4 + b64IndexWithinChunk;
 		return {
 			chunkIndex,
-			byteIndex: null,
-			byteIndexWithinChunk: null,
+			byteIndex: 0,
+			byteIndexWithinChunk: 0,
 			b64CharIndex,
 			b64IndexWithinChunk,
 		};
 	}
 	return {
-		chunkIndex: null,
-		byteIndex: null,
-		byteIndexWithinChunk: null,
-		b64CharIndex: null,
-		b64IndexWithinChunk: null,
+		chunkIndex: 0,
+		byteIndex: 0,
+		byteIndexWithinChunk: 0,
+		b64CharIndex: 0,
+		b64IndexWithinChunk: 0,
 	};
 }
 
@@ -179,7 +211,7 @@ export const getChunkIndexFromBase64CharIndex = (charIndex: number): number => (
 
 /* c8 ignore start */
 export async function copyToClipboard(text: string): Promise<Result> {
-	if (typeof window !== 'undefined') {
+	if (browser) {
 		try {
 			await navigator.clipboard.writeText(text);
 			return { success: true };
@@ -187,5 +219,9 @@ export async function copyToClipboard(text: string): Promise<Result> {
 			return { success: false, error: Error('Error! Failed to copy text to clipboard.') };
 		}
 	}
+	return {
+		success: false,
+		error: Error('This function (copyToClipboard) must be run in browser (client-side)'),
+	};
 }
 /* c8 ignore stop */

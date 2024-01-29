@@ -7,7 +7,7 @@
 	<div class="encoding-wrapper">
 		<div class="string-encoding">
 			<span class="form-label">Text Encoding</span>
-			<SelectStringEncoding inHelpDocs={true} />
+			<SelectStringEncoding />
 			<div
 				class="dropdown"
 				role="menu"

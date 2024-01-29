@@ -99,6 +99,7 @@ export const defaultHexByteMap: HexByteMap = {
 	hex_word1: '',
 	hex_word2: '',
 	ascii: '',
+	char: '',
 	isWhiteSpace: false,
 	groupId: '',
 	bitGroups: [
@@ -107,6 +108,7 @@ export const defaultHexByteMap: HexByteMap = {
 			bits: '',
 		},
 	],
+	characterId: '',
 };
 
 export const defaultEncoderInputChunk: EncoderInputChunk = {
@@ -154,31 +156,6 @@ export const defaultDecoderOutput: DecoderOutput = {
 	chunks: [defaultOutputChunk],
 };
 
-export const defaultEncoderInput: EncoderInput = {
-	inputText: '',
-	inputEncoding: 'utf8',
-	outputEncoding: 'base64',
-	validationResult: { success: true },
-	bytes: [],
-	hex: '',
-	ascii: '',
-	binary: '',
-	totalChunks: 0,
-	lastChunkPadded: false,
-	padLength: 0,
-	chunks: [defaultEncoderInputChunk],
-};
-
-export const defaultEncoderOutput: EncoderOutput = {
-	input: '',
-	inputEncoding: 'ascii',
-	isASCII: true,
-	output: '',
-	bytes: [],
-	outputEncoding: 'base64',
-	chunks: [defaultOutputChunk],
-};
-
 export const defaultUtf8StandardCharacterMap: Utf8StandardCharacterMap = {
 	char: '',
 	isCombined: false,
@@ -219,4 +196,31 @@ export const defaultUtf8StringComposition: Utf8StringComposition = {
 	hexMap: [defaultHexByteMap],
 	bytes: [],
 	charMap: [defaultUtf8ComplexCharacterMap],
+};
+
+export const defaultEncoderInput: EncoderInput = {
+	inputText: '',
+	inputEncoding: 'utf8',
+	outputEncoding: 'base64',
+	validationResult: { success: true },
+	bytes: [],
+	hexBytes: [],
+	hex: '',
+	ascii: '',
+	utf8: defaultUtf8StringComposition,
+	binary: '',
+	totalChunks: 0,
+	lastChunkPadded: false,
+	padLength: 0,
+	chunks: [defaultEncoderInputChunk],
+};
+
+export const defaultEncoderOutput: EncoderOutput = {
+	input: '',
+	inputEncoding: 'ascii',
+	isASCII: true,
+	output: '',
+	bytes: [],
+	outputEncoding: 'base64',
+	chunks: [defaultOutputChunk],
 };

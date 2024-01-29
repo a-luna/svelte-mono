@@ -2,7 +2,7 @@
 	import OpenHelpDocsButton from '$lib/components/AlgorithmDemo/Buttons/OpenHelpDocsButton.svelte';
 	import DetailsSummary from '$lib/components/AlgorithmDemo/DemoIntro/DetailsSummary.svelte';
 	import ArrowKey from '$lib/components/Icons/KeyboardIcons/ArrowKey.svelte';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import { slide } from 'svelte/transition';
 
 	let arrowSize: 'sm' | 'md' | 'lg';
@@ -10,7 +10,7 @@
 	let encodingDetailsElement: HTMLDetailsElement;
 	let appNavDetailsElement: HTMLDetailsElement;
 	let openSection: 'none' | 'welcome' | 'settings' | 'navigation' = 'welcome';
-	const { demoState } = getAppContext();
+	const { demoState } = getDemoAppContext();
 
 	$: arrowSize = $demoState.isMobileDisplay ? 'sm' : 'sm';
 
@@ -140,6 +140,7 @@
 	}
 	ul {
 		margin: 0;
+		line-height: 1.7;
 	}
 
 	@media screen and (min-width: 764px) {

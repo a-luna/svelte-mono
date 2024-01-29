@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getRandomHexString } from '$lib/util';
+	import { getRandomHexString } from '@a-luna/shared-ui/util';
 
 	import { createEventDispatcher } from 'svelte';
 
@@ -7,7 +7,7 @@
 	export let inputText: string;
 	export let disabled = false;
 	export let error = false;
-	export let id = `text-box-${getRandomHexString(4)}`;
+	export let id = `text-box-${getRandomHexString({ length: 4 })}`;
 	let inputTextElement: HTMLInputElement;
 	const dispatch = createEventDispatcher();
 

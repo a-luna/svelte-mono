@@ -5,10 +5,11 @@
 	import OutputBase64EncodingRadioButtons from '$lib/components/InputForm/OutputBase64EncodingRadioButtons.svelte';
 	import InputTextBox from '$lib/components/InputTextBox.svelte';
 	import { alert } from '$lib/stores/alert';
-	import { app } from '$lib/stores/app';
-	import { state } from '$lib/stores/state';
+	import { getSimpleAppContext } from '$lib/stores/context';
+	import type { AppState, AppStore } from '$lib/types';
 	import type { ButtonColor } from '@a-luna/shared-ui';
 	import { PushableButton } from '@a-luna/shared-ui';
+	import type { Readable } from 'svelte/store';
 
 	let inputText: string;
 	let inputTextBox: InputTextBox;
@@ -17,6 +18,9 @@
 	let outputBase64EncodingOptions: OutputBase64EncodingRadioButtons;
 	let priColor: ButtonColor;
 	let secColor: ButtonColor;
+	let state: AppState;
+	let app: Readable<AppStore>;
+	({ state, app } = getSimpleAppContext());
 
 	$: priColor = $app.encoderMode ? 'teal' : 'green';
 	$: secColor = $app.encoderMode ? 'pink' : 'indigo';
@@ -27,19 +31,19 @@
 			? `${defaultFlexStyles} flex-flow: row nowrap;`
 			: `${defaultFlexStyles} flex-flow: column nowrap;`
 		: $app.isMobileDisplay
-		? `${defaultFlexStyles} flex-flow: column nowrap; `
-		: `${defaultFlexStyles} flex-flow: row nowrap;`;
+			? `${defaultFlexStyles} flex-flow: column nowrap; `
+			: `${defaultFlexStyles} flex-flow: row nowrap;`;
 	$: defaultGridStyles = 'display: grid; gap: 0.5rem; padding: 0.25rem 0.5rem 0.5rem 0.5rem;';
 	$: inputTextEncodingStylesGrid = $app.isDefaultDisplay
 		? `${defaultGridStyles} grid-template-columns: 75px 1fr; grid-template-rows: auto auto;`
 		: $app.isMobileDisplay
-		? `${defaultGridStyles} grid-template-columns: 75px 75px 75px 1fr; grid-template-rows: auto;`
-		: `${defaultGridStyles} grid-template-columns: repeat(4, auto); grid-template-rows: auto;`;
+			? `${defaultGridStyles} grid-template-columns: 75px 75px 75px 1fr; grid-template-rows: auto;`
+			: `${defaultGridStyles} grid-template-columns: repeat(4, auto); grid-template-rows: auto;`;
 	$: outputBase64EncodingStylesGrid = $app.isDefaultDisplay
 		? `${defaultGridStyles} grid-template-columns: 1fr; grid-template-rows: auto auto;`
 		: $app.isMobileDisplay
-		? `${defaultGridStyles} grid-template-columns: 75px 1fr; grid-template-rows: auto;`
-		: `${defaultGridStyles} grid-template-columns: repeat(2, auto); grid-template-rows: auto;`;
+			? `${defaultGridStyles} grid-template-columns: 75px 1fr; grid-template-rows: auto;`
+			: `${defaultGridStyles} grid-template-columns: repeat(2, auto); grid-template-rows: auto;`;
 	$: inputBase64EncodingStylesGrid = `${defaultGridStyles} grid-template-columns: auto 1fr; grid-template-rows: auto;`;
 	$: state.changeInputText(inputText);
 	$: if ($state.resetPerformed) {

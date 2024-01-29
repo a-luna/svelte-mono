@@ -1,4 +1,4 @@
-import { BIN_TO_HEX } from '$lib/constants';
+import { BIN_TO_HEX, defaultBase64ByteMap, defaultDecoderInputChunk, defaultHexByteMap } from '$lib/constants';
 import { validateDecoderInput, validateEncoderInput } from '$lib/dataPrep';
 import { getBase64Alphabet } from '$lib/maps';
 import { isTextEncoding } from '$lib/typeguards';
@@ -75,12 +75,14 @@ function encodeChunk(
 		const word2 = base64Digit6bit.substring(2, 6);
 		const base64DigitHex = `${BIN_TO_HEX[word1]}${BIN_TO_HEX[word2]}`;
 		const base64DigitDecimal = parseInt(base64DigitHex, 16);
-		const base64Digit = base64Alphabet[base64DigitDecimal];
+		const base64Digit = base64Alphabet?.[base64DigitDecimal] ?? '';
 		return {
 			bin: base64Digit6bit,
 			dec: base64DigitDecimal,
 			b64: base64Digit,
 			isPad: false,
+			groupId: '',
+			bitGroups: [],
 		};
 	});
 	if (isPadded) {
@@ -88,9 +90,11 @@ function encodeChunk(
 		Array.from({ length: padlength }, (_, i) => i).forEach(() =>
 			outputMap.push({
 				bin: '',
-				dec: null,
+				dec: 0,
 				b64: '=',
 				isPad: true,
+				groupId: '',
+				bitGroups: [],
 			}),
 		);
 	}
@@ -142,19 +146,24 @@ function createHexMap(inputChunks: DecoderInputChunk[]): HexByteMap[] {
 		const byteString = binary.slice(i * 8, i * 8 + 8);
 		const bin_word1 = byteString.slice(0, 4);
 		const bin_word2 = byteString.slice(4, 8);
-		const hex_word1 = BIN_TO_HEX[bin_word1];
-		const hex_word2 = BIN_TO_HEX[bin_word2];
+		const hex_word1 = BIN_TO_HEX[bin_word1] ?? '';
+		const hex_word2 = BIN_TO_HEX[bin_word2] ?? '';
 		const byte = parseInt(`${bin_word1}${bin_word2}`, 2);
 		const ascii = asciiStringFromByteArray([byte]);
-		const isWhiteSpace = /^\s+$/.test(ascii);
+		const char = String.fromCharCode(byte);
+		const isWhiteSpace = /^\s+$/.test(char);
 		return {
 			byte,
 			bin_word1,
 			bin_word2,
 			hex_word1,
 			hex_word2,
-			isWhiteSpace,
 			ascii: isWhiteSpace ? 'ws' : ascii,
+			char,
+			isWhiteSpace,
+			groupId: '',
+			bitGroups: [],
+			characterId: '',
 		};
 	});
 }
@@ -167,19 +176,21 @@ function mapHexBytesToBase64Chunks(hexMap: HexByteMap[], inputChunks: DecoderInp
 			if (byteIndex === hexMap.length) {
 				break;
 			}
-			bytesInChunk.push(hexMap[byteIndex]);
+			const byteMap = hexMap[byteIndex] ?? defaultHexByteMap;
+			bytesInChunk.push(byteMap);
 		}
+		const chunk = inputChunks[i] ?? defaultDecoderInputChunk;
 		const bytes = bytesInChunk.map((hexMap) => hexMap.byte);
 		const outputChunk = {
-			base64: inputChunks[i].base64,
-			binary: inputChunks[i].binary,
+			base64: chunk.base64,
+			binary: chunk.binary,
 			ascii: asciiStringFromByteArray(bytes),
 			hex: hexStringFromByteArray(bytes),
 			hexBytes: hexStringFromByteArray(bytes, true, ' ').split(' '),
 			bytes,
 			isASCII: validateAsciiBytes(bytes),
 			hexMap: bytesInChunk,
-			base64Map: inputChunks[i].inputMap,
+			base64Map: chunk.inputMap,
 		};
 		return addBitGroupsToOutputChunk(outputChunk, i);
 	});
@@ -199,37 +210,39 @@ function addBitGroupsToOutputChunk(chunk: OutputChunk, i: number): OutputChunk {
 	const hexBits3a = base64Bits3b;
 	const hexBits3b = base64Bits4;
 
-	const base64Digit1 = chunk.base64Map[0];
+	const base64Digit1 = chunk.base64Map[0] ?? defaultBase64ByteMap;
 	base64Digit1.groupId = `base64-chunk-${i + 1}-digit-1`;
 	base64Digit1.bitGroups = [{ groupId: `hex-chunk-${i + 1}-byte-1`, bits: hexBits1a }];
 
-	const base64Digit2 = chunk.base64Map[1];
+	const base64Digit2 = chunk.base64Map[1] ?? defaultBase64ByteMap;
 	base64Digit2.groupId = `base64-chunk-${i + 1}-digit-2`;
 	base64Digit2.bitGroups = [
 		{ groupId: `hex-chunk-${i + 1}-byte-1`, bits: hexBits1b },
 		{ groupId: `hex-chunk-${i + 1}-byte-2`, bits: hexBits2a },
 	];
 
-	const base64Digit3 = chunk.base64Map[2];
+	const base64Digit3 = chunk.base64Map[2] ?? defaultBase64ByteMap;
 	base64Digit3.groupId = `base64-chunk-${i + 1}-digit-3`;
 	base64Digit3.bitGroups = [
 		{ groupId: `hex-chunk-${i + 1}-byte-2`, bits: hexBits2b },
 		{ groupId: `hex-chunk-${i + 1}-byte-3`, bits: hexBits3a },
 	];
 
-	const base64Digit4 = chunk.base64Map[3];
+	const base64Digit4 = chunk.base64Map[3] ?? defaultBase64ByteMap;
 	base64Digit4.groupId = `base64-chunk-${i + 1}-digit-4`;
 	base64Digit4.bitGroups = [{ groupId: `hex-chunk-${i + 1}-byte-3`, bits: hexBits3b }];
 
-	chunk.hexMap[0].groupId = `hex-chunk-${i + 1}-byte-1`;
-	chunk.hexMap[0].bitGroups = [
+	const hexByte1 = chunk.hexMap[0] ?? defaultHexByteMap;
+	hexByte1.groupId = `hex-chunk-${i + 1}-byte-1`;
+	hexByte1.bitGroups = [
 		{ groupId: `base64-chunk-${i + 1}-digit-1`, bits: base64Bits1 },
 		{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2a },
 	];
 
 	if (chunk.hexMap.length > 1) {
-		chunk.hexMap[1].groupId = `hex-chunk-${i + 1}-byte-2`;
-		chunk.hexMap[1].bitGroups = [
+		const hexByte2 = chunk.hexMap[1] ?? defaultHexByteMap;
+		hexByte2.groupId = `hex-chunk-${i + 1}-byte-2`;
+		hexByte2.bitGroups = [
 			{ groupId: `base64-chunk-${i + 1}-digit-2`, bits: base64Bits2b },
 			{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3a },
 		];
@@ -241,8 +254,9 @@ function addBitGroupsToOutputChunk(chunk: OutputChunk, i: number): OutputChunk {
 	}
 
 	if (chunk.hexMap.length > 2) {
-		chunk.hexMap[2].groupId = `hex-chunk-${i + 1}-byte-3`;
-		chunk.hexMap[2].bitGroups = [
+		const hexByte3 = chunk.hexMap[2] ?? defaultHexByteMap;
+		hexByte3.groupId = `hex-chunk-${i + 1}-byte-3`;
+		hexByte3.bitGroups = [
 			{ groupId: `base64-chunk-${i + 1}-digit-3`, bits: base64Bits3b },
 			{ groupId: `base64-chunk-${i + 1}-digit-4`, bits: base64Bits4 },
 		];
@@ -265,7 +279,7 @@ function createEncodedCharacterMap(utf8: Utf8StringComposition, encodedChunks: O
 		const updatedComplexCharMap: Utf8ComplexCharacterMap = { ...complexCharMap, hexMap: combinedHexMap };
 		combinedStart = combinedEnd;
 		if (complexCharMap.isCombined) {
-			const standardCharMapWithHexMap = updatedComplexCharMap.charMap.map((standardCharMap) => {
+			const standardCharMapWithHexMap = updatedComplexCharMap.charMap?.map((standardCharMap) => {
 				isolatedEnd += standardCharMap.totalBytes;
 				const isolatedHexMap = hexMap.slice(isolatedStart, isolatedEnd);
 				const updatedStandardCharMap: Utf8StandardCharacterMap = { ...standardCharMap, hexMap: isolatedHexMap };
@@ -277,9 +291,12 @@ function createEncodedCharacterMap(utf8: Utf8StringComposition, encodedChunks: O
 		return updatedComplexCharMap;
 	});
 	const updatedHexMaps = complexCharMapWithHexMap.map((complexCharMap) => {
-		const hexMapForChar = complexCharMap.hexMap;
-		hexMapForChar[0].char = complexCharMap.char;
-		hexMapForChar.slice(1).forEach((hexMap) => (hexMap.char = '&nbsp;'));
+		const hexMapForChar = complexCharMap.hexMap ?? [];
+		const [firstCharHexMap, ...remainingHexMaps] = hexMapForChar;
+		if (firstCharHexMap) {
+			firstCharHexMap.char = complexCharMap.char;
+		}
+		remainingHexMaps.forEach((hexMap) => (hexMap.char = '&nbsp;'));
 		return hexMapForChar;
 	});
 	return { ...utf8, charMap: complexCharMapWithHexMap, hexMap: updatedHexMaps.flat() };
@@ -287,5 +304,5 @@ function createEncodedCharacterMap(utf8: Utf8StringComposition, encodedChunks: O
 
 function updateEncoderOutputChunks(utf8: Utf8StringComposition, encodedChunks: OutputChunk[]): OutputChunk[] {
 	const hexMapsChunked = chunkify<HexByteMap>({ inputList: utf8.hexMap, chunkSize: 3 });
-	return encodedChunks.map((chunk, i) => ({ ...chunk, hexMap: hexMapsChunked[i] }));
+	return encodedChunks.map((chunk, i) => ({ ...chunk, hexMap: hexMapsChunked[i] ?? [] }));
 }

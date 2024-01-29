@@ -1,8 +1,13 @@
 <script lang="ts">
 	import AsciiLookupTable from '$lib/components/Results/LookupTables/AsciiLookupTable.svelte';
 	import Base64LookupTable from '$lib/components/Results/LookupTables/Base64LookupTable.svelte';
-	import { app } from '$lib/stores/app';
-	import { state } from '$lib/stores/state';
+	import { getSimpleAppContext } from '$lib/stores/context';
+	import type { AppState, AppStore } from '$lib/types';
+	import type { Readable } from 'svelte/store';
+
+	let state: AppState;
+	let app: Readable<AppStore>;
+	({ state, app } = getSimpleAppContext());
 
 	export let asciiTableChunkSize: number;
 	export let base64TableChunkSize: number;

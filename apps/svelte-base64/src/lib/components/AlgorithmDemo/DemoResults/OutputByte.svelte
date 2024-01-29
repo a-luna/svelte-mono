@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { rotatingColors } from '$lib/constants';
-	import { getAppContext } from '$lib/stores/context';
+	import { getDemoAppContext } from '$lib/stores/context';
 	import type { Base64ByteMap } from '$lib/types';
 	import { getChunkIndexFromBase64CharIndex, getHexByteIndexFromGroupId } from '$lib/util';
 
 	export let charIndex: number;
 	export let b64: Base64ByteMap;
-	const { state, demoUIState } = getAppContext();
+	const { state, demoUIState } = getDemoAppContext();
 
 	$: b64CharNumber = charIndex + 1;
 	$: byteDisplayChar = b64.isPad ? '&nbsp;' : 'B';
 	$: byteDisplayNumber = b64.isPad ? '&nbsp;' : `${b64CharNumber}`;
 	$: chunkIndex = getChunkIndexFromBase64CharIndex(charIndex);
 	$: chunkNumber = chunkIndex + 1;
-	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length];
+	$: chunkColor = rotatingColors[chunkIndex % rotatingColors.length] ?? '--teal4';
 	$: currentInputChunk = $state.context.inputChunkIndex;
 	$: currentOutputChunk = $state.context.outputChunkIndex;
 	$: inputChunkMappingInProgress =
@@ -31,7 +31,7 @@
 	$: currentChunkIsMapped = currentInputChunkIsMapped || currentOutputChunkIsMapped;
 	$: currentChunkColor = currentChunkIsMapped ? chunkColor : '--black1';
 
-	$: b64CharColor = rotatingColors[charIndex % rotatingColors.length];
+	$: b64CharColor = rotatingColors[charIndex % rotatingColors.length] ?? '--purple3';
 	$: currentB64Char = $state.context.base64CharIndex;
 	$: b64MappingInProgress =
 		$state.matches({ encodeOutput: 'autoPlayEncodeBase64' }) ||
@@ -41,9 +41,7 @@
 	$: currentB64CharIsHovered = $state.matches('verifyResults') && $demoUIState.highlightBase64BitGroup === b64.groupId;
 	$: currentB64CharColor = currentB64CharIsMapped || currentB64CharIsHovered ? b64CharColor : currentChunkColor;
 	$: currentB64CharIdColor =
-		currentB64CharIsMapped || currentB64CharIsHovered || $state.matches('verifyResults')
-			? b64CharColor
-			: '--light-gray3';
+		currentB64CharIsMapped || currentB64CharIsHovered || $state.matches('verifyResults') ? b64CharColor : '--gray3';
 	$: currentPadOutline =
 		currentB64CharIsMapped || currentB64CharIsHovered ? `1px dotted var(${currentB64CharColor})` : 'none';
 
@@ -54,7 +52,7 @@
 	const bitGroupIsHovered = (currentGroupId: string, checkGroupId: string): boolean =>
 		$state.matches('verifyResults') && currentGroupId === checkGroupId;
 	const getHexByteColor = (groupId: string): string =>
-		rotatingColors[getHexByteIndexFromGroupId(groupId) % rotatingColors.length];
+		rotatingColors[getHexByteIndexFromGroupId(groupId) % rotatingColors.length] ?? '--green3';
 	const getCurrentBitGroupColor = (currentGroupId: string, checkGroupId: string): string =>
 		bitGroupIsHovered(currentGroupId, checkGroupId) ? getHexByteColor(checkGroupId) : currentB64CharColor;
 </script>

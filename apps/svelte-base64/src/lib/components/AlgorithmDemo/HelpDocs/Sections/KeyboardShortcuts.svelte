@@ -17,8 +17,10 @@
 	.keyboard-shortcuts {
 		display: grid;
 		grid-template-columns: 65px auto;
-		gap: 0.5rem;
+		gap: 0.75rem;
 		margin: 0 auto;
+		line-height: 1;
+		align-items: self-end;
 	}
 	kbd {
 		background-color: var(--light-gray2);
@@ -28,10 +30,10 @@
 		display: flex;
 		justify-content: center;
 		align-items: baseline;
-		font-size: 0.85rem;
+		font-size: 0.8rem;
 		font-weight: 700;
 		line-height: 1;
-		padding: 3px;
+		padding: 2px;
 		white-space: nowrap;
 		text-align: center;
 	}

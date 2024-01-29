@@ -1,3 +1,5 @@
+import type { HelpSectionReference } from '$lib/types';
+
 export const whyBase641 = [
 	'Many application-level protocols, such as those used for email and web access, are character-based.',
 	'Although these protocols exchange bytes, those bytes are assumed to be restricted to a limited set of characters that are printable or contain print instructions. Such characters use only the low-order 7 bits in each 8-bit byte.',
@@ -78,19 +80,18 @@ export const base64OutputEncoding = [
 	'By default, the Standard Base64 alphabet is used (<span class="b64">base64</span> in the dropdown menu). Selecting <span class="b64">base64url</span> will use the Base64 URL/filename-safe alphabet.',
 ];
 
-export const references = [
-	{
-		title: 'RFC 4648: The Base16, Base32, and Base64 Data Encodings',
-		url: 'https://datatracker.ietf.org/doc/html/rfc4648',
-		description: [
-			'<span class="emphasis">RFC 4648</span> is the specification for Base64 encoding (also Base32 and Base16 encodings, but these are rarely used). This document defines the standard and URL-safe alphabets used in this demonstration, as well as the algorithm for encoding 8-bit bytes to 6-bit ASCII characters.',
-		],
-	},
-	{
-		title: 'Base64 (wikipedia.com)',
-		url: 'https://en.wikipedia.org/wiki/Base64',
-		description: [
-			'The wikipedia article for Base64 covers a much larger number of subjects than RFC 4648, including the use of Base64 encoding with UTF-7, OpenPGP, MIME, and several other examples of practical uses for Base64 encoding.',
-		],
-	},
-];
+export const HelpReference1: HelpSectionReference = {
+	title: 'RFC 4648: The Base16, Base32, and Base64 Data Encodings',
+	url: 'https://datatracker.ietf.org/doc/html/rfc4648',
+	description: [
+		'<span class="emphasis">RFC 4648</span> is the specification for Base64 encoding (also Base32 and Base16 encodings, but these are rarely used). This document defines the standard and URL-safe alphabets used in this demonstration, as well as the algorithm for encoding 8-bit bytes to 6-bit ASCII characters.',
+	],
+};
+
+export const HelpReference2: HelpSectionReference = {
+	title: 'Base64 (wikipedia.com)',
+	url: 'https://en.wikipedia.org/wiki/Base64',
+	description: [
+		'The wikipedia article for Base64 covers a much larger number of subjects than RFC 4648, including the use of Base64 encoding with UTF-7, OpenPGP, MIME, and several other examples of practical uses for Base64 encoding.',
+	],
+};

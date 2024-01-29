@@ -39,7 +39,7 @@ export interface Utf8StringComposition {
 	encoded: string;
 	totalBytes: number;
 	hexBytes: string[];
-	hexMap?: HexByteMap[];
+	hexMap: HexByteMap[];
 	bytes: number[];
 	charMap: Utf8ComplexCharacterMap[];
 }

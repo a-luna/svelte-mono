@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { b64Encode } from '$lib/base64';
 import {
 	defaultBase64ByteMap,
@@ -1328,7 +1327,7 @@ export const encodingMachine =
 				stopAutoPlay: assign({ autoplay: (_) => false }),
 				setFlagSkipDemo: assign({ skipDemo: (_) => true }),
 				validate: assign({
-					input: (_: EncodingContext, event: EncodingEvent) => {
+					input: (context: EncodingContext, event: EncodingEvent) => {
 						if (
 							event.type === 'VALIDATE_TEXT' ||
 							event.type === 'UPDATE_TEXT' ||
@@ -1337,27 +1336,29 @@ export const encodingMachine =
 						) {
 							return validateEncoderInput(event.inputText, event.inputEncoding, event.outputEncoding);
 						}
+						return context.input;
 					},
 				}),
 				encode: assign({
 					inputChunkIndex: 0,
-					remainingInputChunks: (context: EncodingContext) => context.input.totalChunks,
+					remainingInputChunks: (context: EncodingContext) => context.input.totalChunks ?? 0,
 					output: (context: EncodingContext) => {
 						if (context.input.validationResult.success) {
 							return b64Encode(context.input);
 						}
+						return context.output;
 					},
 				}),
 				getCurrentByte: assign({
-					currentByte: (context: EncodingContext) => context.byteMaps[context.byteIndex],
+					currentByte: (context: EncodingContext) => context.byteMaps[context.byteIndex] ?? defaultHexByteMap,
 					updatedByteMaps: (context: EncodingContext) => context.byteMaps.slice(0, context.byteIndex + 1),
 				}),
 				generateByteMaps: assign({
 					byteMaps: (context: EncodingContext) => {
 						if (isTextEncoding(context.input.inputEncoding)) {
-							return context.output.utf8.hexMap;
+							return context.output.utf8?.hexMap ?? [];
 						} else {
-							return context.input.chunks.map((chunk) => chunk.inputMap.map((map) => map)).flat();
+							return context.input.chunks?.map((chunk) => chunk.inputMap.map((map) => map)).flat() ?? [];
 						}
 					},
 					updatedByteMaps: (_) => [],
@@ -1381,17 +1382,21 @@ export const encodingMachine =
 					remainingBytes: (context: EncodingContext) => context.remainingBytes + 1,
 				}),
 				getCurrentInputChunk: assign({
-					currentInputChunk: (context: EncodingContext) => context.input.chunks[context.inputChunkIndex],
-					updatedInputChunks: (context: EncodingContext) => context.input.chunks.slice(0, context.inputChunkIndex + 1),
+					currentInputChunk: (context: EncodingContext) =>
+						context.input.chunks?.[context.inputChunkIndex] ?? defaultEncoderInputChunk,
+					updatedInputChunks: (context: EncodingContext) =>
+						context.input.chunks?.slice(0, context.inputChunkIndex + 1) ?? [],
 				}),
 				resetRemainingInputChunks: assign({
 					updatedInputChunks: (_) => [],
 					inputChunkIndex: (_) => 0,
 					currentInputChunk: (_) => defaultEncoderInputChunk,
-					remainingInputChunks: (context: EncodingContext) => context.input.totalChunks - 1,
+					remainingInputChunks: (context: EncodingContext) =>
+						context.input.totalChunks ? context.input.totalChunks - 1 : 0,
 				}),
 				resetNoInputChunksRemaining: assign({
-					inputChunkIndex: (context: EncodingContext) => context.input.totalChunks - 1,
+					inputChunkIndex: (context: EncodingContext) =>
+						context.input.totalChunks ? context.input.totalChunks - 1 : 0,
 					remainingInputChunks: (_) => 0,
 				}),
 				mapNextInputChunk: assign({
@@ -1403,7 +1408,8 @@ export const encodingMachine =
 					remainingInputChunks: (context: EncodingContext) => context.remainingInputChunks + 1,
 				}),
 				getCurrentOutputChunk: assign({
-					currentOutputChunk: (context: EncodingContext) => context.output.chunks[context.outputChunkIndex],
+					currentOutputChunk: (context: EncodingContext) =>
+						context.output.chunks?.[context.outputChunkIndex] ?? defaultOutputChunk,
 					updatedOutputChunks: (context: EncodingContext) =>
 						context.output.chunks.slice(0, context.outputChunkIndex + 1),
 				}),
@@ -1411,10 +1417,12 @@ export const encodingMachine =
 					updatedOutputChunks: (_) => [],
 					outputChunkIndex: (_) => 0,
 					currentOutputChunk: (_) => defaultOutputChunk,
-					remainingOutputChunks: (context: EncodingContext) => context.input.totalChunks - 1,
+					remainingOutputChunks: (context: EncodingContext) =>
+						context.input.totalChunks ? context.input.totalChunks - 1 : 0,
 				}),
 				resetNoOutputChunksRemaining: assign({
-					outputChunkIndex: (context: EncodingContext) => context.input.totalChunks - 1,
+					outputChunkIndex: (context: EncodingContext) =>
+						context.input.totalChunks ? context.input.totalChunks - 1 : 0,
 					remainingOutputChunks: (_) => 0,
 				}),
 				mapNextOutputChunk: assign({
@@ -1426,7 +1434,8 @@ export const encodingMachine =
 					remainingOutputChunks: (context: EncodingContext) => context.remainingOutputChunks + 1,
 				}),
 				getCurrentBase64Char: assign({
-					currentBase64Char: (context: EncodingContext) => context.base64Maps[context.base64CharIndex],
+					currentBase64Char: (context: EncodingContext) =>
+						context.base64Maps?.[context.base64CharIndex] ?? defaultBase64ByteMap,
 					updatedBase64Maps: (context: EncodingContext) => context.base64Maps.slice(0, context.base64CharIndex + 1),
 				}),
 				generateBase64Maps: assign({
@@ -1454,17 +1463,20 @@ export const encodingMachine =
 				}),
 				updateContextForLastStep: assign({
 					updatedByteMaps: (context: EncodingContext) => context.byteMaps.slice(0),
-					updatedInputChunks: (context: EncodingContext) => context.input.chunks.slice(0),
+					updatedInputChunks: (context: EncodingContext) => context.input.chunks?.slice(0) ?? [],
 					updatedOutputChunks: (context: EncodingContext) => context.output.chunks.slice(0),
 					updatedBase64Maps: (context: EncodingContext) => context.base64Maps.slice(0),
 					byteIndex: (context: EncodingContext) => context.byteMaps.length - 1,
-					inputChunkIndex: (context: EncodingContext) => context.input.chunks.length - 1,
+					inputChunkIndex: (context: EncodingContext) => (context.input.chunks ? context.input.chunks.length - 1 : 0),
 					outputChunkIndex: (context: EncodingContext) => context.output.chunks.length - 1,
 					base64CharIndex: (context: EncodingContext) => context.base64Maps.length - 1,
-					currentByte: (context: EncodingContext) => context.byteMaps[context.byteMaps.length - 1],
-					currentInputChunk: (context: EncodingContext) => context.input.chunks[context.input.chunks.length - 1],
-					currentOutputChunk: (context: EncodingContext) => context.output.chunks[context.output.chunks.length - 1],
-					currentBase64Char: (context: EncodingContext) => context.base64Maps[context.base64Maps.length - 1],
+					currentByte: (context: EncodingContext) => context.byteMaps[context.byteMaps.length - 1] ?? defaultHexByteMap,
+					currentInputChunk: (context: EncodingContext) =>
+						context.input.chunks?.[context.input.chunks.length - 1] ?? defaultEncoderInputChunk,
+					currentOutputChunk: (context: EncodingContext) =>
+						context.output.chunks?.[context.output.chunks.length - 1] ?? defaultOutputChunk,
+					currentBase64Char: (context: EncodingContext) =>
+						context.base64Maps[context.base64Maps.length - 1] ?? defaultBase64ByteMap,
 					remainingInputChunks: (_) => 0,
 				}),
 			},
@@ -1484,11 +1496,11 @@ export const encodingMachine =
 				hasPreviousByte: (context: EncodingContext) => context.byteIndex > 0,
 				inputChunksRemaining: (context: EncodingContext) =>
 					context.input.lastChunkPadded ? context.remainingInputChunks > 1 : context.remainingInputChunks > 0,
-				lastChunkIsPadded: (context: EncodingContext) => !context.autoplay && context.input.lastChunkPadded,
+				lastChunkIsPadded: (context: EncodingContext) => (!context.autoplay && context.input.lastChunkPadded) || false,
 				finalPaddedInputChunkRemaining: (context: EncodingContext) =>
 					(context.remainingInputChunks === 1 && context.input.lastChunkPadded) || false,
 				onlyOnePaddedChunk: (context: EncodingContext) =>
-					context.input.totalChunks === 1 && context.input.lastChunkPadded,
+					(context.input.totalChunks === 1 && context.input.lastChunkPadded) || false,
 				noInputChunksRemaining: (context: EncodingContext) => context.remainingInputChunks === 0,
 				allInputChunksRemaining: (context: EncodingContext) =>
 					context.remainingInputChunks + 1 === context.input.totalChunks,

@@ -14,6 +14,7 @@
 <style lang="postcss">
 	summary {
 		display: flex;
+		align-items: center;
 		color: var(--pri-color);
 		cursor: pointer;
 		font-size: 1.25rem;

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { getRandomHexString } from '$lib/util';
 	import { BasicIconRenderer } from '@a-luna/shared-ui';
+	import { getRandomHexString } from '@a-luna/shared-ui/util';
 
-	export let modalId = `modal-${getRandomHexString(4)}`;
+	export let modalId = `modal-${getRandomHexString({ length: 4 })}`;
 	export let title = '';
 	export let closed = true;
 	export let noHeader = false;
@@ -91,7 +91,9 @@
 		border-style: none;
 		outline: 0;
 		pointer-events: auto;
-		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+		box-shadow:
+			0 10px 15px -3px rgba(0, 0, 0, 0.1),
+			0 4px 6px -2px rgba(0, 0, 0, 0.05);
 	}
 
 	.modal-content {

@@ -1,5 +1,10 @@
+/// <reference types="@sveltejs/kit" />
+/// <reference no-default-lib="true"/>
+/// <reference lib="esnext" />
+/// <reference lib="webworker" />
+
 import { build, files, version } from '$service-worker';
-const worker = self as unknown as any;
+const worker = self as unknown as ServiceWorkerGlobalScope;
 const FILES = `cache${version}`;
 const to_cache = build.concat(files);
 const staticAssets = new Set(to_cache);
@@ -42,7 +47,7 @@ async function fetchAndCache(request: Request) {
 // listen for the fetch events
 worker.addEventListener('fetch', (event) => {
 	if (event.request.url.indexOf('/characters/') !== -1) {
-		return false;
+		return;
 	}
 	if (event.request.method !== 'GET' || event.request.headers.has('range')) return;
 	const url = new URL(event.request.url);
