@@ -45,13 +45,13 @@
 		"deploy:base64": "NODE_ENV=production && pnpm run iprod:ui && pnpm run build:ui && pnpm run iprod:base64 && pnpm run bprod:base64"
 	},
 	"dependencies": {
-		"svelte": "^3.59.2"
+		"svelte": "^4.2.7"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.26.2",
 		"@svitejs/changesets-changelog-github-compact": "^1.1.0",
-		"prettier": "^2.8.8",
-		"prettier-plugin-svelte": "^2.10.1"
+		"prettier": "^3.1.1",
+		"prettier-plugin-svelte": "^3.1.2"
 	},
 	"type": "module",
 	"private": true,
