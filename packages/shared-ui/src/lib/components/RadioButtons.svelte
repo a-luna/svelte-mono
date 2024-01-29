@@ -35,7 +35,7 @@
 	<fieldset name={groupName} {form}>
 		<legend>{title}</legend>
 		<div class="radio-buttons" {style}>
-			{#each buttons as button, i}
+			{#each buttons as button}
 				<div class="button-wrapper">
 					<input
 						type="radio"

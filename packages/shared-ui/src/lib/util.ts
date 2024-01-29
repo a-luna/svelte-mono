@@ -1,6 +1,3 @@
-import { BROWSER } from 'esm-env';
-import { writable, type Writable } from 'svelte/store';
-
 export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
 export const getVariableName = (x: object) => Object.keys(x)[0];
 export const objectIsEmpty = (obj: object) => JSON.stringify(obj) === '{}';
@@ -16,12 +13,15 @@ export function getRandomHexString(options: { length: number }): string {
 export const copyObject = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
 
 export function groupByProperty<T>(array: T[], property: keyof T): { [k: string]: T[] } {
-	return array.reduce((grouped, item) => {
-		const groupVal = item[property] as string;
-		grouped[groupVal] = grouped[groupVal] || [];
-		grouped[groupVal]?.push(item);
-		return grouped;
-	}, {} as { [k: string]: T[] });
+	return array.reduce(
+		(grouped, item) => {
+			const groupVal = item[property] as string;
+			grouped[groupVal] = grouped[groupVal] || [];
+			grouped[groupVal]?.push(item);
+			return grouped;
+		},
+		{} as { [k: string]: T[] },
+	);
 }
 
 export function getRandomArrayItem<T>(array: readonly T[]): T | undefined {
@@ -52,24 +52,6 @@ export function clickOutside(node: HTMLElement, { enabled: initialEnabled, cb }:
 			window.removeEventListener('click', handleOutsideClick);
 		},
 	};
-}
-
-export function createLocalStorageValue<T extends object>(key: string, defaultValue: T): Writable<T> {
-	let clientValue = defaultValue;
-	if (BROWSER) {
-		clientValue = JSON.parse(window.localStorage.getItem(key) ?? '{}');
-		if (objectIsEmpty(clientValue)) {
-			window.localStorage.setItem(key, JSON.stringify(defaultValue));
-			clientValue = defaultValue;
-		}
-	}
-	const store = writable(clientValue);
-	store.subscribe((value) => {
-		if (BROWSER) {
-			window.localStorage.setItem(key, JSON.stringify(value));
-		}
-	});
-	return store;
 }
 
 export function getErrorMessage(error: unknown) {
