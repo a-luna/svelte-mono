@@ -2,12 +2,14 @@ name: deploy portfolio
 
 on:
   pull_request:
+    types:
+      - closed
     branches:
-      - main
+      - 'main'
 
 jobs:
   bake:
-    if: contains(github.event.pull_request.labels.*.name, 'portfolio')
+    if: ${{ github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'portfolio') }}
     name: Build docker image for portfolio site and deploy to dokku
     runs-on: ubuntu-latest
     steps:

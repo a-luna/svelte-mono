@@ -2,12 +2,14 @@ name: deploy base64
 
 on:
   pull_request:
+    types:
+      - closed
     branches:
-      - main
+      - 'main'
 
 jobs:
   bake:
-    if: contains(github.event.pull_request.labels.*.name, 'base64')
+    if: ${{ github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'base64') }}
     name: Build docker image for base64 app and deploy to dokku
     runs-on: ubuntu-latest
     steps:
