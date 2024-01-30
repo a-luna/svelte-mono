@@ -30,7 +30,6 @@
 	},
 	"dependencies": {
 		"@a-luna/shared-ui": "workspace:*",
-		"@a-luna/svelte-simple-tables": "^0.0.29",
 		"@sveltejs/adapter-node": "^4.0.1",
 		"@sveltejs/kit": "^2.5.0",
 		"@sveltejs/package": "^2.2.6",
