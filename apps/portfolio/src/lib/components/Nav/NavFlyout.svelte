@@ -19,10 +19,10 @@
 		display: flex;
 		flex-flow: column nowrap;
 		position: absolute;
-		right: calc(1.5rem - 3px);
+		right: 12px;
 		z-index: 10;
 		background-color: var(--purple);
-		border-color: var(--black);
+		border-color: var(--page-bg-color);
 		border-width: 3px;
 		margin-top: calc(1.5rem + calc(56px - 3px));
 	}
