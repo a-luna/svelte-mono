@@ -96,9 +96,10 @@
 
 	.top-right-row {
 		display: flex;
-		flex-flow: column nowrap;
-		justify-content: flex-start;
+		flex-flow: row nowrap;
+		justify-content: space-between;
 		gap: 0.75rem;
+		font-size: 0.9rem;
 		line-height: 1;
 	}
 
@@ -123,7 +124,6 @@
 	}
 
 	.published {
-		font-size: 1rem;
 		color: var(--gray);
 	}
 

@@ -46,7 +46,7 @@
 		vertical-align: middle;
 	}
 	.filter-value {
-		font-size: 1rem;
+		font-size: inherit;
 		letter-spacing: 0.6px;
 		white-space: nowrap;
 	}
