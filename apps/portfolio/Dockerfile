@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:21-alpine AS base
 RUN npm --no-update-notifier --no-fund --global install pnpm
 ARG API_KEY
 ENV API_KEY=$API_KEY
