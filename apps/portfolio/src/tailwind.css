@@ -1085,14 +1085,19 @@ details .underline--magical h4 {
 	}
 }
 
-/* @media (min-width: 768px) {
+.home .section-content .normal-text a.icon,
+.home .section-content .normal-text a.icon:hover {
+	height: auto;
+	width: 18px;
+}
 
+@media (min-width: 640px) {
 	.home .section-content .normal-text a.icon,
 	.home .section-content .normal-text a.icon:hover {
-		height: 18px;
-		width: 24px;
+		height: auto;
+		width: 20px;
 	}
-} */
+}
 
 .language-list {
 	display: flex;
