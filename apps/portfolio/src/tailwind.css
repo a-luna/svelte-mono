@@ -94,7 +94,6 @@
 		/* https://ishadeed.com/article/defensive-css */
 		overflow-wrap: break-word;
 		overflow-y: auto;
-		scrollbar-gutter: stable;
 	}
 
 	:focus-visible {
@@ -344,6 +343,14 @@
 
 html {
 	height: 100%;
+	--scrollbarBg: hsl(0, 0%, 5%);
+	--thumbBg: hsl(161.97 100% 49%);
+	--thumbBg: oklch(86.47% 0.257 162.56);
+	overflow-y: scroll;
+	overflow-x: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--thumbBg) var(--scrollbarBg);
+	scrollbar-gutter: auto;
 }
 
 body {
@@ -380,8 +387,7 @@ body {
   - https://css-tricks.com/strut-your-stuff-with-a-custom-scrollbar/
   */
 
-body,
-#svelte {
+/* body {
 	--scrollbarBg: hsl(0, 0%, 5%);
 	--thumbBg: hsl(161.97 100% 49%);
 	--thumbBg: oklch(86.47% 0.257 162.56);
@@ -389,7 +395,7 @@ body,
 	overflow-x: auto;
 	scrollbar-width: thin;
 	scrollbar-color: var(--thumbBg) var(--scrollbarBg);
-}
+} */
 
 /* body:has(.mobile-nav-open) {
 	--scrollbarBg: var(--black-tint2);
