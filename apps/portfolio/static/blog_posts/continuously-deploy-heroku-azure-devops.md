@@ -71,11 +71,11 @@ If you create Heroku apps, you know that the only built-in options for deploymen
 
 Creating a project in Azure DevOps gives you more than a private git repository. With **Build Pipelines**, you can quickly create a CICD process. Navigate to your project's build piplelines by clicking on the blue rocketship icon. If you have never created a build pipeline for this project, you will be directed to create one as shown in **Figure 1**. Otherwise, select **New -> New build pipeline** as shown in **Figure 2**:
 
-<div class="flex-row">
-    <div class="flex-item">
+<div style="display: flex; flex-flow: row wrap; align-items: flex-end;">
+    <div style="flex: 0 0 50%;">
 {{< linked_image img1 >}}
     </div>
-    <div class="flex-item">
+    <div style="flex: 0 0 50%;">
 {{< linked_image img2 >}}
     </div>
 </div>

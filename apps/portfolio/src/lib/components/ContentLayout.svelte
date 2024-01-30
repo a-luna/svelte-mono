@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
 	import ByLine from '$lib/components/ByLine.svelte';
-	import PostNav from '$lib/components/PostNav.svelte';
+	import PageTransition from '$lib/components/PageTransition.svelte';
 	import { enableCopyCodeButtons } from '$lib/content/browser';
 	import { MY_TWITTER_HANDLE, SITE_TITLE } from '$lib/siteConfig';
 	import type { BlogPost, ContentType, ProjectReadme, TutorialSection } from '$lib/types';
-	import Giscus from '@giscus/svelte';
 	import { onMount } from 'svelte';
 
 	export let content: ProjectReadme | BlogPost | TutorialSection;
@@ -15,6 +13,7 @@
 
 	$: published = content?.date ? new Date(content.date) : new Date(0);
 	$: if (pageLoaded && !buttonsEnabled) buttonsEnabled = enableCopyCodeButtons();
+	$: projectName = contentType === 'readme' ? ' ' + content.slug : '';
 
 	onMount(() => (pageLoaded = true));
 </script>
@@ -37,42 +36,28 @@
 	{/if}
 </svelte:head>
 
-<article class={contentType}>
-	<header>
-		<div class="wrapper">
-			<h1><span class="gradient-heading">{content?.title}</span></h1>
-			<ByLine {published} {contentType} />
+<PageTransition>
+	<article class="{contentType}{projectName}">
+		<header>
+			<div class="wrapper">
+				<h1>{content?.title}</h1>
+				<ByLine {published} {contentType} />
+			</div>
+		</header>
+		<div
+			class="wrapper content-wrapper prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
+		>
+			<slot name="toc" />
+			<slot name="content" />
 		</div>
-	</header>
-	<div
-		class="wrapper content-wrapper prose prose-invert mb-8 w-full max-w-none prose-headings:m-0 prose-headings:font-normal prose-headings:leading-none prose-figure:mx-auto prose-figure:mb-4 prose-strong:inline prose-video:mx-auto prose-video:my-0"
-	>
-		<slot />
-	</div>
-	{#if ['blog', 'tutorial'].includes(contentType)}
-		<div class="wrapper nav-wrapper">
-			<PostNav slug={content.slug} {contentType} />
-		</div>
-		{#if !dev}
-			<div class="wrapper comments-wrapper">
-				<Giscus
-					repo="a-luna/svelte-mono"
-					repoId="R_kgDOJRXMQw"
-					category="Giscus"
-					categoryId="DIC_kwDOJRXMQ84CYIYD"
-					mapping="og:title"
-					strict="1"
-					reactionsEnabled="1"
-					emitMetadata="0"
-					inputPosition="top"
-					theme="transparent_dark"
-					lang="en"
-					loading="lazy"
-				/>
+		{#if $$slots.content_item_nav}
+			<div class="wrapper nav-wrapper">
+				<slot name="content_item_nav" />
 			</div>
 		{/if}
-	{/if}
-</article>
+		<slot name="comments" />
+	</article>
+</PageTransition>
 
 <style lang="postcss">
 	article {
@@ -119,7 +104,7 @@
 	.nav-wrapper,
 	.comments-wrapper {
 		background-color: var(--page-bg-color);
-		margin: 0 auto 2rem auto;
+		margin: 0 auto 4rem auto;
 		padding-top: 0;
 		padding-bottom: 0;
 		padding-left: var(--mobile-page-padding);

@@ -1,10 +1,14 @@
-import type { BlogPost, RepoWithMetaData } from '$lib/types';
+import type { AppStore, BlogPost, RepoWithMetaData } from '$lib/types';
 
 export const SCREEN_SIZES = ['sm', 'md', 'lg'] as const;
 
 export const SITE_SECTIONS = ['home', 'projects', 'blog', 'about', 'tutorial'] as const;
 
+export const TRANSITION_SECTIONS = ['/', '/projects', '/blog', '/about'] as const;
+
 export const CONTENT_TYPES = ['blog', 'tutorial', 'readme'] as const;
+
+export const PAGE_TYPES = ['section', 'content'] as const;
 
 export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'CONNECT'] as const;
 
@@ -87,6 +91,7 @@ export const REPO_NAMES = [
 	'svelte-base64-ts',
 	'svelte-base64',
 	'svelte-color-tools',
+	'svelte-mono',
 	'svelte-simple-tables-docs',
 	'svelte-simple-tables',
 	'unicode-api',
@@ -99,6 +104,7 @@ export const FEATURED_PROJECTS = [
 	'fastapi-redis-cache',
 	'svelte-base64-ts',
 	'svelte-color-tools',
+	'svelte-mono',
 	'svelte-simple-tables',
 	'unicode-api',
 	'vigorish',
@@ -120,6 +126,18 @@ export const BACKEND_CATEGORIES = [
 ] as const;
 
 export const PROJECT_CATEGORIES = ['allCategories', ...BACKEND_CATEGORIES, ...FRONTEND_CATEGORIES] as const;
+
+export const defaultAppState: AppStore = {
+	initialized: false,
+	url: '',
+	pageType: 'section',
+	pageHeight: 0,
+	pageWidth: 0,
+	viewportHeight: 0,
+	screenSize: 'lg',
+	fadeInDelay: 0,
+	showScrollToTopButton: false,
+};
 
 export const nullRepoWithMetadata: RepoWithMetaData = {
 	name: 'null',

@@ -107,7 +107,12 @@
 		</button>
 	{/if}
 	{#if expanded}
-		<div in:fade={{ delay: 500 }} out:fade={{ delay: 300 }} class="filter-settings" style={settingsListStyle}>
+		<div
+			in:fade|global={{ delay: 500 }}
+			out:fade|global={{ delay: 300 }}
+			class="filter-settings"
+			style={settingsListStyle}
+		>
 			{#if noFilterSetting}
 				<input type="radio" bind:group={selectedValue} name={id} id="{id}-option-0" value={noFilterSetting} />
 				<label
@@ -180,7 +185,6 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1rem;
-		z-index: 3;
 	}
 	.filter-title {
 		flex: 0;

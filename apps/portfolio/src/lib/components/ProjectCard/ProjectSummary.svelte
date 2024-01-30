@@ -27,7 +27,7 @@
 		</div>
 		<p class="project-description">{project.description}</p>
 		<div class="language-list">
-			<ProjectLanguages {project} showPrimaryLang={true} />
+			<ProjectLanguages {project} />
 		</div>
 	</a>
 </div>

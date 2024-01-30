@@ -24,8 +24,8 @@
 		border-bottom-style: solid;
 		border-bottom-color: var(--project-card-border-color);
 
-		grid-column: 4 / span 1;
-		grid-row: 1 / span 3;
+		grid-column: 3 / span 1;
+		grid-row: 1 / span 1;
 	}
 
 	:global(.project-card:hover) .project-card-link {

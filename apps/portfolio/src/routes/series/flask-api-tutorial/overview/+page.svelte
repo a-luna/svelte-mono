@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { browser, dev } from '$app/environment';
 	import SectionSummary from '$lib/components/ApiTutorial/SectionSummary.svelte';
 	import ContentLayout from '$lib/components/ContentLayout.svelte';
 	import { nullBlogPost } from '$lib/constants';
 	import { SITE_URL } from '$lib/siteConfig';
 	import { tutorialSections } from '$lib/stores';
 	import type { BlogPost, TutorialSection } from '$lib/types';
+	import Giscus from '@giscus/svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -33,28 +34,50 @@
 
 {#if $tutorialSections.length}
 	<ContentLayout {content} contentType={'tutorial'}>
-		<section class="article-list">
-			<p>
-				This tutorial series provides step-by-step instructions and in-depth explanations to guide you through the
-				process of creating a robust, production-quality REST API. The toolstack consists of Flask, Flask-RESTx,
-				SQLAlchemy, pyjwt, tox and other packages. Code quality is a major focus, with considerable time dedicated to
-				testing (using pytest), logging and tools such as coverage, flake8 and mypy. The tutorial concludes by creating
-				a process that continuously integrates (with tox, travis/circle CI, coveralls) and deploys the API (with either
-				Github or Azure DevOps to Heroku).
-			</p>
-			<h3>All Sections</h3>
-			{#if list.length}
-				<ul data-sveltekit-preload-data="hover">
-					{#each list as item}
-						<li>
-							<SectionSummary section={item} />
-						</li>
-					{/each}
-				</ul>
-			{:else}
-				<div class="prose dark:prose-invert">No tutorial sections found!</div>
+		<svelte:fragment slot="content">
+			<section class="article-list">
+				<p>
+					This tutorial series provides step-by-step instructions and in-depth explanations to guide you through the
+					process of creating a robust, production-quality REST API. The toolstack consists of Flask, Flask-RESTx,
+					SQLAlchemy, pyjwt, tox and other packages. Code quality is a major focus, with considerable time dedicated to
+					testing (using pytest), logging and tools such as coverage, flake8 and mypy. The tutorial concludes by
+					creating a process that continuously integrates (with tox, travis/circle CI, coveralls) and deploys the API
+					(with either Github or Azure DevOps to Heroku).
+				</p>
+				<h3>All Sections</h3>
+				{#if list.length}
+					<ul data-sveltekit-preload-data="hover">
+						{#each list as item}
+							<li>
+								<SectionSummary section={item} />
+							</li>
+						{/each}
+					</ul>
+				{:else}
+					<div class="prose dark:prose-invert">No tutorial sections found!</div>
+				{/if}
+			</section>
+		</svelte:fragment>
+		<svelte:fragment slot="comments">
+			{#if !dev}
+				<div class="wrapper comments-wrapper">
+					<Giscus
+						repo="a-luna/svelte-mono"
+						repoId="R_kgDOJRXMQw"
+						category="Giscus"
+						categoryId="DIC_kwDOJRXMQ84CYIYD"
+						mapping="og:title"
+						strict="1"
+						reactionsEnabled="1"
+						emitMetadata="0"
+						inputPosition="top"
+						theme="transparent_dark"
+						lang="en"
+						loading="lazy"
+					/>
+				</div>
 			{/if}
-		</section>
+		</svelte:fragment>
 	</ContentLayout>
 {/if}
 

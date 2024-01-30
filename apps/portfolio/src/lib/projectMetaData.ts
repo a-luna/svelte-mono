@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import { nullRepoWithMetadata } from '$lib/constants';
 import { isUserRepo } from '$lib/typeguards';
 import type { CachedProjectData, GHRepo, LanguageOrTech, ProjectCategory, RepoWithMetaData } from '$lib/types';
@@ -74,7 +75,7 @@ export const repoDataDepot: {
 		primaryCategory: 'frontend',
 		languages: ['Playwright', 'TypeScript', 'XState'],
 		categories: ['web_app'],
-		deployedUrl: 'https://base64.aaronluna.dev/',
+		deployedUrl: dev ? 'http://localhost:3500/' : 'https://base64.aaronluna.dev/',
 		projectSiteTitle: 'Base64 Algorithm Demonstration',
 	},
 	'svelte-base64': {
@@ -114,7 +115,7 @@ export const repoDataDepot: {
 		primaryCategory: 'backend',
 		languages: ['FastAPI', 'Pydantic'],
 		categories: ['rest_api'],
-		deployedUrl: 'https://unicode-api.aaronluna.dev/v1/docs',
+		deployedUrl: dev ? 'http://localhost:3507/' : 'https://unicode-api.aaronluna.dev/v1/docs',
 		projectSiteTitle: 'Unicode API Docs (Swagger UI)',
 	},
 	'vig-api': {
@@ -160,7 +161,7 @@ export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
 				updatedAt: project.pushed_at || new Date().toISOString(),
 				deployedUrl: repoDataDepot?.[project.name]?.deployedUrl || '',
 				projectSiteTitle: repoDataDepot?.[project.name]?.projectSiteTitle ?? '',
-		  }
+			}
 		: nullRepoWithMetadata;
 
 // UPDATE CACHE WITH THIS CODE, ADD TO +page.svelte for /projects route

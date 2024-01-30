@@ -3,9 +3,8 @@
 	import FilterSettingWithIcon from '../ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
 
 	export let project: RepoWithMetaData;
-	export let showPrimaryLang = false;
 
-	$: languages = showPrimaryLang ? [project.primaryLanguage, ...(project?.languages || [])] : project?.languages || [];
+	$: languages = [project.primaryLanguage, ...(project?.languages || [])];
 </script>
 
 {#if languages.length > 0}

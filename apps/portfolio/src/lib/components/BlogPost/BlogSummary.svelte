@@ -2,7 +2,6 @@
 	import PreviewImage from '$lib/components/BlogPost/PreviewImage.svelte';
 	import ProjectCategory from '$lib/components/ProjectCard/ProjectCategory.svelte';
 	import FilterSettingWithIcon from '$lib/components/ProjectList/ProjectFilter/FilterSettingWithIcon.svelte';
-	import { screenSize } from '$lib/stores';
 	import type { LanguageOrTech, ProjectCategory as ProjectCategoryType } from '$lib/types';
 	import { formatDateString } from '$lib/util';
 
@@ -14,7 +13,7 @@
 	export let language: LanguageOrTech = 'allLanguages';
 </script>
 
-<div class="blog-summary">
+<li class="blog-summary">
 	<div class="summary-top">
 		<div class="top-left">
 			<div class="image">
@@ -31,36 +30,30 @@
 				</div>
 				<h4><a {href} class="post-title">{title}</a></h4>
 			</div>
-			{#if $screenSize === 'sm' || $screenSize === 'md'}
-				<div class="tags">
-					{#each categories as category}
-						<ProjectCategory {category} />
-					{/each}
-				</div>
-			{/if}
+			<div class="tags">
+				{#each categories as category}
+					<ProjectCategory {category} />
+				{/each}
+			</div>
 		</div>
 	</div>
-	{#if $screenSize === 'lg'}
-		<div class="tags">
-			{#each categories as category}
-				<ProjectCategory {category} />
-			{/each}
-		</div>
-	{/if}
 	<p class="description"><slot /></p>
-</div>
+</li>
 
 <style lang="postcss">
 	.blog-summary {
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1rem;
+		font-size: 1.125rem;
+		line-height: 1.75rem;
 		border-width: 2px;
 		border-style: solid;
 		border-color: var(--dark-gray);
 		color: var(--white);
 		background-color: var(--black);
 		padding: 1.5rem;
+		margin: 0 0 2rem 0;
 	}
 
 	.summary-top {
@@ -124,7 +117,9 @@
 		background-color: var(--black);
 		text-decoration: none;
 		line-height: 1.3;
-		transition: background-color 350ms ease-out, color 350ms ease-out;
+		transition:
+			background-color 350ms ease-out,
+			color 350ms ease-out;
 	}
 
 	.published {

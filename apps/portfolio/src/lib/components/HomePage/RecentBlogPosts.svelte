@@ -45,4 +45,10 @@
 		color: var(--page-bg-color);
 		background-color: var(--link-color);
 	}
+
+	@media (min-width: 640px) {
+		.recent-posts li {
+			font-size: 1rem;
+		}
+	}
 </style>

@@ -6,13 +6,13 @@ module.exports = {
 			typography: {
 				DEFAULT: {
 					css: {
-						'--tw-prose-invert-body': 'var(--white-shade4)',
-						'--tw-prose-invert-headings': 'var(--white-shade2)',
+						'--tw-prose-invert-body': 'var(--white-shade2)',
+						'--tw-prose-invert-headings': 'var(--white)',
 						'--tw-prose-invert-code': 'var(--heading-code-color)',
 						'line-height': '1.6',
 						'h2, h3, h4, h5, h6': {
 							'font-family': 'Roboto, sans-serif',
-							fontWeight: '300',
+							fontWeight: '400',
 							letterSpacing: '1px',
 						},
 						blockquote: {
@@ -55,14 +55,14 @@ module.exports = {
 							fontStyle: 'normal',
 							padding: '2px',
 						},
-						'main a': {
+						'main a, .nav-flyout-item a': {
 							fontWeight: '400',
 							color: 'var(--link-color)',
 							'background-color': 'inherit',
 							textDecoration: 'none',
-							transition: 'all 350ms ease-out',
+							transition: 'color 350ms ease-out, background-color 350ms ease-out',
 						},
-						'main a:hover': {
+						'main a:hover, .nav-flyout-item a:hover': {
 							fontWeight: '400',
 							color: 'var(--black-tint3)',
 							'background-color': 'var(--link-color)',

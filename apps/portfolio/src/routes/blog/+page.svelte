@@ -4,6 +4,7 @@
 	import { SITE_TITLE } from '$lib/siteConfig';
 	import type { BlogPost } from '$lib/types';
 	import { sortByDate } from '$lib/util';
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -11,6 +12,7 @@
 	let inputEl: HTMLInputElement;
 	let isTruncated = data.allBlogPosts.length > 20;
 	let search: string;
+	let mounted = false;
 	// let filteredCategory: string;
 
 	$: list = sortByDate(data.allBlogPosts, { key: 'date', asc: false })
@@ -22,9 +24,11 @@
 		})
 		.slice(0, isTruncated ? 2 : data.allBlogPosts.length);
 
-	function focusSearch(e: KeyboardEvent) {
+	const focusSearch = (e: KeyboardEvent) => {
 		if (e.key === '/' && inputEl) inputEl.select();
-	}
+	};
+
+	onMount(() => (mounted = true));
 </script>
 
 <svelte:head>
@@ -34,32 +38,32 @@
 
 <svelte:window on:keyup={focusSearch} />
 
-<SectionLayout section={'blog'}>
-	<section class="article-list">
-		<p class="search-desc">Use the search below to filter by title.</p>
-		<div class="input-wrapper">
-			<input
-				aria-label="Search articles"
-				type="text"
-				bind:value={search}
-				bind:this={inputEl}
-				placeholder="Hit / to search"
-			/><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-				><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-				/></svg
-			>
-		</div>
-		{#if !search}
-			<h3>All Posts</h3>
-		{/if}
-		{#if list.length}
-			<ul data-sveltekit-preload-data="hover">
-				{#each list as item}
-					<li>
+{#if mounted}
+	<SectionLayout section={'blog'}>
+		<section class="article-list">
+			<p class="search-desc">Use the search below to filter by title.</p>
+			<div class="input-wrapper">
+				<input
+					aria-label="Search articles"
+					type="text"
+					bind:value={search}
+					bind:this={inputEl}
+					placeholder="Hit / to search"
+				/><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+					><path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+					/></svg
+				>
+			</div>
+			{#if !search}
+				<h3>All Posts</h3>
+			{/if}
+			{#if list.length}
+				<ul>
+					{#each list as item}
 						<BlogSummary
 							slug={item.slug}
 							href={item.href}
@@ -70,25 +74,25 @@
 						>
 							{item.description}
 						</BlogSummary>
-					</li>
-				{/each}
-			</ul>
-			{#if isTruncated}
-				<div class="button-wrapper">
-					<button on:click={() => (isTruncated = false)} class="load-more-button"> Load More Posts... </button>
+					{/each}
+				</ul>
+				{#if isTruncated}
+					<div class="button-wrapper">
+						<button on:click={() => (isTruncated = false)} class="load-more-button"> Load More Posts... </button>
+					</div>
+				{/if}
+			{:else if search}
+				<div class="prose dark:prose-invert">
+					No posts found for
+					<code>{search}</code>.
 				</div>
+				<button class="bg-slate-500 p-2" on:click={() => (search = '')}>Clear your search</button>
+			{:else}
+				<div class="prose dark:prose-invert">No blogposts found!</div>
 			{/if}
-		{:else if search}
-			<div class="prose dark:prose-invert">
-				No posts found for
-				<code>{search}</code>.
-			</div>
-			<button class="bg-slate-500 p-2" on:click={() => (search = '')}>Clear your search</button>
-		{:else}
-			<div class="prose dark:prose-invert">No blogposts found!</div>
-		{/if}
-	</section>
-</SectionLayout>
+		</section>
+	</SectionLayout>
+{/if}
 
 <style lang="postcss">
 	section {
@@ -135,11 +139,6 @@
 	ul {
 		list-style: none;
 		padding: 0;
-	}
-	li {
-		margin: 0 0 2rem 0;
-		font-size: 1.125rem;
-		line-height: 1.75rem;
 	}
 	.button-wrapper {
 		background-color: var(--page-bg-color);

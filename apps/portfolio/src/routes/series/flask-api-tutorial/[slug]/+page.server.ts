@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		tutorialSections.set(checkSections);
 	}
 	if (!checkSections.length) {
-		throw error(404, 'No blog posts were found!');
+		throw error(404, 'No posts were found for this series (flask-api-tutorial)!');
 	}
 	const { slug } = params;
 	const tutorialSection: TutorialSection = await fetch(`/series/flask-api-tutorial/${slug}.json`).then((r) => r.json());
