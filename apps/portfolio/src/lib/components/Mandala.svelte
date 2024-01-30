@@ -9,12 +9,12 @@
 			pageWidth >= 768
 				? { width: 575, height: 575 }
 				: pageWidth >= 640
-				? { width: 550, height: 550 }
-				: pageWidth >= 495
-				? { width: 500, height: 500 }
-				: pageWidth >= 440
-				? { width: 450, height: 450 }
-				: { width: 425, height: 425 };
+					? { width: 550, height: 550 }
+					: pageWidth >= 495
+						? { width: 500, height: 500 }
+						: pageWidth >= 440
+							? { width: 450, height: 450 }
+							: { width: 425, height: 425 };
 	}
 	$: ({ width, height } = svgSize);
 </script>
@@ -331,17 +331,17 @@
 	}
 	@media (min-width: 495px) {
 		.mandala-container {
-			transform: translate(6rem, 0rem);
+			transform: translate(4rem, -3.5rem);
 		}
 	}
 	@media (min-width: 640px) {
 		.mandala-container {
-			transform: translate(8rem, 0rem);
+			transform: translate(7rem, -3.5rem);
 		}
 	}
 	@media (min-width: 768px) {
 		.mandala-container {
-			transform: translate(9rem, -1rem);
+			transform: translate(7.5rem, -4rem);
 		}
 	}
 </style>

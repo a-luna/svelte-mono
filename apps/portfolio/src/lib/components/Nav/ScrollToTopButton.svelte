@@ -15,7 +15,7 @@
 		color: var(--black);
 		background: var(--link-color);
 		opacity: 0.5;
-		z-index: 3;
+		z-index: 10;
 		padding: 0.5rem 0.25rem;
 	}
 	a:hover,

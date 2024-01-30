@@ -11,26 +11,20 @@ const allFilesToCache = buildFilesToCache.concat(staticFilesToCache);
 const staticAssets = new Set(allFilesToCache);
 
 worker.addEventListener('install', (event) => {
-	event.waitUntil(
-		caches
-			.open(FILES)
-			.then((cache) => cache.addAll(allFilesToCache))
-			.then(() => {
-				worker.skipWaiting();
-			}),
-	);
+	async function addFilesToCache() {
+		const cache = await caches.open(FILES);
+		await cache.addAll(allFilesToCache);
+	}
+	event.waitUntil(addFilesToCache());
 });
 
 worker.addEventListener('activate', (event) => {
-	event.waitUntil(
-		caches.keys().then(async (keys) => {
-			// delete old caches
-			for (const key of keys) {
-				if (key !== FILES) await caches.delete(key);
-			}
-			worker.clients.claim();
-		}),
-	);
+	async function removeOldCache() {
+		for (const key of await caches.keys()) {
+			if (key !== FILES) await caches.delete(key);
+		}
+	}
+	event.waitUntil(removeOldCache());
 });
 
 worker.addEventListener('fetch', (event) => {

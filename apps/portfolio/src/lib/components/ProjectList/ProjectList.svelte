@@ -46,15 +46,15 @@
 			type === 'allProjects' && category === 'allCategories'
 				? ''
 				: category === 'allCategories'
-				? ` ${getFilterSettingDetails(type).displayName}`
-				: type === 'allProjects'
-				? ` ${getFilterSettingDetails(category).displayName}`
-				: ` ${getFilterSettingDetails(type).displayName}, ${getFilterSettingDetails(category).displayName}`;
+					? ` ${getFilterSettingDetails(type).displayName}`
+					: type === 'allProjects'
+						? ` ${getFilterSettingDetails(category).displayName}`
+						: ` ${getFilterSettingDetails(type).displayName}, ${getFilterSettingDetails(category).displayName}`;
 		return language === 'allLanguages'
 			? `${projects.length}${projectType}${projectPlural}`
 			: `${projects.length}${projectType}${projectPlural} that ${involvePlural} ${
 					getFilterSettingDetails(language).displayName
-			  }`;
+				}`;
 	}
 
 	function filterProjects(
@@ -109,7 +109,7 @@
 		<FilterControls bind:showFilters {filterApplied} on:resetFilter={() => resetFilter()} />
 	</div>
 	{#if showFilters}
-		<div transition:slide={{ duration: 500 }} class="project-list-filter-wrapper">
+		<div transition:slide|global={{ duration: 500 }} class="project-list-filter-wrapper">
 			<FilterList
 				{projectTypes}
 				{categories}
@@ -136,7 +136,6 @@
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 1.5rem;
-		z-index: 3;
 	}
 
 	.filter-controls-wrapper {
@@ -153,7 +152,6 @@
 		border: 2px solid var(--project-card-border-color);
 		line-height: 1;
 		padding: 2rem;
-		z-index: 3;
 	}
 
 	.project-list {

@@ -1,7 +1,9 @@
-import type { LayoutLoad } from "./$types";
+import { url as pageUrl } from '$lib/stores';
+import type { LayoutLoad } from './$types';
 
 export const load = (async ({ url }) => {
-    return {
-		url: url.pathname
-	}
+	pageUrl.set(url.pathname);
+	return {
+		url: url.pathname,
+	};
 }) satisfies LayoutLoad;

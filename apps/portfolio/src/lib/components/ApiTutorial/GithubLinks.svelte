@@ -37,8 +37,8 @@
 	{#if open}
 		<div
 			class="github-links-wrapper"
-			in:slide={{ duration: 300, delay: 100 }}
-			out:slide={{ duration: 300, delay: 100 }}
+			in:slide|global={{ duration: 300, delay: 100 }}
+			out:slide|global={{ duration: 300, delay: 100 }}
 		>
 			<ul>
 				<p>

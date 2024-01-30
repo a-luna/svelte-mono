@@ -2,9 +2,13 @@
 	import ProjectList from '$lib/components/ProjectList/ProjectList.svelte';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { MY_TWITTER_HANDLE } from '$lib/siteConfig';
+	import { onMount } from 'svelte';
 
+	let mounted = false;
 	const description =
 		'A curated list of my open-source projects. Use the filters to narrow down the list by project type or technology/programming language.';
+
+	onMount(() => (mounted = true));
 </script>
 
 <svelte:head>
@@ -16,6 +20,8 @@
 	<meta name="twitter:description" content={description} />
 </svelte:head>
 
-<SectionLayout section={'projects'}>
-	<ProjectList />
-</SectionLayout>
+{#if mounted}
+	<SectionLayout section={'projects'}>
+		<ProjectList />
+	</SectionLayout>
+{/if}

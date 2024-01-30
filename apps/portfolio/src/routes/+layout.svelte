@@ -1,31 +1,40 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
+	import { beforeNavigate } from '$app/navigation';
 	import Nav from '$lib/components/Nav/Nav.svelte';
-	import NavSideBar from '$lib/components/Nav/NavSideBar.svelte';
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
-	import PageTransition from '$lib/components/PageTransition.svelte';
+	import { defaultAppState } from '$lib/constants';
 	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
-	import { initialFadePerformed, mobileNavOpen, screenSize } from '$lib/stores';
-	import { fade } from 'svelte/transition';
+	import { initAppContext, isInitialPageLoad, mobileNavOpen, sectionTransition } from '$lib/stores';
+	import { isTransitionSection } from '$lib/typeguards';
+	import type { AppStore } from '$lib/types';
+	import { readable, writable, type Readable } from 'svelte/store';
 	import '../tailwind.css';
 
-	export let data;
-	let pageHeight: number;
-	let pageWidth: number;
-	let windowHeight: number;
-	let scrollY: number;
-	let showScrollToTopButton: boolean;
+	let y: number;
+	let scrollY = writable(0);
+	let state: Readable<AppStore> = readable(defaultAppState);
 
-	$: fadeInDelay = $initialFadePerformed ? 200 : 0;
-	$: if (typeof window !== 'undefined') {
-		showScrollToTopButton = pageHeight > windowHeight && scrollY > 0;
-		$screenSize = pageWidth < 632 ? 'sm' : pageWidth < 760 ? 'md' : 'lg';
-	}
+	beforeNavigate(({ from, to }) => {
+		$isInitialPageLoad = false;
+		const [fromRoute, toRoute] = [from?.route.id ?? '', to?.route.id ?? ''];
+		if (isTransitionSection(toRoute) && fromRoute !== toRoute) {
+			$sectionTransition = {
+				inProgress: true,
+				from: isTransitionSection(fromRoute) ? fromRoute : '',
+				fromComplete: !isTransitionSection(fromRoute),
+				to: toRoute,
+				toComplete: false,
+			};
+		}
+		if ($mobileNavOpen) $mobileNavOpen = false;
+	});
+
+	$: if (typeof window !== 'undefined' && !$state.initialized) state = initAppContext(scrollY);
+	$: scrollY.set(y);
 </script>
 
-screenSize
-
-<svelte:window bind:innerHeight={windowHeight} bind:scrollY />
+<svelte:window bind:scrollY={y} />
 
 <svelte:head>
 	<link rel="icon" href="/favicon.ico?v=1.1" sizes="any" />
@@ -45,41 +54,20 @@ screenSize
 	{/if}
 </svelte:head>
 
-<div id="svelte" bind:clientHeight={pageHeight} bind:clientWidth={pageWidth}>
-	{#if !$mobileNavOpen}
-		<div in:fade={{ delay: fadeInDelay, duration: 400 }} out:fade={{ duration: 300 }} id="top" class="header-wrapper">
-			<Nav />
-		</div>
-		<main>
-			<PageTransition url={data.url} {fadeInDelay}>
-				<slot />
-				{#if showScrollToTopButton}
-					<ScrollToTopButton />
-				{/if}
-			</PageTransition>
-		</main>
-	{:else}
-		<NavSideBar {pageWidth} />
-	{/if}
+<div id="svelte" class:mobile-nav-open={$mobileNavOpen}>
+	<Nav />
+	<main>
+		<slot />
+		{#if $state.showScrollToTopButton}
+			<ScrollToTopButton />
+		{/if}
+	</main>
 </div>
 
 <style lang="postcss">
-	.header-wrapper {
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: center;
-		background-color: var(--page-bg-color);
-		width: 100%;
-	}
 	main {
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: center;
-	}
-
-	@media (min-width: 768px) {
-		.header-wrapper {
-			height: 95px;
-		}
 	}
 </style>

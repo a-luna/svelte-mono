@@ -1,23 +1,29 @@
 <script lang="ts">
 	import MenuButton from '$lib/components/Nav/MenuButton.svelte';
 	import NavBrand from '$lib/components/Nav/NavBrand.svelte';
+	import NavFlyout from '$lib/components/Nav/NavFlyout.svelte';
 	import NavItems from '$lib/components/Nav/NavItems.svelte';
 	import SocialLinks from '$lib/components/Nav/SocialLinks.svelte';
-	import { screenSize } from '$lib/stores';
+	import { getAppContext, mobileNavOpen, navMounted } from '$lib/stores';
 	import { onMount } from 'svelte';
-	let mounted = false;
 
-	onMount(() => (mounted = true));
+	let state = getAppContext();
+
+	onMount(() => ($navMounted = true));
 </script>
 
-{#if mounted}
+{#if $navMounted}
 	<div class="nav-container">
 		<NavBrand />
-		{#if $screenSize === 'lg'}
+		{#if $state.screenSize === 'lg'}
 			<NavItems />
 			<SocialLinks />
+		{:else}
+			<MenuButton />
+			{#if $mobileNavOpen}
+				<NavFlyout />
+			{/if}
 		{/if}
-		<MenuButton />
 	</div>
 {/if}
 

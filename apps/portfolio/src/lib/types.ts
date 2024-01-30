@@ -31,12 +31,14 @@ import type {
 	ICON_COLORS,
 	ICON_NAMES,
 	NAV_ICON_NAMES,
+	PAGE_TYPES,
 	PROJECT_CATEGORIES,
 	PROJECT_TYPES,
 	REPO_NAMES,
 	SCREEN_SIZES,
 	SITE_SECTIONS,
 	TECH_LIST,
+	TRANSITION_SECTIONS,
 } from '$lib/constants';
 import type {
 	Asterisk as AllProjects,
@@ -64,8 +66,10 @@ import type {
 } from '@a-luna/shared-ui';
 
 export type ScreenSize = (typeof SCREEN_SIZES)[number];
+export type TransitionSection = (typeof TRANSITION_SECTIONS)[number];
 export type SiteSection = (typeof SITE_SECTIONS)[number];
 export type ContentType = (typeof CONTENT_TYPES)[number];
+export type PageType = (typeof PAGE_TYPES)[number];
 export type HttpMethod = (typeof HTTP_METHODS)[number];
 export type HttpAuthType = (typeof HTTP_AUTH_TYPES)[number];
 export type IconName = (typeof ICON_NAMES)[number];
@@ -78,6 +82,26 @@ export type BackendCategory = (typeof BACKEND_CATEGORIES)[number];
 export type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
 export type LanguageOrTech = (typeof TECH_LIST)[number];
 export type FilterSetting = ProjectType | ProjectCategory | LanguageOrTech | '';
+
+export interface AppStore {
+	initialized: boolean;
+	url: string;
+	pageType: PageType;
+	pageHeight: number;
+	pageWidth: number;
+	viewportHeight: number;
+	screenSize: ScreenSize;
+	fadeInDelay: number;
+	showScrollToTopButton: boolean;
+}
+
+export interface SectionTransition {
+	inProgress: boolean;
+	from: string;
+	fromComplete: boolean;
+	to: string;
+	toComplete: boolean;
+}
 
 export type HttpError = { status: number; message: string };
 export type HttpResult = { success: true; value: Response } | { success: false; error: HttpError };
