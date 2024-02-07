@@ -6,13 +6,7 @@
 </script>
 
 <div class="section-name">
-	<h1
-		in:typewriter={{ speed: 75 }}
-		on:introstart={() => console.log('SectionName introstart')}
-		on:introend={() => console.log('SectionName introend')}
-		on:outrostart={() => console.log('SectionName outrostart')}
-		on:outroend={() => console.log('SectionName outroend')}
-	>
+	<h1 in:typewriter={{ speed: 75 }}>
 		{title}
 	</h1>
 	<span class="cursor" class:cursor-blink={!$sectionTransition.inProgress || $isInitialPageLoad} />
