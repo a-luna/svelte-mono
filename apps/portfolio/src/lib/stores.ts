@@ -10,7 +10,7 @@ import type {
 	TutorialSection,
 } from '$lib/types';
 import { sortByDate } from '$lib/util';
-import { getPageHeight, getPageWidth, getViewportHeight } from '@a-luna/shared-ui/stores';
+import { getPageHeight, getPageWidth } from '@a-luna/shared-ui/stores';
 import { getContext, setContext } from 'svelte';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
@@ -97,8 +97,8 @@ function getService<T>(): () => T {
 	return () => getContext('app');
 }
 
-export function initAppContext(scrollY: Writable<number>): Readable<AppStore> {
-	let [pageWidth, pageHeight, viewportHeight] = [writable(0), writable(0), writable(0)];
+export function initAppContext(scrollY: Writable<number>, viewportHeight: Writable<number>): Readable<AppStore> {
+	let [pageWidth, pageHeight] = [writable(0), writable(0)];
 
 	const getPageWidthResult = getPageWidth();
 	if (getPageWidthResult.success) {
@@ -107,10 +107,6 @@ export function initAppContext(scrollY: Writable<number>): Readable<AppStore> {
 	const getPageHeightResult = getPageHeight();
 	if (getPageHeightResult.success) {
 		pageHeight = getPageHeightResult.value;
-	}
-	const getViewportHeightResult = getViewportHeight();
-	if (getViewportHeightResult.success) {
-		viewportHeight = getViewportHeightResult.value;
 	}
 	return setService<Readable<AppStore>>(getAppState(url, pageHeight, pageWidth, viewportHeight, scrollY));
 }

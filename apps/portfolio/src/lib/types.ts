@@ -90,6 +90,7 @@ export interface AppStore {
 	pageHeight: number;
 	pageWidth: number;
 	viewportHeight: number;
+	scrollY: number;
 	screenSize: ScreenSize;
 	fadeInDelay: number;
 	showScrollToTopButton: boolean;

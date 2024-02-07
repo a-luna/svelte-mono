@@ -94,6 +94,7 @@
 		/* https://ishadeed.com/article/defensive-css */
 		overflow-wrap: break-word;
 		overflow-y: auto;
+		scrollbar-gutter: stable;
 	}
 
 	:focus-visible {
@@ -255,8 +256,6 @@
 
 	--code-block-border-color: =var(--gray-shade5);
 
-	scroll-behavior: smooth;
-
 	--mobile-page-padding: 1.5rem;
 
 	/* Project README */
@@ -341,18 +340,6 @@
 	--heading-underline-gradient: linear-gradient(to right, var(--g-color-1), var(--g-color-2));
 }
 
-html {
-	height: 100%;
-	--scrollbarBg: hsl(0, 0%, 5%);
-	--thumbBg: hsl(161.97 100% 49%);
-	--thumbBg: oklch(86.47% 0.257 162.56);
-	overflow-y: scroll;
-	overflow-x: auto;
-	scrollbar-width: thin;
-	scrollbar-color: var(--thumbBg) var(--scrollbarBg);
-	scrollbar-gutter: auto;
-}
-
 body {
 	--header-bg-color: var(--black-tint2);
 	--page-bg-color: var(--black-tint1);
@@ -387,7 +374,7 @@ body {
   - https://css-tricks.com/strut-your-stuff-with-a-custom-scrollbar/
   */
 
-/* body {
+body {
 	--scrollbarBg: hsl(0, 0%, 5%);
 	--thumbBg: hsl(161.97 100% 49%);
 	--thumbBg: oklch(86.47% 0.257 162.56);
@@ -395,12 +382,7 @@ body {
 	overflow-x: auto;
 	scrollbar-width: thin;
 	scrollbar-color: var(--thumbBg) var(--scrollbarBg);
-} */
-
-/* body:has(.mobile-nav-open) {
-	--scrollbarBg: var(--black-tint2);
-	--thumbBg: var(--black-tint2);
-} */
+}
 
 body::-webkit-scrollbar {
 	width: 0.5rem;

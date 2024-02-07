@@ -7,7 +7,6 @@
 	let debounce = false;
 
 	$: icon = $mobileNavOpen ? { name: 'close', size: '26px' } : { name: 'menu', size: 'auto' };
-	$: console.log({ mobileNavOpen: $mobileNavOpen, debounce });
 
 	const isTouchPointer = () => matchMedia('(pointer: coarse)').matches;
 
@@ -38,7 +37,6 @@
 	aria-expanded={$mobileNavOpen}
 	on:mouseenter={() => openNavFlyout()}
 	on:click|self={() => toggleNavFlyout()}
-	on:click={(e) => console.log(e)}
 	use:clickOutside={{ enabled: $mobileNavOpen, cb: () => ($mobileNavOpen = !$mobileNavOpen) }}
 >
 	<BasicIconRenderer icon={icon.name} width={icon.size} height={icon.size} />
