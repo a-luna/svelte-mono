@@ -10,7 +10,6 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
-		"sync": "svelte-kit sync",
 		"sync:up": "pnpm --filter shared-ui update && svelte-kit sync && pnpm-lock-export && npm i --package-lock-only && find . -name '.DS_Store' -type f -delete",
 		"prepublishOnly": "echo 'Did you mean to publish `./package/`, instead of `./`?' && exit 1",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -18,7 +17,8 @@
 		"test": "vitest run --coverage",
 		"test:ui": "vitest watch --ui --threads false --coverage",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"format": "prettier --plugin-search-dir . --write .",
+		"sync": "svelte-kit sync && find . -name '.DS_Store' -type f -delete"
 	},
 	"dependencies": {
 		"@sveltejs/adapter-node": "^4.0.1",
@@ -26,19 +26,19 @@
 		"@sveltejs/package": "^2.2.6",
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
 		"esm-env": "^1.0.0",
-		"svelte": "^4.2.9",
+		"svelte": "^4.2.10",
 		"vite": "^5.0.12"
 	},
 	"devDependencies": {
-		"@types/node": "^18.19.10",
-		"@typescript-eslint/eslint-plugin": "^6.20.0",
-		"@typescript-eslint/parser": "^6.20.0",
+		"@types/node": "^18.19.14",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
 		"@vitest/coverage-v8": "^0.33.0",
 		"@vitest/ui": "^0.33.0",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
-		"prettier": "^3.2.4",
+		"prettier": "^3.2.5",
 		"prettier-plugin-svelte": "^3.1.2",
 		"svelte-check": "^3.6.3",
 		"tslib": "^2.6.2",

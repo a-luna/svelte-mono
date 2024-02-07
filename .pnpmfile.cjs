@@ -1,7 +1,7 @@
 const DEPENDENCY_TYPES = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies'];
 const REMOVE_DEPENDENCIES = ['playwright', 'safaridriver', 'webdriverio'];
 
-function readPackage(pkg, context) {
+function readPackage(pkg, _) {
   if (process.env.NODE_ENV === 'production') {
     const searchResults = searchAllDependencies(pkg);
     if (searchResults.hasDep) {
