@@ -1,4 +1,3 @@
-import { dev } from '$app/environment';
 import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import type { HttpResponse, Result } from '$lib/types';
 import { UnicodeCharInfoSchema, type FlattenedError, type UnicodeCharInfoParseResult } from '$lib/types/api';
@@ -35,7 +34,7 @@ export async function getUnicodeCharInfo(s: string): Promise<Result<HttpResponse
 }
 
 async function fetchUnicodeCharInfo(utf8: string): Promise<UnicodeCharInfoParseResult> {
-	const api_base_url = dev ? PUBLIC_API_BASE_URL : 'https://unicode-api.aaronluna.dev/v1';
+	const api_base_url = PUBLIC_API_BASE_URL;
 	const endpoint = `${api_base_url}/characters/-/${strictUriEncode(utf8)}?show_props=UTF8&show_props=Basic`;
 	const response = await fetch(endpoint, {
 		method: 'GET',
