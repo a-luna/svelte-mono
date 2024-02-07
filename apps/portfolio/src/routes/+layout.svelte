@@ -13,6 +13,8 @@
 
 	let y: number;
 	let scrollY = writable(0);
+	let windowInnerHeight = 0;
+	let viewportHeight = writable(0);
 	let state: Readable<AppStore> = readable(defaultAppState);
 
 	beforeNavigate(({ from, to }) => {
@@ -30,11 +32,12 @@
 		if ($mobileNavOpen) $mobileNavOpen = false;
 	});
 
-	$: if (typeof window !== 'undefined' && !$state.initialized) state = initAppContext(scrollY);
 	$: scrollY.set(y);
+	$: viewportHeight.set(windowInnerHeight);
+	$: if (typeof window !== 'undefined' && !$state.initialized) state = initAppContext(scrollY, viewportHeight);
 </script>
 
-<svelte:window bind:scrollY={y} />
+<svelte:window bind:scrollY={y} bind:innerHeight={windowInnerHeight} />
 
 <svelte:head>
 	<link rel="icon" href="/favicon.ico?v=1.1" sizes="any" />
