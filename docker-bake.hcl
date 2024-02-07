@@ -30,4 +30,8 @@ target "base64" {
         root = "."
     }
     tags = ["ghcr.io/a-luna/svelte-base64:${GITHUB_SHA}"]
+    args = {
+        ENV="PROD"
+        PUBLIC_API_BASE_URL="https://unicode-api.aaronluna.dev/v1"
+    }
 }
