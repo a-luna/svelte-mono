@@ -19,7 +19,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		position: absolute;
-		right: 12px;
+		right: 21px;
 		z-index: 10;
 		background-color: var(--purple);
 		border-color: var(--page-bg-color);
