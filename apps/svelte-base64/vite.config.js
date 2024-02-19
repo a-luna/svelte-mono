@@ -13,16 +13,14 @@ export default defineConfig({
 	test: {
 		globals: false,
 		environment: 'jsdom',
-		moduleNameMapper: {
-			'^\\$lib(.*)$': '<rootDir>/src/lib$1',
-			'^\\$app(.*)$': ['<rootDir>/.svelte-kit/dev/runtime/app$1', '<rootDir>/.svelte-kit/build/runtime/app$1'],
-		},
 		deps: {
-			inline: ['xstate'],
+			optimizer: { web: { include: ['xstate'] } },
 		},
 		coverage: {
+			reporter: ['text', 'json-summary', 'json'],
+			reportOnFailure: true,
 			skipFull: true,
-			exclude: [...configDefaults.exclude, '**/b64Encode.test/**', '**/tests/**', '**/.svelte-kit/**'],
+			exclude: [...configDefaults.exclude, '**/tests/**', './.svelte-kit/**', './build/**'],
 		},
 		testTimeout: 30_000,
 		hookTimeout: 30_000,

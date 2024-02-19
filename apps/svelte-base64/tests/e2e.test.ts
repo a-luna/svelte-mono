@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+// @vitest-environment node
+
 import type { Browser, Page } from 'playwright';
 import { chromium } from 'playwright';
 import type { PreviewServer } from 'vite';
