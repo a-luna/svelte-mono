@@ -1,45 +1,49 @@
 <script lang="ts">
-	import { menuButtonWasClicked, mobileNavOpen } from '$lib/stores';
+	import { mobileNavOpen } from '$lib/stores';
 	import { BasicIconRenderer } from '@a-luna/shared-ui';
-	import { clickOutside } from '@a-luna/shared-ui/util';
 
+	let hovering = false;
 	let icon: { name: 'close' | 'menu'; size: string };
-	let debounce = false;
 
 	$: icon = $mobileNavOpen ? { name: 'close', size: '26px' } : { name: 'menu', size: 'auto' };
 
 	const isTouchPointer = () => matchMedia('(pointer: coarse)').matches;
 
-	function openNavFlyout() {
-		if (!isTouchPointer() && !debounce && !$menuButtonWasClicked) {
-			$mobileNavOpen = true;
-		}
-	}
+	function clickOutside(node: HTMLElement) {
+		const handleClick = (event: MouseEvent) => {
+			if (node && event.target instanceof Node && !node.contains(event.target) && !event.defaultPrevented) {
+				node.dispatchEvent(new CustomEvent('clickOutside', { detail: event }));
+			}
+		};
 
-	function toggleNavFlyout() {
-		$menuButtonWasClicked = true;
-		if (!isTouchPointer()) {
-			debounce = true;
-			setTimeout(() => {
-				debounce = false;
-			}, 100);
-		}
-		$mobileNavOpen = !$mobileNavOpen;
+		document.addEventListener('click', handleClick, true);
+
+		return {
+			destroy() {
+				document.removeEventListener('click', handleClick, true);
+			},
+		};
 	}
 </script>
 
 <button
-	class="menu-button"
 	aria-label="menu"
 	tabindex="0"
 	aria-controls="nav-sidebar"
 	aria-haspopup="menu"
 	aria-expanded={$mobileNavOpen}
-	on:mouseenter={() => openNavFlyout()}
-	on:click|self={() => toggleNavFlyout()}
-	use:clickOutside={{ enabled: $mobileNavOpen, cb: () => ($mobileNavOpen = !$mobileNavOpen) }}
+	on:mouseenter={() => (hovering = true)}
+	on:mouseleave={() => (hovering = false)}
+	on:click={() => ($mobileNavOpen = !$mobileNavOpen)}
 >
-	<BasicIconRenderer icon={icon.name} width={icon.size} height={icon.size} />
+	<div
+		class="menu-button"
+		class:active={isTouchPointer() ? $mobileNavOpen : hovering || $mobileNavOpen}
+		use:clickOutside
+		on:clickOutside={() => ($mobileNavOpen = false)}
+	>
+		<BasicIconRenderer icon={icon.name} width={icon.size} height={icon.size} />
+	</div>
 </button>
 
 <style lang="postcss">
@@ -57,7 +61,7 @@
 		color: var(--white);
 		font-size: 2rem;
 	}
-	.menu-button:hover {
+	.active {
 		border-color: var(--link-color);
 		color: var(--link-color);
 	}
