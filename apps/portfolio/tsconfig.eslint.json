@@ -6,6 +6,7 @@
 		"ambient.d.ts",
 		"./.svelte-kit/types/**/$types.d.ts",
 		"./vite.config.ts",
+		"src/additional-svelte-typings.d.ts",
 		"./src/**/*.js",
 		"./src/**/*.ts",
 		"./src/**/*.svelte",
