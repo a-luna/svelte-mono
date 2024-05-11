@@ -13,14 +13,7 @@
 	import { downloadUserThemeJson } from '$lib/theme';
 	import type { AppStore, ColorPickerStore, ThemeEditorStore, UserThemeImported } from '$lib/types';
 	import { getThemeEditorSlotExampleCode } from '$lib/util';
-	import {
-		ColorParser,
-		createEmptyColorPalette,
-		type ComponentColor,
-		type CssColor,
-		type ThemeColor,
-	} from '@a-luna/shared-ui';
-	import { getColorSchemesForAllColorFormats } from '@a-luna/shared-ui/color/schemes';
+	import { createEmptyColorPalette, type ComponentColor, type CssColor, type ThemeColor } from '@a-luna/shared-ui';
 	import { createEventDispatcher } from 'svelte';
 	import { HighlightSvelte } from 'svelte-highlight';
 	import type { Readable } from 'svelte/store';
@@ -151,13 +144,13 @@
 			app: $app,
 		});
 	}
-	$: {
-		const result = ColorParser.parse('oklch(87.78% 0.205 147.55 / 75%)');
-		if (result.success) {
-			const schemeSet = getColorSchemesForAllColorFormats(result.value);
-			console.log({ schemeSet });
-		}
-	}
+	// $: {
+	// 	const result = ColorParser.parse('oklch(87.78% 0.205 147.55 / 75%)');
+	// 	if (result.success) {
+	// 		const schemeSet = getColorSchemesForAllColorFormats(result.value);
+	// 		console.log({ schemeSet });
+	// 	}
+	// }
 
 	$: if (typeof window !== 'undefined' && !editorStateInitialized) {
 		themeEditor = createThemeEditorStore();
@@ -178,7 +171,7 @@
 		dispatch('uiColorChanged', { uiColor: userTheme.uiColor });
 	}
 
-	function handleUiColorChanged(e: CustomEvent<null>) {
+	function handleUiColorChanged(_: CustomEvent<null>) {
 		dispatch('uiColorChanged', { uiColor: $themeEditor.userTheme.uiColor });
 	}
 
@@ -297,7 +290,7 @@
 		--button-background-color-hover: var(--hover-bg-color);
 		--button-background-color-active: var(--active-bg-color);
 		--button-background-color-disabled: var(--disabled-bg-color);
-		--button-border: 1px solid var(--border-color);
+		--button-border: 2px solid var(--border-color);
 
 		display: flex;
 		flex-flow: column nowrap;

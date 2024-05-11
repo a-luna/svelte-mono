@@ -42,7 +42,6 @@
 	<SelectedColor />
 	<div class="button-list">
 		<SetColorPickerButton
-			style={'grid-column: 2 / span 1; grid-row: 4 / span 1;'}
 			on:click={() => dispatch('setColorPickerValue', { color: $themeEditor.selectedColor.color })}
 			disabled={disableControls || !$themeEditor.colorSelected}
 		/>

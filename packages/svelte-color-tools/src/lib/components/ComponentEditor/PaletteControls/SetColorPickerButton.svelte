@@ -9,7 +9,7 @@
 	gridStyle={style}
 	tooltip={'Set Color Picker Value to Selected Color'}
 	{disabled}
-	iconWidth={'13px'}
+	iconWidth={'16px'}
 	wrapperWidth={'32px'}
 	on:click
 >
