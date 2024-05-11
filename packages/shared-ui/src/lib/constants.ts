@@ -1,4 +1,5 @@
 export const COMPONENT_COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo'] as const;
+export const UI_THEME_VALUES = [...COMPONENT_COLORS, 'custom'] as const;
 export const COLOR_SPACES = ['srgb', 'p3', 'rec2020', 'out'] as const;
 export const COLOR_FORMATS = ['hex', 'rgb', 'hsl', 'okhsl', 'lch', 'oklch', 'lab', 'oklab'] as const;
 export const HEX_STRING_FORMATS = ['condensed', 'full'] as const;

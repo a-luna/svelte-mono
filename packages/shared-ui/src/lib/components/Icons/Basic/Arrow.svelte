@@ -6,6 +6,6 @@
 	export let padding = '0';
 </script>
 
-<IconBase viewBox="0 0 24 24" {strokeWidth} {padding} {title}>
-	<path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
+<IconBase viewBox="0 0 20 20" {strokeWidth} {padding} {title}>
+	<path d="M9 3.828L2.929 9.899L1.515 8.485L10 0l.707.707l7.778 7.778l-1.414 1.414L11 3.828V20H9z" />
 </IconBase>

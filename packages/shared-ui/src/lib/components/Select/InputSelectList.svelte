@@ -69,6 +69,7 @@
 			class="open-list-button"
 			class:disabled
 			class:no-selection={noSelection}
+			class:active={dropdownShown}
 			id="{menuId}-open-list-button"
 			data-testid="{menuId}-open-list-button"
 			aria-expanded={dropdownShown}
@@ -114,19 +115,35 @@
 		--select-list-default-justify-content: space-between;
 		--select-list-default-align-items: center;
 		--select-list-default-gap: 0.625rem;
+
+		--select-list-default-border-radius: var(--theme-border-radius, var(--theme-default-border-radius));
+		--select-list-default-border-width: 1px;
+		--select-list-default-border-style: solid;
+
 		--select-list-default-open-button-text-color: var(--theme-text-color, var(--theme-default-text-color));
 		--select-list-default-open-button-background-color: var(
 			--theme-background-color,
 			var(--theme-default-background-color)
 		);
-		--select-list-default-open-button-text-color-hover: var(
-			--theme-text-color-hover,
-			var(--theme-default-text-color-hover)
-		);
+		--select-list-default-open-button-text-color-hover: var(--theme-text-color, var(--theme-default-text-color));
 		--select-list-default-open-button-background-color-hover: var(
 			--theme-background-color-hover,
 			var(--theme-default-background-color-hover)
 		);
+		--select-list-default-open-button-text-color-active: var(
+			--theme-text-color-active,
+			var(--theme-default-text-color-active)
+		);
+		--select-list-default-open-button-background-color-active: var(
+			--theme-background-color-active,
+			var(--theme-default-background-color-active)
+		);
+
+		--select-list-default-border-color-active: var(--theme-text-color-active, var(--theme-default-text-color-active));
+		--select-list-default-border-active: var(--select-list-border-width, var(--select-list-default-border-width))
+			var(--select-list-border-style, var(--select-list-default-border-style))
+			var(--select-list-border-color-active, var(---select-list-default-border-color-active));
+
 		--select-list-default-open-button-border-color: var(--theme-text-color, var(--theme-default-text-color));
 		--select-list-default-open-button-font-weight: 500;
 		--select-list-default-open-button-padding: 9px 11px 9px 14px;
@@ -139,12 +156,10 @@
 			--theme-background-color-disabled,
 			var(--theme-default-background-color-disabled)
 		);
-		--select-list-default-border-width: 1px;
-		--select-list-default-border-style: solid;
 		--select-list-default-border-color: var(--theme-text-color, var(--theme-default-text-color));
 		--select-list-default-border-radius: var(--theme-border-radius, var(--theme-default-border-radius));
 		--select-list-default-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-		--select-list-default-border-color-hover: var(--theme-text-color-hover, var(--theme-default-text-color-hover));
+		--select-list-default-border-color-hover: var(--theme-text-color, var(--theme-default-text-color));
 		--select-list-default-dropdown-text-color: var(--theme-text-color, var(--theme-default-text-color));
 		--select-list-default-dropdown-background-color: var(
 			--theme-background-color,
@@ -215,13 +230,25 @@
 		border-color: var(--select-list-border-color-hover, var(--select-list-default-border-color-hover));
 	}
 
-	.open-list-button.disabled {
-		cursor: default;
+	.open-list-button.active {
+		color: var(--select-list-open-button-text-color-active, var(--select-list-default-open-button-text-color-active));
+		background-color: var(
+			--select-list-open-button-background-color-active,
+			var(--select-list-default-open-button-background-color-active)
+		);
+		border: var(--select-list-border-active, var(--select-list-default-border-active));
+	}
+
+	.disabled,
+	.disabled:hover,
+	.disabled:focus {
+		cursor: not-allowed;
 		color: var(--select-list-disabled-text-color, var(--select-list-default-disabled-text-color));
 		background-color: var(
 			--select-list-disabled-background-color,
 			var(--select-list-default-disabled-background-color)
 		);
+		border: 1px solid var(--theme-color-disabled, var(--theme-default-color-disabled));
 	}
 
 	.open-list-button.no-selection {

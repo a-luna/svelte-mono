@@ -63,23 +63,3 @@ export const getPageWidth = (): Result<Writable<number>> => {
 		? { success: true, value: syncWidth(svelteDiv) }
 		: { success: false, error: Error('The DOM element with id="svelte" does not exist') };
 };
-
-export const getViewportHeight = (): Result<Writable<number>> => {
-	if (typeof window === 'undefined') {
-		return { success: false, error: Error('This function (getViewportHeight) must be run in browser (client-side)') };
-	}
-	const body = document.getElementsByTagName('body')[0];
-	return body
-		? { success: true, value: syncHeight(body) }
-		: { success: false, error: Error("'body' element was not found. Please ensure the DOM is rendered correctly") };
-};
-
-export const getViewportWidth = (): Result<Writable<number>> => {
-	if (typeof window === 'undefined') {
-		return { success: false, error: Error('This function (getViewportWidth) must be run in browser (client-side)') };
-	}
-	const body = document.getElementsByTagName('body')[0];
-	return body
-		? { success: true, value: syncWidth(body) }
-		: { success: false, error: Error("'body' element was not found. Please ensure the DOM is rendered correctly") };
-};

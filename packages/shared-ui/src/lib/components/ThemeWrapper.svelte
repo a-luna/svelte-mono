@@ -1,21 +1,25 @@
 <script lang="ts">
 	import { getRandomHueValue } from '$lib/color/util';
 	import type { ComponentColor } from '$lib/types';
+	import type { UiThemeValue } from '$lib/types/Literals';
+	import { getRandomThemeColor } from '$lib/util';
 
 	export let color: ComponentColor = 'black';
+	export let randomComponentColor = false;
 	export let customHue: number | null = null;
 	export let randomHue = false;
+	let theme: UiThemeValue;
 
-	if (randomHue) {
-		customHue = getRandomHueValue();
-	}
-
-	$: theme = color === 'black' ? 'default-theme' : customHue || randomHue ? 'custom-theme' : 'color-theme';
-	$: style = customHue ? `--theme-color-hue: ${customHue};` : '';
+	$: theme = customHue || randomHue ? 'custom' : randomComponentColor ? getRandomThemeColor() ?? 'black' : color;
+	$: style = randomHue
+		? `--theme-color-hue: ${getRandomHueValue()};`
+		: customHue
+			? `--theme-color-hue: ${customHue};`
+			: '';
 </script>
 
-<div id="ui-wrapper" class="{theme} {color}" {style}>
-	<slot />
+<div id="ui-wrapper" data-ui-theme={theme} {style}>
+	<slot {color} />
 </div>
 
 <style lang="postcss">
@@ -112,128 +116,141 @@
 		--pink2: hsl(315, 100%, 45%);
 		--pink3: hsl(315, 100%, 55%);
 
+		--theme-default-red-hue: 335;
+		--theme-default-orange-hue: 39;
+		--theme-default-yellow-hue: 57;
+		--theme-default-green-hue: 140;
+		--theme-default-teal-hue: 175;
+		--theme-default-blue-hue: 210;
+		--theme-default-indigo-hue: 250;
+
 		/* COMMON THEME PROPERTIES */
 		--theme-default-background-color-sat: 100%;
 		--theme-default-background-color-light: 94%;
 		--theme-default-background-color-light-hover: 90%;
 		--theme-default-background-color-light-active: 99%;
+		/* --theme-default-background-color-light-hover: calc(var(--theme-default-background-color-light) - 4%);
+		--theme-default-background-color-light-active: calc(var(--theme-default-background-color-light) + 5%); */
 		--theme-default-background-color-alpha: 1;
 
 		--theme-default-app-background-color-sat: 15%;
 		--theme-default-app-background-color-light: 85%;
 
 		--theme-default-color-sat: 63%;
-		--theme-default-color-sat-active: calc(var(--button-color-sat, var(--button-default-color-sat)) - 7%);
+		--theme-default-color-sat-hover: calc(var(--theme-default-color-sat) - 7%);
+		--theme-default-color-sat-active: calc(var(--theme-default-color-sat) - 7%);
 		--theme-default-color-light: 26%;
-		--theme-default-color-light-active: calc(var(--button-color-light, var(--button-default-color-light)) + 24%);
+		--theme-default-color-light-hover: calc(var(--theme-default-color-light) + 24%);
+		--theme-default-color-light-active: calc(var(--theme-default-color-light) + 24%);
 		--theme-default-color-alpha: 1;
 
 		--theme-default-focus-ring-color-hue: 218;
 		--theme-default-focus-ring-color-light: 55%;
 		--theme-default-focus-ring-color: hsl(
-			var(--theme-focus-ring-color-hue, var(--theme-default-focus-ring-color-hue)) 
-			var(--theme-background-color-sat, var(--theme-default-background-color-sat)) 
-			var(--theme-focus-ring-color-light, var(--theme-default-focus-ring-color-light)) / 
-			var(--theme-color-alpha, var(--theme-default-color-alpha))
+			var(--theme-focus-ring-color-hue, var(--theme-default-focus-ring-color-hue))
+				var(--theme-background-color-sat, var(--theme-default-background-color-sat))
+				var(--theme-focus-ring-color-light, var(--theme-default-focus-ring-color-light)) /
+				var(--theme-color-alpha, var(--theme-default-color-alpha))
 		);
 
 		--theme-default-invalid-hue: 2;
 		--theme-default-background-color-invalid-light: 75%;
 		--theme-default-invalid-background-color: hsl(
-			var(--theme-invalid-hue, var(--theme-default-invalid-hue)) 
-			var(--theme-background-color-sat, var(--theme-default-background-color-sat)) 
-			var(--theme-background-color-invalid-light, var(--theme-default-background-color-invalid-light)) / 
-			var(--theme-color-alpha, var(--theme-default-color-alpha))
+			var(--theme-invalid-hue, var(--theme-default-invalid-hue))
+				var(--theme-background-color-sat, var(--theme-default-background-color-sat))
+				var(--theme-background-color-invalid-light, var(--theme-default-background-color-invalid-light)) /
+				var(--theme-color-alpha, var(--theme-default-color-alpha))
 		);
 
 		--theme-default-color-invalid-light: 55%;
 		--theme-default-invalid-color: hsl(
-			var(--theme-invalid-hue, var(--theme-default-invalid-hue)) 
-			var(--theme-background-color-sat, var(--theme-default-background-color-sat)) 
-			var(--theme-color-invalid-light, var(--theme-default-color-invalid-light)) / 
-			var(--theme-color-alpha, var(--theme-default-color-alpha))
+			var(--theme-invalid-hue, var(--theme-default-invalid-hue))
+				var(--theme-background-color-sat, var(--theme-default-background-color-sat))
+				var(--theme-color-invalid-light, var(--theme-default-color-invalid-light)) /
+				var(--theme-color-alpha, var(--theme-default-color-alpha))
 		);
 
 		--theme-default-font-size: 0.875rem;
 		--theme-default-border-radius: 6px;
 		--theme-default-background-color-disabled: var(--white1);
-		--theme-default-color-disabled: var(--gray4);
-		--theme-default-panel-background-color: var(--theme-background-color-active, var(--theme-default-background-color-active));
+		--theme-default-color-disabled: var(--gray2);
+		--theme-default-border-color-disabled: var(--gray4);
+		--theme-default-panel-background-color: var(
+			--theme-background-color-active,
+			var(--theme-default-background-color-active)
+		);
 	}
-	#ui-wrapper.red {
-		--theme-default-color-hue: 335;
-	}
-	#ui-wrapper.orange {
-		--theme-default-color-hue: 39;
-	}
-	#ui-wrapper.yellow {
-		--theme-default-color-hue: 57;
-	}
-	#ui-wrapper.green {
-		--theme-default-color-hue: 140;
-	}
-	#ui-wrapper.teal {
-		--theme-default-color-hue: 175;
-	}
-	#ui-wrapper.blue {
-		--theme-default-color-hue: 210;
-	}
-	#ui-wrapper.indigo {
-		--theme-default-color-hue: 250;
-	}
-	#ui-wrapper.default-theme {
+	[data-ui-theme='black'] {
+		--theme-default-app-background-color: var(--white1);
 		--theme-default-background-color: var(--white3);
 		--theme-default-background-color-hover: var(--white2);
 		--theme-default-background-color-active: var(--white4);
 		--theme-default-text-color: var(--black2);
 		--theme-default-text-color-hover: var(--black4);
 		--theme-default-text-color-active: var(--black4);
-		--theme-app-background-color: var(--white1);
 	}
-	#ui-wrapper.color-theme,
-	#ui-wrapper.custom-theme {
+	[data-ui-theme='red'] {
+		--theme-color-hue: var(--theme-red-hue, var(--theme-default-red-hue));
+	}
+	[data-ui-theme='orange'] {
+		--theme-color-hue: var(--theme-orange-hue, var(--theme-default-orange-hue));
+	}
+	[data-ui-theme='yellow'] {
+		--theme-color-hue: var(--theme-yellow-hue, var(--theme-default-yellow-hue));
+	}
+	[data-ui-theme='green'] {
+		--theme-color-hue: var(--theme-green-hue, var(--theme-default-green-hue));
+	}
+	[data-ui-theme='teal'] {
+		--theme-color-hue: var(--theme-teal-hue, var(--theme-default-teal-hue));
+	}
+	[data-ui-theme='blue'] {
+		--theme-color-hue: var(--theme-blue-hue, var(--theme-default-blue-hue));
+	}
+	[data-ui-theme='indigo'] {
+		--theme-color-hue: var(--theme-indigo-hue, var(--theme-default-indigo-hue));
+	}
+	:not([data-ui-theme='black']) {
+		--theme-default-app-background-color: hsl(
+			var(--theme-color-hue) var(--theme-app-background-color-sat, var(--theme-default-app-background-color-sat))
+				var(--theme-app-background-color-light, var(--theme-default-app-background-color-light)) /
+				var(--theme-color-alpha, var(--theme-default-color-alpha))
+		);
+
 		--theme-default-background-color: hsl(
-			var(--theme-color-hue, var(--theme-default-color-hue)) 
-			var(--theme-background-color-sat, var(--theme-default-background-color-sat)) 
-			var(--theme-background-color-light, var(--theme-default-background-color-light)) / 
-			var(--theme-background-color-alpha, var(--theme-default-background-color-alpha))
+			var(--theme-color-hue) var(--theme-background-color-sat, var(--theme-default-background-color-sat))
+				var(--theme-background-color-light, var(--theme-default-background-color-light)) /
+				var(--theme-background-color-alpha, var(--theme-default-background-color-alpha))
 		);
 
 		--theme-default-background-color-hover: hsl(
-			var(--theme-color-hue, var(--theme-default-color-hue)) 
-			var(--theme-background-color-sat, var(--theme-default-background-color-sat)) 
-			var(--theme-background-color-light-hover, var(--theme-default-background-color-light-hover)) / 
-			var(--theme-background-color-alpha, var(--theme-default-background-color-alpha))
+			var(--theme-color-hue) var(--theme-background-color-sat, var(--theme-default-background-color-sat))
+				var(--theme-background-color-light-hover, var(--theme-default-background-color-light-hover)) /
+				var(--theme-background-color-alpha, var(--theme-default-background-color-alpha))
 		);
 
 		--theme-default-background-color-active: hsl(
-			var(--theme-color-hue, var(--theme-default-color-hue)) 
-			var(--theme-background-color-sat, var(--theme-default-background-color-sat)) 
-			var(--theme-background-color-light-active, var(--theme-default-background-color-light-active)) / 
-			var(--theme-background-color-alpha, var(--theme-default-background-color-alpha))
-		);
-
-		--theme-default-app-background-color: hsl(
-			var(--theme-color-hue, var(--theme-default-color-hue)) 
-			var(--theme-app-background-color-sat, var(--theme-default-app-background-color-sat)) 
-			var(--theme-app-background-color-light, var(--theme-default-app-background-color-light)) / 
-			var(--theme-color-alpha, var(--theme-default-color-alpha))
+			var(--theme-color-hue) var(--theme-background-color-sat, var(--theme-default-background-color-sat))
+				var(--theme-background-color-light-active, var(--theme-default-background-color-light-active)) /
+				var(--theme-background-color-alpha, var(--theme-default-background-color-alpha))
 		);
 
 		--theme-default-text-color: hsl(
-			var(--theme-color-hue, var(--theme-default-color-hue)) 
-			var(--theme-color-sat, var(--theme-default-color-sat)) 
-			var(--theme-color-light, var(--theme-default-color-light)) / 
-			var(--theme-color-alpha, var(--theme-default-color-alpha))
+			var(--theme-color-hue) var(--theme-color-sat, var(--theme-default-color-sat))
+				var(--theme-color-light, var(--theme-default-color-light)) /
+				var(--theme-color-alpha, var(--theme-default-color-alpha))
 		);
 
-		--theme-default-text-color-hover: var(--theme-text-color, var(--theme-default-text-color));
+		--theme-default-text-color-hover: hsl(
+			var(--theme-color-hue) var(--theme-color-sat-hover, var(--theme-default-color-sat-hover))
+				var(--theme-color-light-hover, var(--theme-default-color-light-hover)) /
+				var(--theme-color-alpha, var(--theme-default-color-alpha))
+		);
 
 		--theme-default-text-color-active: hsl(
-			var(--theme-color-hue, var(--theme-default-color-hue)) 
-			var(--theme-color-sat-active, var(--theme-default-color-sat-active)) 
-			var(--theme-color-light-active, var(--theme-default-color-light-active)) / 
-			var(--theme-color-alpha, var(--theme-default-color-alpha))
+			var(--theme-color-hue) var(--theme-color-sat-active, var(--theme-default-color-sat-active))
+				var(--theme-color-light-active, var(--theme-default-color-light-active)) /
+				var(--theme-color-alpha, var(--theme-default-color-alpha))
 		);
 	}
 </style>

@@ -8,6 +8,7 @@ import type {
 	COMPONENT_COLORS,
 	HEX_STRING_FORMATS,
 	NUMBER_TYPES,
+	UI_THEME_VALUES,
 } from '$lib/constants';
 
 export interface IsEnumerable {
@@ -16,6 +17,7 @@ export interface IsEnumerable {
 
 export type Subset<K, T extends K> = T;
 export type ComponentColor = (typeof COMPONENT_COLORS)[number];
+export type UiThemeValue = (typeof UI_THEME_VALUES)[number];
 export type ColorSpace = (typeof COLOR_SPACES)[number];
 export type ColorFormat = (typeof COLOR_FORMATS)[number];
 export type ColorScheme = (typeof COLOR_SCHEMES)[number];
