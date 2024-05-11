@@ -157,29 +157,23 @@ body {
 
 main.encode {
 	--pri-h: 180;
-	--pri-s: 93%;
-	--pri-l: 53%;
-	--pri-a: 1;
-
 	--sec-h: 275;
-	--sec-s: 93%;
-	--sec-l: 71%;
-	--sec-a: 1;
 }
 
 main.decode {
 	--pri-h: 113;
-	--pri-s: 100%;
-	--pri-l: 52%;
-	--pri-a: 1;
-
 	--sec-h: 261;
-	--sec-s: 100%;
-	--sec-l: 65%;
-	--sec-a: 1;
 }
 
 main {
+	--pri-s: 100%;
+	--pri-l: 53%;
+	--pri-a: 1;
+
+	--sec-s: 100%;
+	--sec-l: 71%;
+	--sec-a: 1;
+
 	--pri-color: hsl(var(--pri-h) var(--pri-s) var(--pri-l) / var(--pri-a));
 	--sec-color: hsl(var(--sec-h) var(--sec-s) var(--sec-l) / var(--sec-a));
 
@@ -1027,7 +1021,6 @@ div[id*='modal'] .help-docs button:active:focus {
 .base64-algo-demo button {
 	color: var(--nav-button-text-color);
 	background-color: var(--nav-button-bg-color);
-	padding: 8px 13px;
 	margin: 0;
 	height: 33px;
 	cursor: pointer;
@@ -1291,8 +1284,8 @@ div[id*='modal'] .help-docs button:active:focus {
 	text-transform: uppercase;
 }
 
-.base64-algo-demo .icon {
-	width: 11px;
+.algo-nav-buttons .icon {
+	width: 15px;
 	margin: auto;
 }
 
@@ -1478,5 +1471,9 @@ div[id*='modal'] .help-docs button:active:focus {
 
 	.b64-ref-content {
 		font-size: 0.8rem;
+	}
+
+	.algo-nav-buttons .icon {
+		width: 16px;
 	}
 }

@@ -9,7 +9,6 @@
 	export let label: string = '';
 	export let tooltip: string = '';
 	export let buttonNumber: number = 0;
-	export let iconWidth: string = '11px';
 	export let disabled = false;
 	export let testId: string;
 	let labelShown = false;
@@ -78,7 +77,7 @@
 	on:mouseleave={() => hideLabel()}
 	on:click={() => fireNavAction()}
 >
-	<div class="icon" style="width: {iconWidth}">
+	<div class="icon">
 		<slot />
 	</div>
 </button>

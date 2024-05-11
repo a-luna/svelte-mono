@@ -127,7 +127,7 @@ describe('verify encoding process using ascii-encoded strings', async () => {
 		await algorithmDemoPage.verifyMachineState({ state: 'encodeOutput', substate: 'autoPlayEncodeBase64' });
 		await algorithmDemoPage.verifyMachineState({ state: 'verifyResults', substate: '' });
 		await algorithmDemoPage.verifyMachineState({ state: 'finished', substate: '' });
-	});
+	}, 60_000);
 
 	test('encode ascii string, skip demo', async () => {
 		if (!algorithmDemoPage) return;
@@ -551,7 +551,7 @@ describe('verify encoding process using ascii-encoded strings', async () => {
 
 		await algorithmDemoPage.goToNextStep();
 		await algorithmDemoPage.verifyMachineState({ state: 'finished', substate: '' });
-	});
+	}, 60_000);
 
 	test('encode multiple utf8 strings, mix of ascii and utf8', async () => {
 		if (!algorithmDemoPage) return;

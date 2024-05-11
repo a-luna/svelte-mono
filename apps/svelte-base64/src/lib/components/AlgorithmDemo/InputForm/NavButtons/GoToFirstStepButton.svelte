@@ -12,7 +12,6 @@
 	{buttonNumber}
 	label={'First Step'}
 	tooltip={'Go To First Step'}
-	iconWidth={'13px'}
 	testId={'first-step-button'}
 >
 	<BasicIconRenderer icon={'fastbackward'} />

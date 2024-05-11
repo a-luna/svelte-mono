@@ -7,8 +7,10 @@
 	import { alert } from '$lib/stores/alert';
 	import { getSimpleAppContext } from '$lib/stores/context';
 	import type { AppState, AppStore } from '$lib/types';
-	import type { ButtonColor } from '@a-luna/shared-ui';
+	import type { HslColor } from '@a-luna/shared-ui';
 	import { PushableButton } from '@a-luna/shared-ui';
+	import { getCssPropertyHslColorValue } from '@a-luna/shared-ui/util';
+	import { tick } from 'svelte';
 	import type { Readable } from 'svelte/store';
 
 	let inputText: string;
@@ -16,14 +18,16 @@
 	let inputStringEncodingButtons: InputStringEncodingRadioButtons;
 	let inputBase64EncodingOptions: InputBase64EncodingRadioButtons;
 	let outputBase64EncodingOptions: OutputBase64EncodingRadioButtons;
-	let priColor: ButtonColor;
-	let secColor: ButtonColor;
+	let priColor: HslColor = { h: 0, s: 0, l: 0, a: 1 };
+	let secColor: HslColor = { h: 0, s: 0, l: 0, a: 1 };
+	const fgColor = { h: 0, s: 0, l: 0, a: 1 };
 	let state: AppState;
 	let app: Readable<AppStore>;
 	({ state, app } = getSimpleAppContext());
 
-	$: priColor = $app.encoderMode ? 'teal' : 'green';
-	$: secColor = $app.encoderMode ? 'pink' : 'indigo';
+	$: if (typeof window !== 'undefined') {
+		updateButtonColors();
+	}
 	$: inputTextBoxGridStyles = 'grid-column: 1 / span 3;';
 	$: defaultFlexStyles = 'display: flex; gap: 0.5rem;';
 	$: encodingOptionsFlexStyles = $app.isDefaultDisplay
@@ -52,8 +56,23 @@
 	}
 	$: formTitleMargin = $app.isMobileDisplay ? '0' : '-0.25rem 0 0 0';
 
-	function toggleMode() {
+	async function updateButtonColors() {
+		if (typeof window !== 'undefined') {
+			const query = `main.${$app.encoderMode ? 'encode' : 'decode'}`;
+			let mainElement: HTMLElement | null = null;
+			do {
+				mainElement = document.querySelector(query);
+				await tick();
+			} while (!mainElement);
+
+			priColor = getCssPropertyHslColorValue(mainElement, '--pri-color');
+			secColor = getCssPropertyHslColorValue(mainElement, '--sec-color');
+		}
+	}
+
+	async function toggleMode() {
 		state.toggleMode();
+		await updateButtonColors();
 		inputTextBox.focus();
 	}
 
@@ -87,20 +106,26 @@
 	<div class="switch-mode-button-wrapper">
 		<PushableButton
 			size={$app.buttonSize}
-			color={priColor}
+			bgColor={priColor}
+			{fgColor}
 			width={'100%'}
 			testid={'switch-mode-button'}
-			on:click={() => toggleMode()}>Switch Mode</PushableButton
+			on:click={() => toggleMode()}
 		>
+			Switch Mode
+		</PushableButton>
 	</div>
 	<div class="reset-form-button-wrapper">
 		<PushableButton
 			size={$app.buttonSize}
-			color={secColor}
+			bgColor={secColor}
+			{fgColor}
 			width={'100%'}
 			testid={'reset-form-button'}
-			on:click={() => resetForm()}>Reset</PushableButton
+			on:click={() => resetForm()}
 		>
+			Reset
+		</PushableButton>
 	</div>
 </div>
 <div class="encoding-options-wrapper" style={encodingOptionsFlexStyles}>
@@ -129,9 +154,15 @@
 	style={inputTextBoxGridStyles}
 	on:submit={() => submitForm()}
 />
-<PushableButton size={'xs'} color={$app.buttonColor} testid={'execute-button'} on:click={() => submitForm()}
-	>{$app.buttonLabel}</PushableButton
+<PushableButton
+	size={$app.buttonSize}
+	bgColor={priColor}
+	{fgColor}
+	testid={'execute-button'}
+	on:click={() => submitForm()}
 >
+	{$app.buttonLabel}
+</PushableButton>
 
 <style lang="postcss">
 	.form-top {
@@ -150,6 +181,7 @@
 	.input-encoding-options,
 	.output-encoding-options {
 		flex: 0 1 50%;
+		height: 55px;
 	}
 	.switch-mode-button-wrapper,
 	.reset-form-button-wrapper {
