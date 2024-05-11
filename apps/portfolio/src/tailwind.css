@@ -81,6 +81,16 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Hack';
+	font-style: normal;
+	font-weight: 700;
+	src:
+		url('/fonts/hack-bold-subset.woff2') format('woff2'),
+		url('/fonts/hack-bold-subset.woff') format('woff');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Hack';
 	font-style: italic;
 	font-weight: 400;
 	src:
@@ -88,57 +98,53 @@
 		url('/fonts/hack-italic-subset.woff') format('woff');
 }
 
-@layer components {
-	body {
-		--brand-accent: var(--accent-color);
-		/* https://ishadeed.com/article/defensive-css */
-		overflow-wrap: break-word;
-		overflow-y: auto;
-		scrollbar-gutter: stable;
-	}
+@font-face {
+	font-display: swap;
+	font-family: 'Hack';
+	font-style: italic;
+	font-weight: 700;
+	src:
+		url('/fonts/hack-bolditalic-subset.woff2') format('woff2'),
+		url('/fonts/hack-bolditalic-subset.woff') format('woff');
+}
 
-	:focus-visible {
-		outline: 2px solid var(--link-color);
-	}
+:focus-visible {
+	outline: 2px solid var(--link-color);
+}
 
-	::selection {
-		color: var(--black);
-		background-color: var(--link-color);
-	}
+::selection {
+	color: var(--black);
+	background-color: var(--link-color);
+}
 
-	::strong {
-		color: current;
-		font-weight: 700;
-	}
+::strong {
+	color: current;
+	font-weight: 700;
+}
 
-	.dark ::selection {
-		color: #1d1d1d;
-	}
+:is(
+		::-webkit-calendar-picker-indicator,
+		::-webkit-clear-button,
+		::-webkit-inner-spin-button,
+		::-webkit-outer-spin-button
+	) {
+	color: var(--link-color);
+}
 
-	:is(
-			::-webkit-calendar-picker-indicator,
-			::-webkit-clear-button,
-			::-webkit-inner-spin-button,
-			::-webkit-outer-spin-button
-		) {
-		color: var(--link-color);
-	}
+details > summary > *:first-child {
+	display: inline;
+}
 
-	details > summary > *:first-child {
-		display: inline;
-	}
+img {
+	/* https://ishadeed.com/article/defensive-css */
+	max-width: 100%;
+	object-fit: cover;
+	background-color: grey;
+}
 
-	img {
-		/* https://ishadeed.com/article/defensive-css */
-		max-width: 100%;
-		object-fit: cover;
-		background-color: grey;
-	}
-
-	ul,
-	ol {
-		list-style: revert;
-	}
+ul,
+ol {
+	list-style: revert;
 }
 
 :root {
@@ -338,6 +344,14 @@
 	--g-color-1: var(--purple);
 	--g-color-2: var(--green);
 	--heading-underline-gradient: linear-gradient(to right, var(--g-color-1), var(--g-color-2));
+	--scrollbarBg: hsl(0, 0%, 5%);
+	--thumbBg: hsl(161.97 100% 49%);
+	--thumbBg: oklch(86.47% 0.257 162.56);
+	overflow-y: scroll;
+	overflow-x: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--thumbBg) var(--scrollbarBg);
+	scrollbar-gutter: stable;
 }
 
 body {
@@ -359,11 +373,13 @@ body {
 	--gradient: linear-gradient(to right, hsl(254.04 100% 55%), hsl(180 100% 49%));
 	--gradient: linear-gradient(to right, oklch(49.6% 0.307 278.18), oklch(88.4% 0.199 194.78));
 
+	--brand-accent: var(--accent-color);
 	--code-block-bg-color: #141414;
 	--code-block-border-color: var(--dark-gray-shade2);
 	--toggle-group-bg-color: var(--code-block-bg-color);
-	background-color: var(--page-bg-color);
 
+	background-color: var(--page-bg-color);
+	overflow-wrap: break-word;
 	font-family: 'Roboto', Inter, Arial, Helvetica, sans-serif;
 	letter-spacing: 0.4px;
 	height: 100%;
@@ -373,16 +389,6 @@ body {
   CUSTOM SCROLLBARS! 
   - https://css-tricks.com/strut-your-stuff-with-a-custom-scrollbar/
   */
-
-body {
-	--scrollbarBg: hsl(0, 0%, 5%);
-	--thumbBg: hsl(161.97 100% 49%);
-	--thumbBg: oklch(86.47% 0.257 162.56);
-	overflow-y: scroll;
-	overflow-x: auto;
-	scrollbar-width: thin;
-	scrollbar-color: var(--thumbBg) var(--scrollbarBg);
-}
 
 body::-webkit-scrollbar {
 	width: 0.5rem;
@@ -651,7 +657,7 @@ body::-webkit-scrollbar-corner {
 }
 
 .prose a {
-	font-weight: 400;
+	font-weight: 500;
 }
 
 .prose p,
@@ -664,7 +670,6 @@ body::-webkit-scrollbar-corner {
 	font-family: 'Roboto', Inter, Arial, Helvetica, sans-serif;
 	font-size: 0.8rem;
 	line-height: 1.6;
-	font-weight: 300;
 }
 
 article header {

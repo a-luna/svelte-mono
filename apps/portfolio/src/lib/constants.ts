@@ -80,7 +80,6 @@ export const TECH_LIST = [
 ] as const;
 
 export const REPO_NAMES = [
-	'null',
 	'aaronluna.dev',
 	'async-file-server',
 	'console-progress-bar',
@@ -88,10 +87,6 @@ export const REPO_NAMES = [
 	'fastapi-redis-cache',
 	'flask-api-tutorial',
 	'packer-examples',
-	'svelte-base64-ts',
-	'svelte-base64',
-	'svelte-color-tools',
-	'svelte-mono',
 	'svelte-simple-tables-docs',
 	'svelte-simple-tables',
 	'unicode-api',
@@ -100,15 +95,13 @@ export const REPO_NAMES = [
 	'vigorish',
 ] as const;
 
-export const FEATURED_PROJECTS = [
-	'fastapi-redis-cache',
-	'svelte-base64-ts',
-	'svelte-color-tools',
-	'svelte-mono',
-	'svelte-simple-tables',
-	'unicode-api',
-	'vigorish',
-];
+export const MONOREPO_NAMES = ['svelte-mono', ''] as const;
+
+export const MONOREPO_PROJECTS = ['portfolio', 'svelte-base64', 'svelte-color-tools'] as const;
+
+export const PROJECT_NAMES = [...REPO_NAMES, ...MONOREPO_PROJECTS] as const;
+
+export const FEATURED_PROJECTS = ['fastapi-redis-cache', 'svelte-simple-tables', 'unicode-api', 'vigorish'] as const;
 
 export const PROJECT_TYPES = ['allProjects', 'backend', 'frontend'] as const;
 
@@ -137,6 +130,7 @@ export const defaultAppState: AppStore = {
 	screenSize: 'lg',
 	fadeInDelay: 0,
 	showScrollToTopButton: false,
+	scrollY: 0,
 };
 
 export const nullRepoWithMetadata: RepoWithMetaData = {
@@ -154,6 +148,9 @@ export const nullRepoWithMetadata: RepoWithMetaData = {
 	updatedAt: '',
 	deployedUrl: '',
 	projectSiteTitle: '',
+	inMonorepo: false,
+	monorepoName: '',
+	monorepoProjectPath: '',
 };
 
 export const nullBlogPost: BlogPost = {

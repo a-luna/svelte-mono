@@ -1,12 +1,12 @@
 <script lang="ts">
 	import ProjectSummary from '$lib/components/ProjectCard/ProjectSummary.svelte';
-	import { FEATURED_PROJECTS } from '$lib/constants';
 	import { userRepos } from '$lib/stores';
+	import { isFeaturedProject } from '$lib/typeguards';
 	import type { RepoWithMetaData } from '$lib/types';
 
 	let featuredProjects: RepoWithMetaData[] = [];
 
-	$: featuredProjects = $userRepos.repos.filter((project) => FEATURED_PROJECTS.includes(project.name));
+	$: featuredProjects = $userRepos.repos.filter((project) => isFeaturedProject(project.name));
 </script>
 
 <div>
@@ -28,12 +28,10 @@
 
 	.featured-projects :global(.project-name) {
 		font-size: 1.25rem;
-		font-weight: 300;
 	}
 
 	.featured-projects :global(.project-description) {
 		font-size: 0.8rem;
-		font-weight: 400;
 	}
 
 	.featured-projects :global(div.language-list .filter-value) {
@@ -52,7 +50,6 @@
 
 		.featured-projects :global(.project-description) {
 			font-size: 0.9rem;
-			font-weight: 300;
 		}
 
 		.featured-projects :global(div.language-list .filter-value) {

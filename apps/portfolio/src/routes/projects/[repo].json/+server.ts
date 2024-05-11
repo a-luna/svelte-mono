@@ -9,7 +9,10 @@ import { get } from 'svelte/store';
 import type { RequestEvent, RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) => {
-	const endpoint = `repos/${GH_USER}/${params.repo}/readme`;
+	const { repos } = get(userRepos);
+	const repo = repos.find((r) => r.name === params.repo) || ({} as RepoWithMetaData);
+
+	const endpoint = repo.inMonorepo ? getMonorepoProjectReadme(repo) : getRepositoryReadme(repo);
 	const result = await api.get(
 		`${API_BASE_URL}/${endpoint}`,
 		{ type: 'Token', token: API_KEY },
@@ -20,8 +23,6 @@ export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) 
 	}
 	const response = result.value;
 	const markdown = await response.text().catch(() => '');
-	const { repos } = get(userRepos);
-	const repo = repos.find((r) => r.name === params.repo) || ({} as RepoWithMetaData);
 	const readme = await convertReadmeToHtml(markdown, repo);
 
 	setHeaders({
@@ -29,3 +30,8 @@ export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) 
 	});
 	return json(readme);
 };
+
+const getRepositoryReadme = (repo: RepoWithMetaData): string => `repos/${GH_USER}/${repo.name}/readme`;
+
+const getMonorepoProjectReadme = (project: RepoWithMetaData): string =>
+	`repos/${GH_USER}/${project.monorepoName}/contents/${project.monorepoProjectPath}/README.md`;

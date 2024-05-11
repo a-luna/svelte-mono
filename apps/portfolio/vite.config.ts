@@ -4,7 +4,7 @@ import type { UserConfig } from 'vite';
 import { imagetools } from 'vite-imagetools';
 
 const config: UserConfig = {
-	plugins: [imagetools({ force: true }), sveltekit()],
+	plugins: [imagetools(), sveltekit()],
 	optimizeDeps: {
 		exclude: ['node-html-parser', 'node-fetch', 'mdsvex', 'highlight.js', 'highlight.js/lib/core'],
 	},

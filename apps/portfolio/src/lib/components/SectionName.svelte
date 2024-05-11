@@ -6,7 +6,7 @@
 </script>
 
 <div class="section-name">
-	<h1 in:typewriter={{ speed: 75 }}>
+	<h1 in:typewriter={{ speed: 85 }}>
 		{title}
 	</h1>
 	<span class="cursor" class:cursor-blink={!$sectionTransition.inProgress || $isInitialPageLoad} />
@@ -16,7 +16,7 @@
 	.section-name {
 		display: flex;
 		gap: 0.25rem;
-		font-family: 'Roboto Mono', menlo, consolas, monospace;
+		font-family: Hack, menlo, consolas, monospace;
 		background-color: var(--accent-color);
 		width: 100%;
 		padding: 0.75rem 0.5rem;
