@@ -66,12 +66,6 @@
 </div>
 
 <style>
-	.radio-group {
-		display: flex;
-		flex-flow: column nowrap;
-		align-items: center;
-		width: 100%;
-	}
 	.button-wrapper {
 		flex: 0 1 75px;
 	}
@@ -80,8 +74,6 @@
 		border-radius: 4px;
 		padding: 2px 0;
 		font-size: 0.875rem;
-		width: 100%;
-		height: 100%;
 	}
 	legend {
 		color: var(--fieldset-title-color);
