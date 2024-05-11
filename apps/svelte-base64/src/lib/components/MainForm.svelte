@@ -25,6 +25,10 @@
 		padding: 1rem;
 	}
 	.base64 {
+		--pushable-button-padding: 7.2px 18px;
+		--pushable-button-font-size: 12px;
+		--pushable-button-font-weight: 700;
+
 		display: grid;
 		grid-template-columns: 87px 1fr 1fr 87px;
 		grid-template-rows: 78px auto 31px auto auto 1fr;
