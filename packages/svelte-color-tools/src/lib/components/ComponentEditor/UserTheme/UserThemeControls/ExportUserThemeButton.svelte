@@ -4,8 +4,8 @@
 	export let disabled = false;
 </script>
 
-<ThemeButton tooltip={'Export User Theme'} {disabled} iconWidth={'25px'} on:click>
+<ThemeButton tooltip={'Export User Theme'} {disabled} iconWidth={'18px'} on:click>
 	<svelte:fragment slot="icon">
-		<BasicIconRenderer icon={'export'} width={'25px'} />
+		<BasicIconRenderer icon={'export'} width={'18px'} />
 	</svelte:fragment>
 </ThemeButton>

@@ -33,7 +33,7 @@
 <div class="bg-color-selector">
 	Background Color
 	<BgColorSelector bind:value={bgColorHex} disabled={useCustomColor} />
-	<UseCustomColorCheckbox {componentColor} bind:checked={useCustomColor} />
+	<UseCustomColorCheckbox bind:checked={useCustomColor} />
 	{#if useCustomColor}
 		<InputTextBox
 			bind:this={customColorTextBox}

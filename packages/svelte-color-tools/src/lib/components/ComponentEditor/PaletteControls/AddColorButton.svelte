@@ -7,7 +7,7 @@
 	$: tooltip = disabled ? 'Select a palette from the list above' : 'Add color to the selected palette';
 </script>
 
-<ThemeButton {tooltip} {disabled} gridStyle={style} on:click>
+<ThemeButton {tooltip} {disabled} gridStyle={style} iconWidth={'16px'} on:click>
 	<svelte:fragment slot="icon">
 		<BasicIconRenderer icon={'plus'} />
 	</svelte:fragment>
