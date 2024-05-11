@@ -15,13 +15,13 @@
 			<h2 class="project-name">{project.name}</h2>
 			<p class="last-updated">last updated {lastUpdated}</p>
 			<ProjectCategories {project} />
-	</div>
+		</div>
 		<p class="project-description">{project.description}</p>
 		{#if project?.languages?.length}
-		<div class="language-list">
-			<ProjectLanguages {project} />
-		</div>
-	{/if}
+			<div class="language-list">
+				<ProjectLanguages {project} />
+			</div>
+		{/if}
 	</div>
 {/if}
 
@@ -52,7 +52,6 @@
 	.last-updated {
 		color: var(--gray);
 		font-size: 0.8rem;
-		font-weight: 300;
 	}
 
 	.details-top :global(.category-list) {
@@ -73,13 +72,13 @@
 		letter-spacing: 0.75px;
 		line-height: 1.5;
 		max-width: 40rem;
-		color: var(--gray);
+		color: var(--tw-prose-invert-body);
 		margin: 0;
 	}
 
 	@media screen and (min-width: 640px) {
 		.details-top {
-			gap: 0.65rem
+			gap: 0.65rem;
 		}
 		h2 {
 			font-size: 1.5rem;
@@ -98,7 +97,6 @@
 		}
 		.project-description {
 			font-size: 1rem;
-			font-weight: 300;
 		}
 	}
 </style>
