@@ -25,14 +25,18 @@ import type {
 import type {
 	BACKEND_CATEGORIES,
 	CONTENT_TYPES,
+	FEATURED_PROJECTS,
 	FRONTEND_CATEGORIES,
 	HTTP_AUTH_TYPES,
 	HTTP_METHODS,
 	ICON_COLORS,
 	ICON_NAMES,
+	MONOREPO_NAMES,
+	MONOREPO_PROJECTS,
 	NAV_ICON_NAMES,
 	PAGE_TYPES,
 	PROJECT_CATEGORIES,
+	PROJECT_NAMES,
 	PROJECT_TYPES,
 	REPO_NAMES,
 	SCREEN_SIZES,
@@ -76,6 +80,10 @@ export type IconName = (typeof ICON_NAMES)[number];
 export type NavIconName = (typeof NAV_ICON_NAMES)[number];
 export type IconColor = (typeof ICON_COLORS)[number];
 export type RepoName = (typeof REPO_NAMES)[number];
+export type Monorepo = (typeof MONOREPO_NAMES)[number];
+export type MonorepoProjectName = (typeof MONOREPO_PROJECTS)[number];
+export type ProjectName = (typeof PROJECT_NAMES)[number];
+export type FeaturedProject = (typeof FEATURED_PROJECTS)[number];
 export type ProjectType = (typeof PROJECT_TYPES)[number];
 export type FrontendCategory = (typeof FRONTEND_CATEGORIES)[number];
 export type BackendCategory = (typeof BACKEND_CATEGORIES)[number];
@@ -316,8 +324,48 @@ export interface GHRepo {
 	subscribers_count?: number;
 }
 
+export interface GHCommit {
+	url: string;
+	sha: string;
+	node_id: string;
+	html_url: string;
+	comments_url: string;
+	commit: {
+		url: string;
+		author: {
+			name: string;
+			email: string;
+			date: string;
+		};
+		committer: {
+			name: string;
+			email: string;
+			date: string;
+		};
+		message: string;
+		tree: {
+			url: string;
+			sha: string;
+		};
+		comment_count: number;
+		verification: {
+			verified: boolean;
+			reason: string;
+			signature: string | null;
+			payload: string | null;
+		};
+	};
+	author: GHUser;
+	committer: GHUser;
+	parents: {
+		url: string;
+		sha: string;
+		html_url: string;
+	}[];
+}
+
 export interface RepoWithMetaData {
-	name: RepoName;
+	name: ProjectName;
 	description: string;
 	starCount: number;
 	forkCount: number;
@@ -331,6 +379,9 @@ export interface RepoWithMetaData {
 	updatedAt: string;
 	deployedUrl: string;
 	projectSiteTitle: string;
+	inMonorepo: boolean;
+	monorepoName: Monorepo;
+	monorepoProjectPath: string;
 }
 
 export interface CachedProjectData {

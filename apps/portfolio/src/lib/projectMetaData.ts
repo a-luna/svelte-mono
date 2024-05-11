@@ -1,19 +1,17 @@
 import { dev } from '$app/environment';
 import { nullRepoWithMetadata } from '$lib/constants';
-import { isUserRepo } from '$lib/typeguards';
-import type { CachedProjectData, GHRepo, LanguageOrTech, ProjectCategory, RepoWithMetaData } from '$lib/types';
+import { isSiteProject, isUserRepo } from '$lib/typeguards';
+import type {
+	CachedProjectData,
+	GHRepo,
+	Monorepo,
+	MonorepoProjectName,
+	ProjectName,
+	RepoWithMetaData,
+} from '$lib/types';
 import { addHours, isWithinInterval, parseISO } from 'date-fns';
 
-export const repoDataDepot: {
-	[key: string]: {
-		primaryLanguage: LanguageOrTech;
-		primaryCategory: 'frontend' | 'backend';
-		languages: LanguageOrTech[];
-		categories: ProjectCategory[];
-		deployedUrl: string;
-		projectSiteTitle: string;
-	};
-} = {
+export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 	'aaronluna.dev': {
 		primaryLanguage: 'Hugo',
 		primaryCategory: 'frontend',
@@ -21,6 +19,8 @@ export const repoDataDepot: {
 		categories: ['blog_portfolio_sites'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
+		monorepoName: '',
 	},
 	'async-file-server': {
 		primaryLanguage: 'CSharp',
@@ -29,6 +29,8 @@ export const repoDataDepot: {
 		categories: ['cli_apps'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
+		monorepoName: '',
 	},
 	'console-progress-bar': {
 		primaryLanguage: 'CSharp',
@@ -37,6 +39,7 @@ export const repoDataDepot: {
 		categories: ['cli_apps'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 	'dotnetcore-crypto': {
 		primaryLanguage: 'CSharp',
@@ -45,6 +48,7 @@ export const repoDataDepot: {
 		categories: ['cryptography'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 	'fastapi-redis-cache': {
 		primaryLanguage: 'Python',
@@ -53,6 +57,7 @@ export const repoDataDepot: {
 		categories: ['dev_tools', 'fastapi_plugins'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 	'flask-api-tutorial': {
 		primaryLanguage: 'Python',
@@ -61,6 +66,7 @@ export const repoDataDepot: {
 		categories: ['docs_guides', 'rest_api'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 	'packer-examples': {
 		primaryLanguage: 'Shell',
@@ -69,30 +75,50 @@ export const repoDataDepot: {
 		categories: ['dev_tools', 'devops'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
-	'svelte-base64-ts': {
+	portfolio: {
+		name: 'portfolio',
+		description: 'My personal website/blog/portfolio, built with sveltekit',
+		primaryLanguage: 'Svelte',
+		primaryCategory: 'frontend',
+		languages: ['TypeScript', 'XState'],
+		categories: ['web_app'],
+		updatedAt: new Date().toISOString(),
+		deployedUrl: dev ? 'http://localhost:3504/' : 'https://portfolio.aaronluna.dev/',
+		projectSiteTitle: 'aaronluna.dev',
+		inMonorepo: true,
+		monorepoName: 'svelte-mono',
+		monorepoProjectPath: 'apps/portfolio',
+	},
+	'svelte-base64': {
+		name: 'svelte-base64',
+		description:
+			'Web app that explains how base64 encoding works step-by-step for any string or data and shows the process visually',
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['Playwright', 'TypeScript', 'XState'],
 		categories: ['web_app'],
+		updatedAt: new Date().toISOString(),
 		deployedUrl: dev ? 'http://localhost:3500/' : 'https://base64.aaronluna.dev/',
 		projectSiteTitle: 'Base64 Algorithm Demonstration',
-	},
-	'svelte-base64': {
-		primaryLanguage: 'Svelte',
-		primaryCategory: 'frontend',
-		languages: ['Cypress'],
-		categories: ['web_app'],
-		deployedUrl: '',
-		projectSiteTitle: '',
+		inMonorepo: true,
+		monorepoName: 'svelte-mono',
+		monorepoProjectPath: 'apps/svelte-base64',
 	},
 	'svelte-color-tools': {
+		name: 'svelte-color-tools',
+		description: 'Svelte component library containing helpful ColorPicker and ColorPalette components.',
 		primaryLanguage: 'Svelte',
 		primaryCategory: 'frontend',
 		languages: ['RegExp', 'TailwindCSS', 'TypeScript'],
 		categories: ['component_library'],
 		deployedUrl: '',
+		updatedAt: new Date().toISOString(),
 		projectSiteTitle: '',
+		inMonorepo: true,
+		monorepoName: 'svelte-mono',
+		monorepoProjectPath: 'packages/svelte-color-tools',
 	},
 	'svelte-simple-tables-docs': {
 		primaryLanguage: 'Svelte',
@@ -101,6 +127,7 @@ export const repoDataDepot: {
 		categories: ['docs_guides', 'web_app', 'component_library'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 	'svelte-simple-tables': {
 		primaryLanguage: 'Svelte',
@@ -109,6 +136,7 @@ export const repoDataDepot: {
 		categories: ['component_library'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 	'unicode-api': {
 		primaryLanguage: 'Python',
@@ -117,6 +145,7 @@ export const repoDataDepot: {
 		categories: ['rest_api'],
 		deployedUrl: dev ? 'http://localhost:3507/' : 'https://unicode-api.aaronluna.dev/v1/docs',
 		projectSiteTitle: 'Unicode API Docs (Swagger UI)',
+		inMonorepo: false,
 	},
 	'vig-api': {
 		primaryLanguage: 'Python',
@@ -125,6 +154,7 @@ export const repoDataDepot: {
 		categories: ['rest_api'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 	'vig-data': {
 		primaryLanguage: 'Svelte',
@@ -133,6 +163,7 @@ export const repoDataDepot: {
 		categories: ['web_app'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 	vigorish: {
 		primaryLanguage: 'Python',
@@ -141,11 +172,12 @@ export const repoDataDepot: {
 		categories: ['cli_apps', 'web_scraping'],
 		deployedUrl: '',
 		projectSiteTitle: '',
+		inMonorepo: false,
 	},
 };
 
 export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
-	isUserRepo(project.name)
+	isSiteProject(project.name)
 		? {
 				name: project.name,
 				description: project.description,
@@ -161,6 +193,9 @@ export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
 				updatedAt: project.pushed_at || new Date().toISOString(),
 				deployedUrl: repoDataDepot?.[project.name]?.deployedUrl || '',
 				projectSiteTitle: repoDataDepot?.[project.name]?.projectSiteTitle ?? '',
+				inMonorepo: false,
+				monorepoName: '',
+				monorepoProjectPath: '',
 			}
 		: nullRepoWithMetadata;
 
@@ -372,15 +407,6 @@ export const cachedUserRepos: GHRepo[] = [
 		forks_url: 'https://api.github.com/repos/a-luna/svelte-base64-ts/forks',
 	},
 	{
-		name: 'svelte-color-tools',
-		description: 'Svelte component library containing helpful ColorPicker and ColorPalette components.',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/svelte-color-tools',
-		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-color-tools/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-color-tools/forks',
-	},
-	{
 		name: 'svelte-simple-datatables',
 		description: 'A Datatable component for Svelte',
 		stargazers_count: 0,
@@ -474,6 +500,25 @@ export const convertGHRepos = (ghRepos: GHRepo[]): RepoWithMetaData[] =>
 	Object.values(ghRepos)
 		.filter((r) => isUserRepo(r.name))
 		.map(updateProjectMetaData);
+
+export function convertMonorepoProjects(
+	monorepoProjectData: Record<Monorepo, Record<MonorepoProjectName, string>>,
+): RepoWithMetaData[] {
+	const monorepoProjects: RepoWithMetaData[] = [];
+	for (const projects of Object.values(monorepoProjectData)) {
+		for (const [projectName, lastCommitDate] of Object.entries(projects)) {
+			if (!isSiteProject(projectName)) continue;
+			const project = repoDataDepot?.[projectName] ?? nullRepoWithMetadata;
+			project.repoUrl = `https://github.com/a-luna/${project.monorepoName}/tree/main/${project.monorepoProjectPath}`;
+			monorepoProjects.push({
+				...nullRepoWithMetadata,
+				...project,
+				updatedAt: lastCommitDate,
+			});
+		}
+	}
+	return monorepoProjects;
+}
 
 export const cacheIsStale = (cachedAt: string): boolean =>
 	!isWithinInterval(new Date(), { start: parseISO(cachedAt), end: addHours(parseISO(cachedAt), 6) });
