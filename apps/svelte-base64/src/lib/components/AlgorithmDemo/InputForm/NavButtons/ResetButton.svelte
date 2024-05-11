@@ -7,13 +7,6 @@
 	let defaultNavAction: EncodingEvent = { type: 'RESET' };
 </script>
 
-<NavButton
-	{defaultNavAction}
-	{buttonNumber}
-	label={'Reset'}
-	tooltip={'Reset'}
-	iconWidth={'12px'}
-	testId={'reset-button'}
->
+<NavButton {defaultNavAction} {buttonNumber} label={'Reset'} tooltip={'Reset'} testId={'reset-button'}>
 	<BasicIconRenderer icon={'reset'} />
 </NavButton>

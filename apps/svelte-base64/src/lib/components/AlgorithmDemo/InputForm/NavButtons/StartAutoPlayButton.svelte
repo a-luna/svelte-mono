@@ -27,7 +27,6 @@
 	{buttonNumber}
 	label={'Start Autoplay'}
 	tooltip={'Start Autoplay'}
-	iconWidth={'10px'}
 	testId={'start-autoplay-button'}
 >
 	<BasicIconRenderer icon={'play'} />

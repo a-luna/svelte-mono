@@ -27,7 +27,6 @@
 	{buttonNumber}
 	label={'Last Step'}
 	tooltip={'Go To Last Step'}
-	iconWidth={'13px'}
 	testId={'last-step-button'}
 >
 	<BasicIconRenderer icon={'fastforward'} />

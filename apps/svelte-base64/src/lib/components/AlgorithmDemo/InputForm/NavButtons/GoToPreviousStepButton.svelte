@@ -12,7 +12,6 @@
 	{buttonNumber}
 	label={'Prev. Step'}
 	tooltip={'Go To Previous Step'}
-	iconWidth={'11px'}
 	testId={'previous-step-button'}
 >
 	<BasicIconRenderer icon={'stepbackward'} />

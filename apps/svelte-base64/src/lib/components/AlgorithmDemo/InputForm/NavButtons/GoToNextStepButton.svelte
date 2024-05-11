@@ -27,7 +27,6 @@
 	{buttonNumber}
 	label={'Next Step'}
 	tooltip={'Go To Next Step'}
-	iconWidth={'11px'}
 	testId={'next-step-button'}
 >
 	<BasicIconRenderer icon={'stepforward'} />
