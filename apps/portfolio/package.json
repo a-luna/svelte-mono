@@ -25,7 +25,7 @@
 		"@giscus/svelte": "^2.4.0",
 		"@stefanprobst/remark-shiki": "2.1.0",
 		"@sveltejs/adapter-node": "^5.0.1",
-		"@sveltejs/kit": "^2.5.7",
+		"@sveltejs/kit": "^2.5.8",
 		"@sveltejs/vite-plugin-svelte": "^3.1.0",
 		"@tailwindcss/typography": "^0.5.13",
 		"autoprefixer": "^10.4.19",
