@@ -176,6 +176,7 @@ main {
 
 	--pri-color: hsl(var(--pri-h) var(--pri-s) var(--pri-l) / var(--pri-a));
 	--sec-color: hsl(var(--sec-h) var(--sec-s) var(--sec-l) / var(--sec-a));
+	--error-color: var(--red4);
 
 	/* Form Title */
 	--form-title-text-color: hsl(

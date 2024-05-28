@@ -25,6 +25,7 @@
 		padding: 1rem;
 	}
 	.base64 {
+		--pushable-button-width: 100%;
 		--pushable-button-padding: 7.2px 18px;
 		--pushable-button-font-size: 12px;
 		--pushable-button-font-weight: 700;
