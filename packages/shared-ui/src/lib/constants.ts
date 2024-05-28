@@ -129,10 +129,12 @@ export const LANGTECH_ICON_NAMES = [
 	'fastapi',
 	'flask',
 	'hugo',
+	'javascript',
 	'lxml',
 	'microsoft',
 	'playwright',
 	'puppeteer',
+	'pydantic',
 	'python',
 	'redis',
 	'regexp',
@@ -143,6 +145,7 @@ export const LANGTECH_ICON_NAMES = [
 	'tailwind',
 	'typescript',
 	'xml',
+	'xpath',
 	'xstate',
 ] as const;
 
@@ -298,3 +301,7 @@ export const X11_NAMED_COLORS = [
 	'Yellow',
 	'YellowGreen',
 ];
+
+export const CSS_ABSOLUTE_LENGTH_UNITS = ['cm', 'mm', 'Q', 'in', 'pc', 'pt', 'px'] as const;
+export const CSS_RELATIVE_LENGTH_UNITS = ['em', 'ex', 'ch', 'rem', 'lh', 'vw', 'vh', 'vmin', 'vmax'] as const;
+export const CSS_ANGLE_UNITS = ['deg', 'grad', 'rad', 'turn'] as const;

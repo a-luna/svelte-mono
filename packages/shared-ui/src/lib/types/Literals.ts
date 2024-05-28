@@ -6,6 +6,9 @@ import type {
 	COLOR_SCHEMES,
 	COLOR_SPACES,
 	COMPONENT_COLORS,
+	CSS_ABSOLUTE_LENGTH_UNITS,
+	CSS_ANGLE_UNITS,
+	CSS_RELATIVE_LENGTH_UNITS,
 	HEX_STRING_FORMATS,
 	NUMBER_TYPES,
 	UI_THEME_VALUES,
@@ -36,3 +39,6 @@ export type LchComponent = Subset<ColorFormatComponents, 'light' | 'chroma' | 'h
 export type LabComponent = Subset<ColorFormatComponents, 'light' | 'aaxis' | 'baxis' | 'alpha'>;
 export type ButtonColor = (typeof BUTTON_COLORS)[number];
 export type ButtonSize = (typeof BUTTON_SIZES)[number];
+export type CssAbsoluteLengthUnit = (typeof CSS_ABSOLUTE_LENGTH_UNITS)[number];
+export type CssRelativeLengthUnit = (typeof CSS_RELATIVE_LENGTH_UNITS)[number];
+export type CssAngleUnit = (typeof CSS_ANGLE_UNITS)[number];

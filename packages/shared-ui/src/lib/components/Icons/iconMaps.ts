@@ -95,9 +95,11 @@ import {
 	FastApi,
 	Flask,
 	Hugo,
+	JavaScript,
 	Microsoft,
 	Playwright,
 	Puppeteer,
+	Pydantic,
 	Python,
 	Redis,
 	RegExp,
@@ -106,13 +108,21 @@ import {
 	Tailwind,
 	TypeScript,
 	Xml,
+	XPath,
 	XState,
 } from '$lib/components/Icons/LanguageTech';
 
-import type { AllIcons, BasicIconName, LanguageTechIconName, SocialIconName } from '$lib/types/Icons';
+import type {
+	BasicIcon,
+	BasicIconName,
+	LanguageTechIcon,
+	LanguageTechIconName,
+	SocialIcon,
+	SocialIconName,
+} from '$lib/types/Icons';
 
-function createBasicIconMap(): Map<BasicIconName, AllIcons> {
-	const iconMap = new Map<BasicIconName, AllIcons>();
+function createBasicIconMap(): Map<BasicIconName, BasicIcon> {
+	const iconMap = new Map<BasicIconName, BasicIcon>();
 	iconMap.set('angledoubleleft', AngleDoubleLeft);
 	iconMap.set('angledoubleright', AngleDoubleRight);
 	iconMap.set('arrow', Arrow);
@@ -192,8 +202,8 @@ function createBasicIconMap(): Map<BasicIconName, AllIcons> {
 	return iconMap;
 }
 
-function createSocialIconMap(): Map<SocialIconName, AllIcons> {
-	const iconMap = new Map<SocialIconName, AllIcons>();
+function createSocialIconMap(): Map<SocialIconName, SocialIcon> {
+	const iconMap = new Map<SocialIconName, SocialIcon>();
 	iconMap.set('codepen', Codepen);
 	iconMap.set('github', Github);
 	iconMap.set('github2', Github2);
@@ -206,18 +216,20 @@ function createSocialIconMap(): Map<SocialIconName, AllIcons> {
 	return iconMap;
 }
 
-function createLangTechIconMap(): Map<LanguageTechIconName, AllIcons> {
-	const iconMap = new Map<LanguageTechIconName, AllIcons>();
+function createLangTechIconMap(): Map<LanguageTechIconName, LanguageTechIcon> {
+	const iconMap = new Map<LanguageTechIconName, LanguageTechIcon>();
 	iconMap.set('aws', Aws);
 	iconMap.set('csharp', Microsoft);
 	iconMap.set('cypress', Cypress);
 	iconMap.set('fastapi', FastApi);
 	iconMap.set('flask', Flask);
 	iconMap.set('hugo', Hugo);
+	iconMap.set('javascript', JavaScript);
 	iconMap.set('lxml', Code);
 	iconMap.set('microsoft', Microsoft);
 	iconMap.set('playwright', Playwright);
 	iconMap.set('puppeteer', Puppeteer);
+	iconMap.set('pydantic', Pydantic);
 	iconMap.set('python', Python);
 	iconMap.set('redis', Redis);
 	iconMap.set('regexp', RegExp);
@@ -228,6 +240,7 @@ function createLangTechIconMap(): Map<LanguageTechIconName, AllIcons> {
 	iconMap.set('tailwind', Tailwind);
 	iconMap.set('typescript', TypeScript);
 	iconMap.set('xml', Xml);
+	iconMap.set('xpath', XPath);
 	iconMap.set('xstate', XState);
 	return iconMap;
 }

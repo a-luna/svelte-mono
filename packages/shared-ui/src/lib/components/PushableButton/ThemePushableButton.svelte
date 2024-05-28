@@ -1,11 +1,9 @@
 <script lang="ts">
-	import type { ButtonSize, HslColor } from '$lib';
+	import type { HslColor } from '$lib';
 	import PushableButtonBase from '$lib/components/PushableButton/PushableButtonBase.svelte';
 	import { getCssPropertyValue, getRandomHexString } from '$lib/util';
 
-	export let size: ButtonSize = 'sm';
 	export let disabled = false;
-	export let width = 'auto';
 	export let testid = `button-${getRandomHexString({ length: 4 })}`;
 	let buttonElement: HTMLButtonElement;
 	let fgColor: HslColor | undefined = undefined;
@@ -46,6 +44,26 @@
 	}
 </script>
 
-<PushableButtonBase bind:buttonElement {fgColor} {bgColor} {size} {disabled} {width} {testid}>
-	<slot></slot>
+<PushableButtonBase bind:buttonElement {fgColor} {bgColor} {disabled} {testid}>
+	{#if $$slots.icon}
+		<div class="icon">
+			<slot name="icon" />
+		</div>
+	{/if}
+	{#if $$slots.label}
+		<div class="label">
+			<slot name="label" />
+		</div>
+	{/if}
 </PushableButtonBase>
+
+<style lang="postcss">
+	.icon {
+		width: var(--pushable-button-icon-size, var(--pushable-button-default-icon-size));
+		height: var(--pushable-button-icon-size, var(--pushable-button-default-icon-size));
+		flex: 0 0 auto;
+	}
+	.label {
+		flex: 1;
+	}
+</style>
