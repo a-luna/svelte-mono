@@ -20,12 +20,14 @@
 	let outputBase64EncodingOptions: OutputBase64EncodingRadioButtons;
 	let priColor: HslColor = { h: 0, s: 0, l: 0, a: 1 };
 	let secColor: HslColor = { h: 0, s: 0, l: 0, a: 1 };
+	let errorColor: HslColor = { h: 0, s: 0, l: 0, a: 1 };
 	const fgColor = { h: 0, s: 0, l: 0, a: 1 };
 	let state: AppState;
 	let app: Readable<AppStore>;
+	let initialized = false;
 	({ state, app } = getSimpleAppContext());
 
-	$: if (typeof window !== 'undefined') {
+	$: if (typeof window !== 'undefined' && !initialized) {
 		updateButtonColors();
 	}
 	$: inputTextBoxGridStyles = 'grid-column: 1 / span 3;';
@@ -55,6 +57,7 @@
 		$state.resetPerformed = false;
 	}
 	$: formTitleMargin = $app.isMobileDisplay ? '0' : '-0.25rem 0 0 0';
+	$: execButtonColor = $app.inputStringIsValid ? priColor : errorColor;
 
 	async function updateButtonColors() {
 		if (typeof window !== 'undefined') {
@@ -67,6 +70,10 @@
 
 			priColor = getCssPropertyHslColorValue(mainElement, '--pri-color');
 			secColor = getCssPropertyHslColorValue(mainElement, '--sec-color');
+			errorColor = getCssPropertyHslColorValue(mainElement, '--error-color');
+			initialized = true;
+		} else {
+			initialized = false;
 		}
 	}
 
@@ -104,26 +111,12 @@
 <div class="form-top">
 	<FormTitle title={$app.formTitle} margin={formTitleMargin} />
 	<div class="switch-mode-button-wrapper">
-		<PushableButton
-			size={$app.buttonSize}
-			bgColor={priColor}
-			{fgColor}
-			width={'100%'}
-			testid={'switch-mode-button'}
-			on:click={() => toggleMode()}
-		>
+		<PushableButton bgColor={priColor} {fgColor} testid={'switch-mode-button'} on:click={() => toggleMode()}>
 			Switch Mode
 		</PushableButton>
 	</div>
 	<div class="reset-form-button-wrapper">
-		<PushableButton
-			size={$app.buttonSize}
-			bgColor={secColor}
-			{fgColor}
-			width={'100%'}
-			testid={'reset-form-button'}
-			on:click={() => resetForm()}
-		>
+		<PushableButton bgColor={secColor} {fgColor} testid={'reset-form-button'} on:click={() => resetForm()}>
 			Reset
 		</PushableButton>
 	</div>
@@ -154,13 +147,7 @@
 	style={inputTextBoxGridStyles}
 	on:submit={() => submitForm()}
 />
-<PushableButton
-	size={$app.buttonSize}
-	bgColor={priColor}
-	{fgColor}
-	testid={'execute-button'}
-	on:click={() => submitForm()}
->
+<PushableButton bgColor={execButtonColor} {fgColor} testid={'execute-button'} on:click={() => submitForm()}>
 	{$app.buttonLabel}
 </PushableButton>
 
@@ -185,6 +172,8 @@
 	}
 	.switch-mode-button-wrapper,
 	.reset-form-button-wrapper {
+		--pushable-button-width: 115px;
+		place-self: center stretch;
 		flex: 1;
 	}
 	.switch-mode-button-wrapper {
