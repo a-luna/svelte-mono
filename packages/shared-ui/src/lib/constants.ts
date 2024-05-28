@@ -129,10 +129,12 @@ export const LANGTECH_ICON_NAMES = [
 	'fastapi',
 	'flask',
 	'hugo',
+	'javascript',
 	'lxml',
 	'microsoft',
 	'playwright',
 	'puppeteer',
+	'pydantic',
 	'python',
 	'redis',
 	'regexp',
@@ -143,6 +145,7 @@ export const LANGTECH_ICON_NAMES = [
 	'tailwind',
 	'typescript',
 	'xml',
+	'xpath',
 	'xstate',
 ] as const;
 

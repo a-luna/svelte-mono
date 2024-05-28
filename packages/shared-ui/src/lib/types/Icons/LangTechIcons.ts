@@ -4,9 +4,11 @@ import type {
 	FastApi,
 	Flask,
 	Hugo,
+	JavaScript,
 	Microsoft,
 	Playwright,
 	Puppeteer,
+	Pydantic,
 	Python,
 	Redis,
 	RegExp,
@@ -15,6 +17,7 @@ import type {
 	Tailwind,
 	TypeScript,
 	Xml,
+	XPath,
 	XState,
 } from '$lib/components/Icons/LanguageTech';
 import type { LANGTECH_ICON_NAMES } from '$lib/constants';
@@ -25,9 +28,11 @@ export type LanguageTechIcon =
 	| typeof FastApi
 	| typeof Flask
 	| typeof Hugo
+	| typeof JavaScript
 	| typeof Microsoft
 	| typeof Playwright
 	| typeof Puppeteer
+	| typeof Pydantic
 	| typeof Python
 	| typeof Redis
 	| typeof RegExp
@@ -36,6 +41,7 @@ export type LanguageTechIcon =
 	| typeof Tailwind
 	| typeof TypeScript
 	| typeof Xml
+	| typeof XPath
 	| typeof XState;
 
 export type LanguageTechIconName = (typeof LANGTECH_ICON_NAMES)[number];
