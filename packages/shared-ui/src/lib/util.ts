@@ -40,9 +40,7 @@ export function getCssPropertyValue(
 	valueType: 'numeric' | 'string',
 ): CSSUnitValue | string | undefined {
 	const styleValue = element.computedStyleMap().get(propName);
-	if (!styleValue) {
-		return undefined;
-	}
+	if (!styleValue) return undefined;
 	switch (valueType) {
 		case 'string':
 			return styleValue.toString();
@@ -76,9 +74,7 @@ export const getThemeCSSPropertyHslColorValue = (
 
 function parseHslColorFromCssValue(value: string): HslColor {
 	const result = ColorParser.parse(value);
-	if (result.success) {
-		return result.value.hsl;
-	}
+	if (result.success) return result.value.hsl;
 	return { h: 0, s: 0, l: 0, a: 1 };
 }
 

@@ -1,9 +1,17 @@
-import { BUTTON_COLORS, COLOR_FORMATS, COMPONENT_COLORS } from '$lib/constants';
+import {
+	BUTTON_COLORS,
+	COLOR_FORMATS,
+	COMPONENT_COLORS,
+	CSS_ABSOLUTE_LENGTH_UNITS,
+	CSS_RELATIVE_LENGTH_UNITS,
+} from '$lib/constants';
 import type {
 	AdjustableColorFormat,
 	ButtonColor,
 	ColorFormat,
 	ComponentColor,
+	CssAbsoluteLengthUnit,
+	CssRelativeLengthUnit,
 	HasHueAndLightness,
 	HslColor,
 	LabColorFormat,
@@ -29,3 +37,9 @@ export const isOkhslColor = (color: HasHueAndLightness): color is OkhslColor => 
 export const isOklchColor = (color: HasHueAndLightness): color is OklchColor => 'c' in (color as OklchColor);
 
 export const isButtonColor = (color: string): color is ButtonColor => BUTTON_COLORS.includes(color as ButtonColor);
+
+export const isAbsoluteLengthUnit = (unit: string): unit is CssAbsoluteLengthUnit =>
+	CSS_ABSOLUTE_LENGTH_UNITS.includes(unit as CssAbsoluteLengthUnit);
+
+export const isRelativeLengthUnit = (unit: string): unit is CssRelativeLengthUnit =>
+	CSS_RELATIVE_LENGTH_UNITS.includes(unit as CssRelativeLengthUnit);
