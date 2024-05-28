@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { hslToString } from '$lib/color/util';
-	import type { ButtonSize, HslColor } from '$lib/types';
-	import { getRandomHexString } from '$lib/util';
+	import type { HslColor } from '$lib/types';
+	import { getRandomHexString, getThemeCSSPropertyValue } from '$lib/util';
 
 	export let fgColor: HslColor | undefined = undefined;
 	export let bgColor: HslColor | undefined = undefined;
-	export let size: ButtonSize = 'sm';
 	export let disabled = false;
-	export let width = 'auto';
 	export let testid = `button-${getRandomHexString({ length: 4 })}`;
 	export let buttonElement: HTMLButtonElement | undefined = undefined;
 	let frontStyle = '';
@@ -21,12 +19,16 @@
 	const bgColorDisabled: HslColor = { h: 0, s: 0, l: 50, a: 1 };
 	const disabledColors: [HslColor, HslColor] = [fgColorDisabled, bgColorDisabled];
 
-	const fontSizeMap: Record<ButtonSize, string> = {
-		xs: '0.75rem',
-		sm: '0.85rem',
-		md: '1rem',
-		lg: '1.2rem',
-	};
+	$: {
+		[fgColor, bgColor] = getButtonColors(buttonElement, fgColor, bgColor, disabled);
+		const [edgeHeight, frontHeight] = getButtonHeights(buttonElement);
+		frontStyle = `height: ${frontHeight}; color: ${hslToString(fgColor)}; background: ${hslToString(bgColor)};`;
+		const gStop1 = hslToString({ ...bgColor, l: 16 });
+		const gStop2 = hslToString({ ...bgColor, l: 32 });
+		edgeStyle = disabled
+			? `height: ${edgeHeight}; background: ${hslToString(bgColor)};`
+			: `height: ${edgeHeight}; background: linear-gradient(to left, ${gStop1} 0%, ${gStop2} 8%, ${gStop2} 92%, ${gStop1} 100%);`;
+	}
 
 	function getButtonColors(
 		button: HTMLButtonElement | undefined,
@@ -34,58 +36,63 @@
 		bg: HslColor | undefined,
 		disabled: boolean,
 	): [HslColor, HslColor] {
-		if (!button) {
-			return defaultColors;
-		}
-		if (disabled) {
-			return disabledColors;
-		}
+		if (!button) return defaultColors;
+		if (disabled) return disabledColors;
 		return fg && bg ? [fg, bg] : defaultColors;
 	}
 
-	$: fontSize = fontSizeMap[size];
-	$: {
-		[fgColor, bgColor] = getButtonColors(buttonElement, fgColor, bgColor, disabled);
-		frontStyle = `color: ${hslToString(fgColor)}; background: ${hslToString(bgColor)};`;
-		const gStop1 = hslToString({ ...bgColor, l: 16 });
-		const gStop2 = hslToString({ ...bgColor, l: 32 });
-		edgeStyle = `background: linear-gradient(to left, ${gStop1} 0%, ${gStop2} 8%, ${gStop2} 92%, ${gStop1} 100%);`;
+	function getButtonHeights(button: HTMLButtonElement | undefined) {
+		if (!button) return ['', ''];
+		let originalHeight = getThemeCSSPropertyValue(
+			button,
+			'--pushable-button-height',
+			'--pushable-button-default-height',
+			'numeric',
+		);
+		let yOffset = getThemeCSSPropertyValue(
+			button,
+			'--pushable-button-front-y-position',
+			'--pushable-button-default-front-y-position',
+			'numeric',
+		);
+		let yMargin = getThemeCSSPropertyValue(
+			button,
+			'--pushable-button-vertical-padding',
+			'--pushable-button-default-vertical-padding',
+			'numeric',
+		);
+		if (!originalHeight || !(originalHeight instanceof CSSUnitValue)) return '';
+		if (!yOffset || !(yOffset instanceof CSSUnitValue)) return '';
+		if (!yMargin || !(yMargin instanceof CSSUnitValue)) return '';
+
+		const yOffsetAbs = yOffset.max(yOffset.mul(-1));
+		const edgeHeight = originalHeight.sub(yOffsetAbs);
+		const frontHeight = originalHeight.sub(yOffsetAbs.mul(2).add(yMargin.mul(2)));
+		return disabled
+			? [originalHeight.toString(), originalHeight.toString()]
+			: [edgeHeight.toString(), frontHeight.toString()];
 	}
 </script>
 
-<button
-	bind:this={buttonElement}
-	{disabled}
-	class="pushable"
-	style="font-size: {fontSize}; width: {width}"
-	data-testid={testid}
-	on:click
->
-	<span class="shadow" />
+<button bind:this={buttonElement} {disabled} class="pushable" data-testid={testid} on:click>
 	<span class="edge" style={edgeStyle} />
 	<span class="front" style={frontStyle}>
 		<slot />
-		<!-- {#if $$slots.icon}
-			<div
-				class="icon"
-				style="width: var(--button-icon-size, var(--button-default-icon-size)); height: var(--button-icon-size, var(--button-default-icon-size))"
-			>
-				<slot name="icon" />
-			</div>
-		{/if}
-		{#if $$slots.label}
-			<span class="label">
-				<slot name="label" />
-			</span>
-		{/if} -->
 	</span>
 </button>
 
 <style lang="postcss">
 	.pushable {
-		--pushable-button-padding-default: 10px;
-		--pushable-button-font-size-default: 1em;
-		--pushable-button-font-weight-default: 400;
+		--pushable-button-default-width: 32px;
+		--pushable-button-default-height: 32px;
+		--pushable-button-default-icon-size: 1rem;
+		--pushable-button-default-font-size: 1rem;
+		--pushable-button-default-font-weight: 400;
+		--pushable-button-default-vertical-padding: 0.25rem;
+		--pushable-button-default-horizontal-padding: 0.5rem;
+		--pushable-button-default-front-y-position: -4px;
+		--pushable-button-default-front-y-position-hover: -6px;
+		--pushable-button-default-front-y-position-active: -2px;
 
 		position: relative;
 		border: none;
@@ -97,59 +104,59 @@
 		user-select: none;
 		-webkit-tap-highlight-color: transparent;
 		margin: 0;
-	}
-	.shadow {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		border-radius: 6px;
-		background: hsl(0deg 0% 0% / 0.25);
-		will-change: transform;
-		transform: translateY(2px);
-		transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
-		filter: blur(4px);
+		width: var(--pushable-button-width, var(--pushable-button-default-width));
+		height: var(--pushable-button-height, var(--pushable-button-default-height));
+		font-size: var(--pushable-button-font-size, var(--pushable-button-default-font-size));
 	}
 	.edge {
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 100%;
-		height: 100%;
+		width: var(--pushable-button-width, var(--pushable-button-default-width));
+		height: calc(
+			var(--pushable-button-height, var(--pushable-button-default-height)) +
+				var(--pushable-button-front-y-position, var(--pushable-button-default-front-y-position))
+		);
+		transform: translateY(
+			calc(var(--pushable-button-front-y-position, var(--pushable-button-default-front-y-position)) * -1)
+		);
 		border-radius: 6px;
 	}
 	.front {
-		display: block;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5rem;
 		position: relative;
-		padding: var(--pushable-button-padding, var(--pushable-button-padding-default));
+		padding: var(--pushable-button-vertical-padding, var(--pushable-button-default-vertical-padding))
+			var(--pushable-button-horizontal-padding, var(--pushable-button-default-horizontal-padding));
+		width: calc(
+			var(--pushable-button-width, var(--pushable-button-default-width)) -
+				calc(var(--pushable-button-horizontal-padding, var(--pushable-button-default-horizontal-padding)) * 2)
+		);
+
 		border-radius: 6px;
-		font-size: var(--pushable-button-font-size, var(--pushable-button-font-size-default));
-		font-weight: var(--pushable-button-font-weight, var(--pushable-button-font-weight-default));
+		font-weight: var(--pushable-button-font-weight, var(--pushable-button-default-font-weight));
 		line-height: 1;
 		letter-spacing: 0.8px;
 		white-space: nowrap;
-		transform: translateY(-4px);
+		transform: translateY(var(--pushable-button-front-y-position, var(--pushable-button-default-front-y-position)));
 		transition: transform 400ms cubic-bezier(0.3, 0.7, 0.4, 1);
 	}
 	.pushable:hover {
 		transition: filter 250ms;
-		filter: brightness(110%);
+		filter: brightness(120%);
 	}
 	.pushable:hover .front {
-		transform: translateY(-6px);
-		transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
-	}
-	.pushable:hover .shadow {
-		transform: translateY(4px);
+		transform: translateY(
+			var(--pushable-button-front-y-position-hover, var(--pushable-button-default-front-y-position-hover))
+		);
 		transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
 	}
 	.pushable:active .front {
-		transform: translateY(-2px);
-		transition: transform 34ms;
-	}
-	.pushable:active .shadow {
-		transform: translateY(1px);
+		transform: translateY(
+			var(--pushable-button-front-y-position-active, var(--pushable-button-default-front-y-position-active))
+		);
 		transition: transform 34ms;
 	}
 	.pushable:disabled {
@@ -158,5 +165,14 @@
 	}
 	.pushable:disabled .front {
 		transform: none;
+		--vertical-pad: calc(
+			calc(
+					var(--pushable-button-height, var(--pushable-button-default-height)) -
+						var(--pushable-button-icon-size, var(--pushable-button-default-icon-size))
+				) / 2
+		);
+	}
+	.pushable:disabled .edge {
+		display: none;
 	}
 </style>
