@@ -8,6 +8,7 @@ import type {
 	ArrowUp,
 	Asterisk,
 	BezierCurve,
+	Bulb,
 	Cancel,
 	CaretDown,
 	CaretUp,
@@ -48,6 +49,7 @@ import type {
 	Help,
 	Keyboard,
 	Link,
+	Lock,
 	Menu,
 	Minus,
 	MinusSquare,
@@ -75,6 +77,7 @@ import type {
 	StepForward,
 	Trash,
 	Unchecked,
+	Unlock,
 } from '$lib/components/Icons/Basic';
 
 import type { BASIC_ICON_NAMES } from '$lib/constants';
@@ -89,6 +92,7 @@ export type BasicIcon =
 	| typeof ArrowUp
 	| typeof Asterisk
 	| typeof BezierCurve
+	| typeof Bulb
 	| typeof Cancel
 	| typeof CaretDown
 	| typeof CaretUp
@@ -155,6 +159,8 @@ export type BasicIcon =
 	| typeof StepBackward
 	| typeof StepForward
 	| typeof Trash
-	| typeof Unchecked;
+	| typeof Unchecked
+	| typeof Lock
+	| typeof Unlock;
 
 export type BasicIconName = (typeof BASIC_ICON_NAMES)[number];

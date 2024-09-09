@@ -41,6 +41,7 @@ export const BASIC_ICON_NAMES = [
 	'arrowup',
 	'asterisk',
 	'beziercurve',
+	'bulb',
 	'cancel',
 	'caretdown',
 	'caretup',
@@ -81,6 +82,7 @@ export const BASIC_ICON_NAMES = [
 	'help',
 	'keyboard',
 	'link',
+	'lock',
 	'menu',
 	'minus',
 	'minussquare',
@@ -108,6 +110,7 @@ export const BASIC_ICON_NAMES = [
 	'stepforward',
 	'trash',
 	'unchecked',
+	'unlock',
 ] as const;
 
 export const SOCIAL_ICON_NAMES = [
