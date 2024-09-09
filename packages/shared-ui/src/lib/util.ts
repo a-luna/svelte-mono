@@ -3,6 +3,7 @@ import type { ComponentColor, HslColor } from '$lib/types';
 import { COMPONENT_COLORS } from './constants';
 
 export const normalize = (s: string): string => s.replaceAll(/[\s-_]/g, '').toLowerCase();
+export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
 export const getVariableName = (x: object) => Object.keys(x)[0];
 export const objectIsEmpty = (obj: object) => JSON.stringify(obj) === '{}';
 export const divmod = (x: number, y: number): [number, number] => [(x / y) | 0, x % y];
