@@ -9,7 +9,7 @@
 	$: strokeStyle = strokeWidth ? `stroke-width: ${strokeWidth}; ` : '';
 	$: paddingStyle = padding ? `padding: ${padding}; ` : '';
 	$: transformStyle = transform ? `-webkit-transform: ${transform}; transform: ${transform}; ` : '';
-	$: style = `${strokeStyle}${paddingStyle}${transformStyle}`;
+	$: style = `${strokeStyle}${paddingStyle}${transformStyle}`.trimEnd();
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" {viewBox} {stroke} {style}>
