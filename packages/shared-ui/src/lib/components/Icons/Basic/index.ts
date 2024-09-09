@@ -7,6 +7,7 @@ import ArrowRight from '$lib/components/Icons/Basic/ArrowRight.svelte';
 import ArrowUp from '$lib/components/Icons/Basic/ArrowUp.svelte';
 import Asterisk from '$lib/components/Icons/Basic/Asterisk.svelte';
 import BezierCurve from '$lib/components/Icons/Basic/BezierCurve.svelte';
+import Bulb from '$lib/components/Icons/Basic/Bulb.svelte';
 import Cancel from '$lib/components/Icons/Basic/Cancel.svelte';
 import CaretDown from '$lib/components/Icons/Basic/CaretDown.svelte';
 import CaretUp from '$lib/components/Icons/Basic/CaretUp.svelte';
@@ -47,6 +48,7 @@ import Hashtag from '$lib/components/Icons/Basic/Hashtag.svelte';
 import Help from '$lib/components/Icons/Basic/Help.svelte';
 import Keyboard from '$lib/components/Icons/Basic/Keyboard.svelte';
 import Link from '$lib/components/Icons/Basic/Link.svelte';
+import Lock from '$lib/components/Icons/Basic/Lock.svelte';
 import Menu from '$lib/components/Icons/Basic/Menu.svelte';
 import Minus from '$lib/components/Icons/Basic/Minus.svelte';
 import MinusSquare from '$lib/components/Icons/Basic/MinusSquare.svelte';
@@ -74,6 +76,7 @@ import StepBackward from '$lib/components/Icons/Basic/StepBackward.svelte';
 import StepForward from '$lib/components/Icons/Basic/StepForward.svelte';
 import Trash from '$lib/components/Icons/Basic/Trash.svelte';
 import Unchecked from '$lib/components/Icons/Basic/Unchecked.svelte';
+import Unlock from '$lib/components/Icons/Basic/Unlock.svelte';
 
 export {
 	AngleDoubleLeft,
@@ -85,6 +88,7 @@ export {
 	ArrowUp,
 	Asterisk,
 	BezierCurve,
+	Bulb,
 	Cancel,
 	CaretDown,
 	CaretUp,
@@ -125,6 +129,7 @@ export {
 	Help,
 	Keyboard,
 	Link,
+	Lock,
 	Menu,
 	Minus,
 	MinusSquare,
@@ -152,4 +157,5 @@ export {
 	StepForward,
 	Trash,
 	Unchecked,
+	Unlock,
 };

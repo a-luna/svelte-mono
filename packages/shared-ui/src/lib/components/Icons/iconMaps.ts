@@ -8,6 +8,7 @@ import {
 	ArrowUp,
 	Asterisk,
 	BezierCurve,
+	Bulb,
 	Cancel,
 	CaretDown,
 	CaretUp,
@@ -48,6 +49,7 @@ import {
 	Help,
 	Keyboard,
 	Link,
+	Lock,
 	Menu,
 	Minus,
 	MinusSquare,
@@ -75,6 +77,7 @@ import {
 	StepForward,
 	Trash,
 	Unchecked,
+	Unlock,
 } from '$lib/components/Icons/Basic';
 
 import {
@@ -132,6 +135,7 @@ function createBasicIconMap(): Map<BasicIconName, BasicIcon> {
 	iconMap.set('arrowup', ArrowUp);
 	iconMap.set('asterisk', Asterisk);
 	iconMap.set('beziercurve', BezierCurve);
+	iconMap.set('bulb', Bulb);
 	iconMap.set('cancel', Cancel);
 	iconMap.set('caretdown', CaretDown);
 	iconMap.set('caretup', CaretUp);
@@ -172,6 +176,7 @@ function createBasicIconMap(): Map<BasicIconName, BasicIcon> {
 	iconMap.set('help', Help);
 	iconMap.set('keyboard', Keyboard);
 	iconMap.set('link', Link);
+	iconMap.set('lock', Lock);
 	iconMap.set('menu', Menu);
 	iconMap.set('minus', Minus);
 	iconMap.set('minussquare', MinusSquare);
@@ -199,6 +204,7 @@ function createBasicIconMap(): Map<BasicIconName, BasicIcon> {
 	iconMap.set('stepforward', StepForward);
 	iconMap.set('trash', Trash);
 	iconMap.set('unchecked', Unchecked);
+	iconMap.set('unlock', Unlock);
 	return iconMap;
 }
 
