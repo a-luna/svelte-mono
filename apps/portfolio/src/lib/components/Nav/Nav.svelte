@@ -29,10 +29,15 @@
 
 <style lang="postcss">
 	.nav-container {
+		--mobile-menu-button-size: 50px;
+		--mobile-menu-button-padding: 0.75rem;
+		--mobile-menu-button-border-width: 2px;
+		--mobile-nav-flyout-border-width: 3px;
+
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
-		align-items: baseline;
+		align-items: center;
 		width: 100%;
 		max-width: var(--max-width);
 		background-color: inherit;

@@ -1,5 +1,4 @@
 import { isInitialPageLoad, sectionTransition, url } from '$lib/stores';
-// import type { ScreenSize } from '$lib/types';
 import { get } from 'svelte/store';
 import { isTransitionSection } from './typeguards';
 
@@ -28,13 +27,15 @@ export function typewriter(node: HTMLElement, { delay = 0, speed = 50 }) {
 		if (isTransitionSection(firstUrl)) {
 			to = firstUrl;
 			sectionTransition.set({
-				inProgress: true,
+				inProgress: false,
+				showContent: false,
 				from: '',
 				fromComplete: true,
 				to: sectionRoutes[firstUrl],
 				toComplete: false,
 			});
 		}
+		delay = delay || 4000;
 	}
 	if (from && isTransitionSection(from)) {
 		ranges.push({
@@ -44,6 +45,8 @@ export function typewriter(node: HTMLElement, { delay = 0, speed = 50 }) {
 			action: 'delete',
 		});
 		totalLength += sectionRoutes[from].length;
+	} else {
+		delay = delay || 600;
 	}
 	if (to && isTransitionSection(to)) {
 		ranges.push({
@@ -76,6 +79,9 @@ export function typewriter(node: HTMLElement, { delay = 0, speed = 50 }) {
 		duration: totalLength * speed,
 		tick: (t: number) => {
 			const progress = ~~(totalLength * t);
+			if (progress === 0) {
+				sectionTransition.set({ ...get(sectionTransition), inProgress: true, showContent: false });
+			}
 			const {
 				textNode,
 				range: { start, end },

@@ -11,17 +11,16 @@ export const GET: RequestHandler = async ({ url, setHeaders }: RequestEvent) => 
 		range = url.searchParams.get('range') ?? 'last_7_days';
 	}
 	const endpoint = `${WAKA_API_BASE_URL}/stats/${range}`;
-	const result = await api.get(endpoint, {
+	const result = await api.getJson(endpoint, {
 		type: 'Basic',
-		token: encode(WAKATIME_API_KEY)
+		token: encode(WAKATIME_API_KEY),
 	});
 	if (!result.success) {
 		throw error(result.error.status, result.error.message);
 	}
-	const response = result.value;
-	const stats = await response.json().catch(() => ({}));
+	const stats = result.value;
 	setHeaders({
-		'Cache-Control': `max-age=0, s-maxage=${3600}`
+		'Cache-Control': `max-age=0, s-maxage=${3600}`,
 	});
 	return json(stats);
 };

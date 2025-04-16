@@ -129,7 +129,7 @@
 
 	.description {
 		font-size: 0.9rem;
-		color: var(--gray);
+		color: var(--tw-prose-invert-body);
 		line-height: 1.5;
 	}
 

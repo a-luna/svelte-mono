@@ -10,18 +10,12 @@ import {
 	transformCodeBlocks,
 	transformFaBulletLists,
 	transformHeadings,
+	transformLockIcons,
+	transformUnlockIcons,
 } from '$lib/server';
 import { highlighter, parseMeta } from '$lib/shiki';
 import { SITE_URL } from '$lib/siteConfig';
-import type {
-	BlogPost,
-	CodeBlock,
-	ProjectReadme,
-	RepoWithMetaData,
-	ResourceMap,
-	TocSection,
-	TutorialSection,
-} from '$lib/types';
+import type { BlogPost, CodeBlock, ProjectReadme, RepoWithMetaData, ResourceMap, TutorialSection } from '$lib/types';
 import remarkShiki from '@stefanprobst/remark-shiki';
 import rehypeFormat from 'rehype-format';
 import rehypeRaw from 'rehype-raw';
@@ -54,6 +48,8 @@ async function convertMarkdownToHtml(content: string, resources: ResourceMap): P
 function transformHtml(html: string, codeBlocks: CodeBlock[]): string {
 	let content = transformHeadings(html);
 	content = transformCodeBlocks(content, codeBlocks);
+	content = transformLockIcons(content);
+	content = transformUnlockIcons(content);
 	if (FA_BULLET_LIST_REGEX.test(html)) {
 		content = transformFaBulletLists(content);
 	}
@@ -61,31 +57,27 @@ function transformHtml(html: string, codeBlocks: CodeBlock[]): string {
 }
 
 export async function convertContentToHtml(blogPost: BlogPost): Promise<BlogPost | TutorialSection> {
+	const html = await convertMarkdownToHtml(blogPost.content, blogPost.resources);
 	const codeBlocks = identifyCodeBlocks(blogPost.content);
-	let html = await convertMarkdownToHtml(blogPost.content, blogPost.resources);
-
-	let toc: TocSection[] = [];
-	if (blogPost.hasToc) {
-		toc = generateTableOfContents(html);
-	}
-	html = transformHtml(html, codeBlocks);
-	return { ...blogPost, content: html, codeBlocks, toc };
+	return {
+		...blogPost,
+		content: transformHtml(html, codeBlocks),
+		codeBlocks,
+		toc: blogPost.hasToc ? generateTableOfContents(html) : [],
+	};
 }
 
 export async function convertReadmeToHtml(markdown: string, repo: RepoWithMetaData): Promise<ProjectReadme> {
-	const readme = initializeReadme(repo);
-	const codeBlocks = identifyCodeBlocks(markdown);
 	const htmlFile = await markdownToHtmlProcessor.process(markdown.trim());
 	const html = String(htmlFile).trim();
-	const title = extractPageTitle(html) || repo.name;
-
-	let toc: TocSection[] = [];
-	if (readmeHasToc(html)) {
-		toc = generateTableOfContents(html);
-	}
-	let content = transformHeadings(html);
-	content = transformCodeBlocks(content, codeBlocks);
-	return { ...readme, title, content, codeBlocks, toc };
+	const codeBlocks = identifyCodeBlocks(markdown);
+	return {
+		...initializeReadme(repo),
+		title: extractPageTitle(html) || repo.name,
+		toc: readmeHasToc(html) ? generateTableOfContents(html) : [],
+		codeBlocks,
+		content: transformCodeBlocks(transformHeadings(html), codeBlocks),
+	};
 }
 
 function initializeReadme(repo: RepoWithMetaData): ProjectReadme {
@@ -94,6 +86,7 @@ function initializeReadme(repo: RepoWithMetaData): ProjectReadme {
 		content: '',
 		title: repo.name,
 		description: repo.description,
+		toc: [],
 		hasToc: true,
 		category: repo.primaryCategory,
 		language: repo.primaryLanguage,
@@ -108,6 +101,8 @@ function initializeReadme(repo: RepoWithMetaData): ProjectReadme {
 			src: '',
 			caption: '',
 		},
+		resources: {},
+		codeBlocks: [],
 		deployedUrl: repo.deployedUrl,
 		projectSiteTitle: repo.projectSiteTitle,
 	};
@@ -126,6 +121,5 @@ function extractPageTitle(html: string): string | null {
 			title = title.slice(0, title.indexOf('<!--'));
 		}
 	}
-	title?.trim();
-	return title;
+	return title?.trim() || null;
 }

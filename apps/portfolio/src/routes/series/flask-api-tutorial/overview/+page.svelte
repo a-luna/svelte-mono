@@ -60,22 +60,20 @@
 		</svelte:fragment>
 		<svelte:fragment slot="comments">
 			{#if !dev}
-				<div class="wrapper comments-wrapper">
-					<Giscus
-						repo="a-luna/svelte-mono"
-						repoId="R_kgDOJRXMQw"
-						category="Giscus"
-						categoryId="DIC_kwDOJRXMQ84CYIYD"
-						mapping="og:title"
-						strict="1"
-						reactionsEnabled="1"
-						emitMetadata="0"
-						inputPosition="top"
-						theme="transparent_dark"
-						lang="en"
-						loading="lazy"
-					/>
-				</div>
+				<Giscus
+					repo="a-luna/svelte-mono"
+					repoId="R_kgDOJRXMQw"
+					category="Giscus"
+					categoryId="DIC_kwDOJRXMQ84CYIYD"
+					mapping="og:title"
+					strict="1"
+					reactionsEnabled="1"
+					emitMetadata="0"
+					inputPosition="top"
+					theme="transparent_dark"
+					lang="en"
+					loading="lazy"
+				/>
 			{/if}
 		</svelte:fragment>
 	</ContentLayout>

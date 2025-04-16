@@ -14,8 +14,6 @@ export const getRandomArrayItem = <T>(array: readonly T[], defaultValue: T): T =
 export const getCSSPropValue = (element: HTMLElement, propName: string): string =>
 	getComputedStyle(element).getPropertyValue(propName);
 
-export const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
-
 export const slugify = (text: string): string =>
 	text
 		.normalize('NFKD')
@@ -39,8 +37,8 @@ export function getScrollbarWidth() {
 	return scrollbarWidth;
 }
 
-export function sortByDate<T, K extends keyof T>(list: T[], options: {key: K; asc?: boolean}): T[] {
-	const { key, asc } = {...{asc: true }, ...options}
+export function sortByDate<T, K extends keyof T>(list: T[], options: { key: K; asc?: boolean }): T[] {
+	const { key, asc } = { ...{ asc: true }, ...options };
 	let byDate: (a: T, b: T) => number;
 	if (asc) {
 		byDate = (a: T, b: T) => {
@@ -64,7 +62,7 @@ export function sortByDate<T, K extends keyof T>(list: T[], options: {key: K; as
 			}
 			return 0;
 		};
-	}    
-	
+	}
+
 	return list.sort(byDate);
-};
+}

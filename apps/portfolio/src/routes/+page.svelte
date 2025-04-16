@@ -6,12 +6,13 @@
 	import RecentBlogPosts from '$lib/components/HomePage/RecentBlogPosts.svelte';
 	import SectionLayout from '$lib/components/SectionLayout.svelte';
 	import { DEFAULT_OG_IMAGE, MY_TWITTER_HANDLE, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/siteConfig';
-	import { blogPosts, initialFadePerformed, mobileNavOpen, tutorialSections, userRepos } from '$lib/stores';
+	import { blogPosts, mobileNavOpen, tutorialSections } from '$lib/stores';
 	import { parseColorFromString } from '@a-luna/shared-ui/color/parsers';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
 	const title = 'Welcome!';
 	let mounted = false;
 
@@ -27,21 +28,13 @@
 		result = parseColorFromString('hsl(353 100% 38%)');
 		console.log(result);
 	}
-	$: if (data.allRepos.length) {
-		$userRepos.repos = data.allRepos;
-		$userRepos.cachedAt = data.reposCachedAt;
-	}
-	$: if (data.allTutorialSections.length) {
-		$tutorialSections = data.allTutorialSections;
-	}
-	$: if (data.allBlogPosts.length) {
-		$blogPosts = data.allBlogPosts;
-	}
+	$: projects = Object.values(data.repos);
+	$: $blogPosts = data.allPosts;
+	$: $tutorialSections = data.allSections;
 
 	onMount(() => {
 		$mobileNavOpen = false;
 		mounted = true;
-		setTimeout(() => ($initialFadePerformed = true), 1000);
 	});
 </script>
 
@@ -69,7 +62,7 @@
 					{#if $blogPosts && $blogPosts.length}
 						<RecentBlogPosts />
 					{/if}
-					{#if $userRepos && $userRepos.repos.length}
+					{#if projects && projects.length}
 						<FeaturedProjects />
 					{/if}
 					{#if $tutorialSections && $tutorialSections.length}
@@ -83,21 +76,22 @@
 
 <style lang="postcss">
 	.intro {
-		background: var(--page-bg-color);
+		/* background: var(--page-bg-color);
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr;
+		grid-template-rows: 1fr; */
 		width: 100%;
 		margin: 0 auto;
 	}
 	.intro-content {
 		margin: 0 auto;
-		position: relative;
 		max-width: var(--max-width);
+		/* position: relative;
 		grid-column: 1;
 		grid-row: 1;
 		padding: 0;
 		width: 100%;
+		z-index: 2; */
 	}
 	.section-content {
 		display: flex;

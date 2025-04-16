@@ -63,7 +63,6 @@
 		background-color: var(--page-bg-color);
 		padding: 0;
 		text-decoration: none;
-		transition: background-color 350ms ease-out, color 350ms ease-out;
 	}
 	.post-nav-prev a {
 		justify-content: flex-start;

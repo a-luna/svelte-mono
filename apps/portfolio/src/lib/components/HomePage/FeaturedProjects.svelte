@@ -6,7 +6,8 @@
 
 	let featuredProjects: RepoWithMetaData[] = [];
 
-	$: featuredProjects = $userRepos.repos.filter((project) => isFeaturedProject(project.name));
+	$: projects = Object.values($userRepos.repos);
+	$: featuredProjects = projects.filter((project) => isFeaturedProject(project.name));
 </script>
 
 <div>

@@ -730,7 +730,7 @@ create_widget_reqparser.add_argument(
     location="form",
     required=True,
     nullable=False,
-    case_sensitive=True,
+    case_sensitive=False,
 )
 ```
 
@@ -994,7 +994,7 @@ Let's take a look at how the `create_widget` function performs the tasks listed 
         <p><strong>Line 19: </strong><code>**</code> is the dictionary unpacking operator, you can find more info on it and the related list unpacking operator (<code>*</code>) in <a href="https://www.python.org/dev/peps/pep-0448/">PEP 448</a>. It is a concise way to pass the <code>name</code>, <code>info_url</code>, and <code>deadline</code> values to the <code>Widget</code> constructor.</p>
       </li>
       <li>
-        <p><strong>Lines 20-21: </strong>Thanks to the <code>@admin_token_required</code> decorator, the <code>public_id</code> of the user who sent the request is stored in <code>create_widget.public_id</code> (If you don't remember why this is is the case, review the last section where we broke down <a href="/series/flask-api-tutorial/part-4/#decorators">how the decorators are designed</a>).</p>
+        <p><strong>Lines 20-21: </strong>Thanks to the <code>@admin_token_required</code> decorator, the <code>public_id</code> of the user who sent the request is stored in <code>create_widget.public_id</code> (If you don't remember why this is is the case, review the last section where we broke down <a href="/series/flask-api-tutorial/part-4/#token_required--and-admin_token_required--decorators">how the decorators are designed</a>).</p>
         <p>We retrieve the <code>User</code> object that corresponds to the <code>public_id</code> of the user that sent the request and assign it to <code>owner</code>. Then, <code>owner.id</code> is set as the value of <code>widget.owner_id</code>.</p>
         <div class="note note-flex">
           <div class="note-icon">

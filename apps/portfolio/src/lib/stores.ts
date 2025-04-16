@@ -19,10 +19,10 @@ export const url = writable('');
 export const navMounted = writable(false);
 export const mobileNavOpen = writable(false);
 export const isInitialPageLoad = writable(true);
-export const initialFadePerformed = writable(false);
 export const menuButtonWasClicked = writable(false);
 export const sectionTransition = writable<SectionTransition>({
 	inProgress: false,
+	showContent: false,
 	from: '',
 	fromComplete: false,
 	to: '',
@@ -63,11 +63,9 @@ export function getAppState(
 		[url, pageHeight, pageWidth, viewportHeight, scrollY, navMounted],
 		([$url, $pageHeight, $pageWidth, $viewportHeight, $scrollY, $navMounted]) => {
 			const sectionRoutes = ['/', '/projects', '/blog', '/about'];
-			const scrollBarWidth = 8;
 
 			const getPageType = (): PageType => (sectionRoutes.includes($url) ? 'section' : 'content');
-			const getScreenSize = (): ScreenSize =>
-				$pageWidth + scrollBarWidth < 640 ? 'sm' : $pageWidth + scrollBarWidth < 768 ? 'md' : 'lg';
+			const getScreenSize = (): ScreenSize => ($pageWidth < 640 ? 'sm' : $pageWidth < 768 ? 'md' : 'lg');
 			const getFadeInDelay = (): number => ($pageWidth < 640 ? 200 : $pageWidth < 768 ? 300 : 250);
 			const showScrollToTopButton = (): boolean => $pageHeight > $viewportHeight && $scrollY > 0;
 

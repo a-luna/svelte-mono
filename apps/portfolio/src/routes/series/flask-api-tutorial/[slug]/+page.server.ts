@@ -5,15 +5,15 @@ import { get } from 'svelte/store';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
-	let checkSections = get(tutorialSections);
-	if (!checkSections || !checkSections.length) {
-		checkSections = await fetch('/series/flask-api-tutorial.json').then((r) => r.json());
-		tutorialSections.set(checkSections);
+	let allSections = get(tutorialSections);
+	if (!allSections || !allSections.length) {
+		allSections = await fetch('/series/flask-api-tutorial.json').then((r) => r.json());
+		tutorialSections.set(allSections);
 	}
-	if (!checkSections.length) {
+	if (!allSections.length) {
 		throw error(404, 'No posts were found for this series (flask-api-tutorial)!');
 	}
 	const { slug } = params;
 	const tutorialSection: TutorialSection = await fetch(`/series/flask-api-tutorial/${slug}.json`).then((r) => r.json());
-	return { allTutorialSections: checkSections, tutorialSection };
+	return { tutorialSection, allSections };
 };

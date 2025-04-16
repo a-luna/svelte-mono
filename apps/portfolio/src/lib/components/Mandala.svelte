@@ -4,17 +4,17 @@
 
 	$: if (typeof window !== 'undefined') {
 		svgSize =
-			// pageWidth >= 1024
-			// 	? { width: 675, height: 675 }
-			pageWidth >= 768
-				? { width: 575, height: 575 }
-				: pageWidth >= 640
-					? { width: 550, height: 550 }
-					: pageWidth >= 495
-						? { width: 500, height: 500 }
-						: pageWidth >= 440
-							? { width: 450, height: 450 }
-							: { width: 425, height: 425 };
+			pageWidth >= 1024
+				? { width: 775, height: 775 }
+				: pageWidth >= 768
+					? { width: 725, height: 725 }
+					: pageWidth >= 640
+						? { width: 675, height: 675 }
+						: pageWidth >= 495
+							? { width: 500, height: 500 }
+							: pageWidth >= 440
+								? { width: 450, height: 450 }
+								: { width: 425, height: 425 };
 	}
 	$: ({ width, height } = svgSize);
 </script>
@@ -42,24 +42,9 @@
 					repeatCount="indefinite"
 				/>
 				<textPath textLength="2010" href="#circle1">
-					&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
-						>&#47;</tspan
-					>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan
-						>&#47;</tspan
-					>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-					>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
-						>&#47;</tspan
-					>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan
-						>&#47;</tspan
-					>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-					>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
-						>&#47;</tspan
-					>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan
-						>&#47;</tspan
-					>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan
-					>&nbsp;&nbsp;&nbsp;/<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>&#47;<tspan
-						>&#47;</tspan
-					>&#47;<tspan>&#47;</tspan>&#47;<tspan>&#47;</tspan>
+					{#each Array.from({ length: 12 }) as _}
+						&#11825;&#11825;&#11825;&#11825;<tspan>&#124;</tspan>
+					{/each}
 				</textPath>
 			</text>
 			<text class="mandala-accent-2" dy="70" textLength="1760">
@@ -73,15 +58,9 @@
 					repeatCount="indefinite"
 				/>
 				<textPath textLength="1760" href="#circle2">
-					&nbsp;&nbsp;&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan>&nbsp;&nbsp;&#43;<tspan
-						>&#43;</tspan
-					>&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan>&nbsp;&nbsp;&#43;<tspan>&#43;</tspan>&#43;<tspan
-						>&#43;</tspan
-					>&#43;<tspan>&#43;</tspan>&nbsp;&nbsp;&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan>&#43;<tspan
-						>&#43;</tspan
-					>&nbsp;&nbsp;&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan
-					>&nbsp;&nbsp;&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan
-					>&nbsp;&nbsp;&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan>&#43;<tspan>&#43;</tspan>
+					{#each Array.from({ length: 4 }) as _}
+						&#11825;&#11825;&nbsp;<tspan>&#11821;</tspan>&nbsp;&#11825;&#11825;&#11825;&#11825;&nbsp;<tspan>&#11821;</tspan>&nbsp;&#11825;&#11825;
+					{/each}
 				</textPath>
 			</text>
 			<text class="mandala-accent-3" dy="70" textLength="1507">
@@ -95,14 +74,9 @@
 					repeatCount="indefinite"
 				/>
 				<textPath textLength="1507" href="#circle3">
-					<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan
-					>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan
-					>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan
-					>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan
-					>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan
-					>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan>&#123;&nbsp;<tspan>&#125;</tspan
-					>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;<tspan>&#123;</tspan>&#123;<tspan>&#123;</tspan
-					>&#123;&nbsp;<tspan>&#125;</tspan>&#125;<tspan>&#125;</tspan>&#125;&nbsp;&nbsp;
+					{#each Array.from({ length: 8 }) as _}
+						&#11825;&nbsp;<tspan>&#74864;</tspan>&nbsp;&#11825;&#11825;&nbsp;<tspan>&#74864;</tspan>&nbsp;&#11825;
+					{/each}
 				</textPath>
 			</text>
 			<text class="mandala-accent-4" dy="70" textLength="1257">
@@ -116,8 +90,8 @@
 					repeatCount="indefinite"
 				/>
 				<textPath textLength="1257" href="#circle4">
-					{#each Array.from({ length: 7 }) as _}
-						&nbsp;&nbsp;&nbsp;&#46;&#46;<tspan>&#47;</tspan>&#46;&#46;<tspan>&#47;</tspan>
+					{#each Array.from({ length: 9 }) as _}
+						&#11825;<tspan>&#10192;</tspan>
 					{/each}
 				</textPath>
 			</text>
@@ -132,8 +106,8 @@
 					repeatCount="indefinite"
 				/>
 				<textPath textLength="1005" href="#circle5">
-					{#each Array.from({ length: 16 }) as _}
-						<tspan>&#60;&#62;</tspan>&#60;&#47;&#62;
+					{#each Array.from({ length: 5 }) as _}
+						<tspan>&#10196;</tspan>&nbsp;&#10649;&nbsp;<tspan>&#10195;&#10196;</tspan>&nbsp;&#10649;&nbsp;<tspan>&#10195;</tspan>
 					{/each}
 				</textPath>
 			</text>
@@ -143,21 +117,11 @@
 
 <style lang="postcss">
 	.mandala-container {
-		--mandala-primary: var(--black-tint3);
-		/* --mandala-accent-1: hsl(173.22 100% 65%);
-		--mandala-accent-2: hsl(261, 100%, 55%);
-		--mandala-accent-3: hsl(261, 100%, 55%);
-		--mandala-accent-4: hsl(93.52 100% 50%); */
-
-		/* --mandala-accent-1: hsl(150 100% 47%);
-		--mandala-accent-2: hsl(0 0% 75%);
-		--mandala-accent-3: hsl(252 100% 56%);
-		--mandala-accent-4: hsl(0 0% 47%); */
-
-		--mandala-accent-1: hsl(180, 100%, 50%);
-		--mandala-accent-2: hsl(300 100% 50%);
-		--mandala-accent-3: hsl(93.52 100% 50%);
-		--mandala-accent-4: hsl(261, 100%, 55%);
+		--mandala-primary-color: var(--dark-gray);
+		--mandala-change-color-1: hsl(180, 100%, 50%);
+		--mandala-change-color-2: hsl(216, 100%, 55%);
+		--mandala-change-color-3: hsl(255 100% 50%);
+		--mandala-change-color-4: hsl(298 100% 50%);
 		display: flex;
 		justify-content: center;
 		transform: translate(2rem, 1rem);
@@ -185,29 +149,33 @@
 		animation: rotation 500s linear infinite;
 	}
 	svg > text {
-		fill: var(--mandala-primary);
+		fill: var(--mandala-primary-color);
+		font-family: Hack, monospace;
 	}
 	svg > text > textPath > tspan {
-		fill: var(--mandala-primary);
+		fill: var(--mandala-primary-color);
 		animation: mandala-color-change 50s infinite;
-		animation-timing-function: ease;
 		animation-delay: 0s;
-		animation-timing-function: ease-in-out;
+		animation-timing-function: ease;
 	}
 	.mandala-accent-1 > textPath > tspan {
-		fill: var(--mandala-accent-1);
+		fill: var(--mandala-change-color-1);
 		animation-delay: -5s;
 	}
 	.mandala-accent-2 > textPath > tspan {
-		fill: var(--mandala-accent-2);
+		fill: var(--mandala-change-color-2);
 		animation-delay: -25s;
 	}
 	.mandala-accent-3 > textPath > tspan {
-		fill: var(--mandala-accent-3);
+		fill: var(--mandala-change-color-3);
 		animation-delay: -30s;
 	}
+	.mandala-accent-4 > textPath > tspan {
+		fill: var(--mandala-change-color-4);
+		animation-delay: -35s;
+	}
 	.mandala-accent-5 > textPath > tspan {
-		fill: var(--mandala-accent-4);
+		fill: var(--mandala-change-color-1);
 		animation-delay: -55s;
 	}
 	@keyframes rotation {
@@ -220,110 +188,69 @@
 	}
 	@keyframes mandala-color-change {
 		0% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		5% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		10% {
-			fill: var(--mandala-accent-1);
+			fill: var(--mandala-change-color-1);
 		}
 		15% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		20% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		25% {
-			fill: var(--mandala-accent-2);
+			fill: var(--mandala-change-color-2);
 		}
 		30% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		35% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		40% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		45% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		50% {
-			fill: var(--mandala-accent-4);
+			fill: var(--mandala-change-color-4);
 		}
 		55% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		60% {
-			fill: var(--mandala-accent-3);
+			fill: var(--mandala-change-color-3);
 		}
 		65% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		70% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		75% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		80% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		85% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		90% {
-			fill: var(--mandala-accent-1);
+			fill: var(--mandala-change-color-1);
 		}
 		95% {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 		to {
-			fill: var(--mandala-primary);
+			fill: var(--mandala-primary-color);
 		}
 	}
-	/* @keyframes mandala-color-change {
-		0% {
-			fill: var(--mandala-primary);
-		}
-		8% {
-			fill: var(--mandala-accent-1);
-		}
-		16% {
-			fill: var(--mandala-primary);
-		}
-		25% {
-			fill: var(--mandala-primary);
-		}
-		33% {
-			fill: var(--mandala-accent-2);
-		}
-		41% {
-			fill: var(--mandala-primary);
-		}
-		50% {
-			fill: var(--mandala-primary);
-		}
-		58% {
-			fill: var(--mandala-accent-3);
-		}
-		66% {
-			fill: var(--mandala-primary);
-		}
-		75% {
-			fill: var(--mandala-primary);
-		}
-		83% {
-			fill: var(--mandala-accent-4);
-		}
-		91% {
-			fill: var(--mandala-primary);
-		}
-		to {
-			fill: var(--mandala-primary);
-		}
-	} */
 	@media (min-width: 440px) {
 		.mandala-container {
 			transform: translate(4rem, 1rem);
@@ -336,7 +263,7 @@
 	}
 	@media (min-width: 640px) {
 		.mandala-container {
-			transform: translate(7rem, -3.5rem);
+			transform: translate(5rem, -3.5rem);
 		}
 	}
 	@media (min-width: 768px) {

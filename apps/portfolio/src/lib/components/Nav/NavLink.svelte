@@ -15,7 +15,6 @@
 		color: var(--white-shade2);
 		background-color: var(--black-tint2);
 		border-radius: 0;
-		transition: color 0.3s, background-color 0.3s;
 		line-height: 1;
 		letter-spacing: 1.5px;
 	}
@@ -38,7 +37,6 @@
 			padding: 12px 0;
 			background-color: var(--page-bg-color);
 			border-bottom: 1px solid var(--page-bg-color);
-			transition: border-color 0.5s, color 0.5s;
 		}
 
 		a:hover {

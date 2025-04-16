@@ -8,12 +8,17 @@ import { error, json } from '@sveltejs/kit';
 import { get } from 'svelte/store';
 import type { RequestEvent, RequestHandler } from './$types';
 
+const getReadmeEndpointForProject = (project: RepoWithMetaData): string => {
+	return project.inMonorepo
+		? `repos/${GH_USER}/${project.monorepoName}/contents/${project.monorepoProjectPath}/README.md`
+		: `repos/${GH_USER}/${project.name}/readme`;
+};
+
 export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) => {
 	const { repos } = get(userRepos);
-	const repo = repos.find((r) => r.name === params.repo) || ({} as RepoWithMetaData);
-
-	const endpoint = repo.inMonorepo ? getMonorepoProjectReadme(repo) : getRepositoryReadme(repo);
-	const result = await api.get(
+	const project = Object.values(repos).find((r) => r.name === params.repo) || ({} as RepoWithMetaData);
+	const endpoint = getReadmeEndpointForProject(project);
+	const result = await api.getText(
 		`${API_BASE_URL}/${endpoint}`,
 		{ type: 'Token', token: API_KEY },
 		'application/vnd.github.raw',
@@ -21,17 +26,11 @@ export const GET: RequestHandler = async ({ params, setHeaders }: RequestEvent) 
 	if (!result.success) {
 		throw error(result.error.status, result.error.message);
 	}
-	const response = result.value;
-	const markdown = await response.text().catch(() => '');
-	const readme = await convertReadmeToHtml(markdown, repo);
+	const markdown = result.value;
+	const readme = await convertReadmeToHtml(markdown, project);
 
 	setHeaders({
 		'Cache-Control': `max-age=0, s-maxage=${3600}`,
 	});
 	return json(readme);
 };
-
-const getRepositoryReadme = (repo: RepoWithMetaData): string => `repos/${GH_USER}/${repo.name}/readme`;
-
-const getMonorepoProjectReadme = (project: RepoWithMetaData): string =>
-	`repos/${GH_USER}/${project.monorepoName}/contents/${project.monorepoProjectPath}/README.md`;
