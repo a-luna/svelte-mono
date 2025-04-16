@@ -13,14 +13,14 @@
 
 <style lang="postcss">
 	a {
-		height: 47px;
+		height: 46px;
 		margin: 0 0.5rem 0 0;
 	}
 	.nav-brand {
 		display: flex;
 		flex-flow: row nowrap;
 		align-items: center;
-		justify-content: flex-start;
+		justify-content: space-between;
 		width: 180px;
 		padding: 0.25rem 0.75rem 0.25rem 0.5rem;
 		font-size: 22px;
@@ -28,7 +28,9 @@
 		line-height: 1;
 		color: var(--black);
 		background-color: var(--white);
-		box-shadow: 7px 7px 0px -1px var(--page-bg-color), 7px 7px 0px 0px var(--accent-color);
+		box-shadow:
+			7px 7px 0px -1px var(--page-bg-color),
+			7px 7px 0px 0px var(--accent-color);
 		gap: 0.5rem;
 		white-space: nowrap;
 	}

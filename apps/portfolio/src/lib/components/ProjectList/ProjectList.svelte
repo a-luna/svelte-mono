@@ -9,39 +9,27 @@
 	import { slugify, sortByDate } from '$lib/util';
 	import { slide } from 'svelte/transition';
 
-	let filterProjectType: ProjectType = 'allProjects';
-	let filterCategory: ProjectCategory = 'allCategories';
-	let filterLanguage: LanguageOrTech = 'allLanguages';
-	let filtered: RepoWithMetaData[] = [];
+	type FilterSettings = [ProjectType, ProjectCategory, LanguageOrTech];
+
+	let allProjects = Object.values($userRepos.repos);
+	// let [projectTypes, categories, languages] = updateFilterSettings(allProjects);
+	let [filterType, filterCat, filterLang]: FilterSettings = ['allProjects', 'allCategories', 'allLanguages'];
+	let currentSettings: FilterSettings;
 	let showFilters = false;
 
-	let projectTypes = [...PROJECT_TYPES].filter((type) => type !== 'allProjects');
-	let categories = [...new Set($userRepos.repos.map((repo) => repo.categories).flat())]
-		.filter((category): category is ProjectCategory => !!category)
-		.filter((category) => !PROJECT_TYPES.includes(category as ProjectType));
-	let languages = [...new Set($userRepos.repos.map((repo) => repo.languages).flat())].filter(
-		(lang): lang is LanguageOrTech => !!lang,
-	);
+	$: currentSettings = [filterType, filterCat, filterLang];
+	$: projects = filterProjects(allProjects, currentSettings);
+	$: [projectTypes, categories, languages] = updateFilterSettings(projects);
+	$: filterApplied = filterType !== 'allProjects' || filterCat !== 'allCategories' || filterLang !== 'allLanguages';
+	$: description = getFilterDescription(projects, currentSettings);
 
-	$: filterApplied =
-		filterProjectType !== 'allProjects' || filterCategory !== 'allCategories' || filterLanguage !== 'allLanguages';
-	$: if (filterProjectType || filterCategory || filterLanguage) {
-		filtered = filterProjects($userRepos.repos, filterProjectType, filterCategory, filterLanguage);
-		[projectTypes, categories, languages] = updateFilterSettings(filtered);
-	}
-	$: description = getFilterDescription(filtered, filterProjectType, filterCategory, filterLanguage);
-
-	function getFilterDescription(
-		projects: RepoWithMetaData[],
-		type: ProjectType,
-		category: ProjectCategory,
-		language: LanguageOrTech,
-	): string {
+	function getFilterDescription(projects: RepoWithMetaData[], settings: FilterSettings): string {
 		const projectPlural = projects.length === 1 ? ' project' : ' projects';
 		const involvePlural = projects.length === 1 ? ' involves' : ' involve';
 		if (!filterApplied) {
 			return `${projects.length} total ${projectPlural}, no filter applied`;
 		}
+		const [type, category, language] = settings;
 		const projectType =
 			type === 'allProjects' && category === 'allCategories'
 				? ''
@@ -57,29 +45,25 @@
 				}`;
 	}
 
-	function filterProjects(
-		projects: RepoWithMetaData[],
-		type: ProjectType,
-		category: ProjectCategory,
-		language: LanguageOrTech,
-	): RepoWithMetaData[] {
-		filtered = sortByDate([...projects], { key: 'updatedAt', asc: false });
-		if (type && type !== 'allProjects') {
-			filtered = filtered.filter((project) => project.primaryCategory === type);
+	function filterProjects(projects: RepoWithMetaData[], settings: FilterSettings): RepoWithMetaData[] {
+		const [type, category, language] = settings;
+		projects = sortByDate([...projects], { key: 'updatedAt', asc: false });
+		if (type !== 'allProjects') {
+			projects = projects.filter((project) => project.primaryCategory === type);
 		}
-		if (category && category !== 'allCategories') {
-			filtered = filtered.filter((project) => project.categories?.includes(category));
+		if (category !== 'allCategories') {
+			projects = projects.filter((project) => project.categories?.includes(category));
 		}
-		if (language && language !== 'allLanguages') {
-			filtered = filtered.filter(
+		if (language !== 'allLanguages') {
+			projects = projects.filter(
 				(project) => project.primaryLanguage === language || project.languages?.includes(language),
 			);
 		}
-		return filtered;
+		return projects;
 	}
 
 	function updateFilterSettings(projects: RepoWithMetaData[]): [ProjectType[], ProjectCategory[], LanguageOrTech[]] {
-		const filteredTypes = [...new Set(projects.map((repo) => repo.primaryCategory))].filter(
+		const filteredTypes = [...new Set(projects.map((repo) => repo.primaryCategory) ?? [...PROJECT_TYPES])].filter(
 			(type) => type !== 'allProjects',
 		);
 
@@ -98,9 +82,9 @@
 	}
 
 	function resetFilter() {
-		filterProjectType = 'allProjects';
-		filterCategory = 'allCategories';
-		filterLanguage = 'allLanguages';
+		filterType = 'allProjects';
+		filterCat = 'allCategories';
+		filterLang = 'allLanguages';
 	}
 </script>
 
@@ -114,16 +98,16 @@
 				{projectTypes}
 				{categories}
 				{languages}
-				bind:filterProjectType
-				bind:filterCategory
-				bind:filterLanguage
+				bind:filterProjectType={filterType}
+				bind:filterCategory={filterCat}
+				bind:filterLanguage={filterLang}
 			/>
 		</div>
 	{/if}
 	<span class="total-results">{description}</span>
 
 	<div class="project-list">
-		{#each filtered as project}
+		{#each projects as project}
 			<ProjectCard {project} />
 		{/each}
 	</div>

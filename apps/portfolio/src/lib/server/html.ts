@@ -4,7 +4,9 @@ import {
 	FA_BULLET_REGEX,
 	getSvgIcon,
 	HTML_HEADING_REGEX,
+	LOCK_ICON_HTML,
 	TOX_TEST_RESULTS_REGEX,
+	UNLOCK_ICON_HTML,
 } from '$lib/server';
 import type { CodeBlock, CodeBlockUpdateDetails, HtmlHeading, TocSection } from '$lib/types';
 
@@ -18,16 +20,19 @@ export const colorizeToxResults = (html: string): string =>
 		return `<span class="cmd-results">${colorized}</span>`;
 	});
 
+export const transformLockIcons = (html: string): string =>
+	html.replaceAll(LOCK_ICON_HTML, `<span class="inline-svg">${getSvgIcon('lock')}</span>`);
+export const transformUnlockIcons = (html: string): string =>
+	html.replaceAll(UNLOCK_ICON_HTML, `<span class="inline-svg">${getSvgIcon('unlock')}</span>`);
+
 export const generateTableOfContents = (html: string): TocSection[] =>
 	createTocSection(1, 0, html.length, createHtmlHeadingMap(html));
 
-export function transformHeadings(html: string): string {
-	const svgIcon = getSvgIcon('hash');
-	return html.replace(
+export const transformHeadings = (html: string): string =>
+	html.replace(
 		HTML_HEADING_REGEX,
-		`<span class="heading-text level-$<level> underline--magical"><a href="#$<slug>" class="hanchor hanchor-self" title="Link to this section">${svgIcon}</a><h$<level> id="$<slug>">$<text></h$<level>></span>`,
+		`<span class="heading-text level-$<level> underline--magical"><a href="#$<slug>" class="hanchor hanchor-self" title="Link to this section">${getSvgIcon('hash')}</a><h$<level> id="$<slug>">$<text></h$<level>></span>`,
 	);
-}
 
 function createHtmlHeadingMap(html: string): { [k: number]: HtmlHeading[] } {
 	const headings = Array.from(html.matchAll(HTML_HEADING_REGEX)).map((m) => ({
@@ -126,14 +131,19 @@ function createWrappedCodeBlock(
 	lineNumbers: boolean,
 	lineNumberStart: number,
 ): string {
-	const svgIcon = getSvgIcon('copy', 4);
-	let topRow = '\n\t<span class="top-row">\n';
-	topRow += `\t\t<span class="lang-name-wrapper">\n`;
+	let topRow = '\n';
+	topRow += '\t<span class="top-row">\n';
+	topRow += '\t\t<div class="lang-name-wrapper">\n';
 	topRow += `\t\t\t<span class="lang-name">${lang}</span>\n`;
-	topRow += `\t\t\t<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">${svgIcon}\t\t\t</button>\n`;
-	topRow += `\t\t</span>\n`;
+	topRow += '\t\t</div>\n';
+	topRow += '\t\t<div class="copy-button-wrapper">\n';
+	topRow += `\t\t\t<button class="copy-button" type="button" data-code-block-id="${codeBlockId}" title="Copy code to clipboard">\n`;
+	topRow += `\t\t\t\t${getSvgIcon('copy', 4)}\n`;
+	topRow += '\t\t\t<span class="copy-status">copy</span>\n';
+	topRow += '\t\t\t</button>\n';
+	topRow += '\t\t</div>\n';
 	topRow += '\t\t<span class="space-filler"></span>\n';
-	topRow += `\t</span>\n`;
+	topRow += '\t</span>\n';
 
 	let newPre = `<pre class="shiki" style="background-color: #141414">`;
 	if (lineNumbers) {
@@ -152,6 +162,6 @@ const starSvgMap: { [k: string]: string } = {
 export const transformFaBulletLists = (html: string): string =>
 	html.replace(
 		FA_BULLET_REGEX,
-		(match: string, p1: string, p2: string): string =>
+		(_: string, p1: string, p2: string): string =>
 			`<div class="fa-bullet ${p1}">${starSvgMap[p1]}</div><div class="fa-bullet-text ${p1}">${p2}</div>`,
 	);

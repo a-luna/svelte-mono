@@ -51,10 +51,10 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 56px;
-		width: 56px;
-		padding: 0.75rem;
-		border-width: 3px;
+		height: var(--mobile-menu-button-size);
+		width: var(--mobile-menu-button-size);
+		padding: var(--mobile-menu-button-padding);
+		border-width: var(--mobile-menu-button-border-width);
 		border-style: solid;
 		border-color: var(--white);
 		background-color: var(--page-bg-color);

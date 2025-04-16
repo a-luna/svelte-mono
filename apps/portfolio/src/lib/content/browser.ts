@@ -8,6 +8,8 @@ export function enableCopyCodeButtons() {
 		const codeBlockId = e.dataset.codeBlockId;
 		const codeToCopy = document.querySelector<HTMLElement>(`#${codeBlockId}`)?.innerText ?? '';
 		e.addEventListener('click', () => copyCodeToClipboard(codeToCopy, e));
+		e.addEventListener('mouseenter', () => updateStatusLabel(e, 'copy'));
+		e.addEventListener('mouseleave', () => updateStatusLabel(e, 'copy'));
 	});
 	return true;
 }
@@ -28,6 +30,7 @@ async function copyCodeToClipboard(codeToCopy: string, button: HTMLElement) {
 		resultClass = 'error';
 	}
 	toggleClass(button.parentNode as HTMLElement, resultClass);
+	updateStatusLabel(button, resultClass === 'success' ? 'copied!' : 'error!');
 }
 async function copyToClipboard(text: string): Promise<Result> {
 	if (typeof window !== 'undefined') {
@@ -44,7 +47,7 @@ async function copyToClipboardSafari(textToCopy: string): Promise<Result> {
 				return new Promise((resolve) => {
 					resolve(new Blob([textToCopy]));
 				});
-			})
+			}),
 		});
 		navigator.clipboard.write([clipboardItem]);
 		return { success: true, value: undefined };
@@ -59,6 +62,13 @@ function toggleClass(element: HTMLElement | null, className: string) {
 		element.classList.add(className);
 		setTimeout(function () {
 			element.classList.remove(className);
-		}, 2000);
+			const statusLabel = element.parentNode?.querySelector('.copy-status');
+			if (statusLabel) statusLabel.textContent = 'copy';
+		}, 1000);
 	}
+}
+
+function updateStatusLabel(button: HTMLElement, status: string) {
+	const statusLabel = button.parentNode?.querySelector('.copy-status');
+	if (statusLabel) statusLabel.textContent = status;
 }

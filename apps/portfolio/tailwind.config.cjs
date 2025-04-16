@@ -18,9 +18,9 @@ module.exports = {
 						blockquote: {
 							fontWeight: '400',
 							fontStyle: 'italic',
-							color: 'var(--link-color)',
-							background: 'var(--black-tint2)',
-							'border-left': '2px solid var(--link-color)',
+							color: 'var(--pink)',
+							background: 'var(--page-bg-color)',
+							'border-left': '2px solid var(--pink)',
 							padding: '5px 10px',
 							margin: '0 0 20px 1em',
 						},
@@ -43,24 +43,11 @@ module.exports = {
 						},
 						'code::before': false,
 						'code::after': false,
-						'pre code, code': {
-							fontFamily: "Hack, 'Roboto Mono', menlo, monospace",
-						},
-						code: {
-							fontWeight: 400,
-							color: '#0FF',
-							background: 'var(--black-tint3)',
-							border: 'none',
-							'border-radius': '4px',
-							fontStyle: 'normal',
-							padding: '2px',
-						},
 						'main a, .nav-flyout-item a': {
 							fontWeight: '400',
 							color: 'var(--link-color)',
 							'background-color': 'inherit',
 							textDecoration: 'none',
-							transition: 'color 350ms ease-out, background-color 350ms ease-out',
 						},
 						'main a:hover, .nav-flyout-item a:hover': {
 							fontWeight: '400',
@@ -79,7 +66,6 @@ module.exports = {
 						'article a:hover code': {
 							color: 'var(--black-tint3)',
 							'background-color': 'var(--link-color)',
-							transition: 'all 350ms ease-out',
 						},
 						'a code': {
 							color: 'unset',
@@ -90,7 +76,6 @@ module.exports = {
 							marginBottom: '0',
 							marginLeft: 'auto',
 							color: 'var(--white)',
-							fontWeight: '400',
 						},
 						'article .custom-block strong, article .requirements strong, article blockquote p strong': {
 							color: 'currentColor',
@@ -130,6 +115,7 @@ module.exports = {
 						'.code-details ul li strong': {
 							color: 'var(--white)',
 							fontSize: '1.05em',
+							fontWeight: '700',
 							'text-transform': 'uppercase',
 						},
 						'li > img': {

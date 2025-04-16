@@ -1,11 +1,20 @@
 <script lang="ts">
 	import { BasicIconRenderer } from '@a-luna/shared-ui';
+
+	function smoothScrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
+	}
 </script>
 
-<a href="#top" title="Scroll To Top"><BasicIconRenderer icon={'doubleup'} width={'100%'} height={'30px'} /></a>
+<button title="Scroll To Top" on:click={smoothScrollToTop}>
+	<BasicIconRenderer icon={'doubleup'} width={'100%'} height={'30px'} />
+</button>
 
 <style lang="postcss">
-	a {
+	button {
 		position: fixed;
 		right: 1rem;
 		bottom: 1rem;
@@ -18,19 +27,19 @@
 		z-index: 10;
 		padding: 0.5rem 0.25rem;
 	}
-	a:hover,
-	a:focus,
-	a:active {
+	button:hover,
+	button:focus,
+	button:active {
 		color: var(--black);
 		background: var(--link-color);
 	}
-	a:hover {
+	button:hover {
 		opacity: 0.8;
 	}
-	a:focus {
+	button:focus {
 		opacity: 0.9;
 	}
-	a:active {
+	button:active {
 		opacity: 1;
 	}
 </style>

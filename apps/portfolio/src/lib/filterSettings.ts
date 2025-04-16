@@ -14,10 +14,12 @@ import {
 	FastApi,
 	Flask,
 	Hugo,
+	JavaScript,
 	Code as Lxml,
 	Microsoft,
 	Playwright,
 	Puppeteer,
+	Pydantic,
 	Python,
 	Redis,
 	RegExp,
@@ -26,8 +28,8 @@ import {
 	Svelte,
 	Tailwind,
 	TypeScript,
+	XPath,
 	XState,
-	Xml,
 } from '@a-luna/shared-ui';
 
 const projectTypeDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
@@ -104,6 +106,13 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		icon: Hugo,
 		size: 16,
 	},
+	javascript: {
+		displayName: 'JavaScript',
+		color: 'yellow',
+		hasIcon: true,
+		icon: JavaScript,
+		size: 15,
+	},
 	lxml: {
 		displayName: 'lxml',
 		color: 'teal',
@@ -129,7 +138,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		displayName: 'Pydantic',
 		color: 'pink',
 		hasIcon: true,
-		icon: Python,
+		icon: Pydantic,
 		size: 16,
 	},
 	python: {
@@ -181,7 +190,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		icon: Svelte,
 		size: 18,
 	},
-	tailwindcss: {
+	tailwind: {
 		displayName: 'TailwindCSS',
 		color: 'orange',
 		hasIcon: true,
@@ -199,7 +208,7 @@ const langorTechDetailsDatabase: { [k: string]: ProjectTypeDetails } = {
 		displayName: 'XPath',
 		color: 'purple',
 		hasIcon: true,
-		icon: Xml,
+		icon: XPath,
 		size: 16,
 	},
 	xstate: {

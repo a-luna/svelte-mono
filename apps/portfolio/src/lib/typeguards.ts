@@ -5,7 +5,7 @@ import {
 	PROJECT_TYPES,
 	REPO_NAMES,
 	SITE_SECTIONS,
-	TRANSITION_SECTIONS,
+	SPECIFIC_TECH_LIST,
 } from '$lib/constants';
 import type {
 	FeaturedProject,
@@ -14,14 +14,19 @@ import type {
 	ProjectType,
 	RepoName,
 	SiteSection,
+	SpecificLangOrTech,
 	TransitionSection,
 } from '$lib/types';
 
 export const isProjectType = (filterSetting: string): filterSetting is ProjectType =>
 	PROJECT_TYPES.includes(filterSetting as ProjectType);
 
-export const isTransitionSection = (section: string): section is TransitionSection =>
-	TRANSITION_SECTIONS.includes(section as TransitionSection);
+export const isSpecificLanguageOrTech = (tech: string): tech is SpecificLangOrTech => {
+	return SPECIFIC_TECH_LIST.includes(tech as SpecificLangOrTech);
+};
+
+export const isTransitionSection = (url: string): url is TransitionSection =>
+	['/', '/projects', '/blog', '/about'].some((path: string) => url === path);
 
 export const isSiteSection = (section: string): section is SiteSection =>
 	SITE_SECTIONS.includes(section as SiteSection);

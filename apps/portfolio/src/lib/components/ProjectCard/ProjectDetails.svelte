@@ -41,7 +41,7 @@
 	.details-top {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: 0.5rem;
+		gap: 0.75rem;
 	}
 
 	.project-name,
@@ -78,7 +78,7 @@
 
 	@media screen and (min-width: 640px) {
 		.details-top {
-			gap: 0.65rem;
+			gap: 1rem;
 		}
 		h2 {
 			font-size: 1.5rem;

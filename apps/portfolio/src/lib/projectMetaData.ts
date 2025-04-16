@@ -1,19 +1,12 @@
 import { dev } from '$app/environment';
 import { nullRepoWithMetadata } from '$lib/constants';
 import { isSiteProject, isUserRepo } from '$lib/typeguards';
-import type {
-	CachedProjectData,
-	GHRepo,
-	Monorepo,
-	MonorepoProjectName,
-	ProjectName,
-	RepoWithMetaData,
-} from '$lib/types';
+import type { CachedProjectData, ProjectName, RepoWithMetaData, ghRepoMinimal } from '$lib/types';
 import { addHours, isWithinInterval, parseISO } from 'date-fns';
 
 export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 	'aaronluna.dev': {
-		primaryLanguage: 'Hugo',
+		primaryLanguage: 'hugo',
 		primaryCategory: 'frontend',
 		languages: [],
 		categories: ['blog_portfolio_sites'],
@@ -23,7 +16,7 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 		monorepoName: '',
 	},
 	'async-file-server': {
-		primaryLanguage: 'CSharp',
+		primaryLanguage: 'csharp',
 		primaryCategory: 'backend',
 		languages: [],
 		categories: ['cli_apps'],
@@ -33,7 +26,7 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 		monorepoName: '',
 	},
 	'console-progress-bar': {
-		primaryLanguage: 'CSharp',
+		primaryLanguage: 'csharp',
 		primaryCategory: 'backend',
 		languages: [],
 		categories: ['cli_apps'],
@@ -42,7 +35,7 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 		inMonorepo: false,
 	},
 	'dotnetcore-crypto': {
-		primaryLanguage: 'CSharp',
+		primaryLanguage: 'csharp',
 		primaryCategory: 'backend',
 		languages: [],
 		categories: ['cryptography'],
@@ -51,27 +44,27 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 		inMonorepo: false,
 	},
 	'fastapi-redis-cache': {
-		primaryLanguage: 'Python',
+		primaryLanguage: 'python',
 		primaryCategory: 'backend',
-		languages: ['Redis', 'FastAPI'],
+		languages: ['redis', 'fastapi'],
 		categories: ['dev_tools', 'fastapi_plugins'],
 		deployedUrl: '',
 		projectSiteTitle: '',
 		inMonorepo: false,
 	},
 	'flask-api-tutorial': {
-		primaryLanguage: 'Python',
+		primaryLanguage: 'python',
 		primaryCategory: 'backend',
-		languages: ['Flask', 'Hugo', 'SQLAlchemy', 'SQLite'],
+		languages: ['flask', 'hugo', 'sqlalchemy', 'sqlite'],
 		categories: ['docs_guides', 'rest_api'],
 		deployedUrl: '',
 		projectSiteTitle: '',
 		inMonorepo: false,
 	},
 	'packer-examples': {
-		primaryLanguage: 'Shell',
+		primaryLanguage: 'shell',
 		primaryCategory: 'backend',
-		languages: ['AWS'],
+		languages: ['aws'],
 		categories: ['dev_tools', 'devops'],
 		deployedUrl: '',
 		projectSiteTitle: '',
@@ -80,9 +73,9 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 	portfolio: {
 		name: 'portfolio',
 		description: 'My personal website/blog/portfolio, built with sveltekit',
-		primaryLanguage: 'Svelte',
+		primaryLanguage: 'svelte',
 		primaryCategory: 'frontend',
-		languages: ['TypeScript', 'XState'],
+		languages: ['typescript', 'xstate'],
 		categories: ['web_app'],
 		updatedAt: new Date().toISOString(),
 		deployedUrl: dev ? 'http://localhost:3504/' : 'https://portfolio.aaronluna.dev/',
@@ -95,9 +88,9 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 		name: 'svelte-base64',
 		description:
 			'Web app that explains how base64 encoding works step-by-step for any string or data and shows the process visually',
-		primaryLanguage: 'Svelte',
+		primaryLanguage: 'svelte',
 		primaryCategory: 'frontend',
-		languages: ['Playwright', 'TypeScript', 'XState'],
+		languages: ['playwright', 'typescript', 'xstate'],
 		categories: ['web_app'],
 		updatedAt: new Date().toISOString(),
 		deployedUrl: dev ? 'http://localhost:3500/' : 'https://base64.aaronluna.dev/',
@@ -109,9 +102,9 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 	'svelte-color-tools': {
 		name: 'svelte-color-tools',
 		description: 'Svelte component library containing helpful ColorPicker and ColorPalette components.',
-		primaryLanguage: 'Svelte',
+		primaryLanguage: 'svelte',
 		primaryCategory: 'frontend',
-		languages: ['RegExp', 'TailwindCSS', 'TypeScript'],
+		languages: ['regexp', 'tailwind', 'typescript'],
 		categories: ['component_library'],
 		deployedUrl: '',
 		updatedAt: new Date().toISOString(),
@@ -121,54 +114,54 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 		monorepoProjectPath: 'packages/svelte-color-tools',
 	},
 	'svelte-simple-tables-docs': {
-		primaryLanguage: 'Svelte',
+		primaryLanguage: 'svelte',
 		primaryCategory: 'frontend',
-		languages: ['TailwindCSS', 'TypeScript'],
+		languages: ['tailwind', 'typescript'],
 		categories: ['docs_guides', 'web_app', 'component_library'],
 		deployedUrl: '',
 		projectSiteTitle: '',
 		inMonorepo: false,
 	},
 	'svelte-simple-tables': {
-		primaryLanguage: 'Svelte',
+		primaryLanguage: 'svelte',
 		primaryCategory: 'frontend',
-		languages: ['TypeScript'],
+		languages: ['typescript'],
 		categories: ['component_library'],
 		deployedUrl: '',
 		projectSiteTitle: '',
 		inMonorepo: false,
 	},
 	'unicode-api': {
-		primaryLanguage: 'Python',
+		primaryLanguage: 'python',
 		primaryCategory: 'backend',
-		languages: ['FastAPI', 'Pydantic'],
+		languages: ['fastapi', 'pydantic'],
 		categories: ['rest_api'],
 		deployedUrl: dev ? 'http://localhost:3507/' : 'https://unicode-api.aaronluna.dev/v1/docs',
 		projectSiteTitle: 'Unicode API Docs (Swagger UI)',
 		inMonorepo: false,
 	},
 	'vig-api': {
-		primaryLanguage: 'Python',
+		primaryLanguage: 'python',
 		primaryCategory: 'backend',
-		languages: ['FastAPI', 'Pydantic'],
+		languages: ['fastapi', 'pydantic'],
 		categories: ['rest_api'],
 		deployedUrl: '',
 		projectSiteTitle: '',
 		inMonorepo: false,
 	},
 	'vig-data': {
-		primaryLanguage: 'Svelte',
+		primaryLanguage: 'svelte',
 		primaryCategory: 'frontend',
-		languages: ['TypeScript'],
+		languages: ['typescript'],
 		categories: ['web_app'],
 		deployedUrl: '',
 		projectSiteTitle: '',
 		inMonorepo: false,
 	},
 	vigorish: {
-		primaryLanguage: 'Python',
+		primaryLanguage: 'python',
 		primaryCategory: 'backend',
-		languages: ['AWS', 'lxml', 'Puppeteer', 'RegExp', 'SQLAlchemy', 'SQLite', 'XPath'],
+		languages: ['aws', 'lxml', 'puppeteer', 'regexp', 'sqlalchemy', 'sqlite', 'xpath'],
 		categories: ['cli_apps', 'web_scraping'],
 		deployedUrl: '',
 		projectSiteTitle: '',
@@ -176,11 +169,32 @@ export const repoDataDepot: Record<ProjectName, Partial<RepoWithMetaData>> = {
 	},
 };
 
-export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
+export const cacheIsStale = (cachedAt: string): boolean =>
+	!isWithinInterval(new Date(), { start: parseISO(cachedAt), end: addHours(parseISO(cachedAt), 6) });
+
+export const initializeProjectData = (): CachedProjectData => ({
+	repos: createProjectMap(convertGHRepos(cachedUserRepos)),
+	cachedAt: new Date(0).toISOString(),
+});
+
+export function createProjectMap(repos: RepoWithMetaData[]): Record<ProjectName, RepoWithMetaData> {
+	const projectMap: Record<ProjectName, RepoWithMetaData> = {} as Record<ProjectName, RepoWithMetaData>;
+	for (const repo of repos) {
+		projectMap[repo.name] = repo;
+	}
+	return projectMap;
+}
+
+export const convertGHRepos = (ghRepos: ghRepoMinimal[]): RepoWithMetaData[] =>
+	Object.values(ghRepos)
+		.filter((r) => isUserRepo(r.name))
+		.map(updateProjectMetaData);
+
+export const updateProjectMetaData = (project: ghRepoMinimal): RepoWithMetaData =>
 	isSiteProject(project.name)
 		? {
 				name: project.name,
-				description: project.description,
+				description: project.description || '',
 				starCount: project.stargazers_count,
 				forkCount: project.forks_count,
 				repoUrl: project.html_url,
@@ -204,74 +218,51 @@ export const updateProjectMetaData = (project: GHRepo): RepoWithMetaData =>
 // import { userRepos } from '$lib/stores';
 
 // $: if ($userRepos) {
-// 	const cache = $userRepos.map((project) => ({
+// 	const cache = Object.values($userRepos.repos).map((project) => ({
 // 		name: project.name,
 // 		description: project.description,
-// 		stargazers_count: project.stargazers_count,
-// 		forks_count: project.forks_count,
-// 		html_url: project.html_url,
-// 		stargazers_url: project.stargazers_url,
-// 		forks_url: project.forks_url
+// 		stargazers_count: project.starCount,
+// 		forks_count: project.forkCount,
+// 		html_url: project.repoUrl,
+// 		stargazers_url: project.starsUrl,
+// 		forks_url: project.forksUrl,
+// 		pushed_at: project.updatedAt,
 // 	}));
 // 	console.log({ cache });
 // }
 
-export const cachedUserRepos: GHRepo[] = [
+export const cachedUserRepos: ghRepoMinimal[] = [
 	{
 		name: 'aaronluna.dev',
 		description: 'My personal website/blog/portfolio, built with Hugo',
 		stargazers_count: 3,
-		forks_count: 2,
+		forks_count: 1,
 		html_url: 'https://github.com/a-luna/aaronluna.dev',
 		stargazers_url: 'https://api.github.com/repos/a-luna/aaronluna.dev/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/aaronluna.dev/forks',
-	},
-	{
-		name: 'aaronluna.dev-v2',
-		description: 'Rewriting my blog/portfolio site in sveltekit',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/aaronluna.dev-v2',
-		stargazers_url: 'https://api.github.com/repos/a-luna/aaronluna.dev-v2/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/aaronluna.dev-v2/forks',
+		pushed_at: '2023-12-19T13:09:50Z',
 	},
 	{
 		name: 'async-file-server',
 		description:
 			'Light-weight, cross-platform (NET Core 2.1) C# Asynchronous file server and text messaging platform. Utilizes custom extension methods which wrap asynchronous TCP socket method pairs, providing the benefits of the Task Parallel Library (TPL) to socket programming.',
-		stargazers_count: 8,
+		stargazers_count: 11,
 		forks_count: 7,
 		html_url: 'https://github.com/a-luna/async-file-server',
 		stargazers_url: 'https://api.github.com/repos/a-luna/async-file-server/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/async-file-server/forks',
-	},
-	{
-		name: 'bookit',
-		description: 'A UI component explorere desiged specifically for Svelte Kit, not spooky',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/bookit',
-		stargazers_url: 'https://api.github.com/repos/a-luna/bookit/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/bookit/forks',
-	},
-	{
-		name: 'bullet',
-		description: '🚅 Interactive prompts made simple. Build a prompt like stacking blocks.',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/bullet',
-		stargazers_url: 'https://api.github.com/repos/a-luna/bullet/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/bullet/forks',
+		pushed_at: '2019-03-28T07:32:34Z',
 	},
 	{
 		name: 'console-progress-bar',
 		description:
 			'Customizable progress bar for C# console applications (.NET Core 2.0). Includes a basic progress bar which can be used for any long-running task and a file transfer progress bar that detects when the transfer has stalled, firing an event that the client can subscribe to.',
-		stargazers_count: 16,
+		stargazers_count: 20,
 		forks_count: 10,
 		html_url: 'https://github.com/a-luna/console-progress-bar',
 		stargazers_url: 'https://api.github.com/repos/a-luna/console-progress-bar/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/console-progress-bar/forks',
+		pushed_at: '2020-01-04T04:49:45Z',
 	},
 	{
 		name: 'dotnetcore-crypto',
@@ -282,147 +273,50 @@ export const cachedUserRepos: GHRepo[] = [
 		html_url: 'https://github.com/a-luna/dotnetcore-crypto',
 		stargazers_url: 'https://api.github.com/repos/a-luna/dotnetcore-crypto/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/dotnetcore-crypto/forks',
+		pushed_at: '2019-03-28T00:59:54Z',
 	},
 	{
 		name: 'fastapi-redis-cache',
 		description:
 			'A simple and robust caching solution for FastAPI that interprets request header values and creates proper response header values (powered by Redis)',
-		stargazers_count: 86,
-		forks_count: 18,
+		stargazers_count: 151,
+		forks_count: 24,
 		html_url: 'https://github.com/a-luna/fastapi-redis-cache',
 		stargazers_url: 'https://api.github.com/repos/a-luna/fastapi-redis-cache/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/fastapi-redis-cache/forks',
+		pushed_at: '2024-07-10T08:02:29Z',
 	},
 	{
 		name: 'flask-api-tutorial',
 		description:
 			'Boilerplate for a Flask REST API with JWT-based authentication, built with SQLAlchemy, Flask-RESTx, PyJWT, and pytest. This is a companion repo for a multi-part tutorial series on my personal website.',
-		stargazers_count: 51,
-		forks_count: 13,
+		stargazers_count: 75,
+		forks_count: 18,
 		html_url: 'https://github.com/a-luna/flask-api-tutorial',
 		stargazers_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial/forks',
-	},
-	{
-		name: 'flask-api-tutorial-old',
-		description:
-			'Boilerplate for a Flask REST API with JWT-based authentication, focused on test-coverage and CI via pytest, tox, and github actions.',
-		stargazers_count: 1,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/flask-api-tutorial-old',
-		stargazers_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial-old/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/flask-api-tutorial-old/forks',
-	},
-	{
-		name: 'flask-restapi-jwt',
-		description: 'Boilerplate flask project for a REST API with JWT-based authentication',
-		stargazers_count: 2,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/flask-restapi-jwt',
-		stargazers_url: 'https://api.github.com/repos/a-luna/flask-restapi-jwt/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/flask-restapi-jwt/forks',
-	},
-	{
-		name: 'flask-restplus',
-		description: 'Fully featured framework for fast, easy and documented API development with Flask',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/flask-restplus',
-		stargazers_url: 'https://api.github.com/repos/a-luna/flask-restplus/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/flask-restplus/forks',
-	},
-	{
-		name: 'glyphhanger',
-		description:
-			'Your web font utility belt. It can subset web fonts. It can find unicode-ranges for you automatically. It makes julienne fries.',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/glyphhanger',
-		stargazers_url: 'https://api.github.com/repos/a-luna/glyphhanger/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/glyphhanger/forks',
-	},
-	{
-		name: 'hugo-lunr',
-		description: 'Node module for creating lunr.js search indexes for static Hugo sites',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/hugo-lunr',
-		stargazers_url: 'https://api.github.com/repos/a-luna/hugo-lunr/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/hugo-lunr/forks',
+		pushed_at: '2022-03-06T10:43:23Z',
 	},
 	{
 		name: 'packer-examples',
 		description:
 			'Packer templates which create machine images running various applications, e.g., LEMP stack with Bedrock-Wordpress fully-configured, ready to install immediately upon instancing.',
-		stargazers_count: 7,
+		stargazers_count: 8,
 		forks_count: 9,
 		html_url: 'https://github.com/a-luna/packer-examples',
 		stargazers_url: 'https://api.github.com/repos/a-luna/packer-examples/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/packer-examples/forks',
-	},
-	{
-		name: 'portfolio-site',
-		description: '',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/portfolio-site',
-		stargazers_url: 'https://api.github.com/repos/a-luna/portfolio-site/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/portfolio-site/forks',
-	},
-	{
-		name: 'python-playground',
-		description: 'My implementations of projects and exercises from the book Python Playground by Mahesh Venkitachalam',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/python-playground',
-		stargazers_url: 'https://api.github.com/repos/a-luna/python-playground/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/python-playground/forks',
-	},
-	{
-		name: 'smui-example-sveltekit',
-		description: 'SMUI SvelteKit Example',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/smui-example-sveltekit',
-		stargazers_url: 'https://api.github.com/repos/a-luna/smui-example-sveltekit/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/smui-example-sveltekit/forks',
-	},
-	{
-		name: 'svelte-base64',
-		description:
-			'A simple application using svelte 3.0, that encodes/decodes ASCII text or hex strings to/from base64 and provides reactive ui components to help illustrate the encoding process.',
-		stargazers_count: 0,
-		forks_count: 2,
-		html_url: 'https://github.com/a-luna/svelte-base64',
-		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-base64/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-base64/forks',
-	},
-	{
-		name: 'svelte-base64-ts',
-		description: 'Re-implementation of my svelte-base64 application, updated to use sveltekit and typescript',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/svelte-base64-ts',
-		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-base64-ts/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-base64-ts/forks',
-	},
-	{
-		name: 'svelte-simple-datatables',
-		description: 'A Datatable component for Svelte',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/svelte-simple-datatables',
-		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-simple-datatables/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-datatables/forks',
+		pushed_at: '2019-03-16T10:49:49Z',
 	},
 	{
 		name: 'svelte-simple-tables',
 		description: 'Accessible, sortable, paginated table component (created with sveltekit)',
-		stargazers_count: 1,
-		forks_count: 0,
+		stargazers_count: 4,
+		forks_count: 1,
 		html_url: 'https://github.com/a-luna/svelte-simple-tables',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables/forks',
+		pushed_at: '2024-02-10T11:17:57Z',
 	},
 	{
 		name: 'svelte-simple-tables-docs',
@@ -433,33 +327,17 @@ export const cachedUserRepos: GHRepo[] = [
 		html_url: 'https://github.com/a-luna/svelte-simple-tables-docs',
 		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables-docs/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/svelte-simple-tables-docs/forks',
-	},
-	{
-		name: 'svelte-toy',
-		description: 'A toy for svelte data stores',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/svelte-toy',
-		stargazers_url: 'https://api.github.com/repos/a-luna/svelte-toy/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/svelte-toy/forks',
+		pushed_at: '2022-09-20T18:32:51Z',
 	},
 	{
 		name: 'unicode-api',
 		description: 'REST API providing detailed information about unicode characters',
-		stargazers_count: 0,
+		stargazers_count: 3,
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/unicode-api',
 		stargazers_url: 'https://api.github.com/repos/a-luna/unicode-api/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/unicode-api/forks',
-	},
-	{
-		name: 'utterances',
-		description: ':crystal_ball: A lightweight comments widget built on GitHub issues',
-		stargazers_count: 0,
-		forks_count: 0,
-		html_url: 'https://github.com/a-luna/utterances',
-		stargazers_url: 'https://api.github.com/repos/a-luna/utterances/stargazers',
-		forks_url: 'https://api.github.com/repos/a-luna/utterances/forks',
+		pushed_at: '2024-05-28T04:39:57Z',
 	},
 	{
 		name: 'vig-api',
@@ -469,16 +347,18 @@ export const cachedUserRepos: GHRepo[] = [
 		html_url: 'https://github.com/a-luna/vig-api',
 		stargazers_url: 'https://api.github.com/repos/a-luna/vig-api/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/vig-api/forks',
+		pushed_at: '2024-09-04T22:48:48Z',
 	},
 	{
 		name: 'vig-data',
 		description:
 			'Web application for interacting with MLB data collected with vigorish. Built with SvelteKit as an opportunity to learn the new framework and ESM tooling.',
-		stargazers_count: 0,
+		stargazers_count: 1,
 		forks_count: 0,
 		html_url: 'https://github.com/a-luna/vig-data',
 		stargazers_url: 'https://api.github.com/repos/a-luna/vig-data/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/vig-data/forks',
+		pushed_at: '2024-09-19T11:31:01Z',
 	},
 	{
 		name: 'vigorish',
@@ -488,37 +368,37 @@ export const cachedUserRepos: GHRepo[] = [
 		html_url: 'https://github.com/a-luna/vigorish',
 		stargazers_url: 'https://api.github.com/repos/a-luna/vigorish/stargazers',
 		forks_url: 'https://api.github.com/repos/a-luna/vigorish/forks',
+		pushed_at: '2024-09-04T23:03:23Z',
+	},
+	{
+		name: 'portfolio',
+		description: 'My personal website/blog/portfolio, built with sveltekit',
+		stargazers_count: 0,
+		forks_count: 0,
+		html_url: 'https://github.com/a-luna/svelte-mono/tree/main/apps/portfolio',
+		stargazers_url: '',
+		forks_url: '',
+		pushed_at: '2024-05-11T16:02:04Z',
+	},
+	{
+		name: 'svelte-base64',
+		description:
+			'Web app that explains how base64 encoding works step-by-step for any string or data and shows the process visually',
+		stargazers_count: 0,
+		forks_count: 0,
+		html_url: 'https://github.com/a-luna/svelte-mono/tree/main/apps/svelte-base64',
+		stargazers_url: '',
+		forks_url: '',
+		pushed_at: '2024-05-28T23:19:26Z',
+	},
+	{
+		name: 'svelte-color-tools',
+		description: 'Svelte component library containing helpful ColorPicker and ColorPalette components.',
+		stargazers_count: 0,
+		forks_count: 0,
+		html_url: 'https://github.com/a-luna/svelte-mono/tree/main/packages/svelte-color-tools',
+		stargazers_url: '',
+		forks_url: '',
+		pushed_at: '2024-05-11T07:54:49Z',
 	},
 ];
-
-export const initializeProjectData = (): CachedProjectData => ({
-	repos: convertGHRepos(cachedUserRepos),
-	cachedAt: new Date(0).toISOString(),
-});
-
-export const convertGHRepos = (ghRepos: GHRepo[]): RepoWithMetaData[] =>
-	Object.values(ghRepos)
-		.filter((r) => isUserRepo(r.name))
-		.map(updateProjectMetaData);
-
-export function convertMonorepoProjects(
-	monorepoProjectData: Record<Monorepo, Record<MonorepoProjectName, string>>,
-): RepoWithMetaData[] {
-	const monorepoProjects: RepoWithMetaData[] = [];
-	for (const projects of Object.values(monorepoProjectData)) {
-		for (const [projectName, lastCommitDate] of Object.entries(projects)) {
-			if (!isSiteProject(projectName)) continue;
-			const project = repoDataDepot?.[projectName] ?? nullRepoWithMetadata;
-			project.repoUrl = `https://github.com/a-luna/${project.monorepoName}/tree/main/${project.monorepoProjectPath}`;
-			monorepoProjects.push({
-				...nullRepoWithMetadata,
-				...project,
-				updatedAt: lastCommitDate,
-			});
-		}
-	}
-	return monorepoProjects;
-}
-
-export const cacheIsStale = (cachedAt: string): boolean =>
-	!isWithinInterval(new Date(), { start: parseISO(cachedAt), end: addHours(parseISO(cachedAt), 6) });

@@ -22,7 +22,8 @@
 		const [fromRoute, toRoute] = [from?.route.id ?? '', to?.route.id ?? ''];
 		if (isTransitionSection(toRoute) && fromRoute !== toRoute) {
 			$sectionTransition = {
-				inProgress: true,
+				inProgress: false,
+				showContent: false,
 				from: isTransitionSection(fromRoute) ? fromRoute : '',
 				fromComplete: !isTransitionSection(fromRoute),
 				to: toRoute,
@@ -61,10 +62,10 @@
 	<Nav />
 	<main>
 		<slot />
-		{#if $state.showScrollToTopButton}
-			<ScrollToTopButton />
-		{/if}
 	</main>
+	{#if $state.showScrollToTopButton}
+		<ScrollToTopButton />
+	{/if}
 </div>
 
 <style lang="postcss">

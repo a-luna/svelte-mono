@@ -1,4 +1,4 @@
-import type { AppStore, BlogPost, RepoWithMetaData } from '$lib/types';
+import type { AppStore, BlogPost, RepoWithMetaData, SpecificLangOrTech } from '$lib/types';
 
 export const SCREEN_SIZES = ['sm', 'md', 'lg'] as const;
 
@@ -54,30 +54,36 @@ export const NAV_ICON_NAMES = [
 	'vulture',
 ] as const;
 
-export const TECH_LIST = [
-	'allLanguages',
-	'AWS',
-	'CSharp',
-	'Cypress',
-	'FastAPI',
-	'Flask',
-	'Hugo',
+export const SPECIFIC_TECH_LIST = [
+	'aws',
+	'csharp',
+	'cypress',
+	'fastapi',
+	'flask',
+	'hugo',
+	'javascript',
 	'lxml',
-	'Puppeteer',
-	'Playwright',
-	'Pydantic',
-	'Python',
-	'Redis',
-	'RegExp',
-	'Shell',
-	'SQLAlchemy',
-	'SQLite',
-	'Svelte',
-	'TailwindCSS',
-	'TypeScript',
-	'XPath',
-	'XState',
+	'puppeteer',
+	'playwright',
+	'pydantic',
+	'python',
+	'redis',
+	'regexp',
+	'shell',
+	'sqlalchemy',
+	'sqlite',
+	'svelte',
+	'tailwind',
+	'typescript',
+	'xpath',
+	'xstate',
 ] as const;
+
+export const TECH_LIST = ['allLanguages', ...SPECIFIC_TECH_LIST] as const;
+
+export const GH_LANG_TO_MY_LANG_MAP: Record<string, SpecificLangOrTech> = {
+	TailwindCSS: 'tailwind',
+};
 
 export const REPO_NAMES = [
 	'aaronluna.dev',
@@ -134,7 +140,7 @@ export const defaultAppState: AppStore = {
 };
 
 export const nullRepoWithMetadata: RepoWithMetaData = {
-	name: 'null',
+	name: 'aaronluna.dev',
 	description: '',
 	starCount: 0,
 	forkCount: 0,
@@ -160,11 +166,13 @@ export const nullBlogPost: BlogPost = {
 	description: '',
 	frontmatter: {},
 	hasToc: false,
+	toc: [],
 	category: 'allProjects',
 	language: 'allLanguages',
 	categories: [],
 	techList: [],
 	slug: '',
+	href: '',
 	url: '',
 	date: '',
 	coverImage: {
@@ -173,4 +181,7 @@ export const nullBlogPost: BlogPost = {
 		caption: '',
 	},
 	resources: {},
+	codeBlocks: [],
+	deployedUrl: '',
+	projectSiteTitle: '',
 };

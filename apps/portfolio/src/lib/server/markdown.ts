@@ -69,14 +69,12 @@ export const convertWarningBoxes = async (markdown: string): Promise<string> =>
 
 async function convertInfoBoxToHtml(match: RegExpMatchArray): Promise<string> {
 	const html = await convertMarkdownSnippetToHtml(match);
-	const svgIcon = getSvgIcon('note');
-	return `<div class="note custom-block"><div class="custom-block-top"><div class="custom-block-icon">${svgIcon}</div>\n<span class="custom-block-title">NOTE</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
+	return `<div class="note custom-block"><div class="custom-block-top"><div class="custom-block-icon">${getSvgIcon('note')}</div>\n<span class="custom-block-title">NOTE</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
 }
 
 async function convertWarningBoxToHtml(match: RegExpMatchArray): Promise<string> {
 	const html = await convertMarkdownSnippetToHtml(match);
-	const svgIcon = getSvgIcon('warning');
-	return `<div class="warning custom-block"><div class="custom-block-top"><div class="custom-block-icon">${svgIcon}</div>\n<span class="custom-block-title">WARNING</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
+	return `<div class="warning custom-block"><div class="custom-block-top"><div class="custom-block-icon">${getSvgIcon('warning')}</div>\n<span class="custom-block-title">WARNING</span></div><div class="custom-block-message"><p>${html}</p></div></div>`;
 }
 
 async function convertMarkdownSnippetToHtml(match: RegExpMatchArray): Promise<string> {

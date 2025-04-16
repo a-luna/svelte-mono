@@ -1,20 +1,10 @@
 <script lang="ts">
-	import { blogPostDateMap, tutorialSectionNumberMap } from '$lib/stores';
-	import type { ContentType, OrderedNavItem } from '$lib/types';
+	import type { OrderedNavItem } from '$lib/types';
 	import { BasicIconRenderer } from '@a-luna/shared-ui';
 
-	export let contentType: ContentType;
 	export let slug: string;
+	export let navItems: OrderedNavItem[] = [];
 
-	const part0: OrderedNavItem = {
-		slug: 'overview',
-		title: 'Project Overview',
-		titleCompact: 'Overview',
-		weight: 0,
-	};
-
-	$: tutorialSections = [part0, ...$tutorialSectionNumberMap];
-	$: navItems = contentType == 'blog' ? $blogPostDateMap : contentType == 'tutorial' ? tutorialSections : [];
 	$: postIndex = navItems.findIndex((post) => post.slug === slug);
 	$: previous = postIndex > 0 ? navItems.at(postIndex - 1) : null;
 	$: next = postIndex < navItems.length - 1 ? navItems.at(postIndex + 1) : null;
@@ -81,7 +71,9 @@
 		color: var(--link-color);
 		background-color: inherit;
 		text-decoration: none;
-		transition: background-color 350ms ease-out, color 350ms ease-out;
+		transition:
+			background-color 350ms ease-out,
+			color 350ms ease-out;
 	}
 	.icon {
 		height: 16px;

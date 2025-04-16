@@ -55,7 +55,11 @@
 				<slot name="content_item_nav" />
 			</div>
 		{/if}
-		<slot name="comments" />
+		{#if $$slots.comments}
+			<div class="wrapper comments-wrapper">
+				<slot name="comments" />
+			</div>
+		{/if}
 	</article>
 </PageTransition>
 
@@ -83,15 +87,6 @@
 		font-weight: 400;
 		line-height: 1.3;
 	}
-	/* .gradient-heading {
-		color: transparent;
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-box-decoration-break: text;
-		box-decoration-break: clone;
-		background-image: var(--page-title-gradient);
-		background-color: var(--black-tint2);
-	} */
 	.wrapper {
 		padding-top: 0;
 		padding-bottom: 0;

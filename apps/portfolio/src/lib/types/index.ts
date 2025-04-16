@@ -22,27 +22,28 @@ import type {
 	Uluru,
 	Vulture,
 } from '$lib/components/Icons';
-import type {
-	BACKEND_CATEGORIES,
-	CONTENT_TYPES,
-	FEATURED_PROJECTS,
-	FRONTEND_CATEGORIES,
-	HTTP_AUTH_TYPES,
-	HTTP_METHODS,
-	ICON_COLORS,
-	ICON_NAMES,
-	MONOREPO_NAMES,
-	MONOREPO_PROJECTS,
-	NAV_ICON_NAMES,
-	PAGE_TYPES,
-	PROJECT_CATEGORIES,
-	PROJECT_NAMES,
-	PROJECT_TYPES,
-	REPO_NAMES,
-	SCREEN_SIZES,
-	SITE_SECTIONS,
+import {
+	SPECIFIC_TECH_LIST,
 	TECH_LIST,
-	TRANSITION_SECTIONS,
+	type BACKEND_CATEGORIES,
+	type CONTENT_TYPES,
+	type FEATURED_PROJECTS,
+	type FRONTEND_CATEGORIES,
+	type HTTP_AUTH_TYPES,
+	type HTTP_METHODS,
+	type ICON_COLORS,
+	type ICON_NAMES,
+	type MONOREPO_NAMES,
+	type MONOREPO_PROJECTS,
+	type NAV_ICON_NAMES,
+	type PAGE_TYPES,
+	type PROJECT_CATEGORIES,
+	type PROJECT_NAMES,
+	type PROJECT_TYPES,
+	type REPO_NAMES,
+	type SCREEN_SIZES,
+	type SITE_SECTIONS,
+	type TRANSITION_SECTIONS,
 } from '$lib/constants';
 import type {
 	Asterisk as AllProjects,
@@ -89,6 +90,7 @@ export type FrontendCategory = (typeof FRONTEND_CATEGORIES)[number];
 export type BackendCategory = (typeof BACKEND_CATEGORIES)[number];
 export type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
 export type LanguageOrTech = (typeof TECH_LIST)[number];
+export type SpecificLangOrTech = (typeof SPECIFIC_TECH_LIST)[number];
 export type FilterSetting = ProjectType | ProjectCategory | LanguageOrTech | '';
 
 export interface AppStore {
@@ -106,15 +108,12 @@ export interface AppStore {
 
 export interface SectionTransition {
 	inProgress: boolean;
+	showContent: boolean;
 	from: string;
 	fromComplete: boolean;
 	to: string;
 	toComplete: boolean;
 }
-
-export type HttpError = { status: number; message: string };
-export type HttpResult = { success: true; value: Response } | { success: false; error: HttpError };
-export type Result<T = void> = { success: true; value: T } | { success: false; error: string };
 
 export interface HttpAuthToken {
 	type: HttpAuthType;
@@ -171,19 +170,20 @@ export interface ProjectReadme {
 	title: string;
 	description: string;
 	hasToc: boolean;
-	toc?: TocSection[];
+	toc: TocSection[];
 	category: ProjectType | '';
 	language: LanguageOrTech | '';
 	categories: ProjectCategory[];
 	techList: LanguageOrTech[];
 	slug: string;
-	href?: string;
+	href: string;
 	url: string;
 	date: string;
-	coverImage?: BlogResource;
-	codeBlocks?: CodeBlock[];
-	deployedUrl?: string;
-	projectSiteTitle?: string;
+	coverImage: BlogResource;
+	resources: ResourceMap;
+	codeBlocks: CodeBlock[];
+	deployedUrl: string;
+	projectSiteTitle: string;
 }
 
 export interface BlogPost extends ProjectReadme {
@@ -191,23 +191,21 @@ export interface BlogPost extends ProjectReadme {
 	frontmatter: {
 		[key: string]: string;
 	};
-	resources: ResourceMap;
-	codeBlocks?: CodeBlock[];
 }
 
 export type BlogPostDateMap = Pick<BlogPost, 'slug' | 'date' | 'title'>;
 
 export interface TutorialSection extends BlogPost {
-	lead?: string;
-	series_weight?: number;
-	series_title?: string;
-	series_part?: string;
-	series_part_lead?: string;
-	git_release_name?: string;
-	url_git_rel_browse?: string;
-	url_git_rel_zip?: string;
-	url_git_rel_tar?: string;
-	url_git_rel_diff?: string;
+	lead: string;
+	series_weight: number;
+	series_title: string;
+	series_part: string;
+	series_part_lead: string;
+	git_release_name: string;
+	url_git_rel_browse: string;
+	url_git_rel_zip: string;
+	url_git_rel_tar: string;
+	url_git_rel_diff: string;
 }
 
 export type TutorialSectionNumberMap = Pick<TutorialSection, 'slug' | 'lead' | 'series_part' | 'series_weight'>;
@@ -217,151 +215,6 @@ export interface OrderedNavItem {
 	title: string;
 	titleCompact: string;
 	weight: number;
-}
-
-export interface GHUser {
-	login: string;
-	id: number;
-	node_id: string;
-	avatar_url: string;
-	gravatar_id: string;
-	url: string;
-	html_url: string;
-	followers_url: string;
-	following_url: string;
-	gists_url: string;
-	starred_url: string;
-	subscriptions_url: string;
-	organizations_url: string;
-	repos_url: string;
-	events_url: string;
-	received_events_url: string;
-	type: 'User';
-	site_admin: boolean;
-}
-
-export interface GHRepo {
-	id?: number;
-	node_id?: string;
-	name: string;
-	full_name?: string;
-	private?: boolean;
-	owner?: GHUser;
-	html_url: string;
-	description: string;
-	fork?: boolean;
-	url?: string;
-	forks_url: string;
-	keys_url?: string;
-	collaborators_url?: string;
-	teams_url?: string;
-	hooks_url?: string;
-	issue_events_url?: string;
-	events_url?: string;
-	assignees_url?: string;
-	branches_url?: string;
-	tags_url?: string;
-	blobs_url?: string;
-	git_tags_url?: string;
-	git_refs_url?: string;
-	trees_url?: string;
-	statuses_url?: string;
-	languages_url?: string;
-	stargazers_url: string;
-	contributors_url?: string;
-	subscription_url?: string;
-	subscribers_url?: string;
-	git_commits_url?: string;
-	commits_url?: string;
-	issue_comment_url?: string;
-	comments_url?: string;
-	compare_url?: string;
-	contents_url?: string;
-	archive_url?: string;
-	merges_url?: string;
-	issues_url?: string;
-	downloads_url?: string;
-	milestones_url?: string;
-	pulls_url?: string;
-	labels_url?: string;
-	notifications_url?: string;
-	deployments_url?: string;
-	releases_url?: string;
-	created_at?: string;
-	updated_at?: string;
-	pushed_at?: string;
-	git_url?: string;
-	ssh_url?: string;
-	clone_url?: string;
-	svn_url?: string;
-	homepage?: string;
-	size?: number;
-	stargazers_count: number;
-	watchers_count?: number;
-	language?: string;
-	has_issues?: boolean;
-	has_projects?: boolean;
-	has_downloads?: boolean;
-	has_wiki?: boolean;
-	has_pages?: boolean;
-	forks_count: number;
-	mirror_url?: string;
-	archived?: boolean;
-	disabled?: boolean;
-	open_issues_count?: number;
-	license?: string;
-	allow_forking?: boolean;
-	is_template?: boolean;
-	web_commit_signoff_required?: boolean;
-	topics?: string[];
-	visibility?: 'public' | 'private';
-	forks?: number;
-	open_issues?: number;
-	watchers?: number;
-	default_branch?: string;
-	temp_clone_token?: string;
-	network_count?: number;
-	subscribers_count?: number;
-}
-
-export interface GHCommit {
-	url: string;
-	sha: string;
-	node_id: string;
-	html_url: string;
-	comments_url: string;
-	commit: {
-		url: string;
-		author: {
-			name: string;
-			email: string;
-			date: string;
-		};
-		committer: {
-			name: string;
-			email: string;
-			date: string;
-		};
-		message: string;
-		tree: {
-			url: string;
-			sha: string;
-		};
-		comment_count: number;
-		verification: {
-			verified: boolean;
-			reason: string;
-			signature: string | null;
-			payload: string | null;
-		};
-	};
-	author: GHUser;
-	committer: GHUser;
-	parents: {
-		url: string;
-		sha: string;
-		html_url: string;
-	}[];
 }
 
 export interface RepoWithMetaData {
@@ -384,12 +237,12 @@ export interface RepoWithMetaData {
 	monorepoProjectPath: string;
 }
 
+export type UserRepos = Record<ProjectName, RepoWithMetaData>;
+
 export interface CachedProjectData {
-	repos: RepoWithMetaData[];
+	repos: UserRepos;
 	cachedAt: string;
 }
-
-export type UserRepos = { [key: string]: RepoWithMetaData };
 
 export type FilterSettingIcon =
 	| typeof AllProjects
@@ -471,3 +324,6 @@ export interface hasDate {
 export interface SortFunction<T> {
 	(a: T, b: T): number;
 }
+
+export * from './github';
+export * from './util';

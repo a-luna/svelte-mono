@@ -1,44 +1,63 @@
 import { API_KEY } from '$env/static/private';
 import { api } from '$lib/api';
-import { MONOREPO_NAMES } from '$lib/constants';
-import { cachedUserRepos, convertGHRepos, convertMonorepoProjects, repoDataDepot } from '$lib/projectMetaData';
+import { MONOREPO_NAMES, nullRepoWithMetadata } from '$lib/constants';
+import { cachedUserRepos, convertGHRepos, createProjectMap, repoDataDepot } from '$lib/projectMetaData';
 import { API_BASE_URL, GH_USER } from '$lib/siteConfig';
-import { isMonorepoProject } from '$lib/typeguards';
-import type { GHCommit, HttpResult, Monorepo, MonorepoProjectName, RepoWithMetaData } from '$lib/types';
+import { isMonorepoProject, isSiteProject } from '$lib/typeguards';
+import {
+	gHCommitSchema,
+	gHRepoSchema,
+	type HttpJsonResult,
+	type Monorepo,
+	type MonorepoProjectName,
+	type RepoWithMetaData,
+	type ZodParseResult,
+	type ghCommit,
+	type ghRepo,
+} from '$lib/types';
 import { error, json } from '@sveltejs/kit';
+import { ZodError, z } from 'zod';
 import type { RequestEvent, RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ setHeaders }: RequestEvent) => {
-	const { userRepos, cachedAt } = await getUserRepos();
+	let userRepos: RepoWithMetaData[] = [];
+	let cachedAt: string = '';
+	const result = await getUserRepos();
+	if (result.success) {
+		userRepos = convertGHRepos(result.data);
+		cachedAt = new Date().toISOString();
+	} else {
+		userRepos = convertGHRepos(cachedUserRepos);
+		cachedAt = new Date(0).toISOString();
+	}
 	const monorepoProjects = await getMonorepoProjects();
+	const repos = createProjectMap([...userRepos, ...monorepoProjects]);
 
 	setHeaders({
 		'Cache-Control': `max-age=0, s-maxage=${3600}`,
 	});
-	return json({ repos: [...userRepos, ...monorepoProjects], cachedAt });
+	return json({ repos, cachedAt });
 };
 
-async function getUserRepos(): Promise<{ userRepos: RepoWithMetaData[]; cachedAt: string }> {
+async function getUserRepos(): Promise<ZodParseResult<ghRepo[]>> {
 	const endpoint = `users/${GH_USER}/repos`;
 	const q = new URLSearchParams();
 	q.set('per_page', '100');
 
-	let result: HttpResult;
+	let result: HttpJsonResult;
 	try {
-		result = await api.get(`${API_BASE_URL}/${endpoint}?${q}`, {
+		result = await api.getJson(`${API_BASE_URL}/${endpoint}?${q}`, {
 			type: 'Token',
 			token: API_KEY,
 		});
 	} catch (ex) {
-		return { userRepos: convertGHRepos(cachedUserRepos), cachedAt: new Date(0).toISOString() };
+		const error = ex as Error;
+		return { success: false, error: new ZodError([{ path: [], message: error.message, code: 'custom' }]) };
 	}
-
 	if (!result.success) {
 		throw error(result.error.status, result.error.message);
 	}
-	const response = result.value;
-	const allRepos = await response.json().catch(() => ({}));
-	return { userRepos: convertGHRepos(allRepos), cachedAt: new Date().toISOString() };
+	return await z.array(gHRepoSchema).safeParseAsync(result.value);
 }
 
 async function getMonorepoProjects(): Promise<RepoWithMetaData[]> {
@@ -49,25 +68,29 @@ async function getMonorepoProjects(): Promise<RepoWithMetaData[]> {
 	for (const monorepo of MONOREPO_NAMES) {
 		if (monorepo === '') continue;
 		monorepoData[monorepo] = {} as Record<MonorepoProjectName, string>;
-		const commits = await getMonorepoCommits(monorepo);
+		const result = await getMonorepoCommits(monorepo);
+		if (!result.success) {
+			throw error(500, 'Error fetching monorepo commits');
+		}
+		const commits = result.data;
 
 		for (const projectName of getMonorepoProjectNames(monorepo)) {
+			if (projectName === '') continue;
 			const lastCommitDate = getMonorepoProjectLastCommitDate(commits, projectName);
-			const thisMonorepoData = monorepoData[monorepo];
 			if (isMonorepoProject(projectName)) {
-				thisMonorepoData[projectName] = lastCommitDate;
+				monorepoData[monorepo][projectName] = lastCommitDate;
 			}
 		}
 	}
 	return convertMonorepoProjects(monorepoData);
 }
 
-async function getMonorepoCommits(repo: string) {
+async function getMonorepoCommits(repo: string): Promise<ZodParseResult<ghCommit[]>> {
 	const endpoint = `repos/${GH_USER}/${repo}/commits`;
 	const q = new URLSearchParams();
 	q.set('per_page', '100');
 
-	const result = await api.get(
+	const result = await api.getJson(
 		`${API_BASE_URL}/${endpoint}?${q}`,
 		{ type: 'Token', token: API_KEY },
 		'application/vnd.github+json',
@@ -75,8 +98,7 @@ async function getMonorepoCommits(repo: string) {
 	if (!result.success) {
 		throw error(result.error.status, result.error.message);
 	}
-	const response = result.value;
-	return await response.json().catch(() => ({}));
+	return await z.array(gHCommitSchema).safeParseAsync(result.value);
 }
 
 const getMonorepoProjectNames = (monorepo: string): string[] =>
@@ -85,10 +107,29 @@ const getMonorepoProjectNames = (monorepo: string): string[] =>
 		.filter((repo) => repo.monorepoName === monorepo)
 		.map((repo) => repo?.name ?? '');
 
-function getMonorepoProjectLastCommitDate(allCommits: GHCommit[], projectName: string): string {
+function getMonorepoProjectLastCommitDate(allCommits: ghCommit[], projectName: string): string {
 	const lastCommit = allCommits
 		.filter((commit) => commit.commit.message.includes(`(${projectName})`))
 		.sort((a, b) => new Date(b.commit.author.date).valueOf() - new Date(a.commit.author.date).valueOf())
 		.at(0);
 	return lastCommit?.commit.author.date || '';
+}
+
+function convertMonorepoProjects(
+	monorepoProjectData: Record<Monorepo, Record<MonorepoProjectName, string>>,
+): RepoWithMetaData[] {
+	const monorepoProjects: RepoWithMetaData[] = [];
+	for (const projects of Object.values(monorepoProjectData)) {
+		for (const [projectName, lastCommitDate] of Object.entries(projects)) {
+			if (!isSiteProject(projectName)) continue;
+			const project = repoDataDepot?.[projectName] ?? nullRepoWithMetadata;
+			project.repoUrl = `https://github.com/a-luna/${project.monorepoName}/tree/main/${project.monorepoProjectPath}`;
+			monorepoProjects.push({
+				...nullRepoWithMetadata,
+				...project,
+				updatedAt: lastCommitDate,
+			});
+		}
+	}
+	return monorepoProjects;
 }
