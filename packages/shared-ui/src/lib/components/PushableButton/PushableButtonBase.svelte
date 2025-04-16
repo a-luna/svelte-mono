@@ -20,7 +20,7 @@
 	const disabledColors: [HslColor, HslColor] = [fgColorDisabled, bgColorDisabled];
 
 	$: {
-		[fgColor, bgColor] = getButtonColors(buttonElement, fgColor, bgColor, disabled);
+		[fgColor, bgColor] = getButtonColors(fgColor, bgColor, disabled);
 		const [edgeHeight, frontHeight] = getButtonHeights(buttonElement);
 		frontStyle = `height: ${frontHeight}; color: ${hslToString(fgColor)}; background: ${hslToString(bgColor)};`;
 		const gStop1 = hslToString({ ...bgColor, l: 16 });
@@ -31,17 +31,16 @@
 	}
 
 	function getButtonColors(
-		button: HTMLButtonElement | undefined,
 		fg: HslColor | undefined,
 		bg: HslColor | undefined,
 		disabled: boolean,
 	): [HslColor, HslColor] {
-		if (!button) return defaultColors;
 		if (disabled) return disabledColors;
-		return fg && bg ? [fg, bg] : defaultColors;
+		if (fg && bg) return [fg, bg];
+		return defaultColors;
 	}
 
-	function getButtonHeights(button: HTMLButtonElement | undefined) {
+	function getButtonHeights(button: HTMLButtonElement | undefined): [string, string] {
 		if (!button) return ['', ''];
 		let originalHeight = getThemeCSSPropertyValue(
 			button,
@@ -61,15 +60,16 @@
 			'--pushable-button-default-vertical-padding',
 			'numeric',
 		);
-		if (!originalHeight || !(originalHeight instanceof CSSUnitValue)) return '';
-		if (!yOffset || !(yOffset instanceof CSSUnitValue)) return '';
-		if (!yMargin || !(yMargin instanceof CSSUnitValue)) return '';
+		if (!originalHeight || !(originalHeight instanceof CSSUnitValue)) return ['', ''];
+		if (!yOffset || !(yOffset instanceof CSSUnitValue)) return ['', ''];
+		if (!yMargin || !(yMargin instanceof CSSUnitValue)) return ['', ''];
 
 		const yOffsetAbs = yOffset.max(yOffset.mul(-1));
 		const edgeHeight = originalHeight.sub(yOffsetAbs);
 		const frontHeight = originalHeight.sub(yOffsetAbs.mul(2).add(yMargin.mul(2)));
+		const frontHeightDisabled = originalHeight.sub(yMargin.mul(2));
 		return disabled
-			? [originalHeight.toString(), originalHeight.toString()]
+			? [edgeHeight.toString(), frontHeightDisabled.toString()]
 			: [edgeHeight.toString(), frontHeight.toString()];
 	}
 </script>
@@ -160,7 +160,7 @@
 		transition: transform 34ms;
 	}
 	.pushable:disabled {
-		cursor: default;
+		cursor: not-allowed;
 		filter: none;
 	}
 	.pushable:disabled .front {
@@ -169,7 +169,8 @@
 			calc(
 					var(--pushable-button-height, var(--pushable-button-default-height)) -
 						var(--pushable-button-icon-size, var(--pushable-button-default-icon-size))
-				) / 2
+				) /
+				2
 		);
 	}
 	.pushable:disabled .edge {
