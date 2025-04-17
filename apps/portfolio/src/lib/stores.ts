@@ -3,6 +3,7 @@ import type {
 	AppStore,
 	BlogPost,
 	CachedProjectData,
+	CursorState,
 	OrderedNavItem,
 	PageType,
 	ScreenSize,
@@ -27,6 +28,10 @@ export const sectionTransition = writable<SectionTransition>({
 	fromComplete: false,
 	to: '',
 	toComplete: false,
+});
+export const cursorState = writable<CursorState>({
+	blinking: false,
+	processing: false,
 });
 export const userRepos = writable<CachedProjectData>(initializeProjectData());
 export const blogPosts = writable<BlogPost[]>([]);
