@@ -5,7 +5,7 @@
 	import ScrollToTopButton from '$lib/components/Nav/ScrollToTopButton.svelte';
 	import { defaultAppState } from '$lib/constants';
 	import { SITE_TITLE, THEME_COLOR } from '$lib/siteConfig';
-	import { initAppContext, isInitialPageLoad, mobileNavOpen, sectionTransition } from '$lib/stores';
+	import { cursorState, initAppContext, isInitialPageLoad, mobileNavOpen, sectionTransition } from '$lib/stores';
 	import { isTransitionSection } from '$lib/typeguards';
 	import type { AppStore } from '$lib/types';
 	import { readable, writable, type Readable } from 'svelte/store';
@@ -19,6 +19,10 @@
 
 	beforeNavigate(({ from, to }) => {
 		$isInitialPageLoad = false;
+		$cursorState = {
+			blinking: false,
+			processing: false,
+		};
 		const [fromRoute, toRoute] = [from?.route.id ?? '', to?.route.id ?? ''];
 		if (isTransitionSection(toRoute) && fromRoute !== toRoute) {
 			$sectionTransition = {

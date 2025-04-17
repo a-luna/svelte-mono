@@ -115,6 +115,11 @@ export interface SectionTransition {
 	toComplete: boolean;
 }
 
+export interface CursorState {
+	blinking: boolean;
+	processing: boolean;
+}
+
 export interface HttpAuthToken {
 	type: HttpAuthType;
 	token: string;

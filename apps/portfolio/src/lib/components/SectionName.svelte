@@ -1,33 +1,40 @@
 <script lang="ts">
-	import { isInitialPageLoad, sectionTransition } from '$lib/stores';
+	import { cursorState, isInitialPageLoad, sectionTransition } from '$lib/stores';
 	import { typewriter } from '$lib/typewriter';
 
 	export let title: string;
 	let cursor = '';
-	let cursorProcessing = false;
-	let cursorBlink = false;
 	const frames = ['┤', '┘', '┴', '└', '├', '┌', '┬', '┐'];
-	const duration = 1500;
+	const duration = $isInitialPageLoad ? 1500 : 0;
 	const interval = 65;
 	const cursorFrames = getCursorFrames(frames, { duration, interval });
 
-	$: if (isInitialPageLoad && !$sectionTransition.toComplete) {
-		cursorBlink = true;
+	$: if ($isInitialPageLoad) {
+		if (!$sectionTransition.toComplete) {
+			$cursorState.blinking = true;
+		}
+		if ($sectionTransition.toComplete && !$sectionTransition.showContent) {
+			$cursorState.processing = true;
+			cursorFrames.forEach(([frame, timeout]) => {
+				setTimeout(() => {
+					cursor = frame;
+				}, timeout);
+			});
+			setTimeout(() => {
+				cursor = '';
+				$cursorState.processing = false;
+			}, duration);
+		}
+	}
+	$: if (!$isInitialPageLoad && !$sectionTransition.fromComplete) {
+		$cursorState.blinking = true;
 	}
 	$: if ($sectionTransition.toComplete && !$sectionTransition.showContent) {
-		cursorBlink = false;
-		cursorProcessing = true;
-		cursorFrames.forEach(([frame, timeout]) => {
-			setTimeout(() => {
-				cursor = frame;
-			}, timeout);
-		});
+		$cursorState.blinking = false;
 	}
 	$: if ($sectionTransition.toComplete) {
 		setTimeout(() => {
-			cursor = '';
-			cursorProcessing = false;
-			cursorBlink = true;
+			$cursorState.blinking = true;
 		}, duration);
 		setTimeout(() => {
 			$sectionTransition.showContent = true;
@@ -54,7 +61,9 @@
 
 <div class="section-name">
 	<h1 in:typewriter={{ speed: 85 }}>{title}</h1>
-	<span class="cursor" class:cursor-blink={cursorBlink} class:cursor-processing={cursorProcessing}>{cursor}</span>
+	<span class="cursor" class:cursor-blink={$cursorState.blinking} class:cursor-processing={$cursorState.processing}
+		>{cursor}</span
+	>
 </div>
 
 <style>
@@ -79,7 +88,7 @@
 		width: 10px;
 		height: 30px;
 		display: inline-block;
-		background: hsl(0 0% 0% / 0.9);
+		background: hsl(0 0% 0% / 0);
 	}
 	.cursor-blink {
 		background: hsl(0 0% 0% / 0.9);
